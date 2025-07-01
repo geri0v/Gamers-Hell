@@ -3,228 +3,111 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Guild Wars 2 PvE Community</title>
+<title>Gamers-Hell PvE Community</title>
 <style>
-  body {
-    background-color: #3c6e8d65;
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    color: black;
-  }
-  .center {
-    margin: auto;
-    padding: 10px;
-    max-width: 900px;
-  }
-  .sidenav {
-    height: 100%;
-    width: 360px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    padding-top: 20px;
-  }
-  .sidenav a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 20px;
-    color: #818181;
-    display: block;
-  }
-  .sidenav a:hover {
-    color: #f1f1f1;
-  }
-  .sidenav2 {
-    height: 100%;
-    width: 360px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    padding-top: 20px;
-  }
-  .main {
-    margin-left: 380px; /* left sidenav width + some padding */
-    margin-right: 380px; /* right sidenav width + padding */
-    padding: 10px;
-  }
-  .textbox-container {
-    margin: 6px 0;
-    display: flex;
-    align-items: center;
-  }
-  .textbox {
-    flex: 1;
-    padding: 6px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-  }
+  body { background-color: #3c6e8d65; margin: 0; font-family: Arial, Helvetica, sans-serif; color: black; }
+  .center { margin: auto; padding: 10px; max-width: 900px; }
+  .textbox-container { margin: 6px 0; display: flex; align-items: center; max-width: 100%; }
+  .textbox { flex: 1 1 auto; padding: 6px 10px; border: 1px solid #ccc; font-size: 1rem; min-width: 0; }
   .copy-button {
-    padding: 6px 12px;
-    background-color: #444;
-    color: white;
-    border: none;
     cursor: pointer;
-    font-size: 1rem;
+    margin-left: 5px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-image: url('https://i.postimg.cc/htgY2Y8w/Commander-tag-blue.png');
+    background-size: cover;
+    background-position: center;
+    display: inline-block;
+    flex-shrink: 0;
   }
   .copy-button:hover {
-    background-color: #666;
-  }
-  .event-section h2 {
-    font-size: 30px;
-    margin-top: 40px;
+    background-image: url('https://i.postimg.cc/HnVZyDgc/120px-Mentoring-Badge.png');
   }
 </style>
-</head>
-<body onload="initEvents()">
-
-<!-- Left sidenav -->
-<div class="sidenav">
-  <a href="#Welcome">Welcome</a>
-  <a href="#CoreTyria">Core Tyria</a>
-  <a href="#LWS2">Living World Season 2</a>
-  <a href="#HoT">Heart of Thorns</a>
-  <a href="#LWS3">Living World Season 3</a>
-  <a href="#PoF">Path of Fire</a>
-  <a href="#LWS4">Living World Season 4</a>
-  <a href="#IBS">Icebrood Saga</a>
-  <a href="#EoD">End of Dragons</a>
-  <a href="#Dungeons">Dungeons</a>
-  <a href="#JumpingPuzzles">Jumping Puzzles</a>
-  <a href="#Bountys">Bountys</a>
-  <a href="#Raids">Raids</a>
-  <a href="#StrikeMissions">Strike Missions</a>
-  <a href="#Other">Other</a>
-  <a href="#Credits">Credits</a>
-</div>
-
-<!-- Right sidenav -->
-<div class="sidenav2">
-  <iframe 
-    src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true" 
-    width="360" 
-    height="600" 
-    style="border: 1px solid #444; box-shadow: 0px 0px 12px #223;" 
-    scrolling="yes">
-  </iframe>
-</div>
-
-<!-- Main content -->
-<div class="main">
-  <div class="center" id="Welcome">
-    <h1 style="font-size:50px">Welcome Commander</h1>
-  </div>
-
-  <div id="events-container" class="center"></div>
-
-  <div class="center" id="Credits">
-    <h2>Credits</h2>
-    <textarea cols="100" rows="15" disabled style="width:100%; max-width:900px; font-family: monospace;">
-Gamers-Hell Community
-Players Vs Events,
-  Blaz, 
-  Devilish Rain, 
-  Stormmyknight, 
-  Beina, 
-  Geri V
-
-Websites
-https://wiki.guildwars2.com/wiki
-https://gw2efficiency.com/
-http://gw2timer.com/
-https://www.tapatalk.com/groups/renaka/add-gw2timer-to-your-website-t142.html
-    </textarea>
-    <p>
-      <a href="http://pvecommunity.mooo.com" target="_blank">Gamers-Hell Community</a>
-    </p>
-  </div>
-</div>
-
 <script>
-const eventData = {
-  "Core Tyria": [
-    { name: "Taidha Covington", code: "[&BKgBAAA=]" },
-    { name: "Karka Queen", code: "[&BNcGAAA=]" },
-    { name: "Jungle Wurm", code: "[&BEEFAAA=]" },
-    { name: "Fire Elemental", code: "[&BEYAAAA=]" },
-    { name: "Megadestroyer", code: "[&BM0CAAA=]" },
-    { name: "Shadow Behemoth", code: "[&BPwAAAA=]" },
-    { name: "Tequatl", code: "[&BNABAAA=]" },
-    { name: "The Shatterer", code: "[&BE4DAAA=]" },
-    { name: "Frozen Maw", code: "[&BH4BAAA=]" },
-    { name: "Modniir Ulgoth", code: "[&BLEAAAA=]" },
-    { name: "Golem Mark II", code: "[&BNQCAAA=]" },
-    { name: "Claw of Jormag", code: "[&BHoCAAA=]" }
-  ],
+  // Password prompt
+  (function(){
+    var pass1 = "PvE";
+    var password = prompt('Please enter your password to view this page!', '');
+    if (password === pass1) {
+      alert('Welcome Commander');
+    } else {
+      window.location.href = "https://sites.google.com/view/gamers-hell-community";
+    }
+  })();
 
-  "Living World Season 2": [
-    { name: "Example Event 1", code: "[&AAAAAAA=]" },
-    { name: "Example Event 2", code: "[&BBBBBBB=]" }
-    // Voeg hier je echte data toe
-  ],
+  // Data: categorieën met items en hun teleportcodes
+  const data = {
+    "Core Tyria": [
+      { name: "Taidha Covington", code: "[&BKgBAAA=]" },
+      { name: "Karka Queen", code: "[&BNcGAAA=]" },
+      { name: "Jungle Wurm", code: "[&BEEFAAA=]" },
+      { name: "Fire Elemental", code: "[&BEYAAAA=]" },
+      { name: "Megadestroyer", code: "[&BM0CAAA=]" },
+      { name: "Shadow Behemoth", code: "[&BPwAAAA=]" },
+      { name: "Tequatl", code: "[&BNABAAA=]" },
+      { name: "The Shatterer", code: "[&BE4DAAA=]" },
+      { name: "Frozen Maw", code: "[&BH4BAAA=]" },
+      { name: "Modniir Ulgoth", code: "[&BLEAAAA=]" },
+      { name: "Golem Mark II", code: "[&BNQCAAA=]" },
+      { name: "Claw of Jormag", code: "[&BHoCAAA=]" }
+    ],
+    // Je kan hier makkelijk andere categorieën toevoegen
+    "Living World Season 2": [
+      { name: "Example Boss 1", code: "[&ABCDE=]" },
+      { name: "Example Boss 2", code: "[&FGHIJ=]" }
+    ]
+    // etc.
+  };
 
-  // Voeg meer categorieën toe met dezelfde structuur
-};
-
-function copyToClipboard(id) {
-  const copyText = document.getElementById(id);
-  if (!copyText) return;
-  navigator.clipboard.writeText(copyText.value)
-    .then(() => {
-      alert(`Copied: ${copyText.value}`);
-    })
-    .catch(err => {
-      alert('Copy failed, please copy manually.');
-      console.error(err);
-    });
-}
-
-function generateEventSection(title, events) {
-  const container = document.createElement('section');
-  container.className = 'event-section';
-  container.id = title.replace(/\s+/g, '');
-
-  const heading = document.createElement('h2');
-  heading.textContent = title;
-  container.appendChild(heading);
-
-  events.forEach((event, index) => {
-    const textboxContainer = document.createElement('div');
-    textboxContainer.className = 'textbox-container';
-
-    const input = document.createElement('input');
-    const inputId = `${title.replace(/\s+/g, '')}_event_${index}`;
-    input.type = 'text';
-    input.id = inputId;
-    input.className = 'textbox';
-    input.value = `${event.name}: ${event.code}`;
-    input.disabled = true;
-
-    const button = document.createElement('button');
-    button.className = 'copy-button';
-    button.textContent = 'Copy';
-    button.onclick = () => copyToClipboard(inputId);
-
-    textboxContainer.appendChild(input);
-    textboxContainer.appendChild(button);
-    container.appendChild(textboxContainer);
-  });
-
-  document.getElementById('events-container').appendChild(container);
-}
-
-function initEvents() {
-  for (const [category, events] of Object.entries(eventData)) {
-    generateEventSection(category, events);
+  function copyToClipboard(id) {
+    const textbox = document.getElementById(id);
+    textbox.disabled = false; // tijdelijk enable voor selecteren
+    textbox.select();
+    textbox.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    textbox.disabled = true;
+    alert(`Copied "${textbox.value}" to clipboard.`);
   }
-}
-</script>
 
+  function generateButtons() {
+    const mainDiv = document.getElementById('mainContent');
+    for (const [category, items] of Object.entries(data)) {
+      const catTitle = document.createElement('h2');
+      catTitle.textContent = category;
+      mainDiv.appendChild(catTitle);
+
+      items.forEach((item, idx) => {
+        const container = document.createElement('div');
+        container.className = 'textbox-container';
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'textbox';
+        input.value = `${item.name}: ${item.code}`;
+        input.id = `${category.replace(/\s+/g, '')}_textbox_${idx}`;
+        input.disabled = true;
+
+        const button = document.createElement('button');
+        button.className = 'copy-button';
+        button.title = `Copy ${item.name}`;
+        button.onclick = () => copyToClipboard(input.id);
+
+        container.appendChild(input);
+        container.appendChild(button);
+        mainDiv.appendChild(container);
+      });
+    }
+  }
+
+  window.onload = generateButtons;
+</script>
+</head>
+<body>
+  <div class="center" id="mainContent">
+    <h1>Gamers-Hell PvE Community</h1>
+    <p>Selecteer en kopieer eenvoudig de teleportcodes via de knoppen.</p>
+  </div>
 </body>
 </html>
