@@ -5,122 +5,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gamers-Hell Teleporters</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-    }
+    html, body { margin:0; padding:0; height:100vh }
     body {
       display: grid;
-      grid-template-columns: 360px 1fr 360px;
-      grid-template-areas: "navleft main navright";
-      font-family: Arial, sans-serif;
-      background: #3c6e8d65;
-      color: #333;
+      grid-template-columns:360px 1fr 360px;
+      grid-template-areas:"navleft main navright";
+      font-family:Arial,sans-serif;
+      background:#3c6e8d65; color:#333;
     }
-    .sidenav, .sidenav2 {
-      height: 100%;
-      overflow-y: auto;
-      background: #111;
-      color: #818181;
-    }
-    .sidenav { grid-area: navleft; }
-    .sidenav2 { grid-area: navright; }
-    .main {
-      grid-area: main;
-      overflow-y: auto;
-      padding: 20px;
-    }
-    /* Sidebar links */
+    .sidenav { grid-area:navleft; background:#111; color:#818181; overflow-y:auto }
+    .sidenav2{ grid-area:navright;background:#111; color:#818181; overflow-y:auto }
+    .main    { grid-area:main; overflow-y:auto; padding:20px }
     .sidenav a, .sidenav2 a {
-      display: block;
-      padding: 8px 16px;
-      font-size: 16px;
-      text-decoration: none;
-      color: inherit;
+      display:block; padding:8px 16px; font-size:16px;
+      text-decoration:none; color:inherit;
     }
-    .sidenav a:hover, .sidenav2 a:hover {
-      color: #f1f1f1;
-    }
-    /* Collapsible nav */
+    .sidenav a:hover, .sidenav2 a:hover { color:#f1f1f1 }
     .sidenav details {
-      padding: 4px 16px;
-      cursor: pointer;
+      padding:4px 16px; cursor:pointer;
     }
     .sidenav summary {
-      list-style: none;
-      font-size: 16px;
-      user-select: none;
+      list-style:none; font-size:16px; user-select:none;
     }
     .sidenav summary::before {
-      content: "▸";
-      display: inline-block;
-      width: 1em;
-      transition: transform 0.2s;
+      content:"▸"; display:inline-block; width:1em;
+      transition:transform .2s;
     }
-    .sidenav details[open] summary::before {
-      content: "▾";
-    }
+    .sidenav details[open] summary::before { content:"▾" }
     .sidenav details a {
-      padding-left: 32px;
-      font-size: 15px;
+      padding-left:32px; font-size:15px;
     }
-    /* Typography */
-    h1, h2 {
-      margin: 0.5em 0;
-    }
+    h1,h2 { margin:.5em 0 }
     h2 {
-      margin-top: 1.5em;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 0.2em;
+      margin-top:1.5em; border-bottom:1px solid #ccc;
+      padding-bottom:.2em;
     }
-    .center {
-      text-align: center;
-      margin-bottom: 1em;
-    }
-    /* Teleporter rows */
+    .center { text-align:center; margin-bottom:1em }
     .textbox-container {
-      display: flex;
-      align-items: center;
-      margin: 6px 0;
+      display:flex; align-items:center; margin:6px 0;
     }
     .textbox {
-      flex: 1;
-      padding: 6px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background: #fff;
+      flex:1; padding:6px; font-size:14px;
+      border:1px solid #ccc; border-radius:4px;
+      background:#fff;
     }
     .copy-button {
-      width: 24px;
-      height: 24px;
-      margin-left: 6px;
-      border: none;
-      cursor: pointer;
-      border-radius: 4px;
-      background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png') center/cover no-repeat;
+      width:24px; height:24px; margin-left:6px;
+      border:none; cursor:pointer; border-radius:4px;
+      background:url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png')
+                center/cover no-repeat;
     }
     .copy-button:hover {
-      background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
+      background-image:url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
     }
-    textarea {
-      width: 100%;
-      max-width: 600px;
-    }
+    textarea { width:100%; max-width:600px }
     footer {
-      text-align: center;
-      padding: 1em 0;
-      background: #ececec;
-      margin-top: 2em;
-      font-size: 0.9em;
+      text-align:center; padding:1em 0; background:#ececec;
+      margin-top:2em; font-size:.9em;
     }
   </style>
 </head>
 <body>
 
+  <!-- LEFT NAV -->
   <nav class="sidenav" id="sideNav"></nav>
 
+  <!-- MAIN CONTENT -->
   <div class="main">
     <section id="Welcome" class="center">
       <h1>Welcome Commander</h1>
@@ -155,6 +105,7 @@ Websites:
     <footer>&copy; 2025 Gamers-Hell Community</footer>
   </div>
 
+  <!-- RIGHT NAV (Timer) -->
   <nav class="sidenav2">
     <iframe
       src="https://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true"
@@ -162,41 +113,56 @@ Websites:
       style="box-shadow:0 0 12px #223;">
     </iframe>
   </nav>
+
+  <!-- SCRIPT: fetch & build UI from Google Sheet -->
   <script>
-    const SHEET_ID = "1drEpltlQrycYXTHHG8K1xiQNvHZgQk0z2JOPgK0E0yA";
+    const SHEET_ID   = "1drEpltlQrycYXTHHG8K1xiQNvHZgQk0z2JOPgK0E0yA";
     const SHEET_GIDS = [
-  "159648992",  // Core Tyria tab
-  "1712489673",  // Living World Season 1 tab
-  "1641486649"   // Living world Season 2 tab
-  // add more here…
+      "159648992",  // Core Tyria
+      "1712489673", // Living World S1
+      "1641486649"  // Living World S2
+      // add more GIDs here as needed
     ];
 
-    // 1) Fetch the published sheet as GViz JSON
-async function init() {
-  try {
-    // 1) pull every tab
-    let allRows = [];
-    for (const gid of SHEET_GIDS) {
-      const rows = await fetchSheet(SHEET_ID, gid);
-      // skip header row on subsequent tabs
-      allRows.push(...(allRows.length===0 ? rows : rows.slice(1)));
+    // Fetch one tab via GViz JSON
+    async function fetchSheet(id, gid) {
+      const url = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?gid=${gid}&tqx=out:json`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const txt = await res.text();
+      const json = JSON.parse(txt.slice(txt.indexOf("{"), txt.lastIndexOf("}")+1));
+      return json.table.rows.map(r => r.c.map(c => c?.v || ""));
     }
 
-    // 2) turn them into nested data
-    const data = rowsToNestedData(allRows);
+    // Fetch all tabs, merge rows (skip headers after the first)
+    async function fetchAllSheets(id, gids) {
+      let allRows = [];
+      for (let i = 0; i < gids.length; i++) {
+        const rows = await fetchSheet(id, gids[i]);
+        allRows = i === 0
+          ? rows
+          : allRows.concat(rows.slice(1));
+      }
+      return allRows;
+    }
 
-    // 3) build nav + content
-    generateNav(data);
-    buildContent(document.getElementById("mainContent"), data);
-  }
-  catch (err) {
-    console.error("Sheet load failed:", err);
-    document.getElementById("mainContent").innerHTML =
-      "<p style='color:red'>Unable to fetch sheet data.</p>";
-  }
-}
+    // Convert rows → nested { Category: { Subcategory: [ {name,code},… ] } }
+    function rowsToNestedData(rows) {
+      const data = {};
+      const [header, ...body] = rows;
+      body.forEach(row => {
+        const [cat, sub, name, code] = row.map(x => String(x||"").trim());
+        if (!name && !code) return; // skip blank
+        const C = cat || "Other";
+        const S = sub || "General";
+        data[C] = data[C] || {};
+        data[C][S] = data[C][S] || [];
+        data[C][S].push({ name, code });
+      });
+      return data;
+    }
 
-    // 2) Copy button helper
+    // Copy helper
     function copyToClipboard(id) {
       const tb = document.getElementById(id);
       tb.disabled = false;
@@ -206,38 +172,7 @@ async function init() {
       alert(`Copied: ${tb.value}`);
     }
 
-    // 3) Convert rows into nested data: { Category: { Subcat: [ {name,code}, … ] } }
-    function rowsToNestedData(rows) {
-      const data = {};
-      // assume header row: [ "Category", "Subcategory", "Name", "Code" ]
-      rows.slice(1).forEach(([cat, sub, name, code]) => {
-        const C = (cat || "Other").trim();
-        const S = (sub || "General").trim();
-        if (!data[C]) data[C] = {};
-        if (!data[C][S]) data[C][S] = [];
-        data[C][S].push({ name, code });
-      });
-      return data;
-    }
-    // 4) Recursive nav builder
-    function buildNav(parent, obj) {
-      Object.entries(obj).forEach(([category, subs]) => {
-        const details = document.createElement("details");
-        const summary = document.createElement("summary");
-        summary.textContent = category;
-        details.appendChild(summary);
-
-        Object.keys(subs).forEach(sub => {
-          const a = document.createElement("a");
-          a.href = `#${category.replace(/\s+/g, "")}_${sub.replace(/\s+/g, "")}`;
-          a.textContent = sub;
-          details.appendChild(a);
-        });
-
-        parent.appendChild(details);
-      });
-    }
-
+    // Build left nav
     function generateNav(data) {
       const nav = document.getElementById("sideNav");
       nav.innerHTML = "";
@@ -246,23 +181,36 @@ async function init() {
       a.href = "#Welcome"; a.textContent = "Welcome";
       nav.appendChild(a);
       // dynamic categories
-      buildNav(nav, data);
+      Object.entries(data).forEach(([cat, subs]) => {
+        const details = document.createElement("details");
+        const sum     = document.createElement("summary");
+        sum.textContent = cat;
+        details.appendChild(sum);
+        Object.keys(subs).forEach(sub => {
+          const link = document.createElement("a");
+          link.href = `#${cat.replace(/\s+/g,"")}_${sub.replace(/\s+/g,"")}`;
+          link.textContent = sub;
+          details.appendChild(link);
+        });
+        nav.appendChild(details);
+      });
       // static Credits
       a = document.createElement("a");
       a.href = "#Credits"; a.textContent = "Credits";
       nav.appendChild(a);
     }
 
-    // 5) Recursive content builder
-    function buildContent(parent, obj) {
-      Object.entries(obj).forEach(([category, subs]) => {
+    // Build main content
+    function buildContent(data) {
+      const container = document.getElementById("mainContent");
+      container.innerHTML = "";
+      Object.entries(data).forEach(([cat, subs]) => {
         Object.entries(subs).forEach(([sub, items]) => {
           const section = document.createElement("section");
-          const id = `${category.replace(/\s+/g, "")}_${sub.replace(/\s+/g, "")}`;
+          const id      = `${cat.replace(/\s+/g,"")}_${sub.replace(/\s+/g,"")}`;
           section.id = id;
-
           const h2 = document.createElement("h2");
-          h2.textContent = `${category} – ${sub}`;
+          h2.textContent = `${cat} – ${sub}`;
           section.appendChild(h2);
 
           items.forEach((item, idx) => {
@@ -270,41 +218,41 @@ async function init() {
             wrap.className = "textbox-container";
 
             const inp = document.createElement("input");
-            inp.type = "text";
+            inp.type  = "text";
             inp.className = "textbox";
             inp.value = `${item.name}: ${item.code}`;
-            inp.id = `tb_${id}_${idx}`;
+            inp.id    = `tb_${id}_${idx}`;
             inp.disabled = true;
 
             const btn = document.createElement("button");
             btn.className = "copy-button";
-            btn.title = `Copy ${item.name}`;
-            btn.onclick = () => copyToClipboard(inp.id);
+            btn.title     = `Copy ${item.name}`;
+            btn.onclick   = () => copyToClipboard(inp.id);
 
             wrap.appendChild(inp);
             wrap.appendChild(btn);
             section.appendChild(wrap);
           });
 
-          parent.appendChild(section);
+          container.appendChild(section);
         });
       });
     }
 
-    // 6) Init on load
-    async function init() {
+    // Init on load
+    document.addEventListener("DOMContentLoaded", async () => {
       try {
-        const rows = await fetchSheet(SHEET_ID, GID);
+        const rows = await fetchAllSheets(SHEET_ID, SHEET_GIDS);
         const data = rowsToNestedData(rows);
         generateNav(data);
-        buildContent(document.getElementById("mainContent"), data);
+        buildContent(data);
       } catch (err) {
-        console.error("Failed to load sheet data:", err);
+        console.error("Error loading data:", err);
         document.getElementById("mainContent").innerHTML =
-          "<p style='color:red'>Unable to fetch event data.</p>";
+          `<p style="color:red">Unable to fetch event data.<br>${err.message}</p>`;
       }
-    }
-    document.addEventListener("DOMContentLoaded", init);
+    });
   </script>
 </body>
 </html>
+```
