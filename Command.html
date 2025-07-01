@@ -3,53 +3,112 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gamers-Hell Teleporters (Nested Nav)</title>
+  <title>Gamers-Hell Command</title>
   <style>
-    /* ==== Layout ==== */
-    body {
+    /* ====== GRID LAYOUT ====== */
+    html, body {
       margin: 0;
+      padding: 0;
+      height: 100vh;
+    }
+    body {
+      display: grid;
+      grid-template-columns: 360px 1fr 360px;
+      grid-template-areas: "navleft main navright";
       font-family: Arial, sans-serif;
       background: #3c6e8d65;
-      color: #333;
     }
+    .sidenav  { grid-area: navleft; }
+    .sidenav2 { grid-area: navright; }
+
+    .main {
+      grid-area: main;
+      overflow-y: auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    /* ====== SIDEBARS ====== */
     .sidenav, .sidenav2 {
-      position: fixed; top: 0; height: 100%; width: 280px;
-      background: #111; overflow-y: auto; padding: 20px 0;
-      z-index: 10;
+      background: #111;
+      color: #818181;
+      overflow-y: auto;
+      height: 100%;
     }
-    .sidenav { left: 0; }
-    .sidenav2 { right: 0; }
+    .sidenav a, .sidenav2 a {
+      display: block;
+      padding: 8px 16px;
+      font-size: 16px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .sidenav a:hover, .sidenav2 a:hover {
+      color: #f1f1f1;
+    }
+
+    /* ====== COLLAPSIBLE NAV ====== */
     .sidenav details {
-      color: #818181; padding: 0 16px; font-size: 16px;
-      cursor: pointer; user-select: none;
+      padding: 4px 16px;
+      color: #818181;
+      cursor: pointer;
     }
     .sidenav summary {
       list-style: none;
+      font-size: 16px;
+      user-select: none;
     }
+    /* remove default marker */
     .sidenav summary::-webkit-details-marker { display: none; }
-    .sidenav a {
-      display: block; padding: 6px 32px; 
-      color: #818181; text-decoration: none; font-size: 15px;
-    }
-    .sidenav a:hover, .sidenav details:hover { color: #f1f1f1; }
 
-    .main {
-      margin: 0 300px; /* room for sidebars */
-      padding: 20px;
+    /* custom arrow */
+    .sidenav summary::before {
+      content: "▸";
+      display: inline-block;
+      width: 1em;
+      transition: transform 0.2s;
     }
-    .center { text-align: center; }
+    .sidenav details[open] summary::before {
+      content: "▾";
+    }
+    .sidenav details a {
+      padding-left: 32px;
+      font-size: 15px;
+    }
 
-    /* ==== Buttons & Inputs ==== */
+    /* ====== MAIN CONTENT ====== */
+    .center {
+      text-align: center;
+      margin-bottom: 1em;
+    }
+    h1, h2 {
+      margin: 0.5em 0;
+    }
+    h2 {
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.2em;
+      margin-top: 1.5em;
+    }
+
+    /* ====== TELEPORTER ROWS ====== */
     .textbox-container {
-      display: flex; align-items: center; margin: 6px 0;
+      display: flex;
+      align-items: center;
+      margin: 6px 0;
     }
     .textbox {
-      flex: 1; padding: 6px; font-size: 14px; border: 1px solid #ccc;
-      border-radius: 4px; background: #fff;
+      flex: 1;
+      padding: 6px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
     }
     .copy-button {
-      width: 24px; height: 24px; margin-left: 6px; border: none;
-      cursor: pointer; border-radius:4px;
+      width: 24px; height: 24px;
+      margin-left: 6px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
       background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png')
                   no-repeat center/cover;
     }
@@ -57,14 +116,16 @@
       background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
     }
 
-    h1, h2 { margin: 0.5em 0; }
-    h2 {
-      margin-top: 1.5em; border-bottom: 1px solid #ccc;
-      padding-bottom: 0.2em;
-    }
     footer {
-      text-align: center; padding: 1em 0; background: #ececec;
-      margin-top: 2em; font-size: 0.9em;
+      text-align: center;
+      padding: 1em 0;
+      background: #ececec;
+      margin-top: 2em;
+      font-size: 0.9em;
+    }
+    textarea {
+      width: 100%;
+      max-width: 600px;
     }
   </style>
 </head>
@@ -73,18 +134,8 @@
   <!-- LEFT NAV -->
   <nav class="sidenav" id="sideNav"></nav>
 
-  <!-- RIGHT TIMER -->
-  <nav class="sidenav2">
-    <iframe
-      src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true"
-      width="100%" height="100%" frameborder="0"
-      style="box-shadow:0 0 12px #223;">
-    </iframe>
-  </nav>
-
-  <!-- MAIN -->
+  <!-- MAIN CONTENT -->
   <div class="main">
-    <!-- Welcome -->
     <section id="Welcome" class="center">
       <h1>Welcome Commander</h1>
       <script>
@@ -97,10 +148,8 @@
       </script>
     </section>
 
-    <!-- Dynamic Content -->
     <div id="mainContent"></div>
 
-    <!-- Credits -->
     <section id="Credits" class="center">
       <h2>Credits</h2>
       <textarea rows="6" disabled>
@@ -118,20 +167,28 @@ Websites:
     <footer>&copy; 2025 Gamers-Hell Community</footer>
   </div>
 
-  <!-- SCRIPT -->
+  <!-- RIGHT TIMER -->
+  <nav class="sidenav2">
+    <iframe
+      src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true"
+      width="100%" height="100%" frameborder="0"
+      style="box-shadow:0 0 12px #223;">
+    </iframe>
+  </nav>
+
+  <!-- GENERATOR SCRIPT -->
   <script>
-    // 1) Nested data: object→subcategories or array→teleport items
+    // 1) Nested data structure
     const data = {
       "Core Tyria": {
         "Core Tyria": [
           { name: "Taidha Covington", code: "[&BKgBAAA=]" },
           { name: "Karka Queen",       code: "[&BNcGAAA=]" },
-          /* …other Core bosses… */
+          { name: "Jungle Wurm",       code: "[&BEEFAAA=]" }
         ],
         "Ley-Line Anomaly": [
           { name: "Legendary Anomaly A", code: "[&BEwCAAA=]" },
-          { name: "Legendary Anomaly B", code: "[&BOcBAAA=]" },
-          { name: "Legendary Anomaly C", code: "[&BOMAAAA=]" }
+          { name: "Legendary Anomaly B", code: "[&BOcBAAA=]" }
         ]
       },
       "Living World Season 1": [
@@ -170,7 +227,7 @@ Websites:
       ]
     };
 
-    // 2) Copy to clipboard
+    // 2) Copy helper
     function copyToClipboard(id) {
       const tb = document.getElementById(id);
       tb.disabled = false;
@@ -180,57 +237,51 @@ Websites:
       alert(`Copied: ${tb.value}`);
     }
 
-    // 3) Build sidebar nav recursively
-    function buildNav(container, obj) {
+    // 3) Build sidebar nav (recursive)
+    function buildNav(parent, obj) {
       Object.entries(obj).forEach(([key, val]) => {
         if (Array.isArray(val)) {
-          // leaf category
           const a = document.createElement('a');
           a.href = `#${key.replace(/\s+/g,'')}`;
           a.textContent = key;
-          container.appendChild(a);
+          parent.appendChild(a);
         } else {
-          // has subcategories → <details>
           const details = document.createElement('details');
           const summary = document.createElement('summary');
           summary.textContent = key;
           details.appendChild(summary);
           buildNav(details, val);
-          container.appendChild(details);
+          parent.appendChild(details);
         }
       });
     }
 
-    // 4) Generate left nav
     function generateNav() {
       const nav = document.getElementById('sideNav');
       nav.innerHTML = '';
-      // static "Welcome"
-      let a = document.createElement('a');
-      a.href = '#Welcome'; a.textContent = 'Welcome';
-      nav.appendChild(a);
+      // static welcome
+      const w = document.createElement('a');
+      w.href = '#Welcome'; w.textContent = 'Welcome';
+      nav.appendChild(w);
       // dynamic
       buildNav(nav, data);
-      // static "Credits"
-      a = document.createElement('a');
-      a.href = '#Credits'; a.textContent = 'Credits';
-      nav.appendChild(a);
+      // static credits
+      const c = document.createElement('a');
+      c.href = '#Credits'; c.textContent = 'Credits';
+      nav.appendChild(c);
     }
 
-    // 5) Generate main content recursively
-    function buildContent(container, obj) {
+    // 4) Build main content (recursive)
+    function buildContent(parent, obj) {
       Object.entries(obj).forEach(([key, val]) => {
         if (Array.isArray(val)) {
-          // section for this category
           const section = document.createElement('section');
-          const id = key.replace(/\s+/g,'');
-          section.id = id;
-
+          section.id = key.replace(/\s+/g,'');
           const h2 = document.createElement('h2');
           h2.textContent = key;
           section.appendChild(h2);
 
-          val.forEach((item, idx) => {
+          val.forEach((item, i) => {
             const wrap = document.createElement('div');
             wrap.className = 'textbox-container';
 
@@ -238,7 +289,7 @@ Websites:
             inp.type = 'text';
             inp.className = 'textbox';
             inp.value = `${item.name}: ${item.code}`;
-            inp.id = `tb_${id}_${idx}`;
+            inp.id = `tb_${section.id}_${i}`;
             inp.disabled = true;
 
             const btn = document.createElement('button');
@@ -251,15 +302,14 @@ Websites:
             section.appendChild(wrap);
           });
 
-          container.appendChild(section);
+          parent.appendChild(section);
         } else {
-          // nested object → recurse
-          buildContent(container, val);
+          buildContent(parent, val);
         }
       });
     }
 
-    // 6) Generate everything on load
+    // 5) Initialize
     document.addEventListener('DOMContentLoaded', () => {
       generateNav();
       const main = document.getElementById('mainContent');
