@@ -13,37 +13,52 @@
       color: #333;
     }
     .sidenav, .sidenav2 {
-      position: fixed; top: 0; height: 100%; width: 360px;
-      background: #111; overflow-y: auto; padding-top: 20px;
+      position: fixed;
+      top: 0;
+      height: 100%;
+      width: 280px;
+      background: #111;
+      overflow-y: auto;
+      padding-top: 20px;
       z-index: 10;
     }
     .sidenav { left: 0; }
     .sidenav2 { right: 0; }
     .sidenav a, .sidenav2 a {
-      display: block; padding: 8px 16px; color: #818181;
-      text-decoration: none; font-size: 18px;
+      display: block;
+      padding: 8px 16px;
+      color: #818181;
+      text-decoration: none;
+      font-size: 16px;
     }
     .sidenav a:hover, .sidenav2 a:hover { color: #f1f1f1; }
 
     .main {
-      margin: 0 380px; /* leave room for sidebars */
+      margin: 0 300px; /* room for sidebars */
       padding: 20px;
     }
     .center { text-align: center; }
 
     /* ==== Buttons & Inputs ==== */
     .textbox-container {
-      display: flex; align-items: center;
-      margin: 8px 0;
+      display: flex;
+      align-items: center;
+      margin: 6px 0;
     }
     .textbox {
-      flex: 1; padding: 6px; font-size: 15px;
-      border: 1px solid #ccc; border-radius: 4px;
+      flex: 1;
+      padding: 6px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
       background: #fff;
     }
     .copy-button {
-      width: 24px; height: 24px; margin-left: 6px;
-      border: none; cursor: pointer;
+      width: 24px;
+      height: 24px;
+      margin-left: 6px;
+      border: none;
+      cursor: pointer;
       background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png')
                   no-repeat center/cover;
       border-radius: 4px;
@@ -51,42 +66,38 @@
     .copy-button:hover {
       background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
     }
+
+    h1, h2 {
+      margin: 0.5em 0;
+    }
     h2 {
       margin-top: 1.5em;
       border-bottom: 1px solid #ccc;
       padding-bottom: 0.2em;
     }
     footer {
-      text-align: center; padding: 1em 0;
-      background: #ececec; margin-top: 2em;
+      text-align: center;
+      padding: 1em 0;
+      background: #ececec;
+      margin-top: 2em;
+      font-size: 0.9em;
+    }
+    textarea {
+      width: 100%;
+      max-width: 600px;
     }
   </style>
 </head>
 <body>
 
-  <!-- LEFT NAV -->
-  <nav class="sidenav">
-    <a href="#Welcome">Welcome</a>
-    <a href="#CoreTyria">Core Tyria</a>
-    <a href="#LivingWorldSeason1">Living World Season 1</a>
-    <a href="#LivingWorldSeason2">Living World Season 2</a>
-    <a href="#HeartOfThorns">Heart of Thorns</a>
-    <a href="#LivingWorldSeason3">Living World Season 3</a>
-    <a href="#PathOfFire">Path of Fire</a>
-    <a href="#LivingWorldSeason4">Living World Season 4</a>
-    <a href="#IceBroodSaga">Ice Brood Saga</a>
-    <a href="#EndOfDragons">End of Dragons</a>
-    <a href="#SecretsOfTheObscure">Secrets of the Obscure</a>
-    <a href="#JanthirWilds">Janthir Wilds</a>
-    <a href="#Expansion6">Expansion 6</a>
-    <a href="#crd">Credits</a>
-  </nav>
+  <!-- LEFT NAV (auto-generated) -->
+  <nav class="sidenav" id="sideNav"></nav>
 
-  <!-- RIGHT NAV (TIMER) -->
+  <!-- RIGHT NAV (GW2 Timer iframe) -->
   <nav class="sidenav2">
     <iframe
       src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true"
-      width="360" height="100%" frameborder="0"
+      width="100%" height="100%" frameborder="0"
       style="box-shadow:0 0 12px #223;">
     </iframe>
   </nav>
@@ -97,12 +108,11 @@
     <!-- Welcome Section -->
     <section id="Welcome" class="center">
       <h1>Welcome Commander</h1>
-      <!-- Password Script -->
       <script>
         (function(){
-          const pass = "PvE";
+          const PASS = "PvE";
           const pw = prompt('Enter password to view this page','');
-          if (pw !== pass) {
+          if (pw !== PASS) {
             window.location = 'https://sites.google.com/view/gamers-hell-community';
           } else {
             alert('Welcome Commander');
@@ -111,13 +121,13 @@
       </script>
     </section>
 
-    <!-- TELEPORTER BUTTONS WILL BE INJECTED HERE -->
+    <!-- Teleporter Sections & Buttons -->
     <div id="mainContent"></div>
 
-    <!-- CREDITS -->
-    <section id="crd" class="center">
+    <!-- Credits Section -->
+    <section id="Credits" class="center">
       <h2>Credits</h2>
-      <textarea cols="60" rows="6" disabled>
+      <textarea rows="6" disabled>
 Gamers-Hell Community
 Players Vs Events:
   Blaz, Devilish Rain, Stormmyknight, Beina, Geri V
@@ -132,8 +142,9 @@ Websites:
     <footer>&copy; 2025 Gamers-Hell Community</footer>
   </div>
 
-  <!-- BUTTON GENERATOR SCRIPT -->
+  <!-- DATA + NAV & BUTTON GENERATORS -->
   <script>
+    // 1) Teleport categories + example codes
     const data = {
       "Core Tyria": [
         { name: "Taidha Covington", code: "[&BKgBAAA=]" },
@@ -142,55 +153,62 @@ Websites:
         { name: "Fire Elemental",    code: "[&BEYAAAA=]" },
         { name: "Megadestroyer",     code: "[&BM0CAAA=]" },
         { name: "Shadow Behemoth",   code: "[&BPwAAAA=]" },
-        { name: "Tequatl",           code: "[&BNABAAA=]" },
+        { name: "Tequatl the Sunless", code: "[&BNABAAA=]" },
         { name: "The Shatterer",     code: "[&BE4DAAA=]" },
         { name: "Frozen Maw",        code: "[&BH4BAAA=]" },
         { name: "Modniir Ulgoth",    code: "[&BLEAAAA=]" },
         { name: "Golem Mark II",     code: "[&BNQCAAA=]" },
         { name: "Claw of Jormag",    code: "[&BHoCAAA=]" }
-        ],
-        
-     "Ley-Line anomaly":[										
-        { name: "Legendary Ley-Line Anomaly", code: "[&BEwCAAA=]"},								
-        { name: "Legendary Ley-Line Anomaly", code: "[&BOcBAAA=]"},									
-        { name: "Legendary Ley-Line Anomaly", code: "[&BOMAAAA=]"}								
+      ],
+      "Ley-Line Anomaly": [
+        { name: "Legendary Anomaly A", code: "[&BEwCAAA=]" },
+        { name: "Legendary Anomaly B", code: "[&BOcBAAA=]" },
+        { name: "Legendary Anomaly C", code: "[&BOMAAAA=]" }
       ],
       "Living World Season 1": [
-        { name: "Example Boss A", code: "[&AAAAAA=]" },
-        { name: "Example Boss B", code: "[&BBBBBB=]" }
+        { name: "Oola’s Tower",        code: "[&ABCD01=]" },
+        { name: "Tarir Conflux Event",  code: "[&ABCD02=]" }
       ],
       "Living World Season 2": [
-        { name: "Example Boss C", code: "[&CCCCCC=]" }
+        { name: "Seitung Harbor Meta",  code: "[&WXYZ01=]" },
+        { name: "Draconis Mons Meta",   code: "[&WXYZ02=]" }
       ],
       "Heart of Thorns": [
-        { name: "Example Boss D", code: "[&DDDDDD=]" }
+        { name: "Vale Guardian",        code: "[&HOTG1=]" },
+        { name: "Gorseval",             code: "[&HOTG2=]" }
       ],
       "Living World Season 3": [
-        { name: "Example Boss E", code: "[&EEEEEE=]" }
+        { name: "The Key of Ahdashim",  code: "[&LWS301=]" },
+        { name: "Statue of Melandru",   code: "[&LWS302=]" }
       ],
       "Path of Fire": [
-        { name: "Example Boss F", code: "[&FFFFFF=]" }
+        { name: "Champion of the Sun",  code: "[&POF01=]" },
+        { name: "SCP Meta",             code: "[&POF02=]" }
       ],
       "Living World Season 4": [
-        { name: "Example Boss G", code: "[&GGGGGG=]" }
+        { name: "Spekks’ Labyrinth",    code: "[&LWS401=]" },
+        { name: "Braham Passage Meta",  code: "[&LWS402=]" }
       ],
       "Ice Brood Saga": [
-        { name: "Example Boss H", code: "[&HHHHHH=]" }
+        { name: "Jormag’s Fang",        code: "[&IBS01=]" },
+        { name: "Ensolyss Invasion",    code: "[&IBS02=]" }
       ],
       "End of Dragons": [
-        { name: "Example Boss I", code: "[&IIIIII=]" }
+        { name: "Zuko’s Ruin",          code: "[&EoD01=]" },
+        { name: "Mordrem Tunnels",      code: "[&EoD02=]" }
       ],
       "Secrets of the Obscure": [
-        { name: "Example Boss J", code: "[&JJJJJJ=]" }
+        { name: "Obscure Cache Meta",   code: "[&SotO01=]" }
       ],
       "Janthir Wilds": [
-        { name: "Example Boss K", code: "[&KKKKKK=]" }
+        { name: "Janthir Assault",      code: "[&JW01=]" }
       ],
       "Expansion 6": [
-        { name: "Example Boss L", code: "[&LLLLLL=]" }
+        { name: "New Meta Event",       code: "[&EXP601=]" }
       ]
     };
 
+    // 2) Copy helper
     function copyToClipboard(id) {
       const tb = document.getElementById(id);
       tb.disabled = false;
@@ -200,18 +218,50 @@ Websites:
       alert(`Copied: ${tb.value}`);
     }
 
-    function generateButtons() {
+    // 3) Build left nav from data keys + static links
+    function generateNav() {
+      const nav = document.getElementById('sideNav');
+      nav.innerHTML = '';
+
+      // static: Welcome
+      const aWelcome = document.createElement('a');
+      aWelcome.href = '#Welcome';
+      aWelcome.textContent = 'Welcome';
+      nav.appendChild(aWelcome);
+
+      // dynamic categories
+      Object.keys(data).forEach(category => {
+        const id = category.replace(/\s+/g, '');
+        const a = document.createElement('a');
+        a.href = `#${id}`;
+        a.textContent = category;
+        nav.appendChild(a);
+      });
+
+      // static: Credits
+      const aCredits = document.createElement('a');
+      aCredits.href = '#Credits';
+      aCredits.textContent = 'Credits';
+      nav.appendChild(aCredits);
+    }
+
+    // 4) Generate sections + copy-buttons for each category
+    function generateContent() {
       const container = document.getElementById('mainContent');
-      container.innerHTML = "";
+      container.innerHTML = '';
 
       Object.entries(data).forEach(([category, items]) => {
-        // section heading
-        const h2 = document.createElement('h2');
-        h2.id = category.replace(/\s+/g, "");
-        h2.textContent = category;
-        container.appendChild(h2);
+        // section wrapper
+        const section = document.createElement('section');
+        const sectionId = category.replace(/\s+/g, '');
+        section.id = sectionId;
 
-        // teleport entries
+        // heading
+        const h2 = document.createElement('h2');
+        h2.textContent = category;
+        section.appendChild(h2);
+
+        // items
         items.forEach((item, idx) => {
           const wrap = document.createElement('div');
           wrap.className = 'textbox-container';
@@ -220,7 +270,7 @@ Websites:
           inp.type = 'text';
           inp.className = 'textbox';
           inp.value = `${item.name}: ${item.code}`;
-          inp.id = `tb_${category.replace(/\s+/g, "")}_${idx}`;
+          inp.id = `tb_${sectionId}_${idx}`;
           inp.disabled = true;
 
           const btn = document.createElement('button');
@@ -230,14 +280,19 @@ Websites:
 
           wrap.appendChild(inp);
           wrap.appendChild(btn);
-          container.appendChild(wrap);
+          section.appendChild(wrap);
         });
+
+        container.appendChild(section);
       });
     }
 
-    document.addEventListener('DOMContentLoaded', generateButtons);
+    // 5) Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+      generateNav();
+      generateContent();
+    });
   </script>
 
 </body>
 </html>
-```
