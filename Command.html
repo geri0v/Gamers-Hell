@@ -1,257 +1,126 @@
 <!DOCTYPE html>
-<html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
 <head>
-  </head>
-<style>
-  .copy-button {
-    cursor: pointer;
-    margin-left: 5px;
-    width: 24px;
-    height: 24px;
-    border: none;
-    background-image: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
-    background-size: cover;
-    background-position: center;
-    display: inline-block;
-    flex-shrink: 0;
-  }
-  .copy-button:hover {
-    background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
-  }	
-.center 
-{
-  margin: auto;  
-  padding: 10px;
-  text-align: center;
-  
-}
-
-body
-
-{
-background-color: #3c6e8d65;
-margin: 0;
-font-family: Arial, Helvetica, sans-serif;
-}
-
-.hero-text {
-text-align: center;
-
-color: black;
-}
-
-body {
-  font-family: "Lato", sans-serif;
-}
-
-.sidenav {
-  height: 100%;
-  width: 360px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 20px;
-  color: #818181;
-  display: block;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.main {
-  margin-left: 160px; /* Same as the width of the sidenav */
-  font-size: 28px; /* Increased text to enable scrolling */
-  padding: 0px 10px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-
-body 
-
-{
-margin: 0;
-font-family: Arial, Helvetica, sans-serif;
-}
-
-.hero-text {
-text-align: center;
-
-color: black;
-}
-
-.sidenav2 {
-  height: 100%;
-  width: 360px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Upcoming GW2 Events (45 min)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .event-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .event-item input {
+      flex: 1;
+      padding: 6px;
+      font-size: 14px;
+      margin-right: 6px;
+    }
+    .copy-btn {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png')
+                  no-repeat center/cover;
+      cursor: pointer;
+    }
+    .copy-btn:hover {
+      background: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png')
+                  no-repeat center/cover;
+    }
+  </style>
+</head>
 <body>
 
-<div class="sidenav">
-  <a href="#Welcome">Welcome</a><br>
-  <a href="#Core">Core Tyria</a><br>
-  <a href="#LWS2">Living World Season 2</a><br>
-  <a href="#HoT">Heart of Thorns</a><br>
-  <a href="#LWS3">Living World Season 3</a><br>
-  <a href="#PoF">Path of Fire</a><br>
-  <a href="#LWS4">Living World Season 4</a><br>
-  <a href="#IBS">Icebrood Saga</a><br>
-  <a href="#EoD">End of Dragons</a><br>
-  <a href="#dng">Dungeons</a><br>
-  <a href="#jp">Jumping Puzzles</a><br>
-  <a href="#bt">Bounty's</a><br>
-  <a href="#rds">Raids</a><br>
-  <a href="#str">Strike Missions</a><br>
-  <a href="#oth">Other</a><br>
-  <a href="#crd">Credits</a><br>
-</div>
+  <h1>Events in the Next 45 Minutes</h1>
+  <div id="mainContent">Loading…</div>
 
-   <div class="sidenav2">
-   
-	   <iframe src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true" 
-		   width="360" 
-		   height="600" 
-		   seamless="seamless" 
-		   style="border: 1px solid #444; box-shadow: 0px 0px 12px #223;" 
-		   scrolling="yes">
-		   
-	</iframe> 
-   </div>
-	
-<div class="main">
-<div class="center">
-<div class="hero-text" id="Welcome">
-</div>
-
-<h1 style="font-size:50px">Welcome Commander</h1>
-
-<script>
-
-  // Password prompt
-  (function(){
-    var pass1 = "PvE";
-    var password = prompt('Please enter your password to view this page!', '');
-    if (password === pass1) {
-      alert('Welcome Commander');
-    } else {
-      window.location.href = "https://sites.google.com/view/gamers-hell-community";
-    }
-  })();
-
-  // Data: categorieën met items en hun teleportcodes
-    <div class="center" id="Core">
-  const data = {
-    "Core Tyria": [
-      { name: "Taidha Covington", code: "[&BKgBAAA=]" },
-      { name: "Karka Queen", code: "[&BNcGAAA=]" },
-      { name: "Jungle Wurm", code: "[&BEEFAAA=]" },
-      { name: "Fire Elemental", code: "[&BEYAAAA=]" },
-      { name: "Megadestroyer", code: "[&BM0CAAA=]" },
-      { name: "Shadow Behemoth", code: "[&BPwAAAA=]" },
-      { name: "Tequatl", code: "[&BNABAAA=]" },
-      { name: "The Shatterer", code: "[&BE4DAAA=]" },
-      { name: "Frozen Maw", code: "[&BH4BAAA=]" },
-      { name: "Modniir Ulgoth", code: "[&BLEAAAA=]" },
-      { name: "Golem Mark II", code: "[&BNQCAAA=]" },
-      { name: "Claw of Jormag", code: "[&BHoCAAA=]" }
-    ],
-    // Je kan hier makkelijk andere categorieën toevoegen
-    "Living World Season 2": [
-      { name: "Example Boss 1", code: "[&ABCDE=]" },
-      { name: "Example Boss 2", code: "[&FGHIJ=]" }
-    ]
-    // etc.
-  };
-    </div>
-  </div>
-  function copyToClipboard(id) {
-    const textbox = document.getElementById(id);
-    textbox.disabled = false; // tijdelijk enable voor selecteren
-    textbox.select();
-    textbox.setSelectionRange(0, 99999);
-    document.execCommand("copy");
-    textbox.disabled = true;
-    alert(`Copied "${textbox.value}" to clipboard.`);
+  <script>
+  // fetch helper
+  async function fetchJson(url) {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(r.statusText);
+    return r.json();
   }
 
-  function generateButtons() {
-    const mainDiv = document.getElementById('mainContent');
-    for (const [category, items] of Object.entries(data)) {
-      const catTitle = document.createElement('h2');
-      catTitle.textContent = category;
-      mainDiv.appendChild(catTitle);
-
-      items.forEach((item, idx) => {
-        const container = document.createElement('div');
-        container.className = 'textbox-container';
-
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.className = 'textbox';
-        input.value = `${item.name}: ${item.code}`;
-        input.id = `${category.replace(/\s+/g, '')}_textbox_${idx}`;
-        input.disabled = true;
-
-        const button = document.createElement('button');
-        button.className = 'copy-button';
-        button.title = `Copy ${item.name}`;
-        button.onclick = () => copyToClipboard(input.id);
-
-        container.appendChild(input);
-        container.appendChild(button);
-        mainDiv.appendChild(container);
-      });
-    }
+  // get upcoming events within `windowMin`
+  async function getUpcoming(windowMin = 45) {
+    const now = Date.now();
+    const cutoff = now + windowMin * 60_000;
+    const events = await fetchJson('https://api.guildwars2.com/v2/events?ids=all');
+    return events
+      .filter(e => e.next_time && e.location?.center)
+      .map(e => ({
+        name:     e.name,
+        map_id:   e.map_id,
+        nextTime: new Date(e.next_time).getTime(),
+        coord:    e.location.center
+      }))
+      .filter(e => e.nextTime > now && e.nextTime <= cutoff);
   }
 
-  window.onload = generateButtons;
-</script>
+  // render into #mainContent
+  async function renderList() {
+    const container = document.getElementById('mainContent');
+    container.innerHTML = '';
 
+    let upcoming;
+    try {
+      upcoming = await getUpcoming(45);
+    } catch (err) {
+      return container.textContent = 'Error: ' + err.message;
+    }
 
-  <div class="center" id="crd">
-    <h1 style="font-size:40px">Credits</h1>
-      <textarea name="myTextBox" cols="100" rows="20" disabled>
-        Gamers-Hell Community
-        Players Vs Events,
-          Blaz, 
-          Devilish Rain, 
-          Stormmyknight, 
-          Beina, 
-	        Geri V
+    if (upcoming.length === 0) {
+      return container.textContent = 'No events in the next 45 minutes.';
+    }
 
-        Websites
-        https://wiki.guildwars2.com/wiki
-        https://gw2efficiency.com/
-        http://gw2timer.com/
-        https://www.tapatalk.com/groups/renaka/add-gw2timer-to-your-website-t142.html
+    // fetch map names
+    const mapIds = Array.from(new Set(upcoming.map(e => e.map_id))).join(',');
+    const maps   = await fetchJson(`https://api.guildwars2.com/v2/maps?ids=${mapIds}`);
+    const mapNames = Object.fromEntries(maps.map(m => [m.id, m.name]));
 
-        </textarea>
+    // build list
+    upcoming.forEach((e, i) => {
+      const minsLeft = Math.ceil((e.nextTime - Date.now()) / 60_000);
+      const [x, y]   = e.coord.map(c => c.toFixed(0));
+      const label    = `${e.name} on ${mapNames[e.map_id]} ‒ ${minsLeft} min @${x},${y}`;
 
-  </div>
+      const row = document.createElement('div');
+      row.className = 'event-item';
 
-      <h1 style="font-size:30px"></h1> <a href="https://sites.google.com/view/gamers-hell-community> Gamers-Hell Community </a>
-</div>
-</div>
+      const inp = document.createElement('input');
+      inp.type    = 'text';
+      inp.value   = `${mapNames[e.map_id]} – ${x},${y}`;
+      inp.id      = `evt_${i}`;
+      inp.disabled= true;
+
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.title     = 'Copy location';
+      btn.onclick   = () => {
+        inp.disabled = false;
+        inp.select();
+        document.execCommand('copy');
+        inp.disabled = true;
+        alert(`Copied: ${inp.value}`);
+      };
+
+      row.append(inp, btn);
+      container.append(row);
+    });
+  }
+
+  // init + auto-refresh
+  document.addEventListener('DOMContentLoaded', () => {
+    renderList();
+    setInterval(renderList, 5 * 60_000);
+  });
+  </script>
+
 </body>
-</html> 
+</html>
