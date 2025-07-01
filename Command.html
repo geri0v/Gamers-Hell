@@ -2,185 +2,202 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Guild Wars 2 Teleporters • Upcoming Events</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gamers-Hell Teleporters</title>
   <style>
-    /* --- Global --- */
     body {
+      background-color: #3c6e8d65;
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #333;
-      display: flex;
-      flex-direction: column;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .sidenav, .sidenav2 {
+      height: 100%;
+      width: 360px;
+      position: fixed;
+      top: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      padding-top: 20px;
+      z-index: 1;
+    }
+    .sidenav { left: 0; }
+    .sidenav2 { right: 0; }
+    .sidenav a, .sidenav2 a {
+      padding: 6px 8px 6px 16px;
+      text-decoration: none;
+      font-size: 20px;
+      color: #818181;
+      display: block;
+    }
+    .sidenav a:hover, .sidenav2 a:hover { color: #f1f1f1; }
+
+    .main {
+      margin: 0 380px;        /* leave room for both sidebars */
+      padding: 0 20px;
       min-height: 100vh;
     }
-    header {
-      background: #2a3f54;
-      color: white;
-      padding: 1em;
+    .center {
       text-align: center;
+      margin: 20px 0;
     }
-    main {
-      flex: 1;
-      padding: 1em;
-      max-width: 800px;
-      margin: auto;
-    }
-    h1 {
-      margin-top: 0;
-    }
-    #status {
-      margin-bottom: 1em;
-      font-style: italic;
-    }
-    /* --- Event List --- */
-    .event-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.75em;
-    }
-    .event-item input {
-      flex: 1;
-      padding: 0.5em;
-      font-size: 0.95em;
-      margin-right: 0.5em;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background: #fff;
-    }
-    .copy-btn {
-      width: 32px;
-      height: 32px;
-      border: none;
-      background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png') 
-                  no-repeat center/cover;
+    .copy-button {
       cursor: pointer;
-      border-radius: 4px;
+      margin-left: 5px;
+      width: 24px;
+      height: 24px;
+      border: none;
+      background-image: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
+      background-size: cover;
+      background-position: center;
     }
-    .copy-btn:hover {
+    .copy-button:hover {
       background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
     }
-    /* --- Footer --- */
-    footer {
-      text-align: center;
-      padding: 0.5em;
-      font-size: 0.85em;
-      background: #ececec;
+    .textbox-container {
+      margin: 8px 0;
+      display: flex;
+      align-items: center;
+    }
+    .textbox {
+      flex: 1;
+      padding: 6px;
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>GW2 Teleporter • Events Next 45 Minutes</h1>
-  </header>
+  <!-- Left nav -->
+  <div class="sidenav">
+    <a href="#Welcome">Welcome</a>
+    <a href="#Core">Core Tyria</a>
+    <a href="#LWS2">Living World S2</a>
+    <a href="#HoT">Heart of Thorns</a>
+    <a href="#crd">Credits</a>
+  </div>
 
-  <main>
-    <div id="status">Loading upcoming events…</div>
-    <div id="eventList"></div>
-  </main>
+  <!-- Right iframe -->
+  <div class="sidenav2">
+    <iframe
+      src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true"
+      width="360" height="600" style="border:1px solid #444; box-shadow:0 0 12px #223;"
+      seamless scrolling="yes">
+    </iframe>
+  </div>
 
-  <footer>
-    &copy; 2025 Your Guild Wars 2 Community  
-  </footer>
+  <!-- Main content -->
+  <div class="main">
 
-  <script>
-  (function() {
-    const statusEl = document.getElementById('status');
-    const listEl   = document.getElementById('eventList');
+    <div class="center" id="Welcome">
+      <h1 style="font-size:50px">Welcome Commander</h1>
+    </div>
 
-    // fetch JSON helper
-    async function fetchJson(url) {
-      const r = await fetch(url);
-      if (!r.ok) throw new Error(`HTTP ${r.status} ${r.statusText}`);
-      return r.json();
-    }
-
-    // get upcoming events in the next `mins` minutes
-    async function getUpcoming(mins = 45) {
-      const now = Date.now();
-      const cutoff = now + mins * 60_000;
-      const events = await fetchJson('https://api.guildwars2.com/v2/events?ids=all');
-
-      return events
-        .filter(e =>
-          e.next_time &&
-          e.location &&
-          Array.isArray(e.location.center) &&
-          e.location.center.length === 2
-        )
-        .map(e => ({
-          name:     e.name,
-          map_id:   e.map_id,
-          nextTime: new Date(e.next_time).getTime(),
-          coord:    e.location.center
-        }))
-        .filter(e => e.nextTime > now && e.nextTime <= cutoff);
-    }
-
-    // render UI
-    async function render() {
-      listEl.innerHTML = '';
-      try {
-        statusEl.textContent = 'Fetching events…';
-        const upcoming = await getUpcoming(45);
-
-        if (!upcoming.length) {
-          statusEl.textContent = 'No events in the next 45 minutes.';
-          return;
+    <!-- Password check -->
+    <script>
+      (function(){
+        const pass1 = "PvE";
+        const password = prompt('Please enter your password to view this page!', '');
+        if (password !== pass1) {
+          window.location.href = "https://sites.google.com/view/gamers-hell-community";
+        } else {
+          alert('Welcome Commander');
         }
+      })();
+    </script>
 
-        // load map names
-        const ids = [...new Set(upcoming.map(e => e.map_id))].join(',');
-        const maps = await fetchJson(`https://api.guildwars2.com/v2/maps?ids=${ids}`);
-        const mapNames = Object.fromEntries(maps.map(m => [m.id, m.name]));
+    <!-- Here is where our dynamic buttons will go -->
+    <section id="Core" class="center">
+      <h2>Core Tyria & Living World S2 Teleporters</h2>
+      <div id="mainContent"></div>
+    </section>
 
-        statusEl.textContent = `Found ${upcoming.length} event(s) coming up:`;
+    <!-- Credits -->
+    <div class="center" id="crd">
+      <h2>Credits</h2>
+      <textarea cols="60" rows="8" disabled>
+Gamers-Hell Community
+Players Vs Events:
+  Blaz, Devilish Rain, Stormmyknight, Beina, Geri V
 
-        upcoming.forEach((e, i) => {
-          const mins = Math.ceil((e.nextTime - Date.now()) / 60_000);
-          const [x, y] = e.coord.map(c => c.toFixed(0));
-          const waypoint = `${mapNames[e.map_id]} – ${x},${y}`;
+Websites:
+  https://wiki.guildwars2.com/wiki
+  https://gw2efficiency.com/
+  http://gw2timer.com/
+      </textarea>
+    </div>
 
-          // build row
-          const row = document.createElement('div');
-          row.className = 'event-item';
-          row.title = `${e.name} on ${mapNames[e.map_id]} in ${mins} min`;
+  </div> <!-- .main -->
+
+  <!-- Generate buttons script -->
+  <script>
+    // Static teleport data
+    const data = {
+      "Core Tyria": [
+        { name: "Taidha Covington", code: "[&BKgBAAA=]" },
+        { name: "Karka Queen",       code: "[&BNcGAAA=]" },
+        { name: "Jungle Wurm",       code: "[&BEEFAAA=]" },
+        { name: "Fire Elemental",    code: "[&BEYAAAA=]" },
+        { name: "Megadestroyer",     code: "[&BM0CAAA=]" },
+        { name: "Shadow Behemoth",   code: "[&BPwAAAA=]" },
+        { name: "Tequatl",           code: "[&BNABAAA=]" },
+        { name: "The Shatterer",     code: "[&BE4DAAA=]" },
+        { name: "Frozen Maw",        code: "[&BH4BAAA=]" },
+        { name: "Modniir Ulgoth",    code: "[&BLEAAAA=]" },
+        { name: "Golem Mark II",     code: "[&BNQCAAA=]" },
+        { name: "Claw of Jormag",    code: "[&BHoCAAA=]" }
+      ],
+      "Living World Season 2": [
+        { name: "Example Boss 1", code: "[&ABCDE=]" },
+        { name: "Example Boss 2", code: "[&FGHIJ=]" }
+      ]
+    };
+
+    // Copy helper
+    function copyToClipboard(id) {
+      const tb = document.getElementById(id);
+      tb.disabled = false;
+      tb.select();
+      document.execCommand('copy');
+      tb.disabled = true;
+      alert(`Copied "${tb.value}"`);
+    }
+
+    // Generate the inputs + buttons into #mainContent
+    function generateButtons() {
+      const mainDiv = document.getElementById('mainContent');
+      mainDiv.innerHTML = ''; // clear
+
+      for (const [category, items] of Object.entries(data)) {
+        // Category heading
+        const h3 = document.createElement('h3');
+        h3.textContent = category;
+        mainDiv.appendChild(h3);
+
+        // Each teleport code
+        items.forEach((item, idx) => {
+          const container = document.createElement('div');
+          container.className = 'textbox-container';
 
           const input = document.createElement('input');
           input.type = 'text';
-          input.value = waypoint;
+          input.className = 'textbox';
+          input.value = `${item.name}: ${item.code}`;
+          input.id = `${category.replace(/\s+/g,'')}_tb_${idx}`;
           input.disabled = true;
-          input.id = `evt_${i}`;
 
-          const btn = document.createElement('button');
-          btn.className = 'copy-btn';
-          btn.title = 'Copy waypoint';
-          btn.onclick = () => {
-            input.disabled = false;
-            input.select();
-            document.execCommand('copy');
-            input.disabled = true;
-            alert('Copied: ' + waypoint);
-          };
+          const button = document.createElement('button');
+          button.className = 'copy-button';
+          button.title = `Copy ${item.name}`;
+          button.onclick = () => copyToClipboard(input.id);
 
-          row.append(input, btn);
-          listEl.append(row);
+          container.append(input, button);
+          mainDiv.appendChild(container);
         });
-
-      } catch (err) {
-        statusEl.textContent = 'Error fetching events.';
-        console.error(err);
       }
     }
 
-    // init & auto-refresh
-    document.addEventListener('DOMContentLoaded', () => {
-      render();
-      setInterval(render, 5 * 60_000);
-    });
-  })();
+    // Run after DOM is loaded
+    document.addEventListener('DOMContentLoaded', generateButtons);
   </script>
 
 </body>
