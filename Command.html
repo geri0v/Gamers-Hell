@@ -1,52 +1,148 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <title>Test getUpcoming()</title>
+  <title>GW2 Events (Next 45 Min) with Retry & Cache</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .event-item { display: flex; margin-bottom: 8px; }
+    .event-item input { flex:1; padding:6px; margin-right:6px; }
+    .copy-btn { width:24px; height:24px; background-size:cover; border:none; cursor:pointer; }
+    .copy-btn { background-image:url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png'); }
+    .copy-btn:hover { background-image:url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png'); }
+    #status { margin-bottom:10px; color: #555; }
+    .error { color: red; }
+  </style>
 </head>
 <body>
-  <h1>Check Console for Output</h1>
+
+  <h1>Events in the Next 45 Minutes</h1>
+  <div id="status">Loading…</div>
+  <div id="mainContent"></div>
+
   <script>
-    // 1) fetchJson helper
-    async function fetchJson(url) {
+  // 1) Retry‐and‐backoff fetch
+  async function retryFetchJson(url, retries = 3, backoff = 1000) {
+    try {
       const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP ${res.status} – ${res.statusText}`);
-      return res.json();
-    }
-
-    // 2) Your getUpcoming function
-    async function getUpcoming(windowMin = 45) {
-      const now    = Date.now();
-      const cutoff = now + windowMin * 60_000;
-
-      const events = await fetchJson('https://api.guildwars2.com/v2/events?ids=all');
-      console.log('raw events length:', events.length);
-
-      return events
-        .filter(e => 
-          e.next_time &&
-          e.location &&
-          Array.isArray(e.location.center) &&
-          e.location.center.length === 2
-        )
-        .map(e => ({
-          name:     e.name,
-          map_id:   e.map_id,
-          nextTime: new Date(e.next_time).getTime(),
-          coord:    e.location.center
-        }))
-        .filter(e => e.nextTime > now && e.nextTime <= cutoff);
-    }
-
-    // 3) Call it and log results
-    (async () => {
-      try {
-        const upcoming = await getUpcoming(45);
-        console.log('upcoming events in 45m:', upcoming);
-      } catch (err) {
-        console.error('getUpcoming error:', err);
+      if (!res.ok) {
+        if (res.status >= 500 && retries > 0) {
+          await new Promise(r => setTimeout(r, backoff));
+          return retryFetchJson(url, retries - 1, backoff * 2);
+        }
+        throw new Error(`HTTP ${res.status} – ${res.statusText}`);
       }
-    })();
+      return res.json();
+    } catch (err) {
+      if (retries > 0) {
+        await new Promise(r => setTimeout(r, backoff));
+        return retryFetchJson(url, retries - 1, backoff * 2);
+      }
+      throw err;
+    }
+  }
+
+  // 2) Fetch with localStorage cache fallback
+  async function fetchWithCache(key, url) {
+    try {
+      const data = await retryFetchJson(url);
+      localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data }));
+      return data;
+    } catch (err) {
+      const raw = localStorage.getItem(key);
+      if (raw) {
+        const cached = JSON.parse(raw);
+        if (Date.now() - cached.ts < 3600_000) {
+          console.warn('Using cached', key);
+          return cached.data;
+        }
+      }
+      throw err;
+    }
+  }
+
+  // 3) Get upcoming events (45m window)
+  async function getUpcomingEvents(windowMin = 45) {
+    const now = Date.now();
+    const cutoff = now + windowMin * 60_000;
+    const events = await fetchWithCache('events', 'https://api.guildwars2.com/v2/events?ids=all');
+
+    return events
+      .filter(e =>
+        e.next_time &&
+        e.location &&
+        Array.isArray(e.location.center) &&
+        e.location.center.length === 2
+      )
+      .map(e => ({
+        name:     e.name,
+        map_id:   e.map_id,
+        nextTime: new Date(e.next_time).getTime(),
+        coord:    e.location.center
+      }))
+      .filter(e => e.nextTime > now && e.nextTime <= cutoff);
+  }
+
+  // 4) Render UI
+  async function renderList() {
+    const statusEl = document.getElementById('status');
+    const mainEl   = document.getElementById('mainContent');
+    mainEl.innerHTML = '';
+
+    try {
+      statusEl.textContent = 'Fetching events…';
+      const upcoming = await getUpcomingEvents(45);
+
+      if (!upcoming.length) {
+        statusEl.textContent = 'No events in the next 45 minutes.';
+        return;
+      }
+
+      // Fetch maps
+      const mapIds = [...new Set(upcoming.map(e => e.map_id))].join(',');
+      const maps   = await fetchWithCache('maps', `https://api.guildwars2.com/v2/maps?ids=${mapIds}`);
+      const mapNames = Object.fromEntries(maps.map(m => [m.id, m.name]));
+
+      statusEl.textContent = `Found ${upcoming.length} event(s) coming up.`;
+
+      upcoming.forEach((e,i) => {
+        const mins = Math.ceil((e.nextTime - Date.now())/60_000);
+        const [x,y] = e.coord.map(c => c.toFixed(0));
+        const row   = document.createElement('div');
+        row.className = 'event-item';
+
+        const inp = document.createElement('input');
+        inp.type     = 'text';
+        inp.value    = `${mapNames[e.map_id]} – ${x},${y}`;
+        inp.id       = `evt${i}`;
+        inp.disabled = true;
+
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.title     = 'Copy waypoint';
+        btn.onclick   = () => {
+          inp.disabled = false;
+          inp.select();
+          document.execCommand('copy');
+          inp.disabled = true;
+          alert(`Copied: ${inp.value}`);
+        };
+
+        row.append(inp, btn);
+        mainEl.append(row);
+      });
+    } catch (err) {
+      statusEl.innerHTML = `<span class="error">Error: ${err.message}</span>`;
+      console.error(err);
+    }
+  }
+
+  // init & auto‐refresh
+  document.addEventListener('DOMContentLoaded', () => {
+    renderList();
+    setInterval(renderList, 5 * 60_000);
+  });
   </script>
+
 </body>
 </html>
