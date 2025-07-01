@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <script language="JavaScript">
+  <!--hide
+  
+  var password;
+  var pass1="PvE";
+  
+  password=prompt('Please enter your password to view this page!',' ');
+  
+  if (password==pass1)
+    alert('Welcome Commander');
+  else
+     {
+      window.location=": https://sites.google.com/view/gamers-hell-community";
+      }
+  
+  //-->
+  </script>
+  </head>
+<style>
+	
+.center 
+{
+  margin: auto;  
+  padding: 10px;
+  text-align: center;
+  
+}
+
+body
+
+{
+background-color: #3c6e8d65;
+margin: 0;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+.hero-text {
+text-align: center;
+
+color: black;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 360px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+body 
+
+{
+margin: 0;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+.hero-text {
+text-align: center;
+
+color: black;
+}
+
+.sidenav2 {
+  height: 100%;
+  width: 360px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+</style>
+
+<body>
+
+<div class="sidenav">
+  <a href="#Welcome">Welcome</a><br>
+  <a href="#Core">Core Tyria</a><br>
+  <a href="#LWS2">Living World Season 2</a><br>
+  <a href="#HoT">Heart of Thorns</a><br>
+  <a href="#LWS3">Living World Season 3</a><br>
+  <a href="#PoF">Path of Fire</a><br>
+  <a href="#LWS4">Living World Season 4</a><br>
+  <a href="#IBS">Icebrood Saga</a><br>
+  <a href="#EoD">End of Dragons</a><br>
+  <a href="#dng">Dungeons</a><br>
+  <a href="#jp">Jumping Puzzles</a><br>
+  <a href="#bt">Bounty's</a><br>
+  <a href="#rds">Raids</a><br>
+  <a href="#str">Strike Missions</a><br>
+  <a href="#oth">Other</a><br>
+  <a href="#crd">Credits</a><br>
+</div>
+
+   <div class="sidenav2">
+   
+	   <iframe src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true" 
+		   width="360" 
+		   height="600" 
+		   seamless="seamless" 
+		   style="border: 1px solid #444; box-shadow: 0px 0px 12px #223;" 
+		   scrolling="yes">
+		   
+	</iframe> 
+   </div>
+	
+<div class="main">
+<div class="center">
+<div class="hero-text" id="Welcome">
+</div>
+
+<h1 style="font-size:50px">Welcome Commander</h1>
+</div>
+
+<div class="center" id="Core">
+<h1 style="font-size:40px">Core Tyria </h1>
+<h1 style="font-size:30px">Core Stuff</h1>
+<h1 style="font-size:20px">Timed Events</h1>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<input  id="Core1" value="Taidha Covington: [&BKgBAAA=]" type="text" class="copy"  size="75" maxlength="75" disabled> 
+<button id="Core1btn" onclick="copyToClipboard('#Core1')">Copy </button><br>
+<input  id="Core2" value="Karka Queen: [&BNcGAAA=]" type="text" class="copy" size="75" maxlength="75" disabled> 
+<button id="Core2btn" onclick="copyToClipboard('#Core2')">Copy</button><br>
+<input  id="Core3" value="Jungle Wurm: [&BEEFAAA=]" type="text" class="copy" size="75" maxlength="75" disabled> 
+<button id="Core3btn" onclick="copyToClipboard('#Core3')">Copy</button><br>
+<input  id="Core4" value="Fire Elemental: [&BEYAAAA=]" type="text" class="copy" size="75" maxlength="75" disabled> 
+<button id="Core4btn" onclick="copyToClipboard('#Core4')">Copy</button><br>
+<input  id="Core5" value="Megadestroyer: [&BM0CAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core5btn" onclick="copyToClipboard('#Core5')">Copy</button><br>
+<input  id="Core6" value="Shadow Behemoth: [&BPwAAAA=]" type="text" class="copy" size="75" maxlength="75" disabled> 
+<button id="Core6btn" onclick="copyToClipboard('#Core6')">Copy</button><br>
+<input  id="Core7" value="Tequatl: [&BNABAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core7btn" onclick="copyToClipboard('#Core7')">Copy</button><br>
+<input  id="Core8" value="The Shatterer: [&BE4DAAA=]" type="text" class="copy" size="75" maxlength="75" disabled> 
+<button id="Core8btn" onclick="copyToClipboard('#Core8')">Copy</button><br>
+<input  id="Core9" value="Frozen Maw: [&BH4BAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core9btn" onclick="copyToClipboard('#Core9')">Copy</button><br>
+<input  id="Core10" value="Modniir Ulgoth: [&BLEAAAA=]" type="text" class="copy" size="75" maxlength="75" disabled> 
+<button id="Core10btn" onclick="copyToClipboard('#Core10')">Copy</button><br>
+<input  id="Core11" value="Golem Mark II: [&BNQCAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core11btn" onclick="copyToClipboard('#Core11')">Copy</button><br>
+<input  id="Core12" value="Claw of Jormag: [&BHoCAAA=]" type="text" class="copy" size="75" maxlength="75" disabled> 
+<button id="Core12btn" onclick="copyToClipboard('#Core12')">Copy</button><br><br>
+
+<h1 style="font-size:15px">Legendary Ley-Line Anomaly</h1>
+<input  id="Core13" value="Legendary Ley-Line Anomaly: Timberline Falls [&BEwCAAA=] " type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core13btn" onclick="copyToClipboard('#Core13')">Copy</button><br>
+<input  id="Core14" value="Legendary Ley-Line Anomaly: Iron Marches [&BOcBAAA=]" type="text" class="copy" size="75" maxlength="75" disabled> 
+<button id="Core14btn" onclick="copyToClipboard('#Core14')">Copy</button><br>
+<input  id="Core15" value="Legendary Ley-Line Anomaly: Gendarran Fields [&BOMAAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core15btn" onclick="copyToClipboard('#Core15')">Copy</button><br><br>
+
+<h1 style="font-size:20px">Untimed Events</h1>
+<h1 style="font-size:15px">Temples of Orr</h1>
+<input  id="Core16" value="Temple of Balthazar: [&BNIEAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core16btn" onclick="copyToClipboard('#Core16')">Copy</button><br>
+<input  id="Core17" value="Temple of Lyssa: [&BKsCAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core17btn" onclick="copyToClipboard('#Core17')">Copy</button><br>
+<input  id="Core18" value="Temple of Dwayna: [&BLICAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core18btn" onclick="copyToClipboard('#Core18')">Copy</button><br>
+<input  id="Core19" value="Temple of Melandru: [&BBsDAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core19btn" onclick="copyToClipboard('#Core19')">Copy</button><br>
+<input  id="Core20" value="Temple of Grenth: [&BCIDAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core20btn" onclick="copyToClipboard('#Core20')">Copy</button><br><br>
+
+<h1 style="font-size:15px">Special World Events & Bosses</h1>
+<input  id="Core21" value="Gates of Arah: [&BCADAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core21btn" onclick="copyToClipboard('#Core21')">Copy</button><br>
+<input  id="Core22" value="Eye of Zhaitan: [&BPgCAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core22btn" onclick="copyToClipboard('#Core22')">Copy</button><br>
+<input  id="Core23" value="Rotbeard: [&BOQGAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core23btn" onclick="copyToClipboard('#Core23')">Copy</button><br>
+<input  id="Core24" value="Dredge Commissar: [&BD8FAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core24btn" onclick="copyToClipboard('#Core24')">Copy</button><br>
+<input  id="Core25" value="Ogre Wars: [&BDwEAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core25btn" onclick="copyToClipboard('#Core25')">Copy</button><br>
+<input  id="Core26" value="Rhendak: [&BNwAAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core26btn" onclick="copyToClipboard('#Core26')">Copy</button><br>
+<input  id="Core27" value="Fire Shaman: [&BO4BAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core27btn" onclick="copyToClipboard('#Core27')">Copy</button><br>
+<input  id="Core28" value="Nebo Terrace: [&BIwBAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core28btn" onclick="copyToClipboard('#Core28')">Copy</button><br><br>
+
+<h1 style="font-size:15px">Shining Blade Bounty's</h1>
+<input  id="Core29" value="Aerl the Silent: [&BGQAAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core29btn" onclick="copyToClipboard('#Core29')">Copy</button><br>
+<input  id="Core30" value="Ezal the Quick: [&BKgAAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core30btn" onclick="copyToClipboard('#Core30')">Copy</button><br>
+<input  id="Core31" value="Flyrra the Remorseless: [&BGIAAAA=] Go to [&BFEAAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core31btn" onclick="copyToClipboard('#Core31')">Copy</button><br>
+<input  id="Core32" value="Lenner the Eagle-Eyed: [&BIwBAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core32btn" onclick="copyToClipboard('#Core32')">Copy</button><br>
+<input  id="Core33" value="Ruye the Crimson: [&BAMAAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core33btn" onclick="copyToClipboard('#Core33')">Copy</button><br>
+<input  id="Core34" value="Temvay the Arrogant: [&BBAAAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core34btn" onclick="copyToClipboard('#Core34')">Copy</button><br>
+<input  id="Core35" value="Ulssen the Anvil: [&BK8AAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core35btn" onclick="copyToClipboard('#Core35')">Copy</button><br>
+<input  id="Core36" value="Varre the Underhanded: [&BBEAAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core36btn" onclick="copyToClipboard('#Core36')">Copy</button><br>
+<input  id="Core37" value="Vic the Iron: [&BPkAAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core37btn" onclick="copyToClipboard('#Core37')">Copy</button><br>
+<input  id="Core38" value="Zirh the Venomous: [&BPQAAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="Core38btn" onclick="copyToClipboard('#Core38')">Copy</button><br>
+</div>
+
+<div class="center" id="LWS2">
+<h1 style="font-size:40px">Living World Season 2</h1>
+<h1 style="font-size:30px">Dry Top</h1>
+<h1 style="font-size:20px">Timed Events</h1>
+<input  id="lws21" value="Crash Site (Zephyrites): [&BIAHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="lws21btn" onclick="copyToClipboard('#lws21')">Copy</button><br>
+<input  id="lws22" value="Sand Storm: [&BIAHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="lws22btn" onclick="copyToClipboard('#lws22')">Copy</button><br>
+<h1 style="font-size:30px">Silverwastes</h1>
+<h1 style="font-size:20px">Untimed Events</h1>
+<input  id="lws23" value="The Silverwastes: Foothold (Riba) [&BH8HAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="lws23btn" onclick="copyToClipboard('#lws23')">Copy</button><br>
+<input  id="lws24" value="The Silverwastes: The Breach (champions)[&BH8HAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="lws24btn" onclick="copyToClipboard('#lws24')">Copy</button><br>
+<input  id="lws25" value="The Silverwastes: Modrem Vinewrath (Boss)[&BH8HAAA=] go to [&BLcHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="lws25btn" onclick="copyToClipboard('#lws25')">Copy</button><br>
+<input  id="lws26" value="The Silverwastes: Time Out (Champions/Chests/Maze)[&BJ4HAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="lws26btn" onclick="copyToClipboard('#lws26')">Copy</button><br><br>
+<input  id="lws27" value="[&BKYHAAA=]: Legendary Mordrem Annihilator. Spawns just west of the fort." type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="lws27btn" onclick="copyToClipboard('#lws27')">Copy</button><br>
+<input  id="lws28" value="[&BKoHAAA=]: Legendary Mordrem Executioner. Spawns just north of the fort." type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="lws28btn" onclick="copyToClipboard('#lws28')">Copy</button><br>
+<input  id="lws29" value="[&BKkHAAA=]: Legendary Mordrem Demolisher Spawns just north of the fort." type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="lws29btn" onclick="copyToClipboard('#lws29')">Copy</button><br>
+<input  id="lws20" value="[&BKsHAAA=]: Legendary Mordrem Tormentor. Spawns south of the fort." type="text" class="copy" size="75" maxlength="75" disabled>  
+<button id="lws20btn" onclick="copyToClipboard('#lws20')">Copy</button><br>
+
+</div>
+
+<div class="center" id="HoT">
+	<h1 style="font-size:30px">Heart of Thorns</h1>
+  <h1 style="font-size:25px">Verdant Brink</h1>
+  <h1 style="font-size:20px">Timed Events</h1>
+	<input  id="hot0" value="Daytime: Securing Verdant Brink [&BN4HAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot0btn" onclick="copyToClipboard('#hot0')">Copy</button><br>
+  <input  id="hot1" value="Nighttime: Night and the Enemy [&BN4HAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot1btn" onclick="copyToClipboard('#hot1')">Copy</button><br>
+  <input  id="hot2" value="Nighttime: Night Bosses (Choppers) [&BAgIAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot2btn" onclick="copyToClipboard('#hot2')">Copy</button><br>
+
+<br>
+  <h1 style="font-size:20px">Untimed Events</h1>
+  <input  id="hot3" value="Treasure Mushroom: [&BBwIAAA=] North of the waypoint [&BMEHAAA=] " type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot3btn" onclick="copyToClipboard('#hot3')">Copy</button><br><br>
+	  <h1 style="font-size:25px">Auric Basin</h1>
+  <h1 style="font-size:20px">Timed Events</h1>
+	  <h1 style="font-size:15px">Phase One</h1>
+	  <input  id="hot4a" value="Outpost: Northwatch Pylons, [&BN0HAAA=] " type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4abtn" onclick="copyToClipboard('#hot4a')">Copy</button><br>
+  	  <input  id="hot4b" value="Ruins of Eastwatch Pylons, [&BGwIAAA=] " type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4bbtn" onclick="copyToClipboard('#hot4b')">Copy</button><br>
+    	  <input  id="hot4c" value="Outpost: Southwatch Pylons, [&BAIIAAA=] " type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4cbtn" onclick="copyToClipboard('#hot4c')">Copy</button><br>
+      	  <input  id="hot4d" value="Outpost: Westwatch Pylons, [&BAYIAAA=] " type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4dbtn" onclick="copyToClipboard('#hot4d')">Copy</button><br>
+		  <h1 style="font-size:15px">Phase Two</h1>
+		  <input  id="hot4e" value="Complete the Challenges, North Watch [&BN0HAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4ebtn" onclick="copyToClipboard('#hot4e')">Copy</button><br>
+  	  <input  id="hot4f" value="Complete the Challenges,East Watch [&BGwIAAA=] " type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4fbtn" onclick="copyToClipboard('#hot4f')">Copy</button><br>
+    	  <input  id="hot4g" value="Complete the Challenges, South Watch [&BAIIAAA=] " type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4gbtn" onclick="copyToClipboard('#hot4g')">Copy</button><br>
+      	  <input  id="hot4h" value="Complete the Challenges, West Watch [&BAYIAAA=]  " type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4hbtn" onclick="copyToClipboard('#hot4h')">Copy</button><br>
+		  <h1 style="font-size:15px">Phase Three</h1>
+		  <input  id="hot4i" value="Build Turrets & Use them to make it vulnearable, North Watch [&BN0HAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4ibtn" onclick="copyToClipboard('#hot4i')">Copy</button><br>
+  	  <input  id="hot4j" value="Pick Up Bombs & Throw them to make it vulnearable, East Watch [&BGwIAAA=] " type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4jbtn" onclick="copyToClipboard('#hot4j')">Copy</button><br>
+    	  <input  id="hot4k" value="Guide the Big Bomb to the Octovine and let it explode, South Watch [&BAIIAAA=] " type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4kbtn" onclick="copyToClipboard('#hot4k')">Copy</button><br>
+      	  <input  id="hot4l" value="Transform into a Mushroom and try to Hit it with skill 1, West Watch [&BAYIAAA=]  " type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4lbtn" onclick="copyToClipboard('#hot4l')">Copy</button><br>
+		  <h1 style="font-size:15px">Phase Four</h1>
+	      <input  id="hot4m" value="Go [&BMYHAAA=] Down to the Hole and open all the chests " type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4mbtn" onclick="copyToClipboard('#hot4m')">Copy</button><br><br>
+	
+  <h1 style="font-size:20px">Untimed Events</h1>
+  <input  id="hot4n" value="Treasure Mushroom: [&BGwIAAA=] (at the [&BNQHAAA=])" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="hot4nbtn" onclick="copyToClipboard('#hot4n')">Copy</button><br>
+	
+</div>
+
+<div class="center" id="LWS3">
+  <h1 style="font-size:40px">Living World Season 3</h1>
+  <h1 style="font-size:30px">Bloodstone Fen</h1>
+	<h1 style="font-size:20px">Timed Events</h1>
+	<input  id="LWS3-1" value="Nebo Terrace: [&BIwBAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+	<button id="LWS3-1btn" onclick="copyToClipboard('#LWS3-1')">Copy</button><br>
+
+	<br>
+	<h1 style="font-size:20px">Untimed Events</h1>
+</div>
+
+<div class="center" id="PoF">
+  <h1 style="font-size:40px">Path of Fire</h1>
+  <h1 style="font-size:30px">Crystal Oasis</h1>
+	<h1 style="font-size:20px">Timed Events</h1>
+	<input  id="LWS3-1" value="Nebo Terrace: [&BIwBAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+	<button id="LWS3-1btn" onclick="copyToClipboard('#LWS3-1')">Copy</button><br>
+
+	<br>
+	<h1 style="font-size:20px">Untimed Events</h1>
+</div>
+
+<div class="center" id="LWS4">
+  <h1 style="font-size:40px">Living World Season 4</h1>
+  <h1 style="font-size:30px">Domain of Kourna</h1>
+	<h1 style="font-size:20px">Timed Events</h1>
+	<input  id="LWS3-1" value="Nebo Terrace: [&BIwBAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+	<button id="LWS3-1btn" onclick="copyToClipboard('#LWS3-1')">Copy</button><br>
+
+	<br>
+	<h1 style="font-size:20px">Untimed Events</h1>
+</div>
+<div class="center" id="IBS">
+  <h1 style="font-size:40px">Icebrood Saga</h1>
+  <h1 style="font-size:30px">Grothmar Valley</h1>
+	<h1 style="font-size:20px">Timed Events</h1>
+	<input  id="LWS3-1" value="Nebo Terrace: [&BIwBAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+	<button id="LWS3-1btn" onclick="copyToClipboard('#LWS3-1')">Copy</button><br>
+
+	<h1 style="font-size:20px">Untimed Events</h1>
+	<input  id="LWS3-1" value="Nebo Terrace: [&BIwBAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="LWS3-1btn" onclick="copyToClipboard('#LWS3-1')">Copy</button><br>
+  
+  <h1 style="font-size:20px">Dragon Response Missions</h1>
+  
+</div>
+
+<div class="center" id="EoD">
+  <h1 style="font-size:40px">End of Dragons</h1>
+  <h1 style="font-size:30px">Map Name</h1>
+	<h1 style="font-size:20px">Timed Events</h1>
+	<input  id="LWS3-1" value="Nebo Terrace: [&BIwBAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+	<button id="LWS3-1btn" onclick="copyToClipboard('#LWS3-1')">Copy</button><br>
+
+	<br>
+	<h1 style="font-size:20px">Untimed Events</h1>
+</div>
+
+<div class="center" id="dng">
+	<h1 style="font-size:40px">Dungeons</h1>
+	<h1 style="font-size:30px">Dungeon Locations</h1>
+	<input  id="LWS3-1" value="Nebo Terrace: [&BIwBAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="LWS3-1btn" onclick="copyToClipboard('#LWS3-1')">Copy</button><br>
+  
+  <div class="center" id="jp">
+    <h1 style="font-size:40px">Jumping Puzzles</h1>
+    <h1 style="font-size:30px">Starting Points</h1>
+    <input  id="jpsw" value="Silverwastes Jumping Puzzle: [&BLoHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+    <button id="jpsw" onclick="copyToClipboard('#jpsw')">Copy</button><br>
+  </div>
+  
+    <div class="center" id="bt">
+    <h1 style="font-size:40px">Bounty's</h1>
+    <h1 style="font-size:30px">Map Name</h1>
+    <h1 style="font-size:20px">Location & Tactics</h1>
+    <input  id="LWS3-1" value="Nebo Terrace: [&BIwBAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+    <button id="LWS3-1btn" onclick="copyToClipboard('#LWS3-1')">Copy</button><br>
+  </div>
+  
+  <div class="center" id="rds">
+    <h1 style="font-size:40px">Raids</h1>
+    <h1 style="font-size:30px">Locations</h1>
+    <input  id="LWS3-1" value="Nebo Terrace: [&BIwBAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+    <button id="LWS3-1btn" onclick="copyToClipboard('#LWS3-1')">Copy</button><br>
+ 
+  </div>
+
+  <div class="center" id="str">
+    <h1 style="font-size:40px">Strike Missions</h1>
+    <h1 style="font-size:30px">Locations</h1>
+    <input  id="LWS3-1" value="Nebo Terrace: [&BIwBAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+    <button id="LWS3-1btn" onclick="copyToClipboard('#LWS3-1')">Copy</button><br>
+  </div>
+
+</div>
+
+<div class="center" id="oth">
+  <h1 style="font-size:40px">Other</h1>
+  <h1 style="font-size:30px">Fractals</h1>
+  <h1 style="font-size:30px">Special</h1>
+  <h1 style="font-size:20px">Teqautl</h1>
+  <h1 style="font-size:20px">Triple Trouble</h1>
+  <h1 style="font-size:20px">The Shatterer</h1>
+  <h1 style="font-size:20px">Legendary Bloodstone Sightnigns</h1>
+
+  <h1 style="font-size:30px">Farms</h1>
+  <h1 style="font-size:20px">Core Tyria: Frostgorge Sound Champions</h1>
+	<input  id="oth1" value="[&BIYCAAA=] Trio champions" type="text" class="copy" size="75" maxlength="75" disabled>  
+	<button id="othbtn" onclick="copyToClipboard('#oth1')">Copy</button><br>
+	<input  id="oth2" value="[&BH8CAAA=] Champion Icewurm (underwater)" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth2btn" onclick="copyToClipboard('#oth2')">Copy</button><br>
+  <input  id="oth3" value="[&BHoCAAA=] Champion Ice Troll" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth3btn" onclick="copyToClipboard('#oth3')">Copy</button><br>
+  <input  id="oth4" value="[&BIECAAA=] Champion Quagan & Champion Drake" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth4btn" onclick="copyToClipboard('#oth4')">Copy</button><br>
+  <input  id="oth5" value="[&BHgCAAA=] Champion Blue Ooze" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth5btn" onclick="copyToClipboard('#oth5')">Copy</button><br>
+  <input  id="oth6" value="[&BIICAAA=] Svanir Icebrood Followed by Escort" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth6btn" onclick="copyToClipboard('#oth6')">Copy</button><br>
+  <input  id="oth7" value="[&BHoCAAA=] Claw of Jormag" type="text" class="copy" size="75" maxlength="75" disabled>  
+	<button id="oth7btn" onclick="copyToClipboard('#oth7')">Copy</button><br>
+  <br>
+  <h1 style="font-size:20px">Core Tyria: Cursed Shore Farm</h1>
+  <input  id="oth8" value="Plinx: [&BCEDAAA=] North-West or [&BBgDAAA=] North across the water" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth8btn" onclick="copyToClipboard('#oth8')">Copy</button><br>
+  <input  id="oth9" value="Plinx: Do NOT attack the Champion Gladiator!" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth9btn" onclick="copyToClipboard('#oth9')">Copy</button><br><br>
+  <input  id="oth10" value="Champion Risen Broodmother [&BP8CAAA=]." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth10btn" onclick="copyToClipboard('#oth10')">Copy</button><br>
+  <input  id="oth11" value="Go [&BBgDAAA=] North-West or [&BCEDAAA=] West to find Her" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth11btn" onclick="copyToClipboard('#oth11')">Copy</button><br><br>
+  <input  id="oth12" value="Champion Risen Groundskeeper [&BAMDAAA=]." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth12btn" onclick="copyToClipboard('#oth12')">Copy</button><br>
+  <input  id="oth0" value="Go[&BBgDAAA=] South or [&BBkDAAA=] West to Destroy" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth0btn" onclick="copyToClipboard('#oth0')">Copy</button><br><br>
+  <input  id="oth13" value="Champion Risen Archmage [&BCEDAAA=] to get there, go east." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth13btn" onclick="copyToClipboard('#oth13')">Copy</button><br>
+  <input  id="oth01" value="Champion Risen Giant [&BB4DAAA=] to get there, go North." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth01btn" onclick="copyToClipboard('#oth01')">Copy</button><br>
+  <input  id="oth14" value="Champion Ooze King [&BB4DAAA=] to get there, go North." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth14btn" onclick="copyToClipboard('#oth14')">Copy</button><br><br>
+  <input  id="oth15" value="Explorer Loana: Escort to the Royal Tomb's [&BBQDAAA=] of the Champion Risen." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth15btn" onclick="copyToClipboard('#oth15')">Copy</button><br>
+  <input  id="oth16" value="Go to [&BB4DAAA=] East to get there." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth16btn" onclick="copyToClipboard('#oth16')">Copy</button><br><br>
+  <input  id="oth17" value="Pentinent Waypoint:  Escort/defense from/of [&BBwDAAA=] is starting." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth17btn" onclick="copyToClipboard('#oth17')">Copy</button><br>
+  <input  id="oth18" value="Use [&BBkDAAA=] tunnel south or [&BB0DAAA=] North to get there." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth18btn" onclick="copyToClipboard('#oth18')">Copy</button><br><br>
+  <input  id="oth19" value="Shelter's Gate Waypoint:  Escort/defense from/of [&BBwDAAA=] is starting." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth19btn" onclick="copyToClipboard('#oth19')">Copy</button><br>
+  <input  id="oth20" value="Use [&BBkDAAA=] tunnel South or [&BB0DAAA=] North to get there." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth20btn" onclick="copyToClipboard('#oth20')">Copy</button><br><br>
+  <input  id="oth21" value="Melandru: Pre-Event to Temple of Melandru is starting at [&BBoDAAA=]." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth21btn" onclick="copyToClipboard('#oth21')">Copy</button><br>
+  <input  id="oth22" value="If contested use [&BBsDAAA=] or [&BB4DAAA=] to get there." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth22btn" onclick="copyToClipboard('#oth22')">Copy</button><br>
+  <input  id="oth23" value="Temple of Melandru starting at [&BBYDAAA=]. Use [&BB4DAAA=] to get there." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth23btn" onclick="copyToClipboard('#oth23')">Copy</button><br>
+  <input  id="oth24" value="If Melandru changes you. get the diving goggles and you will get your skills back" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth24btn" onclick="copyToClipboard('#oth24')">Copy</button><br><br>
+  <input  id="oth25" value="Jofast's Waypoint: Defense of [&BB0DAAA=] has started" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth25btn" onclick="copyToClipboard('#oth25')">Copy</button><br>
+  <input  id="oth26" value="Use [&BBwDAAA=] South or [&BB4DAAA=] North-East to get there." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth26btn" onclick="copyToClipboard('#oth26')">Copy</button><br><br>
+  <input  id="oth27" value="Gates of Arah offense: Pre-event to the attack on the [&BBUDAAA=] has started." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth27btn" onclick="copyToClipboard('#oth27')">Copy</button><br>
+  <input  id="oth28" value="Use [&BB4DAAA=] South to get there." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth28btn" onclick="copyToClipboard('#oth28')">Copy</button><br>
+  <input  id="oth29" value="The attack on the [&BBUDAAA=] has started. Use [&BB8DAAA=] East to get there" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth29btn" onclick="copyToClipboard('#oth29')">Copy</button><br>
+  <input  id="oth30" value="Gates of Arah defense: Defense of [&BBUDAAA=] has started. Use [&BCADAAA=] to get there." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth30btn" onclick="copyToClipboard('#oth30')">Copy</button><br>
+  <input  id="oth31" value="Kill the veterans as fast as you can. The faster they die, the more we kill." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="oth31btn" onclick="copyToClipboard('#oth31')">Copy</button><br><br>
+  
+  <br><br>
+  <h1 style="font-size:20px">Silverwastes RIBA</h1>
+  <input  id="RIBA1" value="The Silverwastes: Riba Farm[&BH8HAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="RIBA1btn" onclick="copyToClipboard('#RIBA1')">Copy</button><br>
+  <input  id="RIBA2" value="Red Rock Bastion [&BKYHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="RIBA2btn" onclick="copyToClipboard('#RIBA2')">Copy</button><br>
+  <input  id="RIBA3" value="Indigo Cave [&BKkHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="RIBA3btn" onclick="copyToClipboard('#RIBA3')">Copy</button><br>
+  <input  id="RIBA4" value="Blue Oasis [&BKsHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="RIBA4btn" onclick="copyToClipboard('#RIBA4')">Copy</button><br>
+  <input  id="RIBA5" value="Amber Sandfall [&BKoHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="RIBA5btn" onclick="copyToClipboard('#RIBA5')">Copy</button><br> 
+  <input  id="RIBA6" value="The Breach (champions)[&BH8HAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="RIBA6btn" onclick="copyToClipboard('#RIBA6')">Copy</button><br>  
+  <input  id="RIBA7" value="Modrem Vinewrath [&BLcHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="RIBA7btn" onclick="copyToClipboard('#RIBA7')">Copy</button><br>  
+  <input  id="RIBA8" value="Champions & Chestfarm [&BLcHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="RIBA8btn" onclick="copyToClipboard('#RIBA8')">Copy</button><br>  
+  
+  <h1 style="font-size:30px">Runs</h1>
+  <h1 style="font-size:20px">Dry Top 4 Commanders</h1>
+  <input  id="DT1" value="Small: Tendril A -> Tendril B -> Shaman -> Vine Bridge / Serene -> Basket" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="DT1btn" onclick="copyToClipboard('#DT1')">Copy</button><br>
+  <input  id="DT2" value="Middle: Crash Victims -> Inquest Leader -> Light Golem -> Ley Line Hub" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="DT2btn" onclick="copyToClipboard('#DT2')">Copy</button><br>
+  <input  id="DT3" value="West: Skritt Supplies / Rustbucket -> Beetles -> Inquest Suit" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="DT3btn" onclick="copyToClipboard('#DT3')">Copy</button><br>
+  <input  id="DT4" value="Main/Zerg: Race -> Moa -> Queen / Frog -> South Mine -> Town -> North Mine" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="DT4btn" onclick="copyToClipboard('#DT4')">Copy</button><br><br>  
+  <input  id="DT5" value="Sandstorm: Dust Mites -> Haze -> Devourer Queen -> Rare Creature -> Giant" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="DT5btn" onclick="copyToClipboard('#DT5')">Copy</button><br>  
+  <input  id="DT6" value="-> Dust Mites -> Haze -> Twister -> Skritt Queen -> Dust Monster -> Beetle " type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="DT6btn" onclick="copyToClipboard('#DT6')">Copy</button><br> <br> 
+
+  <h1 style="font-size:20px">Heart of Thorns: Verdant Brink Day & Night</h1>
+  <input  id="ht0" value="Verdant Brink Day & Night [&BN4HAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht0btn" onclick="copyToClipboard('#ht0')">Copy</button><br>  
+  <input  id="ht1" value="During the Daytime each of the 5 outposts has its own Meta-Event chain" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht1btn" onclick="copyToClipboard('#ht1')">Copy</button><br>  
+  <input  id="ht2" value="Waypoints [&BOAHAAA=][&BOAHAAA=][&BAgIAAA=][&BAEIAAA=][&BNUHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht2btn" onclick="copyToClipboard('#ht2')">Copy</button><br>  
+  <input  id="ht3" value="We will mark them & do their events per Outpost" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht3btn" onclick="copyToClipboard('#ht3')">Copy</button><br>  
+  <input  id="ht4" value="Jaka Itzel [&BOAHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht4btn" onclick="copyToClipboard('#ht4')">Copy</button><br> 
+  <input  id="ht5" value="Noble Ledges [&BO8HAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht5btn" onclick="copyToClipboard('#ht5')">Copy</button><br> 
+  <input  id="ht6" value="Pact Encampment [&BAgIAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht6btn" onclick="copyToClipboard('#ht6')">Copy</button><br> 
+  <input  id="ht7" value="Pale Reaver Rally [&BAEIAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht7btn" onclick="copyToClipboard('#ht7')">Copy</button><br> 
+  <input  id="ht8" value="The Ordnance Corps[&BNUHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht8btn" onclick="copyToClipboard('#ht8')">Copy</button><br> 
+  <input  id="ht9" value="Nighttime is Starting, We marked the most important Outposts" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht9btn" onclick="copyToClipboard('#ht9')">Copy</button><br> 
+  <input  id="ht10" value="Please spread out Between the Markers 3 to 5 Players will do" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht10btn" onclick="copyToClipboard('#ht10')">Copy</button><br> 
+  <input  id="ht11" value="Retain Control over the Rally Points & Defend them" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht11btn" onclick="copyToClipboard('#ht11')">Copy</button><br> 
+  <input  id="ht12" value="During Breaks: Get Supplies, Escort Soldier & Defeat Rampaging Mordrem" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht12btn" onclick="copyToClipboard('#ht12')">Copy</button><br> 
+  <input  id="ht13" value="Return to your Rally, try to make it T5 & Defend it." type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht13btn" onclick="copyToClipboard('#ht13')">Copy</button><br> 
+  <input  id="ht14" value="If your Rally is T5, Spread out and Help others" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht14btn" onclick="copyToClipboard('#ht14')">Copy</button><br> 
+  <input  id="ht15" value="Shout in Squad/Map Chat if you need Assistence" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht15btn" onclick="copyToClipboard('#ht15')">Copy</button><br> 
+  <input  id="ht16" value="Champion Time, starting with: Matriarch: [&BAgIAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht16btn" onclick="copyToClipboard('#ht16')">Copy</button><br> 
+  <input  id="ht17" value="Champion Time, Next Up: Tetrad of Mordrem Champs: [&BMsHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht17btn" onclick="copyToClipboard('#ht17')">Copy</button><br> 
+  <input  id="ht01" value="Champion Time, Next Up: Axemaster Gwyllion: [&BO8HAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht01btn" onclick="copyToClipboard('#ht01')">Copy</button><br> 
+  <input  id="ht18" value="Champion Time, Next Up: Cotoni and Huetzi: [&BOAHAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht18btn" onclick="copyToClipboard('#ht18')">Copy</button><br> 
+  <input  id="ht19" value="Champion Time, Final Boss Patriarch: [&BAEIAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht19btn" onclick="copyToClipboard('#ht19')">Copy</button><br> 
+  <input  id="ht20" value="Champion Time, Go here if you need Patriarch: [&BAEIAAA=]" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht20btn" onclick="copyToClipboard('#ht20')">Copy</button><br> 
+  <input  id="ht21" value="Congratulations with T4, Thanks for joining, cya Next time" type="text" class="copy" size="75" maxlength="75" disabled>  
+  <button id="ht21btn" onclick="copyToClipboard('#ht21')">Copy</button><br> 
+
+  <div class="center" id="crd">
+    <h1 style="font-size:40px">Credits</h1>
+      <textarea name="myTextBox" cols="100" rows="20" disabled>
+        Gamers-Hell Community
+        Players Vs Events,
+        Blaz, 
+        Devilish Rain, 
+        Stormmyknight, 
+        Beina, 
+	Geri V
+
+        TAC - DC Community
+        Ray Stonecrusher,
+
+        Friends
+        Vega Starshine, 
+        
+        Websites
+        https://wiki.guildwars2.com/wiki
+        https://gw2efficiency.com/
+        http://gw2timer.com/
+        https://www.tapatalk.com/groups/renaka/add-gw2timer-to-your-website-t142.html
+
+        </textarea>
+
+  </div>
+
+      <h1 style="font-size:30px"></h1> <a href="http://pvecommunity.mooo.com"> Gamers-Hell Community </a>
+</div>
+
+<script type="text/javascript">
+
+function copyToClipboardFF(text) {
+window.prompt("Copy to clipboard: Ctrl C, Enter", text);
+}
+
+function copyToClipboard(inputId) {
+var input = $(inputId);
+var success = true,
+range = document.createRange(),
+selection;
+// For IE.
+if (window.clipboardData) {
+window.clipboardData.setData("Text", input.val());
+} else {
+// Create a temporary element off screen.
+var tmpElem = $('<div>');
+tmpElem.css({
+position: "absolute",
+left: "-1000px",
+top: "-1000px",
+});
+// Add the input value to the temp element.
+tmpElem.text(input.val());
+$("body").append(tmpElem);
+// Select temp element.
+range.selectNodeContents(tmpElem.get(0));
+selection = window.getSelection();
+selection.removeAllRanges();
+selection.addRange(range);
+// Lets copy.
+try {
+success = document.execCommand("copy", false, null);
+}
+catch (e) {
+copyToClipboardFF(input.val());
+}
+if (success) {
+// remove temp element.
+tmpElem.remove();
+}
+}
+}
+
+</script>
+</div>
+</body>
+</html> 
