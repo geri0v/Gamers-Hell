@@ -24,15 +24,6 @@
   .copy-button:hover {
     background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
   }
-.center 
-{
-  margin: auto;  
-  padding: 10px;
-  text-align: center;
-  
-}
-
-body
 
 {
 background-color: #3c6e8d65;
@@ -46,7 +37,23 @@ text-align: center;
 color: black;
 }
 
-  .sidenav a {
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 360px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
   font-size: 20px;
@@ -126,7 +133,15 @@ color: black;
 		   scrolling="yes">
 		   
 	</iframe> 
-</style>
+   </div>
+	
+<div class="main">
+<div class="center">
+<div class="hero-text" id="Welcome">
+</div>
+
+<h1 style="font-size:50px">Welcome Commander</h1>
+
 <script>
   // Password prompt
   (function(){
