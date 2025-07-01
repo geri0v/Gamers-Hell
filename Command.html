@@ -5,129 +5,119 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gamers-Hell Teleporters</title>
   <style>
+    /* ==== Layout ==== */
     body {
-      background-color: #3c6e8d65;
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: Arial, sans-serif;
+      background: #3c6e8d65;
+      color: #333;
     }
     .sidenav, .sidenav2 {
-      height: 100%;
-      width: 360px;
-      position: fixed;
-      top: 0;
-      background-color: #111;
-      overflow-x: hidden;
-      padding-top: 20px;
-      z-index: 1;
+      position: fixed; top: 0; height: 100%; width: 360px;
+      background: #111; overflow-y: auto; padding-top: 20px;
+      z-index: 10;
     }
     .sidenav { left: 0; }
     .sidenav2 { right: 0; }
     .sidenav a, .sidenav2 a {
-      padding: 6px 8px 6px 16px;
-      text-decoration: none;
-      font-size: 20px;
-      color: #818181;
-      display: block;
+      display: block; padding: 8px 16px; color: #818181;
+      text-decoration: none; font-size: 18px;
     }
     .sidenav a:hover, .sidenav2 a:hover { color: #f1f1f1; }
 
     .main {
-      margin: 0 380px;        /* leave room for both sidebars */
-      padding: 0 20px;
-      min-height: 100vh;
+      margin: 0 380px; /* leave room for sidebars */
+      padding: 20px;
     }
-    .center {
-      text-align: center;
-      margin: 20px 0;
+    .center { text-align: center; }
+
+    /* ==== Buttons & Inputs ==== */
+    .textbox-container {
+      display: flex; align-items: center;
+      margin: 8px 0;
+    }
+    .textbox {
+      flex: 1; padding: 6px; font-size: 15px;
+      border: 1px solid #ccc; border-radius: 4px;
+      background: #fff;
     }
     .copy-button {
-      cursor: pointer;
-      margin-left: 5px;
-      width: 24px;
-      height: 24px;
-      border: none;
-      background-image: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
-      background-size: cover;
-      background-position: center;
+      width: 24px; height: 24px; margin-left: 6px;
+      border: none; cursor: pointer;
+      background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png')
+                  no-repeat center/cover;
+      border-radius: 4px;
     }
     .copy-button:hover {
       background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
     }
-    .textbox-container {
-      margin: 8px 0;
-      display: flex;
-      align-items: center;
+    h2 {
+      margin-top: 1.5em;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.2em;
     }
-    .textbox {
-      flex: 1;
-      padding: 6px;
-      font-size: 16px;
+    footer {
+      text-align: center; padding: 1em 0;
+      background: #ececec; margin-top: 2em;
     }
   </style>
 </head>
 <body>
 
-  <!-- Left nav -->
-  <div class="sidenav">
+  <!-- LEFT NAV -->
+  <nav class="sidenav">
     <a href="#Welcome">Welcome</a>
-    <a href="#Core">Core Tyria</a>
-    <a href="#LWS1">Living World Season 1</a>
-    <a href="#LWS2">Living World Season 2</a>
-    <a href="#HoT">Heart of Thorns</a>
-    <a href="#LWS3">Living World Season 3</a>
-    <a href="#PoF"> Path of Fire</a>
-    <a href="#LWS4">Living World Season 4</a>
-    <a href="#IBS">Ice Brood Saga</a>
-    <a href="#EoD">End of Dragons</a>
-    <a href="#SotO">Secrets of the Obsecure</a>
-    <a href="#JaWi">Janthir Wilds</a>
-    <a href="#?">Expansion 6</a>
+    <a href="#CoreTyria">Core Tyria</a>
+    <a href="#LivingWorldSeason1">Living World Season 1</a>
+    <a href="#LivingWorldSeason2">Living World Season 2</a>
+    <a href="#HeartOfThorns">Heart of Thorns</a>
+    <a href="#LivingWorldSeason3">Living World Season 3</a>
+    <a href="#PathOfFire">Path of Fire</a>
+    <a href="#LivingWorldSeason4">Living World Season 4</a>
+    <a href="#IceBroodSaga">Ice Brood Saga</a>
+    <a href="#EndOfDragons">End of Dragons</a>
+    <a href="#SecretsOfTheObscure">Secrets of the Obscure</a>
+    <a href="#JanthirWilds">Janthir Wilds</a>
+    <a href="#Expansion6">Expansion 6</a>
     <a href="#crd">Credits</a>
-  </div>
+  </nav>
 
-  <!-- Right iframe -->
-  <div class="sidenav2">
+  <!-- RIGHT NAV (TIMER) -->
+  <nav class="sidenav2">
     <iframe
       src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true"
-      width="360" height="600" style="border:1px solid #444; box-shadow:0 0 12px #223;"
-      seamless scrolling="yes">
+      width="360" height="100%" frameborder="0"
+      style="box-shadow:0 0 12px #223;">
     </iframe>
-  </div>
+  </nav>
 
-  <!-- Main content -->
+  <!-- MAIN CONTENT -->
   <div class="main">
 
-    <div class="center" id="Welcome">
-      <h1 style="font-size:50px">Welcome Commander</h1>
-    </div>
-
-    <!-- Password check -->
-    <script>
-      (function(){
-        const pass1 = "PvE";
-        const password = prompt('Please enter your password to view this page!', '');
-        if (password !== pass1) {
-          window.location.href = "https://sites.google.com/view/gamers-hell-community";
-        } else {
-          alert('Welcome Commander');
-        }
-      })();
-    </script>
-
-    <!-- Here is where our dynamic buttons will go -->
-    <section id="Core" class="center">
-      <h2>Core Tyria</h2>
-      <div id="mainContent"></div>
+    <!-- Welcome Section -->
+    <section id="Welcome" class="center">
+      <h1>Welcome Commander</h1>
+      <!-- Password Script -->
+      <script>
+        (function(){
+          const pass = "PvE";
+          const pw = prompt('Enter password to view this page','');
+          if (pw !== pass) {
+            window.location = 'https://sites.google.com/view/gamers-hell-community';
+          } else {
+            alert('Welcome Commander');
+          }
+        })();
+      </script>
     </section>
-    
-    <section id="LWS1" class="center">
-      <h2>Living World Season 1</h2>
-      <div id="mainContent"></div>
-    </section>
-    <!-- Credits -->
-    <div class="center" id="crd">
+
+    <!-- TELEPORTER BUTTONS WILL BE INJECTED HERE -->
+    <div id="mainContent"></div>
+
+    <!-- CREDITS -->
+    <section id="crd" class="center">
       <h2>Credits</h2>
-      <textarea cols="60" rows="8" disabled>
+      <textarea cols="60" rows="6" disabled>
 Gamers-Hell Community
 Players Vs Events:
   Blaz, Devilish Rain, Stormmyknight, Beina, Geri V
@@ -137,13 +127,13 @@ Websites:
   https://gw2efficiency.com/
   http://gw2timer.com/
       </textarea>
-    </div>
+    </section>
 
-  </div> <!-- .main -->
+    <footer>&copy; 2025 Gamers-Hell Community</footer>
+  </div>
 
-  <!-- Generate buttons script -->
+  <!-- BUTTON GENERATOR SCRIPT -->
   <script>
-    // Static teleport data
     const data = {
       "Core Tyria": [
         { name: "Taidha Covington", code: "[&BKgBAAA=]" },
@@ -160,62 +150,88 @@ Websites:
         { name: "Claw of Jormag",    code: "[&BHoCAAA=]" }
       ],
       "Living World Season 1": [
-        { name: "Example Boss 1", code: "[&ABCDE=]" },
-        { name: "Example Boss 2", code: "[&FGHIJ=]" }
+        { name: "Example Boss A", code: "[&AAAAAA=]" },
+        { name: "Example Boss B", code: "[&BBBBBB=]" }
       ],
-      "Living World Season 2":[
-        { name: "Example Boss 1", code: "[&ABCDE=]" },
-        { name: "Example Boss 2", code: "[&FGHIJ=]" }
+      "Living World Season 2": [
+        { name: "Example Boss C", code: "[&CCCCCC=]" }
       ],
+      "Heart of Thorns": [
+        { name: "Example Boss D", code: "[&DDDDDD=]" }
+      ],
+      "Living World Season 3": [
+        { name: "Example Boss E", code: "[&EEEEEE=]" }
+      ],
+      "Path of Fire": [
+        { name: "Example Boss F", code: "[&FFFFFF=]" }
+      ],
+      "Living World Season 4": [
+        { name: "Example Boss G", code: "[&GGGGGG=]" }
+      ],
+      "Ice Brood Saga": [
+        { name: "Example Boss H", code: "[&HHHHHH=]" }
+      ],
+      "End of Dragons": [
+        { name: "Example Boss I", code: "[&IIIIII=]" }
+      ],
+      "Secrets of the Obscure": [
+        { name: "Example Boss J", code: "[&JJJJJJ=]" }
+      ],
+      "Janthir Wilds": [
+        { name: "Example Boss K", code: "[&KKKKKK=]" }
+      ],
+      "Expansion 6": [
+        { name: "Example Boss L", code: "[&LLLLLL=]" }
+      ]
     };
 
-    // Copy helper
     function copyToClipboard(id) {
       const tb = document.getElementById(id);
       tb.disabled = false;
       tb.select();
       document.execCommand('copy');
       tb.disabled = true;
-      alert(`Copied "${tb.value}"`);
+      alert(`Copied: ${tb.value}`);
     }
 
-    // Generate the inputs + buttons into #mainContent
     function generateButtons() {
-      const mainDiv = document.getElementById('mainContent');
-      mainDiv.innerHTML = ''; // clear
+      const container = document.getElementById('mainContent');
+      container.innerHTML = "";
 
-      for (const [category, items] of Object.entries(data)) {
-        // Category heading
-        const h3 = document.createElement('h3');
-        h3.textContent = category;
-        mainDiv.appendChild(h3);
+      Object.entries(data).forEach(([category, items]) => {
+        // section heading
+        const h2 = document.createElement('h2');
+        h2.id = category.replace(/\s+/g, "");
+        h2.textContent = category;
+        container.appendChild(h2);
 
-        // Each teleport code
+        // teleport entries
         items.forEach((item, idx) => {
-          const container = document.createElement('div');
-          container.className = 'textbox-container';
+          const wrap = document.createElement('div');
+          wrap.className = 'textbox-container';
 
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.className = 'textbox';
-          input.value = `${item.name}: ${item.code}`;
-          input.id = `${category.replace(/\s+/g,'')}_tb_${idx}`;
-          input.disabled = true;
+          const inp = document.createElement('input');
+          inp.type = 'text';
+          inp.className = 'textbox';
+          inp.value = `${item.name}: ${item.code}`;
+          inp.id = `tb_${category.replace(/\s+/g, "")}_${idx}`;
+          inp.disabled = true;
 
-          const button = document.createElement('button');
-          button.className = 'copy-button';
-          button.title = `Copy ${item.name}`;
-          button.onclick = () => copyToClipboard(input.id);
+          const btn = document.createElement('button');
+          btn.className = 'copy-button';
+          btn.title = `Copy ${item.name}`;
+          btn.onclick = () => copyToClipboard(inp.id);
 
-          container.append(input, button);
-          mainDiv.appendChild(container);
+          wrap.appendChild(inp);
+          wrap.appendChild(btn);
+          container.appendChild(wrap);
         });
-      }
+      });
     }
 
-    // Run after DOM is loaded
     document.addEventListener('DOMContentLoaded', generateButtons);
   </script>
 
 </body>
 </html>
+```
