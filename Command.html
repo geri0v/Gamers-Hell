@@ -1,245 +1,230 @@
 <!DOCTYPE html>
-<html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
 <head>
-  <script language="JavaScript">
-  <!--hide
-  
-  var password;
-  var pass1="PvE";
-  
-  password=prompt('Please enter your password to view this page!',' ');
-  
-  if (password==pass1)
-    alert('Welcome Commander');
-  else
-     {
-      window.location=": https://sites.google.com/view/gamers-hell-community";
-      }
-  
-  //-->
-  </script>
-  </head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Guild Wars 2 PvE Community</title>
 <style>
-	
-.center 
-{
-  margin: auto;  
-  padding: 10px;
-  text-align: center;
-  
-}
-
-body
-
-{
-background-color: #3c6e8d65;
-margin: 0;
-font-family: Arial, Helvetica, sans-serif;
-}
-
-.hero-text {
-text-align: center;
-
-color: black;
-}
-
-body {
-  font-family: "Lato", sans-serif;
-}
-
-.sidenav {
-  height: 100%;
-  width: 360px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 20px;
-  color: #818181;
-  display: block;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.main {
-  margin-left: 160px; /* Same as the width of the sidenav */
-  font-size: 28px; /* Increased text to enable scrolling */
-  padding: 0px 10px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-
-body 
-
-{
-margin: 0;
-font-family: Arial, Helvetica, sans-serif;
-}
-
-.hero-text {
-text-align: center;
-
-color: black;
-}
-
-.sidenav2 {
-  height: 100%;
-  width: 360px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
+  body {
+    background-color: #3c6e8d65;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+  }
+  .center {
+    margin: auto;
+    padding: 10px;
+    max-width: 900px;
+  }
+  .sidenav {
+    height: 100%;
+    width: 360px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+  }
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  .sidenav2 {
+    height: 100%;
+    width: 360px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+  .main {
+    margin-left: 380px; /* left sidenav width + some padding */
+    margin-right: 380px; /* right sidenav width + padding */
+    padding: 10px;
+  }
+  .textbox-container {
+    margin: 6px 0;
+    display: flex;
+    align-items: center;
+  }
+  .textbox {
+    flex: 1;
+    padding: 6px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  .copy-button {
+    padding: 6px 12px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  .copy-button:hover {
+    background-color: #666;
+  }
+  .event-section h2 {
+    font-size: 30px;
+    margin-top: 40px;
+  }
 </style>
+</head>
+<body onload="initEvents()">
 
-<body>
-
+<!-- Left sidenav -->
 <div class="sidenav">
-  <a href="#Welcome">Welcome</a><br>
-  <a href="#Core">Core Tyria</a><br>
-  <a href="#LWS2">Living World Season 2</a><br>
-  <a href="#HoT">Heart of Thorns</a><br>
-  <a href="#LWS3">Living World Season 3</a><br>
-  <a href="#PoF">Path of Fire</a><br>
-  <a href="#LWS4">Living World Season 4</a><br>
-  <a href="#IBS">Icebrood Saga</a><br>
-  <a href="#EoD">End of Dragons</a><br>
-  <a href="#dng">Dungeons</a><br>
-  <a href="#jp">Jumping Puzzles</a><br>
-  <a href="#bt">Bounty's</a><br>
-  <a href="#rds">Raids</a><br>
-  <a href="#str">Strike Missions</a><br>
-  <a href="#oth">Other</a><br>
-  <a href="#crd">Credits</a><br>
+  <a href="#Welcome">Welcome</a>
+  <a href="#CoreTyria">Core Tyria</a>
+  <a href="#LWS2">Living World Season 2</a>
+  <a href="#HoT">Heart of Thorns</a>
+  <a href="#LWS3">Living World Season 3</a>
+  <a href="#PoF">Path of Fire</a>
+  <a href="#LWS4">Living World Season 4</a>
+  <a href="#IBS">Icebrood Saga</a>
+  <a href="#EoD">End of Dragons</a>
+  <a href="#Dungeons">Dungeons</a>
+  <a href="#JumpingPuzzles">Jumping Puzzles</a>
+  <a href="#Bountys">Bountys</a>
+  <a href="#Raids">Raids</a>
+  <a href="#StrikeMissions">Strike Missions</a>
+  <a href="#Other">Other</a>
+  <a href="#Credits">Credits</a>
 </div>
 
-   <div class="sidenav2">
-   
-	   <iframe src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true" 
-		   width="360" 
-		   height="600" 
-		   seamless="seamless" 
-		   style="border: 1px solid #444; box-shadow: 0px 0px 12px #223;" 
-		   scrolling="yes">
-		   
-	</iframe> 
-   </div>
-	
+<!-- Right sidenav -->
+<div class="sidenav2">
+  <iframe 
+    src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true" 
+    width="360" 
+    height="600" 
+    style="border: 1px solid #444; box-shadow: 0px 0px 12px #223;" 
+    scrolling="yes">
+  </iframe>
+</div>
+
+<!-- Main content -->
 <div class="main">
-<div class="center">
-<div class="hero-text" id="Welcome">
-</div>
-
-<h1 style="font-size:50px">Welcome Commander</h1>
-
-<div class="center" id="Core">
-<h1 style="font-size:40px">Core Tyria </h1>
-<h1 style="font-size:30px">Core Stuff</h1>
-<h1 style="font-size:20px">Timed Events</h1>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <div class="textbox-container">
-        <input type="text" id="textbox1" class="textbox" value="Taidha Covington: [&BKgBAAA=]" disabled>
-        <button class="copy-button" onclick="copyToClipboard('textbox1')">
-    </div>
-    <div class="textbox-container">
-        <input type="text" id="textbox2" class="textbox" value="Karka Queen: [&BNcGAAA=]" disabled>
-        <button class="copy-button" onclick="copyToClipboard('textbox2')">
-    </div>
-    <div class="textbox-container">
-        <input type="text" id="textbox3" class="textbox" value="Jungle Wurm: [&BEEFAAA=]" disabled>
-        <button class="copy-button" onclick="copyToClipboard('textbox3')">
-    </div>
-    <div class="textbox-container">
-        <input type="text" id="textbox4" class="textbox" value="Fire Elemental: [&BEYAAAA=]" disabled>
-        <button class="copy-button" onclick="copyToClipboard('textbox4')">
-    </div>
-    <div class="textbox-container">
-        <input type="text" id="textbox5" class="textbox" value="Megadestroyer: [&BM0CAAA=]" disabled>
-        <button class="copy-button" onclick="copyToClipboard('textbox5')">
-    </div>
-    <div class="textbox-container">
-        <input type="text" id="textbox6" class="textbox" value="Shadow Behemoth: [&BPwAAAA=]" disabled>
-        <button class="copy-button" onclick="copyToClipboard('textbox6')">
-    </div>
-    <div class="textbox-container">
-        <input type="text" id="textbox7" class="textbox" value="Tequatl: [&BNABAAA=]" disabled>
-        <button class="copy-button" onclick="copyToClipboard('textbox7')">
-    </div>
-    <div class="textbox-container">
-        <input type="text" id="textbox8" class="textbox" value="The Shatterer: [&BE4DAAA=]" disabled>
-        <button class="copy-button" onclick="copyToClipboard('textbox8')">
-    </div>
-    <div class="textbox-container">
-        <input type="text" id="textbox9" class="textbox" value="Frozen Maw: [&BH4BAAA=]" disabled>
-        <button class="copy-button" onclick="copyToClipboard('textbox9')">
-    </div>
-    <div class="textbox-container">
-        <input type="text" id="textbox10" class="textbox" value="Modniir Ulgoth: [&BLEAAAA=]" disabled>
-        <button class="copy-button" onclick="copyToClipboard('textbox10')">
-    </div>
-    <div class="textbox-container">
-        <input type="text" id="textbox11" class="textbox" value="Golem Mark II: [&BNQCAAA=]" disabled>
-        <button class="copy-button" onclick="copyToClipboard('textbox11')">
-    </div>
-    <div class="textbox-container">
-        <input type="text" id="textbox12" class="textbox" value="Claw of Jormag: [&BHoCAAA=]" disabled>
-        <button class="copy-button" onclick="copyToClipboard('textbox12')">
-    </div>
-
-
-  <div class="center" id="crd">
-    <h1 style="font-size:40px">Credits</h1>
-      <textarea name="myTextBox" cols="100" rows="20" disabled>
-        Gamers-Hell Community
-        Players Vs Events,
-          Blaz, 
-          Devilish Rain, 
-          Stormmyknight, 
-          Beina, 
-	        Geri V
-
-        Websites
-        https://wiki.guildwars2.com/wiki
-        https://gw2efficiency.com/
-        http://gw2timer.com/
-        https://www.tapatalk.com/groups/renaka/add-gw2timer-to-your-website-t142.html
-
-        </textarea>
-
+  <div class="center" id="Welcome">
+    <h1 style="font-size:50px">Welcome Commander</h1>
   </div>
 
-      <h1 style="font-size:30px"></h1> <a href="http://pvecommunity.mooo.com"> Gamers-Hell Community </a>
+  <div id="events-container" class="center"></div>
+
+  <div class="center" id="Credits">
+    <h2>Credits</h2>
+    <textarea cols="100" rows="15" disabled style="width:100%; max-width:900px; font-family: monospace;">
+Gamers-Hell Community
+Players Vs Events,
+  Blaz, 
+  Devilish Rain, 
+  Stormmyknight, 
+  Beina, 
+  Geri V
+
+Websites
+https://wiki.guildwars2.com/wiki
+https://gw2efficiency.com/
+http://gw2timer.com/
+https://www.tapatalk.com/groups/renaka/add-gw2timer-to-your-website-t142.html
+    </textarea>
+    <p>
+      <a href="http://pvecommunity.mooo.com" target="_blank">Gamers-Hell Community</a>
+    </p>
+  </div>
 </div>
 
-<script type="text/javascript">
+<script>
+const eventData = {
+  "Core Tyria": [
+    { name: "Taidha Covington", code: "[&BKgBAAA=]" },
+    { name: "Karka Queen", code: "[&BNcGAAA=]" },
+    { name: "Jungle Wurm", code: "[&BEEFAAA=]" },
+    { name: "Fire Elemental", code: "[&BEYAAAA=]" },
+    { name: "Megadestroyer", code: "[&BM0CAAA=]" },
+    { name: "Shadow Behemoth", code: "[&BPwAAAA=]" },
+    { name: "Tequatl", code: "[&BNABAAA=]" },
+    { name: "The Shatterer", code: "[&BE4DAAA=]" },
+    { name: "Frozen Maw", code: "[&BH4BAAA=]" },
+    { name: "Modniir Ulgoth", code: "[&BLEAAAA=]" },
+    { name: "Golem Mark II", code: "[&BNQCAAA=]" },
+    { name: "Claw of Jormag", code: "[&BHoCAAA=]" }
+  ],
 
-    function copyToClipboard(id) {
-        var copyText = document.getElementById(id);
-        var textArea = document.createElement("textarea");
-        textArea.value = copyText.value;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textArea);
-    }
+  "Living World Season 2": [
+    { name: "Example Event 1", code: "[&AAAAAAA=]" },
+    { name: "Example Event 2", code: "[&BBBBBBB=]" }
+    // Voeg hier je echte data toe
+  ],
+
+  // Voeg meer categorieën toe met dezelfde structuur
+};
+
+function copyToClipboard(id) {
+  const copyText = document.getElementById(id);
+  if (!copyText) return;
+  navigator.clipboard.writeText(copyText.value)
+    .then(() => {
+      alert(`Copied: ${copyText.value}`);
+    })
+    .catch(err => {
+      alert('Copy failed, please copy manually.');
+      console.error(err);
+    });
+}
+
+function generateEventSection(title, events) {
+  const container = document.createElement('section');
+  container.className = 'event-section';
+  container.id = title.replace(/\s+/g, '');
+
+  const heading = document.createElement('h2');
+  heading.textContent = title;
+  container.appendChild(heading);
+
+  events.forEach((event, index) => {
+    const textboxContainer = document.createElement('div');
+    textboxContainer.className = 'textbox-container';
+
+    const input = document.createElement('input');
+    const inputId = `${title.replace(/\s+/g, '')}_event_${index}`;
+    input.type = 'text';
+    input.id = inputId;
+    input.className = 'textbox';
+    input.value = `${event.name}: ${event.code}`;
+    input.disabled = true;
+
+    const button = document.createElement('button');
+    button.className = 'copy-button';
+    button.textContent = 'Copy';
+    button.onclick = () => copyToClipboard(inputId);
+
+    textboxContainer.appendChild(input);
+    textboxContainer.appendChild(button);
+    container.appendChild(textboxContainer);
+  });
+
+  document.getElementById('events-container').appendChild(container);
+}
+
+function initEvents() {
+  for (const [category, events] of Object.entries(eventData)) {
+    generateEventSection(category, events);
+  }
+}
 </script>
-</div>
+
 </body>
-</html> 
+</html>
