@@ -1,21 +1,159 @@
-async function getUpcoming(windowMin = 45) {
-  const now    = Date.now();
-  const cutoff = now + windowMin * 60_000;
-  const events = await fetchJson('https://api.guildwars2.com/v2/events?ids=all');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GW2 Events (Next 45m + Copy Waypoint)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    #mainContent {
+      margin-top: 10px;
+    }
+    .event-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .event-item input {
+      flex: 1;
+      padding: 6px;
+      font-size: 14px;
+      margin-right: 6px;
+    }
+    .copy-btn {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png')
+                  no-repeat center/cover;
+      cursor: pointer;
+    }
+    .copy-btn:hover {
+      background: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png')
+                  no-repeat center/cover;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
 
-  return events
-    .filter(e => {
-      // must have next_time and a valid location center array
-      return e.next_time
-          && e.location
-          && Array.isArray(e.location.center)
-          && e.location.center.length === 2;
-    })
-    .map(e => ({
-      name:     e.name,
-      map_id:   e.map_id,
-      nextTime: new Date(e.next_time).getTime(),
-      coord:    e.location.center
-    }))
-    .filter(e => e.nextTime > now && e.nextTime <= cutoff);
-}
+  <h1>Upcoming GW2 Events (Next 45 Minutes)</h1>
+  <div id="mainContent">Loading…</div>
+
+  <script>
+    // Helper to fetch JSON or throw
+    async function fetchJson(url) {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status} – ${res.statusText}`);
+      return res.json();
+    }
+
+    // Get events whose next_time is within the next `windowMin` minutes
+    async function getUpcomingEvents(windowMin = 45) {
+      const now = Date.now();
+      const cutoff = now + windowMin * 60_000;
+
+      // 1) Fetch raw events
+      const events = await fetchJson('https://api.guildwars2.com/v2/events?ids=all');
+      console.log('raw events:', events);
+
+      // 2) Filter & map into a clean structure
+      return events
+        .filter(e => 
+          e.next_time &&
+          e.location &&
+          Array.isArray(e.location.center) &&
+          e.location.center.length === 2
+        )
+        .map(e => ({
+          name:     e.name,
+          map_id:   e.map_id,
+          nextTime: new Date(e.next_time).getTime(),
+          coord:    e.location.center
+        }))
+        .filter(e => e.nextTime > now && e.nextTime <= cutoff);
+    }
+
+    // Render the list of upcoming events
+    async function renderList() {
+      const container = document.getElementById('mainContent');
+      container.innerHTML = ''; // clear existing
+
+      let upcoming;
+      try {
+        upcoming = await getUpcomingEvents(45);
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = `<div class="error">Error fetching events: ${err.message}</div>`;
+        return;
+      }
+
+      if (upcoming.length === 0) {
+        container.textContent = 'No events in the next 45 minutes.';
+        return;
+      }
+
+      // Fetch map names once for all upcoming events
+      const mapIds = [...new Set(upcoming.map(e => e.map_id))].join(',');
+      let mapData = [];
+      try {
+        mapData = await fetchJson(`https://api.guildwars2.com/v2/maps?ids=${mapIds}`);
+      } catch (err) {
+        console.warn('Could not fetch map names:', err);
+      }
+      const mapNames = {};
+      mapData.forEach(m => mapNames[m.id] = m.name || `Map ${m.id}`);
+
+      // Build each event row
+      upcoming.forEach((e, i) => {
+        const minsLeft = Math.ceil((e.nextTime - Date.now()) / 60_000);
+        const [x, y]   = e.coord.map(c => c.toFixed(0));
+        const label    = `${e.name} on ${mapNames[e.map_id]} — ${minsLeft} min`;
+
+        const row = document.createElement('div');
+        row.className = 'event-item';
+
+        // Disabled input showing "Map – X,Y"
+        const inp = document.createElement('input');
+        inp.type     = 'text';
+        inp.value    = `${mapNames[e.map_id]} – ${x},${y}`;
+        inp.id       = `evt_${i}`;
+        inp.disabled = true;
+
+        // Copy button
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.title     = 'Copy waypoint';
+        btn.onclick   = () => {
+          inp.disabled = false;
+          inp.select();
+          document.execCommand('copy');
+          inp.disabled = true;
+          alert(`Copied: ${inp.value}`);
+        };
+
+        // Tooltip or accessible label
+        row.title = label;
+
+        row.append(inp, btn);
+        container.append(row);
+      });
+    }
+
+    // Kick off on load and refresh every 5 minutes
+    document.addEventListener('DOMContentLoaded', () => {
+      renderList();
+      setInterval(renderList, 5 * 60_000);
+    });
+  </script>
+
+</body>
+</html>
