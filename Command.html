@@ -1,147 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <title>GW2 Events (Next 45 Min) with Retry & Cache</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Guild Wars 2 Teleporters • Upcoming Events</title>
   <style>
-    body { font-family: Arial; padding: 20px; }
-    .event-item { display: flex; margin-bottom: 8px; }
-    .event-item input { flex:1; padding:6px; margin-right:6px; }
-    .copy-btn { width:24px; height:24px; background-size:cover; border:none; cursor:pointer; }
-    .copy-btn { background-image:url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png'); }
-    .copy-btn:hover { background-image:url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png'); }
-    #status { margin-bottom:10px; color: #555; }
-    .error { color: red; }
+    /* --- Global --- */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background: #2a3f54;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+    main {
+      flex: 1;
+      padding: 1em;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    #status {
+      margin-bottom: 1em;
+      font-style: italic;
+    }
+    /* --- Event List --- */
+    .event-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75em;
+    }
+    .event-item input {
+      flex: 1;
+      padding: 0.5em;
+      font-size: 0.95em;
+      margin-right: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+    }
+    .copy-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png') 
+                  no-repeat center/cover;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .copy-btn:hover {
+      background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
+    }
+    /* --- Footer --- */
+    footer {
+      text-align: center;
+      padding: 0.5em;
+      font-size: 0.85em;
+      background: #ececec;
+    }
   </style>
 </head>
 <body>
 
-  <h1>Events in the Next 45 Minutes</h1>
-  <div id="status">Loading…</div>
-  <div id="mainContent"></div>
+  <header>
+    <h1>GW2 Teleporter • Events Next 45 Minutes</h1>
+  </header>
+
+  <main>
+    <div id="status">Loading upcoming events…</div>
+    <div id="eventList"></div>
+  </main>
+
+  <footer>
+    &copy; 2025 Your Guild Wars 2 Community  
+  </footer>
 
   <script>
-  // 1) Retry‐and‐backoff fetch
-  async function retryFetchJson(url, retries = 3, backoff = 1000) {
-    try {
-      const res = await fetch(url);
-      if (!res.ok) {
-        if (res.status >= 500 && retries > 0) {
-          await new Promise(r => setTimeout(r, backoff));
-          return retryFetchJson(url, retries - 1, backoff * 2);
-        }
-        throw new Error(`HTTP ${res.status} – ${res.statusText}`);
-      }
-      return res.json();
-    } catch (err) {
-      if (retries > 0) {
-        await new Promise(r => setTimeout(r, backoff));
-        return retryFetchJson(url, retries - 1, backoff * 2);
-      }
-      throw err;
-    }
-  }
-
-  // 2) Fetch with localStorage cache fallback
-  async function fetchWithCache(key, url) {
-    try {
-      const data = await retryFetchJson(url);
-      localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data }));
-      return data;
-    } catch (err) {
-      const raw = localStorage.getItem(key);
-      if (raw) {
-        const cached = JSON.parse(raw);
-        if (Date.now() - cached.ts < 3600_000) {
-          console.warn('Using cached', key);
-          return cached.data;
-        }
-      }
-      throw err;
-    }
-  }
-
-  // 3) Get upcoming events (45m window)
-  async function getUpcomingEvents(windowMin = 45) {
-    const now = Date.now();
-    const cutoff = now + windowMin * 60_000;
-    const events = await fetchWithCache('events', 'https://api.guildwars2.com/v2/events?ids=all');
-
-    return events
-      .filter(e =>
-        e.next_time &&
-        e.location &&
-        Array.isArray(e.location.center) &&
-        e.location.center.length === 2
-      )
-      .map(e => ({
-        name:     e.name,
-        map_id:   e.map_id,
-        nextTime: new Date(e.next_time).getTime(),
-        coord:    e.location.center
-      }))
-      .filter(e => e.nextTime > now && e.nextTime <= cutoff);
-  }
-
-  // 4) Render UI
-  async function renderList() {
+  (function() {
     const statusEl = document.getElementById('status');
-    const mainEl   = document.getElementById('mainContent');
-    mainEl.innerHTML = '';
+    const listEl   = document.getElementById('eventList');
 
-    try {
-      statusEl.textContent = 'Fetching events…';
-      const upcoming = await getUpcomingEvents(45);
-
-      if (!upcoming.length) {
-        statusEl.textContent = 'No events in the next 45 minutes.';
-        return;
-      }
-
-      // Fetch maps
-      const mapIds = [...new Set(upcoming.map(e => e.map_id))].join(',');
-      const maps   = await fetchWithCache('maps', `https://api.guildwars2.com/v2/maps?ids=${mapIds}`);
-      const mapNames = Object.fromEntries(maps.map(m => [m.id, m.name]));
-
-      statusEl.textContent = `Found ${upcoming.length} event(s) coming up.`;
-
-      upcoming.forEach((e,i) => {
-        const mins = Math.ceil((e.nextTime - Date.now())/60_000);
-        const [x,y] = e.coord.map(c => c.toFixed(0));
-        const row   = document.createElement('div');
-        row.className = 'event-item';
-
-        const inp = document.createElement('input');
-        inp.type     = 'text';
-        inp.value    = `${mapNames[e.map_id]} – ${x},${y}`;
-        inp.id       = `evt${i}`;
-        inp.disabled = true;
-
-        const btn = document.createElement('button');
-        btn.className = 'copy-btn';
-        btn.title     = 'Copy waypoint';
-        btn.onclick   = () => {
-          inp.disabled = false;
-          inp.select();
-          document.execCommand('copy');
-          inp.disabled = true;
-          alert(`Copied: ${inp.value}`);
-        };
-
-        row.append(inp, btn);
-        mainEl.append(row);
-      });
-    } catch (err) {
-      statusEl.innerHTML = `<span class="error">Error: ${err.message}</span>`;
-      console.error(err);
+    // fetch JSON helper
+    async function fetchJson(url) {
+      const r = await fetch(url);
+      if (!r.ok) throw new Error(`HTTP ${r.status} ${r.statusText}`);
+      return r.json();
     }
-  }
 
-  // init & auto‐refresh
-  document.addEventListener('DOMContentLoaded', () => {
-    renderList();
-    setInterval(renderList, 5 * 60_000);
-  });
+    // get upcoming events in the next `mins` minutes
+    async function getUpcoming(mins = 45) {
+      const now = Date.now();
+      const cutoff = now + mins * 60_000;
+      const events = await fetchJson('https://api.guildwars2.com/v2/events?ids=all');
+
+      return events
+        .filter(e =>
+          e.next_time &&
+          e.location &&
+          Array.isArray(e.location.center) &&
+          e.location.center.length === 2
+        )
+        .map(e => ({
+          name:     e.name,
+          map_id:   e.map_id,
+          nextTime: new Date(e.next_time).getTime(),
+          coord:    e.location.center
+        }))
+        .filter(e => e.nextTime > now && e.nextTime <= cutoff);
+    }
+
+    // render UI
+    async function render() {
+      listEl.innerHTML = '';
+      try {
+        statusEl.textContent = 'Fetching events…';
+        const upcoming = await getUpcoming(45);
+
+        if (!upcoming.length) {
+          statusEl.textContent = 'No events in the next 45 minutes.';
+          return;
+        }
+
+        // load map names
+        const ids = [...new Set(upcoming.map(e => e.map_id))].join(',');
+        const maps = await fetchJson(`https://api.guildwars2.com/v2/maps?ids=${ids}`);
+        const mapNames = Object.fromEntries(maps.map(m => [m.id, m.name]));
+
+        statusEl.textContent = `Found ${upcoming.length} event(s) coming up:`;
+
+        upcoming.forEach((e, i) => {
+          const mins = Math.ceil((e.nextTime - Date.now()) / 60_000);
+          const [x, y] = e.coord.map(c => c.toFixed(0));
+          const waypoint = `${mapNames[e.map_id]} – ${x},${y}`;
+
+          // build row
+          const row = document.createElement('div');
+          row.className = 'event-item';
+          row.title = `${e.name} on ${mapNames[e.map_id]} in ${mins} min`;
+
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = waypoint;
+          input.disabled = true;
+          input.id = `evt_${i}`;
+
+          const btn = document.createElement('button');
+          btn.className = 'copy-btn';
+          btn.title = 'Copy waypoint';
+          btn.onclick = () => {
+            input.disabled = false;
+            input.select();
+            document.execCommand('copy');
+            input.disabled = true;
+            alert('Copied: ' + waypoint);
+          };
+
+          row.append(input, btn);
+          listEl.append(row);
+        });
+
+      } catch (err) {
+        statusEl.textContent = 'Error fetching events.';
+        console.error(err);
+      }
+    }
+
+    // init & auto-refresh
+    document.addEventListener('DOMContentLoaded', () => {
+      render();
+      setInterval(render, 5 * 60_000);
+    });
+  })();
   </script>
 
 </body>
