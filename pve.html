@@ -1,274 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>GW2 Timers • Gamers-Hell</title>
-  <style>
-    html,body {margin:0;padding:0;height:100vh}
-    body {
-      display:grid;
-      grid-template-columns:360px 1fr 360px;
-      grid-template-areas:"navleft main navright";
-      font-family:Arial,sans-serif;
-      background:#f0f0f0;
-    }
-    nav.sidenav {grid-area:navleft;background:#111;color:#ccc;overflow-y:auto}
-    nav.sidenav2{grid-area:navright;background:#111;color:#ccc;overflow-y:auto}
-    .main {grid-area:main;overflow-y:auto;padding:20px;background:#fff}
-
-    /* Collapsible sidebar */
-    nav.sidenav details {
-      padding:4px 16px; cursor:pointer;
-    }
-    nav.sidenav summary {
-      list-style:none; font-size:16px; user-select:none;
-      color:#ddd;
-    }
-    nav.sidenav summary::before {
-      content:"▸"; display:inline-block; width:1em;
-      transition:transform .2s;
-    }
-    nav.sidenav details[open] summary::before {
-      content:"▾";
-    }
-    nav.sidenav details a,
-    nav.sidenav > a {
-      display:block; padding:6px 32px; font-size:14px;
-      color:#ccc; text-decoration:none;
-    }
-    nav.sidenav > a {padding:8px 16px}
-    nav.sidenav details a:hover,
-    nav.sidenav > a:hover {color:#fff}
-
-    /* Main headings */
-    h1,h2 {margin:.5em 0}
-    h2 {border-bottom:1px solid #ddd;padding-bottom:.2em;margin-top:1.5em}
-
-    /* Copy‐button rows */
-    .textbox-container {
-      display:flex; align-items:center; margin:6px 0;
-    }
-    .textbox {
-      flex:1; padding:6px; font-size:14px;
-      border:1px solid #ccc; border-radius:4px;
-      background:#fafafa;
-    }
-    .copy-button {
-      width:24px;height:24px;margin-left:6px;border:none;
-      border-radius:4px;cursor:pointer;
-      background:url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png')
-                 center/cover no-repeat;
-    }
-    .copy-button:hover {
-      background-image:url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
-    }
-
-    /* Credits */
-    textarea {
-      width:100%; max-width:600px; margin-top:1em;
-      font-family:monospace;
-    }
-    footer {
-      text-align:center; padding:1em; margin-top:2em;
-      font-size:.85em;color:#666;
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>GW2 Teleporters</title>
+<style>
+  /* copy your existing CSS here… */
+</style>
 </head>
 <body>
+  <nav id="sideNav"></nav>
+  <div id="mainContent"></div>
 
-  <!-- LEFT NAV -->
-  <nav class="sidenav" id="sideNav"></nav>
+<script>
+const WEBAPP_URL = 'https://script.google.com/macros/s/…/exec'; // your deployed URL
 
-  <!-- MAIN CONTENT -->
-  <div class="main">
-    <h1>Welcome Commander</h1>
-    <script>
-      (function(){
-        const PASS = "PvE";
-        if (prompt("Enter password:") !== PASS) {
-          window.location = "https://sites.google.com/view/gamers-hell-community";
-        }
-      })();
-    </script>
+// 1) Fetch full grid with formatting
+async function fetchGrid() {
+  const res = await fetch(WEBAPP_URL);
+  if (!res.ok) throw new Error(res.statusText);
+  return res.json();  // [ [ {value, row, col, bold, size, merge}, … ], … ]
+}
 
-    <div id="mainContent"></div>
-
-    <h2>Credits</h2>
-    <textarea rows="6" disabled>
-Gamers-Hell Community
-Players Vs Events:
-  Blaz, Devilish Rain, Stormmyknight, Beina, Geri V
-
-Websites:
-  https://wiki.guildwars2.com/wiki
-  https://gw2efficiency.com/
-  http://gw2timer.com/
-    </textarea>
-
-    <footer>&copy; 2025 Gamers-Hell Community</footer>
-  </div>
-
-  <!-- RIGHT TIMER -->
-  <nav class="sidenav2">
-    <iframe
-      src="https://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true"
-      width="100%" height="100%" frameborder="0"
-      style="box-shadow:0 0 12px #0008;">
-    </iframe>
-  </nav>
-
-  <!-- SCRIPT: pull & render sheet data -->
-  <script>
-    const SHEET_ID   = "1drEpltlQrycYXTHHG8K1xiQNvHZgQk0z2JOPgK0E0yA";
-    const SHEET_GIDS = [
-      "159648992",  // Core Tyria tab
-      "1712489673", // Living World S1
-      "1641486649"  // Living World S2
-      // …add more GIDs here
-    ];
-
-    // fetch one tab as GViz JSON → rows[][]
-    async function fetchSheet(id, gid) {
-      const url = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?gid=${gid}&tqx=out:json`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`Sheet ${gid} HTTP ${res.status}`);
-      const text = await res.text();
-      const js   = text.slice(text.indexOf("{"), text.lastIndexOf("}")+1);
-      const json = JSON.parse(js);
-      return json.table.rows.map(r => (r.c||[]).map(c=>c?.v||""));
-    }
-
-    // fetch all tabs, merge, skip headers after first
-    async function fetchAll(id, gids) {
-      let all = [];
-      for (let i=0; i<gids.length; i++) {
-        const rows = await fetchSheet(id, gids[i]);
-        all = i===0 ? rows : all.concat(rows.slice(1));
-      }
-      return all;
-    }
-
-    // rows→ data[exp][sub][map] = [ {name,code}, … ]
-    function rowsToNested(rows) {
-      const data = {};
-      if (!rows.length) return data;
-
-      // detect gw2timer.com noise → ignore rows where 'Event' == 'gw2timer.com'
-      const body = rows.slice(1).filter(r=>!String(r[3]||"").includes("gw2timer.com"));
-
-      body.forEach(r=>{
-        const [exp, sub, map, name, code] = r.map(x=>String(x||"").trim());
-        if (!name || !code) return;
-        data[exp]         = data[exp] || {};
-        data[exp][sub]    = data[exp][sub] || {};
-        data[exp][sub][map] = data[exp][sub][map] || [];
-        data[exp][sub][map].push({ name, code });
-      });
-      return data;
-    }
-
-    function copyToClipboard(id) {
-      const tb = document.getElementById(id);
-      tb.disabled = false;
-      tb.select();
-      document.execCommand("copy");
-      tb.disabled = true;
-      alert(`Copied: ${tb.value}`);
-    }
-
-    // build sidebar nav (4 levels)
-    function buildNav(data) {
-      const nav = document.getElementById("sideNav");
-      nav.innerHTML = "";
-
-      // static welcome link
-      let a = document.createElement("a");
-      a.href = "#"; a.textContent = "Welcome"; nav.appendChild(a);
-
-      Object.entries(data).forEach(([exp, subs])=>{
-        const dExp = document.createElement("details");
-        const sExp = document.createElement("summary");
-        sExp.textContent = exp;
-        dExp.append(sExp);
-
-        Object.entries(subs).forEach(([sub, maps])=>{
-          const dSub = document.createElement("details");
-          const sSub = document.createElement("summary");
-          sSub.textContent = sub;
-          dSub.append(sSub);
-
-          Object.keys(maps).forEach(map=>{
-            const link = document.createElement("a");
-            link.href = `#${exp.replace(/\s+/g,"")}_${sub.replace(/\s+/g,"")}_${map.replace(/\s+/g,"")}`;
-            link.textContent = map;
-            dSub.append(link);
-          });
-
-          dExp.append(dSub);
-        });
-
-        nav.append(dExp);
-      });
-
-      // static credits
-      a = document.createElement("a");
-      a.href = "#"; a.textContent = "Credits";
-      nav.append(a);
-    }
-
-    // build main content
-    function buildContent(data) {
-      const out = document.getElementById("mainContent");
-      out.innerHTML = "";
-
-      Object.entries(data).forEach(([exp, subs])=>{
-        Object.entries(subs).forEach(([sub, maps])=>{
-          Object.entries(maps).forEach(([map, items])=>{
-            const sec = document.createElement("section");
-            sec.id = `${exp.replace(/\s+/g,"")}_${sub.replace(/\s+/g,"")}_${map.replace(/\s+/g,"")}`;
-
-            const h2 = document.createElement("h2");
-            h2.textContent = `${exp} – ${sub} – ${map}`;
-            sec.append(h2);
-
-            items.forEach((it, idx)=>{
-              const wrap = document.createElement("div");
-              wrap.className = "textbox-container";
-
-              const inp = document.createElement("input");
-              inp.type = "text";
-              inp.className = "textbox";
-              inp.value = `${it.name}: ${it.code}`;
-              inp.id = `tb_${sec.id}_${idx}`;
-              inp.disabled = true;
-
-              const btn = document.createElement("button");
-              btn.className = "copy-button";
-              btn.onclick = ()=>copyToClipboard(inp.id);
-
-              wrap.append(inp, btn);
-              sec.append(wrap);
-            });
-
-            out.append(sec);
-          });
-        });
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", async ()=>{
-      try {
-        const rows = await fetchAll(SHEET_ID, SHEET_GIDS);
-        const data = rowsToNested(rows);
-        buildNav(data);
-        buildContent(data);
-      } catch(e) {
-        console.error(e);
-        document.getElementById("mainContent").innerHTML =
-          `<p style="color:red">Error loading data:<br>${e.message}</p>`;
+// 2) Turn grid into a hierarchical data structure
+function gridToTree(grid) {
+  // find all header cells: bold && merge.cols>1 or size>some threshold
+  const headers = [];
+  grid.forEach(row => {
+    row.forEach(cell => {
+      if (cell.bold && cell.value.trim()) {
+        headers.push(cell);
       }
     });
-  </script>
+  });
+  
+  // Sort headers by font size desc, then row asc
+  headers.sort((a,b) => b.size - a.size || a.row - b.row);
+
+  // Build nested tree by walking headers top→down
+  const tree = {};
+  function insertPath(path, content) {
+    let node = tree;
+    path.forEach(p => {
+      node[p] = node[p] || {};
+      node = node[p];
+    });
+    node.items = node.items || [];
+    node.items.push(content);
+  }
+
+  headers.forEach((h,i) => {
+    // this is a simplified heuristic:
+    //   FontSize largest → Expansion
+    //   Next largest → Category
+    //   Next → Subcategory
+    //   Others → just items
+    // you can refine by comparing h.size to thresholds
+    const path = [
+      headers[0].value,           // expansion
+      headers[1]?.value || '',    // category
+      headers[2]?.value || ''     // subcategory
+    ].filter(x=>x);
+    // find all non-header cells below this header row to collect codes
+    const items = grid[h.row-1].slice(h.merge.cols).map(c=>c.value).filter(v=>v);
+    insertPath(path, { header: h.value, items });
+  });
+
+  return tree;
+}
+
+// 3) Render the tree into sidebar + content
+function render(tree) {
+  const nav = document.getElementById('sideNav');
+  const main = document.getElementById('mainContent');
+  nav.innerHTML = '';
+  main.innerHTML = '';
+
+  Object.entries(tree).forEach(([exp, cats]) => {
+    const dExp = document.createElement('details');
+    const sExp = dExp.appendChild(document.createElement('summary'));
+    sExp.textContent = exp;
+
+    Object.entries(cats).forEach(([cat, subs]) => {
+      const dCat = dExp.appendChild(document.createElement('details'));
+      const sCat = dCat.appendChild(document.createElement('summary'));
+      sCat.textContent = cat;
+
+      subs.items && subs.items.forEach(item => {
+        const a = dCat.appendChild(document.createElement('a'));
+        a.textContent = item.header;
+        a.href = '#' + item.header.replace(/\s+/g,'');
+      });
+
+      Object.entries(subs).forEach(([key,val])=>{
+        if (key==='items') return;
+        const dSub = dCat.appendChild(document.createElement('details'));
+        const sSub = dSub.appendChild(document.createElement('summary'));
+        sSub.textContent = key;
+        val.items && val.items.forEach(item=>{
+          const a = dSub.appendChild(document.createElement('a'));
+          a.textContent = item.header;
+          a.href='#'+item.header.replace(/\s+/g,'');
+        });
+      });
+    });
+
+    nav.appendChild(dExp);
+  });
+
+  // main content…
+}
+
+// 4) kick off
+fetchGrid()
+  .then(grid=>gridToTree(grid))
+  .then(tree=>render(tree))
+  .catch(err=>{
+    console.error(err);
+    document.getElementById('mainContent')
+      .innerHTML = '<p style="color:red">Failed to load sheet data.</p>';
+  });
+</script>
 </body>
 </html>
