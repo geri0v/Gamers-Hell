@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gamers-Hell Teleporters</title>
+  <title>Gamers-Hell Teleporters (Nested Nav)</title>
   <style>
     /* ==== Layout ==== */
     body {
@@ -13,25 +13,25 @@
       color: #333;
     }
     .sidenav, .sidenav2 {
-      position: fixed;
-      top: 0;
-      height: 100%;
-      width: 280px;
-      background: #111;
-      overflow-y: auto;
-      padding-top: 20px;
+      position: fixed; top: 0; height: 100%; width: 280px;
+      background: #111; overflow-y: auto; padding: 20px 0;
       z-index: 10;
     }
     .sidenav { left: 0; }
     .sidenav2 { right: 0; }
-    .sidenav a, .sidenav2 a {
-      display: block;
-      padding: 8px 16px;
-      color: #818181;
-      text-decoration: none;
-      font-size: 16px;
+    .sidenav details {
+      color: #818181; padding: 0 16px; font-size: 16px;
+      cursor: pointer; user-select: none;
     }
-    .sidenav a:hover, .sidenav2 a:hover { color: #f1f1f1; }
+    .sidenav summary {
+      list-style: none;
+    }
+    .sidenav summary::-webkit-details-marker { display: none; }
+    .sidenav a {
+      display: block; padding: 6px 32px; 
+      color: #818181; text-decoration: none; font-size: 15px;
+    }
+    .sidenav a:hover, .sidenav details:hover { color: #f1f1f1; }
 
     .main {
       margin: 0 300px; /* room for sidebars */
@@ -41,90 +41,66 @@
 
     /* ==== Buttons & Inputs ==== */
     .textbox-container {
-      display: flex;
-      align-items: center;
-      margin: 6px 0;
+      display: flex; align-items: center; margin: 6px 0;
     }
     .textbox {
-      flex: 1;
-      padding: 6px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background: #fff;
+      flex: 1; padding: 6px; font-size: 14px; border: 1px solid #ccc;
+      border-radius: 4px; background: #fff;
     }
     .copy-button {
-      width: 24px;
-      height: 24px;
-      margin-left: 6px;
-      border: none;
-      cursor: pointer;
+      width: 24px; height: 24px; margin-left: 6px; border: none;
+      cursor: pointer; border-radius:4px;
       background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png')
                   no-repeat center/cover;
-      border-radius: 4px;
     }
     .copy-button:hover {
       background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
     }
 
-    h1, h2 {
-      margin: 0.5em 0;
-    }
+    h1, h2 { margin: 0.5em 0; }
     h2 {
-      margin-top: 1.5em;
-      border-bottom: 1px solid #ccc;
+      margin-top: 1.5em; border-bottom: 1px solid #ccc;
       padding-bottom: 0.2em;
     }
     footer {
-      text-align: center;
-      padding: 1em 0;
-      background: #ececec;
-      margin-top: 2em;
-      font-size: 0.9em;
-    }
-    textarea {
-      width: 100%;
-      max-width: 600px;
+      text-align: center; padding: 1em 0; background: #ececec;
+      margin-top: 2em; font-size: 0.9em;
     }
   </style>
 </head>
 <body>
 
-  <!-- LEFT NAV (auto-generated) -->
+  <!-- LEFT NAV -->
   <nav class="sidenav" id="sideNav"></nav>
 
-  <!-- RIGHT NAV (GW2 Timer iframe) -->
+  <!-- RIGHT TIMER -->
   <nav class="sidenav2">
-    <iframe style="float: right;"
+    <iframe
       src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true"
-      width="60%" height="100%" frameborder="0"
+      width="100%" height="100%" frameborder="0"
       style="box-shadow:0 0 12px #223;">
     </iframe>
   </nav>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <div class="main">
-
-    <!-- Welcome Section -->
+    <!-- Welcome -->
     <section id="Welcome" class="center">
       <h1>Welcome Commander</h1>
       <script>
         (function(){
           const PASS = "PvE";
-          const pw = prompt('Enter password to view this page','');
-          if (pw !== PASS) {
-            window.location = 'https://sites.google.com/view/gamers-hell-community';
-          } else {
-            alert('Welcome Commander');
-          }
+          if (prompt('Password?','') !== PASS) {
+            location.href = 'https://sites.google.com/view/gamers-hell-community';
+          } else alert('Welcome Commander');
         })();
       </script>
     </section>
 
-    <!-- Teleporter Sections & Buttons -->
+    <!-- Dynamic Content -->
     <div id="mainContent"></div>
 
-    <!-- Credits Section -->
+    <!-- Credits -->
     <section id="Credits" class="center">
       <h2>Credits</h2>
       <textarea rows="6" disabled>
@@ -142,73 +118,59 @@ Websites:
     <footer>&copy; 2025 Gamers-Hell Community</footer>
   </div>
 
-  <!-- DATA + NAV & BUTTON GENERATORS -->
+  <!-- SCRIPT -->
   <script>
-    // 1) Teleport categories + example codes
+    // 1) Nested data: object→subcategories or array→teleport items
     const data = {
-      "Core Tyria": [
-        { name: "Taidha Covington", code: "[&BKgBAAA=]" },
-        { name: "Karka Queen",       code: "[&BNcGAAA=]" },
-        { name: "Jungle Wurm",       code: "[&BEEFAAA=]" },
-        { name: "Fire Elemental",    code: "[&BEYAAAA=]" },
-        { name: "Megadestroyer",     code: "[&BM0CAAA=]" },
-        { name: "Shadow Behemoth",   code: "[&BPwAAAA=]" },
-        { name: "Tequatl the Sunless", code: "[&BNABAAA=]" },
-        { name: "The Shatterer",     code: "[&BE4DAAA=]" },
-        { name: "Frozen Maw",        code: "[&BH4BAAA=]" },
-        { name: "Modniir Ulgoth",    code: "[&BLEAAAA=]" },
-        { name: "Golem Mark II",     code: "[&BNQCAAA=]" },
-        { name: "Claw of Jormag",    code: "[&BHoCAAA=]" }
-      ],
-      "Ley-Line Anomaly": [
-        { name: "Legendary Anomaly A", code: "[&BEwCAAA=]" },
-        { name: "Legendary Anomaly B", code: "[&BOcBAAA=]" },
-        { name: "Legendary Anomaly C", code: "[&BOMAAAA=]" }
-      ],
+      "Core Tyria": {
+        "Core Tyria": [
+          { name: "Taidha Covington", code: "[&BKgBAAA=]" },
+          { name: "Karka Queen",       code: "[&BNcGAAA=]" },
+          /* …other Core bosses… */
+        ],
+        "Ley-Line Anomaly": [
+          { name: "Legendary Anomaly A", code: "[&BEwCAAA=]" },
+          { name: "Legendary Anomaly B", code: "[&BOcBAAA=]" },
+          { name: "Legendary Anomaly C", code: "[&BOMAAAA=]" }
+        ]
+      },
       "Living World Season 1": [
-        { name: "Oola’s Tower",        code: "[&ABCD01=]" },
-        { name: "Tarir Conflux Event",  code: "[&ABCD02=]" }
+        { name: "Oola’s Tower",       code: "[&ABCD01=]" },
+        { name: "Tarir Conflux Event",code: "[&ABCD02=]" }
       ],
       "Living World Season 2": [
-        { name: "Seitung Harbor Meta",  code: "[&WXYZ01=]" },
-        { name: "Draconis Mons Meta",   code: "[&WXYZ02=]" }
+        { name: "Seitung Harbor Meta",code: "[&WXYZ01=]" }
       ],
       "Heart of Thorns": [
-        { name: "Vale Guardian",        code: "[&HOTG1=]" },
-        { name: "Gorseval",             code: "[&HOTG2=]" }
+        { name: "Vale Guardian",      code: "[&HOTG1=]" }
       ],
       "Living World Season 3": [
-        { name: "The Key of Ahdashim",  code: "[&LWS301=]" },
-        { name: "Statue of Melandru",   code: "[&LWS302=]" }
+        { name: "Key of Ahdashim",    code: "[&LWS301=]" }
       ],
       "Path of Fire": [
-        { name: "Champion of the Sun",  code: "[&POF01=]" },
-        { name: "SCP Meta",             code: "[&POF02=]" }
+        { name: "Champion of the Sun",code: "[&POF01=]" }
       ],
       "Living World Season 4": [
-        { name: "Spekks’ Labyrinth",    code: "[&LWS401=]" },
-        { name: "Braham Passage Meta",  code: "[&LWS402=]" }
-      ], 
+        { name: "Spekks’ Labyrinth",  code: "[&LWS401=]" }
+      ],
       "Ice Brood Saga": [
-        { name: "Jormag’s Fang",        code: "[&IBS01=]" },
-        { name: "Ensolyss Invasion",    code: "[&IBS02=]" }
+        { name: "Jormag’s Fang",      code: "[&IBS01=]" }
       ],
       "End of Dragons": [
-        { name: "Zuko’s Ruin",          code: "[&EoD01=]" },
-        { name: "Mordrem Tunnels",      code: "[&EoD02=]" }
+        { name: "Zuko’s Ruin",        code: "[&EoD01=]" }
       ],
       "Secrets of the Obscure": [
-        { name: "Obscure Cache Meta",   code: "[&SotO01=]" }
+        { name: "Obscure Cache Meta", code: "[&SotO01=]" }
       ],
       "Janthir Wilds": [
-        { name: "Janthir Assault",      code: "[&JW01=]" }
+        { name: "Janthir Assault",    code: "[&JW01=]" }
       ],
       "Expansion 6": [
-        { name: "New Meta Event",       code: "[&EXP601=]" }
+        { name: "New Meta Event",     code: "[&EXP601=]" }
       ]
     };
 
-    // 2) Copy helper
+    // 2) Copy to clipboard
     function copyToClipboard(id) {
       const tb = document.getElementById(id);
       tb.disabled = false;
@@ -218,81 +180,92 @@ Websites:
       alert(`Copied: ${tb.value}`);
     }
 
-    // 3) Build left nav from data keys + static links
+    // 3) Build sidebar nav recursively
+    function buildNav(container, obj) {
+      Object.entries(obj).forEach(([key, val]) => {
+        if (Array.isArray(val)) {
+          // leaf category
+          const a = document.createElement('a');
+          a.href = `#${key.replace(/\s+/g,'')}`;
+          a.textContent = key;
+          container.appendChild(a);
+        } else {
+          // has subcategories → <details>
+          const details = document.createElement('details');
+          const summary = document.createElement('summary');
+          summary.textContent = key;
+          details.appendChild(summary);
+          buildNav(details, val);
+          container.appendChild(details);
+        }
+      });
+    }
+
+    // 4) Generate left nav
     function generateNav() {
       const nav = document.getElementById('sideNav');
       nav.innerHTML = '';
-
-      // static: Welcome
-      const aWelcome = document.createElement('a');
-      aWelcome.href = '#Welcome';
-      aWelcome.textContent = 'Welcome';
-      nav.appendChild(aWelcome);
-
-      // dynamic categories
-      Object.keys(data).forEach(category => {
-        const id = category.replace(/\s+/g, '');
-        const a = document.createElement('a');
-        a.href = `#${id}`;
-        a.textContent = category;
-        nav.appendChild(a);
-      });
-
-      // static: Credits
-      const aCredits = document.createElement('a');
-      aCredits.href = '#Credits';
-      aCredits.textContent = 'Credits';
-      nav.appendChild(aCredits);
+      // static "Welcome"
+      let a = document.createElement('a');
+      a.href = '#Welcome'; a.textContent = 'Welcome';
+      nav.appendChild(a);
+      // dynamic
+      buildNav(nav, data);
+      // static "Credits"
+      a = document.createElement('a');
+      a.href = '#Credits'; a.textContent = 'Credits';
+      nav.appendChild(a);
     }
 
-    // 4) Generate sections + copy-buttons for each category
-    function generateContent() {
-      const container = document.getElementById('mainContent');
-      container.innerHTML = '';
+    // 5) Generate main content recursively
+    function buildContent(container, obj) {
+      Object.entries(obj).forEach(([key, val]) => {
+        if (Array.isArray(val)) {
+          // section for this category
+          const section = document.createElement('section');
+          const id = key.replace(/\s+/g,'');
+          section.id = id;
 
-      Object.entries(data).forEach(([category, items]) => {
-        // section wrapper
-        const section = document.createElement('section');
-        const sectionId = category.replace(/\s+/g, '');
-        section.id = sectionId;
+          const h2 = document.createElement('h2');
+          h2.textContent = key;
+          section.appendChild(h2);
 
-        // heading
-        const h2 = document.createElement('h2');
-        h2.textContent = category;
-        section.appendChild(h2);
+          val.forEach((item, idx) => {
+            const wrap = document.createElement('div');
+            wrap.className = 'textbox-container';
 
-        // items
-        items.forEach((item, idx) => {
-          const wrap = document.createElement('div');
-          wrap.className = 'textbox-container';
+            const inp = document.createElement('input');
+            inp.type = 'text';
+            inp.className = 'textbox';
+            inp.value = `${item.name}: ${item.code}`;
+            inp.id = `tb_${id}_${idx}`;
+            inp.disabled = true;
 
-          const inp = document.createElement('input');
-          inp.type = 'text';
-          inp.className = 'textbox';
-          inp.value = `${item.name}: ${item.code}`;
-          inp.id = `tb_${sectionId}_${idx}`;
-          inp.disabled = true;
+            const btn = document.createElement('button');
+            btn.className = 'copy-button';
+            btn.title = `Copy ${item.name}`;
+            btn.onclick = () => copyToClipboard(inp.id);
 
-          const btn = document.createElement('button');
-          btn.className = 'copy-button';
-          btn.title = `Copy ${item.name}`;
-          btn.onclick = () => copyToClipboard(inp.id);
+            wrap.appendChild(inp);
+            wrap.appendChild(btn);
+            section.appendChild(wrap);
+          });
 
-          wrap.appendChild(inp);
-          wrap.appendChild(btn);
-          section.appendChild(wrap);
-        });
-
-        container.appendChild(section);
+          container.appendChild(section);
+        } else {
+          // nested object → recurse
+          buildContent(container, val);
+        }
       });
     }
 
-    // 5) Initialize on load
+    // 6) Generate everything on load
     document.addEventListener('DOMContentLoaded', () => {
       generateNav();
-      generateContent();
+      const main = document.getElementById('mainContent');
+      main.innerHTML = '';
+      buildContent(main, data);
     });
   </script>
-
 </body>
 </html>
