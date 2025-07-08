@@ -690,64 +690,80 @@ Websites:
         ]
       }
     };
-    function buildNav(parent, obj, path=[]) {
-      Object.entries(obj).forEach(([key,val]) => {
-        if (Array.isArray(val)) {
-          const a = document.createElement('a');
-          a.href = `#${[...path, key].join('-').replace(/\s+/g,'')}`;
-          a.textContent = key;
-          a.addEventListener('click', e => {
-            e.preventDefault();
-            const el = document.getElementById(a.href.slice(1));
-            if (el) {
-              el.scrollIntoView({behavior:"smooth", block:"start"});
-              el.focus && el.focus();
-            }
-          });
-          parent.appendChild(a);
-        } else {
-          const details = document.createElement('details');
-          const summary = document.createElement('summary');
-          summary.textContent = key;
-          details.appendChild(summary);
-          buildNav(details, val, [...path, key]);
-          parent.appendChild(details);
-        }
-      });
-    }
-    function generateNav() {
+
+    // ========== Sidebar Navigation (robust) ==========
+    function buildNavSidebar(data, filter = "") {
       const nav = document.getElementById('sideNav');
       nav.innerHTML = '';
+      const createList = (obj, parentUl, level = 0) => {
+        Object.entries(obj).forEach(([cat, val]) => {
+          if (Array.isArray(val)) {
+            // Group of bosses/events
+            const details = document.createElement('details');
+            details.open = true;
+            const summary = document.createElement('summary');
+            summary.textContent = cat;
+            details.appendChild(summary);
+            val.forEach(boss => {
+              if (filter && !matchBoss(boss, filter)) return;
+              const a = document.createElement('a');
+              a.href = `#${boss.name.replace(/\s+/g, '')}`;
+              a.textContent = boss.name;
+              a.tabIndex = 0;
+              a.addEventListener('click', e => {
+                e.preventDefault();
+                const el = document.getElementById(a.href.slice(1));
+                if (el) {
+                  el.scrollIntoView({behavior:"smooth", block:"start"});
+                  el.focus && el.focus();
+                }
+              });
+              details.appendChild(a);
+            });
+            if (details.childElementCount > 1) parentUl.appendChild(details);
+          } else if (typeof val === 'object') {
+            // Nested category
+            const details = document.createElement('details');
+            details.open = true;
+            const summary = document.createElement('summary');
+            summary.textContent = cat;
+            details.appendChild(summary);
+            createList(val, details, level + 1);
+            if (details.childElementCount > 1) parentUl.appendChild(details);
+          }
+        });
+      };
+      createList(data, nav);
+      // Add Welcome/Credits
       nav.appendChild(Object.assign(document.createElement('a'), { href: '#Welcome', textContent: 'Welcome' }));
-      buildNav(nav, data);
       nav.appendChild(Object.assign(document.createElement('a'), { href: '#Credits', textContent: 'Credits' }));
     }
 
-    // ========== Main Content Builder ==========
+    // ========== Main Content (robust, filterable, async) ==========
     const itemCache = {};
+    function matchBoss(boss, filter) {
+      filter = filter.toLowerCase();
+      if (boss.name.toLowerCase().includes(filter)) return true;
+      if (boss.location && boss.location.toLowerCase().includes(filter)) return true;
+      if (boss.drops && boss.drops.some(d => (itemCache[d.id]?.name || "").toLowerCase().includes(filter))) return true;
+      return false;
+    }
     async function fetchItemData(id) {
       if (itemCache[id]) return itemCache[id];
-      let cache = localStorage.getItem('ghc-item-'+id);
-      let cacheTime = localStorage.getItem('ghc-item-time-'+id);
-      if (cache && cacheTime && Date.now() - cacheTime < 1000*60*60*4) {
-        itemCache[id] = JSON.parse(cache);
-        return itemCache[id];
-      }
       try {
         const [item, price] = await Promise.all([
-          fetch(`https://api.guildwars2.com/v2/items/${id}`).then(r=>r.ok ? r.json() : Promise.reject()),
-          fetch(`https://api.guildwars2.com/v2/commerce/prices/${id}`).then(r=>r.ok ? r.json() : Promise.reject())
+          fetch(`https://api.guildwars2.com/v2/items/${id}`).then(r=>r.json()),
+          fetch(`https://api.guildwars2.com/v2/commerce/prices/${id}`).then(r=>r.json())
         ]);
         itemCache[id] = {
           name: item.name,
           icon: item.icon,
+          desc: item.description || '',
           value: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
         };
-        localStorage.setItem('ghc-item-'+id, JSON.stringify(itemCache[id]));
-        localStorage.setItem('ghc-item-time-'+id, Date.now());
         return itemCache[id];
       } catch {
-        return { name: `Item ${id}`, icon: '', value: 0 };
+        return { name: `Item ${id}`, icon: '', value: 0, desc: '' };
       }
     }
     function formatCoin(value) {
@@ -761,81 +777,69 @@ Websites:
       str += copper + 'c';
       return str.trim();
     }
-    async function buildContent(parent, obj) {
-      parent.innerHTML = '<div class="spinner" role="status" aria-live="polite" aria-label="Loading content"></div>';
-      try {
-        let html = '';
-        for (const [cat, groups] of Object.entries(obj)) {
-          const catId = cat.replace(/\s+/g,'');
-          html += `<details open id="${catId}" tabindex="-1"><summary><span class="cat-heading">${cat}</span></summary>`;
-          for (const [group, bosses] of Object.entries(groups)) {
-            const groupId = [cat, group].join('-').replace(/\s+/g,'');
-            html += `<details id="${groupId}" tabindex="-1"><summary><h2 style="display:inline">${group}</h2></summary>`;
-            for (let boss of bosses) {
-              const bossId = [cat, group, boss.name].join('-').replace(/\s+/g,'');
-              html += `<div class="boss-block" id="${bossId}" tabindex="-1"><h3>${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
-              let dropDataArr = [];
-              for (const drop of boss.drops) {
-                dropDataArr.push(await fetchItemData(drop.id));
-              }
-              const guaranteedDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
-              const chanceDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'chance');
-              let mostValuableChance = null;
-              if (chanceDrops.length) {
-                mostValuableChance = chanceDrops.reduce((max, d) => itemCache[d.id].value > itemCache[max.id].value ? d : max, chanceDrops[0]);
-              }
-              let parts = [];
-              guaranteedDrops.forEach(d =>
-                parts.push(`Guaranteed to drop ${itemCache[d.id].name} (Value: ${formatCoin(itemCache[d.id].value)})`)
-              );
-              if (mostValuableChance) {
-                parts.push(`Chance to drop ${itemCache[mostValuableChance.id].name} (Value: ${formatCoin(itemCache[mostValuableChance.id].value)})`);
-              }
-              if (!guaranteedDrops.length && !chanceDrops.length) {
-                boss.drops.sort((a, b) => itemCache[b.id].value - itemCache[a.id].value);
-                boss.drops.forEach(d =>
-                  parts.push(`${itemCache[d.id].name} (Value: ${formatCoin(itemCache[d.id].value)})`)
-                );
-              }
-              const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${parts.join(', ')}`;
-              html += `<div class="textbox-container">
-                <input type="text" class="textbox" value="${copyText.replace(/"/g,'&quot;')}" readonly aria-label="Copy text for ${boss.name}">
-                <button class="copy-button" title="Copy ${boss.name}" type="button" tabindex="0" aria-label="Copy ${boss.name}"></button>
-              </div>
-              <details><summary>Show/Hide Drops</summary>
-              <div class="drops-container">`;
-              boss.drops.forEach(d => {
-                let dropType = '';
-                if ((d.note || '').toLowerCase() === 'guaranteed') dropType = '<span class="drop-type-guaranteed">(Guaranteed)</span>';
-                else if ((d.note || '').toLowerCase() === 'chance') dropType = '<span class="drop-type-chance">(Chance)</span>';
-                html += `<div class="item-drop">
-                  <img src="${itemCache[d.id].icon||''}" alt="${itemCache[d.id].name||''}">
-                  <span>${itemCache[d.id].name}</span>
-                  ${dropType}
-                  <small>Value: ${formatCoin(itemCache[d.id].value)}</small>
-                </div>`;
-              });
-              html += `</div></details></div>`;
+    async function buildMainContent(data, filter = "") {
+      const parent = document.getElementById('mainContent');
+      parent.innerHTML = '<div class="spinner"></div>';
+      let html = '';
+      for (const [cat, groups] of Object.entries(data)) {
+        let groupContent = '';
+        for (const [group, bosses] of Object.entries(groups)) {
+          let bossContent = '';
+          for (let boss of bosses) {
+            if (filter && !matchBoss(boss, filter)) continue;
+            bossContent += `<div class="boss-block"><h3 id="${boss.name.replace(/\s/g,'')}">${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
+            for (const drop of boss.drops) await fetchItemData(drop.id);
+            const guaranteedDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
+            const chanceDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'chance');
+            let mostValuableChance = null;
+            if (chanceDrops.length) {
+              mostValuableChance = chanceDrops.reduce((max, d) => itemCache[d.id].value > itemCache[max.id].value ? d : max, chanceDrops[0]);
             }
-            html += `</details>`;
+            let parts = [];
+            guaranteedDrops.forEach(d =>
+              parts.push(`Guaranteed: ${itemCache[d.id].name} (${formatCoin(itemCache[d.id].value)})`)
+            );
+            if (mostValuableChance) {
+              parts.push(`Chance: ${itemCache[mostValuableChance.id].name} (${formatCoin(itemCache[mostValuableChance.id].value)})`);
+            }
+            if (!guaranteedDrops.length && !chanceDrops.length) {
+              boss.drops.sort((a, b) => itemCache[b.id].value - itemCache[a.id].value);
+              boss.drops.forEach(d =>
+                parts.push(`${itemCache[d.id].name} (${formatCoin(itemCache[d.id].value)})`)
+              );
+            }
+            const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${parts.join(', ')}`;
+            bossContent += `<div class="textbox-container">
+              <input type="text" class="textbox" value="${copyText.replace(/"/g,'&quot;')}" readonly aria-label="Boss Info: ${boss.name}">
+              <button class="copy-button" title="Copy ${boss.name}" type="button" tabindex="0" aria-label="Copy ${boss.name}"></button>
+            </div>
+            <details><summary>Show/Hide Drops</summary>
+            <div class="drops-container">`;
+            for (let d of boss.drops) {
+              let dropType = '';
+              if ((d.note || '').toLowerCase() === 'guaranteed') dropType = '<span class="drop-type-guaranteed">(Guaranteed)</span>';
+              else if ((d.note || '').toLowerCase() === 'chance') dropType = '<span class="drop-type-chance">(Chance)</span>';
+              bossContent += `<div class="item-drop" tabindex="0">
+                <img src="${itemCache[d.id].icon||''}" alt="${itemCache[d.id].name||''}" loading="lazy">
+                <span>${itemCache[d.id].name}</span>
+                ${dropType}
+                <small>Value: ${formatCoin(itemCache[d.id].value)}</small>
+              </div>`;
+            }
+            bossContent += `</div></details></div>`;
           }
-          html += `</details>`;
+          if (bossContent) groupContent += `<details open><summary><span class="cat-heading">${group}</span></summary>${bossContent}</details>`;
         }
-        parent.innerHTML = html;
-        parent.querySelectorAll('.copy-button').forEach(btn => {
-          btn.addEventListener('click', function() {
-            const input = this.previousElementSibling;
-            if (input) {
-              navigator.clipboard.writeText(input.value).then(
-                () => showToast("Copied!"),
-                () => showToast('Copy failed!')
-              );
-            }
-          });
-        });
-      } catch (e) {
-        parent.innerHTML = '<div style="color:#c00; padding:20px;">Failed to load content. Please try again later.</div>';
+        if (groupContent) html += `<section><h2>${cat}</h2>${groupContent}</section>`;
       }
+      parent.innerHTML = html || `<div style="padding:20px;color:#aaa;">No bosses/events match your search.</div>`;
+      // Attach copy events
+      parent.querySelectorAll('.copy-button').forEach(btn => {
+        btn.addEventListener('click', function() {
+          showToast('Copied!');
+          navigator.clipboard.writeText(this.previousElementSibling.value);
+        });
+      });
     }
 
     // ========== Event Timer ==========
@@ -866,7 +870,7 @@ Websites:
       tzSelect.addEventListener('change', function() {
         selectedTimezone = this.value;
         localStorage.setItem('ghc-timezone', selectedTimezone);
-        updateEvents();
+        updateEvents(document.getElementById('searchInput').value);
       });
     }
     function parseOffset(offset) {
@@ -907,7 +911,7 @@ Websites:
       let cacheTime = localStorage.getItem('ghc-events-time');
       if (!force && cache && cacheTime && Date.now() - cacheTime < 1000*60*15) {
         events = JSON.parse(cache);
-        updateEvents();
+        updateEvents(document.getElementById('searchInput').value);
         return;
       }
       try {
@@ -922,19 +926,26 @@ Websites:
         showError('Failed to load events. Try again later.');
         events = [];
       }
-      updateEvents();
+      updateEvents(document.getElementById('searchInput').value);
     }
-    function updateEvents() {
+    function matchEvent(event, filter) {
+      filter = filter.toLowerCase();
+      return event.name.toLowerCase().includes(filter);
+    }
+    function updateEvents(filter = "") {
       const eventList = document.getElementById('eventList');
       if (!events.length) {
         eventList.innerHTML = '<div style="padding:20px;color:#aaa;">No events available.</div>';
         return;
       }
       const now = new Date();
-      const nextEvents = events.map(event => {
+      let nextEvents = events.map(event => {
         const nextTime = getNextOccurrence(event.offset, event.repeat);
         return { name: event.name, utcTime: nextTime, localTime: toTimezoneStr(nextTime, selectedTimezone), nextTime };
       });
+      if (filter) {
+        nextEvents = nextEvents.filter(ev => matchEvent(ev, filter));
+      }
       nextEvents.sort((a, b) => a.utcTime - b.utcTime);
       let nextIdx = nextEvents.findIndex(ev => ev.utcTime > now);
       if (nextIdx === -1) nextIdx = 0;
@@ -947,7 +958,7 @@ Websites:
           </span>
         </div>`;
       });
-      eventList.innerHTML = html;
+      eventList.innerHTML = html || `<div style="padding:20px;color:#aaa;">No events match your search.</div>`;
       if (timerInterval) clearInterval(timerInterval);
       timerInterval = setInterval(() => {
         document.querySelectorAll('.event-countdown').forEach(span => {
@@ -962,23 +973,12 @@ Websites:
       fetchEvents(true);
     });
 
-    // ========== Search ==========
-    function sanitizeInput(str) {
-      const temp = document.createElement('div');
-      temp.textContent = str;
-      return temp.innerHTML.toLowerCase();
-    }
-    function searchContent(query) {
-      query = sanitizeInput(query.trim());
-      document.querySelectorAll('.boss-block').forEach(el => {
-        el.style.display = (!query || el.textContent.toLowerCase().includes(query)) ? "" : "none";
-      });
-      document.querySelectorAll('.event-row').forEach(el => {
-        el.style.display = (!query || el.textContent.toLowerCase().includes(query)) ? "" : "none";
-      });
-    }
-    document.getElementById('searchInput').addEventListener('input', function() {
-      searchContent(this.value);
+    // ========== Search: Filters both bosses and events ==========
+    document.getElementById('searchInput').addEventListener('input', async function() {
+      const filter = this.value.trim();
+      buildNavSidebar(data, filter);
+      await buildMainContent(data, filter);
+      updateEvents(filter);
     });
 
     // ========== Error Handling ==========
@@ -989,45 +989,16 @@ Websites:
       setTimeout(() => { err.style.display = 'none'; }, 5000);
     }
 
-    // ========== Push Notifications (in-page only) ==========
-    function requestNotificationPermission() {
-      if (!("Notification" in window)) return;
-      if (Notification.permission === "default") {
-        Notification.requestPermission();
-      }
-    }
-    function notifyNextEvent() {
-      if (!("Notification" in window) || Notification.permission !== "granted") return;
-      const now = new Date();
-      const nextEvent = events.map(e => {
-        const nextTime = getNextOccurrence(e.offset, e.repeat);
-        return { name: e.name, nextTime };
-      }).sort((a,b) => a.nextTime - b.nextTime)[0];
-      if (nextEvent) {
-        const diff = nextEvent.nextTime - now;
-        if (diff > 0 && diff < 10*60*1000) {
-          new Notification("Event soon!", {
-            body: `${nextEvent.name} starts in ${Math.floor(diff/60000)} min.`,
-            icon: "https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png"
-          });
-        }
-      }
-    }
-    if ("Notification" in window) {
-      requestNotificationPermission();
-      setInterval(notifyNextEvent, 60000);
-    }
-
     // ========== DOMContentLoaded ==========
     document.addEventListener('DOMContentLoaded', async () => {
-      generateNav();
+      buildNavSidebar(data);
+      await buildMainContent(data);
       populateTimezoneSelect();
-      const main = document.getElementById('mainContent');
-      await buildContent(main, data);
-      fetchEvents();
-      setInterval(fetchEvents, 1000*60*5);
+      await fetchEvents();
+      updateEvents();
+      setInterval(() => { fetchEvents().then(()=>updateEvents(document.getElementById('searchInput').value)); }, 60000);
       document.addEventListener('visibilitychange', function() {
-        if (!document.hidden) fetchEvents();
+        if (!document.hidden) fetchEvents().then(()=>updateEvents(document.getElementById('searchInput').value));
       });
     });
   </script>
