@@ -77,57 +77,51 @@
     .sidebar-toggle:focus { outline: 2px solid #fff; outline-offset: 2px; }
     .sidebar-toggle:hover { background: #666; }
 
-    /* Mobile hamburger buttons */
-    .sidebar-hamburger {
-      display: none;
-      position: fixed;
-      top: 18px;
-      z-index: 2000;
-      width: 48px; height: 48px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 32px;
-      box-shadow: 0 2px 8px #0005;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-      outline: none;
+    .sidebar-nav {
+      margin-top: 70px;
+      overflow-y: auto;
+      flex: 1;
     }
-    .sidebar-hamburger.left  { left: 10px; }
-    .sidebar-hamburger.right { right: 10px; }
-    .sidebar-hamburger:focus { outline: 2px solid #fff; outline-offset: 2px; }
-    .sidebar-hamburger:hover { background: #4e7bbd; }
-
-    /* --- Event Timer Styles --- */
-    .event-list { margin-top: 70px; padding: 16px; max-height: calc(100vh - 70px); overflow-y: auto; }
-    .event-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #333; font-size: 1rem; }
-    .event-row.upcoming { background: #29334a; font-weight: bold; border-radius: 4px; }
-    .event-name { flex: 2; }
-    .event-time { flex: 1; text-align: right; font-family: monospace; }
-    .event-filter { width: 100%; margin-bottom: 8px; padding: 4px; border-radius: 4px; border: 1px solid var(--border); }
-
-    /* --- Navigation Styles --- */
-    .sidebar-nav { margin-top: 70px; }
+    .sidebar-nav ul, .sidebar-nav li {
+      list-style: none;
+      margin: 0; padding: 0;
+    }
+    .sidebar-nav .nav-group {
+      font-weight: bold;
+      font-size: 1.1em;
+      padding: 8px 16px 8px 8px;
+      background: none;
+      border: none;
+      color: inherit;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      outline: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sidebar-nav .nav-group:focus { outline: 2px solid var(--accent); }
+    .sidebar-nav .nav-group .arrow {
+      font-size: 1em;
+      transition: transform 0.2s;
+    }
+    .sidebar-nav .nav-group[aria-expanded="true"] .arrow {
+      transform: rotate(90deg);
+    }
+    .sidebar-nav .nav-items {
+      display: none;
+      padding-left: 18px;
+    }
+    .sidebar-nav .nav-items.open { display: block; }
     .sidebar-nav a {
-      display: block; padding: 10px 18px; font-size: 18px;
+      display: block; padding: 7px 8px; font-size: 1em;
       text-decoration: none; color: inherit;
       border-radius: 4px;
       outline: none;
     }
-    .sidebar-nav a:focus { outline: 2px solid #fff; outline-offset: 2px; background: #222; color: #fff; }
+    .sidebar-nav a:focus { outline: 2px solid var(--accent); background: #222; color: #fff; }
     .sidebar-nav a:hover { color: #f1f1f1; background: #222; }
-    .sidebar-nav details { padding: 4px 16px; color: #818181; cursor: pointer; }
-    .sidebar-nav summary { list-style: none; font-size: 18px; user-select: none; }
-    .sidebar-nav summary::-webkit-details-marker { display: none; }
-    .sidebar-nav summary::before {
-      content: "▸"; display: inline-block; width: 1em; transition: transform 0.2s;
-    }
-    .sidebar-nav details[open] summary::before { content: "▾"; }
-    .sidebar-nav details a { padding-left: 32px; font-size: 16px; }
-    .cat-heading { font-size: 1.6em; margin: 1.5em 0 0.5em 0; color: var(--accent); }
 
     /* --- Main Content --- */
     main.main     { grid-area: main; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: all 0.3s; min-height: 100vh; }
@@ -157,18 +151,6 @@
       background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
       outline: 2px solid var(--accent);
     }
-    .batch-copy-btn {
-      margin: 10px 0 20px 0;
-      padding: 7px 18px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .batch-copy-btn:hover, .batch-copy-btn:focus { background: #4e7bbd; }
     .drops-container {
       margin-left: 32px; margin-top: 8px;
     }
@@ -242,23 +224,45 @@
     }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
-    /* Theme toggle */
+    /* Theme toggle & search bar floating */
+    .floating-controls {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 10px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      z-index: 10;
+    }
     .theme-toggle {
-      position: absolute;
-      top: 16px; right: 55px;
       background: var(--accent);
       color: #fff;
       border: none;
       border-radius: 6px;
-      padding: 6px 14px;
+      padding: 6px 18px;
       font-size: 16px;
       cursor: pointer;
-      z-index: 2001;
       transition: background 0.2s;
+      margin-top: 10px;
     }
     .theme-toggle:hover, .theme-toggle:focus { background: #4e7bbd; }
+    .main-search {
+      width: 220px;
+      padding: 7px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-size: 16px;
+      margin-top: 10px;
+    }
 
-    /* Timezone select */
+    /* --- Event Timer Styles --- */
+    .event-list { margin-top: 70px; padding: 16px; max-height: calc(100vh - 70px); overflow-y: auto; }
+    .event-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #333; font-size: 1rem; }
+    .event-row.upcoming { background: #29334a; font-weight: bold; border-radius: 4px; }
+    .event-name { flex: 2; }
+    .event-time { flex: 1; text-align: right; font-family: monospace; }
     .timezone-select {
       width: 90%;
       margin: 10px 5%;
@@ -270,39 +274,29 @@
       color: #222;
     }
 
-    /* Login Modal */
-    .modal-bg {
-      position: fixed; left: 0; top: 0; width: 100vw; height: 100vh;
-      background: #000a; z-index: 5000;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .modal {
-      background: var(--bg);
-      color: var(--text);
-      border-radius: 10px;
-      box-shadow: 0 4px 20px #0008;
-      padding: 32px 40px;
-      min-width: 320px;
-      text-align: center;
-    }
-    .modal input[type="password"] {
-      width: 90%;
-      padding: 10px;
-      font-size: 18px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      margin: 16px 0 24px 0;
-    }
-    .modal button {
-      padding: 8px 24px;
-      font-size: 18px;
-      border-radius: 6px;
-      border: none;
+    /* Mobile hamburger buttons */
+    .sidebar-hamburger {
+      display: none;
+      position: fixed;
+      top: 18px;
+      z-index: 2000;
+      width: 48px; height: 48px;
       background: var(--accent);
       color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 32px;
+      box-shadow: 0 2px 8px #0005;
       cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      outline: none;
     }
-    .modal button:hover, .modal button:focus { background: #4e7bbd; }
+    .sidebar-hamburger.left  { left: 10px; }
+    .sidebar-hamburger.right { right: 10px; }
+    .sidebar-hamburger:focus { outline: 2px solid #fff; outline-offset: 2px; }
+    .sidebar-hamburger:hover { background: #4e7bbd; }
 
     @media (max-width: 1000px) {
       body, body.left-closed, body.right-closed, body.both-closed {
@@ -314,7 +308,6 @@
       .sidebar-toggle.left { right: 0; left: auto; }
       .sidebar-toggle.right { left: 0; right: auto; }
       .sidebar-hamburger { display: flex; }
-      .theme-toggle { right: 65px; }
     }
   </style>
 </head>
@@ -322,7 +315,6 @@
   <!-- Mobile hamburger buttons -->
   <button class="sidebar-hamburger left" id="openLeft" aria-label="Open Menu" type="button" tabindex="0">&#9776;</button>
   <button class="sidebar-hamburger right" id="openRight" aria-label="Open Events" type="button" tabindex="0">&#9776;</button>
-  <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme" type="button">🌙 Theme</button>
 
   <!-- LEFT SIDEBAR: Navigation -->
   <nav class="sidebar left" id="sidebarLeft" aria-label="Main menu">
@@ -332,6 +324,10 @@
 
   <!-- MAIN CONTENT -->
   <main class="main" id="main" tabindex="0">
+    <div class="floating-controls">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme" type="button">🌙 Theme</button>
+      <input class="main-search" id="mainSearch" type="text" placeholder="Search bosses/events..." aria-label="Search" />
+    </div>
     <section id="Welcome" class="center">
       <h1>Welcome Commander</h1>
       <p>Use the sidebars to explore bosses, events, and more. <span style="font-size:1.2em;">🎮</span></p>
@@ -357,7 +353,6 @@ Websites:
   <nav class="sidebar right" id="sidebarRight" aria-label="Event timer">
     <button class="sidebar-toggle right" id="toggleRight" aria-label="Hide Events" type="button" tabindex="0">&times;</button>
     <select class="timezone-select" id="timezoneSelect" aria-label="Select Timezone"></select>
-    <input type="text" class="event-filter" id="eventFilter" placeholder="Search events..." aria-label="Filter Events" />
     <div class="event-list" id="eventList">
       <div class="spinner" id="eventSpinner"></div>
     </div>
@@ -366,61 +361,8 @@ Websites:
   <!-- Toast for copy feedback -->
   <div class="toast" id="toast"></div>
 
-  <!-- Login Modal (replace with real auth in production) -->
-  <div class="modal-bg" id="loginModalBg" style="display:none;">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-      <h2 id="loginTitle">Commander Login</h2>
-      <form id="loginForm">
-        <input type="password" id="loginPassword" placeholder="Enter Password" aria-label="Password" autocomplete="current-password" required />
-        <br>
-        <button type="submit">Login</button>
-      </form>
-      <div id="loginError" style="color:#c00;display:none;">Incorrect password.</div>
-    </div>
-  </div>
-
 <script>
-/* --- Accessibility: Focus trap for modal --- */
-function trapFocus(modal) {
-  const focusable = modal.querySelectorAll('input,button');
-  let first = focusable[0], last = focusable[focusable.length-1];
-  modal.addEventListener('keydown', e => {
-    if (e.key === 'Tab') {
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-  });
-}
-
-/* --- Demo Login Modal (replace with real auth in production) --- */
-function showLoginModal() {
-  document.getElementById('loginModalBg').style.display = 'flex';
-  document.getElementById('loginPassword').focus();
-}
-function hideLoginModal() {
-  document.getElementById('loginModalBg').style.display = 'none';
-}
-document.addEventListener('DOMContentLoaded', () => {
-  if (!localStorage.getItem('ghc_loggedin')) {
-    showLoginModal();
-    trapFocus(document.getElementById('loginModalBg'));
-  }
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const pass = document.getElementById('loginPassword').value;
-    if (pass === "PvE") {
-      localStorage.setItem('ghc_loggedin', '1');
-      hideLoginModal();
-    } else {
-      document.getElementById('loginError').style.display = '';
-      setTimeout(()=>document.getElementById('loginError').style.display='none',2000);
-      document.getElementById('loginPassword').value = '';
-      document.getElementById('loginPassword').focus();
-    }
-  });
-});
-
-/* --- Theme Toggle and Persistence --- */
+/* --- THEME TOGGLE --- */
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('ghc_theme', theme);
@@ -435,7 +377,7 @@ document.getElementById('themeToggle').addEventListener('click', () => {
   setTheme(saved);
 })();
 
-/* --- Toast Message for Copy Feedback --- */
+/* --- TOAST MESSAGE --- */
 function showToast(msg) {
   const toast = document.getElementById('toast');
   toast.textContent = msg;
@@ -443,7 +385,7 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove('show'), 2000);
 }
 
-/* --- Navigation Data and Builder --- */
+/* --- DATA STRUCTURE: Add bosses/events here --- */
 const data = {
   "Core Tyria": {
     "World Bosses": [
@@ -483,51 +425,83 @@ const data = {
       }
     ]
   }
+  // Add more categories/groups/bosses here!
 };
-function buildNav(parent, obj) {
-  Object.entries(obj).forEach(([key,val]) => {
-    if (Array.isArray(val)) {
-      const a = document.createElement('a');
-      a.href = `#${key.replace(/\s+/g,'')}`;
-      a.textContent = key;
-      a.tabIndex = 0;
-      parent.appendChild(a);
-    } else {
-      const details = document.createElement('details');
-      const summary = document.createElement('summary');
-      summary.textContent = key;
-      details.appendChild(summary);
-      buildNav(details,val);
-      parent.appendChild(details);
-    }
-  });
-}
-function generateNav() {
+
+/* --- NAVIGATION SIDEBAR: Data-driven, retractable, accessible --- */
+function buildNavSidebar(data, filter = "") {
   const nav = document.getElementById('sideNav');
   nav.innerHTML = '';
-  nav.appendChild(Object.assign(document.createElement('a'), { href: '#Welcome', textContent: 'Welcome', tabIndex: 0 }));
-  buildNav(nav, data);
-  nav.appendChild(Object.assign(document.createElement('a'), { href: '#Credits', textContent: 'Credits', tabIndex: 0 }));
+  const createList = (obj, parentUl, level = 0) => {
+    Object.entries(obj).forEach(([cat, val]) => {
+      if (Array.isArray(val)) {
+        // Group of bosses/events
+        const li = document.createElement('li');
+        const groupBtn = document.createElement('button');
+        groupBtn.className = 'nav-group';
+        groupBtn.setAttribute('aria-expanded', 'false');
+        groupBtn.innerHTML = `<span class="arrow">&#9654;</span>${cat}`;
+        groupBtn.tabIndex = 0;
+        const itemsUl = document.createElement('ul');
+        itemsUl.className = 'nav-items';
+        val.forEach(boss => {
+          if (filter && !matchBoss(boss, filter)) return;
+          const a = document.createElement('a');
+          a.href = `#${boss.name.replace(/\s+/g, '')}`;
+          a.textContent = boss.name;
+          a.tabIndex = 0;
+          itemsUl.appendChild(Object.assign(document.createElement('li'), { appendChild: () => a }));
+          itemsUl.lastChild.appendChild(a);
+        });
+        if (itemsUl.childElementCount) {
+          li.appendChild(groupBtn);
+          li.appendChild(itemsUl);
+          parentUl.appendChild(li);
+          groupBtn.addEventListener('click', function() {
+            const expanded = groupBtn.getAttribute('aria-expanded') === 'true';
+            groupBtn.setAttribute('aria-expanded', !expanded);
+            itemsUl.classList.toggle('open', !expanded);
+            groupBtn.querySelector('.arrow').style.transform = !expanded ? 'rotate(90deg)' : '';
+          });
+        }
+      } else if (typeof val === 'object') {
+        // Nested category
+        const li = document.createElement('li');
+        const groupBtn = document.createElement('button');
+        groupBtn.className = 'nav-group';
+        groupBtn.setAttribute('aria-expanded', 'false');
+        groupBtn.innerHTML = `<span class="arrow">&#9654;</span>${cat}`;
+        groupBtn.tabIndex = 0;
+        const itemsUl = document.createElement('ul');
+        itemsUl.className = 'nav-items';
+        createList(val, itemsUl, level + 1);
+        if (itemsUl.childElementCount) {
+          li.appendChild(groupBtn);
+          li.appendChild(itemsUl);
+          parentUl.appendChild(li);
+          groupBtn.addEventListener('click', function() {
+            const expanded = groupBtn.getAttribute('aria-expanded') === 'true';
+            groupBtn.setAttribute('aria-expanded', !expanded);
+            itemsUl.classList.toggle('open', !expanded);
+            groupBtn.querySelector('.arrow').style.transform = !expanded ? 'rotate(90deg)' : '';
+          });
+        }
+      }
+    });
+  };
+  const ul = document.createElement('ul');
+  createList(data, ul);
+  nav.appendChild(ul);
 }
 
-/* --- Main Content Dynamic Boss/Item Logic --- */
+/* --- MAIN CONTENT: Bosses/Events, data-driven, filterable --- */
 const itemCache = {};
-function copyToClipboard(text) {
-  navigator.clipboard.writeText(text).then(
-    () => showToast('Copied!'),
-    () => showToast('Copy failed!')
-  );
-}
-function formatCoin(value) {
-  value = Number(value) || 0;
-  const gold = Math.floor(value / 10000);
-  const silver = Math.floor((value % 10000) / 100);
-  const copper = value % 100;
-  let str = '';
-  if (gold) str += gold + 'g ';
-  if (gold || silver) str += silver + 's ';
-  str += copper + 'c';
-  return str.trim();
+function matchBoss(boss, filter) {
+  filter = filter.toLowerCase();
+  if (boss.name.toLowerCase().includes(filter)) return true;
+  if (boss.location && boss.location.toLowerCase().includes(filter)) return true;
+  if (boss.drops && boss.drops.some(d => (itemCache[d.id]?.name || "").toLowerCase().includes(filter))) return true;
+  return false;
 }
 async function fetchItemData(id) {
   if (itemCache[id]) return itemCache[id];
@@ -547,20 +521,29 @@ async function fetchItemData(id) {
     return { name: `Item ${id}`, icon: '', value: 0, desc: '' };
   }
 }
-async function buildContent(parent, obj) {
+function formatCoin(value) {
+  value = Number(value) || 0;
+  const gold = Math.floor(value / 10000);
+  const silver = Math.floor((value % 10000) / 100);
+  const copper = value % 100;
+  let str = '';
+  if (gold) str += gold + 'g ';
+  if (gold || silver) str += silver + 's ';
+  str += copper + 'c';
+  return str.trim();
+}
+async function buildMainContent(data, filter = "") {
+  const parent = document.getElementById('mainContent');
   parent.innerHTML = '<div class="spinner"></div>';
-  let html = '<button class="batch-copy-btn" id="batchCopyBtn" aria-label="Copy All">Copy All Boss Info</button>';
-  let allCopyLines = [];
-  for (const [cat, groups] of Object.entries(obj)) {
-    html += `<details open><summary><span class="cat-heading">${cat}</span></summary>`;
+  let html = '';
+  for (const [cat, groups] of Object.entries(data)) {
+    let groupContent = '';
     for (const [group, bosses] of Object.entries(groups)) {
-      html += `<details><summary><h2 style="display:inline">${group}</h2></summary>`;
+      let bossContent = '';
       for (let boss of bosses) {
-        html += `<div class="boss-block"><h3 id="${boss.name.replace(/\s/g,'')}">${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
-        let dropDataArr = [];
-        for (const drop of boss.drops) {
-          dropDataArr.push(await fetchItemData(drop.id));
-        }
+        if (filter && !matchBoss(boss, filter)) continue;
+        bossContent += `<div class="boss-block"><h3 id="${boss.name.replace(/\s/g,'')}">${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
+        for (const drop of boss.drops) await fetchItemData(drop.id);
         const guaranteedDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
         const chanceDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'chance');
         let mostValuableChance = null;
@@ -581,8 +564,7 @@ async function buildContent(parent, obj) {
           );
         }
         const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${parts.join(', ')}`;
-        allCopyLines.push(copyText);
-        html += `<div class="textbox-container">
+        bossContent += `<div class="textbox-container">
           <input type="text" class="textbox" value="${copyText.replace(/"/g,'&quot;')}" readonly aria-label="Boss Info: ${boss.name}">
           <button class="copy-button" title="Copy ${boss.name}" type="button" tabindex="0" aria-label="Copy ${boss.name}"></button>
         </div>
@@ -592,7 +574,7 @@ async function buildContent(parent, obj) {
           let dropType = '';
           if ((d.note || '').toLowerCase() === 'guaranteed') dropType = '<span class="drop-type-guaranteed">(Guaranteed)</span>';
           else if ((d.note || '').toLowerCase() === 'chance') dropType = '<span class="drop-type-chance">(Chance)</span>';
-          html += `<div class="item-drop" tabindex="0">
+          bossContent += `<div class="item-drop" tabindex="0">
             <img src="${itemCache[d.id].icon||''}" alt="${itemCache[d.id].name||''}" loading="lazy">
             <span>${itemCache[d.id].name}</span>
             ${dropType}
@@ -600,26 +582,23 @@ async function buildContent(parent, obj) {
             <span class="tooltip">${itemCache[d.id].desc||'No description.'}</span>
           </div>`;
         }
-        html += `</div></details></div>`;
+        bossContent += `</div></details></div>`;
       }
-      html += `</details>`;
+      if (bossContent) groupContent += `<details open><summary><span class="cat-heading">${group}</span></summary>${bossContent}</details>`;
     }
-    html += `</details>`;
+    if (groupContent) html += `<section><h2>${cat}</h2>${groupContent}</section>`;
   }
-  parent.innerHTML = html;
+  parent.innerHTML = html || `<div style="padding:20px;color:#aaa;">No bosses/events match your search.</div>`;
   // Attach copy events
   parent.querySelectorAll('.copy-button').forEach(btn => {
     btn.addEventListener('click', function() {
-      copyToClipboard(this.previousElementSibling.value);
+      showToast('Copied!');
+      navigator.clipboard.writeText(this.previousElementSibling.value);
     });
   });
-  // Batch copy
-  document.getElementById('batchCopyBtn').onclick = () => {
-    copyToClipboard(allCopyLines.join('\n'));
-  };
 }
 
-/* --- Sidebar Toggle Logic --- */
+/* --- SIDEBAR TOGGLES --- */
 function updateBodyClass() {
   const left  = !document.getElementById('sidebarLeft').classList.contains('closed');
   const right = !document.getElementById('sidebarRight').classList.contains('closed');
@@ -643,7 +622,7 @@ function setupSidebarToggles() {
   document.getElementById('openRight').addEventListener('click', () => openSidebar('sidebarRight'));
 }
 
-/* --- GW2 Event Timer Sidebar Logic --- */
+/* --- EVENT TIMER: GW2 API + Community sources --- */
 const EVENTS_JSON_URL = 'https://raw.githubusercontent.com/blish-hud/Community-Module-Pack/master/Events%20Module/ref/events.json';
 let events = [];
 let userTimezone = localStorage.getItem('ghc_timezone') || Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -684,9 +663,12 @@ async function fetchEvents() {
   }
   if (spinner) spinner.style.display = 'none';
 }
-function updateEvents() {
+function matchEvent(event, filter) {
+  filter = filter.toLowerCase();
+  return event.name.toLowerCase().includes(filter);
+}
+function updateEvents(filter = "") {
   const eventList = document.getElementById('eventList');
-  const filter = document.getElementById('eventFilter').value.trim().toLowerCase();
   if (!events.length) {
     eventList.innerHTML = '<div style="padding:20px;color:#aaa;">No events available.</div>';
     return;
@@ -697,7 +679,7 @@ function updateEvents() {
     return { name: event.name, utcTime: nextTime, userTime: toUserTimeStr(nextTime) };
   });
   if (filter) {
-    nextEvents = nextEvents.filter(ev => ev.name.toLowerCase().includes(filter));
+    nextEvents = nextEvents.filter(ev => matchEvent(ev, filter));
   }
   nextEvents.sort((a, b) => a.utcTime - b.utcTime);
   let nextIdx = nextEvents.findIndex(ev => ev.utcTime > now);
@@ -706,14 +688,8 @@ function updateEvents() {
   nextEvents.forEach((event, idx) => {
     html += `<div class="event-row${idx === nextIdx ? ' upcoming' : ''}"><span class="event-name">${event.name}</span><span class="event-time">${event.userTime}</span></div>`;
   });
-  eventList.innerHTML = html;
+  eventList.innerHTML = html || `<div style="padding:20px;color:#aaa;">No events match your search.</div>`;
 }
-async function refreshAndUpdate() {
-  await fetchEvents();
-  updateEvents();
-}
-
-/* --- Timezone Select --- */
 function populateTimezones() {
   const sel = document.getElementById('timezoneSelect');
   const zones = Intl.supportedValuesOf ? Intl.supportedValuesOf("timeZone") : [
@@ -730,50 +706,29 @@ function populateTimezones() {
   sel.addEventListener('change', function() {
     userTimezone = this.value;
     localStorage.setItem('ghc_timezone', userTimezone);
-    updateEvents();
+    updateEvents(document.getElementById('mainSearch').value);
   });
 }
 
-/* --- Event Filter --- */
-document.getElementById('eventFilter').addEventListener('input', updateEvents);
-
-/* --- Notifications for Next Event --- */
-async function notifyNextEvent() {
-  if (!("Notification" in window)) return;
-  if (Notification.permission !== "granted") {
-    Notification.requestPermission();
-    return;
-  }
-  if (!events.length) return;
-  const now = new Date();
-  const nextEvent = events.map(e => ({...e, next: getNextOccurrence(e.offset, e.repeat)}))
-    .sort((a, b) => a.next - b.next)[0];
-  if (!nextEvent) return;
-  const ms = nextEvent.next - now;
-  if (ms > 0 && ms < 60000) {
-    new Notification(`Event soon: ${nextEvent.name}`, {
-      body: `Starts at ${toUserTimeStr(nextEvent.next)} (${userTimezone})`
-    });
-  }
-}
+/* --- MAIN SEARCH: Filters both bosses and events --- */
+document.getElementById('mainSearch').addEventListener('input', async function() {
+  const filter = this.value.trim();
+  buildNavSidebar(data, filter);
+  await buildMainContent(data, filter);
+  updateEvents(filter);
+});
 
 /* --- DOMContentLoaded: Build everything --- */
 document.addEventListener('DOMContentLoaded', async () => {
-  generateNav();
   setupSidebarToggles();
-  // Main content
-  const main = document.getElementById('mainContent');
-  await buildContent(main, data);
-
-  // Event timer
+  buildNavSidebar(data);
+  await buildMainContent(data);
   populateTimezones();
-  refreshAndUpdate();
-  setInterval(() => {
-    refreshAndUpdate();
-    notifyNextEvent();
-  }, 60000);
+  await fetchEvents();
+  updateEvents();
+  setInterval(() => { fetchEvents().then(()=>updateEvents(document.getElementById('mainSearch').value)); }, 60000);
   document.addEventListener('visibilitychange', function() {
-    if (!document.hidden) refreshAndUpdate();
+    if (!document.hidden) fetchEvents().then(()=>updateEvents(document.getElementById('mainSearch').value));
   });
   updateBodyClass();
 });
