@@ -58,24 +58,6 @@
       transition: background 0.3s, color 0.3s;
       overflow-x: hidden;
     }
-    a.skip-link {
-      position: absolute;
-      top: -40px;
-      left: 0;
-      background: var(--accent);
-      color: white;
-      padding: 8px 16px;
-      z-index: 10000;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 0 0 4px 0;
-      transition: top 0.3s;
-    }
-    a.skip-link:focus {
-      top: 0;
-      outline: 3px solid #f1c40f;
-      outline-offset: 2px;
-    }
     nav.sidebar {
       position: fixed;
       top: 0;
@@ -649,7 +631,7 @@ Websites:
       }
     });
 
-    // ========== Navigation Data ==========
+    // ========== Data Structure ==========
     const data = {
       "Core Tyria": {
         "World Bosses": [
@@ -687,59 +669,77 @@ Websites:
               { id: 31051, note: "Chance" }
             ]
           }
+        ],
+        "Meta Events": [
+          {
+            name: "Tequatl the Sunless",
+            code: "[&BNABAAA=]",
+            location: "Sparkfly Fen",
+            drops: [
+              { id: 46733, note: "Guaranteed" },
+              { id: 46747, note: "Chance" }
+            ]
+          }
         ]
       }
     };
 
-    // ========== Sidebar Navigation (robust) ==========
+    // ========== Sidebar Navigation (sync with main content) ==========
+    function makeId(main, sub, name) {
+      return (
+        main.replace(/\s+/g, '') +
+        '-' +
+        sub.replace(/\s+/g, '') +
+        '-' +
+        name.replace(/\s+/g, '')
+      );
+    }
+
     function buildNavSidebar(data, filter = "") {
       const nav = document.getElementById('sideNav');
       nav.innerHTML = '';
-      const createList = (obj, parentUl, level = 0) => {
-        Object.entries(obj).forEach(([cat, val]) => {
-          if (Array.isArray(val)) {
-            // Group of bosses/events
-            const details = document.createElement('details');
-            details.open = true;
-            const summary = document.createElement('summary');
-            summary.textContent = cat;
-            details.appendChild(summary);
-            val.forEach(boss => {
-              if (filter && !matchBoss(boss, filter)) return;
-              const a = document.createElement('a');
-              a.href = `#${boss.name.replace(/\s+/g, '')}`;
-              a.textContent = boss.name;
-              a.tabIndex = 0;
-              a.addEventListener('click', e => {
-                e.preventDefault();
-                const el = document.getElementById(a.href.slice(1));
-                if (el) {
-                  el.scrollIntoView({behavior:"smooth", block:"start"});
-                  el.focus && el.focus();
-                }
-              });
-              details.appendChild(a);
+      Object.entries(data).forEach(([main, subs]) => {
+        const mainDetails = document.createElement('details');
+        mainDetails.open = true;
+        const mainSummary = document.createElement('summary');
+        mainSummary.textContent = main;
+        mainDetails.appendChild(mainSummary);
+
+        Object.entries(subs).forEach(([sub, bosses]) => {
+          const subDetails = document.createElement('details');
+          subDetails.open = true;
+          const subSummary = document.createElement('summary');
+          subSummary.textContent = sub;
+          subDetails.appendChild(subSummary);
+
+          bosses.forEach(boss => {
+            if (filter && !matchBoss(boss, filter)) return;
+            const a = document.createElement('a');
+            a.href = `#${makeId(main, sub, boss.name)}`;
+            a.textContent = boss.name;
+            a.tabIndex = 0;
+            a.addEventListener('click', e => {
+              e.preventDefault();
+              const el = document.getElementById(makeId(main, sub, boss.name));
+              if (el) {
+                el.scrollIntoView({behavior:"smooth", block:"start"});
+                el.focus && el.focus();
+              }
             });
-            if (details.childElementCount > 1) parentUl.appendChild(details);
-          } else if (typeof val === 'object') {
-            // Nested category
-            const details = document.createElement('details');
-            details.open = true;
-            const summary = document.createElement('summary');
-            summary.textContent = cat;
-            details.appendChild(summary);
-            createList(val, details, level + 1);
-            if (details.childElementCount > 1) parentUl.appendChild(details);
-          }
+            subDetails.appendChild(a);
+          });
+
+          if (subDetails.childElementCount > 1) mainDetails.appendChild(subDetails);
         });
-      };
-      createList(data, nav);
+
+        nav.appendChild(mainDetails);
+      });
       // Add Welcome/Credits
       nav.appendChild(Object.assign(document.createElement('a'), { href: '#Welcome', textContent: 'Welcome' }));
       nav.appendChild(Object.assign(document.createElement('a'), { href: '#Credits', textContent: 'Credits' }));
     }
 
-    // ========== Main Content (robust, filterable, async) ==========
+    // ========== Main Content (sync with sidebar, async for items) ==========
     const itemCache = {};
     function matchBoss(boss, filter) {
       filter = filter.toLowerCase();
@@ -753,13 +753,13 @@ Websites:
       try {
         const [item, price] = await Promise.all([
           fetch(`https://api.guildwars2.com/v2/items/${id}`).then(r=>r.json()),
-          fetch(`https://api.guildwars2.com/v2/commerce/prices/${id}`).then(r=>r.json())
+          fetch(`https://api.guildwars2.com/v2/commerce/prices/${id}`).then(r=>r.json()).catch(()=>null)
         ]);
         itemCache[id] = {
           name: item.name,
           icon: item.icon,
           desc: item.description || '',
-          value: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
+          value: price?.sells?.unit_price || price?.lowest_sell_unit_price || 0
         };
         return itemCache[id];
       } catch {
@@ -781,13 +781,13 @@ Websites:
       const parent = document.getElementById('mainContent');
       parent.innerHTML = '<div class="spinner"></div>';
       let html = '';
-      for (const [cat, groups] of Object.entries(data)) {
+      for (const [main, groups] of Object.entries(data)) {
         let groupContent = '';
         for (const [group, bosses] of Object.entries(groups)) {
           let bossContent = '';
           for (let boss of bosses) {
             if (filter && !matchBoss(boss, filter)) continue;
-            bossContent += `<div class="boss-block"><h3 id="${boss.name.replace(/\s/g,'')}">${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
+            bossContent += `<div class="boss-block" id="${makeId(main, group, boss.name)}" tabindex="-1"><h3>${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
             for (const drop of boss.drops) await fetchItemData(drop.id);
             const guaranteedDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
             const chanceDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'chance');
@@ -830,7 +830,7 @@ Websites:
           }
           if (bossContent) groupContent += `<details open><summary><span class="cat-heading">${group}</span></summary>${bossContent}</details>`;
         }
-        if (groupContent) html += `<section><h2>${cat}</h2>${groupContent}</section>`;
+        if (groupContent) html += `<section><h2>${main}</h2>${groupContent}</section>`;
       }
       parent.innerHTML = html || `<div style="padding:20px;color:#aaa;">No bosses/events match your search.</div>`;
       // Attach copy events
