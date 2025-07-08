@@ -59,6 +59,15 @@
     }
     .item-drop img { width: 24px; height: 24px; }
     .item-drop small { color: #555; margin-left: 4px; }
+    .item-code {
+      font-family: monospace;
+      background: #222;
+      color: #f9d923;
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin-left: 6px;
+      font-size: 13px;
+    }
     footer {
       text-align: center; padding: 1em 0; background: #ececec;
       margin-top: 2em; font-size: 0.9em;
@@ -116,17 +125,12 @@ const data = {
         code: "[&BKgBAAA=]",
         location: "Bloodtide Coast",
         drops: [
-          { id: 24305, note: "Bloodstone Chest" },
-          { id: 24567, note: "Mystic Coin" }
-        ]
-      },
-      {
-        name: "Karka Queen",
-        code: "[&BNcGAAA=]",
-        location: "Southsun Cove",
-        drops: [
-          { id: 30698, note: "Karka Shell" },
-          { id: 43141, note: "Queen's Gauntlet Ticket" }
+          { 
+            id: 55434, // Sack of Booty
+            note: "Sack of Booty",
+            itemCode: "[&AgGCJAAA]",
+            price: { buy: 306, sell: 200 } // 3s 6c and 2s 0c
+          }
         ]
       }
     ]
@@ -169,6 +173,19 @@ function generateNav() {
   const c = document.createElement('a');
   c.href = '#Credits'; c.textContent = 'Credits';
   nav.appendChild(c);
+}
+
+// ========== PRICE FORMATTER ==========
+function formatCoin(value) {
+  value = Number(value) || 0;
+  const gold = Math.floor(value / 10000);
+  const silver = Math.floor((value % 10000) / 100);
+  const copper = value % 100;
+  let str = '';
+  if (gold) str += gold + 'g ';
+  if (gold || silver) str += silver + 's ';
+  str += copper + 'c';
+  return str.trim();
 }
 
 // ========== ITEM DATA FETCHING ==========
@@ -217,74 +234,4 @@ async function fetchItemData(ids) {
 
 // ========== MAIN CONTENT ==========
 function buildContent(parent, obj, info) {
-  Object.entries(obj).forEach(([key,val]) => {
-    if (Array.isArray(val)) {
-      const section = document.createElement('section');
-      section.id = key.replace(/\s+/g,'');
-      section.innerHTML = `<h2>${key}</h2>`;
-      val.forEach((boss,i) => {
-        // Compose copy string
-        const dropStrings = boss.drops.map(drop => {
-          const d = info[drop.id] || {};
-          return `${drop.note || d.name || 'Unknown'} (Buy: ${d.buy} ⛃, Sell: ${d.sell} ⛃)`;
-        }).join(' | ');
-        const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${dropStrings}`;
-        // Teleport row
-        const wrap = document.createElement('div');
-        wrap.className = 'textbox-container';
-        const inp = document.createElement('input');
-        inp.type = 'text';
-        inp.className = 'textbox';
-        inp.value = copyText;
-        inp.readOnly = true;
-        const btn = document.createElement('button');
-        btn.className = 'copy-button';
-        btn.title = `Copy ${boss.name}`;
-        btn.onclick = ()=>copyToClipboard(copyText);
-        wrap.appendChild(inp);
-        wrap.appendChild(btn);
-        section.appendChild(wrap);
-        // Drops
-        const dropsDiv = document.createElement('div');
-        dropsDiv.className = 'drops-container';
-        boss.drops.forEach(drop => {
-          const d = info[drop.id] || {};
-          const div = document.createElement('div');
-          div.className = 'item-drop';
-          div.innerHTML = `
-            <img src="${d.icon||''}" alt="${d.name||drop.id}">
-            <span>${drop.note || d.name || 'Unknown Item'}</span>
-            <small>Buy: ${d.buy} ⛃ | Sell: ${d.sell} ⛃</small>
-            <small>Account Bound: ${d.bound? 'Yes':'No'}</small>
-          `;
-          dropsDiv.appendChild(div);
-        });
-        section.appendChild(dropsDiv);
-      });
-      parent.appendChild(section);
-    } else {
-      buildContent(parent,val,info);
-    }
-  });
-}
-
-// ========== INIT ==========
-document.addEventListener('DOMContentLoaded', async () => {
-  generateNav();
-  // Collect unique drop IDs
-  const allIds = [];
-  (function collect(o){
-    Object.values(o).forEach(v => {
-      if (Array.isArray(v))
-        v.forEach(b=> b.drops?.forEach(drop=> allIds.push(drop.id)));
-      else collect(v);
-    });
-  })(data);
-  const info = await fetchItemData([...new Set(allIds)]);
-  const main = document.getElementById('mainContent');
-  main.innerHTML = '';
-  buildContent(main, data, info);
-});
-</script>
-</body>
-</html>
+  Object.entries(obj).forEach(([key
