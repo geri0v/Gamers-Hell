@@ -76,8 +76,9 @@
   </style>
 </head>
 <body>
-  <!-- LEFT NAV -->
+  <!-- LEFT NAVIGATION MENU (auto-generated) -->
   <nav class="sidenav" id="sideNav"></nav>
+
   <!-- MAIN CONTENT -->
   <div class="main">
     <section id="Welcome" class="center">
@@ -107,7 +108,8 @@ Websites:
     </section>
     <footer>&copy; 2025 Gamers-Hell Community</footer>
   </div>
-  <!-- RIGHT TIMER -->
+
+  <!-- RIGHT TIMER MENU -->
   <nav class="sidenav2">
     <iframe
       src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true"
@@ -115,56 +117,70 @@ Websites:
       style="box-shadow:0 0 12px #223;">
     </iframe>
   </nav>
+
 <script>
 /* =========================
-   CONFIG: Only edit this!
-   ========================= */
+   DATA STRUCTURE
+   =========================
+   - To add a new CATEGORY, add a new property at the root of the 'data' object.
+   - To add a new BOSS, add a new object to the relevant category/group array.
+   - To add a new DROP, add a new object to the 'drops' array of the boss.
+*/
 const data = {
-  "Core Tyria": {
-    "World Bosses": [
+  "Core Tyria": { // <-- CATEGORY
+    "World Bosses": [ // <-- GROUP (will be a menu section)
       {
-        name: "Taidha Covington",
-        code: "[&BKgBAAA=]",
+        name: "Taidha Covington", // BOSS NAME
+        code: "[&BKgBAAA=]",      // Closest waypoint code
         location: "Bloodtide Coast",
-        drops: [
+        drops: [                  // DROPS (add as many as you want)
           {
-            id: 9346, // Sack of Booty (correct item ID)
+            id: 9346,
             note: "Sack of Booty",
             itemCode: "[&AgGCJAAA]"
+          },
+          {
+            id: 19357,
+            note: "Chance to get Old Reliable",
+            itemCode: "[&Cu8RAAA=]"
+          },
+          {
+            id: 19361,
+            note: "Chance to get Trusty Rusty",
+            itemCode: "[&Cv4RAAA=]"
+          }
+        ]
+      },
+      // ---- ADD ANOTHER BOSS HERE ----
+      {
+        name: "Karka Queen",
+        code: "[&BNcGAAA=]",
+        location: "Southsun Cove",
+        drops: [
+          {
+            id: 30698,
+            note: "Karka Shell",
+            itemCode: "[&AgG9wgAA]"
           }
         ]
       },
       {
-        name: "Karka Queen",
-        code: "[&BNcGAAA=]", // Lion Point Waypoint (closest)
-        location: "Southsun Cove",
-        drops: [
-          {
-            id: 37897, // Karka Shell
-            note: "Karka Shell",
-            itemCode: "[&AgG9wgAA]" // In-game chat code for Karka Shell
-          }
-        ]
-      },
-            {
-        name: "Karka Queen",
-        code: "[&BNcGAAA=]", // Lion Point Waypoint (closest)
-        location: "Southsun Cove",
-        drops: [
-          {
-            id: 30698, // Karka Shell
-            note: "Karka Shell",
-            itemCode: "[&AgG9wgAA]" // In-game chat code for Karka Shell
-          }
-        ]
-      },
+  name: "Shadow Behemoth",
+  code: "[&BPcAAAA=]",
+  location: "Queensdale",
+  drops: [
+    { id: 12345, note: "Rare Shadow Chest", itemCode: "[&AgAAAAAA]" }
+  ]
+}
+      // ---- ADD MORE BOSSES HERE ----
     ]
+    // ---- ADD MORE GROUPS HERE ----
   }
-  // Add more categories, bosses, and drops as needed!
+  // ---- ADD MORE CATEGORIES HERE ----
 };
 
 /* =========================
-   Copy-to-Clipboard
+   COPY-TO-CLIPBOARD
    ========================= */
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(
@@ -174,7 +190,7 @@ function copyToClipboard(text) {
 }
 
 /* =========================
-   Sidebar Navigation
+   SIDEBAR NAVIGATION
    ========================= */
 function buildNav(parent, obj) {
   Object.entries(obj).forEach(([key,val]) => {
@@ -202,7 +218,7 @@ function generateNav() {
 }
 
 /* =========================
-   Coin Formatter
+   COIN FORMATTER
    ========================= */
 function formatCoin(value) {
   value = Number(value) || 0;
@@ -217,10 +233,9 @@ function formatCoin(value) {
 }
 
 /* =========================
-   Fetch Item Data (API + Wiki fallback)
+   FETCH ITEM DATA (API + WIKI FALLBACK)
    ========================= */
 async function fetchItemData(id) {
-  // Try GW2 API (primary)
   try {
     const [item, price] = await Promise.all([
       fetch(`https://api.guildwars2.com/v2/items/${id}`).then(r=>r.json()),
@@ -231,11 +246,9 @@ async function fetchItemData(id) {
       icon: item.icon,
       itemCode: item.chat_link || "",
       bound: item.flags && item.flags.includes('AccountBound'),
-      buy: price?.buys?.unit_price || price.highest_buy_unit_price || 0,
-      sell: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
+      value: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
     };
   } catch(e) {
-    // Fallback: GW2 Wiki (name, icon, chat code only)
     try {
       const url = `https://wiki.guildwars2.com/api.php?action=askargs&format=json&parameters=[[Has game id::${id}]]|?Has_icon|?Has_name|?Has_chat_link`;
       const data = await fetch(url, {mode:'cors'}).then(r=>r.json());
@@ -246,17 +259,16 @@ async function fetchItemData(id) {
         icon: page.printouts?.Has_icon?.[0] || '',
         itemCode: page.printouts?.Has_chat_link?.[0] || "",
         bound: false,
-        buy: 0,
-        sell: 0
+        value: 0
       };
     } catch(e2) {
-      return { name: `Item ${id}`, icon: '', itemCode: "", bound: false, buy: 0, sell: 0 };
+      return { name: `Item ${id}`, icon: '', itemCode: "", bound: false, value: 0 };
     }
   }
 }
 
 /* =========================
-   Main Content Builder
+   MAIN CONTENT BUILDER
    ========================= */
 async function buildContent(parent, obj) {
   for (const [cat, groups] of Object.entries(obj)) {
@@ -266,21 +278,18 @@ async function buildContent(parent, obj) {
       section.innerHTML = `<h2>${group}</h2>`;
       for (let i = 0; i < bosses.length; i++) {
         const boss = bosses[i];
-        // Only show the most valuable drop (highest sell price)
-        let bestDrop = null, bestVal = -1;
+        // Fetch all drops for this boss
+        const dropDataArr = [];
         for (const drop of boss.drops) {
           const dropData = await fetchItemData(drop.id);
-          if ((dropData.sell || 0) > bestVal) {
-            bestDrop = { ...drop, ...dropData };
-            bestVal = dropData.sell || 0;
-          }
+          dropDataArr.push({ ...drop, ...dropData });
         }
-        // Compose copy string
-        const dropString = bestDrop
-          ? `${bestDrop.note || bestDrop.name} ${bestDrop.itemCode || ''} (Buy: ${formatCoin(bestDrop.buy)}, Sell: ${formatCoin(bestDrop.sell)})`
-          : "No drop data";
-        const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${dropString}`;
-        // Teleport row
+        // Copy string: only name and value
+        const dropStrings = dropDataArr.map(d =>
+          `${d.note || d.name} (Value: ${formatCoin(d.value)})`
+        ).join(' | ');
+        const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${dropStrings}`;
+        // Copy-paste row
         const wrap = document.createElement('div');
         wrap.className = 'textbox-container';
         const inp = document.createElement('input');
@@ -295,22 +304,22 @@ async function buildContent(parent, obj) {
         wrap.appendChild(inp);
         wrap.appendChild(btn);
         section.appendChild(wrap);
-        // Drop details
-        if (bestDrop) {
-          const dropsDiv = document.createElement('div');
-          dropsDiv.className = 'drops-container';
+        // Drop details with item codes
+        const dropsDiv = document.createElement('div');
+        dropsDiv.className = 'drops-container';
+        dropDataArr.forEach(d => {
           const div = document.createElement('div');
           div.className = 'item-drop';
           div.innerHTML = `
-            <img src="${bestDrop.icon||''}" alt="${bestDrop.name||''}">
-            <span>${bestDrop.note || bestDrop.name || ''}</span>
-            <span class="item-code">${bestDrop.itemCode||''}</span>
-            <small>Buy: ${formatCoin(bestDrop.buy)} | Sell: ${formatCoin(bestDrop.sell)}</small>
-            <small>Account Bound: ${bestDrop.bound? 'Yes':'No'}</small>
+            <img src="${d.icon||''}" alt="${d.name||''}">
+            <span>${d.note || d.name || ''}</span>
+            <span class="item-code">${d.itemCode||''}</span>
+            <small>Value: ${formatCoin(d.value)}</small>
+            <small>Account Bound: ${d.bound? 'Yes':'No'}</small>
           `;
           dropsDiv.appendChild(div);
-          section.appendChild(dropsDiv);
-        }
+        });
+        section.appendChild(dropsDiv);
       }
       parent.appendChild(section);
     }
