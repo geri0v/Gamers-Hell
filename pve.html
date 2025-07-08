@@ -35,6 +35,7 @@
     .center { text-align: center; margin-bottom: 1em; }
     h1, h2 { margin: 0.5em 0; }
     h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.2em; margin-top: 1.5em; }
+    .cat-heading { font-size: 1.6em; margin: 1.5em 0 0.5em 0; color: #2b4765; }
     .textbox-container {
       display: flex; align-items: center; margin: 6px 0;
     }
@@ -59,11 +60,6 @@
     }
     .item-drop img { width: 24px; height: 24px; }
     .item-drop small { color: #555; margin-left: 4px; }
-    footer {
-      text-align: center; padding: 1em 0; background: #ececec;
-      margin-top: 2em; font-size: 0.9em;
-    }
-    textarea { width: 100%; max-width: 600px; }
     details summary {
       cursor: pointer;
       font-weight: bold;
@@ -73,6 +69,13 @@
       margin-bottom: 4px;
       user-select: none;
     }
+    footer {
+      text-align: center; padding: 1em 0; background: #ececec;
+      margin-top: 2em; font-size: 0.9em;
+    }
+    textarea { width: 100%; max-width: 600px; }
+    .drop-type-guaranteed { color: #007c1e; font-weight: bold; margin-left: 8px; }
+    .drop-type-chance { color: #c00; font-weight: bold; margin-left: 8px; }
   </style>
 </head>
 <body>
@@ -122,6 +125,7 @@ Websites:
 /* =========================
    DATA STRUCTURE
    ========================= */
+// Use note: "Guaranteed" or "Chance" (case-insensitive) if you want to control copy-paste output.
 const data = {
   "Core Tyria": {
     "World Bosses": [
@@ -130,9 +134,9 @@ const data = {
         code: "[&BKgBAAA=]",
         location: "Bloodtide Coast",
         drops: [
-          { id: 9346, note: "Guaranteed Sack of Booty" },
-          { id: 19357, note: "Chance to get Old Reliable" },
-          { id: 19361, note: "Chance to get Trusty Rusty" }
+          { id: 9346, note: "Guaranteed" },
+          { id: 19357, note: "Chance" },
+          { id: 19361, note: "Chance" }
         ]
       },
       {
@@ -140,9 +144,9 @@ const data = {
         code: "[&BNcGAAA=]",
         location: "Southsun Cove",
         drops: [
-          { id: 37897, note: "Guaranteed Karka Shell (5)" },
-          { id: 37899, note: "Ancient Karka Shell" },
-          { id: 49509, note: "Ancient Karka Shell" }
+          { id: 37897, note: "Guaranteed" },
+          { id: 37899, note: "Chance" },
+          { id: 49509 }
         ]
       },
       {
@@ -150,15 +154,16 @@ const data = {
         code: "[&BPcAAAA=]",
         location: "Queensdale",
         drops: [
-          { id: 12345, note: "Rare Shadow Chest" }
+          { id: 12345 }
         ]
       }
     ]
   }
+  // Add more categories/groups as needed!
 };
 
 /* =========================
-   COPY-TO-CLIPBOARD
+   COPY-TO-CLIPBOARD FUNCTION
    ========================= */
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(
@@ -211,7 +216,7 @@ function formatCoin(value) {
 }
 
 /* =========================
-   FETCH ITEM DATA (API + WIKI FALLBACK)
+   FETCH ITEM DATA (API)
    ========================= */
 async function fetchItemData(id) {
   try {
@@ -222,24 +227,10 @@ async function fetchItemData(id) {
     return {
       name: item.name,
       icon: item.icon,
-      bound: item.flags && item.flags.includes('AccountBound'),
       value: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
     };
-  } catch(e) {
-    try {
-      const url = `https://wiki.guildwars2.com/api.php?action=askargs&format=json&parameters=[[Has game id::${id}]]|?Has_icon|?Has_name`;
-      const data = await fetch(url, {mode:'cors'}).then(r=>r.json());
-      const pages = data.query.results;
-      const page = Object.values(pages)[0] || {};
-      return {
-        name: page.printouts?.Has_name?.[0] || `Item ${id}`,
-        icon: page.printouts?.Has_icon?.[0] || '',
-        bound: false,
-        value: 0
-      };
-    } catch(e2) {
-      return { name: `Item ${id}`, icon: '', bound: false, value: 0 };
-    }
+  } catch {
+    return { name: `Item ${id}`, icon: '', value: 0 };
   }
 }
 
@@ -248,22 +239,50 @@ async function fetchItemData(id) {
    ========================= */
 async function buildContent(parent, obj) {
   for (const [cat, groups] of Object.entries(obj)) {
+    // Category heading
+    const catHeading = document.createElement('div');
+    catHeading.className = 'cat-heading';
+    catHeading.textContent = cat;
+    parent.appendChild(catHeading);
+
     for (const [group, bosses] of Object.entries(groups)) {
       const section = document.createElement('section');
       section.id = group.replace(/\s+/g,'');
       section.innerHTML = `<h2>${group}</h2>`;
-      for (let i = 0; i < bosses.length; i++) {
-        const boss = bosses[i];
+      for (let boss of bosses) {
+        const bossDiv = document.createElement('div');
+        bossDiv.className = 'boss';
+        bossDiv.innerHTML = `<h3>${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
         // Fetch all drops for this boss
         const dropDataArr = [];
         for (const drop of boss.drops) {
-          const dropData = await fetchItemData(drop.id);
-          dropDataArr.push({ ...drop, ...dropData });
+          const itemData = await fetchItemData(drop.id);
+          dropDataArr.push({ ...drop, ...itemData });
         }
-        // Find the drop with the highest value
-        const highestValueDrop = dropDataArr.reduce((max, d) => d.value > max.value ? d : max, dropDataArr[0]);
-        // Copy string: only boss name, code, location, and highest value drop name and value
-        const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${highestValueDrop.note || highestValueDrop.name} (Value: ${formatCoin(highestValueDrop.value)})`;
+        // Separate guaranteed and chance drops
+        const guaranteedDrops = dropDataArr.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
+        const chanceDrops = dropDataArr.filter(d => (d.note || '').toLowerCase() === 'chance');
+        // Find the most valuable chance drop
+        let mostValuableChance = null;
+        if (chanceDrops.length) {
+          mostValuableChance = chanceDrops.reduce((max, d) => d.value > max.value ? d : max, chanceDrops[0]);
+        }
+        // Build copy-paste string
+        let parts = [];
+        guaranteedDrops.forEach(d =>
+          parts.push(`Guaranteed to drop ${d.name} (Value: ${formatCoin(d.value)})`)
+        );
+        if (mostValuableChance) {
+          parts.push(`Chance to drop ${mostValuableChance.name} (Value: ${formatCoin(mostValuableChance.value)})`);
+        }
+        // If no notes at all, just list all drops by value
+        if (!guaranteedDrops.length && !chanceDrops.length) {
+          dropDataArr.sort((a, b) => b.value - a.value);
+          dropDataArr.forEach(d =>
+            parts.push(`${d.name} (Value: ${formatCoin(d.value)})`)
+          );
+        }
+        const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${parts.join(', ')}`;
         // Copy-paste row
         const wrap = document.createElement('div');
         wrap.className = 'textbox-container';
@@ -278,8 +297,8 @@ async function buildContent(parent, obj) {
         btn.onclick = ()=>copyToClipboard(copyText);
         wrap.appendChild(inp);
         wrap.appendChild(btn);
-        section.appendChild(wrap);
-        // Drop details with item names and values only, collapsible
+        bossDiv.appendChild(wrap);
+        // Drops collapsible
         const details = document.createElement('details');
         const summary = document.createElement('summary');
         summary.textContent = 'Show/Hide Drops';
@@ -287,18 +306,22 @@ async function buildContent(parent, obj) {
         const dropsDiv = document.createElement('div');
         dropsDiv.className = 'drops-container';
         dropDataArr.forEach(d => {
-          const div = document.createElement('div');
+          let dropType = '';
+          if ((d.note || '').toLowerCase() === 'guaranteed') dropType = '<span class="drop-type-guaranteed">(Guaranteed)</span>';
+          else if ((d.note || '').toLowerCase() === 'chance') dropType = '<span class="drop-type-chance">(Chance)</span>';
+          div = document.createElement('div');
           div.className = 'item-drop';
           div.innerHTML = `
             <img src="${d.icon||''}" alt="${d.name||''}">
-            <span>${d.note || d.name || ''}</span>
+            <span>${d.name}</span>
+            ${dropType}
             <small>Value: ${formatCoin(d.value)}</small>
-            <small>Account Bound: ${d.bound? 'Yes':'No'}</small>
           `;
           dropsDiv.appendChild(div);
         });
         details.appendChild(dropsDiv);
-        section.appendChild(details);
+        bossDiv.appendChild(details);
+        section.appendChild(bossDiv);
       }
       parent.appendChild(section);
     }
