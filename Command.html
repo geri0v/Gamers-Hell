@@ -5,151 +5,338 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gamers-Hell Command</title>
   <style>
-    /* ====== GRID LAYOUT ====== */
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
+    :root {
+      --bg: #f8fcff;
+      --text: #222;
+      --accent: #2b4765;
+      --sidebar-bg: #222;
+      --sidebar-text: #fff;
+      --highlight: #007c1e;
+      --danger: #c00;
+      --border: #ccc;
+      --shadow: 0 0 8px #d1e6f6;
     }
+    [data-theme="dark"] {
+      --bg: #181c22;
+      --text: #eee;
+      --accent: #7bc6ff;
+      --sidebar-bg: #222b33;
+      --sidebar-text: #fff;
+      --highlight: #4ecb4e;
+      --danger: #ff5f5f;
+      --border: #444;
+      --shadow: 0 0 8px #223;
+    }
+    html, body { margin: 0; padding: 0; height: 100vh; }
     body {
       display: grid;
-      grid-template-columns: 360px 1fr 360px;
+      grid-template-columns: 320px 1fr 320px;
       grid-template-areas: "navleft main navright";
       font-family: Arial, sans-serif;
-      background: #3c6e8d65;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
     }
-    .sidenav  { grid-area: navleft; }
-    .sidenav2 { grid-area: navright; }
+    body.left-closed  { grid-template-columns: 0 1fr 320px; }
+    body.right-closed { grid-template-columns: 320px 1fr 0; }
+    body.both-closed  { grid-template-columns: 0 1fr 0; }
 
-    .main {
-      grid-area: main;
-      overflow-y: auto;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    /* ====== SIDEBARS ====== */
-    .sidenav, .sidenav2 {
-      background: #111;
-      color: #818181;
-      overflow-y: auto;
-      height: 100%;
-    }
-    .sidenav a, .sidenav2 a {
-      display: block;
-      padding: 8px 16px;
-      font-size: 16px;
-      text-decoration: none;
-      color: inherit;
-    }
-    .sidenav a:hover, .sidenav2 a:hover {
-      color: #f1f1f1;
-    }
-
-    /* ====== COLLAPSIBLE NAV ====== */
-    .sidenav details {
-      padding: 4px 16px;
-      color: #818181;
-      cursor: pointer;
-    }
-    .sidenav summary {
-      list-style: none;
-      font-size: 16px;
-      user-select: none;
-    }
-    /* remove default marker */
-    .sidenav summary::-webkit-details-marker { display: none; }
-
-    /* custom arrow */
-    .sidenav summary::before {
-      content: "▸";
-      display: inline-block;
-      width: 1em;
-      transition: transform 0.2s;
-    }
-    .sidenav details[open] summary::before {
-      content: "▾";
-    }
-    .sidenav details a {
-      padding-left: 32px;
-      font-size: 15px;
-    }
-
-    /* ====== MAIN CONTENT ====== */
-    .center {
-      text-align: center;
-      margin-bottom: 1em;
-    }
-    h1, h2 {
-      margin: 0.5em 0;
-    }
-    h2 {
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 0.2em;
-      margin-top: 1.5em;
-    }
-
-    /* ====== TELEPORTER ROWS ====== */
-    .textbox-container {
+    .sidebar {
+      position: fixed;
+      top: 0;
+      width: 320px;
+      height: 100vh;
+      background: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+      z-index: 1000;
       display: flex;
+      flex-direction: column;
+    }
+    .sidebar.left  { left: 0;  transform: translateX(0); border-right: 1px solid #111; }
+    .sidebar.right { right: 0; transform: translateX(0);  border-left:  1px solid #111; }
+    .sidebar.closed.left  { transform: translateX(-100%); }
+    .sidebar.closed.right { transform: translateX(100%); }
+    .sidebar-toggle {
+      position: absolute;
+      top: 20px;
+      width: 36px; height: 36px;
+      background: #444; color: #fff; border: none;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer; font-size: 22px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      transition: background 0.2s;
+      z-index: 2;
+      outline: none;
+    }
+    .sidebar-toggle.right { left: -40px; border-radius: 4px 0 0 4px; }
+    .sidebar-toggle.left  { right: -40px; }
+    .sidebar-toggle:focus { outline: 2px solid #fff; outline-offset: 2px; }
+    .sidebar-toggle:hover { background: #666; }
+
+    /* Mobile hamburger buttons */
+    .sidebar-hamburger {
+      display: none;
+      position: fixed;
+      top: 18px;
+      z-index: 2000;
+      width: 48px; height: 48px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 32px;
+      box-shadow: 0 2px 8px #0005;
+      cursor: pointer;
       align-items: center;
-      margin: 6px 0;
+      justify-content: center;
+      transition: background 0.2s;
+      outline: none;
+    }
+    .sidebar-hamburger.left  { left: 10px; }
+    .sidebar-hamburger.right { right: 10px; }
+    .sidebar-hamburger:focus { outline: 2px solid #fff; outline-offset: 2px; }
+    .sidebar-hamburger:hover { background: #4e7bbd; }
+
+    /* --- Event Timer Styles --- */
+    .event-list { margin-top: 70px; padding: 16px; max-height: calc(100vh - 70px); overflow-y: auto; }
+    .event-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #333; font-size: 1rem; }
+    .event-row.upcoming { background: #29334a; font-weight: bold; border-radius: 4px; }
+    .event-name { flex: 2; }
+    .event-time { flex: 1; text-align: right; font-family: monospace; }
+    .event-filter { width: 100%; margin-bottom: 8px; padding: 4px; border-radius: 4px; border: 1px solid var(--border); }
+
+    /* --- Navigation Styles --- */
+    .sidebar-nav { margin-top: 70px; }
+    .sidebar-nav a {
+      display: block; padding: 10px 18px; font-size: 18px;
+      text-decoration: none; color: inherit;
+      border-radius: 4px;
+      outline: none;
+    }
+    .sidebar-nav a:focus { outline: 2px solid #fff; outline-offset: 2px; background: #222; color: #fff; }
+    .sidebar-nav a:hover { color: #f1f1f1; background: #222; }
+    .sidebar-nav details { padding: 4px 16px; color: #818181; cursor: pointer; }
+    .sidebar-nav summary { list-style: none; font-size: 18px; user-select: none; }
+    .sidebar-nav summary::-webkit-details-marker { display: none; }
+    .sidebar-nav summary::before {
+      content: "▸"; display: inline-block; width: 1em; transition: transform 0.2s;
+    }
+    .sidebar-nav details[open] summary::before { content: "▾"; }
+    .sidebar-nav details a { padding-left: 32px; font-size: 16px; }
+    .cat-heading { font-size: 1.6em; margin: 1.5em 0 0.5em 0; color: var(--accent); }
+
+    /* --- Main Content --- */
+    main.main     { grid-area: main; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: all 0.3s; min-height: 100vh; }
+    .center { text-align: center; margin-bottom: 1em; }
+    h1, h2 { margin: 0.5em 0; }
+    h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.2em; margin-top: 1.5em; }
+    textarea { width: 100%; }
+    footer { text-align: center; color: #888; margin-top: 30px; }
+
+    /* --- Boss/Item Styles --- */
+    .textbox-container {
+      display: flex; align-items: center; margin: 6px 0;
     }
     .textbox {
-      flex: 1;
-      padding: 6px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background: #fff;
+      flex: 1; padding: 6px; font-size: 15px;
+      border: 1px solid var(--border); border-radius: 4px; background: #fff;
+      color: var(--text);
     }
     .copy-button {
-      width: 24px; height: 24px;
-      margin-left: 6px;
-      border: none;
-      cursor: pointer;
-      border-radius: 4px;
-      background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png')
-                  no-repeat center/cover;
+      width: 28px; height: 28px; margin-left: 8px;
+      border: none; cursor: pointer; border-radius: 4px;
+      background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png') no-repeat center/cover;
+      transition: background 0.2s;
+      outline: none;
     }
-    .copy-button:hover {
+    .copy-button:hover, .copy-button:focus {
       background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
+      outline: 2px solid var(--accent);
+    }
+    .batch-copy-btn {
+      margin: 10px 0 20px 0;
+      padding: 7px 18px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .batch-copy-btn:hover, .batch-copy-btn:focus { background: #4e7bbd; }
+    .drops-container {
+      margin-left: 32px; margin-top: 8px;
+    }
+    .item-drop {
+      display: flex; align-items: center; gap: 8px;
+      margin: 4px 0; font-size: 15px;
+      position: relative;
+    }
+    .item-drop img { width: 28px; height: 28px; border-radius: 4px; }
+    .item-drop small { color: #555; margin-left: 4px; }
+    .item-drop .tooltip {
+      display: none;
+      position: absolute;
+      left: 110%; top: 0;
+      background: #fff;
+      color: #222;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 14px;
+      z-index: 10;
+      min-width: 180px;
+      box-shadow: 0 2px 8px #0004;
+    }
+    .item-drop:hover .tooltip, .item-drop:focus-within .tooltip { display: block; }
+    .drop-type-guaranteed { color: var(--highlight); font-weight: bold; margin-left: 8px; }
+    .drop-type-chance { color: var(--danger); font-weight: bold; margin-left: 8px; }
+    details summary {
+      cursor: pointer;
+      font-weight: bold;
+      background: #eee;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      user-select: none;
+      outline: none;
+    }
+    details:focus-within summary { outline: 2px solid var(--accent); }
+    details { margin-bottom: 8px; }
+    .boss-block { margin-bottom: 20px; background: var(--bg); border-radius: 8px; box-shadow: var(--shadow); padding: 10px 0 10px 0; }
+    .boss-block h3 { margin: 0 0 6px 0; }
+
+    /* Toast message */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px #0007;
+      font-size: 18px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 3000;
+      transition: opacity 0.4s;
+    }
+    .toast.show { opacity: 1; pointer-events: auto; }
+
+    /* Loading Spinner */
+    .spinner {
+      border: 4px solid #eee;
+      border-top: 4px solid var(--accent);
+      border-radius: 50%;
+      width: 36px; height: 36px;
+      animation: spin 1s linear infinite;
+      margin: 30px auto;
+      display: block;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    /* Theme toggle */
+    .theme-toggle {
+      position: absolute;
+      top: 16px; right: 55px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 2001;
+      transition: background 0.2s;
+    }
+    .theme-toggle:hover, .theme-toggle:focus { background: #4e7bbd; }
+
+    /* Timezone select */
+    .timezone-select {
+      width: 90%;
+      margin: 10px 5%;
+      padding: 4px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      font-size: 15px;
+      background: #fff;
+      color: #222;
     }
 
-    footer {
-      text-align: center;
-      padding: 1em 0;
-      background: #ececec;
-      margin-top: 2em;
-      font-size: 0.9em;
+    /* Login Modal */
+    .modal-bg {
+      position: fixed; left: 0; top: 0; width: 100vw; height: 100vh;
+      background: #000a; z-index: 5000;
+      display: flex; align-items: center; justify-content: center;
     }
-    textarea {
-      width: 100%;
-      max-width: 600px;
+    .modal {
+      background: var(--bg);
+      color: var(--text);
+      border-radius: 10px;
+      box-shadow: 0 4px 20px #0008;
+      padding: 32px 40px;
+      min-width: 320px;
+      text-align: center;
+    }
+    .modal input[type="password"] {
+      width: 90%;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      margin: 16px 0 24px 0;
+    }
+    .modal button {
+      padding: 8px 24px;
+      font-size: 18px;
+      border-radius: 6px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+    }
+    .modal button:hover, .modal button:focus { background: #4e7bbd; }
+
+    @media (max-width: 1000px) {
+      body, body.left-closed, body.right-closed, body.both-closed {
+        grid-template-columns: 0 1fr 0 !important;
+      }
+      .sidebar { width: 100vw; left: 0 !important; right: auto !important; border-radius: 0; }
+      .sidebar.left  { transform: translateX(-100%); }
+      .sidebar.right { transform: translateX(100%); }
+      .sidebar-toggle.left { right: 0; left: auto; }
+      .sidebar-toggle.right { left: 0; right: auto; }
+      .sidebar-hamburger { display: flex; }
+      .theme-toggle { right: 65px; }
     }
   </style>
 </head>
 <body>
+  <!-- Mobile hamburger buttons -->
+  <button class="sidebar-hamburger left" id="openLeft" aria-label="Open Menu" type="button" tabindex="0">&#9776;</button>
+  <button class="sidebar-hamburger right" id="openRight" aria-label="Open Events" type="button" tabindex="0">&#9776;</button>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme" type="button">🌙 Theme</button>
 
-  <!-- LEFT NAV -->
-  <nav class="sidenav" id="sideNav"></nav>
+  <!-- LEFT SIDEBAR: Navigation -->
+  <nav class="sidebar left" id="sidebarLeft" aria-label="Main menu">
+    <button class="sidebar-toggle left" id="toggleLeft" aria-label="Hide Menu" type="button" tabindex="0">&times;</button>
+    <nav class="sidebar-nav" id="sideNav"></nav>
+  </nav>
 
   <!-- MAIN CONTENT -->
-  <div class="main">
+  <main class="main" id="main" tabindex="0">
     <section id="Welcome" class="center">
       <h1>Welcome Commander</h1>
-      <script>
-        (function(){
-          const PASS = "PvE";
-          if (prompt('Password?','') !== PASS) {
-            location.href = 'https://sites.google.com/view/gamers-hell-community';
-          } else alert('Welcome Commander');
-        })();
-      </script>
+      <p>Use the sidebars to explore bosses, events, and more. <span style="font-size:1.2em;">🎮</span></p>
     </section>
-
     <div id="mainContent"></div>
-
     <section id="Credits" class="center">
       <h2>Credits</h2>
       <textarea rows="6" disabled>
@@ -163,159 +350,433 @@ Websites:
   http://gw2timer.com/
       </textarea>
     </section>
-
     <footer>&copy; 2025 Gamers-Hell Community</footer>
-  </div>
+  </main>
 
-  <!-- RIGHT TIMER -->
-  <nav class="sidenav2">
-    <iframe
-      src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true"
-      width="100%" height="100%" frameborder="0"
-      style="box-shadow:0 0 12px #223;">
-    </iframe>
+  <!-- RIGHT SIDEBAR: GW2 Event Timer -->
+  <nav class="sidebar right" id="sidebarRight" aria-label="Event timer">
+    <button class="sidebar-toggle right" id="toggleRight" aria-label="Hide Events" type="button" tabindex="0">&times;</button>
+    <select class="timezone-select" id="timezoneSelect" aria-label="Select Timezone"></select>
+    <input type="text" class="event-filter" id="eventFilter" placeholder="Search events..." aria-label="Filter Events" />
+    <div class="event-list" id="eventList">
+      <div class="spinner" id="eventSpinner"></div>
+    </div>
   </nav>
 
-  <!-- GENERATOR SCRIPT -->
-  <script>
-    // 1) Nested data structure
-    const data = {
-      "Core Tyria": {
-        "Core Tyria": [
-          { name: "Taidha Covington", code: "[&BKgBAAA=]" },
-          { name: "Karka Queen",       code: "[&BNcGAAA=]" },
-          { name: "Jungle Wurm",       code: "[&BEEFAAA=]" }
-        ],
-        "Ley-Line Anomaly": [
-          { name: "Legendary Anomaly A", code: "[&BEwCAAA=]" },
-          { name: "Legendary Anomaly B", code: "[&BOcBAAA=]" }
+  <!-- Toast for copy feedback -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Login Modal (replace with real auth in production) -->
+  <div class="modal-bg" id="loginModalBg" style="display:none;">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <h2 id="loginTitle">Commander Login</h2>
+      <form id="loginForm">
+        <input type="password" id="loginPassword" placeholder="Enter Password" aria-label="Password" autocomplete="current-password" required />
+        <br>
+        <button type="submit">Login</button>
+      </form>
+      <div id="loginError" style="color:#c00;display:none;">Incorrect password.</div>
+    </div>
+  </div>
+
+<script>
+/* --- Accessibility: Focus trap for modal --- */
+function trapFocus(modal) {
+  const focusable = modal.querySelectorAll('input,button');
+  let first = focusable[0], last = focusable[focusable.length-1];
+  modal.addEventListener('keydown', e => {
+    if (e.key === 'Tab') {
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+}
+
+/* --- Demo Login Modal (replace with real auth in production) --- */
+function showLoginModal() {
+  document.getElementById('loginModalBg').style.display = 'flex';
+  document.getElementById('loginPassword').focus();
+}
+function hideLoginModal() {
+  document.getElementById('loginModalBg').style.display = 'none';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  if (!localStorage.getItem('ghc_loggedin')) {
+    showLoginModal();
+    trapFocus(document.getElementById('loginModalBg'));
+  }
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const pass = document.getElementById('loginPassword').value;
+    if (pass === "PvE") {
+      localStorage.setItem('ghc_loggedin', '1');
+      hideLoginModal();
+    } else {
+      document.getElementById('loginError').style.display = '';
+      setTimeout(()=>document.getElementById('loginError').style.display='none',2000);
+      document.getElementById('loginPassword').value = '';
+      document.getElementById('loginPassword').focus();
+    }
+  });
+});
+
+/* --- Theme Toggle and Persistence --- */
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('ghc_theme', theme);
+  document.getElementById('themeToggle').textContent = theme === 'dark' ? '☀️ Theme' : '🌙 Theme';
+}
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  setTheme(newTheme);
+});
+(function initTheme() {
+  const saved = localStorage.getItem('ghc_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  setTheme(saved);
+})();
+
+/* --- Toast Message for Copy Feedback --- */
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+/* --- Navigation Data and Builder --- */
+const data = {
+  "Core Tyria": {
+    "World Bosses": [
+      {
+        name: "Taidha Covington",
+        code: "[&BKgBAAA=]",
+        location: "Bloodtide Coast",
+        drops: [
+          { id: 46733, note: "Guaranteed" },
+          { id: 19357, note: "Chance" },
+          { id: 19361, note: "Chance" }
         ]
       },
-      "Living World Season 1": [
-        { name: "Oola’s Tower",       code: "[&ABCD01=]" },
-        { name: "Tarir Conflux Event",code: "[&ABCD02=]" }
-      ],
-      "Living World Season 2": [
-        { name: "Seitung Harbor Meta",code: "[&WXYZ01=]" }
-      ],
-      "Heart of Thorns": [
-        { name: "Vale Guardian",      code: "[&HOTG1=]" }
-      ],
-      "Living World Season 3": [
-        { name: "Key of Ahdashim",    code: "[&LWS301=]" }
-      ],
-      "Path of Fire": [
-        { name: "Champion of the Sun",code: "[&POF01=]" }
-      ],
-      "Living World Season 4": [
-        { name: "Spekks’ Labyrinth",  code: "[&LWS401=]" }
-      ],
-      "Ice Brood Saga": [
-        { name: "Jormag’s Fang",      code: "[&IBS01=]" }
-      ],
-      "End of Dragons": [
-        { name: "Zuko’s Ruin",        code: "[&EoD01=]" }
-      ],
-      "Secrets of the Obscure": [
-        { name: "Obscure Cache Meta", code: "[&SotO01=]" }
-      ],
-      "Janthir Wilds": [
-        { name: "Janthir Assault",    code: "[&JW01=]" }
-      ],
-      "Expansion 6": [
-        { name: "New Meta Event",     code: "[&EXP601=]" }
-      ]
+      {
+        name: "Karka Queen",
+        code: "[&BNcGAAA=]",
+        location: "Southsun Cove",
+        drops: [
+          { id: 37897, note: "Guaranteed" },
+          { id: 37899, note: "Chance" },
+          { id: 49509, note: "Chance" },
+          { id: 45597, note: "Chance" },
+          { id: 46713, note: "Chance" },
+          { id: 46689, note: "Chance" }
+        ]
+      },
+      {
+        name: "Shadow Behemoth",
+        code: "[&BPcAAAA=]",
+        location: "Queensdale",
+        drops: [
+          { id: 46733, note: "Guaranteed"},
+          { id: 8535, note: "Chance" },
+          { id: 19360, note: "Chance" },
+          { id: 31051, note: "Chance" }
+        ]
+      }
+    ]
+  }
+};
+function buildNav(parent, obj) {
+  Object.entries(obj).forEach(([key,val]) => {
+    if (Array.isArray(val)) {
+      const a = document.createElement('a');
+      a.href = `#${key.replace(/\s+/g,'')}`;
+      a.textContent = key;
+      a.tabIndex = 0;
+      parent.appendChild(a);
+    } else {
+      const details = document.createElement('details');
+      const summary = document.createElement('summary');
+      summary.textContent = key;
+      details.appendChild(summary);
+      buildNav(details,val);
+      parent.appendChild(details);
+    }
+  });
+}
+function generateNav() {
+  const nav = document.getElementById('sideNav');
+  nav.innerHTML = '';
+  nav.appendChild(Object.assign(document.createElement('a'), { href: '#Welcome', textContent: 'Welcome', tabIndex: 0 }));
+  buildNav(nav, data);
+  nav.appendChild(Object.assign(document.createElement('a'), { href: '#Credits', textContent: 'Credits', tabIndex: 0 }));
+}
+
+/* --- Main Content Dynamic Boss/Item Logic --- */
+const itemCache = {};
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(
+    () => showToast('Copied!'),
+    () => showToast('Copy failed!')
+  );
+}
+function formatCoin(value) {
+  value = Number(value) || 0;
+  const gold = Math.floor(value / 10000);
+  const silver = Math.floor((value % 10000) / 100);
+  const copper = value % 100;
+  let str = '';
+  if (gold) str += gold + 'g ';
+  if (gold || silver) str += silver + 's ';
+  str += copper + 'c';
+  return str.trim();
+}
+async function fetchItemData(id) {
+  if (itemCache[id]) return itemCache[id];
+  try {
+    const [item, price] = await Promise.all([
+      fetch(`https://api.guildwars2.com/v2/items/${id}`).then(r=>r.json()),
+      fetch(`https://api.guildwars2.com/v2/commerce/prices/${id}`).then(r=>r.json())
+    ]);
+    itemCache[id] = {
+      name: item.name,
+      icon: item.icon,
+      desc: item.description || '',
+      value: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
     };
-
-    // 2) Copy helper
-    function copyToClipboard(id) {
-      const tb = document.getElementById(id);
-      tb.disabled = false;
-      tb.select();
-      document.execCommand('copy');
-      tb.disabled = true;
-      alert(`Copied: ${tb.value}`);
-    }
-
-    // 3) Build sidebar nav (recursive)
-    function buildNav(parent, obj) {
-      Object.entries(obj).forEach(([key, val]) => {
-        if (Array.isArray(val)) {
-          const a = document.createElement('a');
-          a.href = `#${key.replace(/\s+/g,'')}`;
-          a.textContent = key;
-          parent.appendChild(a);
-        } else {
-          const details = document.createElement('details');
-          const summary = document.createElement('summary');
-          summary.textContent = key;
-          details.appendChild(summary);
-          buildNav(details, val);
-          parent.appendChild(details);
+    return itemCache[id];
+  } catch {
+    return { name: `Item ${id}`, icon: '', value: 0, desc: '' };
+  }
+}
+async function buildContent(parent, obj) {
+  parent.innerHTML = '<div class="spinner"></div>';
+  let html = '<button class="batch-copy-btn" id="batchCopyBtn" aria-label="Copy All">Copy All Boss Info</button>';
+  let allCopyLines = [];
+  for (const [cat, groups] of Object.entries(obj)) {
+    html += `<details open><summary><span class="cat-heading">${cat}</span></summary>`;
+    for (const [group, bosses] of Object.entries(groups)) {
+      html += `<details><summary><h2 style="display:inline">${group}</h2></summary>`;
+      for (let boss of bosses) {
+        html += `<div class="boss-block"><h3 id="${boss.name.replace(/\s/g,'')}">${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
+        let dropDataArr = [];
+        for (const drop of boss.drops) {
+          dropDataArr.push(await fetchItemData(drop.id));
         }
-      });
-    }
-
-    function generateNav() {
-      const nav = document.getElementById('sideNav');
-      nav.innerHTML = '';
-      // static welcome
-      const w = document.createElement('a');
-      w.href = '#Welcome'; w.textContent = 'Welcome';
-      nav.appendChild(w);
-      // dynamic
-      buildNav(nav, data);
-      // static credits
-      const c = document.createElement('a');
-      c.href = '#Credits'; c.textContent = 'Credits';
-      nav.appendChild(c);
-    }
-
-    // 4) Build main content (recursive)
-    function buildContent(parent, obj) {
-      Object.entries(obj).forEach(([key, val]) => {
-        if (Array.isArray(val)) {
-          const section = document.createElement('section');
-          section.id = key.replace(/\s+/g,'');
-          const h2 = document.createElement('h2');
-          h2.textContent = key;
-          section.appendChild(h2);
-
-          val.forEach((item, i) => {
-            const wrap = document.createElement('div');
-            wrap.className = 'textbox-container';
-
-            const inp = document.createElement('input');
-            inp.type = 'text';
-            inp.className = 'textbox';
-            inp.value = `${item.name}: ${item.code}`;
-            inp.id = `tb_${section.id}_${i}`;
-            inp.disabled = true;
-
-            const btn = document.createElement('button');
-            btn.className = 'copy-button';
-            btn.title = `Copy ${item.name}`;
-            btn.onclick = () => copyToClipboard(inp.id);
-
-            wrap.appendChild(inp);
-            wrap.appendChild(btn);
-            section.appendChild(wrap);
-          });
-
-          parent.appendChild(section);
-        } else {
-          buildContent(parent, val);
+        const guaranteedDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
+        const chanceDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'chance');
+        let mostValuableChance = null;
+        if (chanceDrops.length) {
+          mostValuableChance = chanceDrops.reduce((max, d) => itemCache[d.id].value > itemCache[max.id].value ? d : max, chanceDrops[0]);
         }
-      });
+        let parts = [];
+        guaranteedDrops.forEach(d =>
+          parts.push(`Guaranteed: ${itemCache[d.id].name} (${formatCoin(itemCache[d.id].value)})`)
+        );
+        if (mostValuableChance) {
+          parts.push(`Chance: ${itemCache[mostValuableChance.id].name} (${formatCoin(itemCache[mostValuableChance.id].value)})`);
+        }
+        if (!guaranteedDrops.length && !chanceDrops.length) {
+          boss.drops.sort((a, b) => itemCache[b.id].value - itemCache[a.id].value);
+          boss.drops.forEach(d =>
+            parts.push(`${itemCache[d.id].name} (${formatCoin(itemCache[d.id].value)})`)
+          );
+        }
+        const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${parts.join(', ')}`;
+        allCopyLines.push(copyText);
+        html += `<div class="textbox-container">
+          <input type="text" class="textbox" value="${copyText.replace(/"/g,'&quot;')}" readonly aria-label="Boss Info: ${boss.name}">
+          <button class="copy-button" title="Copy ${boss.name}" type="button" tabindex="0" aria-label="Copy ${boss.name}"></button>
+        </div>
+        <details><summary>Show/Hide Drops</summary>
+        <div class="drops-container">`;
+        for (let d of boss.drops) {
+          let dropType = '';
+          if ((d.note || '').toLowerCase() === 'guaranteed') dropType = '<span class="drop-type-guaranteed">(Guaranteed)</span>';
+          else if ((d.note || '').toLowerCase() === 'chance') dropType = '<span class="drop-type-chance">(Chance)</span>';
+          html += `<div class="item-drop" tabindex="0">
+            <img src="${itemCache[d.id].icon||''}" alt="${itemCache[d.id].name||''}" loading="lazy">
+            <span>${itemCache[d.id].name}</span>
+            ${dropType}
+            <small>Value: ${formatCoin(itemCache[d.id].value)}</small>
+            <span class="tooltip">${itemCache[d.id].desc||'No description.'}</span>
+          </div>`;
+        }
+        html += `</div></details></div>`;
+      }
+      html += `</details>`;
     }
-
-    // 5) Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-      generateNav();
-      const main = document.getElementById('mainContent');
-      main.innerHTML = '';
-      buildContent(main, data);
+    html += `</details>`;
+  }
+  parent.innerHTML = html;
+  // Attach copy events
+  parent.querySelectorAll('.copy-button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      copyToClipboard(this.previousElementSibling.value);
     });
-  </script>
+  });
+  // Batch copy
+  document.getElementById('batchCopyBtn').onclick = () => {
+    copyToClipboard(allCopyLines.join('\n'));
+  };
+}
+
+/* --- Sidebar Toggle Logic --- */
+function updateBodyClass() {
+  const left  = !document.getElementById('sidebarLeft').classList.contains('closed');
+  const right = !document.getElementById('sidebarRight').classList.contains('closed');
+  if (left && right)      document.body.className = '';
+  else if (left && !right)  document.body.className = 'right-closed';
+  else if (!left && right)  document.body.className = 'left-closed';
+  else                      document.body.className = 'both-closed';
+}
+function openSidebar(side) {
+  document.getElementById(side).classList.remove('closed');
+  updateBodyClass();
+}
+function closeSidebar(side) {
+  document.getElementById(side).classList.add('closed');
+  updateBodyClass();
+}
+function setupSidebarToggles() {
+  document.getElementById('toggleLeft').addEventListener('click', () => closeSidebar('sidebarLeft'));
+  document.getElementById('toggleRight').addEventListener('click', () => closeSidebar('sidebarRight'));
+  document.getElementById('openLeft').addEventListener('click', () => openSidebar('sidebarLeft'));
+  document.getElementById('openRight').addEventListener('click', () => openSidebar('sidebarRight'));
+}
+
+/* --- GW2 Event Timer Sidebar Logic --- */
+const EVENTS_JSON_URL = 'https://raw.githubusercontent.com/blish-hud/Community-Module-Pack/master/Events%20Module/ref/events.json';
+let events = [];
+let userTimezone = localStorage.getItem('ghc_timezone') || Intl.DateTimeFormat().resolvedOptions().timeZone;
+function parseOffset(offset) {
+  let t = offset.replace('Z', '').split(':');
+  return { hour: parseInt(t[0], 10), minute: parseInt(t[1], 10) };
+}
+function parseRepeat(repeat) {
+  let t = repeat.split(':');
+  return parseInt(t[0], 10) * 60 + parseInt(t[1], 10);
+}
+function getNextOccurrence(offset, repeat) {
+  const now = new Date();
+  const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
+  const { hour, minute } = parseOffset(offset);
+  let eventTime = new Date(today.getTime());
+  eventTime.setUTCHours(hour, minute, 0, 0);
+  const repeatMinutes = parseRepeat(repeat);
+  while (eventTime < now) {
+    eventTime = new Date(eventTime.getTime() + repeatMinutes * 60000);
+  }
+  return eventTime;
+}
+function toUserTimeStr(date) {
+  return date.toLocaleTimeString([], { timeZone: userTimezone, hour: '2-digit', minute: '2-digit' });
+}
+async function fetchEvents() {
+  const spinner = document.getElementById('eventSpinner');
+  if (spinner) spinner.style.display = 'block';
+  try {
+    const response = await fetch(EVENTS_JSON_URL, { cache: "no-store" });
+    if (!response.ok) throw new Error("Failed to fetch events");
+    const data = await response.json();
+    events = data.filter(e => e.offset && e.repeat);
+  } catch (err) {
+    events = [];
+    console.error('Error fetching events:', err);
+  }
+  if (spinner) spinner.style.display = 'none';
+}
+function updateEvents() {
+  const eventList = document.getElementById('eventList');
+  const filter = document.getElementById('eventFilter').value.trim().toLowerCase();
+  if (!events.length) {
+    eventList.innerHTML = '<div style="padding:20px;color:#aaa;">No events available.</div>';
+    return;
+  }
+  const now = new Date();
+  let nextEvents = events.map(event => {
+    const nextTime = getNextOccurrence(event.offset, event.repeat);
+    return { name: event.name, utcTime: nextTime, userTime: toUserTimeStr(nextTime) };
+  });
+  if (filter) {
+    nextEvents = nextEvents.filter(ev => ev.name.toLowerCase().includes(filter));
+  }
+  nextEvents.sort((a, b) => a.utcTime - b.utcTime);
+  let nextIdx = nextEvents.findIndex(ev => ev.utcTime > now);
+  if (nextIdx === -1) nextIdx = 0;
+  let html = '';
+  nextEvents.forEach((event, idx) => {
+    html += `<div class="event-row${idx === nextIdx ? ' upcoming' : ''}"><span class="event-name">${event.name}</span><span class="event-time">${event.userTime}</span></div>`;
+  });
+  eventList.innerHTML = html;
+}
+async function refreshAndUpdate() {
+  await fetchEvents();
+  updateEvents();
+}
+
+/* --- Timezone Select --- */
+function populateTimezones() {
+  const sel = document.getElementById('timezoneSelect');
+  const zones = Intl.supportedValuesOf ? Intl.supportedValuesOf("timeZone") : [
+    "Europe/Amsterdam","Europe/London","America/New_York","America/Los_Angeles","Asia/Tokyo","Australia/Sydney"
+  ];
+  sel.innerHTML = '';
+  for (let z of zones) {
+    const opt = document.createElement('option');
+    opt.value = z;
+    opt.textContent = z;
+    if (z === userTimezone) opt.selected = true;
+    sel.appendChild(opt);
+  }
+  sel.addEventListener('change', function() {
+    userTimezone = this.value;
+    localStorage.setItem('ghc_timezone', userTimezone);
+    updateEvents();
+  });
+}
+
+/* --- Event Filter --- */
+document.getElementById('eventFilter').addEventListener('input', updateEvents);
+
+/* --- Notifications for Next Event --- */
+async function notifyNextEvent() {
+  if (!("Notification" in window)) return;
+  if (Notification.permission !== "granted") {
+    Notification.requestPermission();
+    return;
+  }
+  if (!events.length) return;
+  const now = new Date();
+  const nextEvent = events.map(e => ({...e, next: getNextOccurrence(e.offset, e.repeat)}))
+    .sort((a, b) => a.next - b.next)[0];
+  if (!nextEvent) return;
+  const ms = nextEvent.next - now;
+  if (ms > 0 && ms < 60000) {
+    new Notification(`Event soon: ${nextEvent.name}`, {
+      body: `Starts at ${toUserTimeStr(nextEvent.next)} (${userTimezone})`
+    });
+  }
+}
+
+/* --- DOMContentLoaded: Build everything --- */
+document.addEventListener('DOMContentLoaded', async () => {
+  generateNav();
+  setupSidebarToggles();
+  // Main content
+  const main = document.getElementById('mainContent');
+  await buildContent(main, data);
+
+  // Event timer
+  populateTimezones();
+  refreshAndUpdate();
+  setInterval(() => {
+    refreshAndUpdate();
+    notifyNextEvent();
+  }, 60000);
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) refreshAndUpdate();
+  });
+  updateBodyClass();
+});
+</script>
 </body>
 </html>
