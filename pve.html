@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gamers-Hell Command</title>
   <style>
-    /* ====== GRID LAYOUT ====== */
     html, body { margin: 0; padding: 0; height: 100vh; }
     body {
       display: grid;
@@ -17,8 +16,6 @@
     .sidenav  { grid-area: navleft; }
     .sidenav2 { grid-area: navright; }
     .main     { grid-area: main; overflow-y: auto; padding: 20px; box-sizing: border-box; }
-
-    /* ====== SIDEBARS ====== */
     .sidenav, .sidenav2 {
       background: #111; color: #818181; overflow-y: auto; height: 100%;
     }
@@ -27,8 +24,6 @@
       text-decoration: none; color: inherit;
     }
     .sidenav a:hover, .sidenav2 a:hover { color: #f1f1f1; }
-
-    /* ====== COLLAPSIBLE NAV ====== */
     .sidenav details { padding: 4px 16px; color: #818181; cursor: pointer; }
     .sidenav summary { list-style: none; font-size: 16px; user-select: none; }
     .sidenav summary::-webkit-details-marker { display: none; }
@@ -37,16 +32,9 @@
     }
     .sidenav details[open] summary::before { content: "▾"; }
     .sidenav details a { padding-left: 32px; font-size: 15px; }
-
-    /* ====== MAIN CONTENT ====== */
     .center { text-align: center; margin-bottom: 1em; }
     h1, h2 { margin: 0.5em 0; }
-    h2 {
-      border-bottom: 1px solid #ccc; padding-bottom: 0.2em;
-      margin-top: 1.5em;
-    }
-
-    /* ====== TELEPORTER ROWS ====== */
+    h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.2em; margin-top: 1.5em; }
     .textbox-container {
       display: flex; align-items: center; margin: 6px 0;
     }
@@ -57,14 +45,11 @@
     .copy-button {
       width: 24px; height: 24px; margin-left: 6px;
       border: none; cursor: pointer; border-radius: 4px;
-      background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png')
-                  no-repeat center/cover;
+      background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png') no-repeat center/cover;
     }
     .copy-button:hover {
       background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
     }
-
-    /* ====== DROPS LIST ====== */
     .drops-container {
       margin-left: 32px; margin-top: 8px;
     }
@@ -72,13 +57,8 @@
       display: flex; align-items: center; gap: 8px;
       margin: 4px 0; font-size: 14px;
     }
-    .item-drop img {
-      width: 24px; height: 24px;
-    }
-    .item-drop small {
-      color: #555; margin-left: 4px;
-    }
-
+    .item-drop img { width: 24px; height: 24px; }
+    .item-drop small { color: #555; margin-left: 4px; }
     footer {
       text-align: center; padding: 1em 0; background: #ececec;
       margin-top: 2em; font-size: 0.9em;
@@ -89,11 +69,8 @@
 <body>
   <!-- LEFT NAV -->
   <nav class="sidenav" id="sideNav"></nav>
-
   <!-- MAIN CONTENT -->
   <div class="main">
-
-    <!-- Welcome & Password Prompt -->
     <section id="Welcome" class="center">
       <h1>Welcome Commander</h1>
       <script>
@@ -105,11 +82,7 @@
         })();
       </script>
     </section>
-
-    <!-- Dynamic Boss Content Goes Here -->
     <div id="mainContent"></div>
-
-    <!-- Credits -->
     <section id="Credits" class="center">
       <h2>Credits</h2>
       <textarea rows="6" disabled>
@@ -123,10 +96,8 @@ Websites:
   http://gw2timer.com/
       </textarea>
     </section>
-
     <footer>&copy; 2025 Gamers-Hell Community</footer>
   </div>
-
   <!-- RIGHT TIMER -->
   <nav class="sidenav2">
     <iframe
@@ -136,188 +107,153 @@ Websites:
     </iframe>
   </nav>
 <script>
-  // 1) Boss Data + Drops (add real item IDs under drops[])
-  const data = {
-    "Core Tyria": {
-      "World Bosses": [
-        {
-          name: "Taidha Covington",
-          code: "[&BKgBAAA=]",
-          drops: [24305, 24567]
-        },
-        {
-          name: "Karka Queen",
-          code: "[&BNcGAAA=]",
-          drops: [30698, 43141]
-        },
-        {
-          name: "Jungle Wurm",
-          code: "[&BEEFAAA=]",
-          drops: [19639, 19716]
-        }
-      ],
-      "Ley-Line Anomaly": [
-        { name: "Legendary Anomaly A", code: "[&BEwCAAA=]", drops: [65537] },
-        { name: "Legendary Anomaly B", code: "[&BOcBAAA=]", drops: [65538] }
-      ]
-    },
-    // … repeat for other categories …
-  };
-
-  // 2) Copy-to-clipboard helper
-  function copyToClipboard(id) {
-    const tb = document.getElementById(id);
-    tb.disabled = false;
-    tb.select();
-    document.execCommand('copy');
-    tb.disabled = true;
-    alert(`Copied: ${tb.value}`);
-  }
-
-  // 3) Sidebar generation
-  function buildNav(parent, obj) {
-    Object.entries(obj).forEach(([key,val]) => {
-      if (Array.isArray(val)) {
-        const a = document.createElement('a');
-        a.href = `#${key.replace(/\s+/g,'')}`;
-        a.textContent = key;
-        parent.appendChild(a);
-      } else {
-        const details = document.createElement('details');
-        const summary = document.createElement('summary');
-        summary.textContent = key;
-        details.appendChild(summary);
-        buildNav(details,val);
-        parent.appendChild(details);
+/* =========================
+   1. Boss Data Structure
+   ========================= */
+const data = {
+  "Core Tyria": {
+    "World Bosses": [
+      {
+        name: "Taidha Covington",
+        code: "[&BKgBAAA=]",
+        location: "Bloodtide Coast",
+        drops: [
+          { id: 24305, note: "Bloodstone Chest" },
+          { id: 24567, note: "Mystic Coin" }
+        ]
+      },
+      {
+        name: "Karka Queen",
+        code: "[&BNcGAAA=]",
+        location: "Southsun Cove",
+        drops: [
+          { id: 30698, note: "Karka Shell" },
+          { id: 43141, note: "Queen's Gauntlet Ticket" }
+        ]
       }
-    });
+    ]
   }
+  // Add more categories/bosses as needed
+};
 
-  function generateNav() {
-    const nav = document.getElementById('sideNav');
-    nav.innerHTML = '';
-    // static
-    const w = document.createElement('a');
-    w.href = '#Welcome'; w.textContent = 'Welcome';
-    nav.appendChild(w);
-    // dynamic
-    buildNav(nav, data);
-    // credits
-    const c = document.createElement('a');
-    c.href = '#Credits'; c.textContent = 'Credits';
-    nav.appendChild(c);
-  }
+/* =========================
+   2. Copy-to-Clipboard Helper
+   ========================= */
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(
+    () => alert(`Copied:\n${text}`),
+    () => alert('Copy failed!')
+  );
+}
 
-  // 4) Fetch item data & TP prices in batches
-  async function fetchAllDropData(ids) {
-    const chunk = (arr, size) =>
-      arr.reduce((r,v,i) => {
-        if (i % size === 0) r.push([]);
-        r[r.length-1].push(v);
-        return r;
-      }, []);
-    const batches = chunk(ids,100);
-    const map = {};
-
-    await Promise.all(batches.map(async batch => {
-      const [items, prices] = await Promise.all([
-        fetch(`https://api.guildwars2.com/v2/items?ids=${batch.join(',')}`)
-          .then(r=>r.json()),
-        fetch(`https://api.guildwars2.com/v2/commerce/prices?ids=${batch.join(',')}`)
-          .then(r=>r.json())
-      ]);
-      items.forEach(item => {
-        const p = prices.find(x=>x.id===item.id) || {};
-        map[item.id] = {
-          name: item.name,
-          icon: item.icon,
-          bound: item.binding === 'Account',
-          buy: p.highest_buy_unit_price || 0,
-          sell: p.lowest_sell_unit_price || 0
-        };
-      });
-    }));
-
-    return map;
-  }
-
-  // 5) Recursive content builder
-  function buildContent(parent, obj, info) {
-    Object.entries(obj).forEach(([key,val]) => {
-      if (Array.isArray(val)) {
-        const section = document.createElement('section');
-        section.id = key.replace(/\s+/g,'');
-        section.innerHTML = `<h2>${key}</h2>`;
-
-        val.forEach((boss,i) => {
-          // teleport row
-          const wrap = document.createElement('div');
-          wrap.className = 'textbox-container';
-
-          const inp = document.createElement('input');
-          inp.type = 'text';
-          inp.className = 'textbox';
-          inp.value = `${boss.name}: ${boss.code}`;
-          inp.id = `tb_${section.id}_${i}`;
-          inp.disabled = true;
-
-          const btn = document.createElement('button');
-          btn.className = 'copy-button';
-          btn.title = `Copy ${boss.name}`;
-          btn.onclick = ()=>copyToClipboard(inp.id);
-
-          wrap.appendChild(inp);
-          wrap.appendChild(btn);
-          section.appendChild(wrap);
-
-          // drops
-          if (Array.isArray(boss.drops)) {
-            const dropsDiv = document.createElement('div');
-            dropsDiv.className = 'drops-container';
-
-            boss.drops.forEach(id => {
-              const d = document.createElement('div');
-              d.className = 'item-drop';
-              const x = info[id] || {};
-              d.innerHTML = `
-                <img src="${x.icon||''}" alt="${x.name||id}">
-                <span>${x.name||'Unknown Item'}</span>
-                <small>Buy: ${x.buy} ⛃ | Sell: ${x.sell} ⛃</small>
-                <small>Account Bound: ${x.bound? 'Yes':'No'}</small>
-              `;
-              dropsDiv.appendChild(d);
-            });
-            section.appendChild(dropsDiv);
-          }
-        });
-
-        parent.appendChild(section);
-      }
-      else {
-        buildContent(parent,val,info);
-      }
-    });
-  }
-
-  // 6) Initialize on DOM ready
-  document.addEventListener('DOMContentLoaded', async () => {
-    generateNav();
-
-    // collect unique drop IDs
-    const allIds = [];
-    (function collect(o){
-      Object.values(o).forEach(v => {
-        if (Array.isArray(v))
-          v.forEach(b=> b.drops?.forEach(id=> allIds.push(id)));
-        else collect(v);
-      });
-    })(data);
-
-    const info = await fetchAllDropData([...new Set(allIds)]);
-    const main = document.getElementById('mainContent');
-    main.innerHTML = '';
-    buildContent(main, data, info);
+/* =========================
+   3. Sidebar Generation
+   ========================= */
+function buildNav(parent, obj) {
+  Object.entries(obj).forEach(([key,val]) => {
+    if (Array.isArray(val)) {
+      const a = document.createElement('a');
+      a.href = `#${key.replace(/\s+/g,'')}`;
+      a.textContent = key;
+      parent.appendChild(a);
+    } else {
+      const details = document.createElement('details');
+      const summary = document.createElement('summary');
+      summary.textContent = key;
+      details.appendChild(summary);
+      buildNav(details,val);
+      parent.appendChild(details);
+    }
   });
-</script>
-</body>
-</html>
+}
+function generateNav() {
+  const nav = document.getElementById('sideNav');
+  nav.innerHTML = '';
+  const w = document.createElement('a');
+  w.href = '#Welcome'; w.textContent = 'Welcome';
+  nav.appendChild(w);
+  buildNav(nav, data);
+  const c = document.createElement('a');
+  c.href = '#Credits'; c.textContent = 'Credits';
+  nav.appendChild(c);
+}
+
+/* =========================
+   4. Multi-Source Item Fetcher
+   ========================= */
+async function fetchItemData(ids) {
+  // 1. Try GW2 API
+  try {
+    const items = await fetch(`https://api.guildwars2.com/v2/items?ids=${ids.join(',')}`).then(r=>r.json());
+    const prices = await fetch(`https://api.guildwars2.com/v2/commerce/prices?ids=${ids.join(',')}`).then(r=>r.json());
+    const priceMap = {};
+    prices.forEach(p => priceMap[p.id] = p);
+    const result = {};
+    items.forEach(item => {
+      const p = priceMap[item.id] || {};
+      result[item.id] = {
+        name: item.name,
+        icon: item.icon,
+        bound: item.binding === 'Account',
+        buy: p?.buys?.unit_price || p.highest_buy_unit_price || 0,
+        sell: p?.sells?.unit_price || p.lowest_sell_unit_price || 0
+      };
+    });
+    return result;
+  } catch(e) {
+    // 2. Try gw2efficiency (public API, limited)
+    try {
+      const result = {};
+      await Promise.all(ids.map(async id => {
+        const r = await fetch(`https://api.gw2efficiency.com/items/${id}`).then(r=>r.json());
+        result[id] = {
+          name: r.name,
+          icon: r.icon,
+          bound: false,
+          buy: r.buy_price || 0,
+          sell: r.sell_price || 0
+        };
+      }));
+      return result;
+    } catch(e2) {
+      // 3. GW2BLTC (if you have an endpoint)
+      // For now, fallback to unknown
+      const result = {};
+      ids.forEach(id => result[id] = { name: `Item ${id}`, icon: '', bound: false, buy: 0, sell: 0 });
+      return result;
+    }
+  }
+}
+
+/* =========================
+   5. Build Main Content
+   ========================= */
+function buildContent(parent, obj, info) {
+  Object.entries(obj).forEach(([key,val]) => {
+    if (Array.isArray(val)) {
+      const section = document.createElement('section');
+      section.id = key.replace(/\s+/g,'');
+      section.innerHTML = `<h2>${key}</h2>`;
+      val.forEach((boss,i) => {
+        // Compose copy string
+        const dropStrings = boss.drops.map(drop => {
+          const d = info[drop.id] || {};
+          return `${drop.note || d.name || 'Unknown'} (Buy: ${d.buy} ⛃, Sell: ${d.sell} ⛃)`;
+        }).join(' | ');
+        const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${dropStrings}`;
+        // Teleport row
+        const wrap = document.createElement('div');
+        wrap.className = 'textbox-container';
+        const inp = document.createElement('input');
+        inp.type = 'text';
+        inp.className = 'textbox';
+        inp.value = copyText;
+        inp.readOnly = true;
+        const btn = document.createElement('button');
+        btn.className = 'copy-button';
+        btn.title = `Copy ${boss.name}`;
+        btn.onclick = ()=>copyToClipboard(copyText);
+        wrap.appendChild(inp);
+        wrap.appendChild(btn);
+        section.appendChild(wrap);
+        //
