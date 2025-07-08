@@ -8,14 +8,19 @@
     html, body { margin: 0; padding: 0; height: 100vh; }
     body {
       display: grid;
-      grid-template-columns: 360px 1fr 360px;
+      grid-template-columns: 320px 1fr 0px;
       grid-template-areas: "navleft main navright";
       font-family: Arial, sans-serif;
       background: #3c6e8d65;
+      min-height: 100vh;
+      transition: grid-template-columns 0.3s;
+    }
+    body.sidebar-open {
+      grid-template-columns: 320px 1fr 320px;
     }
     .sidenav  { grid-area: navleft; }
-    .sidenav2 { grid-area: navright; }
-    .main     { grid-area: main; overflow-y: auto; padding: 20px; box-sizing: border-box; }
+    .sidenav2 { grid-area: navright; background: #111; color: #818181; position: relative; transition: all 0.3s; }
+    .main     { grid-area: main; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: all 0.3s; }
     .sidenav, .sidenav2 {
       background: #111; color: #818181; overflow-y: auto; height: 100%;
     }
@@ -69,16 +74,68 @@
       margin-bottom: 4px;
       user-select: none;
     }
-    footer {
-      text-align: center; padding: 1em 0; background: #ececec;
-      margin-top: 2em; font-size: 0.9em;
-    }
-    textarea { width: 100%; max-width: 600px; }
+    details { margin-bottom: 8px; }
+    .boss-block { margin-bottom: 20px; background: #f8fcff; border-radius: 8px; box-shadow: 0 0 8px #d1e6f6; padding: 10px 0 10px 0; }
+    .boss-block h3 { margin: 0 0 6px 0; }
     .drop-type-guaranteed { color: #007c1e; font-weight: bold; margin-left: 8px; }
     .drop-type-chance { color: #c00; font-weight: bold; margin-left: 8px; }
+    .right-timer-toggle { margin: 1em 0 0.5em 0; text-align: center; }
+    .right-timer-toggle button {
+      background: #223; color: #fff; border: none; border-radius: 4px; padding: 8px 18px; font-size: 1em; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .right-timer-toggle button:hover { background: #2b4765; }
+    .right-timer-content { text-align: center; }
+    .sidepull-btn {
+      position: fixed;
+      right: 0;
+      top: 40%;
+      z-index: 1000;
+      cursor: pointer;
+      background: #223;
+      color: #fff;
+      padding: 16px 10px 16px 14px;
+      border-radius: 8px 0 0 8px;
+      font-size: 22px;
+      box-shadow: 0 0 8px #223;
+      display: none;
+      transition: background 0.2s;
+    }
+    .sidepull-btn:hover { background: #2b4765; }
+    @media (max-width: 1000px) {
+      body { grid-template-columns: 0 1fr 0; }
+      .sidenav, .sidenav2 { display: none; }
+      .sidepull-btn { display: none !important; }
+    }
+    .iframe-container {
+      width: 100%;
+      height: 700px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #222;
+      margin-top: 10px;
+    }
+    .iframe-container iframe {
+      width: 100%;
+      height: 700px;
+      border: none;
+      background: #222;
+    }
+    .iframe-warning {
+      color: #ffb300;
+      font-size: 0.98em;
+      background: #222;
+      border-radius: 6px;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
   </style>
 </head>
-<body>
+<body class="sidebar-open">
+  <!-- Sidepull button for right sidebar -->
+  <div class="sidepull-btn" id="sidepullBtn" title="Open Timetable">&#9776;</div>
+
   <!-- LEFT NAVIGATION MENU -->
   <nav class="sidenav" id="sideNav"></nav>
 
@@ -112,20 +169,27 @@ Websites:
     <footer>&copy; 2025 Gamers-Hell Community</footer>
   </div>
 
-  <!-- RIGHT TIMER MENU -->
-  <nav class="sidenav2">
-    <iframe
-      src="http://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true"
-      width="100%" height="100%" frameborder="0"
-      style="box-shadow:0 0 12px #223;">
-    </iframe>
+  <!-- RIGHT SIDEBAR: GW2 Event Timer List via HTTPS iframe -->
+  <nav class="sidenav2" id="rightSidebar">
+    <div class="right-timer-toggle">
+      <button id="toggleTimerBtn">Show Event Timer</button>
+    </div>
+    <div class="right-timer-content" id="timerContainer" style="display:none;">
+      <h3 style="margin:0 0 12px 0;">Event Timetable (Live List)</h3>
+      <div class="iframe-container" id="iframeContainer">
+        <iframe id="gw2timerIframe"
+          src="https://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true"
+          allowtransparency="true"></iframe>
+      </div>
+      <div class="iframe-warning" id="iframeWarning" style="display:none;">
+        <b>Note:</b> If the timer does not display, your browser may block HTTP iframes on HTTPS pages.<br>
+        <a href="https://gw2timer.com/?page=Timetable&enu_Language=en&int_setClock=2&bol_use24Hour=true" target="_blank" style="color:#aaf;">Open GW2Timer in a new tab</a>
+      </div>
+    </div>
+    <button id="closeSidebarBtn" style="position:absolute;top:8px;right:8px;font-size:22px;background:none;color:#fff;border:none;cursor:pointer;">×</button>
   </nav>
 
 <script>
-/* =========================
-   DATA STRUCTURE
-   ========================= */
-// Use note: "Guaranteed" or "Chance" (case-insensitive) if you want to control copy-paste output.
 const data = {
   "Core Tyria": {
     "World Bosses": [
@@ -165,12 +229,8 @@ const data = {
       }
     ]
   }
-  // Add more categories/groups as needed!
 };
 
-/* =========================
-   COPY-TO-CLIPBOARD FUNCTION
-   ========================= */
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(
     () => alert(`Copied:\n${text}`),
@@ -178,9 +238,6 @@ function copyToClipboard(text) {
   );
 }
 
-/* =========================
-   SIDEBAR NAVIGATION
-   ========================= */
 function buildNav(parent, obj) {
   Object.entries(obj).forEach(([key,val]) => {
     if (Array.isArray(val)) {
@@ -206,9 +263,6 @@ function generateNav() {
   nav.appendChild(Object.assign(document.createElement('a'), { href: '#Credits', textContent: 'Credits' }));
 }
 
-/* =========================
-   COIN FORMATTER
-   ========================= */
 function formatCoin(value) {
   value = Number(value) || 0;
   const gold = Math.floor(value / 10000);
@@ -221,9 +275,6 @@ function formatCoin(value) {
   return str.trim();
 }
 
-/* =========================
-   FETCH ITEM DATA (API)
-   ========================= */
 async function fetchItemData(id) {
   try {
     const [item, price] = await Promise.all([
@@ -240,40 +291,36 @@ async function fetchItemData(id) {
   }
 }
 
-/* =========================
-   MAIN CONTENT BUILDER
-   ========================= */
 async function buildContent(parent, obj) {
   for (const [cat, groups] of Object.entries(obj)) {
-    // Category heading
-    const catHeading = document.createElement('div');
-    catHeading.className = 'cat-heading';
-    catHeading.textContent = cat;
-    parent.appendChild(catHeading);
+    const catDetails = document.createElement('details');
+    catDetails.open = true;
+    const catSummary = document.createElement('summary');
+    catSummary.innerHTML = `<span class="cat-heading">${cat}</span>`;
+    catDetails.appendChild(catSummary);
 
     for (const [group, bosses] of Object.entries(groups)) {
-      const section = document.createElement('section');
-      section.id = group.replace(/\s+/g,'');
-      section.innerHTML = `<h2>${group}</h2>`;
+      const groupDetails = document.createElement('details');
+      groupDetails.open = false;
+      const groupSummary = document.createElement('summary');
+      groupSummary.innerHTML = `<h2 style="display:inline">${group}</h2>`;
+      groupDetails.appendChild(groupSummary);
+
       for (let boss of bosses) {
         const bossDiv = document.createElement('div');
-        bossDiv.className = 'boss';
+        bossDiv.className = 'boss-block';
         bossDiv.innerHTML = `<h3>${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
-        // Fetch all drops for this boss
         const dropDataArr = [];
         for (const drop of boss.drops) {
           const itemData = await fetchItemData(drop.id);
           dropDataArr.push({ ...drop, ...itemData });
         }
-        // Separate guaranteed and chance drops
         const guaranteedDrops = dropDataArr.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
         const chanceDrops = dropDataArr.filter(d => (d.note || '').toLowerCase() === 'chance');
-        // Find the most valuable chance drop
         let mostValuableChance = null;
         if (chanceDrops.length) {
           mostValuableChance = chanceDrops.reduce((max, d) => d.value > max.value ? d : max, chanceDrops[0]);
         }
-        // Build copy-paste string
         let parts = [];
         guaranteedDrops.forEach(d =>
           parts.push(`Guaranteed to drop ${d.name} (Value: ${formatCoin(d.value)})`)
@@ -281,7 +328,6 @@ async function buildContent(parent, obj) {
         if (mostValuableChance) {
           parts.push(`Chance to drop ${mostValuableChance.name} (Value: ${formatCoin(mostValuableChance.value)})`);
         }
-        // If no notes at all, just list all drops by value
         if (!guaranteedDrops.length && !chanceDrops.length) {
           dropDataArr.sort((a, b) => b.value - a.value);
           dropDataArr.forEach(d =>
@@ -289,7 +335,6 @@ async function buildContent(parent, obj) {
           );
         }
         const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${parts.join(', ')}`;
-        // Copy-paste row
         const wrap = document.createElement('div');
         wrap.className = 'textbox-container';
         const inp = document.createElement('input');
@@ -304,18 +349,18 @@ async function buildContent(parent, obj) {
         wrap.appendChild(inp);
         wrap.appendChild(btn);
         bossDiv.appendChild(wrap);
-        // Drops collapsible
-        const details = document.createElement('details');
-        const summary = document.createElement('summary');
-        summary.textContent = 'Show/Hide Drops';
-        details.appendChild(summary);
+        const dropsDetails = document.createElement('details');
+        dropsDetails.open = false;
+        const dropsSummary = document.createElement('summary');
+        dropsSummary.textContent = 'Show/Hide Drops';
+        dropsDetails.appendChild(dropsSummary);
         const dropsDiv = document.createElement('div');
         dropsDiv.className = 'drops-container';
         dropDataArr.forEach(d => {
           let dropType = '';
           if ((d.note || '').toLowerCase() === 'guaranteed') dropType = '<span class="drop-type-guaranteed">(Guaranteed)</span>';
           else if ((d.note || '').toLowerCase() === 'chance') dropType = '<span class="drop-type-chance">(Chance)</span>';
-          div = document.createElement('div');
+          const div = document.createElement('div');
           div.className = 'item-drop';
           div.innerHTML = `
             <img src="${d.icon||''}" alt="${d.name||''}">
@@ -325,23 +370,72 @@ async function buildContent(parent, obj) {
           `;
           dropsDiv.appendChild(div);
         });
-        details.appendChild(dropsDiv);
-        bossDiv.appendChild(details);
-        section.appendChild(bossDiv);
+        dropsDetails.appendChild(dropsDiv);
+        bossDiv.appendChild(dropsDetails);
+
+        groupDetails.appendChild(bossDiv);
       }
-      parent.appendChild(section);
+      catDetails.appendChild(groupDetails);
     }
+    parent.appendChild(catDetails);
   }
 }
 
-/* =========================
-   INIT
-   ========================= */
 document.addEventListener('DOMContentLoaded', async () => {
   generateNav();
   const main = document.getElementById('mainContent');
   main.innerHTML = '';
   await buildContent(main, data);
+
+  // Timer sidebar logic
+  const timerBtn = document.getElementById('toggleTimerBtn');
+  const timerContainer = document.getElementById('timerContainer');
+  const iframeContainer = document.getElementById('iframeContainer');
+  const gw2timerIframe = document.getElementById('gw2timerIframe');
+  const iframeWarning = document.getElementById('iframeWarning');
+  let timerVisible = false;
+  timerBtn.onclick = function() {
+    timerVisible = !timerVisible;
+    timerContainer.style.display = timerVisible ? "" : "none";
+    timerBtn.textContent = timerVisible ? "Hide Event Timer" : "Show Event Timer";
+    if (timerVisible) {
+      // Try to detect if iframe is blocked (may not work in all browsers)
+      setTimeout(() => {
+        try {
+          // Try to access the iframe contentDocument (will throw if blocked)
+          let doc = gw2timerIframe.contentDocument || gw2timerIframe.contentWindow.document;
+          if (!doc || !doc.body || doc.body.innerHTML.length < 100) {
+            iframeWarning.style.display = '';
+          } else {
+            iframeWarning.style.display = 'none';
+          }
+        } catch (e) {
+          iframeWarning.style.display = '';
+        }
+      }, 2000);
+    }
+  };
+
+  // Sidebar hide/show logic
+  const sidebar = document.getElementById('rightSidebar');
+  const sidepull = document.getElementById('sidepullBtn');
+  const closeBtn = document.getElementById('closeSidebarBtn');
+  function hideSidebar() {
+    sidebar.style.display = 'none';
+    sidepull.style.display = '';
+    document.body.classList.remove('sidebar-open');
+  }
+  function showSidebar() {
+    sidebar.style.display = '';
+    sidepull.style.display = 'none';
+    document.body.classList.add('sidebar-open');
+  }
+  closeBtn.onclick = hideSidebar;
+  sidepull.onclick = showSidebar;
+  sidepull.style.display = 'none';
+
+  // Show sidepull if sidebar is hidden on load (for mobile)
+  if (sidebar.style.display === 'none') sidepull.style.display = '';
 });
 </script>
 </body>
