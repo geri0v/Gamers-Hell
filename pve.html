@@ -19,7 +19,6 @@
     body.right-closed { grid-template-columns: 320px 1fr 0; }
     body.both-closed  { grid-template-columns: 0 1fr 0; }
 
-    /* --- Sidebar Shared Styles --- */
     .sidebar {
       position: fixed;
       top: 0;
@@ -48,10 +47,35 @@
       box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
       transition: background 0.2s;
       z-index: 2;
+      outline: none;
     }
     .sidebar-toggle.right { left: -40px; border-radius: 4px 0 0 4px; }
     .sidebar-toggle.left  { right: -40px; }
+    .sidebar-toggle:focus { outline: 2px solid #fff; outline-offset: 2px; }
     .sidebar-toggle:hover { background: #666; }
+
+    /* Mobile hamburger buttons */
+    .sidebar-hamburger {
+      display: none;
+      position: fixed;
+      top: 18px;
+      z-index: 2000;
+      width: 40px; height: 40px;
+      background: #223;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 28px;
+      box-shadow: 0 2px 8px #0005;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .sidebar-hamburger.left  { left: 10px; }
+    .sidebar-hamburger.right { right: 10px; }
+    .sidebar-hamburger:focus { outline: 2px solid #fff; outline-offset: 2px; }
+    .sidebar-hamburger:hover { background: #2b4765; }
 
     /* --- Event Timer Styles --- */
     .event-list { margin-top: 60px; padding: 16px; max-height: calc(100vh - 60px); overflow-y: auto; }
@@ -65,8 +89,10 @@
     .sidebar-nav a {
       display: block; padding: 8px 16px; font-size: 16px;
       text-decoration: none; color: inherit;
+      border-radius: 4px;
     }
-    .sidebar-nav a:hover { color: #f1f1f1; }
+    .sidebar-nav a:focus { outline: 2px solid #fff; outline-offset: 2px; background: #222; color: #fff; }
+    .sidebar-nav a:hover { color: #f1f1f1; background: #222; }
     .sidebar-nav details { padding: 4px 16px; color: #818181; cursor: pointer; }
     .sidebar-nav summary { list-style: none; font-size: 16px; user-select: none; }
     .sidebar-nav summary::-webkit-details-marker { display: none; }
@@ -78,7 +104,7 @@
     .cat-heading { font-size: 1.6em; margin: 1.5em 0 0.5em 0; color: #2b4765; }
 
     /* --- Main Content --- */
-    .main     { grid-area: main; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: all 0.3s; min-height: 100vh; }
+    main.main     { grid-area: main; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: all 0.3s; min-height: 100vh; }
     .center { text-align: center; margin-bottom: 1em; }
     h1, h2 { margin: 0.5em 0; }
     h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.2em; margin-top: 1.5em; }
@@ -124,6 +150,19 @@
     .boss-block h3 { margin: 0 0 6px 0; }
     .drop-type-guaranteed { color: #007c1e; font-weight: bold; margin-left: 8px; }
     .drop-type-chance { color: #c00; font-weight: bold; margin-left: 8px; }
+
+    /* Loading Spinner */
+    .spinner {
+      border: 4px solid #eee;
+      border-top: 4px solid #2b4765;
+      border-radius: 50%;
+      width: 32px; height: 32px;
+      animation: spin 1s linear infinite;
+      margin: 30px auto;
+      display: block;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
     @media (max-width: 1000px) {
       body, body.left-closed, body.right-closed, body.both-closed {
         grid-template-columns: 0 1fr 0 !important;
@@ -133,18 +172,23 @@
       .sidebar.right { transform: translateX(100%); }
       .sidebar-toggle.left { right: 0; left: auto; }
       .sidebar-toggle.right { left: 0; right: auto; }
+      .sidebar-hamburger { display: flex; }
     }
   </style>
 </head>
 <body>
+  <!-- Mobile hamburger buttons -->
+  <button class="sidebar-hamburger left" id="openLeft" aria-label="Open Menu" type="button">&#9776;</button>
+  <button class="sidebar-hamburger right" id="openRight" aria-label="Open Events" type="button">&#9776;</button>
+
   <!-- LEFT SIDEBAR: Navigation -->
-  <nav class="sidebar left" id="sidebarLeft">
-    <button class="sidebar-toggle left" id="toggleLeft" title="Hide Menu">&times;</button>
+  <nav class="sidebar left" id="sidebarLeft" aria-label="Main menu">
+    <button class="sidebar-toggle left" id="toggleLeft" aria-label="Hide Menu" type="button" tabindex="0">&times;</button>
     <nav class="sidebar-nav" id="sideNav"></nav>
   </nav>
 
   <!-- MAIN CONTENT (Unchanged) -->
-  <div class="main">
+  <main class="main" id="main">
     <section id="Welcome" class="center">
       <h1>Welcome Commander</h1>
       <script>
@@ -171,13 +215,13 @@ Websites:
       </textarea>
     </section>
     <footer>&copy; 2025 Gamers-Hell Community</footer>
-  </div>
+  </main>
 
   <!-- RIGHT SIDEBAR: GW2 Event Timer -->
-  <nav class="sidebar right" id="sidebarRight">
-    <button class="sidebar-toggle right" id="toggleRight" title="Hide Events">&times;</button>
-    <div class="event-list">
-      <!-- Events will be injected here -->
+  <nav class="sidebar right" id="sidebarRight" aria-label="Event timer">
+    <button class="sidebar-toggle right" id="toggleRight" aria-label="Hide Events" type="button" tabindex="0">&times;</button>
+    <div class="event-list" id="eventList">
+      <div class="spinner" id="eventSpinner"></div>
     </div>
   </nav>
 
@@ -248,7 +292,8 @@ function generateNav() {
   nav.appendChild(Object.assign(document.createElement('a'), { href: '#Credits', textContent: 'Credits' }));
 }
 
-/* --- Main Content Dynamic Boss/Item Logic (from your mainContent code) --- */
+/* --- Main Content Dynamic Boss/Item Logic --- */
+const itemCache = {};
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(
     () => alert(`Copied:\n${text}`),
@@ -267,108 +312,85 @@ function formatCoin(value) {
   return str.trim();
 }
 async function fetchItemData(id) {
+  if (itemCache[id]) return itemCache[id];
   try {
     const [item, price] = await Promise.all([
       fetch(`https://api.guildwars2.com/v2/items/${id}`).then(r=>r.json()),
       fetch(`https://api.guildwars2.com/v2/commerce/prices/${id}`).then(r=>r.json())
     ]);
-    return {
+    itemCache[id] = {
       name: item.name,
       icon: item.icon,
       value: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
     };
+    return itemCache[id];
   } catch {
     return { name: `Item ${id}`, icon: '', value: 0 };
   }
 }
 async function buildContent(parent, obj) {
+  parent.innerHTML = '<div class="spinner"></div>';
+  let html = '';
   for (const [cat, groups] of Object.entries(obj)) {
-    const catDetails = document.createElement('details');
-    catDetails.open = true;
-    const catSummary = document.createElement('summary');
-    catSummary.innerHTML = `<span class="cat-heading">${cat}</span>`;
-    catDetails.appendChild(catSummary);
-
+    html += `<details open><summary><span class="cat-heading">${cat}</span></summary>`;
     for (const [group, bosses] of Object.entries(groups)) {
-      const groupDetails = document.createElement('details');
-      groupDetails.open = false;
-      const groupSummary = document.createElement('summary');
-      groupSummary.innerHTML = `<h2 style="display:inline">${group}</h2>`;
-      groupDetails.appendChild(groupSummary);
-
+      html += `<details><summary><h2 style="display:inline">${group}</h2></summary>`;
       for (let boss of bosses) {
-        const bossDiv = document.createElement('div');
-        bossDiv.className = 'boss-block';
-        bossDiv.innerHTML = `<h3>${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
-        const dropDataArr = [];
+        html += `<div class="boss-block"><h3>${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
+        let dropDataArr = [];
         for (const drop of boss.drops) {
-          const itemData = await fetchItemData(drop.id);
-          dropDataArr.push({ ...drop, ...itemData });
+          dropDataArr.push(await fetchItemData(drop.id));
         }
-        const guaranteedDrops = dropDataArr.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
-        const chanceDrops = dropDataArr.filter(d => (d.note || '').toLowerCase() === 'chance');
+        const guaranteedDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
+        const chanceDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'chance');
         let mostValuableChance = null;
         if (chanceDrops.length) {
-          mostValuableChance = chanceDrops.reduce((max, d) => d.value > max.value ? d : max, chanceDrops[0]);
+          mostValuableChance = chanceDrops.reduce((max, d) => itemCache[d.id].value > itemCache[max.id].value ? d : max, chanceDrops[0]);
         }
         let parts = [];
         guaranteedDrops.forEach(d =>
-          parts.push(`Guaranteed to drop ${d.name} (Value: ${formatCoin(d.value)})`)
+          parts.push(`Guaranteed to drop ${itemCache[d.id].name} (Value: ${formatCoin(itemCache[d.id].value)})`)
         );
         if (mostValuableChance) {
-          parts.push(`Chance to drop ${mostValuableChance.name} (Value: ${formatCoin(mostValuableChance.value)})`);
+          parts.push(`Chance to drop ${itemCache[mostValuableChance.id].name} (Value: ${formatCoin(itemCache[mostValuableChance.id].value)})`);
         }
         if (!guaranteedDrops.length && !chanceDrops.length) {
-          dropDataArr.sort((a, b) => b.value - a.value);
-          dropDataArr.forEach(d =>
-            parts.push(`${d.name} (Value: ${formatCoin(d.value)})`)
+          boss.drops.sort((a, b) => itemCache[b.id].value - itemCache[a.id].value);
+          boss.drops.forEach(d =>
+            parts.push(`${itemCache[d.id].name} (Value: ${formatCoin(itemCache[d.id].value)})`)
           );
         }
         const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${parts.join(', ')}`;
-        const wrap = document.createElement('div');
-        wrap.className = 'textbox-container';
-        const inp = document.createElement('input');
-        inp.type = 'text';
-        inp.className = 'textbox';
-        inp.value = copyText;
-        inp.readOnly = true;
-        const btn = document.createElement('button');
-        btn.className = 'copy-button';
-        btn.title = `Copy ${boss.name}`;
-        btn.onclick = ()=>copyToClipboard(copyText);
-        wrap.appendChild(inp);
-        wrap.appendChild(btn);
-        bossDiv.appendChild(wrap);
-        const dropsDetails = document.createElement('details');
-        dropsDetails.open = false;
-        const dropsSummary = document.createElement('summary');
-        dropsSummary.textContent = 'Show/Hide Drops';
-        dropsDetails.appendChild(dropsSummary);
-        const dropsDiv = document.createElement('div');
-        dropsDiv.className = 'drops-container';
-        dropDataArr.forEach(d => {
+        html += `<div class="textbox-container">
+          <input type="text" class="textbox" value="${copyText.replace(/"/g,'&quot;')}" readonly>
+          <button class="copy-button" title="Copy ${boss.name}" type="button" tabindex="0" aria-label="Copy ${boss.name}"></button>
+        </div>
+        <details><summary>Show/Hide Drops</summary>
+        <div class="drops-container">`;
+        boss.drops.forEach(d => {
           let dropType = '';
           if ((d.note || '').toLowerCase() === 'guaranteed') dropType = '<span class="drop-type-guaranteed">(Guaranteed)</span>';
           else if ((d.note || '').toLowerCase() === 'chance') dropType = '<span class="drop-type-chance">(Chance)</span>';
-          const div = document.createElement('div');
-          div.className = 'item-drop';
-          div.innerHTML = `
-            <img src="${d.icon||''}" alt="${d.name||''}">
-            <span>${d.name}</span>
+          html += `<div class="item-drop">
+            <img src="${itemCache[d.id].icon||''}" alt="${itemCache[d.id].name||''}">
+            <span>${itemCache[d.id].name}</span>
             ${dropType}
-            <small>Value: ${formatCoin(d.value)}</small>
-          `;
-          dropsDiv.appendChild(div);
+            <small>Value: ${formatCoin(itemCache[d.id].value)}</small>
+          </div>`;
         });
-        dropsDetails.appendChild(dropsDiv);
-        bossDiv.appendChild(dropsDetails);
-
-        groupDetails.appendChild(bossDiv);
+        html += `</div></details></div>`;
       }
-      catDetails.appendChild(groupDetails);
+      html += `</details>`;
     }
-    parent.appendChild(catDetails);
+    html += `</details>`;
   }
+  parent.innerHTML = html;
+  // Attach copy events
+  parent.querySelectorAll('.copy-button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      copyToClipboard(this.previousElementSibling.value);
+    });
+  });
 }
 
 /* --- Sidebar Toggle Logic --- */
@@ -380,14 +402,20 @@ function updateBodyClass() {
   else if (!left && right)  document.body.className = 'left-closed';
   else                      document.body.className = 'both-closed';
 }
-document.getElementById('toggleLeft').onclick = function() {
-  document.getElementById('sidebarLeft').classList.toggle('closed');
+function openSidebar(side) {
+  document.getElementById(side).classList.remove('closed');
   updateBodyClass();
-};
-document.getElementById('toggleRight').onclick = function() {
-  document.getElementById('sidebarRight').classList.toggle('closed');
+}
+function closeSidebar(side) {
+  document.getElementById(side).classList.add('closed');
   updateBodyClass();
-};
+}
+function setupSidebarToggles() {
+  document.getElementById('toggleLeft').addEventListener('click', () => closeSidebar('sidebarLeft'));
+  document.getElementById('toggleRight').addEventListener('click', () => closeSidebar('sidebarRight'));
+  document.getElementById('openLeft').addEventListener('click', () => openSidebar('sidebarLeft'));
+  document.getElementById('openRight').addEventListener('click', () => openSidebar('sidebarRight'));
+}
 
 /* --- GW2 Event Timer Sidebar Logic --- */
 const EVENTS_JSON_URL = 'https://raw.githubusercontent.com/blish-hud/Community-Module-Pack/master/Events%20Module/ref/events.json';
@@ -416,6 +444,8 @@ function toAmsterdamTimeStr(date) {
 }
 let events = [];
 async function fetchEvents() {
+  const spinner = document.getElementById('eventSpinner');
+  if (spinner) spinner.style.display = 'block';
   try {
     const response = await fetch(EVENTS_JSON_URL, { cache: "no-store" });
     if (!response.ok) throw new Error("Failed to fetch events");
@@ -425,10 +455,10 @@ async function fetchEvents() {
     events = [];
     console.error('Error fetching events:', err);
   }
+  if (spinner) spinner.style.display = 'none';
 }
 function updateEvents() {
-  const eventList = document.querySelector('#sidebarRight .event-list');
-  eventList.innerHTML = '';
+  const eventList = document.getElementById('eventList');
   if (!events.length) {
     eventList.innerHTML = '<div style="padding:20px;color:#aaa;">No events available.</div>';
     return;
@@ -441,12 +471,11 @@ function updateEvents() {
   nextEvents.sort((a, b) => a.utcTime - b.utcTime);
   let nextIdx = nextEvents.findIndex(ev => ev.utcTime > now);
   if (nextIdx === -1) nextIdx = 0;
+  let html = '';
   nextEvents.forEach((event, idx) => {
-    const row = document.createElement('div');
-    row.className = 'event-row' + (idx === nextIdx ? ' upcoming' : '');
-    row.innerHTML = `<span class="event-name">${event.name}</span><span class="event-time">${event.amsTime}</span>`;
-    eventList.appendChild(row);
+    html += `<div class="event-row${idx === nextIdx ? ' upcoming' : ''}"><span class="event-name">${event.name}</span><span class="event-time">${event.amsTime}</span></div>`;
   });
+  eventList.innerHTML = html;
 }
 async function refreshAndUpdate() {
   await fetchEvents();
@@ -456,10 +485,12 @@ async function refreshAndUpdate() {
 /* --- DOMContentLoaded: Build everything --- */
 document.addEventListener('DOMContentLoaded', async () => {
   generateNav();
+  setupSidebarToggles();
+  // Main content
   const main = document.getElementById('mainContent');
-  main.innerHTML = '';
   await buildContent(main, data);
 
+  // Event timer
   refreshAndUpdate();
   setInterval(refreshAndUpdate, 60000);
   document.addEventListener('visibilitychange', function() {
