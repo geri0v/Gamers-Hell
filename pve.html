@@ -4,38 +4,71 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gamers-Hell Command</title>
+  <meta name="theme-color" content="#2b4765">
   <style>
+    :root {
+      --main-bg: #f8fcff;
+      --main-fg: #222;
+      --sidebar-bg: #222;
+      --sidebar-fg: #fff;
+      --accent: #2b4765;
+      --event-upcoming-bg: #29334a;
+      --event-upcoming-fg: #fff;
+      --copy-btn-bg: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
+      --copy-btn-hover-bg: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
+    }
+    body.theme-original { }
+    body.theme-dark {
+      --main-bg: #1b232b;
+      --main-fg: #eee;
+      --sidebar-bg: #11161b;
+      --sidebar-fg: #fff;
+      --accent: #3c6e8d;
+      --event-upcoming-bg: #2b4765;
+      --event-upcoming-fg: #fff;
+    }
+    body.theme-light {
+      --main-bg: #fff;
+      --main-fg: #222;
+      --sidebar-bg: #f0f0f0;
+      --sidebar-fg: #222;
+      --accent: #2b4765;
+      --event-upcoming-bg: #e0e8f6;
+      --event-upcoming-fg: #222;
+    }
     html, body { margin: 0; padding: 0; height: 100vh; }
     body {
       display: grid;
       grid-template-columns: 320px 1fr 320px;
       grid-template-areas: "navleft main navright";
       font-family: Arial, sans-serif;
-      background: #3c6e8d65;
+      background: var(--main-bg);
+      color: var(--main-fg);
       min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
     }
-
     .sidebar {
       position: fixed;
       top: 0;
       width: 320px;
       height: 100vh;
-      background: #222;
-      color: #fff;
+      background: var(--sidebar-bg);
+      color: var(--sidebar-fg);
       box-shadow: 2px 0 8px rgba(0,0,0,0.2);
       z-index: 1000;
       display: flex;
       flex-direction: column;
+      transition: background 0.3s, color 0.3s;
     }
     .sidebar.left  { left: 0; border-right: 1px solid #111; }
     .sidebar.right { right: 0; border-left:  1px solid #111; }
-
-    .event-list { margin-top: 60px; padding: 16px; max-height: calc(100vh - 60px); overflow-y: auto; }
-    .event-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #333; font-size: 1rem; }
-    .event-row.upcoming { background: #29334a; font-weight: bold; border-radius: 4px; }
-    .event-name { flex: 2; }
-    .event-time { flex: 1; text-align: right; font-family: monospace; }
-
+    main.main     { grid-area: main; overflow-y: auto; padding: 20px; box-sizing: border-box; min-height: 100vh; background: var(--main-bg); color: var(--main-fg);}
+    .center { text-align: center; margin-bottom: 1em; }
+    h1, h2 { margin: 0.5em 0; }
+    h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.2em; margin-top: 1.5em; }
+    textarea { width: 100%; }
+    footer { text-align: center; color: #888; margin-top: 30px; }
+    /* Sidebar nav */
     .sidebar-nav { margin-top: 60px; }
     .sidebar-nav a {
       display: block; padding: 8px 16px; font-size: 16px;
@@ -52,15 +85,38 @@
     }
     .sidebar-nav details[open] summary::before { content: "▾"; }
     .sidebar-nav details a { padding-left: 32px; font-size: 15px; }
-    .cat-heading { font-size: 1.6em; margin: 1.5em 0 0.5em 0; color: #2b4765; }
-
-    main.main     { grid-area: main; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: all 0.3s; min-height: 100vh; }
-    .center { text-align: center; margin-bottom: 1em; }
-    h1, h2 { margin: 0.5em 0; }
-    h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.2em; margin-top: 1.5em; }
-    textarea { width: 100%; }
-    footer { text-align: center; color: #888; margin-top: 30px; }
-
+    .cat-heading { font-size: 1.6em; margin: 1.5em 0 0.5em 0; color: var(--accent); }
+    /* Event Timer */
+    .event-list { margin-top: 10px; padding: 16px; max-height: calc(100vh - 90px); overflow-y: auto; }
+    .event-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #333; font-size: 1rem; }
+    .event-row.upcoming { background: var(--event-upcoming-bg); color: var(--event-upcoming-fg); font-weight: bold; border-radius: 4px; }
+    .event-name { flex: 2; }
+    .event-time { flex: 1; text-align: right; font-family: monospace; }
+    .event-countdown { display: block; font-size: 0.9em; color: #f1c40f; text-align: right; }
+    /* Floating Search Bar */
+    .search-bar-container {
+      position: sticky;
+      top: 0;
+      z-index: 2001;
+      background: var(--main-bg);
+      padding: 10px 0 5px 0;
+      box-shadow: 0 2px 8px #0002;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .search-input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    .theme-switcher {
+      margin-left: 8px;
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 1rem;
+    }
+    /* Boss/Item Styles */
     .textbox-container {
       display: flex; align-items: center; margin: 6px 0;
     }
@@ -71,10 +127,10 @@
     .copy-button {
       width: 24px; height: 24px; margin-left: 6px;
       border: none; cursor: pointer; border-radius: 4px;
-      background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png') no-repeat center/cover;
+      background: var(--copy-btn-bg) no-repeat center/cover;
     }
     .copy-button:hover {
-      background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
+      background-image: var(--copy-btn-hover-bg);
     }
     .drops-container {
       margin-left: 32px; margin-top: 8px;
@@ -95,14 +151,14 @@
       user-select: none;
     }
     details { margin-bottom: 8px; }
-    .boss-block { margin-bottom: 20px; background: #f8fcff; border-radius: 8px; box-shadow: 0 0 8px #d1e6f6; padding: 10px 0 10px 0; }
+    .boss-block { margin-bottom: 20px; background: var(--main-bg); border-radius: 8px; box-shadow: 0 0 8px #d1e6f6; padding: 10px 0 10px 0; }
     .boss-block h3 { margin: 0 0 6px 0; }
     .drop-type-guaranteed { color: #007c1e; font-weight: bold; margin-left: 8px; }
     .drop-type-chance { color: #c00; font-weight: bold; margin-left: 8px; }
-
+    /* Loading Spinner */
     .spinner {
       border: 4px solid #eee;
-      border-top: 4px solid #2b4765;
+      border-top: 4px solid var(--accent);
       border-radius: 50%;
       width: 32px; height: 32px;
       animation: spin 1s linear infinite;
@@ -110,23 +166,52 @@
       display: block;
     }
     @keyframes spin { 100% { transform: rotate(360deg); } }
-
+    /* Error Overlay */
+    #globalError {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: #c00; color: #fff;
+      padding: 12px; text-align: center;
+      z-index: 3000;
+      display: none;
+    }
+    /* Responsive */
     @media (max-width: 1000px) {
       body {
         grid-template-columns: 0 1fr 0 !important;
       }
-      .sidebar { width: 100vw; left: 0 !important; right: auto !important; border-radius: 0; }
+      .sidebar {
+        width: 100vw; left: 0 !important; right: auto !important; border-radius: 0;
+        position: static;
+        height: auto;
+      }
+      .sidebar.left, .sidebar.right {
+        border: none;
+      }
+      main.main {
+        padding: 10px;
+      }
+    }
+    @media (max-width: 700px) {
+      .search-bar-container { flex-direction: column; gap: 6px; }
     }
   </style>
 </head>
-<body>
-  <!-- LEFT SIDEBAR: Navigation -->
+<body class="theme-original">
+  <!-- Left Sidebar -->
   <nav class="sidebar left" id="sidebarLeft" aria-label="Main menu">
     <nav class="sidebar-nav" id="sideNav"></nav>
   </nav>
-
-  <!-- MAIN CONTENT -->
+  <!-- Main Content -->
   <main class="main" id="main">
+    <div class="search-bar-container" role="search">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search bosses, events..." aria-label="Search">
+      <select id="themeSwitcher" class="theme-switcher" aria-label="Theme">
+        <option value="original">Original</option>
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+      </select>
+    </div>
     <section id="Welcome" class="center">
       <h1>Welcome Commander</h1>
     </section>
@@ -146,261 +231,412 @@ Websites:
     </section>
     <footer>&copy; 2025 Gamers-Hell Community</footer>
   </main>
-
-  <!-- RIGHT SIDEBAR: GW2 Event Timer -->
+  <!-- Right Sidebar: Event Timer -->
   <nav class="sidebar right" id="sidebarRight" aria-label="Event timer">
+    <div style="padding: 12px;">
+      <label for="timezoneSelect">Timezone:</label>
+      <select id="timezoneSelect" aria-label="Choose timezone"></select>
+    </div>
     <div class="event-list" id="eventList">
       <div class="spinner" id="eventSpinner"></div>
     </div>
   </nav>
+  <!-- Loading and Error Overlays -->
+  <div id="globalError" role="alert"></div>
+  <script>
+    // ========== Theme Switcher ==========
+    const themeSwitcher = document.getElementById('themeSwitcher');
+    function applyTheme(theme) {
+      document.body.className = 'theme-' + theme;
+      localStorage.setItem('ghc-theme', theme);
+    }
+    themeSwitcher.addEventListener('change', e => applyTheme(e.target.value));
+    // On load
+    (() => {
+      const theme = localStorage.getItem('ghc-theme') || 'original';
+      themeSwitcher.value = theme;
+      applyTheme(theme);
+    })();
 
-<script>
-/* --- Navigation Data and Builder --- */
-const data = {
-  "Core Tyria": {
-    "World Bosses": [
-      {
-        name: "Taidha Covington",
-        code: "[&BKgBAAA=]",
-        location: "Bloodtide Coast",
-        drops: [
-          { id: 46733, note: "Guaranteed" },
-          { id: 19357, note: "Chance" },
-          { id: 19361, note: "Chance" }
-        ]
-      },
-      {
-        name: "Karka Queen",
-        code: "[&BNcGAAA=]",
-        location: "Southsun Cove",
-        drops: [
-          { id: 37897, note: "Guaranteed" },
-          { id: 37899, note: "Chance" },
-          { id: 49509, note: "Chance" },
-          { id: 45597, note: "Chance" },
-          { id: 46713, note: "Chance" },
-          { id: 46689, note: "Chance" }
-        ]
-      },
-      {
-        name: "Shadow Behemoth",
-        code: "[&BPcAAAA=]",
-        location: "Queensdale",
-        drops: [
-          { id: 46733, note: "Guaranteed"},
-          { id: 8535, note: "Chance" },
-          { id: 19360, note: "Chance" },
-          { id: 31051, note: "Chance" }
+    // ========== Navigation Data ==========
+    const data = {
+      "Core Tyria": {
+        "World Bosses": [
+          {
+            name: "Taidha Covington",
+            code: "[&BKgBAAA=]",
+            location: "Bloodtide Coast",
+            drops: [
+              { id: 46733, note: "Guaranteed" },
+              { id: 19357, note: "Chance" },
+              { id: 19361, note: "Chance" }
+            ]
+          },
+          {
+            name: "Karka Queen",
+            code: "[&BNcGAAA=]",
+            location: "Southsun Cove",
+            drops: [
+              { id: 37897, note: "Guaranteed" },
+              { id: 37899, note: "Chance" },
+              { id: 49509, note: "Chance" },
+              { id: 45597, note: "Chance" },
+              { id: 46713, note: "Chance" },
+              { id: 46689, note: "Chance" }
+            ]
+          },
+          {
+            name: "Shadow Behemoth",
+            code: "[&BPcAAAA=]",
+            location: "Queensdale",
+            drops: [
+              { id: 46733, note: "Guaranteed"},
+              { id: 8535, note: "Chance" },
+              { id: 19360, note: "Chance" },
+              { id: 31051, note: "Chance" }
+            ]
+          }
         ]
       }
-    ]
-  }
-};
-function buildNav(parent, obj) {
-  Object.entries(obj).forEach(([key,val]) => {
-    if (Array.isArray(val)) {
-      const a = document.createElement('a');
-      a.href = `#${key.replace(/\s+/g,'')}`;
-      a.textContent = key;
-      parent.appendChild(a);
-    } else {
-      const details = document.createElement('details');
-      const summary = document.createElement('summary');
-      summary.textContent = key;
-      details.appendChild(summary);
-      buildNav(details,val);
-      parent.appendChild(details);
-    }
-  });
-}
-function generateNav() {
-  const nav = document.getElementById('sideNav');
-  nav.innerHTML = '';
-  nav.appendChild(Object.assign(document.createElement('a'), { href: '#Welcome', textContent: 'Welcome' }));
-  buildNav(nav, data);
-  nav.appendChild(Object.assign(document.createElement('a'), { href: '#Credits', textContent: 'Credits' }));
-}
-
-/* --- Main Content Dynamic Boss/Item Logic --- */
-const itemCache = {};
-function copyToClipboard(text) {
-  navigator.clipboard.writeText(text).then(
-    () => alert(`Copied:\n${text}`),
-    () => alert('Copy failed!')
-  );
-}
-function formatCoin(value) {
-  value = Number(value) || 0;
-  const gold = Math.floor(value / 10000);
-  const silver = Math.floor((value % 10000) / 100);
-  const copper = value % 100;
-  let str = '';
-  if (gold) str += gold + 'g ';
-  if (gold || silver) str += silver + 's ';
-  str += copper + 'c';
-  return str.trim();
-}
-async function fetchItemData(id) {
-  if (itemCache[id]) return itemCache[id];
-  try {
-    const [item, price] = await Promise.all([
-      fetch(`https://api.guildwars2.com/v2/items/${id}`).then(r=>r.json()),
-      fetch(`https://api.guildwars2.com/v2/commerce/prices/${id}`).then(r=>r.json())
-    ]);
-    itemCache[id] = {
-      name: item.name,
-      icon: item.icon,
-      value: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
     };
-    return itemCache[id];
-  } catch {
-    return { name: `Item ${id}`, icon: '', value: 0 };
-  }
-}
-async function buildContent(parent, obj) {
-  parent.innerHTML = '<div class="spinner"></div>';
-  let html = '';
-  for (const [cat, groups] of Object.entries(obj)) {
-    html += `<details open><summary><span class="cat-heading">${cat}</span></summary>`;
-    for (const [group, bosses] of Object.entries(groups)) {
-      html += `<details><summary><h2 style="display:inline">${group}</h2></summary>`;
-      for (let boss of bosses) {
-        html += `<div class="boss-block"><h3>${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
-        let dropDataArr = [];
-        for (const drop of boss.drops) {
-          dropDataArr.push(await fetchItemData(drop.id));
+
+    // ========== Navigation Builder ==========
+    function buildNav(parent, obj, path=[]) {
+      Object.entries(obj).forEach(([key,val]) => {
+        if (Array.isArray(val)) {
+          const a = document.createElement('a');
+          a.href = `#${[...path, key].join('-').replace(/\s+/g,'')}`;
+          a.textContent = key;
+          a.addEventListener('click', e => {
+            e.preventDefault();
+            const el = document.getElementById(a.href.slice(1));
+            if (el) {
+              el.scrollIntoView({behavior:"smooth", block:"start"});
+              el.focus && el.focus();
+            }
+          });
+          parent.appendChild(a);
+        } else {
+          const details = document.createElement('details');
+          const summary = document.createElement('summary');
+          summary.textContent = key;
+          details.appendChild(summary);
+          buildNav(details, val, [...path, key]);
+          parent.appendChild(details);
         }
-        const guaranteedDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
-        const chanceDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'chance');
-        let mostValuableChance = null;
-        if (chanceDrops.length) {
-          mostValuableChance = chanceDrops.reduce((max, d) => itemCache[d.id].value > itemCache[max.id].value ? d : max, chanceDrops[0]);
-        }
-        let parts = [];
-        guaranteedDrops.forEach(d =>
-          parts.push(`Guaranteed to drop ${itemCache[d.id].name} (Value: ${formatCoin(itemCache[d.id].value)})`)
-        );
-        if (mostValuableChance) {
-          parts.push(`Chance to drop ${itemCache[mostValuableChance.id].name} (Value: ${formatCoin(itemCache[mostValuableChance.id].value)})`);
-        }
-        if (!guaranteedDrops.length && !chanceDrops.length) {
-          boss.drops.sort((a, b) => itemCache[b.id].value - itemCache[a.id].value);
-          boss.drops.forEach(d =>
-            parts.push(`${itemCache[d.id].name} (Value: ${formatCoin(itemCache[d.id].value)})`)
-          );
-        }
-        const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${parts.join(', ')}`;
-        html += `<div class="textbox-container">
-          <input type="text" class="textbox" value="${copyText.replace(/"/g,'&quot;')}" readonly>
-          <button class="copy-button" title="Copy ${boss.name}" type="button" tabindex="0" aria-label="Copy ${boss.name}"></button>
-        </div>
-        <details><summary>Show/Hide Drops</summary>
-        <div class="drops-container">`;
-        boss.drops.forEach(d => {
-          let dropType = '';
-          if ((d.note || '').toLowerCase() === 'guaranteed') dropType = '<span class="drop-type-guaranteed">(Guaranteed)</span>';
-          else if ((d.note || '').toLowerCase() === 'chance') dropType = '<span class="drop-type-chance">(Chance)</span>';
-          html += `<div class="item-drop">
-            <img src="${itemCache[d.id].icon||''}" alt="${itemCache[d.id].name||''}">
-            <span>${itemCache[d.id].name}</span>
-            ${dropType}
-            <small>Value: ${formatCoin(itemCache[d.id].value)}</small>
-          </div>`;
-        });
-        html += `</div></details></div>`;
-      }
-      html += `</details>`;
+      });
     }
-    html += `</details>`;
-  }
-  parent.innerHTML = html;
-  // Attach copy events
-  parent.querySelectorAll('.copy-button').forEach(btn => {
-    btn.addEventListener('click', function() {
-      copyToClipboard(this.previousElementSibling.value);
+    function generateNav() {
+      const nav = document.getElementById('sideNav');
+      nav.innerHTML = '';
+      nav.appendChild(Object.assign(document.createElement('a'), { href: '#Welcome', textContent: 'Welcome' }));
+      buildNav(nav, data);
+      nav.appendChild(Object.assign(document.createElement('a'), { href: '#Credits', textContent: 'Credits' }));
+    }
+
+    // ========== Main Content Builder ==========
+    const itemCache = {};
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(
+        () => alert(`Copied:\n${text}`),
+        () => alert('Copy failed!')
+      );
+    }
+    function formatCoin(value) {
+      value = Number(value) || 0;
+      const gold = Math.floor(value / 10000);
+      const silver = Math.floor((value % 10000) / 100);
+      const copper = value % 100;
+      let str = '';
+      if (gold) str += gold + 'g ';
+      if (gold || silver) str += silver + 's ';
+      str += copper + 'c';
+      return str.trim();
+    }
+    async function fetchItemData(id) {
+      if (itemCache[id]) return itemCache[id];
+      // Try cache
+      let cache = localStorage.getItem('ghc-item-'+id);
+      if (cache) {
+        itemCache[id] = JSON.parse(cache);
+        return itemCache[id];
+      }
+      try {
+        const [item, price] = await Promise.all([
+          fetch(`https://api.guildwars2.com/v2/items/${id}`).then(r=>r.json()),
+          fetch(`https://api.guildwars2.com/v2/commerce/prices/${id}`).then(r=>r.json())
+        ]);
+        itemCache[id] = {
+          name: item.name,
+          icon: item.icon,
+          value: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
+        };
+        // Save to cache
+        localStorage.setItem('ghc-item-'+id, JSON.stringify(itemCache[id]));
+        return itemCache[id];
+      } catch {
+        return { name: `Item ${id}`, icon: '', value: 0 };
+      }
+    }
+    async function buildContent(parent, obj) {
+      parent.innerHTML = '<div class="spinner"></div>';
+      let html = '';
+      for (const [cat, groups] of Object.entries(obj)) {
+        const catId = cat.replace(/\s+/g,'');
+        html += `<details open id="${catId}" tabindex="-1"><summary><span class="cat-heading">${cat}</span></summary>`;
+        for (const [group, bosses] of Object.entries(groups)) {
+          const groupId = [cat, group].join('-').replace(/\s+/g,'');
+          html += `<details id="${groupId}" tabindex="-1"><summary><h2 style="display:inline">${group}</h2></summary>`;
+          for (let boss of bosses) {
+            const bossId = [cat, group, boss.name].join('-').replace(/\s+/g,'');
+            html += `<div class="boss-block" id="${bossId}" tabindex="-1"><h3>${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
+            let dropDataArr = [];
+            for (const drop of boss.drops) {
+              dropDataArr.push(await fetchItemData(drop.id));
+            }
+            const guaranteedDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
+            const chanceDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'chance');
+            let mostValuableChance = null;
+            if (chanceDrops.length) {
+              mostValuableChance = chanceDrops.reduce((max, d) => itemCache[d.id].value > itemCache[max.id].value ? d : max, chanceDrops[0]);
+            }
+            let parts = [];
+            guaranteedDrops.forEach(d =>
+              parts.push(`Guaranteed to drop ${itemCache[d.id].name} (Value: ${formatCoin(itemCache[d.id].value)})`)
+            );
+            if (mostValuableChance) {
+              parts.push(`Chance to drop ${itemCache[mostValuableChance.id].name} (Value: ${formatCoin(itemCache[mostValuableChance.id].value)})`);
+            }
+            if (!guaranteedDrops.length && !chanceDrops.length) {
+              boss.drops.sort((a, b) => itemCache[b.id].value - itemCache[a.id].value);
+              boss.drops.forEach(d =>
+                parts.push(`${itemCache[d.id].name} (Value: ${formatCoin(itemCache[d.id].value)})`)
+              );
+            }
+            const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${parts.join(', ')}`;
+            html += `<div class="textbox-container">
+              <input type="text" class="textbox" value="${copyText.replace(/"/g,'&quot;')}" readonly>
+              <button class="copy-button" title="Copy ${boss.name}" type="button" tabindex="0" aria-label="Copy ${boss.name}"></button>
+            </div>
+            <details><summary>Show/Hide Drops</summary>
+            <div class="drops-container">`;
+            boss.drops.forEach(d => {
+              let dropType = '';
+              if ((d.note || '').toLowerCase() === 'guaranteed') dropType = '<span class="drop-type-guaranteed">(Guaranteed)</span>';
+              else if ((d.note || '').toLowerCase() === 'chance') dropType = '<span class="drop-type-chance">(Chance)</span>';
+              html += `<div class="item-drop">
+                <img src="${itemCache[d.id].icon||''}" alt="${itemCache[d.id].name||''}">
+                <span>${itemCache[d.id].name}</span>
+                ${dropType}
+                <small>Value: ${formatCoin(itemCache[d.id].value)}</small>
+              </div>`;
+            });
+            html += `</div></details></div>`;
+          }
+          html += `</details>`;
+        }
+        html += `</details>`;
+      }
+      parent.innerHTML = html;
+      // Attach copy events
+      parent.querySelectorAll('.copy-button').forEach(btn => {
+        btn.addEventListener('click', function() {
+          copyToClipboard(this.previousElementSibling.value);
+        });
+      });
+    }
+
+    // ========== Event Timer ==========
+    const EVENTS_JSON_URL = 'https://raw.githubusercontent.com/blish-hud/Community-Module-Pack/master/Events%20Module/ref/events.json';
+    let events = [];
+    let timerInterval = null;
+    let selectedTimezone = localStorage.getItem('ghc-timezone') || 'Europe/Amsterdam';
+
+    function getAllTimezones() {
+      try {
+        return Intl.supportedValuesOf('timeZone');
+      } catch {
+        // Fallback
+        return [
+          "Europe/Amsterdam", "Europe/London", "America/New_York", "America/Los_Angeles", "Asia/Tokyo", "UTC"
+        ];
+      }
+    }
+    function populateTimezoneSelect() {
+      const tzSelect = document.getElementById('timezoneSelect');
+      tzSelect.innerHTML = '';
+      getAllTimezones().forEach(tz => {
+        const opt = document.createElement('option');
+        opt.value = tz;
+        opt.textContent = tz.replace('_',' ');
+        if (tz === selectedTimezone) opt.selected = true;
+        tzSelect.appendChild(opt);
+      });
+      tzSelect.addEventListener('change', function() {
+        selectedTimezone = this.value;
+        localStorage.setItem('ghc-timezone', selectedTimezone);
+        updateEvents();
+      });
+    }
+    function parseOffset(offset) {
+      let t = offset.replace('Z', '').split(':');
+      return { hour: parseInt(t[0], 10), minute: parseInt(t[1], 10) };
+    }
+    function parseRepeat(repeat) {
+      let t = repeat.split(':');
+      return parseInt(t[0], 10) * 60 + parseInt(t[1], 10);
+    }
+    function getNextOccurrence(offset, repeat) {
+      const now = new Date();
+      const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
+      const { hour, minute } = parseOffset(offset);
+      let eventTime = new Date(today.getTime());
+      eventTime.setUTCHours(hour, minute, 0, 0);
+      const repeatMinutes = parseRepeat(repeat);
+      while (eventTime < now) {
+        eventTime = new Date(eventTime.getTime() + repeatMinutes * 60000);
+      }
+      return eventTime;
+    }
+    function toTimezoneStr(date, tz) {
+      return date.toLocaleTimeString('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit' });
+    }
+    function getCountdownString(target) {
+      const now = new Date();
+      let diff = Math.max(0, Math.floor((target - now) / 1000));
+      let h = Math.floor(diff / 3600);
+      let m = Math.floor((diff % 3600) / 60);
+      let s = diff % 60;
+      return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    }
+    async function fetchEvents() {
+      const spinner = document.getElementById('eventSpinner');
+      spinner.style.display = 'block';
+      let cache = localStorage.getItem('ghc-events');
+      let cacheTime = localStorage.getItem('ghc-events-time');
+      if (cache && cacheTime && Date.now() - cacheTime < 1000*60*15) {
+        events = JSON.parse(cache);
+        spinner.style.display = 'none';
+        updateEvents();
+        return;
+      }
+      try {
+        const response = await fetch(EVENTS_JSON_URL, { cache: "no-store" });
+        if (!response.ok) throw new Error("Failed to fetch events");
+        const data = await response.json();
+        events = data.filter(e => e.offset && e.repeat);
+        localStorage.setItem('ghc-events', JSON.stringify(events));
+        localStorage.setItem('ghc-events-time', Date.now());
+      } catch (err) {
+        showError('Failed to load events. Try again later.');
+        events = [];
+      }
+      spinner.style.display = 'none';
+      updateEvents();
+    }
+    function updateEvents() {
+      const eventList = document.getElementById('eventList');
+      if (!events.length) {
+        eventList.innerHTML = '<div style="padding:20px;color:#aaa;">No events available.</div>';
+        return;
+      }
+      const now = new Date();
+      const nextEvents = events.map(event => {
+        const nextTime = getNextOccurrence(event.offset, event.repeat);
+        return { name: event.name, utcTime: nextTime, localTime: toTimezoneStr(nextTime, selectedTimezone), nextTime };
+      });
+      nextEvents.sort((a, b) => a.utcTime - b.utcTime);
+      let nextIdx = nextEvents.findIndex(ev => ev.utcTime > now);
+      if (nextIdx === -1) nextIdx = 0;
+      let html = '';
+      nextEvents.forEach((event, idx) => {
+        html += `<div class="event-row${idx === nextIdx ? ' upcoming' : ''}">
+          <span class="event-name">${event.name}</span>
+          <span class="event-time">${event.localTime}
+            <span class="event-countdown" data-idx="${idx}"></span>
+          </span>
+        </div>`;
+      });
+      eventList.innerHTML = html;
+      // Start countdown updates
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        document.querySelectorAll('.event-countdown').forEach(span => {
+          const idx = +span.getAttribute('data-idx');
+          if (nextEvents[idx]) {
+            span.textContent = "Next in: " + getCountdownString(nextEvents[idx].nextTime);
+          }
+        });
+      }, 1000);
+    }
+
+    // ========== Search ==========
+    function searchContent(query) {
+      query = query.trim().toLowerCase();
+      // Main content
+      document.querySelectorAll('.boss-block').forEach(el => {
+        el.style.display = (!query || el.textContent.toLowerCase().includes(query)) ? "" : "none";
+      });
+      // Timer
+      document.querySelectorAll('.event-row').forEach(el => {
+        el.style.display = (!query || el.textContent.toLowerCase().includes(query)) ? "" : "none";
+      });
+    }
+    document.getElementById('searchInput').addEventListener('input', function() {
+      searchContent(this.value);
     });
-  });
-}
 
-/* --- GW2 Event Timer Sidebar Logic --- */
-const EVENTS_JSON_URL = 'https://raw.githubusercontent.com/blish-hud/Community-Module-Pack/master/Events%20Module/ref/events.json';
-function parseOffset(offset) {
-  let t = offset.replace('Z', '').split(':');
-  return { hour: parseInt(t[0], 10), minute: parseInt(t[1], 10) };
-}
-function parseRepeat(repeat) {
-  let t = repeat.split(':');
-  return parseInt(t[0], 10) * 60 + parseInt(t[1], 10);
-}
-function getNextOccurrence(offset, repeat) {
-  const now = new Date();
-  const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
-  const { hour, minute } = parseOffset(offset);
-  let eventTime = new Date(today.getTime());
-  eventTime.setUTCHours(hour, minute, 0, 0);
-  const repeatMinutes = parseRepeat(repeat);
-  while (eventTime < now) {
-    eventTime = new Date(eventTime.getTime() + repeatMinutes * 60000);
-  }
-  return eventTime;
-}
-function toAmsterdamTimeStr(date) {
-  return date.toLocaleTimeString('en-GB', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit' });
-}
-let events = [];
-async function fetchEvents() {
-  const spinner = document.getElementById('eventSpinner');
-  if (spinner) spinner.style.display = 'block';
-  try {
-    const response = await fetch(EVENTS_JSON_URL, { cache: "no-store" });
-    if (!response.ok) throw new Error("Failed to fetch events");
-    const data = await response.json();
-    events = data.filter(e => e.offset && e.repeat);
-  } catch (err) {
-    events = [];
-    console.error('Error fetching events:', err);
-  }
-  if (spinner) spinner.style.display = 'none';
-}
-function updateEvents() {
-  const eventList = document.getElementById('eventList');
-  if (!events.length) {
-    eventList.innerHTML = '<div style="padding:20px;color:#aaa;">No events available.</div>';
-    return;
-  }
-  const now = new Date();
-  const nextEvents = events.map(event => {
-    const nextTime = getNextOccurrence(event.offset, event.repeat);
-    return { name: event.name, utcTime: nextTime, amsTime: toAmsterdamTimeStr(nextTime) };
-  });
-  nextEvents.sort((a, b) => a.utcTime - b.utcTime);
-  let nextIdx = nextEvents.findIndex(ev => ev.utcTime > now);
-  if (nextIdx === -1) nextIdx = 0;
-  let html = '';
-  nextEvents.forEach((event, idx) => {
-    html += `<div class="event-row${idx === nextIdx ? ' upcoming' : ''}"><span class="event-name">${event.name}</span><span class="event-time">${event.amsTime}</span></div>`;
-  });
-  eventList.innerHTML = html;
-}
-async function refreshAndUpdate() {
-  await fetchEvents();
-  updateEvents();
-}
+    // ========== Error Handling ==========
+    function showError(msg) {
+      const err = document.getElementById('globalError');
+      err.textContent = msg;
+      err.style.display = 'block';
+      setTimeout(() => { err.style.display = 'none'; }, 5000);
+    }
 
-/* --- DOMContentLoaded: Build everything --- */
-document.addEventListener('DOMContentLoaded', async () => {
-  generateNav();
-  // Main content
-  const main = document.getElementById('mainContent');
-  await buildContent(main, data);
+    // ========== Push Notifications (in-page only) ==========
+    function requestNotificationPermission() {
+      if (!("Notification" in window)) return;
+      if (Notification.permission === "default") {
+        Notification.requestPermission();
+      }
+    }
+    function notifyNextEvent() {
+      if (!("Notification" in window) || Notification.permission !== "granted") return;
+      const now = new Date();
+      const nextEvent = events.map(e => {
+        const nextTime = getNextOccurrence(e.offset, e.repeat);
+        return { name: e.name, nextTime };
+      }).sort((a,b) => a.nextTime - b.nextTime)[0];
+      if (nextEvent) {
+        const diff = nextEvent.nextTime - now;
+        if (diff > 0 && diff < 10*60*1000) { // 10 minutes
+          new Notification("Event soon!", {
+            body: `${nextEvent.name} starts in ${Math.floor(diff/60000)} min.`,
+            icon: "https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png"
+          });
+        }
+      }
+    }
+    if ("Notification" in window) {
+      requestNotificationPermission();
+      setInterval(notifyNextEvent, 60000);
+    }
 
-  // Event timer
-  refreshAndUpdate();
-  setInterval(refreshAndUpdate, 60000);
-  document.addEventListener('visibilitychange', function() {
-    if (!document.hidden) refreshAndUpdate();
-  });
-});
-</script>
+    // ========== DOMContentLoaded ==========
+    document.addEventListener('DOMContentLoaded', async () => {
+      generateNav();
+      populateTimezoneSelect();
+      // Main content
+      const main = document.getElementById('mainContent');
+      await buildContent(main, data);
+      // Event timer
+      fetchEvents();
+      setInterval(fetchEvents, 1000*60*5);
+      document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) fetchEvents();
+      });
+    });
+  </script>
 </body>
 </html>
