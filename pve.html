@@ -59,24 +59,24 @@
     }
     .item-drop img { width: 24px; height: 24px; }
     .item-drop small { color: #555; margin-left: 4px; }
-    .item-code {
-      font-family: monospace;
-      background: #222;
-      color: #f9d923;
-      border-radius: 4px;
-      padding: 2px 6px;
-      margin-left: 6px;
-      font-size: 13px;
-    }
     footer {
       text-align: center; padding: 1em 0; background: #ececec;
       margin-top: 2em; font-size: 0.9em;
     }
     textarea { width: 100%; max-width: 600px; }
+    details summary {
+      cursor: pointer;
+      font-weight: bold;
+      background: #eee;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      user-select: none;
+    }
   </style>
 </head>
 <body>
-  <!-- LEFT NAVIGATION MENU (auto-generated) -->
+  <!-- LEFT NAVIGATION MENU -->
   <nav class="sidenav" id="sideNav"></nav>
 
   <!-- MAIN CONTENT -->
@@ -121,62 +121,40 @@ Websites:
 <script>
 /* =========================
    DATA STRUCTURE
-   =========================
-   - To add a new CATEGORY, add a new property at the root of the 'data' object.
-   - To add a new BOSS, add a new object to the relevant category/group array.
-   - To add a new DROP, add a new object to the 'drops' array of the boss.
-*/
+   ========================= */
 const data = {
-  "Core Tyria": { // <-- CATEGORY
-    "World Bosses": [ // <-- GROUP (will be a menu section)
+  "Core Tyria": {
+    "World Bosses": [
       {
-        name: "Taidha Covington", // BOSS NAME
-        code: "[&BKgBAAA=]",      // Closest waypoint code
+        name: "Taidha Covington",
+        code: "[&BKgBAAA=]",
         location: "Bloodtide Coast",
-        drops: [                  // DROPS (add as many as you want)
-          {
-            id: 9346,
-            note: "Sack of Booty",
-            itemCode: "[&AgGCJAAA]"
-          },
-          {
-            id: 19357,
-            note: "Chance to get Old Reliable",
-            itemCode: "[&Cu8RAAA=]"
-          },
-          {
-            id: 19361,
-            note: "Chance to get Trusty Rusty",
-            itemCode: "[&Cv4RAAA=]"
-          }
+        drops: [
+          { id: 9346, note: "Guaranteed Sack of Booty" },
+          { id: 19357, note: "Chance to get Old Reliable" },
+          { id: 19361, note: "Chance to get Trusty Rusty" }
         ]
       },
-      // ---- ADD ANOTHER BOSS HERE ----
       {
         name: "Karka Queen",
         code: "[&BNcGAAA=]",
         location: "Southsun Cove",
         drops: [
-          {
-            id: 30698,
-            note: "Karka Shell",
-            itemCode: "[&AgG9wgAA]"
-          }
+          { id: 37897, note: "Guaranteed Karka Shell (5)" },
+          { id: 37899, note: "Ancient Karka Shell" },
+          { id: 49509, note: "Ancient Karka Shell" }
         ]
       },
       {
-  name: "Shadow Behemoth",
-  code: "[&BPcAAAA=]",
-  location: "Queensdale",
-  drops: [
-    { id: 12345, note: "Rare Shadow Chest", itemCode: "[&AgAAAAAA]" }
-  ]
-}
-      // ---- ADD MORE BOSSES HERE ----
+        name: "Shadow Behemoth",
+        code: "[&BPcAAAA=]",
+        location: "Queensdale",
+        drops: [
+          { id: 12345, note: "Rare Shadow Chest" }
+        ]
+      }
     ]
-    // ---- ADD MORE GROUPS HERE ----
   }
-  // ---- ADD MORE CATEGORIES HERE ----
 };
 
 /* =========================
@@ -244,25 +222,23 @@ async function fetchItemData(id) {
     return {
       name: item.name,
       icon: item.icon,
-      itemCode: item.chat_link || "",
       bound: item.flags && item.flags.includes('AccountBound'),
       value: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
     };
   } catch(e) {
     try {
-      const url = `https://wiki.guildwars2.com/api.php?action=askargs&format=json&parameters=[[Has game id::${id}]]|?Has_icon|?Has_name|?Has_chat_link`;
+      const url = `https://wiki.guildwars2.com/api.php?action=askargs&format=json&parameters=[[Has game id::${id}]]|?Has_icon|?Has_name`;
       const data = await fetch(url, {mode:'cors'}).then(r=>r.json());
       const pages = data.query.results;
       const page = Object.values(pages)[0] || {};
       return {
         name: page.printouts?.Has_name?.[0] || `Item ${id}`,
         icon: page.printouts?.Has_icon?.[0] || '',
-        itemCode: page.printouts?.Has_chat_link?.[0] || "",
         bound: false,
         value: 0
       };
     } catch(e2) {
-      return { name: `Item ${id}`, icon: '', itemCode: "", bound: false, value: 0 };
+      return { name: `Item ${id}`, icon: '', bound: false, value: 0 };
     }
   }
 }
@@ -284,11 +260,10 @@ async function buildContent(parent, obj) {
           const dropData = await fetchItemData(drop.id);
           dropDataArr.push({ ...drop, ...dropData });
         }
-        // Copy string: only name and value
-        const dropStrings = dropDataArr.map(d =>
-          `${d.note || d.name} (Value: ${formatCoin(d.value)})`
-        ).join(' | ');
-        const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${dropStrings}`;
+        // Find the drop with the highest value
+        const highestValueDrop = dropDataArr.reduce((max, d) => d.value > max.value ? d : max, dropDataArr[0]);
+        // Copy string: only boss name, code, location, and highest value drop name and value
+        const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${highestValueDrop.note || highestValueDrop.name} (Value: ${formatCoin(highestValueDrop.value)})`;
         // Copy-paste row
         const wrap = document.createElement('div');
         wrap.className = 'textbox-container';
@@ -304,7 +279,11 @@ async function buildContent(parent, obj) {
         wrap.appendChild(inp);
         wrap.appendChild(btn);
         section.appendChild(wrap);
-        // Drop details with item codes
+        // Drop details with item names and values only, collapsible
+        const details = document.createElement('details');
+        const summary = document.createElement('summary');
+        summary.textContent = 'Show/Hide Drops';
+        details.appendChild(summary);
         const dropsDiv = document.createElement('div');
         dropsDiv.className = 'drops-container';
         dropDataArr.forEach(d => {
@@ -313,13 +292,13 @@ async function buildContent(parent, obj) {
           div.innerHTML = `
             <img src="${d.icon||''}" alt="${d.name||''}">
             <span>${d.note || d.name || ''}</span>
-            <span class="item-code">${d.itemCode||''}</span>
             <small>Value: ${formatCoin(d.value)}</small>
             <small>Account Bound: ${d.bound? 'Yes':'No'}</small>
           `;
           dropsDiv.appendChild(div);
         });
-        section.appendChild(dropsDiv);
+        details.appendChild(dropsDiv);
+        section.appendChild(details);
       }
       parent.appendChild(section);
     }
