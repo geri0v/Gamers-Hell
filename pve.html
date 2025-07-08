@@ -107,9 +107,7 @@ Websites:
     </iframe>
   </nav>
 <script>
-/* =========================
-   1. Boss Data Structure
-   ========================= */
+// ========== DATA ==========
 const data = {
   "Core Tyria": {
     "World Bosses": [
@@ -133,12 +131,9 @@ const data = {
       }
     ]
   }
-  // Add more categories/bosses as needed
 };
 
-/* =========================
-   2. Copy-to-Clipboard Helper
-   ========================= */
+// ========== COPY TO CLIPBOARD ==========
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(
     () => alert(`Copied:\n${text}`),
@@ -146,9 +141,7 @@ function copyToClipboard(text) {
   );
 }
 
-/* =========================
-   3. Sidebar Generation
-   ========================= */
+// ========== SIDEBAR ==========
 function buildNav(parent, obj) {
   Object.entries(obj).forEach(([key,val]) => {
     if (Array.isArray(val)) {
@@ -178,11 +171,9 @@ function generateNav() {
   nav.appendChild(c);
 }
 
-/* =========================
-   4. Multi-Source Item Fetcher
-   ========================= */
+// ========== ITEM DATA FETCHING ==========
 async function fetchItemData(ids) {
-  // 1. Try GW2 API
+  // Try GW2 API first
   try {
     const items = await fetch(`https://api.guildwars2.com/v2/items?ids=${ids.join(',')}`).then(r=>r.json());
     const prices = await fetch(`https://api.guildwars2.com/v2/commerce/prices?ids=${ids.join(',')}`).then(r=>r.json());
@@ -194,40 +185,37 @@ async function fetchItemData(ids) {
       result[item.id] = {
         name: item.name,
         icon: item.icon,
-        bound: item.binding === 'Account',
+        bound: item.flags && item.flags.includes('AccountBound'),
         buy: p?.buys?.unit_price || p.highest_buy_unit_price || 0,
         sell: p?.sells?.unit_price || p.lowest_sell_unit_price || 0
       };
     });
     return result;
   } catch(e) {
-    // 2. Try gw2efficiency (public API, limited)
-    try {
-      const result = {};
-      await Promise.all(ids.map(async id => {
-        const r = await fetch(`https://api.gw2efficiency.com/items/${id}`).then(r=>r.json());
+    // Fallback: Try GW2 Wiki for names/icons (no prices)
+    const result = {};
+    await Promise.all(ids.map(async id => {
+      try {
+        const url = `https://wiki.guildwars2.com/api.php?action=askargs&format=json&parameters=[[Has game id::${id}]]|?Has_icon|?Has_name`;
+        const data = await fetch(url, {mode:'cors'}).then(r=>r.json());
+        const pages = data.query.results;
+        const page = Object.values(pages)[0] || {};
         result[id] = {
-          name: r.name,
-          icon: r.icon,
+          name: page.printouts?.Has_name?.[0] || `Item ${id}`,
+          icon: page.printouts?.Has_icon?.[0] || '',
           bound: false,
-          buy: r.buy_price || 0,
-          sell: r.sell_price || 0
+          buy: 0,
+          sell: 0
         };
-      }));
-      return result;
-    } catch(e2) {
-      // 3. GW2BLTC (if you have an endpoint)
-      // For now, fallback to unknown
-      const result = {};
-      ids.forEach(id => result[id] = { name: `Item ${id}`, icon: '', bound: false, buy: 0, sell: 0 });
-      return result;
-    }
+      } catch(e2) {
+        result[id] = { name: `Item ${id}`, icon: '', bound: false, buy: 0, sell: 0 };
+      }
+    }));
+    return result;
   }
 }
 
-/* =========================
-   5. Build Main Content
-   ========================= */
+// ========== MAIN CONTENT ==========
 function buildContent(parent, obj, info) {
   Object.entries(obj).forEach(([key,val]) => {
     if (Array.isArray(val)) {
@@ -256,4 +244,47 @@ function buildContent(parent, obj, info) {
         wrap.appendChild(inp);
         wrap.appendChild(btn);
         section.appendChild(wrap);
-        //
+        // Drops
+        const dropsDiv = document.createElement('div');
+        dropsDiv.className = 'drops-container';
+        boss.drops.forEach(drop => {
+          const d = info[drop.id] || {};
+          const div = document.createElement('div');
+          div.className = 'item-drop';
+          div.innerHTML = `
+            <img src="${d.icon||''}" alt="${d.name||drop.id}">
+            <span>${drop.note || d.name || 'Unknown Item'}</span>
+            <small>Buy: ${d.buy} ⛃ | Sell: ${d.sell} ⛃</small>
+            <small>Account Bound: ${d.bound? 'Yes':'No'}</small>
+          `;
+          dropsDiv.appendChild(div);
+        });
+        section.appendChild(dropsDiv);
+      });
+      parent.appendChild(section);
+    } else {
+      buildContent(parent,val,info);
+    }
+  });
+}
+
+// ========== INIT ==========
+document.addEventListener('DOMContentLoaded', async () => {
+  generateNav();
+  // Collect unique drop IDs
+  const allIds = [];
+  (function collect(o){
+    Object.values(o).forEach(v => {
+      if (Array.isArray(v))
+        v.forEach(b=> b.drops?.forEach(drop=> allIds.push(drop.id)));
+      else collect(v);
+    });
+  })(data);
+  const info = await fetchItemData([...new Set(allIds)]);
+  const main = document.getElementById('mainContent');
+  main.innerHTML = '';
+  buildContent(main, data, info);
+});
+</script>
+</body>
+</html>
