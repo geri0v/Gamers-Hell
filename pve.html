@@ -6,84 +6,101 @@
   <title>Gamers-Hell Command</title>
   <style>
     /* ====== GRID LAYOUT ====== */
-    html, body { margin: 0; padding: 0; height: 100vh; }
+    html, body { margin:0; padding:0; height:100vh; }
     body {
-      display: grid;
-      grid-template-columns: 360px 1fr 360px;
-      grid-template-areas: "navleft main navright";
-      font-family: Arial, sans-serif;
-      background: #3c6e8d65;
+      display:grid;
+      grid-template-columns:360px 1fr 360px;
+      grid-template-areas:"navleft main navright";
+      font-family:Arial,sans-serif;
+      background:#3c6e8d65;
     }
-    .sidenav  { grid-area: navleft; }
-    .sidenav2 { grid-area: navright; }
-    .main     { grid-area: main; overflow-y: auto; padding: 20px; box-sizing: border-box; }
+    .sidenav{grid-area:navleft;}
+    .sidenav2{grid-area:navright;}
+    .main{grid-area:main;overflow-y:auto;padding:20px;box-sizing:border-box;}
 
     /* ====== SIDEBARS ====== */
     .sidenav, .sidenav2 {
-      background: #111; color: #818181; overflow-y: auto; height: 100%;
+      background:#111;color:#818181;overflow-y:auto;height:100%;
     }
     .sidenav a, .sidenav2 a {
-      display: block; padding: 8px 16px; font-size: 16px;
-      text-decoration: none; color: inherit;
+      display:block;padding:8px 16px;font-size:16px;
+      text-decoration:none;color:inherit;
     }
-    .sidenav a:hover, .sidenav2 a:hover { color: #f1f1f1; }
+    .sidenav a:hover, .sidenav2 a:hover { color:#f1f1f1; }
 
     /* ====== COLLAPSIBLE NAV ====== */
-    .sidenav details { padding: 4px 16px; color: #818181; cursor: pointer; }
-    .sidenav summary { list-style: none; font-size: 16px; user-select: none; }
-    .sidenav summary::-webkit-details-marker { display: none; }
-    .sidenav summary::before {
-      content: "▸"; display: inline-block; width: 1em; transition: transform 0.2s;
+    .sidenav details{padding:4px 16px;color:#818181;cursor:pointer;}
+    .sidenav summary{
+      list-style:none;font-size:16px;user-select:none;
     }
-    .sidenav details[open] summary::before { content: "▾"; }
-    .sidenav details a { padding-left: 32px; font-size: 15px; }
+    .sidenav summary::-webkit-details-marker{display:none;}
+    .sidenav summary::before{
+      content:"▸";display:inline-block;width:1em;transition:transform .2s;
+    }
+    .sidenav details[open] summary::before{content:"▾";}
+    .sidenav details a{padding-left:32px;font-size:15px;}
 
     /* ====== MAIN CONTENT ====== */
-    .center { text-align: center; margin-bottom: 1em; }
-    h1, h2 { margin: 0.5em 0; }
-    h2 {
-      border-bottom: 1px solid #ccc; padding-bottom: 0.2em;
-      margin-top: 1.5em;
+    .center{text-align:center;margin-bottom:1em;}
+    h1,h2{margin:.5em 0;}
+    h2{
+      border-bottom:1px solid #ccc;
+      padding-bottom:.2em;
+      margin-top:1.5em;
     }
 
     /* ====== TELEPORTER ROWS ====== */
-    .textbox-container {
-      display: flex; align-items: center; margin: 6px 0;
+    .textbox-container{
+      display:flex;align-items:center;margin:6px 0;
     }
-    .textbox {
-      flex: 1; padding: 6px; font-size: 14px;
-      border: 1px solid #ccc; border-radius: 4px; background: #fff;
+    .textbox{
+      flex:1;padding:6px;font-size:14px;
+      border:1px solid #ccc;border-radius:4px;background:#fff;
     }
-    .copy-button {
-      width: 24px; height: 24px; margin-left: 6px;
-      border: none; cursor: pointer; border-radius: 4px;
-      background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png')
-                  no-repeat center/cover;
+    .copy-button{
+      width:24px;height:24px;margin-left:6px;
+      border:none;cursor:pointer;border-radius:4px;
+      background:url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png')
+        no-repeat center/cover;
     }
-    .copy-button:hover {
-      background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
+    .copy-button:hover{
+      background-image:url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
     }
 
     /* ====== DROPS LIST ====== */
-    .drops-container {
-      margin-left: 32px; margin-top: 8px;
+    .drops-container{
+      margin-left:32px;margin-top:8px;
     }
-    .item-drop {
-      display: flex; align-items: center; gap: 8px;
-      margin: 4px 0; font-size: 14px;
+    .item-drop{
+      display:flex;align-items:center;gap:8px;
+      margin:4px 0;font-size:14px;
     }
-    .item-drop img {
-      width: 24px; height: 24px;
+    .item-drop img{
+      width:24px;height:24px;
     }
-    .item-drop small {
-      color: #555; margin-left: 4px;
+    .item-drop small{
+      color:#555;margin-left:4px;
     }
 
-    footer {
-      text-align: center; padding: 1em 0; background: #ececec;
-      margin-top: 2em; font-size: 0.9em;
+    /* ====== SUMMARY ====== */
+    .summary-container {
+      margin:8px 0;
+      display:flex;align-items:flex-start;gap:6px;
     }
-    textarea { width: 100%; max-width: 600px; }
+    .summary-container textarea {
+      flex:1;
+      font-size:13px;
+      padding:6px;
+      border-radius:4px;
+      border:1px solid #ccc;
+      resize:vertical;
+    }
+
+    footer{
+      text-align:center;padding:1em 0;background:#ececec;
+      margin-top:2em;font-size:.9em;
+    }
+    textarea[disabled] { background:#f5f5f5; }
   </style>
 </head>
 <body>
@@ -106,7 +123,7 @@
       </script>
     </section>
 
-    <!-- Dynamic Boss Content Goes Here -->
+    <!-- Dynamic Boss Content -->
     <div id="mainContent"></div>
 
     <!-- Credits -->
@@ -136,59 +153,80 @@ Websites:
     </iframe>
   </nav>
 <script>
-  // 1) Boss Data + Drops (add real item IDs under drops[])
+  /*————————————————————
+    1) YOUR BOSS/EVENT LIST
+    name:      display name
+    code:      in-game share code
+    location:  where it spawns
+  ————————————————————*/
   const data = {
     "Core Tyria": {
       "World Bosses": [
         {
-          name: "Taidha Covington",
-          code: "[&BKgBAAA=]",
-          drops: [24305, 24567]
+          name:     "Taidha Covington",
+          code:     "[&BKgBAAA=]",
+          location: "Iron Marches"
         },
         {
-          name: "Karka Queen",
-          code: "[&BNcGAAA=]",
-          drops: [30698, 43141]
+          name:     "Karka Queen",
+          code:     "[&BNcGAAA=]",
+          location: "Caledon Forest"
         },
         {
-          name: "Jungle Wurm",
-          code: "[&BEEFAAA=]",
-          drops: [19639, 19716]
+          name:     "Jungle Wurm",
+          code:     "[&BEEFAAA=]",
+          location: "Straits of Devastation"
         }
       ],
       "Ley-Line Anomaly": [
-        { name: "Legendary Anomaly A", code: "[&BEwCAAA=]", drops: [65537] },
-        { name: "Legendary Anomaly B", code: "[&BOcBAAA=]", drops: [65538] }
+        {
+          name:     "Legendary Anomaly A",
+          code:     "[&BEwCAAA=]",
+          location: "Stormbluff Isle"
+        },
+        {
+          name:     "Legendary Anomaly B",
+          code:     "[&BOcBAAA=]",
+          location: "Timberline Falls"
+        }
       ]
     },
-    // … repeat for other categories …
+    // … add your other categories here …
   };
 
-  // 2) Copy-to-clipboard helper
+  /*————————————————————
+    2) UTILITIES: copy, gold-format, sidebar
+  ————————————————————*/
   function copyToClipboard(id) {
-    const tb = document.getElementById(id);
-    tb.disabled = false;
-    tb.select();
+    const ta = document.getElementById(id);
+    ta.disabled = false;
+    ta.select();
     document.execCommand('copy');
-    tb.disabled = true;
-    alert(`Copied: ${tb.value}`);
+    ta.disabled = true;
+    alert(`Copied to clipboard`);
   }
 
-  // 3) Sidebar generation
-  function buildNav(parent, obj) {
-    Object.entries(obj).forEach(([key,val]) => {
-      if (Array.isArray(val)) {
+  function toGold(copper) {
+    const g = Math.floor(copper/10000),
+          s = Math.floor((copper%10000)/100),
+          c = copper%100;
+    return `${g}g ${s}s ${c}c`;
+  }
+
+  function buildNav(parent,obj) {
+    Object.entries(obj).forEach(([k,v])=>{
+      if (Array.isArray(v)) {
         const a = document.createElement('a');
-        a.href = `#${key.replace(/\s+/g,'')}`;
-        a.textContent = key;
+        a.href = `#${k.replace(/\s+/g,'')}`;
+        a.textContent = k;
         parent.appendChild(a);
       } else {
-        const details = document.createElement('details');
-        const summary = document.createElement('summary');
-        summary.textContent = key;
-        details.appendChild(summary);
-        buildNav(details,val);
-        parent.appendChild(details);
+        const d = document.createElement('details');
+        const s = document.createElement('summary');
+        s.textContent = k;
+        d.appendChild(s);
+        buildNav(d,v);
+        parent.appendChild(d);
       }
     });
   }
@@ -196,127 +234,224 @@ Websites:
   function generateNav() {
     const nav = document.getElementById('sideNav');
     nav.innerHTML = '';
-    // static
+    // static Welcome
     const w = document.createElement('a');
-    w.href = '#Welcome'; w.textContent = 'Welcome';
+    w.href='#Welcome'; w.textContent='Welcome';
     nav.appendChild(w);
     // dynamic
-    buildNav(nav, data);
-    // credits
+    buildNav(nav,data);
+    // static Credits
     const c = document.createElement('a');
-    c.href = '#Credits'; c.textContent = 'Credits';
+    c.href='#Credits'; c.textContent='Credits';
     nav.appendChild(c);
   }
 
-  // 4) Fetch item data & TP prices in batches
-  async function fetchAllDropData(ids) {
-    const chunk = (arr, size) =>
-      arr.reduce((r,v,i) => {
-        if (i % size === 0) r.push([]);
-        r[r.length-1].push(v);
-        return r;
-      }, []);
-    const batches = chunk(ids,100);
-    const map = {};
-
-    await Promise.all(batches.map(async batch => {
-      const [items, prices] = await Promise.all([
-        fetch(`https://api.guildwars2.com/v2/items?ids=${batch.join(',')}`)
-          .then(r=>r.json()),
-        fetch(`https://api.guildwars2.com/v2/commerce/prices?ids=${batch.join(',')}`)
-          .then(r=>r.json())
-      ]);
-      items.forEach(item => {
-        const p = prices.find(x=>x.id===item.id) || {};
-        map[item.id] = {
-          name: item.name,
-          icon: item.icon,
-          bound: item.binding === 'Account',
-          buy: p.highest_buy_unit_price || 0,
-          sell: p.lowest_sell_unit_price || 0
-        };
-      });
-    }));
-
-    return map;
+  /*————————————————————
+    3) WIKI LOOT FETCH
+  ————————————————————*/
+  function toWikiTitle(name) {
+    return name
+      .replace(/[’‘']/g,'')
+      .replace(/[^a-zA-Z0-9 ]/g,'')
+      .trim()
+      .replace(/\s+/g,'_');
   }
 
-  // 5) Recursive content builder
-  function buildContent(parent, obj, info) {
-    Object.entries(obj).forEach(([key,val]) => {
-      if (Array.isArray(val)) {
-        const section = document.createElement('section');
-        section.id = key.replace(/\s+/g,'');
-        section.innerHTML = `<h2>${key}</h2>`;
+  async function getLootSectionIndex(title) {
+    const u = new URL('https://wiki.guildwars2.com/api.php');
+    u.search = new URLSearchParams({
+      action: 'parse',
+      page: title,
+      prop: 'sections',
+      format:'json',
+      origin:'*'
+    });
+    const j = await fetch(u).then(r=>r.json());
+    return j.parse?.sections.find(s=>s.line==='Loot')?.index || null;
+  }
 
-        val.forEach((boss,i) => {
-          // teleport row
-          const wrap = document.createElement('div');
-          wrap.className = 'textbox-container';
+  async function fetchLootIDs(title, idx) {
+    const u = new URL('https://wiki.guildwars2.com/api.php');
+    u.search = new URLSearchParams({
+      action:'parse',
+      page:title,
+      prop:'text',
+      section:idx,
+      format:'json',
+      origin:'*'
+    });
+    const j = await fetch(u).then(r=>r.json());
+    const html = j.parse?.text['*'] || '';
+    const doc = new DOMParser().parseFromString(html,'text/html');
+    return Array.from(
+      doc.querySelectorAll('span.item[data-item-id]')
+    ).map(el=> Number(el.dataset.itemId));
+  }
 
-          const inp = document.createElement('input');
-          inp.type = 'text';
-          inp.className = 'textbox';
-          inp.value = `${boss.name}: ${boss.code}`;
-          inp.id = `tb_${section.id}_${i}`;
-          inp.disabled = true;
+  async function fetchBossDrops(name) {
+    const title = toWikiTitle(name);
+    const idx   = await getLootSectionIndex(title);
+    if (!idx) return [];
+    return await fetchLootIDs(title, idx);
+  }
 
-          const btn = document.createElement('button');
-          btn.className = 'copy-button';
-          btn.title = `Copy ${boss.name}`;
-          btn.onclick = ()=>copyToClipboard(inp.id);
+  /*————————————————————
+    4) PRICE FETCH + FALLBACK
+  ————————————————————*/
+  async function fetchPricesOfficial(ids) {
+    const res = await fetch(
+      `https://api.guildwars2.com/v2/commerce/prices?ids=${ids.join(',')}`
+    );
+    if (!res.ok) throw new Error('official TP failed');
+    return await res.json();
+  }
 
-          wrap.appendChild(inp);
-          wrap.appendChild(btn);
-          section.appendChild(wrap);
+  async function fetchPricesGWE(id) {
+    // GW2Eff API, single‐ID fallback
+    const res = await fetch(
+      `https://api.gw2efficiency.com/web/data/prices?id=${id}`
+    );
+    if (!res.ok) throw new Error('GWE fallback failed');
+    const j = await res.json();
+    return { id, buy:j.highest_buy_unit_price, sell:j.lowest_sell_unit_price };
+  }
 
-          // drops
-          if (Array.isArray(boss.drops)) {
-            const dropsDiv = document.createElement('div');
-            dropsDiv.className = 'drops-container';
-
-            boss.drops.forEach(id => {
-              const d = document.createElement('div');
-              d.className = 'item-drop';
-              const x = info[id] || {};
-              d.innerHTML = `
-                <img src="${x.icon||''}" alt="${x.name||id}">
-                <span>${x.name||'Unknown Item'}</span>
-                <small>Buy: ${x.buy} ⛃ | Sell: ${x.sell} ⛃</small>
-                <small>Account Bound: ${x.bound? 'Yes':'No'}</small>
-              `;
-              dropsDiv.appendChild(d);
-            });
-            section.appendChild(dropsDiv);
-          }
-        });
-
-        parent.appendChild(section);
+  async function resolvePrices(ids) {
+    let prices = {};
+    try {
+      const off = await fetchPricesOfficial(ids);
+      off.forEach(p=> prices[p.id]=p);
+    } catch(err) {
+      console.warn(err);
+    }
+    // handle any missing
+    for (let id of ids) {
+      if (!prices[id]) {
+        try {
+          const fb = await fetchPricesGWE(id);
+          prices[id] = fb;
+        } catch(e) {
+          prices[id] = { id, buy:0, sell:0 };
+        }
       }
-      else {
-        buildContent(parent,val,info);
-      }
+    }
+    return prices;
+  }
+
+  /*————————————————————
+    5) BUILD & RENDER
+  ————————————————————*/
+  function buildContent(parent, obj, itemMap, priceMap) {
+    Object.entries(obj).forEach(([sec,arr])=>{
+      if (!Array.isArray(arr)) return buildContent(parent,arr,itemMap,priceMap);
+
+      const S = document.createElement('section');
+      S.id = sec.replace(/\s+/g,'');
+      S.innerHTML = `<h2>${sec}</h2>`;
+
+      arr.forEach((boss,i)=>{
+        // 5a) teleport share‐code row
+        const tc = document.createElement('div');
+        tc.className='textbox-container';
+        const ti = document.createElement('input');
+        ti.type='text'; ti.className='textbox';
+        ti.value=`${boss.name}: ${boss.code}`;
+        ti.id=`tp_${sec}_${i}`; ti.disabled=true;
+        const tb = document.createElement('button');
+        tb.className='copy-button'; tb.title='Copy Teleport Code';
+        tb.onclick=()=>copyToClipboard(ti.id);
+        tc.append(ti,tb);
+        S.appendChild(tc);
+
+        // 5b) drops listing
+        if (Array.isArray(boss.drops)) {
+          const D = document.createElement('div');
+          D.className='drops-container';
+          boss.drops.forEach(id=>{
+            const info = itemMap[id]||{};
+            const price=priceMap[id]||{};
+            const d = document.createElement('div');
+            d.className='item-drop';
+            d.innerHTML=`
+              <img src="${info.icon||''}" alt="${info.name||id}">
+              <span>${info.name||'Unknown'}</span>
+              <small>Buy: ${toGold(price.highest_buy_unit_price||price.buy||0)}</small>
+              <small>Sell: ${toGold(price.lowest_sell_unit_price||price.sell||0)}</small>
+              <small>${info.binding==='Account'?'Account Bound':''}</small>
+            `;
+            D.appendChild(d);
+          });
+          S.appendChild(D);
+        }
+
+        // 5c) summary textarea + copy
+        const sumDIV = document.createElement('div');
+        sumDIV.className='summary-container';
+        const ta = document.createElement('textarea');
+        ta.rows= (boss.drops?.length||1)*1 + 4;
+        ta.id = `sum_${sec}_${i}`;
+        let txt = `Boss: ${boss.name}\n`;
+        txt    += `Location: ${boss.location}\n`;
+        txt    += `Teleport: ${boss.code}\n`;
+        if (boss.drops?.length) {
+          txt += `Drops:\n`;
+          boss.drops.forEach(id=>{
+            const info = itemMap[id]||{};
+            const price=priceMap[id]||{};
+            const buy  = toGold(price.highest_buy_unit_price||price.buy||0);
+            const sell = toGold(price.lowest_sell_unit_price||price.sell||0);
+            const ab   = info.binding==='Account'? ' (AB)' : '';
+            txt += ` - ${info.name||id}: Buy ${buy}, Sell ${sell}${ab}\n`;
+          });
+        }
+        ta.value = txt;
+        ta.disabled=true;
+        const cb = document.createElement('button');
+        cb.className='copy-button';
+        cb.title='Copy Summary';
+        cb.style.backgroundImage="url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png')";
+        cb.onclick = ()=>copyToClipboard(ta.id);
+        sumDIV.append(ta, cb);
+        S.appendChild(sumDIV);
+      });
+
+      parent.appendChild(S);
     });
   }
 
-  // 6) Initialize on DOM ready
-  document.addEventListener('DOMContentLoaded', async () => {
+  /*————————————————————
+    6) INITIALIZE ON LOAD
+  ————————————————————*/
+  document.addEventListener('DOMContentLoaded', async()=>{
     generateNav();
 
-    // collect unique drop IDs
-    const allIds = [];
-    (function collect(o){
-      Object.values(o).forEach(v => {
-        if (Array.isArray(v))
-          v.forEach(b=> b.drops?.forEach(id=> allIds.push(id)));
-        else collect(v);
+    // 6a) fetch drops for each boss
+    const bosses = [];
+    (function c(o){
+      Object.values(o).forEach(v=>{
+        if (Array.isArray(v)) v.forEach(b=>bosses.push(b));
+        else c(v);
       });
     })(data);
 
-    const info = await fetchAllDropData([...new Set(allIds)]);
-    const main = document.getElementById('mainContent');
-    main.innerHTML = '';
-    buildContent(main, data, info);
+    await Promise.all(
+      bosses.map(b=> fetchBossDrops(b.name).then(ids=> b.drops=ids))
+    );
+
+    // 6b) batch fetch item info
+    const allIds = [...new Set(bosses.flatMap(b=>b.drops))];
+    const items  = await fetch(`https://api.guildwars2.com/v2/items?ids=${allIds.join(',')}`)
+                        .then(r=>r.json());
+    const itemMap= {};
+    items.forEach(i=> itemMap[i.id]=i);
+
+    // 6c) fetch prices with fallback
+    const priceMap = await resolvePrices(allIds);
+
+    // 6d) render
+    const mc = document.getElementById('mainContent');
+    mc.innerHTML = '';
+    buildContent(mc, data, itemMap, priceMap);
   });
 </script>
 </body>
