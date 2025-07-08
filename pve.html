@@ -16,6 +16,9 @@
       --event-upcoming-fg: #fff;
       --copy-btn-bg: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
       --copy-btn-hover-bg: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
+      --toast-bg: #222c;
+      --toast-fg: #fff;
+      --transition: 0.3s cubic-bezier(.4,2,.6,1);
     }
     body.theme-original { }
     body.theme-dark {
@@ -26,6 +29,7 @@
       --accent: #3c6e8d;
       --event-upcoming-bg: #2b4765;
       --event-upcoming-fg: #fff;
+      --toast-bg: #111c;
     }
     body.theme-light {
       --main-bg: #fff;
@@ -35,6 +39,8 @@
       --accent: #2b4765;
       --event-upcoming-bg: #e0e8f6;
       --event-upcoming-fg: #222;
+      --toast-bg: #fff8;
+      --toast-fg: #222;
     }
     html, body { margin: 0; padding: 0; height: 100vh; }
     body {
@@ -46,6 +52,7 @@
       color: var(--main-fg);
       min-height: 100vh;
       transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
     }
     .sidebar {
       position: fixed;
@@ -58,10 +65,30 @@
       z-index: 1000;
       display: flex;
       flex-direction: column;
-      transition: background 0.3s, color 0.3s;
+      transition: background 0.3s, color 0.3s, transform var(--transition);
+      will-change: transform;
     }
     .sidebar.left  { left: 0; border-right: 1px solid #111; }
     .sidebar.right { right: 0; border-left:  1px solid #111; }
+    .sidebar.closed.left  { transform: translateX(-105%); }
+    .sidebar.closed.right { transform: translateX(105%); }
+    .sidebar-toggle-btn {
+      position: absolute;
+      top: 12px;
+      width: 36px; height: 36px;
+      background: var(--accent); color: var(--sidebar-fg); border: none;
+      border-radius: 4px;
+      cursor: pointer; font-size: 22px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      transition: background 0.2s;
+      z-index: 2001;
+      outline: none;
+    }
+    .sidebar-toggle-btn.left { right: -18px; }
+    .sidebar-toggle-btn.right { left: -18px; }
+    .sidebar-toggle-btn:focus { outline: 2px solid #fff; outline-offset: 2px; }
+    .sidebar-toggle-btn:hover { background: #666; }
     main.main     { grid-area: main; overflow-y: auto; padding: 20px; box-sizing: border-box; min-height: 100vh; background: var(--main-bg); color: var(--main-fg);}
     .center { text-align: center; margin-bottom: 1em; }
     h1, h2 { margin: 0.5em 0; }
@@ -74,6 +101,7 @@
       display: block; padding: 8px 16px; font-size: 16px;
       text-decoration: none; color: inherit;
       border-radius: 4px;
+      transition: background 0.2s;
     }
     .sidebar-nav a:focus { outline: 2px solid #fff; outline-offset: 2px; background: #222; color: #fff; }
     .sidebar-nav a:hover { color: #f1f1f1; background: #222; }
@@ -128,6 +156,11 @@
       width: 24px; height: 24px; margin-left: 6px;
       border: none; cursor: pointer; border-radius: 4px;
       background: var(--copy-btn-bg) no-repeat center/cover;
+      transition: box-shadow 0.2s;
+    }
+    .copy-button:active {
+      box-shadow: 0 0 0 4px #f1c40f88;
+      transition: box-shadow 0.2s;
     }
     .copy-button:hover {
       background-image: var(--copy-btn-hover-bg);
@@ -149,7 +182,9 @@
       border-radius: 4px;
       margin-bottom: 4px;
       user-select: none;
+      transition: background 0.2s;
     }
+    details[open] summary { background: #dde; }
     details { margin-bottom: 8px; }
     .boss-block { margin-bottom: 20px; background: var(--main-bg); border-radius: 8px; box-shadow: 0 0 8px #d1e6f6; padding: 10px 0 10px 0; }
     .boss-block h3 { margin: 0 0 6px 0; }
@@ -175,6 +210,53 @@
       z-index: 3000;
       display: none;
     }
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: 36px;
+      transform: translateX(-50%) scale(0.9);
+      background: var(--toast-bg);
+      color: var(--toast-fg);
+      border-radius: 8px;
+      padding: 12px 32px;
+      font-size: 1.1em;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 3001;
+      box-shadow: 0 4px 24px #0005;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+      pointer-events: auto;
+    }
+    /* Keyboard Shortcut Help */
+    #shortcutHelp {
+      display: none;
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--main-bg);
+      color: var(--main-fg);
+      border-radius: 12px;
+      box-shadow: 0 8px 48px #0008;
+      padding: 32px 32px 16px 32px;
+      z-index: 4000;
+      min-width: 280px;
+      max-width: 90vw;
+      font-size: 1.1em;
+    }
+    #shortcutHelp h2 { margin-top: 0; }
+    #shortcutHelp table { width: 100%; }
+    #shortcutHelp td { padding: 2px 8px; }
+    #shortcutHelp .close-btn {
+      position: absolute; top: 8px; right: 12px;
+      background: #f1c40f; color: #222; border: none; border-radius: 4px;
+      font-size: 1.2em; padding: 0 8px; cursor: pointer;
+    }
+    #shortcutHelp .close-btn:focus { outline: 2px solid #222; }
     /* Responsive */
     @media (max-width: 1000px) {
       body {
@@ -184,6 +266,7 @@
         width: 100vw; left: 0 !important; right: auto !important; border-radius: 0;
         position: static;
         height: auto;
+        box-shadow: none;
       }
       .sidebar.left, .sidebar.right {
         border: none;
@@ -191,16 +274,32 @@
       main.main {
         padding: 10px;
       }
+      .sidebar-toggle-btn.left { right: 8px; }
+      .sidebar-toggle-btn.right { left: 8px; }
     }
     @media (max-width: 700px) {
       .search-bar-container { flex-direction: column; gap: 6px; }
+      #shortcutHelp { padding: 12px 4vw 8px 4vw; }
     }
   </style>
 </head>
 <body class="theme-original">
   <!-- Left Sidebar -->
   <nav class="sidebar left" id="sidebarLeft" aria-label="Main menu">
+    <button class="sidebar-toggle-btn left" id="toggleLeft" aria-label="Hide menu" title="Hide menu">&laquo;</button>
     <nav class="sidebar-nav" id="sideNav"></nav>
+  </nav>
+  <!-- Right Sidebar: Event Timer -->
+  <nav class="sidebar right" id="sidebarRight" aria-label="Event timer">
+    <button class="sidebar-toggle-btn right" id="toggleRight" aria-label="Hide events" title="Hide events">&raquo;</button>
+    <div style="padding: 12px;">
+      <label for="timezoneSelect">Timezone:</label>
+      <select id="timezoneSelect" aria-label="Choose timezone"></select>
+      <button id="refreshEventsBtn" title="Refresh events" style="margin-left:10px;">&#x21bb;</button>
+    </div>
+    <div class="event-list" id="eventList">
+      <div class="spinner" id="eventSpinner"></div>
+    </div>
   </nav>
   <!-- Main Content -->
   <main class="main" id="main">
@@ -211,6 +310,7 @@
         <option value="dark">Dark</option>
         <option value="light">Light</option>
       </select>
+      <button id="shortcutHelpBtn" title="Keyboard shortcuts" aria-label="Keyboard shortcuts" style="font-size:1.2em;padding:4px 12px 4px 12px;border-radius:6px;border:1px solid #ccc;background:#f1c40f;color:#222;margin-left:8px;cursor:pointer;">?</button>
     </div>
     <section id="Welcome" class="center">
       <h1>Welcome Commander</h1>
@@ -231,32 +331,131 @@ Websites:
     </section>
     <footer>&copy; 2025 Gamers-Hell Community</footer>
   </main>
-  <!-- Right Sidebar: Event Timer -->
-  <nav class="sidebar right" id="sidebarRight" aria-label="Event timer">
-    <div style="padding: 12px;">
-      <label for="timezoneSelect">Timezone:</label>
-      <select id="timezoneSelect" aria-label="Choose timezone"></select>
-    </div>
-    <div class="event-list" id="eventList">
-      <div class="spinner" id="eventSpinner"></div>
-    </div>
-  </nav>
-  <!-- Loading and Error Overlays -->
+  <!-- Toast Notification -->
+  <div id="toast"></div>
+  <!-- Error Overlay -->
   <div id="globalError" role="alert"></div>
+  <!-- Keyboard Shortcut Help -->
+  <div id="shortcutHelp" tabindex="-1">
+    <button class="close-btn" id="closeShortcutHelp" aria-label="Close">&times;</button>
+    <h2>Keyboard Shortcuts</h2>
+    <table>
+      <tr><td><b>Ctrl+B</b> / <b>Ctrl+L</b></td><td>Toggle left sidebar</td></tr>
+      <tr><td><b>Ctrl+E</b> / <b>Ctrl+R</b></td><td>Toggle right sidebar</td></tr>
+      <tr><td><b>/</b> or <b>Ctrl+F</b></td><td>Focus search bar</td></tr>
+      <tr><td><b>Ctrl+1</b></td><td>Jump to Welcome</td></tr>
+      <tr><td><b>Ctrl+2</b></td><td>Jump to Credits</td></tr>
+      <tr><td><b>Esc</b></td><td>Close sidebar/help</td></tr>
+      <tr><td><b>?</b></td><td>Show this help</td></tr>
+    </table>
+  </div>
   <script>
     // ========== Theme Switcher ==========
     const themeSwitcher = document.getElementById('themeSwitcher');
     function applyTheme(theme) {
       document.body.className = 'theme-' + theme;
       localStorage.setItem('ghc-theme', theme);
+      showToast('Theme: ' + theme.charAt(0).toUpperCase() + theme.slice(1));
     }
     themeSwitcher.addEventListener('change', e => applyTheme(e.target.value));
-    // On load
     (() => {
       const theme = localStorage.getItem('ghc-theme') || 'original';
       themeSwitcher.value = theme;
       applyTheme(theme);
     })();
+
+    // ========== Toast Notification ==========
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    // ========== Sidebar Show/Hide ==========
+    function setSidebar(side, show) {
+      const el = document.getElementById(side);
+      if (show) el.classList.remove('closed');
+      else el.classList.add('closed');
+      // Animate main area resizing
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 320);
+    }
+    document.getElementById('toggleLeft').addEventListener('click', () => setSidebar('sidebarLeft', false));
+    document.getElementById('toggleRight').addEventListener('click', () => setSidebar('sidebarRight', false));
+    // Show buttons when sidebar is hidden
+    function createSidebarShowBtn(side) {
+      const btn = document.createElement('button');
+      btn.className = 'sidebar-toggle-btn ' + side;
+      btn.setAttribute('aria-label', 'Show ' + (side === 'left' ? 'menu' : 'events'));
+      btn.title = 'Show ' + (side === 'left' ? 'menu' : 'events');
+      btn.innerHTML = side === 'left' ? '&raquo;' : '&laquo;';
+      btn.style.top = '12px';
+      btn.style.zIndex = 2002;
+      btn.style.position = 'fixed';
+      btn.style[side] = '0';
+      btn.addEventListener('click', () => {
+        setSidebar('sidebar' + (side.charAt(0).toUpperCase() + side.slice(1)), true);
+        btn.remove();
+      });
+      document.body.appendChild(btn);
+    }
+    // Listen for sidebar transition end to show show-btns
+    document.getElementById('sidebarLeft').addEventListener('transitionend', function() {
+      if (this.classList.contains('closed') && !document.getElementById('showLeftBtn')) {
+        createSidebarShowBtn('left');
+      }
+    });
+    document.getElementById('sidebarRight').addEventListener('transitionend', function() {
+      if (this.classList.contains('closed') && !document.getElementById('showRightBtn')) {
+        createSidebarShowBtn('right');
+      }
+    });
+
+    // ========== Keyboard Shortcuts ==========
+    function showShortcutHelp() {
+      const help = document.getElementById('shortcutHelp');
+      help.style.display = 'block';
+      help.focus();
+    }
+    function hideShortcutHelp() {
+      document.getElementById('shortcutHelp').style.display = 'none';
+    }
+    document.getElementById('shortcutHelpBtn').addEventListener('click', showShortcutHelp);
+    document.getElementById('closeShortcutHelp').addEventListener('click', hideShortcutHelp);
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && (e.key === 'b' || e.key === 'l')) { // Toggle left sidebar
+        e.preventDefault();
+        const left = document.getElementById('sidebarLeft');
+        setSidebar('sidebarLeft', left.classList.contains('closed'));
+      }
+      if (e.ctrlKey && (e.key === 'e' || e.key === 'r')) { // Toggle right sidebar
+        e.preventDefault();
+        const right = document.getElementById('sidebarRight');
+        setSidebar('sidebarRight', right.classList.contains('closed'));
+      }
+      if (e.key === '/' || (e.ctrlKey && e.key === 'f')) { // Focus search
+        e.preventDefault();
+        document.getElementById('searchInput').focus();
+      }
+      if (e.ctrlKey && e.key === '1') {
+        e.preventDefault();
+        document.getElementById('Welcome').scrollIntoView({behavior:"smooth"});
+      }
+      if (e.ctrlKey && e.key === '2') {
+        e.preventDefault();
+        document.getElementById('Credits').scrollIntoView({behavior:"smooth"});
+      }
+      if (e.key === '?') {
+        e.preventDefault();
+        showShortcutHelp();
+      }
+      if (e.key === 'Escape') {
+        // Close sidebars/help
+        setSidebar('sidebarLeft', true);
+        setSidebar('sidebarRight', true);
+        hideShortcutHelp();
+      }
+    });
 
     // ========== Navigation Data ==========
     const data = {
@@ -338,8 +537,8 @@ Websites:
     const itemCache = {};
     function copyToClipboard(text) {
       navigator.clipboard.writeText(text).then(
-        () => alert(`Copied:\n${text}`),
-        () => alert('Copy failed!')
+        () => showToast("Copied!"),
+        () => showToast('Copy failed!')
       );
     }
     function formatCoin(value) {
@@ -355,9 +554,9 @@ Websites:
     }
     async function fetchItemData(id) {
       if (itemCache[id]) return itemCache[id];
-      // Try cache
       let cache = localStorage.getItem('ghc-item-'+id);
-      if (cache) {
+      let cacheTime = localStorage.getItem('ghc-item-time-'+id);
+      if (cache && cacheTime && Date.now() - cacheTime < 1000*60*60*4) {
         itemCache[id] = JSON.parse(cache);
         return itemCache[id];
       }
@@ -371,8 +570,8 @@ Websites:
           icon: item.icon,
           value: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
         };
-        // Save to cache
         localStorage.setItem('ghc-item-'+id, JSON.stringify(itemCache[id]));
+        localStorage.setItem('ghc-item-time-'+id, Date.now());
         return itemCache[id];
       } catch {
         return { name: `Item ${id}`, icon: '', value: 0 };
@@ -509,12 +708,12 @@ Websites:
       let s = diff % 60;
       return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
     }
-    async function fetchEvents() {
+    async function fetchEvents(force) {
       const spinner = document.getElementById('eventSpinner');
       spinner.style.display = 'block';
       let cache = localStorage.getItem('ghc-events');
       let cacheTime = localStorage.getItem('ghc-events-time');
-      if (cache && cacheTime && Date.now() - cacheTime < 1000*60*15) {
+      if (!force && cache && cacheTime && Date.now() - cacheTime < 1000*60*15) {
         events = JSON.parse(cache);
         spinner.style.display = 'none';
         updateEvents();
@@ -527,6 +726,7 @@ Websites:
         events = data.filter(e => e.offset && e.repeat);
         localStorage.setItem('ghc-events', JSON.stringify(events));
         localStorage.setItem('ghc-events-time', Date.now());
+        showToast('Events updated!');
       } catch (err) {
         showError('Failed to load events. Try again later.');
         events = [];
@@ -569,6 +769,9 @@ Websites:
         });
       }, 1000);
     }
+    document.getElementById('refreshEventsBtn').addEventListener('click', function() {
+      fetchEvents(true);
+    });
 
     // ========== Search ==========
     function searchContent(query) {
