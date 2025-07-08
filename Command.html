@@ -3,339 +3,362 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gamers-Hell Command</title>
+  <title>Gamers-Hell Command - Unified (Top Bars Swapped)</title>
+  <meta name="theme-color" content="#2b4765" />
   <style>
     :root {
-      --bg: #f8fcff;
-      --text: #222;
+      --main-bg: #f8fcff;
+      --main-fg: #222;
       --accent: #2b4765;
-      --sidebar-bg: #222;
-      --sidebar-text: #fff;
-      --highlight: #007c1e;
-      --danger: #c00;
-      --border: #ccc;
-      --shadow: 0 0 8px #d1e6f6;
+      --topbar-bg: #222;
+      --topbar-fg: #fff;
+      --event-upcoming-bg: #29334a;
+      --event-upcoming-fg: #fff;
+      --toast-bg: #222c;
+      --toast-fg: #fff;
+      --copy-btn-bg: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
+      --copy-btn-hover-bg: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
+      --transition: 0.3s cubic-bezier(.4,2,.6,1);
     }
-    [data-theme="dark"] {
-      --bg: #181c22;
-      --text: #eee;
-      --accent: #7bc6ff;
-      --sidebar-bg: #222b33;
-      --sidebar-text: #fff;
-      --highlight: #4ecb4e;
-      --danger: #ff5f5f;
-      --border: #444;
-      --shadow: 0 0 8px #223;
-    }
-    html, body { margin: 0; padding: 0; height: 100vh; }
     body {
-      display: grid;
-      grid-template-columns: 320px 1fr 320px;
-      grid-template-areas: "navleft main navright";
+      margin: 0;
       font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background: var(--main-bg);
+      color: var(--main-fg);
       min-height: 100vh;
-      transition: background 0.3s, color 0.3s;
     }
-    body.left-closed  { grid-template-columns: 0 1fr 320px; }
-    body.right-closed { grid-template-columns: 320px 1fr 0; }
-    body.both-closed  { grid-template-columns: 0 1fr 0; }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      width: 320px;
-      height: 100vh;
-      background: var(--sidebar-bg);
-      color: var(--sidebar-text);
-      box-shadow: 2px 0 8px rgba(0,0,0,0.2);
-      transition: transform 0.3s;
-      z-index: 1000;
+    .topbar {
+      width: 100%;
+      background: var(--topbar-bg);
+      color: var(--topbar-fg);
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      padding: 0 20px;
+      box-sizing: border-box;
+      min-height: 52px;
+      z-index: 1000;
     }
-    .sidebar.left  { left: 0;  transform: translateX(0); border-right: 1px solid #111; }
-    .sidebar.right { right: 0; transform: translateX(0);  border-left:  1px solid #111; }
-    .sidebar.closed.left  { transform: translateX(-100%); }
-    .sidebar.closed.right { transform: translateX(100%); }
-    .sidebar-toggle {
-      position: absolute;
-      top: 20px;
-      width: 36px; height: 36px;
-      background: #444; color: #fff; border: none;
-      border-radius: 0 4px 4px 0;
-      cursor: pointer; font-size: 22px;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
-      transition: background 0.2s;
-      z-index: 2;
-      outline: none;
+    .topbar.timerbar {
+      position: sticky;
+      top: 0;
+      border-bottom: 1px solid #111;
+      background: #2b4765;
+      color: #fff;
+      min-height: 48px;
+      flex-wrap: wrap;
     }
-    .sidebar-toggle.right { left: -40px; border-radius: 4px 0 0 4px; }
-    .sidebar-toggle.left  { right: -40px; }
-    .sidebar-toggle:focus { outline: 2px solid #fff; outline-offset: 2px; }
-    .sidebar-toggle:hover { background: #666; }
-
-    .sidebar-nav {
-      margin-top: 70px;
-      overflow-y: auto;
+    .topbar.menu {
+      position: sticky;
+      top: 48px;
+      border-bottom: 1px solid #111;
+      background: var(--topbar-bg);
+      color: var(--topbar-fg);
+      min-height: 52px;
+    }
+    .topbar .event-timer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      padding: 6px 0;
+    }
+    .topbar .event-list {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
       flex: 1;
     }
-    .sidebar-nav ul, .sidebar-nav li {
-      list-style: none;
-      margin: 0; padding: 0;
+    .topbar .event-row {
+      background: #29334a;
+      color: #fff;
+      border-radius: 4px;
+      padding: 6px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 160px;
+      margin-right: 8px;
     }
-    .sidebar-nav .nav-group {
+    .topbar .event-row.upcoming {
+      background: #f1c40f;
+      color: #222;
       font-weight: bold;
+    }
+    .topbar .event-name {
+      font-size: 1em;
+      margin-bottom: 2px;
+    }
+    .topbar .event-time {
+      font-size: 0.92em;
+      font-family: monospace;
+    }
+    .topbar .event-countdown {
+      font-size: 0.9em;
+      color: #f1c40f;
+    }
+    .topbar .timezone-select {
+      margin-left: 10px;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 1em;
+    }
+    .topbar .refresh-btn {
+      margin-left: 10px;
       font-size: 1.1em;
-      padding: 8px 16px 8px 8px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: #f1c40f;
+      color: #222;
+      cursor: pointer;
+    }
+    /* Menu bar dropdowns */
+    .topbar.menu .nav-menu {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex: 1;
+    }
+    .topbar.menu .dropdown {
+      position: relative;
+    }
+    .topbar.menu .dropdown > button {
       background: none;
       border: none;
       color: inherit;
-      width: 100%;
-      text-align: left;
-      cursor: pointer;
-      outline: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .sidebar-nav .nav-group:focus { outline: 2px solid var(--accent); }
-    .sidebar-nav .nav-group .arrow {
       font-size: 1em;
-      transition: transform 0.2s;
+      padding: 10px 8px;
+      cursor: pointer;
     }
-    .sidebar-nav .nav-group[aria-expanded="true"] .arrow {
-      transform: rotate(90deg);
-    }
-    .sidebar-nav .nav-items {
-      display: none;
-      padding-left: 18px;
-    }
-    .sidebar-nav .nav-items.open { display: block; }
-    .sidebar-nav a {
-      display: block; padding: 7px 8px; font-size: 1em;
-      text-decoration: none; color: inherit;
-      border-radius: 4px;
-      outline: none;
-    }
-    .sidebar-nav a:focus { outline: 2px solid var(--accent); background: #222; color: #fff; }
-    .sidebar-nav a:hover { color: #f1f1f1; background: #222; }
-
-    /* --- Main Content --- */
-    main.main     { grid-area: main; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: all 0.3s; min-height: 100vh; }
-    .center { text-align: center; margin-bottom: 1em; }
-    h1, h2 { margin: 0.5em 0; }
-    h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.2em; margin-top: 1.5em; }
-    textarea { width: 100%; }
-    footer { text-align: center; color: #888; margin-top: 30px; }
-
-    /* --- Boss/Item Styles --- */
-    .textbox-container {
-      display: flex; align-items: center; margin: 6px 0;
-    }
-    .textbox {
-      flex: 1; padding: 6px; font-size: 15px;
-      border: 1px solid var(--border); border-radius: 4px; background: #fff;
-      color: var(--text);
-    }
-    .copy-button {
-      width: 28px; height: 28px; margin-left: 8px;
-      border: none; cursor: pointer; border-radius: 4px;
-      background: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png') no-repeat center/cover;
-      transition: background 0.2s;
-      outline: none;
-    }
-    .copy-button:hover, .copy-button:focus {
-      background-image: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
-      outline: 2px solid var(--accent);
-    }
-    .drops-container {
-      margin-left: 32px; margin-top: 8px;
-    }
-    .item-drop {
-      display: flex; align-items: center; gap: 8px;
-      margin: 4px 0; font-size: 15px;
-      position: relative;
-    }
-    .item-drop img { width: 28px; height: 28px; border-radius: 4px; }
-    .item-drop small { color: #555; margin-left: 4px; }
-    .item-drop .tooltip {
+    .topbar.menu .dropdown-content {
       display: none;
       position: absolute;
-      left: 110%; top: 0;
       background: #fff;
       color: #222;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      padding: 8px 12px;
-      font-size: 14px;
-      z-index: 10;
-      min-width: 180px;
-      box-shadow: 0 2px 8px #0004;
-    }
-    .item-drop:hover .tooltip, .item-drop:focus-within .tooltip { display: block; }
-    .drop-type-guaranteed { color: var(--highlight); font-weight: bold; margin-left: 8px; }
-    .drop-type-chance { color: var(--danger); font-weight: bold; margin-left: 8px; }
-    details summary {
-      cursor: pointer;
-      font-weight: bold;
-      background: #eee;
-      padding: 4px 8px;
+      min-width: 220px;
+      box-shadow: 0 8px 24px #0003;
+      z-index: 2000;
       border-radius: 4px;
-      margin-bottom: 4px;
-      user-select: none;
-      outline: none;
+      top: 100%;
+      left: 0;
+      padding: 6px 0;
     }
-    details:focus-within summary { outline: 2px solid var(--accent); }
-    details { margin-bottom: 8px; }
-    .boss-block { margin-bottom: 20px; background: var(--bg); border-radius: 8px; box-shadow: var(--shadow); padding: 10px 0 10px 0; }
-    .boss-block h3 { margin: 0 0 6px 0; }
-
-    /* Toast message */
-    .toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--accent);
-      color: #fff;
-      padding: 12px 28px;
+    .topbar.menu .dropdown:hover > .dropdown-content,
+    .topbar.menu .dropdown:focus-within > .dropdown-content {
+      display: block;
+    }
+    .topbar.menu .dropdown-content .dropdown-subject {
+      font-weight: bold;
+      padding: 6px 16px 2px 16px;
+      color: #2b4765;
+      margin-top: 6px;
+    }
+    .topbar.menu .dropdown-content a {
+      display: block;
+      padding: 6px 24px;
+      text-decoration: none;
+      color: inherit;
+      border-radius: 2px;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .topbar.menu .dropdown-content a:hover {
+      background: #e0e8f6;
+      color: #222;
+    }
+    .topbar.menu .search-input {
+      margin-left: 24px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      min-width: 200px;
+    }
+    .topbar.menu .theme-switcher {
+      margin-left: 16px;
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 1em;
+      min-width: 120px;
+    }
+    .topbar.menu .shortcut-help-btn {
+      margin-left: 14px;
+      font-size: 1.2em;
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: #f1c40f;
+      color: #222;
+      cursor: pointer;
+      min-width: 36px;
+      min-height: 36px;
+    }
+    main {
+      max-width: 1200px;
+      margin: 40px auto 0 auto;
+      padding: 24px;
+      box-sizing: border-box;
+      background: var(--main-bg);
+      color: var(--main-fg);
+      min-height: 60vh;
+    }
+    .center { text-align: center; margin-bottom: 1em; }
+    .boss-block {
+      margin-bottom: 20px;
+      background: var(--main-bg);
       border-radius: 8px;
-      box-shadow: 0 2px 12px #0007;
-      font-size: 18px;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 3000;
-      transition: opacity 0.4s;
+      box-shadow: 0 0 8px #d1e6f6;
+      padding: 10px 0;
     }
-    .toast.show { opacity: 1; pointer-events: auto; }
-
-    /* Loading Spinner */
+    .textbox-container {
+      display: flex;
+      align-items: center;
+      margin: 6px 0;
+    }
+    .textbox {
+      flex: 1;
+      padding: 6px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+      user-select: all;
+    }
+    .copy-button {
+      width: 32px;
+      height: 32px;
+      margin-left: 6px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      background: var(--copy-btn-bg) no-repeat center/cover;
+      transition: box-shadow 0.2s, background-image 0.2s;
+      flex-shrink: 0;
+    }
+    .copy-button:active {
+      box-shadow: 0 0 0 4px #f1c40f88;
+      transition: box-shadow 0.2s;
+    }
+    .copy-button:hover {
+      background-image: var(--copy-btn-hover-bg);
+    }
+    .copy-button:focus-visible {
+      outline: 3px solid #f1c40f;
+      outline-offset: 2px;
+    }
+    .drops-container {
+      margin-left: 32px;
+      margin-top: 8px;
+    }
+    .item-drop {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 4px 0;
+      font-size: 14px;
+    }
+    .item-drop img {
+      width: 24px;
+      height: 24px;
+    }
+    .item-drop small {
+      color: #555;
+      margin-left: 4px;
+    }
+    .drop-type-guaranteed {
+      color: #007c1e;
+      font-weight: bold;
+      margin-left: 8px;
+    }
+    .drop-type-chance {
+      color: #c00;
+      font-weight: bold;
+      margin-left: 8px;
+    }
     .spinner {
       border: 4px solid #eee;
       border-top: 4px solid var(--accent);
       border-radius: 50%;
-      width: 36px; height: 36px;
+      width: 32px;
+      height: 32px;
       animation: spin 1s linear infinite;
       margin: 30px auto;
       display: block;
     }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-
-    /* Theme toggle & search bar floating */
-    .floating-controls {
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto 10px auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 16px;
-      z-index: 10;
-    }
-    .theme-toggle {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 6px 18px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 10px;
-    }
-    .theme-toggle:hover, .theme-toggle:focus { background: #4e7bbd; }
-    .main-search {
-      width: 220px;
-      padding: 7px 10px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      font-size: 16px;
-      margin-top: 10px;
-    }
-
-    /* --- Event Timer Styles --- */
-    .event-list { margin-top: 70px; padding: 16px; max-height: calc(100vh - 70px); overflow-y: auto; }
-    .event-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #333; font-size: 1rem; }
-    .event-row.upcoming { background: #29334a; font-weight: bold; border-radius: 4px; }
-    .event-name { flex: 2; }
-    .event-time { flex: 1; text-align: right; font-family: monospace; }
-    .timezone-select {
-      width: 90%;
-      margin: 10px 5%;
-      padding: 4px;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-      font-size: 15px;
-      background: #fff;
-      color: #222;
-    }
-
-    /* Mobile hamburger buttons */
-    .sidebar-hamburger {
-      display: none;
-      position: fixed;
-      top: 18px;
-      z-index: 2000;
-      width: 48px; height: 48px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 32px;
-      box-shadow: 0 2px 8px #0005;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-      outline: none;
-    }
-    .sidebar-hamburger.left  { left: 10px; }
-    .sidebar-hamburger.right { right: 10px; }
-    .sidebar-hamburger:focus { outline: 2px solid #fff; outline-offset: 2px; }
-    .sidebar-hamburger:hover { background: #4e7bbd; }
-
-    @media (max-width: 1000px) {
-      body, body.left-closed, body.right-closed, body.both-closed {
-        grid-template-columns: 0 1fr 0 !important;
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
       }
-      .sidebar { width: 100vw; left: 0 !important; right: auto !important; border-radius: 0; }
-      .sidebar.left  { transform: translateX(-100%); }
-      .sidebar.right { transform: translateX(100%); }
-      .sidebar-toggle.left { right: 0; left: auto; }
-      .sidebar-toggle.right { left: 0; right: auto; }
-      .sidebar-hamburger { display: flex; }
+    }
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: 36px;
+      transform: translateX(-50%) scale(0.9);
+      background: var(--toast-bg);
+      color: var(--toast-fg);
+      border-radius: 8px;
+      padding: 12px 32px;
+      font-size: 1.1em;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 3001;
+      box-shadow: 0 4px 24px #0005;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+      pointer-events: auto;
+    }
+    @media (max-width: 900px) {
+      .topbar .nav-menu { flex-wrap: wrap; gap: 10px; }
+      .topbar .event-list { flex-wrap: wrap; }
+      main { padding: 10px; }
+    }
+    @media (max-width: 700px) {
+      .topbar.timerbar, .topbar.menu {
+        flex-direction: column;
+        align-items: stretch;
+        min-height: unset;
+        padding: 0 8px;
+      }
+      .topbar .nav-menu { flex-direction: column; gap: 4px; }
+      .topbar .event-list { flex-direction: column; gap: 4px; }
+      main { margin-top: 8px; }
     }
   </style>
 </head>
 <body>
-  <!-- Mobile hamburger buttons -->
-  <button class="sidebar-hamburger left" id="openLeft" aria-label="Open Menu" type="button" tabindex="0">&#9776;</button>
-  <button class="sidebar-hamburger right" id="openRight" aria-label="Open Events" type="button" tabindex="0">&#9776;</button>
-
-  <!-- LEFT SIDEBAR: Navigation -->
-  <nav class="sidebar left" id="sidebarLeft" aria-label="Main menu">
-    <button class="sidebar-toggle left" id="toggleLeft" aria-label="Hide Menu" type="button" tabindex="0">&times;</button>
-    <nav class="sidebar-nav" id="sideNav"></nav>
-  </nav>
-
-  <!-- MAIN CONTENT -->
-  <main class="main" id="main" tabindex="0">
-    <div class="floating-controls">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme" type="button">🌙 Theme</button>
-      <input class="main-search" id="mainSearch" type="text" placeholder="Search bosses/events..." aria-label="Search" />
+  <!-- TIMER BAR (now on top) -->
+  <div class="topbar timerbar" role="complementary" aria-label="Event timer and utilities">
+    <div class="event-timer">
+      <label for="timezoneSelect" style="font-size:0.98em;">Timezone:</label>
+      <select id="timezoneSelect" class="timezone-select" aria-label="Choose timezone"></select>
+      <button id="refreshEventsBtn" class="refresh-btn" title="Refresh events" aria-label="Refresh events">&#x21bb;</button>
+      <div class="event-list" id="eventList" role="list" tabindex="0" aria-live="polite" aria-relevant="additions">
+        <div class="spinner"></div>
+      </div>
     </div>
-    <section id="Welcome" class="center">
-      <h1>Welcome Commander</h1>
-      <p>Use the sidebars to explore bosses, events, and more. <span style="font-size:1.2em;">🎮</span></p>
-    </section>
-    <div id="mainContent"></div>
-    <section id="Credits" class="center">
+  </div>
+  <!-- MENU BAR (below timer bar) -->
+  <div class="topbar menu" role="navigation" aria-label="Main menu">
+    <div class="nav-menu" id="navMenu">
+      <!-- Dropdowns will be generated by JS -->
+    </div>
+    <input type="text" class="search-input" id="searchInput" placeholder="Search bosses, events..." aria-label="Search">
+    <select id="themeSwitcher" class="theme-switcher" aria-label="Theme">
+      <option value="original">Original</option>
+      <option value="dark">Dark</option>
+      <option value="light">Light</option>
+    </select>
+    <button class="shortcut-help-btn" id="shortcutHelpBtn" title="Keyboard shortcuts" aria-label="Keyboard shortcuts">?</button>
+  </div>
+  <main id="main" role="main" tabindex="-1" aria-label="Main content area">
+    <div id="mainContent" tabindex="0" aria-live="polite" aria-relevant="additions"></div>
+    <section id="Credits" class="center" tabindex="-1" aria-label="Credits section">
       <h2>Credits</h2>
-      <textarea rows="6" disabled>
+      <textarea rows="6" disabled aria-readonly="true" aria-label="Credits and sources">
 Gamers-Hell Community
 Players Vs Events:
   Blaz, Devilish Rain, Stormmyknight, Beina, Geri V
@@ -346,392 +369,437 @@ Websites:
   http://gw2timer.com/
       </textarea>
     </section>
-    <footer>&copy; 2025 Gamers-Hell Community</footer>
+    <footer style="text-align:center;color:#888;margin-top:30px;">&copy; 2025 Gamers-Hell Community</footer>
   </main>
-
-  <!-- RIGHT SIDEBAR: GW2 Event Timer -->
-  <nav class="sidebar right" id="sidebarRight" aria-label="Event timer">
-    <button class="sidebar-toggle right" id="toggleRight" aria-label="Hide Events" type="button" tabindex="0">&times;</button>
-    <select class="timezone-select" id="timezoneSelect" aria-label="Select Timezone"></select>
-    <div class="event-list" id="eventList">
-      <div class="spinner" id="eventSpinner"></div>
+  <div id="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+  <!-- Keyboard Shortcut Help -->
+  <div id="shortcutHelp" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="shortcutHelpTitle" aria-describedby="shortcutHelpDesc" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--main-bg);color:var(--main-fg);border-radius:12px;box-shadow:0 8px 48px #0008;padding:32px 32px 16px 32px;z-index:4000;min-width:280px;max-width:90vw;font-size:1.1em;">
+    <button class="close-btn" id="closeShortcutHelp" aria-label="Close keyboard shortcuts" style="position:absolute;top:8px;right:12px;background:#f1c40f;color:#222;border:none;border-radius:4px;font-size:1.2em;padding:0 8px;cursor:pointer;">&times;</button>
+    <h2 id="shortcutHelpTitle">Keyboard Shortcuts</h2>
+    <div id="shortcutHelpDesc">
+      <table style="width:100%;border-collapse:collapse;">
+        <tbody>
+          <tr><td><b>Ctrl+B</b> / <b>Ctrl+L</b></td><td>Focus navigation menu</td></tr>
+          <tr><td><b>Ctrl+E</b> / <b>Ctrl+R</b></td><td>Focus event timer</td></tr>
+          <tr><td><b>/</b> or <b>Ctrl+F</b></td><td>Focus search bar</td></tr>
+          <tr><td><b>Ctrl+2</b></td><td>Jump to Credits</td></tr>
+          <tr><td><b>Esc</b></td><td>Close help</td></tr>
+          <tr><td><b>?</b></td><td>Show this help</td></tr>
+        </tbody>
+      </table>
     </div>
-  </nav>
-
-  <!-- Toast for copy feedback -->
-  <div class="toast" id="toast"></div>
-
-<script>
-/* --- THEME TOGGLE --- */
-function setTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('ghc_theme', theme);
-  document.getElementById('themeToggle').textContent = theme === 'dark' ? '☀️ Theme' : '🌙 Theme';
-}
-document.getElementById('themeToggle').addEventListener('click', () => {
-  const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  setTheme(newTheme);
-});
-(function initTheme() {
-  const saved = localStorage.getItem('ghc_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-  setTheme(saved);
-})();
-
-/* --- TOAST MESSAGE --- */
-function showToast(msg) {
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2000);
-}
-
-/* --- DATA STRUCTURE: Add bosses/events here --- */
-const data = {
-  "Core Tyria": {
-    "World Bosses": [
-      {
-        name: "Taidha Covington",
-        code: "[&BKgBAAA=]",
-        location: "Bloodtide Coast",
-        drops: [
-          { id: 46733, note: "Guaranteed" },
-          { id: 19357, note: "Chance" },
-          { id: 19361, note: "Chance" }
-        ]
-      },
-      {
-        name: "Karka Queen",
-        code: "[&BNcGAAA=]",
-        location: "Southsun Cove",
-        drops: [
-          { id: 37897, note: "Guaranteed" },
-          { id: 37899, note: "Chance" },
-          { id: 49509, note: "Chance" },
-          { id: 45597, note: "Chance" },
-          { id: 46713, note: "Chance" },
-          { id: 46689, note: "Chance" }
-        ]
-      },
-      {
-        name: "Shadow Behemoth",
-        code: "[&BPcAAAA=]",
-        location: "Queensdale",
-        drops: [
-          { id: 46733, note: "Guaranteed"},
-          { id: 8535, note: "Chance" },
-          { id: 19360, note: "Chance" },
-          { id: 31051, note: "Chance" }
-        ]
-      }
-    ]
-  }
-  // Add more categories/groups/bosses here!
-};
-
-/* --- NAVIGATION SIDEBAR: Data-driven, retractable, accessible --- */
-function buildNavSidebar(data, filter = "") {
-  const nav = document.getElementById('sideNav');
-  nav.innerHTML = '';
-  const createList = (obj, parentUl, level = 0) => {
-    Object.entries(obj).forEach(([cat, val]) => {
-      if (Array.isArray(val)) {
-        // Group of bosses/events
-        const li = document.createElement('li');
-        const groupBtn = document.createElement('button');
-        groupBtn.className = 'nav-group';
-        groupBtn.setAttribute('aria-expanded', 'false');
-        groupBtn.innerHTML = `<span class="arrow">&#9654;</span>${cat}`;
-        groupBtn.tabIndex = 0;
-        const itemsUl = document.createElement('ul');
-        itemsUl.className = 'nav-items';
-        val.forEach(boss => {
-          if (filter && !matchBoss(boss, filter)) return;
-          const a = document.createElement('a');
-          a.href = `#${boss.name.replace(/\s+/g, '')}`;
-          a.textContent = boss.name;
-          a.tabIndex = 0;
-          itemsUl.appendChild(Object.assign(document.createElement('li'), { appendChild: () => a }));
-          itemsUl.lastChild.appendChild(a);
-        });
-        if (itemsUl.childElementCount) {
-          li.appendChild(groupBtn);
-          li.appendChild(itemsUl);
-          parentUl.appendChild(li);
-          groupBtn.addEventListener('click', function() {
-            const expanded = groupBtn.getAttribute('aria-expanded') === 'true';
-            groupBtn.setAttribute('aria-expanded', !expanded);
-            itemsUl.classList.toggle('open', !expanded);
-            groupBtn.querySelector('.arrow').style.transform = !expanded ? 'rotate(90deg)' : '';
-          });
-        }
-      } else if (typeof val === 'object') {
-        // Nested category
-        const li = document.createElement('li');
-        const groupBtn = document.createElement('button');
-        groupBtn.className = 'nav-group';
-        groupBtn.setAttribute('aria-expanded', 'false');
-        groupBtn.innerHTML = `<span class="arrow">&#9654;</span>${cat}`;
-        groupBtn.tabIndex = 0;
-        const itemsUl = document.createElement('ul');
-        itemsUl.className = 'nav-items';
-        createList(val, itemsUl, level + 1);
-        if (itemsUl.childElementCount) {
-          li.appendChild(groupBtn);
-          li.appendChild(itemsUl);
-          parentUl.appendChild(li);
-          groupBtn.addEventListener('click', function() {
-            const expanded = groupBtn.getAttribute('aria-expanded') === 'true';
-            groupBtn.setAttribute('aria-expanded', !expanded);
-            itemsUl.classList.toggle('open', !expanded);
-            groupBtn.querySelector('.arrow').style.transform = !expanded ? 'rotate(90deg)' : '';
-          });
-        }
-      }
-    });
-  };
-  const ul = document.createElement('ul');
-  createList(data, ul);
-  nav.appendChild(ul);
-}
-
-/* --- MAIN CONTENT: Bosses/Events, data-driven, filterable --- */
-const itemCache = {};
-function matchBoss(boss, filter) {
-  filter = filter.toLowerCase();
-  if (boss.name.toLowerCase().includes(filter)) return true;
-  if (boss.location && boss.location.toLowerCase().includes(filter)) return true;
-  if (boss.drops && boss.drops.some(d => (itemCache[d.id]?.name || "").toLowerCase().includes(filter))) return true;
-  return false;
-}
-async function fetchItemData(id) {
-  if (itemCache[id]) return itemCache[id];
-  try {
-    const [item, price] = await Promise.all([
-      fetch(`https://api.guildwars2.com/v2/items/${id}`).then(r=>r.json()),
-      fetch(`https://api.guildwars2.com/v2/commerce/prices/${id}`).then(r=>r.json())
-    ]);
-    itemCache[id] = {
-      name: item.name,
-      icon: item.icon,
-      desc: item.description || '',
-      value: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
-    };
-    return itemCache[id];
-  } catch {
-    return { name: `Item ${id}`, icon: '', value: 0, desc: '' };
-  }
-}
-function formatCoin(value) {
-  value = Number(value) || 0;
-  const gold = Math.floor(value / 10000);
-  const silver = Math.floor((value % 10000) / 100);
-  const copper = value % 100;
-  let str = '';
-  if (gold) str += gold + 'g ';
-  if (gold || silver) str += silver + 's ';
-  str += copper + 'c';
-  return str.trim();
-}
-async function buildMainContent(data, filter = "") {
-  const parent = document.getElementById('mainContent');
-  parent.innerHTML = '<div class="spinner"></div>';
-  let html = '';
-  for (const [cat, groups] of Object.entries(data)) {
-    let groupContent = '';
-    for (const [group, bosses] of Object.entries(groups)) {
-      let bossContent = '';
-      for (let boss of bosses) {
-        if (filter && !matchBoss(boss, filter)) continue;
-        bossContent += `<div class="boss-block"><h3 id="${boss.name.replace(/\s/g,'')}">${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
-        for (const drop of boss.drops) await fetchItemData(drop.id);
-        const guaranteedDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
-        const chanceDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'chance');
-        let mostValuableChance = null;
-        if (chanceDrops.length) {
-          mostValuableChance = chanceDrops.reduce((max, d) => itemCache[d.id].value > itemCache[max.id].value ? d : max, chanceDrops[0]);
-        }
-        let parts = [];
-        guaranteedDrops.forEach(d =>
-          parts.push(`Guaranteed: ${itemCache[d.id].name} (${formatCoin(itemCache[d.id].value)})`)
-        );
-        if (mostValuableChance) {
-          parts.push(`Chance: ${itemCache[mostValuableChance.id].name} (${formatCoin(itemCache[mostValuableChance.id].value)})`);
-        }
-        if (!guaranteedDrops.length && !chanceDrops.length) {
-          boss.drops.sort((a, b) => itemCache[b.id].value - itemCache[a.id].value);
-          boss.drops.forEach(d =>
-            parts.push(`${itemCache[d.id].name} (${formatCoin(itemCache[d.id].value)})`)
-          );
-        }
-        const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${parts.join(', ')}`;
-        bossContent += `<div class="textbox-container">
-          <input type="text" class="textbox" value="${copyText.replace(/"/g,'&quot;')}" readonly aria-label="Boss Info: ${boss.name}">
-          <button class="copy-button" title="Copy ${boss.name}" type="button" tabindex="0" aria-label="Copy ${boss.name}"></button>
-        </div>
-        <details><summary>Show/Hide Drops</summary>
-        <div class="drops-container">`;
-        for (let d of boss.drops) {
-          let dropType = '';
-          if ((d.note || '').toLowerCase() === 'guaranteed') dropType = '<span class="drop-type-guaranteed">(Guaranteed)</span>';
-          else if ((d.note || '').toLowerCase() === 'chance') dropType = '<span class="drop-type-chance">(Chance)</span>';
-          bossContent += `<div class="item-drop" tabindex="0">
-            <img src="${itemCache[d.id].icon||''}" alt="${itemCache[d.id].name||''}" loading="lazy">
-            <span>${itemCache[d.id].name}</span>
-            ${dropType}
-            <small>Value: ${formatCoin(itemCache[d.id].value)}</small>
-            <span class="tooltip">${itemCache[d.id].desc||'No description.'}</span>
-          </div>`;
-        }
-        bossContent += `</div></details></div>`;
-      }
-      if (bossContent) groupContent += `<details open><summary><span class="cat-heading">${group}</span></summary>${bossContent}</details>`;
+  </div>
+  <script>
+    // ========== Theme Switcher ==========
+    const themeSwitcher = document.getElementById('themeSwitcher');
+    function applyTheme(theme) {
+      document.body.className = 'theme-' + theme;
+      localStorage.setItem('ghc-theme', theme);
+      showToast('Theme: ' + theme.charAt(0).toUpperCase() + theme.slice(1));
     }
-    if (groupContent) html += `<section><h2>${cat}</h2>${groupContent}</section>`;
-  }
-  parent.innerHTML = html || `<div style="padding:20px;color:#aaa;">No bosses/events match your search.</div>`;
-  // Attach copy events
-  parent.querySelectorAll('.copy-button').forEach(btn => {
-    btn.addEventListener('click', function() {
-      showToast('Copied!');
-      navigator.clipboard.writeText(this.previousElementSibling.value);
+    themeSwitcher.addEventListener('change', e => applyTheme(e.target.value));
+    (() => {
+      const theme = localStorage.getItem('ghc-theme') || 'original';
+      themeSwitcher.value = theme;
+      applyTheme(theme);
+    })();
+
+    // ========== Toast Notification ==========
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    // ========== Keyboard Shortcuts ==========
+    function showShortcutHelp() {
+      const help = document.getElementById('shortcutHelp');
+      help.style.display = 'block';
+      help.focus();
+    }
+    function hideShortcutHelp() {
+      document.getElementById('shortcutHelp').style.display = 'none';
+    }
+    document.getElementById('shortcutHelpBtn').addEventListener('click', showShortcutHelp);
+    document.getElementById('closeShortcutHelp').addEventListener('click', hideShortcutHelp);
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && (e.key === 'b' || e.key === 'l')) {
+        e.preventDefault();
+        document.getElementById('navMenu').focus();
+      }
+      if (e.ctrlKey && (e.key === 'e' || e.key === 'r')) {
+        e.preventDefault();
+        document.getElementById('eventList').focus();
+      }
+      if (e.key === '/' || (e.ctrlKey && e.key === 'f')) {
+        e.preventDefault();
+        document.getElementById('searchInput').focus();
+      }
+      if (e.ctrlKey && e.key === '2') {
+        e.preventDefault();
+        document.getElementById('Credits').scrollIntoView({behavior:"smooth"});
+      }
+      if (e.key === '?') {
+        e.preventDefault();
+        showShortcutHelp();
+      }
+      if (e.key === 'Escape') {
+        hideShortcutHelp();
+      }
     });
-  });
-}
 
-/* --- SIDEBAR TOGGLES --- */
-function updateBodyClass() {
-  const left  = !document.getElementById('sidebarLeft').classList.contains('closed');
-  const right = !document.getElementById('sidebarRight').classList.contains('closed');
-  if (left && right)      document.body.className = '';
-  else if (left && !right)  document.body.className = 'right-closed';
-  else if (!left && right)  document.body.className = 'left-closed';
-  else                      document.body.className = 'both-closed';
-}
-function openSidebar(side) {
-  document.getElementById(side).classList.remove('closed');
-  updateBodyClass();
-}
-function closeSidebar(side) {
-  document.getElementById(side).classList.add('closed');
-  updateBodyClass();
-}
-function setupSidebarToggles() {
-  document.getElementById('toggleLeft').addEventListener('click', () => closeSidebar('sidebarLeft'));
-  document.getElementById('toggleRight').addEventListener('click', () => closeSidebar('sidebarRight'));
-  document.getElementById('openLeft').addEventListener('click', () => openSidebar('sidebarLeft'));
-  document.getElementById('openRight').addEventListener('click', () => openSidebar('sidebarRight'));
-}
+    // ========== Navigation Data ==========
+    const data = {
+      "Core Tyria": {
+        "World Bosses": [
+          {
+            name: "Taidha Covington",
+            code: "[&BKgBAAA=]",
+            location: "Bloodtide Coast",
+            drops: [
+              { id: 46733, note: "Guaranteed" },
+              { id: 19357, note: "Chance" },
+              { id: 19361, note: "Chance" }
+            ]
+          },
+          {
+            name: "Karka Queen",
+            code: "[&BNcGAAA=]",
+            location: "Southsun Cove",
+            drops: [
+              { id: 37897, note: "Guaranteed" },
+              { id: 37899, note: "Chance" },
+              { id: 49509, note: "Chance" },
+              { id: 45597, note: "Chance" },
+              { id: 46713, note: "Chance" },
+              { id: 46689, note: "Chance" }
+            ]
+          },
+          {
+            name: "Shadow Behemoth",
+            code: "[&BPcAAAA=]",
+            location: "Queensdale",
+            drops: [
+              { id: 46733, note: "Guaranteed"},
+              { id: 8535, note: "Chance" },
+              { id: 19360, note: "Chance" },
+              { id: 31051, note: "Chance" }
+            ]
+          }
+        ]
+      }
+    };
 
-/* --- EVENT TIMER: GW2 API + Community sources --- */
-const EVENTS_JSON_URL = 'https://raw.githubusercontent.com/blish-hud/Community-Module-Pack/master/Events%20Module/ref/events.json';
-let events = [];
-let userTimezone = localStorage.getItem('ghc_timezone') || Intl.DateTimeFormat().resolvedOptions().timeZone;
-function parseOffset(offset) {
-  let t = offset.replace('Z', '').split(':');
-  return { hour: parseInt(t[0], 10), minute: parseInt(t[1], 10) };
-}
-function parseRepeat(repeat) {
-  let t = repeat.split(':');
-  return parseInt(t[0], 10) * 60 + parseInt(t[1], 10);
-}
-function getNextOccurrence(offset, repeat) {
-  const now = new Date();
-  const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
-  const { hour, minute } = parseOffset(offset);
-  let eventTime = new Date(today.getTime());
-  eventTime.setUTCHours(hour, minute, 0, 0);
-  const repeatMinutes = parseRepeat(repeat);
-  while (eventTime < now) {
-    eventTime = new Date(eventTime.getTime() + repeatMinutes * 60000);
-  }
-  return eventTime;
-}
-function toUserTimeStr(date) {
-  return date.toLocaleTimeString([], { timeZone: userTimezone, hour: '2-digit', minute: '2-digit' });
-}
-async function fetchEvents() {
-  const spinner = document.getElementById('eventSpinner');
-  if (spinner) spinner.style.display = 'block';
-  try {
-    const response = await fetch(EVENTS_JSON_URL, { cache: "no-store" });
-    if (!response.ok) throw new Error("Failed to fetch events");
-    const data = await response.json();
-    events = data.filter(e => e.offset && e.repeat);
-  } catch (err) {
-    events = [];
-    console.error('Error fetching events:', err);
-  }
-  if (spinner) spinner.style.display = 'none';
-}
-function matchEvent(event, filter) {
-  filter = filter.toLowerCase();
-  return event.name.toLowerCase().includes(filter);
-}
-function updateEvents(filter = "") {
-  const eventList = document.getElementById('eventList');
-  if (!events.length) {
-    eventList.innerHTML = '<div style="padding:20px;color:#aaa;">No events available.</div>';
-    return;
-  }
-  const now = new Date();
-  let nextEvents = events.map(event => {
-    const nextTime = getNextOccurrence(event.offset, event.repeat);
-    return { name: event.name, utcTime: nextTime, userTime: toUserTimeStr(nextTime) };
-  });
-  if (filter) {
-    nextEvents = nextEvents.filter(ev => matchEvent(ev, filter));
-  }
-  nextEvents.sort((a, b) => a.utcTime - b.utcTime);
-  let nextIdx = nextEvents.findIndex(ev => ev.utcTime > now);
-  if (nextIdx === -1) nextIdx = 0;
-  let html = '';
-  nextEvents.forEach((event, idx) => {
-    html += `<div class="event-row${idx === nextIdx ? ' upcoming' : ''}"><span class="event-name">${event.name}</span><span class="event-time">${event.userTime}</span></div>`;
-  });
-  eventList.innerHTML = html || `<div style="padding:20px;color:#aaa;">No events match your search.</div>`;
-}
-function populateTimezones() {
-  const sel = document.getElementById('timezoneSelect');
-  const zones = Intl.supportedValuesOf ? Intl.supportedValuesOf("timeZone") : [
-    "Europe/Amsterdam","Europe/London","America/New_York","America/Los_Angeles","Asia/Tokyo","Australia/Sydney"
-  ];
-  sel.innerHTML = '';
-  for (let z of zones) {
-    const opt = document.createElement('option');
-    opt.value = z;
-    opt.textContent = z;
-    if (z === userTimezone) opt.selected = true;
-    sel.appendChild(opt);
-  }
-  sel.addEventListener('change', function() {
-    userTimezone = this.value;
-    localStorage.setItem('ghc_timezone', userTimezone);
-    updateEvents(document.getElementById('mainSearch').value);
-  });
-}
+    // ========== Build Main Menu Dropdowns ==========
+    function buildNavMenu(data, filter = "") {
+      const nav = document.getElementById('navMenu');
+      nav.innerHTML = '';
+      Object.entries(data).forEach(([cat, subjects]) => {
+        // Main Category Dropdown
+        const dropdown = document.createElement('div');
+        dropdown.className = 'dropdown';
+        const btn = document.createElement('button');
+        btn.textContent = cat;
+        btn.setAttribute('aria-haspopup', 'true');
+        btn.setAttribute('aria-expanded', 'false');
+        dropdown.appendChild(btn);
 
-/* --- MAIN SEARCH: Filters both bosses and events --- */
-document.getElementById('mainSearch').addEventListener('input', async function() {
-  const filter = this.value.trim();
-  buildNavSidebar(data, filter);
-  await buildMainContent(data, filter);
-  updateEvents(filter);
-});
+        const dropdownContent = document.createElement('div');
+        dropdownContent.className = 'dropdown-content';
 
-/* --- DOMContentLoaded: Build everything --- */
-document.addEventListener('DOMContentLoaded', async () => {
-  setupSidebarToggles();
-  buildNavSidebar(data);
-  await buildMainContent(data);
-  populateTimezones();
-  await fetchEvents();
-  updateEvents();
-  setInterval(() => { fetchEvents().then(()=>updateEvents(document.getElementById('mainSearch').value)); }, 60000);
-  document.addEventListener('visibilitychange', function() {
-    if (!document.hidden) fetchEvents().then(()=>updateEvents(document.getElementById('mainSearch').value));
-  });
-  updateBodyClass();
-});
-</script>
+        Object.entries(subjects).forEach(([subject, bosses]) => {
+          // Subject as a heading
+          const subjectLabel = document.createElement('div');
+          subjectLabel.className = 'dropdown-subject';
+          subjectLabel.textContent = subject;
+          dropdownContent.appendChild(subjectLabel);
+
+          bosses.forEach(boss => {
+            if (filter && !matchBoss(boss, filter)) return;
+            const a = document.createElement('a');
+            a.href = `#${boss.name.replace(/\s+/g, '')}`;
+            a.textContent = boss.name;
+            a.tabIndex = 0;
+            a.addEventListener('click', e => {
+              e.preventDefault();
+              const el = document.getElementById(a.href.slice(1));
+              if (el) {
+                el.scrollIntoView({behavior:"smooth", block:"start"});
+                el.focus && el.focus();
+              }
+            });
+            dropdownContent.appendChild(a);
+          });
+        });
+        dropdown.appendChild(dropdownContent);
+        nav.appendChild(dropdown);
+      });
+      // Add Credits as a clickable
+      const creditsLink = document.createElement('a');
+      creditsLink.href = "#Credits";
+      creditsLink.textContent = "Credits";
+      creditsLink.tabIndex = 0;
+      creditsLink.addEventListener('click', e => {
+        e.preventDefault();
+        document.getElementById('Credits').scrollIntoView({behavior:"smooth"});
+      });
+      nav.appendChild(creditsLink);
+    }
+
+    // ========== Main Content (robust, filterable, async) ==========
+    const itemCache = {};
+    function matchBoss(boss, filter) {
+      filter = filter.toLowerCase();
+      if (boss.name.toLowerCase().includes(filter)) return true;
+      if (boss.location && boss.location.toLowerCase().includes(filter)) return true;
+      if (boss.drops && boss.drops.some(d => (itemCache[d.id]?.name || "").toLowerCase().includes(filter))) return true;
+      return false;
+    }
+    async function fetchItemData(id) {
+      if (itemCache[id]) return itemCache[id];
+      try {
+        const [item, price] = await Promise.all([
+          fetch(`https://api.guildwars2.com/v2/items/${id}`).then(r=>r.json()),
+          fetch(`https://api.guildwars2.com/v2/commerce/prices/${id}`).then(r=>r.json())
+        ]);
+        itemCache[id] = {
+          name: item.name,
+          icon: item.icon,
+          desc: item.description || '',
+          value: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
+        };
+        return itemCache[id];
+      } catch {
+        return { name: `Item ${id}`, icon: '', value: 0, desc: '' };
+      }
+    }
+    function formatCoin(value) {
+      value = Number(value) || 0;
+      const gold = Math.floor(value / 10000);
+      const silver = Math.floor((value % 10000) / 100);
+      const copper = value % 100;
+      let str = '';
+      if (gold) str += gold + 'g ';
+      if (gold || silver) str += silver + 's ';
+      str += copper + 'c';
+      return str.trim();
+    }
+    async function buildMainContent(data, filter = "") {
+      const parent = document.getElementById('mainContent');
+      parent.innerHTML = '<div class="spinner"></div>';
+      let html = '';
+      for (const [cat, groups] of Object.entries(data)) {
+        let groupContent = '';
+        for (const [group, bosses] of Object.entries(groups)) {
+          let bossContent = '';
+          for (let boss of bosses) {
+            if (filter && !matchBoss(boss, filter)) continue;
+            bossContent += `<div class="boss-block"><h3 id="${boss.name.replace(/\s/g,'')}">${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
+            for (const drop of boss.drops) await fetchItemData(drop.id);
+            const guaranteedDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
+            const chanceDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'chance');
+            let mostValuableChance = null;
+            if (chanceDrops.length) {
+              mostValuableChance = chanceDrops.reduce((max, d) => itemCache[d.id].value > itemCache[max.id].value ? d : max, chanceDrops[0]);
+            }
+            let parts = [];
+            guaranteedDrops.forEach(d =>
+              parts.push(`Guaranteed: ${itemCache[d.id].name} (${formatCoin(itemCache[d.id].value)})`)
+            );
+            if (mostValuableChance) {
+              parts.push(`Chance: ${itemCache[mostValuableChance.id].name} (${formatCoin(itemCache[mostValuableChance.id].value)})`);
+            }
+            if (!guaranteedDrops.length && !chanceDrops.length) {
+              boss.drops.sort((a, b) => itemCache[b.id].value - itemCache[a.id].value);
+              boss.drops.forEach(d =>
+                parts.push(`${itemCache[d.id].name} (${formatCoin(itemCache[d.id].value)})`)
+              );
+            }
+            const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${parts.join(', ')}`;
+            bossContent += `<div class="textbox-container">
+              <input type="text" class="textbox" value="${copyText.replace(/"/g,'&quot;')}" readonly aria-label="Boss Info: ${boss.name}">
+              <button class="copy-button" title="Copy ${boss.name}" type="button" tabindex="0" aria-label="Copy ${boss.name}"></button>
+            </div>
+            <details><summary>Show/Hide Drops</summary>
+            <div class="drops-container">`;
+            for (let d of boss.drops) {
+              let dropType = '';
+              if ((d.note || '').toLowerCase() === 'guaranteed') dropType = '<span class="drop-type-guaranteed">(Guaranteed)</span>';
+              else if ((d.note || '').toLowerCase() === 'chance') dropType = '<span class="drop-type-chance">(Chance)</span>';
+              bossContent += `<div class="item-drop" tabindex="0">
+                <img src="${itemCache[d.id].icon||''}" alt="${itemCache[d.id].name||''}" loading="lazy">
+                <span>${itemCache[d.id].name}</span>
+                ${dropType}
+                <small>Value: ${formatCoin(itemCache[d.id].value)}</small>
+              </div>`;
+            }
+            bossContent += `</div></details></div>`;
+          }
+          if (bossContent) groupContent += `<details open><summary><span class="cat-heading">${group}</span></summary>${bossContent}</details>`;
+        }
+        if (groupContent) html += `<section><h2>${cat}</h2>${groupContent}</section>`;
+      }
+      parent.innerHTML = html || `<div style="padding:20px;color:#aaa;">No bosses/events match your search.</div>`;
+      // Attach copy events
+      parent.querySelectorAll('.copy-button').forEach(btn => {
+        btn.addEventListener('click', function() {
+          showToast('Copied!');
+          navigator.clipboard.writeText(this.previousElementSibling.value);
+        });
+      });
+    }
+
+    // ========== Event Timer (90 min window) ==========
+    const EVENTS_JSON_URL = 'https://raw.githubusercontent.com/blish-hud/Community-Module-Pack/master/Events%20Module/ref/events.json';
+    let events = [];
+    let timerInterval = null;
+    let selectedTimezone = localStorage.getItem('ghc-timezone') || 'Europe/Amsterdam';
+
+    function getAllTimezones() {
+      try {
+        return Intl.supportedValuesOf('timeZone');
+      } catch {
+        return [
+          "Europe/Amsterdam", "Europe/London", "America/New_York", "America/Los_Angeles", "Asia/Tokyo", "UTC"
+        ];
+      }
+    }
+    function populateTimezoneSelect() {
+      const tzSelect = document.getElementById('timezoneSelect');
+      tzSelect.innerHTML = '';
+      getAllTimezones().forEach(tz => {
+        const opt = document.createElement('option');
+        opt.value = tz;
+        opt.textContent = tz.replace('_',' ');
+        if (tz === selectedTimezone) opt.selected = true;
+        tzSelect.appendChild(opt);
+      });
+      tzSelect.addEventListener('change', function() {
+        selectedTimezone = this.value;
+        localStorage.setItem('ghc-timezone', selectedTimezone);
+        updateEvents(document.getElementById('searchInput').value);
+      });
+    }
+    function parseOffset(offset) {
+      let t = offset.replace('Z', '').split(':');
+      return { hour: parseInt(t[0], 10), minute: parseInt(t[1], 10) };
+    }
+    function parseRepeat(repeat) {
+      let t = repeat.split(':');
+      return parseInt(t[0], 10) * 60 + parseInt(t[1], 10);
+    }
+    function getNextOccurrence(offset, repeat) {
+      const now = new Date();
+      const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
+      const { hour, minute } = parseOffset(offset);
+      let eventTime = new Date(today.getTime());
+      eventTime.setUTCHours(hour, minute, 0, 0);
+      const repeatMinutes = parseRepeat(repeat);
+      while (eventTime < now) {
+        eventTime = new Date(eventTime.getTime() + repeatMinutes * 60000);
+      }
+      return eventTime;
+    }
+    function toTimezoneStr(date, tz) {
+      return date.toLocaleTimeString('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit' });
+    }
+    function getCountdownString(target) {
+      const now = new Date();
+      let diff = Math.max(0, Math.floor((target - now) / 1000));
+      let h = Math.floor(diff / 3600);
+      let m = Math.floor((diff % 3600) / 60);
+      let s = diff % 60;
+      return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    }
+    async function fetchEvents(force) {
+      const eventList = document.getElementById('eventList');
+      eventList.innerHTML = '<div class="spinner" role="status" aria-live="polite" aria-label="Loading events"></div>';
+      let cache = localStorage.getItem('ghc-events');
+      let cacheTime = localStorage.getItem('ghc-events-time');
+      if (!force && cache && cacheTime && Date.now() - cacheTime < 1000*60*15) {
+        events = JSON.parse(cache);
+        updateEvents(document.getElementById('searchInput').value);
+        return;
+      }
+      try {
+        const response = await fetch(EVENTS_JSON_URL, { cache: "no-store" });
+        if (!response.ok) throw new Error("Failed to fetch events");
+        const data = await response.json();
+        events = data.filter(e => e.offset && e.repeat);
+        localStorage.setItem('ghc-events', JSON.stringify(events));
+        localStorage.setItem('ghc-events-time', Date.now());
+        showToast('Events updated!');
+      } catch (err) {
+        events = [];
+      }
+      updateEvents(document.getElementById('searchInput').value);
+    }
+    function matchEvent(event, filter) {
+      filter = filter.toLowerCase();
+      return event.name.toLowerCase().includes(filter);
+    }
+    function updateEvents(filter = "") {
+      const eventList = document.getElementById('eventList');
+      if (!events.length) {
+        eventList.innerHTML = '<div style="padding:20px;color:#aaa;">No events available.</div>';
+        return;
+      }
+      const now = new Date();
+      let nextEvents = events.map(event => {
+        const nextTime = getNextOccurrence(event.offset, event.repeat);
+        return { name: event.name, utcTime: nextTime, localTime: toTimezoneStr(nextTime, selectedTimezone), nextTime };
+      });
+      if (filter) {
+        nextEvents = nextEvents.filter(ev => matchEvent(ev, filter));
+      }
+      // Only show events in the next 90 minutes
+      nextEvents = nextEvents.filter(ev => (ev.nextTime - now) / 60000 <= 90 && (ev.nextTime - now) > 0);
+      nextEvents.sort((a, b) => a.utcTime - b.utcTime);
+      let html = '';
+      nextEvents.forEach((event, idx) => {
+        html += `<div class="event-row upcoming" role="listitem">
+          <span class="event-name">${event.name}</span>
+          <span class="event-time">${event.localTime}
+            <span class="event-countdown" data-idx="${idx}"></span>
+          </span>
+        </div>`;
+      });
+      eventList.innerHTML = html || `<div style="padding:20px;color:#aaa;">No events in the next 90 minutes.</div>`;
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        document.querySelectorAll('.event-countdown').forEach(span => {
+          const idx = +span.getAttribute('data-idx');
+          if (nextEvents[idx]) {
+            span.textContent = "Next in: " + getCountdownString(nextEvents[idx].nextTime);
+          }
+        });
+      }, 1000);
+    }
+    document.getElementById('refreshEventsBtn').addEventListener('click', function() {
+      fetchEvents(true);
+    });
+
+    // ========== Search: Filters both bosses and events ==========
+    document.getElementById('searchInput').addEventListener('input', async function() {
+      const filter = this.value.trim();
+      buildNavMenu(data, filter);
+      await buildMainContent(data, filter);
+      updateEvents(filter);
+    });
+
+    // ========== DOMContentLoaded ==========
+    document.addEventListener('DOMContentLoaded', async () => {
+      buildNavMenu(data);
+      await buildMainContent(data);
+      populateTimezoneSelect();
+      await fetchEvents();
+      updateEvents();
+      setInterval(() => { fetchEvents().then(()=>updateEvents(document.getElementById('searchInput').value)); }, 60000);
+      document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) fetchEvents().then(()=>updateEvents(document.getElementById('searchInput').value));
+      });
+    });
+  </script>
 </body>
 </html>
