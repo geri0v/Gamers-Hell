@@ -13,11 +13,7 @@
       font-family: Arial, sans-serif;
       background: #3c6e8d65;
       min-height: 100vh;
-      transition: grid-template-columns 0.3s;
     }
-    body.left-closed  { grid-template-columns: 0 1fr 320px; }
-    body.right-closed { grid-template-columns: 320px 1fr 0; }
-    body.both-closed  { grid-template-columns: 0 1fr 0; }
 
     .sidebar {
       position: fixed;
@@ -27,64 +23,19 @@
       background: #222;
       color: #fff;
       box-shadow: 2px 0 8px rgba(0,0,0,0.2);
-      transition: transform 0.3s;
       z-index: 1000;
       display: flex;
       flex-direction: column;
     }
-    .sidebar.left  { left: 0;  transform: translateX(0); border-right: 1px solid #111; }
-    .sidebar.right { right: 0; transform: translateX(0);  border-left:  1px solid #111; }
-    .sidebar.closed.left  { transform: translateX(-100%); }
-    .sidebar.closed.right { transform: translateX(100%); }
-    .sidebar-toggle {
-      position: absolute;
-      top: 20px;
-      width: 36px; height: 36px;
-      background: #444; color: #fff; border: none;
-      border-radius: 0 4px 4px 0;
-      cursor: pointer; font-size: 22px;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
-      transition: background 0.2s;
-      z-index: 2;
-      outline: none;
-    }
-    .sidebar-toggle.right { left: -40px; border-radius: 4px 0 0 4px; }
-    .sidebar-toggle.left  { right: -40px; }
-    .sidebar-toggle:focus { outline: 2px solid #fff; outline-offset: 2px; }
-    .sidebar-toggle:hover { background: #666; }
+    .sidebar.left  { left: 0; border-right: 1px solid #111; }
+    .sidebar.right { right: 0; border-left:  1px solid #111; }
 
-    /* Mobile hamburger buttons */
-    .sidebar-hamburger {
-      display: none;
-      position: fixed;
-      top: 18px;
-      z-index: 2000;
-      width: 40px; height: 40px;
-      background: #223;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 28px;
-      box-shadow: 0 2px 8px #0005;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-    }
-    .sidebar-hamburger.left  { left: 10px; }
-    .sidebar-hamburger.right { right: 10px; }
-    .sidebar-hamburger:focus { outline: 2px solid #fff; outline-offset: 2px; }
-    .sidebar-hamburger:hover { background: #2b4765; }
-
-    /* --- Event Timer Styles --- */
     .event-list { margin-top: 60px; padding: 16px; max-height: calc(100vh - 60px); overflow-y: auto; }
     .event-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #333; font-size: 1rem; }
     .event-row.upcoming { background: #29334a; font-weight: bold; border-radius: 4px; }
     .event-name { flex: 2; }
     .event-time { flex: 1; text-align: right; font-family: monospace; }
 
-    /* --- Navigation Styles --- */
     .sidebar-nav { margin-top: 60px; }
     .sidebar-nav a {
       display: block; padding: 8px 16px; font-size: 16px;
@@ -103,7 +54,6 @@
     .sidebar-nav details a { padding-left: 32px; font-size: 15px; }
     .cat-heading { font-size: 1.6em; margin: 1.5em 0 0.5em 0; color: #2b4765; }
 
-    /* --- Main Content --- */
     main.main     { grid-area: main; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: all 0.3s; min-height: 100vh; }
     .center { text-align: center; margin-bottom: 1em; }
     h1, h2 { margin: 0.5em 0; }
@@ -111,7 +61,6 @@
     textarea { width: 100%; }
     footer { text-align: center; color: #888; margin-top: 30px; }
 
-    /* --- Boss/Item Styles (from your mainContent code) --- */
     .textbox-container {
       display: flex; align-items: center; margin: 6px 0;
     }
@@ -151,7 +100,6 @@
     .drop-type-guaranteed { color: #007c1e; font-weight: bold; margin-left: 8px; }
     .drop-type-chance { color: #c00; font-weight: bold; margin-left: 8px; }
 
-    /* Loading Spinner */
     .spinner {
       border: 4px solid #eee;
       border-top: 4px solid #2b4765;
@@ -164,41 +112,23 @@
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
     @media (max-width: 1000px) {
-      body, body.left-closed, body.right-closed, body.both-closed {
+      body {
         grid-template-columns: 0 1fr 0 !important;
       }
       .sidebar { width: 100vw; left: 0 !important; right: auto !important; border-radius: 0; }
-      .sidebar.left  { transform: translateX(-100%); }
-      .sidebar.right { transform: translateX(100%); }
-      .sidebar-toggle.left { right: 0; left: auto; }
-      .sidebar-toggle.right { left: 0; right: auto; }
-      .sidebar-hamburger { display: flex; }
     }
   </style>
 </head>
 <body>
-  <!-- Mobile hamburger buttons -->
-  <button class="sidebar-hamburger left" id="openLeft" aria-label="Open Menu" type="button">&#9776;</button>
-  <button class="sidebar-hamburger right" id="openRight" aria-label="Open Events" type="button">&#9776;</button>
-
   <!-- LEFT SIDEBAR: Navigation -->
   <nav class="sidebar left" id="sidebarLeft" aria-label="Main menu">
-    <button class="sidebar-toggle left" id="toggleLeft" aria-label="Hide Menu" type="button" tabindex="0">&times;</button>
     <nav class="sidebar-nav" id="sideNav"></nav>
   </nav>
 
-  <!-- MAIN CONTENT (Unchanged) -->
+  <!-- MAIN CONTENT -->
   <main class="main" id="main">
     <section id="Welcome" class="center">
       <h1>Welcome Commander</h1>
-      <script>
-        (function(){
-          const PASS = "PvE";
-          if (prompt('Password?','') !== PASS) {
-            location.href = 'https://sites.google.com/view/gamers-hell-community';
-          } else alert('Welcome Commander');
-        })();
-      </script>
     </section>
     <div id="mainContent"></div>
     <section id="Credits" class="center">
@@ -219,7 +149,6 @@ Websites:
 
   <!-- RIGHT SIDEBAR: GW2 Event Timer -->
   <nav class="sidebar right" id="sidebarRight" aria-label="Event timer">
-    <button class="sidebar-toggle right" id="toggleRight" aria-label="Hide Events" type="button" tabindex="0">&times;</button>
     <div class="event-list" id="eventList">
       <div class="spinner" id="eventSpinner"></div>
     </div>
@@ -393,30 +322,6 @@ async function buildContent(parent, obj) {
   });
 }
 
-/* --- Sidebar Toggle Logic --- */
-function updateBodyClass() {
-  const left  = !document.getElementById('sidebarLeft').classList.contains('closed');
-  const right = !document.getElementById('sidebarRight').classList.contains('closed');
-  if (left && right)      document.body.className = '';
-  else if (left && !right)  document.body.className = 'right-closed';
-  else if (!left && right)  document.body.className = 'left-closed';
-  else                      document.body.className = 'both-closed';
-}
-function openSidebar(side) {
-  document.getElementById(side).classList.remove('closed');
-  updateBodyClass();
-}
-function closeSidebar(side) {
-  document.getElementById(side).classList.add('closed');
-  updateBodyClass();
-}
-function setupSidebarToggles() {
-  document.getElementById('toggleLeft').addEventListener('click', () => closeSidebar('sidebarLeft'));
-  document.getElementById('toggleRight').addEventListener('click', () => closeSidebar('sidebarRight'));
-  document.getElementById('openLeft').addEventListener('click', () => openSidebar('sidebarLeft'));
-  document.getElementById('openRight').addEventListener('click', () => openSidebar('sidebarRight'));
-}
-
 /* --- GW2 Event Timer Sidebar Logic --- */
 const EVENTS_JSON_URL = 'https://raw.githubusercontent.com/blish-hud/Community-Module-Pack/master/Events%20Module/ref/events.json';
 function parseOffset(offset) {
@@ -485,7 +390,6 @@ async function refreshAndUpdate() {
 /* --- DOMContentLoaded: Build everything --- */
 document.addEventListener('DOMContentLoaded', async () => {
   generateNav();
-  setupSidebarToggles();
   // Main content
   const main = document.getElementById('mainContent');
   await buildContent(main, data);
@@ -496,7 +400,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.addEventListener('visibilitychange', function() {
     if (!document.hidden) refreshAndUpdate();
   });
-  updateBodyClass();
 });
 </script>
 </body>
