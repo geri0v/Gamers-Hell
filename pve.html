@@ -116,7 +116,9 @@ Websites:
     </iframe>
   </nav>
 <script>
-// ========== DATA ==========
+/* =========================
+   CONFIG: Only edit this!
+   ========================= */
 const data = {
   "Core Tyria": {
     "World Bosses": [
@@ -126,17 +128,44 @@ const data = {
         location: "Bloodtide Coast",
         drops: [
           {
-            id: 9346, // Sack of Booty
+            id: 9346, // Sack of Booty (correct item ID)
             note: "Sack of Booty",
             itemCode: "[&AgGCJAAA]"
           }
         ]
-      }
+      },
+      {
+        name: "Karka Queen",
+        code: "[&BNcGAAA=]", // Lion Point Waypoint (closest)
+        location: "Southsun Cove",
+        drops: [
+          {
+            id: 30698, // Karka Shell
+            note: "Karka Shell",
+            itemCode: "[&AgG9wgAA]" // In-game chat code for Karka Shell
+          }
+        ]
+      },
+            {
+        name: "Karka Queen",
+        code: "[&BNcGAAA=]", // Lion Point Waypoint (closest)
+        location: "Southsun Cove",
+        drops: [
+          {
+            id: 30698, // Karka Shell
+            note: "Karka Shell",
+            itemCode: "[&AgG9wgAA]" // In-game chat code for Karka Shell
+          }
+        ]
+      },
     ]
   }
+  // Add more categories, bosses, and drops as needed!
 };
 
-// ========== COPY TO CLIPBOARD ==========
+/* =========================
+   Copy-to-Clipboard
+   ========================= */
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(
     () => alert(`Copied:\n${text}`),
@@ -144,7 +173,9 @@ function copyToClipboard(text) {
   );
 }
 
-// ========== SIDEBAR ==========
+/* =========================
+   Sidebar Navigation
+   ========================= */
 function buildNav(parent, obj) {
   Object.entries(obj).forEach(([key,val]) => {
     if (Array.isArray(val)) {
@@ -165,16 +196,14 @@ function buildNav(parent, obj) {
 function generateNav() {
   const nav = document.getElementById('sideNav');
   nav.innerHTML = '';
-  const w = document.createElement('a');
-  w.href = '#Welcome'; w.textContent = 'Welcome';
-  nav.appendChild(w);
+  nav.appendChild(Object.assign(document.createElement('a'), { href: '#Welcome', textContent: 'Welcome' }));
   buildNav(nav, data);
-  const c = document.createElement('a');
-  c.href = '#Credits'; c.textContent = 'Credits';
-  nav.appendChild(c);
+  nav.appendChild(Object.assign(document.createElement('a'), { href: '#Credits', textContent: 'Credits' }));
 }
 
-// ========== PRICE FORMATTER ==========
+/* =========================
+   Coin Formatter
+   ========================= */
 function formatCoin(value) {
   value = Number(value) || 0;
   const gold = Math.floor(value / 10000);
@@ -187,64 +216,70 @@ function formatCoin(value) {
   return str.trim();
 }
 
-// ========== ITEM DATA FETCHING ==========
-async function fetchItemData(ids) {
+/* =========================
+   Fetch Item Data (API + Wiki fallback)
+   ========================= */
+async function fetchItemData(id) {
+  // Try GW2 API (primary)
   try {
-    const items = await fetch(`https://api.guildwars2.com/v2/items?ids=${ids.join(',')}`).then(r=>r.json());
-    const prices = await fetch(`https://api.guildwars2.com/v2/commerce/prices?ids=${ids.join(',')}`).then(r=>r.json());
-    const priceMap = {};
-    prices.forEach(p => priceMap[p.id] = p);
-    const result = {};
-    items.forEach(item => {
-      const p = priceMap[item.id] || {};
-      result[item.id] = {
-        name: item.name,
-        icon: item.icon,
-        bound: item.flags && item.flags.includes('AccountBound'),
-        buy: p?.buys?.unit_price || p.highest_buy_unit_price || 0,
-        sell: p?.sells?.unit_price || p.lowest_sell_unit_price || 0
-      };
-    });
-    return result;
+    const [item, price] = await Promise.all([
+      fetch(`https://api.guildwars2.com/v2/items/${id}`).then(r=>r.json()),
+      fetch(`https://api.guildwars2.com/v2/commerce/prices/${id}`).then(r=>r.json())
+    ]);
+    return {
+      name: item.name,
+      icon: item.icon,
+      itemCode: item.chat_link || "",
+      bound: item.flags && item.flags.includes('AccountBound'),
+      buy: price?.buys?.unit_price || price.highest_buy_unit_price || 0,
+      sell: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
+    };
   } catch(e) {
-    const result = {};
-    await Promise.all(ids.map(async id => {
-      try {
-        const url = `https://wiki.guildwars2.com/api.php?action=askargs&format=json&parameters=[[Has game id::${id}]]|?Has_icon|?Has_name`;
-        const data = await fetch(url, {mode:'cors'}).then(r=>r.json());
-        const pages = data.query.results;
-        const page = Object.values(pages)[0] || {};
-        result[id] = {
-          name: page.printouts?.Has_name?.[0] || `Item ${id}`,
-          icon: page.printouts?.Has_icon?.[0] || '',
-          bound: false,
-          buy: 0,
-          sell: 0
-        };
-      } catch(e2) {
-        result[id] = { name: `Item ${id}`, icon: '', bound: false, buy: 0, sell: 0 };
-      }
-    }));
-    return result;
+    // Fallback: GW2 Wiki (name, icon, chat code only)
+    try {
+      const url = `https://wiki.guildwars2.com/api.php?action=askargs&format=json&parameters=[[Has game id::${id}]]|?Has_icon|?Has_name|?Has_chat_link`;
+      const data = await fetch(url, {mode:'cors'}).then(r=>r.json());
+      const pages = data.query.results;
+      const page = Object.values(pages)[0] || {};
+      return {
+        name: page.printouts?.Has_name?.[0] || `Item ${id}`,
+        icon: page.printouts?.Has_icon?.[0] || '',
+        itemCode: page.printouts?.Has_chat_link?.[0] || "",
+        bound: false,
+        buy: 0,
+        sell: 0
+      };
+    } catch(e2) {
+      return { name: `Item ${id}`, icon: '', itemCode: "", bound: false, buy: 0, sell: 0 };
+    }
   }
 }
 
-// ========== MAIN CONTENT ==========
-function buildContent(parent, obj, info) {
-  Object.entries(obj).forEach(([key,val]) => {
-    if (Array.isArray(val)) {
+/* =========================
+   Main Content Builder
+   ========================= */
+async function buildContent(parent, obj) {
+  for (const [cat, groups] of Object.entries(obj)) {
+    for (const [group, bosses] of Object.entries(groups)) {
       const section = document.createElement('section');
-      section.id = key.replace(/\s+/g,'');
-      section.innerHTML = `<h2>${key}</h2>`;
-      val.forEach((boss,i) => {
+      section.id = group.replace(/\s+/g,'');
+      section.innerHTML = `<h2>${group}</h2>`;
+      for (let i = 0; i < bosses.length; i++) {
+        const boss = bosses[i];
+        // Only show the most valuable drop (highest sell price)
+        let bestDrop = null, bestVal = -1;
+        for (const drop of boss.drops) {
+          const dropData = await fetchItemData(drop.id);
+          if ((dropData.sell || 0) > bestVal) {
+            bestDrop = { ...drop, ...dropData };
+            bestVal = dropData.sell || 0;
+          }
+        }
         // Compose copy string
-        const dropStrings = boss.drops.map(drop => {
-          const d = info[drop.id] || {};
-          const buy = d.buy || 0;
-          const sell = d.sell || 0;
-          return `${drop.note || d.name || 'Unknown'} ${drop.itemCode ? drop.itemCode : ''} (Buy: ${formatCoin(buy)}, Sell: ${formatCoin(sell)})`;
-        }).join(' | ');
-        const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${dropStrings}`;
+        const dropString = bestDrop
+          ? `${bestDrop.note || bestDrop.name} ${bestDrop.itemCode || ''} (Buy: ${formatCoin(bestDrop.buy)}, Sell: ${formatCoin(bestDrop.sell)})`
+          : "No drop data";
+        const copyText = `${boss.name} | ${boss.code} | ${boss.location} | ${dropString}`;
         // Teleport row
         const wrap = document.createElement('div');
         wrap.className = 'textbox-container';
@@ -260,49 +295,36 @@ function buildContent(parent, obj, info) {
         wrap.appendChild(inp);
         wrap.appendChild(btn);
         section.appendChild(wrap);
-        // Drops
-        const dropsDiv = document.createElement('div');
-        dropsDiv.className = 'drops-container';
-        boss.drops.forEach(drop => {
-          const d = info[drop.id] || {};
-          const buy = d.buy || 0;
-          const sell = d.sell || 0;
+        // Drop details
+        if (bestDrop) {
+          const dropsDiv = document.createElement('div');
+          dropsDiv.className = 'drops-container';
           const div = document.createElement('div');
           div.className = 'item-drop';
           div.innerHTML = `
-            <img src="${d.icon||''}" alt="${d.name||drop.id}">
-            <span>${drop.note || d.name || 'Unknown Item'}</span>
-            <span class="item-code">${drop.itemCode || ''}</span>
-            <small>Buy: ${formatCoin(buy)} | Sell: ${formatCoin(sell)}</small>
-            <small>Account Bound: ${d.bound? 'Yes':'No'}</small>
+            <img src="${bestDrop.icon||''}" alt="${bestDrop.name||''}">
+            <span>${bestDrop.note || bestDrop.name || ''}</span>
+            <span class="item-code">${bestDrop.itemCode||''}</span>
+            <small>Buy: ${formatCoin(bestDrop.buy)} | Sell: ${formatCoin(bestDrop.sell)}</small>
+            <small>Account Bound: ${bestDrop.bound? 'Yes':'No'}</small>
           `;
           dropsDiv.appendChild(div);
-        });
-        section.appendChild(dropsDiv);
-      });
+          section.appendChild(dropsDiv);
+        }
+      }
       parent.appendChild(section);
-    } else {
-      buildContent(parent,val,info);
     }
-  });
+  }
 }
 
-// ========== INIT ==========
+/* =========================
+   INIT
+   ========================= */
 document.addEventListener('DOMContentLoaded', async () => {
   generateNav();
-  // Collect unique drop IDs
-  const allIds = [];
-  (function collect(o){
-    Object.values(o).forEach(v => {
-      if (Array.isArray(v))
-        v.forEach(b=> b.drops?.forEach(drop=> allIds.push(drop.id)));
-      else collect(v);
-    });
-  })(data);
-  const info = await fetchItemData([...new Set(allIds)]);
   const main = document.getElementById('mainContent');
   main.innerHTML = '';
-  buildContent(main, data, info);
+  await buildContent(main, data);
 });
 </script>
 </body>
