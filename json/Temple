@@ -1,0 +1,109 @@
+[
+  {
+    "name": "Temple of Balthazar",
+    "map": "Straits of Devastation",
+    "chatlink": "[&BNIEAAA=]",
+    "loot": [
+      {
+        "name": "Balthazar's Band",
+        "item_id": 24583,
+        "sell_price": 0
+      }
+    ]
+  },
+  {
+    "name": "Temple of Lyssa",
+    "map": "Malchor's Leap",
+    "chatlink": "[&BKsCAAA=]",
+    "loot": [
+      {
+        "name": "Gift of Lyssa",
+        "item_id": 19976,
+        "sell_price": 0
+      },
+      {
+        "name": "Mystic Coin",
+        "item_id": 19976,
+        "sell_price": 0
+      },
+      {
+        "name": "Lyssa's Regalia",
+        "item_id": 30699,
+        "sell_price": 0
+      },
+      {
+        "name": "Unknown Item",
+        "item_id": null,
+        "sell_price": 0,
+        "note": "[&AgGEtQAA]"
+      }
+    ]
+  },
+  {
+    "name": "Temple of Dwayna",
+    "map": "Malchor's Leap",
+    "chatlink": "[&BLICAAA=]",
+    "loot": [
+      {
+        "name": "Dwayna's Tear",
+        "item_id": 24582,
+        "sell_price": 0
+      },
+      {
+        "name": "Unknown Item",
+        "item_id": null,
+        "sell_price": 0,
+        "note": "[&AgE3mgAA]"
+      }
+    ]
+  },
+  {
+    "name": "Temple of Melandru",
+    "map": "Cursed Shore",
+    "chatlink": "[&BBsDAAA=]",
+    "loot": [
+      {
+        "name": "Melandru’s Bloom",
+        "item_id": 24581,
+        "sell_price": 0
+      },
+      {
+        "name": "Unknown Item",
+        "item_id": null,
+        "sell_price": 0,
+        "note": "[&Cm0SAAA=]"
+      },
+      {
+        "name": "Unknown Item",
+        "item_id": null,
+        "sell_price": 0,
+        "note": "[&AgE0mgAA]"
+      }
+    ]
+  },
+  {
+    "name": "Temple of Grenth",
+    "map": "Cursed Shore",
+    "chatlink": "[&BCIDAAA=]",
+    "loot": [
+      {
+        "name": "Signet of Grenth",
+        "item_id": 24580,
+        "sell_price": 0
+      }
+    ]
+  },
+  {
+    "name": "Gates of Arah",
+    "map": "Cursed Shore",
+    "chatlink": "[&BCADAAA=]",
+    "loot": [
+      {
+        "name": "Unknown Item",
+        "item_id": null,
+        "sell_price": 0,
+        "note": "[&AgEvmgAA]"
+      }
+    ]
+  }
+]
