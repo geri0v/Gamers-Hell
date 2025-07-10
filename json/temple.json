@@ -1,52 +1,54 @@
-"Temples of Orr": [
-  {
-    "name": "Temple of Balthazar",
-    "map": "Straits of Devastation",
-    "code": "[&BNIEAAA=]",
-    "loot": [
-      { "id": 39477, "name": "Balthazar's Band" }
-    ]
-  },
-  {
-    "name": "Temple of Lyssa",
-    "map": "Malchor's Leap",
-    "code": "[&BKsCAAA=]",
-    "loot": [
-      { "id": 46468, "name": "Gift of Lyssa" }
-    ]
-  },
-  {
-    "name": "Temple of Dwayna",
-    "map": "Malchor's Leap",
-    "code": "[&BLICAAA=]",
-    "loot": [
-      { "id": 39479, "name": "Gift of Dwayna" }
-    ]
-  },
-  {
-    "name": "Temple of Melandru",
-    "map": "Cursed Shore",
-    "code": "[&BBsDAAA=]",
-    "loot": [
-      { "name": "Melandru’s Bloom" },
-      { "id": 18, "name": "Gift of Nature" },
-      { "id": 39476, "name": "Gift of Melandru" }
-    ]
-  },
-  {
-    "name": "Temple of Grenth",
-    "map": "Cursed Shore",
-    "code": "[&BCIDAAA=]",
-    "loot": [
-      { "id": 39483, "name": "Signet of Grenth" }
-    ]
-  },
-  {
-    "name": "Gates of Arah",
-    "map": "Cursed Shore",
-    "code": "[&BCADAAA=]",
-    "loot": [
-      { "id": 39471, "name": "Gift of Arah" }
-    ]
-  }
-]
+{
+  "Temples of Orr": [
+    {
+      "name": "Temple of Balthazar",
+      "map": "Straits of Devastation",
+      "code": "[&BNIEAAA=]",
+      "loot": [
+        { "id": 39477, "name": "Balthazar's Band" }
+      ]
+    },
+    {
+      "name": "Temple of Lyssa",
+      "map": "Malchor's Leap",
+      "code": "[&BKsCAAA=]",
+      "loot": [
+        { "id": 46468, "name": "Gift of Lyssa" }
+      ]
+    },
+    {
+      "name": "Temple of Dwayna",
+      "map": "Malchor's Leap",
+      "code": "[&BLICAAA=]",
+      "loot": [
+        { "id": 39479, "name": "Gift of Dwayna" }
+      ]
+    },
+    {
+      "name": "Temple of Melandru",
+      "map": "Cursed Shore",
+      "code": "[&BBsDAAA=]",
+      "loot": [
+        { "name": "Melandru's Bloom" },
+        { "id": 18, "name": "Gift of Nature" },
+        { "id": 39476, "name": "Gift of Melandru" }
+      ]
+    },
+    {
+      "name": "Temple of Grenth",
+      "map": "Cursed Shore",
+      "code": "[&BCIDAAA=]",
+      "loot": [
+        { "id": 39483, "name": "Signet of Grenth" }
+      ]
+    },
+    {
+      "name": "Gates of Arah",
+      "map": "Cursed Shore",
+      "code": "[&BCADAAA=]",
+      "loot": [
+        { "id": 39471, "name": "Gift of Arah" }
+      ]
+    }
+  ]
+}
