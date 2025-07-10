@@ -52,33 +52,36 @@
     }
     body {
       display: grid;
-      grid-template-columns: 320px 1fr 320px;
-      grid-template-areas: "navleft main navright";
+      grid-template-columns: 1fr 320px;
+      grid-template-areas: "main navright";
       min-height: 100vh;
       transition: background 0.3s, color 0.3s;
       overflow-x: hidden;
     }
-    nav.sidebar {
+    /* Removed .sidebar.left and related CSS */
+    nav.sidebar.right {
+      grid-area: navright;
       position: fixed;
       top: 0;
+      right: 0;
       width: 320px;
       height: 100vh;
       background: var(--sidebar-bg);
       color: var(--sidebar-fg);
-      box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+      box-shadow: -2px 0 8px rgba(0,0,0,0.2);
       z-index: 1000;
       display: flex;
       flex-direction: column;
       transition: background 0.3s, color 0.3s, transform var(--transition);
       will-change: transform;
+      border-left:  1px solid #111;
     }
-    nav.sidebar.left  { left: 0; border-right: 1px solid #111; }
-    nav.sidebar.right { right: 0; border-left:  1px solid #111; }
-    nav.sidebar.closed.left  { transform: translateX(-105%); }
     nav.sidebar.closed.right { transform: translateX(105%); }
-    button.sidebar-toggle-btn {
+    button.sidebar-toggle-btn.right {
       position: absolute;
       top: 12px;
+      left: auto;
+      right: 0;
       width: var(--btn-hit-area);
       height: var(--btn-hit-area);
       background: var(--accent);
@@ -94,11 +97,6 @@
       transition: background 0.2s;
       z-index: 2001;
       outline-offset: 2px;
-    }
-    button.sidebar-toggle-btn.left { right: -22px; }
-    button .sidebar-toggle-btn.right {
-     left: auto;
-     right: 0;
     }
     button.sidebar-toggle-btn:focus { outline: 3px solid #f1c40f; }
     button.sidebar-toggle-btn:hover { background: #666; }
@@ -117,55 +115,7 @@
     h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.2em; margin-top: 1.5em; }
     textarea { width: 100%; }
     footer { text-align: center; color: #888; margin-top: 30px; }
-    .sidebar-nav {
-      margin-top: 60px;
-      overflow-y: auto;
-      flex-grow: 1;
-    }
-    .sidebar-nav a {
-      display: block;
-      padding: 8px 16px;
-      font-size: 16px;
-      text-decoration: none;
-      color: inherit;
-      border-radius: 4px;
-      transition: background 0.2s;
-    }
-    .sidebar-nav a:focus-visible {
-      outline: 3px solid #f1c40f;
-      background: #222;
-      color: #fff;
-    }
-    .sidebar-nav a:hover {
-      color: #f1f1f1;
-      background: #222;
-    }
-    .sidebar-nav details {
-      padding: 4px 16px;
-      color: #818181;
-      cursor: pointer;
-    }
-    .sidebar-nav summary {
-      list-style: none;
-      font-size: 16px;
-      user-select: none;
-    }
-    .sidebar-nav summary::-webkit-details-marker {
-      display: none;
-    }
-    .sidebar-nav summary::before {
-      content: "▸";
-      display: inline-block;
-      width: 1em;
-      transition: transform 0.2s;
-    }
-    .sidebar-nav details[open] summary::before {
-      content: "▾";
-    }
-    .sidebar-nav details a {
-      padding-left: 32px;
-      font-size: 15px;
-    }
+    /* .sidebar-nav and related CSS removed */
     .cat-heading {
       font-size: 1.6em;
       margin: 1.5em 0 0.5em 0;
@@ -421,7 +371,7 @@
     #shortcutHelp .close-btn:focus-visible { outline: 3px solid #f1c40f; }
     @media (max-width: 1000px) {
       body {
-        grid-template-columns: 0 1fr 0 !important;
+        grid-template-columns: 1fr 0 !important;
       }
       nav.sidebar {
         width: 100vw;
@@ -432,14 +382,12 @@
         height: auto;
         box-shadow: none;
       }
-      nav.sidebar.left, nav.sidebar.right {
+      nav.sidebar.right {
         border: none;
       }
       main.main {
         padding: 10px;
       }
-      button.sidebar-toggle-btn.left { right: 8px; }
-      button.sidebar-toggle-btn.right { left: 8px; }
     }
     @media (max-width: 700px) {
       .search-bar-container { flex-direction: column; gap: 6px; }
@@ -448,12 +396,6 @@
   </style>
 </head>
 <body class="theme-original">
-  <a href="#main" class="skip-link">Skip to main content</a>
-  <!-- Left Sidebar -->
-  <nav class="sidebar left" id="sidebarLeft" aria-label="Main menu" role="navigation">
-    <button class="sidebar-toggle-btn left" id="toggleLeft" aria-label="Hide menu" title="Hide menu" aria-expanded="true" aria-controls="sideNav">&laquo;</button>
-    <nav class="sidebar-nav" id="sideNav" tabindex="0"></nav>
-  </nav>
   <!-- Right Sidebar: Event Timer -->
   <nav class="sidebar right" id="sidebarRight" aria-label="Event timer" role="complementary">
     <button class="sidebar-toggle-btn right" id="toggleRight" aria-label="Hide events" title="Hide events" aria-expanded="true" aria-controls="eventList">&raquo;</button>
@@ -477,23 +419,7 @@
       </select>
       <button id="shortcutHelpBtn" title="Keyboard shortcuts" aria-label="Keyboard shortcuts">?</button>
     </div>
-    <section id="Welcome" class="center" tabindex="-1">
-      <h1>Welcome Commander</h1>
-    </section>
     <div id="mainContent" tabindex="0" aria-live="polite" aria-relevant="additions"></div>
-    <section id="Credits" class="center" tabindex="-1" aria-label="Credits section">
-      <h2>Credits</h2>
-      <textarea rows="6" disabled aria-readonly="true" aria-label="Credits and sources">
-Gamers-Hell Community
-Players Vs Events:
-  Blaz, Devilish Rain, Stormmyknight, Beina, Geri V
-
-Websites:
-  https://wiki.guildwars2.com/wiki
-  https://gw2efficiency.com/
-  http://gw2timer.com/
-      </textarea>
-    </section>
     <footer>&copy; 2025 Gamers-Hell Community</footer>
   </main>
   <!-- Toast Notification -->
@@ -507,11 +433,8 @@ Websites:
     <div id="shortcutHelpDesc">
       <table>
         <tbody>
-          <tr><td><b>Ctrl+B</b> / <b>Ctrl+L</b></td><td>Toggle left sidebar</td></tr>
           <tr><td><b>Ctrl+E</b> / <b>Ctrl+R</b></td><td>Toggle right sidebar</td></tr>
           <tr><td><b>/</b> or <b>Ctrl+F</b></td><td>Focus search bar</td></tr>
-          <tr><td><b>Ctrl+1</b></td><td>Jump to Welcome</td></tr>
-          <tr><td><b>Ctrl+2</b></td><td>Jump to Credits</td></tr>
           <tr><td><b>Esc</b></td><td>Close sidebar/help</td></tr>
           <tr><td><b>?</b></td><td>Show this help</td></tr>
         </tbody>
@@ -544,7 +467,7 @@ Websites:
     // ========== Sidebar Show/Hide ==========
     function setSidebar(side, show) {
       const el = document.getElementById(side);
-      const toggleBtn = side === 'sidebarLeft' ? document.getElementById('toggleLeft') : document.getElementById('toggleRight');
+      const toggleBtn = document.getElementById('toggleRight');
       if (show) {
         el.classList.remove('closed');
         toggleBtn.setAttribute('aria-expanded', 'true');
@@ -554,35 +477,29 @@ Websites:
       }
       setTimeout(() => window.dispatchEvent(new Event('resize')), 320);
     }
-    document.getElementById('toggleLeft').addEventListener('click', () => setSidebar('sidebarLeft', false));
     document.getElementById('toggleRight').addEventListener('click', () => setSidebar('sidebarRight', false));
-    function createSidebarShowBtn(side) {
-      const btnId = 'show' + side.charAt(0).toUpperCase() + side.slice(1) + 'Btn';
+    function createSidebarShowBtn() {
+      const btnId = 'showRightBtn';
       if (document.getElementById(btnId)) return;
       const btn = document.createElement('button');
-      btn.className = 'sidebar-toggle-btn ' + side;
-      btn.setAttribute('aria-label', 'Show ' + (side === 'left' ? 'menu' : 'events'));
-      btn.title = 'Show ' + (side === 'left' ? 'menu' : 'events');
-      btn.innerHTML = side === 'left' ? '&raquo;' : '&laquo;';
+      btn.className = 'sidebar-toggle-btn right';
+      btn.setAttribute('aria-label', 'Show events');
+      btn.title = 'Show events';
+      btn.innerHTML = '&laquo;';
       btn.style.top = '12px';
       btn.style.zIndex = 2002;
       btn.style.position = 'fixed';
-      btn.style[side] = '0';
+      btn.style.right = '0';
       btn.id = btnId;
       btn.addEventListener('click', () => {
-        setSidebar('sidebar' + (side.charAt(0).toUpperCase() + side.slice(1)), true);
+        setSidebar('sidebarRight', true);
         btn.remove();
       });
       document.body.appendChild(btn);
     }
-    document.getElementById('sidebarLeft').addEventListener('transitionend', function() {
-      if (this.classList.contains('closed')) {
-        createSidebarShowBtn('left');
-      }
-    });
     document.getElementById('sidebarRight').addEventListener('transitionend', function() {
       if (this.classList.contains('closed')) {
-        createSidebarShowBtn('right');
+        createSidebarShowBtn();
       }
     });
 
@@ -598,11 +515,6 @@ Websites:
     document.getElementById('shortcutHelpBtn').addEventListener('click', showShortcutHelp);
     document.getElementById('closeShortcutHelp').addEventListener('click', hideShortcutHelp);
     document.addEventListener('keydown', function(e) {
-      if (e.ctrlKey && (e.key === 'b' || e.key === 'l')) {
-        e.preventDefault();
-        const left = document.getElementById('sidebarLeft');
-        setSidebar('sidebarLeft', left.classList.contains('closed'));
-      }
       if (e.ctrlKey && (e.key === 'e' || e.key === 'r')) {
         e.preventDefault();
         const right = document.getElementById('sidebarRight');
@@ -612,20 +524,11 @@ Websites:
         e.preventDefault();
         document.getElementById('searchInput').focus();
       }
-      if (e.ctrlKey && e.key === '1') {
-        e.preventDefault();
-        document.getElementById('Welcome').scrollIntoView({behavior:"smooth"});
-      }
-      if (e.ctrlKey && e.key === '2') {
-        e.preventDefault();
-        document.getElementById('Credits').scrollIntoView({behavior:"smooth"});
-      }
       if (e.key === '?') {
         e.preventDefault();
         showShortcutHelp();
       }
       if (e.key === 'Escape') {
-        setSidebar('sidebarLeft', true);
         setSidebar('sidebarRight', true);
         hideShortcutHelp();
       }
@@ -684,62 +587,7 @@ Websites:
       }
     };
 
-    // ========== Sidebar Navigation (sync with main content) ==========
-    function makeId(main, sub, name) {
-      return (
-        main.replace(/\s+/g, '') +
-        '-' +
-        sub.replace(/\s+/g, '') +
-        '-' +
-        name.replace(/\s+/g, '')
-      );
-    }
-
-    function buildNavSidebar(data, filter = "") {
-      const nav = document.getElementById('sideNav');
-      nav.innerHTML = '';
-      Object.entries(data).forEach(([main, subs]) => {
-        const mainDetails = document.createElement('details');
-        mainDetails.open = true;
-        const mainSummary = document.createElement('summary');
-        mainSummary.textContent = main;
-        mainDetails.appendChild(mainSummary);
-
-        Object.entries(subs).forEach(([sub, bosses]) => {
-          const subDetails = document.createElement('details');
-          subDetails.open = true;
-          const subSummary = document.createElement('summary');
-          subSummary.textContent = sub;
-          subDetails.appendChild(subSummary);
-
-          bosses.forEach(boss => {
-            if (filter && !matchBoss(boss, filter)) return;
-            const a = document.createElement('a');
-            a.href = `#${makeId(main, sub, boss.name)}`;
-            a.textContent = boss.name;
-            a.tabIndex = 0;
-            a.addEventListener('click', e => {
-              e.preventDefault();
-              const el = document.getElementById(makeId(main, sub, boss.name));
-              if (el) {
-                el.scrollIntoView({behavior:"smooth", block:"start"});
-                el.focus && el.focus();
-              }
-            });
-            subDetails.appendChild(a);
-          });
-
-          if (subDetails.childElementCount > 1) mainDetails.appendChild(subDetails);
-        });
-
-        nav.appendChild(mainDetails);
-      });
-      // Add Welcome/Credits
-      nav.appendChild(Object.assign(document.createElement('a'), { href: '#Welcome', textContent: 'Welcome' }));
-      nav.appendChild(Object.assign(document.createElement('a'), { href: '#Credits', textContent: 'Credits' }));
-    }
-
-    // ========== Main Content (sync with sidebar, async for items) ==========
+    // ========== Main Content (async for items) ==========
     const itemCache = {};
     function matchBoss(boss, filter) {
       filter = filter.toLowerCase();
@@ -776,6 +624,15 @@ Websites:
       if (gold || silver) str += silver + 's ';
       str += copper + 'c';
       return str.trim();
+    }
+    function makeId(main, sub, name) {
+      return (
+        main.replace(/\s+/g, '') +
+        '-' +
+        sub.replace(/\s+/g, '') +
+        '-' +
+        name.replace(/\s+/g, '')
+      );
     }
     async function buildMainContent(data, filter = "") {
       const parent = document.getElementById('mainContent');
@@ -976,7 +833,6 @@ Websites:
     // ========== Search: Filters both bosses and events ==========
     document.getElementById('searchInput').addEventListener('input', async function() {
       const filter = this.value.trim();
-      buildNavSidebar(data, filter);
       await buildMainContent(data, filter);
       updateEvents(filter);
     });
@@ -991,7 +847,6 @@ Websites:
 
     // ========== DOMContentLoaded ==========
     document.addEventListener('DOMContentLoaded', async () => {
-      buildNavSidebar(data);
       await buildMainContent(data);
       populateTimezoneSelect();
       await fetchEvents();
