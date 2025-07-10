@@ -1,109 +1,69 @@
-[
-  {
-    "name": "Temple of Balthazar",
-    "map": "Straits of Devastation",
-    "chatlink": "[&BNIEAAA=]",
-    "loot": [
+{
+  "Core Tyria": {
+    "World Bosses": [
       {
-        "name": "Balthazar's Band",
-        "item_id": 24583,
-        "sell_price": 0
+        "name": "Taidha Covington",
+        "code": "[&BKgBAAA=]",
+        "location": "Bloodtide Coast",
+        "drops": [
+          { "id": 46733, "note": "Guaranteed" },
+          { "id": 19357, "note": "Chance" },
+          { "id": 19361, "note": "Chance" }
+        ]
       }
-    ]
-  },
-  {
-    "name": "Temple of Lyssa",
-    "map": "Malchor's Leap",
-    "chatlink": "[&BKsCAAA=]",
-    "loot": [
+      // Add other world bosses here as needed
+    ],
+    "Temples of Orr": [
       {
-        "name": "Gift of Lyssa",
-        "item_id": 19976,
-        "sell_price": 0
+        "name": "Temple of Balthazar",
+        "map": "Straits of Devastation",
+        "code": "[&BNIEAAA=]",
+        "loot": [
+          { "name": "Balthazar's Band" }
+        ]
       },
       {
-        "name": "Mystic Coin",
-        "item_id": 19976,
-        "sell_price": 0
+        "name": "Temple of Lyssa",
+        "map": "Malchor's Leap",
+        "code": "[&BKsCAAA=]",
+        "loot": [
+          { "id": "AgGEtQAA" }
+        ]
       },
       {
-        "name": "Lyssa's Regalia",
-        "item_id": 30699,
-        "sell_price": 0
+        "name": "Temple of Dwayna",
+        "map": "Malchor's Leap",
+        "code": "[&BLICAAA=]",
+        "loot": [
+          { "id": "AgE3mgAA" }
+        ]
       },
       {
-        "name": "Unknown Item",
-        "item_id": null,
-        "sell_price": 0,
-        "note": "[&AgGEtQAA]"
-      }
-    ]
-  },
-  {
-    "name": "Temple of Dwayna",
-    "map": "Malchor's Leap",
-    "chatlink": "[&BLICAAA=]",
-    "loot": [
-      {
-        "name": "Dwayna's Tear",
-        "item_id": 24582,
-        "sell_price": 0
+        "name": "Temple of Melandru",
+        "map": "Cursed Shore",
+        "code": "[&BBsDAAA=]",
+        "loot": [
+          { "name": "Melandru’s Bloom" },
+          { "code": "[&Cm0SAAA=]" },
+          { "id": "AgE0mgAA" }
+        ]
       },
       {
-        "name": "Unknown Item",
-        "item_id": null,
-        "sell_price": 0,
-        "note": "[&AgE3mgAA]"
-      }
-    ]
-  },
-  {
-    "name": "Temple of Melandru",
-    "map": "Cursed Shore",
-    "chatlink": "[&BBsDAAA=]",
-    "loot": [
-      {
-        "name": "Melandru’s Bloom",
-        "item_id": 24581,
-        "sell_price": 0
+        "name": "Temple of Grenth",
+        "map": "Cursed Shore",
+        "code": "[&BCIDAAA=]",
+        "loot": [
+          { "name": "Signet of Grenth" }
+        ]
       },
       {
-        "name": "Unknown Item",
-        "item_id": null,
-        "sell_price": 0,
-        "note": "[&Cm0SAAA=]"
-      },
-      {
-        "name": "Unknown Item",
-        "item_id": null,
-        "sell_price": 0,
-        "note": "[&AgE0mgAA]"
-      }
-    ]
-  },
-  {
-    "name": "Temple of Grenth",
-    "map": "Cursed Shore",
-    "chatlink": "[&BCIDAAA=]",
-    "loot": [
-      {
-        "name": "Signet of Grenth",
-        "item_id": 24580,
-        "sell_price": 0
-      }
-    ]
-  },
-  {
-    "name": "Gates of Arah",
-    "map": "Cursed Shore",
-    "chatlink": "[&BCADAAA=]",
-    "loot": [
-      {
-        "name": "Unknown Item",
-        "item_id": null,
-        "sell_price": 0,
-        "note": "[&AgEvmgAA]"
+        "name": "Gates of Arah",
+        "map": "Cursed Shore",
+        "code": "[&BCADAAA=]",
+        "loot": [
+          { "id": "AgEvmgAA" }
+        ]
       }
     ]
   }
-]
+}
