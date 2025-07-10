@@ -1,69 +1,52 @@
-{
-  "Core Tyria": {
-    "World Bosses": [
-      {
-        "name": "Taidha Covington",
-        "code": "[&BKgBAAA=]",
-        "location": "Bloodtide Coast",
-        "drops": [
-          { "id": 46733, "note": "Guaranteed" },
-          { "id": 19357, "note": "Chance" },
-          { "id": 19361, "note": "Chance" }
-        ]
-      }
-      // Add other world bosses here as needed
-    ],
-    "Temples of Orr": [
-      {
-        "name": "Temple of Balthazar",
-        "map": "Straits of Devastation",
-        "code": "[&BNIEAAA=]",
-        "loot": [
-          { "name": "Balthazar's Band" }
-        ]
-      },
-      {
-        "name": "Temple of Lyssa",
-        "map": "Malchor's Leap",
-        "code": "[&BKsCAAA=]",
-        "loot": [
-          { "id": "AgGEtQAA" }
-        ]
-      },
-      {
-        "name": "Temple of Dwayna",
-        "map": "Malchor's Leap",
-        "code": "[&BLICAAA=]",
-        "loot": [
-          { "id": "AgE3mgAA" }
-        ]
-      },
-      {
-        "name": "Temple of Melandru",
-        "map": "Cursed Shore",
-        "code": "[&BBsDAAA=]",
-        "loot": [
-          { "name": "Melandru’s Bloom" },
-          { "code": "[&Cm0SAAA=]" },
-          { "id": "AgE0mgAA" }
-        ]
-      },
-      {
-        "name": "Temple of Grenth",
-        "map": "Cursed Shore",
-        "code": "[&BCIDAAA=]",
-        "loot": [
-          { "name": "Signet of Grenth" }
-        ]
-      },
-      {
-        "name": "Gates of Arah",
-        "map": "Cursed Shore",
-        "code": "[&BCADAAA=]",
-        "loot": [
-          { "id": "AgEvmgAA" }
-        ]
-      }
+"Temples of Orr": [
+  {
+    "name": "Temple of Balthazar",
+    "map": "Straits of Devastation",
+    "code": "[&BNIEAAA=]",
+    "loot": [
+      { "id": 39477, "name": "Balthazar's Band" }
+    ]
+  },
+  {
+    "name": "Temple of Lyssa",
+    "map": "Malchor's Leap",
+    "code": "[&BKsCAAA=]",
+    "loot": [
+      { "id": 46468, "name": "Gift of Lyssa" }
+    ]
+  },
+  {
+    "name": "Temple of Dwayna",
+    "map": "Malchor's Leap",
+    "code": "[&BLICAAA=]",
+    "loot": [
+      { "id": 39479, "name": "Gift of Dwayna" }
+    ]
+  },
+  {
+    "name": "Temple of Melandru",
+    "map": "Cursed Shore",
+    "code": "[&BBsDAAA=]",
+    "loot": [
+      { "name": "Melandru’s Bloom" },
+      { "id": 18, "name": "Gift of Nature" },
+      { "id": 39476, "name": "Gift of Melandru" }
+    ]
+  },
+  {
+    "name": "Temple of Grenth",
+    "map": "Cursed Shore",
+    "code": "[&BCIDAAA=]",
+    "loot": [
+      { "id": 39483, "name": "Signet of Grenth" }
+    ]
+  },
+  {
+    "name": "Gates of Arah",
+    "map": "Cursed Shore",
+    "code": "[&BCADAAA=]",
+    "loot": [
+      { "id": 39471, "name": "Gift of Arah" }
     ]
   }
-}
+]
