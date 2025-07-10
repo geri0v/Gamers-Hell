@@ -3,212 +3,203 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gamers-Hell Command - Unified (Top Bars Swapped)</title>
+  <title>Gamers-Hell Command - Unified</title>
   <meta name="theme-color" content="#2b4765" />
   <style>
     :root {
       --main-bg: #f8fcff;
       --main-fg: #222;
+      --sidebar-bg: #222;
+      --sidebar-fg: #fff;
       --accent: #2b4765;
-      --topbar-bg: #222;
-      --topbar-fg: #fff;
       --event-upcoming-bg: #29334a;
       --event-upcoming-fg: #fff;
-      --toast-bg: #222c;
-      --toast-fg: #fff;
       --copy-btn-bg: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
       --copy-btn-hover-bg: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
+      --toast-bg: #222c;
+      --toast-fg: #fff;
       --transition: 0.3s cubic-bezier(.4,2,.6,1);
+      --btn-hit-area: 44px;
     }
-    body {
-      margin: 0;
+    body.theme-original {}
+    body.theme-dark {
+      --main-bg: #1b232b;
+      --main-fg: #eee;
+      --sidebar-bg: #11161b;
+      --sidebar-fg: #fff;
+      --accent: #3c6e8d;
+      --event-upcoming-bg: #2b4765;
+      --event-upcoming-fg: #fff;
+      --toast-bg: #111c;
+    }
+    body.theme-light {
+      --main-bg: #fff;
+      --main-fg: #222;
+      --sidebar-bg: #f0f0f0;
+      --sidebar-fg: #222;
+      --accent: #2b4765;
+      --event-upcoming-bg: #e0e8f6;
+      --event-upcoming-fg: #222;
+      --toast-bg: #fff8;
+      --toast-fg: #222;
+    }
+    html, body {
+      margin: 0; padding: 0; height: 100vh;
       font-family: Arial, sans-serif;
       background: var(--main-bg);
       color: var(--main-fg);
+      scroll-behavior: smooth;
+    }
+    body {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      grid-template-areas: "main navright";
       min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
     }
-    .topbar {
-      width: 100%;
-      background: var(--topbar-bg);
-      color: var(--topbar-fg);
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      box-sizing: border-box;
-      min-height: 52px;
-      z-index: 1000;
-    }
-    .topbar.timerbar {
-      position: sticky;
+    /* Removed .sidebar.left and related CSS */
+    nav.sidebar.right {
+      grid-area: navright;
+      position: fixed;
       top: 0;
-      border-bottom: 1px solid #111;
-      background: #2b4765;
-      color: #fff;
-      min-height: 48px;
-      flex-wrap: wrap;
-    }
-    .topbar.menu {
-      position: sticky;
-      top: 48px;
-      border-bottom: 1px solid #111;
-      background: var(--topbar-bg);
-      color: var(--topbar-fg);
-      min-height: 52px;
-    }
-    .topbar .event-timer {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      width: 100%;
-      padding: 6px 0;
-    }
-    .topbar .event-list {
-      display: flex;
-      gap: 18px;
-      overflow-x: auto;
-      flex: 1;
-    }
-    .topbar .event-row {
-      background: #29334a;
-      color: #fff;
-      border-radius: 4px;
-      padding: 6px 14px;
+      right: 0;
+      width: 320px;
+      height: 100vh;
+      background: var(--sidebar-bg);
+      color: var(--sidebar-fg);
+      box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+      z-index: 1000;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      min-width: 160px;
-      margin-right: 8px;
+      transition: background 0.3s, color 0.3s, transform var(--transition);
+      will-change: transform;
+      border-left:  1px solid #111;
     }
-    .topbar .event-row.upcoming {
-      background: #f1c40f;
-      color: #222;
+    nav.sidebar.closed.right { transform: translateX(105%); }
+    button.sidebar-toggle-btn.right {
+      position: absolute;
+      top: 12px;
+      left: auto;
+      right: 0;
+      width: var(--btn-hit-area);
+      height: var(--btn-hit-area);
+      background: var(--accent);
+      color: var(--sidebar-fg);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      transition: background 0.2s;
+      z-index: 2001;
+      outline-offset: 2px;
+    }
+    button.sidebar-toggle-btn:focus { outline: 3px solid #f1c40f; }
+    button.sidebar-toggle-btn:hover { background: #666; }
+    main.main {
+      grid-area: main;
+      overflow-y: auto;
+      padding: 20px;
+      box-sizing: border-box;
+      min-height: 100vh;
+      background: var(--main-bg);
+      color: var(--main-fg);
+      outline-offset: 4px;
+    }
+    .center { text-align: center; margin-bottom: 1em; }
+    h1, h2, h3 { margin: 0.5em 0; }
+    h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.2em; margin-top: 1.5em; }
+    textarea { width: 100%; }
+    footer { text-align: center; color: #888; margin-top: 30px; }
+    /* .sidebar-nav and related CSS removed */
+    .cat-heading {
+      font-size: 1.6em;
+      margin: 1.5em 0 0.5em 0;
+      color: var(--accent);
+    }
+    .event-list {
+      margin-top: 10px;
+      padding: 16px;
+      max-height: calc(100vh - 90px);
+      overflow-y: auto;
+      font-size: 1rem;
+    }
+    .event-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #333;
+    }
+    .event-row.upcoming {
+      background: var(--event-upcoming-bg);
+      color: var(--event-upcoming-fg);
       font-weight: bold;
+      border-radius: 4px;
     }
-    .topbar .event-name {
-      font-size: 1em;
-      margin-bottom: 2px;
+    .event-name {
+      flex: 2;
     }
-    .topbar .event-time {
-      font-size: 0.92em;
+    .event-time {
+      flex: 1;
+      text-align: right;
       font-family: monospace;
     }
-    .topbar .event-countdown {
+    .event-countdown {
+      display: block;
       font-size: 0.9em;
       color: #f1c40f;
+      text-align: right;
     }
-    .topbar .timezone-select {
-      margin-left: 10px;
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 1em;
-    }
-    .topbar .refresh-btn {
-      margin-left: 10px;
-      font-size: 1.1em;
-      padding: 4px 8px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      background: #f1c40f;
-      color: #222;
-      cursor: pointer;
-    }
-    /* Menu bar dropdowns */
-    .topbar.menu .nav-menu {
+    .search-bar-container {
+      position: sticky;
+      top: 0;
+      z-index: 2001;
+      background: var(--main-bg);
+      padding: 10px 0 5px 0;
+      box-shadow: 0 2px 8px #0002;
       display: flex;
-      gap: 18px;
       align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .search-input {
       flex: 1;
-    }
-    .topbar.menu .dropdown {
-      position: relative;
-    }
-    .topbar.menu .dropdown > button {
-      background: none;
-      border: none;
-      color: inherit;
-      font-size: 1em;
-      padding: 10px 8px;
-      cursor: pointer;
-    }
-    .topbar.menu .dropdown-content {
-      display: none;
-      position: absolute;
-      background: #fff;
-      color: #222;
-      min-width: 220px;
-      box-shadow: 0 8px 24px #0003;
-      z-index: 2000;
-      border-radius: 4px;
-      top: 100%;
-      left: 0;
-      padding: 6px 0;
-    }
-    .topbar.menu .dropdown:hover > .dropdown-content,
-    .topbar.menu .dropdown:focus-within > .dropdown-content {
-      display: block;
-    }
-    .topbar.menu .dropdown-content .dropdown-subject {
-      font-weight: bold;
-      padding: 6px 16px 2px 16px;
-      color: #2b4765;
-      margin-top: 6px;
-    }
-    .topbar.menu .dropdown-content a {
-      display: block;
-      padding: 6px 24px;
-      text-decoration: none;
-      color: inherit;
-      border-radius: 2px;
-      font-size: 1em;
-      transition: background 0.2s;
-    }
-    .topbar.menu .dropdown-content a:hover {
-      background: #e0e8f6;
-      color: #222;
-    }
-    .topbar.menu .search-input {
-      margin-left: 24px;
-      padding: 6px 12px;
+      padding: 8px;
       border-radius: 6px;
       border: 1px solid #ccc;
-      font-size: 1em;
+      font-size: 1rem;
       min-width: 200px;
     }
-    .topbar.menu .theme-switcher {
-      margin-left: 16px;
+    .theme-switcher {
+      margin-left: 8px;
       border-radius: 6px;
       padding: 6px;
-      font-size: 1em;
+      font-size: 1rem;
       min-width: 120px;
     }
-    .topbar.menu .shortcut-help-btn {
-      margin-left: 14px;
+    button#shortcutHelpBtn {
       font-size: 1.2em;
       padding: 4px 12px;
       border-radius: 6px;
       border: 1px solid #ccc;
       background: #f1c40f;
       color: #222;
+      margin-left: 8px;
       cursor: pointer;
       min-width: 36px;
       min-height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    main {
-      max-width: 1200px;
-      margin: 40px auto 0 auto;
-      padding: 24px;
-      box-sizing: border-box;
-      background: var(--main-bg);
-      color: var(--main-fg);
-      min-height: 60vh;
-    }
-    .center { text-align: center; margin-bottom: 1em; }
-    .boss-block {
-      margin-bottom: 20px;
-      background: var(--main-bg);
-      border-radius: 8px;
-      box-shadow: 0 0 8px #d1e6f6;
-      padding: 10px 0;
+    button#shortcutHelpBtn:focus-visible {
+      outline: 3px solid #f1c40f;
+      outline-offset: 2px;
     }
     .textbox-container {
       display: flex;
@@ -232,7 +223,7 @@
       cursor: pointer;
       border-radius: 4px;
       background: var(--copy-btn-bg) no-repeat center/cover;
-      transition: box-shadow 0.2s, background-image 0.2s;
+      transition: box-shadow 0.2s;
       flex-shrink: 0;
     }
     .copy-button:active {
@@ -265,6 +256,29 @@
       color: #555;
       margin-left: 4px;
     }
+    details summary {
+      cursor: pointer;
+      font-weight: bold;
+      background: #eee;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      user-select: none;
+      transition: background 0.2s;
+    }
+    details[open] summary {
+      background: #dde;
+    }
+    details {
+      margin-bottom: 8px;
+    }
+    .boss-block {
+      margin-bottom: 20px;
+      background: var(--main-bg);
+      border-radius: 8px;
+      box-shadow: 0 0 8px #d1e6f6;
+      padding: 10px 0;
+    }
     .drop-type-guaranteed {
       color: #007c1e;
       font-weight: bold;
@@ -290,6 +304,18 @@
         transform: rotate(360deg);
       }
     }
+    #globalError {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #c00;
+      color: #fff;
+      padding: 12px;
+      text-align: center;
+      z-index: 3000;
+      display: none;
+    }
     #toast {
       position: fixed;
       left: 50%;
@@ -311,79 +337,105 @@
       transform: translateX(-50%) scale(1);
       pointer-events: auto;
     }
-    @media (max-width: 900px) {
-      .topbar .nav-menu { flex-wrap: wrap; gap: 10px; }
-      .topbar .event-list { flex-wrap: wrap; }
-      main { padding: 10px; }
+    #shortcutHelp {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--main-bg);
+      color: var(--main-fg);
+      border-radius: 12px;
+      box-shadow: 0 8px 48px #0008;
+      padding: 32px 32px 16px 32px;
+      z-index: 4000;
+      min-width: 280px;
+      max-width: 90vw;
+      font-size: 1.1em;
+    }
+    #shortcutHelp h2 { margin-top: 0; }
+    #shortcutHelp table { width: 100%; border-collapse: collapse; }
+    #shortcutHelp td { padding: 4px 8px; border-bottom: 1px solid #ccc; }
+    #shortcutHelp .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      background: #f1c40f;
+      color: #222;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.2em;
+      padding: 0 8px;
+      cursor: pointer;
+    }
+    #shortcutHelp .close-btn:focus-visible { outline: 3px solid #f1c40f; }
+    @media (max-width: 1000px) {
+      body {
+        grid-template-columns: 1fr 0 !important;
+      }
+      nav.sidebar {
+        width: 100vw;
+        left: 0 !important;
+        right: auto !important;
+        border-radius: 0;
+        position: static;
+        height: auto;
+        box-shadow: none;
+      }
+      nav.sidebar.right {
+        border: none;
+      }
+      main.main {
+        padding: 10px;
+      }
     }
     @media (max-width: 700px) {
-      .topbar.timerbar, .topbar.menu {
-        flex-direction: column;
-        align-items: stretch;
-        min-height: unset;
-        padding: 0 8px;
-      }
-      .topbar .nav-menu { flex-direction: column; gap: 4px; }
-      .topbar .event-list { flex-direction: column; gap: 4px; }
-      main { margin-top: 8px; }
+      .search-bar-container { flex-direction: column; gap: 6px; }
+      #shortcutHelp { padding: 12px 4vw 8px 4vw; }
     }
   </style>
 </head>
-<body>
-  <!-- TIMER BAR (now on top) -->
-  <div class="topbar timerbar" role="complementary" aria-label="Event timer and utilities">
-    <div class="event-timer">
-      <label for="timezoneSelect" style="font-size:0.98em;">Timezone:</label>
-      <select id="timezoneSelect" class="timezone-select" aria-label="Choose timezone"></select>
-      <button id="refreshEventsBtn" class="refresh-btn" title="Refresh events" aria-label="Refresh events">&#x21bb;</button>
-      <div class="event-list" id="eventList" role="list" tabindex="0" aria-live="polite" aria-relevant="additions">
-        <div class="spinner"></div>
-      </div>
+<body class="theme-original">
+  <!-- Right Sidebar: Event Timer -->
+  <nav class="sidebar right" id="sidebarRight" aria-label="Event timer" role="complementary">
+    <button class="sidebar-toggle-btn right" id="toggleRight" aria-label="Hide events" title="Hide events" aria-expanded="true" aria-controls="eventList">&raquo;</button>
+    <div style="padding: 12px;">
+      <label for="timezoneSelect">Timezone:</label>
+      <select id="timezoneSelect" aria-label="Choose timezone"></select>
+      <button id="refreshEventsBtn" title="Refresh events" aria-label="Refresh events" style="margin-left:10px;">&#x21bb;</button>
     </div>
-  </div>
-  <!-- MENU BAR (below timer bar) -->
-  <div class="topbar menu" role="navigation" aria-label="Main menu">
-    <div class="nav-menu" id="navMenu">
-      <!-- Dropdowns will be generated by JS -->
+    <div class="event-list" id="eventList" tabindex="0" aria-live="polite" aria-relevant="additions">
+      <div class="spinner"></div>
     </div>
-    <input type="text" class="search-input" id="searchInput" placeholder="Search bosses, events..." aria-label="Search">
-    <select id="themeSwitcher" class="theme-switcher" aria-label="Theme">
-      <option value="original">Original</option>
-      <option value="dark">Dark</option>
-      <option value="light">Light</option>
-    </select>
-    <button class="shortcut-help-btn" id="shortcutHelpBtn" title="Keyboard shortcuts" aria-label="Keyboard shortcuts">?</button>
-  </div>
-  <main id="main" role="main" tabindex="-1" aria-label="Main content area">
+  </nav>
+  <!-- Main Content -->
+  <main class="main" id="main" role="main" tabindex="-1" aria-label="Main content area">
+    <div class="search-bar-container" role="search">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search bosses, events..." aria-label="Search">
+      <select id="themeSwitcher" class="theme-switcher" aria-label="Theme">
+        <option value="original">Original</option>
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+      </select>
+      <button id="shortcutHelpBtn" title="Keyboard shortcuts" aria-label="Keyboard shortcuts">?</button>
+    </div>
     <div id="mainContent" tabindex="0" aria-live="polite" aria-relevant="additions"></div>
-    <section id="Credits" class="center" tabindex="-1" aria-label="Credits section">
-      <h2>Credits</h2>
-      <textarea rows="6" disabled aria-readonly="true" aria-label="Credits and sources">
-Gamers-Hell Community
-Players Vs Events:
-  Blaz, Devilish Rain, Stormmyknight, Beina, Geri V
-
-Websites:
-  https://wiki.guildwars2.com/wiki
-  https://gw2efficiency.com/
-  http://gw2timer.com/
-      </textarea>
-    </section>
-    <footer style="text-align:center;color:#888;margin-top:30px;">&copy; 2025 Gamers-Hell Community</footer>
+    <footer>&copy; 2025 Gamers-Hell Community</footer>
   </main>
+  <!-- Toast Notification -->
   <div id="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+  <!-- Error Overlay -->
+  <div id="globalError" role="alert" aria-live="assertive" aria-atomic="true"></div>
   <!-- Keyboard Shortcut Help -->
-  <div id="shortcutHelp" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="shortcutHelpTitle" aria-describedby="shortcutHelpDesc" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--main-bg);color:var(--main-fg);border-radius:12px;box-shadow:0 8px 48px #0008;padding:32px 32px 16px 32px;z-index:4000;min-width:280px;max-width:90vw;font-size:1.1em;">
-    <button class="close-btn" id="closeShortcutHelp" aria-label="Close keyboard shortcuts" style="position:absolute;top:8px;right:12px;background:#f1c40f;color:#222;border:none;border-radius:4px;font-size:1.2em;padding:0 8px;cursor:pointer;">&times;</button>
+  <div id="shortcutHelp" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="shortcutHelpTitle" aria-describedby="shortcutHelpDesc">
+    <button class="close-btn" id="closeShortcutHelp" aria-label="Close keyboard shortcuts">&times;</button>
     <h2 id="shortcutHelpTitle">Keyboard Shortcuts</h2>
     <div id="shortcutHelpDesc">
-      <table style="width:100%;border-collapse:collapse;">
+      <table>
         <tbody>
-          <tr><td><b>Ctrl+B</b> / <b>Ctrl+L</b></td><td>Focus navigation menu</td></tr>
-          <tr><td><b>Ctrl+E</b> / <b>Ctrl+R</b></td><td>Focus event timer</td></tr>
+          <tr><td><b>Ctrl+E</b> / <b>Ctrl+R</b></td><td>Toggle right sidebar</td></tr>
           <tr><td><b>/</b> or <b>Ctrl+F</b></td><td>Focus search bar</td></tr>
-          <tr><td><b>Ctrl+2</b></td><td>Jump to Credits</td></tr>
-          <tr><td><b>Esc</b></td><td>Close help</td></tr>
+          <tr><td><b>Esc</b></td><td>Close sidebar/help</td></tr>
           <tr><td><b>?</b></td><td>Show this help</td></tr>
         </tbody>
       </table>
@@ -412,6 +464,45 @@ Websites:
       setTimeout(() => toast.classList.remove('show'), 1800);
     }
 
+    // ========== Sidebar Show/Hide ==========
+    function setSidebar(side, show) {
+      const el = document.getElementById(side);
+      const toggleBtn = document.getElementById('toggleRight');
+      if (show) {
+        el.classList.remove('closed');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        el.classList.add('closed');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 320);
+    }
+    document.getElementById('toggleRight').addEventListener('click', () => setSidebar('sidebarRight', false));
+    function createSidebarShowBtn() {
+      const btnId = 'showRightBtn';
+      if (document.getElementById(btnId)) return;
+      const btn = document.createElement('button');
+      btn.className = 'sidebar-toggle-btn right';
+      btn.setAttribute('aria-label', 'Show events');
+      btn.title = 'Show events';
+      btn.innerHTML = '&laquo;';
+      btn.style.top = '12px';
+      btn.style.zIndex = 2002;
+      btn.style.position = 'fixed';
+      btn.style.right = '0';
+      btn.id = btnId;
+      btn.addEventListener('click', () => {
+        setSidebar('sidebarRight', true);
+        btn.remove();
+      });
+      document.body.appendChild(btn);
+    }
+    document.getElementById('sidebarRight').addEventListener('transitionend', function() {
+      if (this.classList.contains('closed')) {
+        createSidebarShowBtn();
+      }
+    });
+
     // ========== Keyboard Shortcuts ==========
     function showShortcutHelp() {
       const help = document.getElementById('shortcutHelp');
@@ -424,32 +515,26 @@ Websites:
     document.getElementById('shortcutHelpBtn').addEventListener('click', showShortcutHelp);
     document.getElementById('closeShortcutHelp').addEventListener('click', hideShortcutHelp);
     document.addEventListener('keydown', function(e) {
-      if (e.ctrlKey && (e.key === 'b' || e.key === 'l')) {
-        e.preventDefault();
-        document.getElementById('navMenu').focus();
-      }
       if (e.ctrlKey && (e.key === 'e' || e.key === 'r')) {
         e.preventDefault();
-        document.getElementById('eventList').focus();
+        const right = document.getElementById('sidebarRight');
+        setSidebar('sidebarRight', right.classList.contains('closed'));
       }
       if (e.key === '/' || (e.ctrlKey && e.key === 'f')) {
         e.preventDefault();
         document.getElementById('searchInput').focus();
-      }
-      if (e.ctrlKey && e.key === '2') {
-        e.preventDefault();
-        document.getElementById('Credits').scrollIntoView({behavior:"smooth"});
       }
       if (e.key === '?') {
         e.preventDefault();
         showShortcutHelp();
       }
       if (e.key === 'Escape') {
+        setSidebar('sidebarRight', true);
         hideShortcutHelp();
       }
     });
 
-    // ========== Navigation Data ==========
+    // ========== Data Structure ==========
     const data = {
       "Core Tyria": {
         "World Bosses": [
@@ -487,67 +572,22 @@ Websites:
               { id: 31051, note: "Chance" }
             ]
           }
+        ],
+        "Meta Events": [
+          {
+            name: "Tequatl the Sunless",
+            code: "[&BNABAAA=]",
+            location: "Sparkfly Fen",
+            drops: [
+              { id: 46733, note: "Guaranteed" },
+              { id: 46747, note: "Chance" }
+            ]
+          }
         ]
       }
     };
 
-    // ========== Build Main Menu Dropdowns ==========
-    function buildNavMenu(data, filter = "") {
-      const nav = document.getElementById('navMenu');
-      nav.innerHTML = '';
-      Object.entries(data).forEach(([cat, subjects]) => {
-        // Main Category Dropdown
-        const dropdown = document.createElement('div');
-        dropdown.className = 'dropdown';
-        const btn = document.createElement('button');
-        btn.textContent = cat;
-        btn.setAttribute('aria-haspopup', 'true');
-        btn.setAttribute('aria-expanded', 'false');
-        dropdown.appendChild(btn);
-
-        const dropdownContent = document.createElement('div');
-        dropdownContent.className = 'dropdown-content';
-
-        Object.entries(subjects).forEach(([subject, bosses]) => {
-          // Subject as a heading
-          const subjectLabel = document.createElement('div');
-          subjectLabel.className = 'dropdown-subject';
-          subjectLabel.textContent = subject;
-          dropdownContent.appendChild(subjectLabel);
-
-          bosses.forEach(boss => {
-            if (filter && !matchBoss(boss, filter)) return;
-            const a = document.createElement('a');
-            a.href = `#${boss.name.replace(/\s+/g, '')}`;
-            a.textContent = boss.name;
-            a.tabIndex = 0;
-            a.addEventListener('click', e => {
-              e.preventDefault();
-              const el = document.getElementById(a.href.slice(1));
-              if (el) {
-                el.scrollIntoView({behavior:"smooth", block:"start"});
-                el.focus && el.focus();
-              }
-            });
-            dropdownContent.appendChild(a);
-          });
-        });
-        dropdown.appendChild(dropdownContent);
-        nav.appendChild(dropdown);
-      });
-      // Add Credits as a clickable
-      const creditsLink = document.createElement('a');
-      creditsLink.href = "#Credits";
-      creditsLink.textContent = "Credits";
-      creditsLink.tabIndex = 0;
-      creditsLink.addEventListener('click', e => {
-        e.preventDefault();
-        document.getElementById('Credits').scrollIntoView({behavior:"smooth"});
-      });
-      nav.appendChild(creditsLink);
-    }
-
-    // ========== Main Content (robust, filterable, async) ==========
+    // ========== Main Content (async for items) ==========
     const itemCache = {};
     function matchBoss(boss, filter) {
       filter = filter.toLowerCase();
@@ -561,13 +601,13 @@ Websites:
       try {
         const [item, price] = await Promise.all([
           fetch(`https://api.guildwars2.com/v2/items/${id}`).then(r=>r.json()),
-          fetch(`https://api.guildwars2.com/v2/commerce/prices/${id}`).then(r=>r.json())
+          fetch(`https://api.guildwars2.com/v2/commerce/prices/${id}`).then(r=>r.json()).catch(()=>null)
         ]);
         itemCache[id] = {
           name: item.name,
           icon: item.icon,
           desc: item.description || '',
-          value: price?.sells?.unit_price || price.lowest_sell_unit_price || 0
+          value: price?.sells?.unit_price || price?.lowest_sell_unit_price || 0
         };
         return itemCache[id];
       } catch {
@@ -585,17 +625,26 @@ Websites:
       str += copper + 'c';
       return str.trim();
     }
+    function makeId(main, sub, name) {
+      return (
+        main.replace(/\s+/g, '') +
+        '-' +
+        sub.replace(/\s+/g, '') +
+        '-' +
+        name.replace(/\s+/g, '')
+      );
+    }
     async function buildMainContent(data, filter = "") {
       const parent = document.getElementById('mainContent');
       parent.innerHTML = '<div class="spinner"></div>';
       let html = '';
-      for (const [cat, groups] of Object.entries(data)) {
+      for (const [main, groups] of Object.entries(data)) {
         let groupContent = '';
         for (const [group, bosses] of Object.entries(groups)) {
           let bossContent = '';
           for (let boss of bosses) {
             if (filter && !matchBoss(boss, filter)) continue;
-            bossContent += `<div class="boss-block"><h3 id="${boss.name.replace(/\s/g,'')}">${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
+            bossContent += `<div class="boss-block" id="${makeId(main, group, boss.name)}" tabindex="-1"><h3>${boss.name} <small style="font-weight:normal;color:#888;">(${boss.location})</small></h3>`;
             for (const drop of boss.drops) await fetchItemData(drop.id);
             const guaranteedDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'guaranteed');
             const chanceDrops = boss.drops.filter(d => (d.note || '').toLowerCase() === 'chance');
@@ -638,7 +687,7 @@ Websites:
           }
           if (bossContent) groupContent += `<details open><summary><span class="cat-heading">${group}</span></summary>${bossContent}</details>`;
         }
-        if (groupContent) html += `<section><h2>${cat}</h2>${groupContent}</section>`;
+        if (groupContent) html += `<section><h2>${main}</h2>${groupContent}</section>`;
       }
       parent.innerHTML = html || `<div style="padding:20px;color:#aaa;">No bosses/events match your search.</div>`;
       // Attach copy events
@@ -650,7 +699,7 @@ Websites:
       });
     }
 
-    // ========== Event Timer (90 min window) ==========
+    // ========== Event Timer ==========
     const EVENTS_JSON_URL = 'https://raw.githubusercontent.com/blish-hud/Community-Module-Pack/master/Events%20Module/ref/events.json';
     let events = [];
     let timerInterval = null;
@@ -731,6 +780,7 @@ Websites:
         localStorage.setItem('ghc-events-time', Date.now());
         showToast('Events updated!');
       } catch (err) {
+        showError('Failed to load events. Try again later.');
         events = [];
       }
       updateEvents(document.getElementById('searchInput').value);
@@ -753,19 +803,19 @@ Websites:
       if (filter) {
         nextEvents = nextEvents.filter(ev => matchEvent(ev, filter));
       }
-      // Only show events in the next 90 minutes
-      nextEvents = nextEvents.filter(ev => (ev.nextTime - now) / 60000 <= 90 && (ev.nextTime - now) > 0);
       nextEvents.sort((a, b) => a.utcTime - b.utcTime);
+      let nextIdx = nextEvents.findIndex(ev => ev.utcTime > now);
+      if (nextIdx === -1) nextIdx = 0;
       let html = '';
       nextEvents.forEach((event, idx) => {
-        html += `<div class="event-row upcoming" role="listitem">
+        html += `<div class="event-row${idx === nextIdx ? ' upcoming' : ''}" role="listitem">
           <span class="event-name">${event.name}</span>
           <span class="event-time">${event.localTime}
             <span class="event-countdown" data-idx="${idx}"></span>
           </span>
         </div>`;
       });
-      eventList.innerHTML = html || `<div style="padding:20px;color:#aaa;">No events in the next 90 minutes.</div>`;
+      eventList.innerHTML = html || `<div style="padding:20px;color:#aaa;">No events match your search.</div>`;
       if (timerInterval) clearInterval(timerInterval);
       timerInterval = setInterval(() => {
         document.querySelectorAll('.event-countdown').forEach(span => {
@@ -783,14 +833,20 @@ Websites:
     // ========== Search: Filters both bosses and events ==========
     document.getElementById('searchInput').addEventListener('input', async function() {
       const filter = this.value.trim();
-      buildNavMenu(data, filter);
       await buildMainContent(data, filter);
       updateEvents(filter);
     });
 
+    // ========== Error Handling ==========
+    function showError(msg) {
+      const err = document.getElementById('globalError');
+      err.textContent = msg;
+      err.style.display = 'block';
+      setTimeout(() => { err.style.display = 'none'; }, 5000);
+    }
+
     // ========== DOMContentLoaded ==========
     document.addEventListener('DOMContentLoaded', async () => {
-      buildNavMenu(data);
       await buildMainContent(data);
       populateTimezoneSelect();
       await fetchEvents();
