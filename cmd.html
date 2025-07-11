@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Gamers-Hell - Events & Loot</title>
-  <link rel="stylesheet" href="styles.css">
   <style>
     :root {
       --main-bg: #1e2630;
@@ -272,14 +271,6 @@
   </header>
 
   <main aria-label="Main content area" class="main" id="main" role="main" tabindex="-1">
-    <div class="json-selector">
-      <label for="jsonSource">Select Data:</label>
-      <select id="jsonSource">
-        <option value="https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/temple.json">Temples of Orr</option>
-        <!-- Add more options here for additional JSONs -->
-      </select>
-    </div>
-
     <div class="search-bar-container" role="search">
       <input
         aria-label="Search"
@@ -301,7 +292,7 @@
     </div>
 
     <div aria-live="polite" aria-relevant="additions" id="mainContent" tabindex="0">
-      <div id="sections"></div>
+      <div id="allSections"></div>
     </div>
 
     <footer>
@@ -317,6 +308,19 @@
     </div>
   </main>
   <script>
+    // --- JSON sources ---
+    const jsonSources = [
+      {
+        name: "Temples of Orr",
+        url: "https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/temples.json"
+      },
+      {
+        name: "Untimedcore",
+        url: "https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/untimedcore.json"
+      }
+      // Add more sources here as needed
+    ];
+
     // --- Spinner and Empty State ---
     function showSpinner(container) {
       container.innerHTML = '<div class="spinner" aria-label="Loading..."></div>';
@@ -460,118 +464,62 @@
       `;
     }
 
-    // --- Render all sections from JSON (multiple keys) ---
-    async function renderSections(json, searchQuery, sortBy) {
-      const sectionsDiv = document.getElementById('sections');
-      showSpinner(sectionsDiv);
-
-      // Gather all arrays in the JSON (multiple sections)
-      let sections = [];
-      if (Array.isArray(json)) {
-        sections = [{ title: 'Events', events: json }];
-      } else if (typeof json === 'object') {
-        for (const key in json) {
-          if (Array.isArray(json[key])) {
-            sections.push({ title: key, events: json[key] });
-          }
-        }
+    // --- Render all events from all JSONs, grouped by expansion ---
+    async function renderAllByExpansion(allEvents, searchQuery, sortBy) {
+      if (!allEvents.length) {
+        return `<div class="empty-state"><img src="https://i.imgur.com/8z8Q2Hk.png" alt="No events"><div>No events found.</div></div>`;
       }
-      if (!sections.length) {
-        showEmptyState(sectionsDiv, "No events found. Try loading a different file or source!");
-        return;
-      }
+      // Group events by expansion
+      const expansions = {};
+      allEvents.forEach(ev => {
+        const exp = ev.expansion || 'Unknown Expansion';
+        if (!expansions[exp]) expansions[exp] = [];
+        expansions[exp].push(ev);
+      });
 
-      // Collect all item IDs for all sections for TP price/icon lookup
+      // Gather all item IDs for TP lookup
       let allItemIds = [];
-      sections.forEach(section => {
-        section.events.forEach(event => {
-          if (Array.isArray(event.loot)) {
-            event.loot.forEach(item => { if (item.id) allItemIds.push(item.id); });
-          }
-        });
+      allEvents.forEach(event => {
+        if (Array.isArray(event.loot)) {
+          event.loot.forEach(item => { if (item.id) allItemIds.push(item.id); });
+        }
       });
       allItemIds = [...new Set(allItemIds)];
       const { prices: tpPrices, icons: tpIcons } = await fetchTPPricesAndIcons(allItemIds);
 
-      // Render each section
+      // Render each expansion as a collapsible section
       let html = '';
-      sections.forEach((section, sidx) => {
+      let expIdx = 0;
+      for (const [expansion, expEvents] of Object.entries(expansions)) {
         // Sorting
-        let events = [...section.events];
+        let sortedEvents = [...expEvents];
         if (sortBy === 'name') {
-          events.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+          sortedEvents.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
         } else if (sortBy === 'location') {
-          events.sort((a, b) => (a.map || a.location || '').localeCompare(b.map || b.location || ''));
+          sortedEvents.sort((a, b) => (a.map || a.location || '').localeCompare(b.map || b.location || ''));
         } else if (sortBy === 'loot') {
-          events.sort((a, b) => {
-            // Sum sell values
+          sortedEvents.sort((a, b) => {
             const sum = ev =>
               (Array.isArray(ev.loot) ? ev.loot.reduce((acc, item) =>
                 acc + ((tpPrices[item.id] && tpPrices[item.id].sell) || 0), 0) : 0);
             return sum(b) - sum(a);
           });
         }
-        const sectionId = `section-${sidx}`;
+        const expSectionId = `expansion-${expIdx}`;
         html += `
-          <button class="section-title" id="${sectionId}-title" aria-expanded="true">
-            ${section.title} <span class="arrow">&#9660;</span>
+          <button class="section-title" id="${expSectionId}-title" aria-expanded="true">
+            ${expansion} <span class="arrow">&#9660;</span>
           </button>
-          <div id="${sectionId}-list" class="event-list">
-            ${events.length ? events.map((event, idx) =>
-              renderEventCard(event, `${sidx}-${idx}`, searchQuery, tpPrices, tpIcons)
-            ).join('') : `<div class="empty-state"><img src="https://i.imgur.com/8z8Q2Hk.png" alt="No events"><div>No events in this section.</div></div>`}
+          <div id="${expSectionId}-list" class="event-list">
+            ${sortedEvents.length ? sortedEvents.map((event, idx) =>
+              renderEventCard(event, `${expIdx}-${idx}`, searchQuery, tpPrices, tpIcons)
+            ).join('') : `<div class="empty-state"><img src="https://i.imgur.com/8z8Q2Hk.png" alt="No events"><div>No events in this expansion.</div></div>`}
           </div>
         `;
-      });
-      sectionsDiv.innerHTML = html;
-
-      // Setup copy bars, loot toggles, and modals
-      sections.forEach((section, sidx) => {
-        section.events.forEach((event, idx) => {
-          const id = `${sidx}-${idx}`;
-          setupCopyBar(
-            document.getElementById(`copy-btn-${id}`),
-            document.getElementById(`copy-input-${id}`),
-            document.getElementById(`copy-msg-${id}`)
-          );
-          // Loot toggle
-          const toggleBtn = document.querySelector(`.event-card[data-idx="${id}"] .drops-toggle`);
-          const lootList = document.getElementById(`loot-${id}`);
-          toggleBtn.onclick = (e) => {
-            e.stopPropagation();
-            lootList.classList.toggle('active');
-            const expanded = lootList.classList.contains('active');
-            toggleBtn.textContent = expanded ? 'Hide Loot ▲' : 'Show Loot ▼';
-            toggleBtn.setAttribute('aria-expanded', expanded);
-          };
-          // Modal details
-          const header = document.querySelector(`.event-card[data-idx="${id}"] .event-header`);
-          header.onclick = function(e) {
-            if (e.target.classList.contains('drops-toggle')) return;
-            showEventModal(event, tpPrices, tpIcons);
-          };
-        });
-      });
-
-      // Collapsible sections
-      sections.forEach((section, sidx) => {
-        const sectionBtn = document.getElementById(`section-${sidx}-title`);
-        const sectionList = document.getElementById(`section-${sidx}-list`);
-        const arrow = sectionBtn.querySelector('.arrow');
-        sectionBtn.onclick = function() {
-          if (sectionList.style.display === 'none') {
-            sectionList.style.display = '';
-            sectionBtn.setAttribute('aria-expanded', 'true');
-            arrow.innerHTML = '&#9660;';
-            sectionBtn.classList.remove('collapsed');
-          } else {
-            sectionList.style.display = 'none';
-            sectionBtn.setAttribute('aria-expanded', 'false');
-            arrow.innerHTML = '&#9654;';
-            sectionBtn.classList.add('collapsed');
-          }
-        };
-      });
+        expIdx++;
+      }
+      renderAllByExpansion._expIdx = expIdx;
+      return html;
     }
 
     // --- Modal for event details ---
@@ -618,43 +566,118 @@
       if (e.key === 'Escape') document.getElementById('eventModal').style.display = 'none';
     });
 
-    // --- Load and process JSON data (multiple sections) ---
-    let currentJson = null;
+    // --- Load all JSON sources, merge events, and render by expansion ---
+    let allEvents = [];
     let currentSort = 'name';
     let currentSearch = '';
-    async function loadJsonData(source) {
-      const sectionsDiv = document.getElementById('sections');
-      showSpinner(sectionsDiv);
-      try {
-        const resp = await fetch(source);
-        const data = await resp.json();
-        currentJson = data;
-        await renderSections(currentJson, currentSearch, currentSort);
-      } catch (e) {
-        showEmptyState(sectionsDiv, "Failed to load events. Try another file or source.");
-      }
+
+    async function loadAllJsonData() {
+      const allSectionsDiv = document.getElementById('allSections');
+      showSpinner(allSectionsDiv);
+
+      const results = await Promise.all(jsonSources.map(async (source) => {
+        try {
+          const resp = await fetch(source.url);
+          const data = await resp.json();
+          let events = [];
+          if (Array.isArray(data)) {
+            events = data;
+          } else if (typeof data === 'object') {
+            for (const key in data) {
+              if (Array.isArray(data[key])) {
+                events = events.concat(data[key]);
+              }
+            }
+          }
+          return events;
+        } catch (e) {
+          return [];
+        }
+      }));
+
+      allEvents = results.flat();
+      renderAllSections();
     }
 
-    // --- Initial load ---
-    let currentJsonSource = document.getElementById('jsonSource').value;
-    loadJsonData(currentJsonSource);
+    async function renderAllSections() {
+      const allSectionsDiv = document.getElementById('allSections');
+      showSpinner(allSectionsDiv);
+      allSectionsDiv.innerHTML = await renderAllByExpansion(allEvents, currentSearch, currentSort);
 
-    // --- Change JSON source ---
-    document.getElementById('jsonSource').addEventListener('change', function() {
-      currentJsonSource = this.value;
-      loadJsonData(currentJsonSource);
-    });
+      // Setup collapsible expansion sections
+      let expIdx = renderAllByExpansion._expIdx || 0;
+      for (let i = 0; i < expIdx; i++) {
+        const sectionBtn = document.getElementById(`expansion-${i}-title`);
+        const sectionList = document.getElementById(`expansion-${i}-list`);
+        const arrow = sectionBtn.querySelector('.arrow');
+        sectionBtn.onclick = function() {
+          if (sectionList.style.display === 'none') {
+            sectionList.style.display = '';
+            sectionBtn.setAttribute('aria-expanded', 'true');
+            arrow.innerHTML = '&#9660;';
+            sectionBtn.classList.remove('collapsed');
+          } else {
+            sectionList.style.display = 'none';
+            sectionBtn.setAttribute('aria-expanded', 'false');
+            arrow.innerHTML = '&#9654;';
+            sectionBtn.classList.add('collapsed');
+          }
+        };
+      }
+
+      // Setup copy bars, loot toggles, modals, collapsibles for all events
+      let expIdx2 = 0;
+      const expansions = {};
+      allEvents.forEach(ev => {
+        const exp = ev.expansion || 'Unknown Expansion';
+        if (!expansions[exp]) expansions[exp] = [];
+        expansions[exp].push(ev);
+      });
+      for (const expEvents of Object.values(expansions)) {
+        expEvents.forEach((event, eidx) => {
+          const id = `${expIdx2}-${eidx}`;
+          setupCopyBar(
+            document.getElementById(`copy-btn-${id}`),
+            document.getElementById(`copy-input-${id}`),
+            document.getElementById(`copy-msg-${id}`)
+          );
+          // Loot toggle
+          const toggleBtn = document.querySelector(`.event-card[data-idx="${id}"] .drops-toggle`);
+          const lootList = document.getElementById(`loot-${id}`);
+          toggleBtn.onclick = (e) => {
+            e.stopPropagation();
+            lootList.classList.toggle('active');
+            const expanded = lootList.classList.contains('active');
+            toggleBtn.textContent = expanded ? 'Hide Loot ▲' : 'Show Loot ▼';
+            toggleBtn.setAttribute('aria-expanded', expanded);
+          };
+          // Modal details
+          const header = document.querySelector(`.event-card[data-idx="${id}"] .event-header`);
+          header.onclick = function(e) {
+            if (e.target.classList.contains('drops-toggle')) return;
+            let itemIds = [];
+            if (Array.isArray(event.loot)) {
+              event.loot.forEach(item => { if (item.id) itemIds.push(item.id); });
+            }
+            fetchTPPricesAndIcons(itemIds).then(({prices, icons}) => {
+              showEventModal(event, prices, icons);
+            });
+          };
+        });
+        expIdx2++;
+      }
+    }
 
     // --- Search functionality with highlight ---
     document.getElementById('searchInput').addEventListener('input', function() {
       currentSearch = this.value.trim();
-      if (currentJson) renderSections(currentJson, currentSearch, currentSort);
+      renderAllSections();
     });
 
     // --- Sorting functionality ---
     document.getElementById('sortSelect').addEventListener('change', function() {
       currentSort = this.value;
-      if (currentJson) renderSections(currentJson, currentSearch, currentSort);
+      renderAllSections();
     });
 
     // --- Keyboard navigation (basic) ---
@@ -674,6 +697,9 @@
         }
       }
     });
+
+    // --- Initial load ---
+    loadAllJsonData();
   </script>
 </body>
 </html>
