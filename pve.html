@@ -2,63 +2,62 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gamers Hell</title>
+
   <style>
-    /* simple two‐column layout */
-    html, body { margin:0; padding:0; height:100%; }
+    /* simple side-by-side containers */
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      font-family: monospace; background: #000; color: #0f0;
+    }
     .container {
-      display: flex;
-      height: 100%;
+      display: flex; height: 100%;
     }
     .panel {
-      flex: 1;
-      overflow: auto;
-      border-right: 1px solid #ccc;
+      flex: 1; overflow: auto; border-right: 1px solid #222;
     }
-    .panel:last-child {
-      border-right: none;
-    }
+    .panel:last-child { border-right: none; }
   </style>
 </head>
 <body>
+
   <div class="container">
     <div id="cmd"   class="panel"></div>
     <div id="timer" class="panel"></div>
   </div>
 
   <script>
-    async function loadFullPage(path, containerId) {
-      const res  = await fetch(path);
-      const text = await res.text();
-      const doc  = new DOMParser().parseFromString(text, 'text/html');
+  (async function loadAll() {
+    async function loadPage(path, targetId) {
+      const raw = await fetch(path).then(r => r.text());
+      const doc = new DOMParser().parseFromString(raw, 'text/html');
 
-      // 1. import CSS from <head>
-      doc.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-        const clone = link.cloneNode();
-        // resolve relative href
-        clone.href = new URL(link.getAttribute('href'), path).href;
-        document.head.appendChild(clone);
+      // 1) import CSS (<link> + <style>)
+      doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+        const l = link.cloneNode();
+        l.href = new URL(link.href, path).href;
+        document.head.append(l);
       });
-      doc.querySelectorAll('style').forEach(style => {
-        document.head.appendChild(style.cloneNode(true));
+      doc.head.querySelectorAll('style').forEach(style => {
+        document.head.append(style.cloneNode(true));
       });
 
-      // 2. inject <body> content
-      const container = document.getElementById(containerId);
+      // 2) inject body markup
+      const container = document.getElementById(targetId);
       Array.from(doc.body.childNodes).forEach(node => {
         container.appendChild(document.importNode(node, true));
       });
 
-      // 3. re-execute scripts in order
-      const scripts = Array.from(doc.querySelectorAll('script'));
+      // 3) re-run scripts in sequence
+      const scripts = doc.body.querySelectorAll('script');
       for (let old of scripts) {
         const s = document.createElement('script');
         if (old.src) {
-          s.src = new URL(old.getAttribute('src'), path).href;
+          s.src = new URL(old.src, path).href;
           s.async = false;
           document.body.appendChild(s);
-          await new Promise(r => { s.onload = r; s.onerror = r; });
+          await new Promise(r => s.onload = r);
         } else {
           s.textContent = old.textContent;
           document.body.appendChild(s);
@@ -66,10 +65,10 @@
       }
     }
 
-    // load both pages into panels
-    loadFullPage('html/cmd.html',   'cmd');
-    loadFullPage('html/timer.html', 'timer');
+    // load both panels
+    await loadPage('html/cmd.html', 'cmd');
+    await loadPage('html/timer.html', 'timer');
+  })();
   </script>
 </body>
 </html>
-```
