@@ -16,10 +16,6 @@ class GhEventsLoot extends HTMLElement {
           --accent: #4a90e2;
           --table-th: #4a90e2;
           --table-border: #3b4b63;
-          --section-title-bg: #232c3b;
-          --section-title-fg: #e1e6ed;
-          --section-title-hover-bg: #4a90e2;
-          --section-title-hover-fg: #fff;
           --spinner-size: 36px;
           --transition: 0.2s cubic-bezier(.4,0,.2,1);
         }
@@ -33,7 +29,7 @@ class GhEventsLoot extends HTMLElement {
         .copy-bar button { padding: 0.4em 1.5em; border-radius: 4px; border: none; background: var(--copy-btn-bg); color: #fff; cursor: pointer; font-weight: bold; min-width: 50px; min-height: 32px; box-shadow: 0 2px 6px #0002; font-size: 1em; display: flex; align-items: center; gap: 0.4em; }
         .copy-bar button.copied { background: #4a90e2 !important; color: #fff !important; transform: scale(1.08); }
         .copy-bar .copy-msg { display:none; color:#6f6; margin-left: 0.5em; }
-        .section-title { background: var(--section-title-bg); color: var(--section-title-fg); padding: 1em 1.2em; border-radius: 12px; font-size: 1.25em; font-weight: bold; margin-bottom: 1.5em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.7em; box-shadow: 0 2px 12px #0002; border: none; outline: none; width: 100%; max-width: 480px; margin: 0 auto 1.5em auto; user-select: none; }
+        .section-title { background: var(--main-bg); color: var(--main-fg); padding: 1em 1.2em; border-radius: 12px; font-size: 1.25em; font-weight: bold; margin-bottom: 1.5em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.7em; box-shadow: 0 2px 12px #0002; border: none; outline: none; width: 100%; max-width: 480px; margin: 0 auto 1.5em auto; user-select: none; }
         .section-title .arrow { font-size: 1.1em; transition: transform var(--transition); }
         .section-title.collapsed .arrow { transform: rotate(-90deg); }
         .source-title { background: var(--card-bg); color: var(--accent); font-size: 1.1em; border: none; border-radius: 8px; margin: 1em auto 0.5em auto; padding: 0.8em 1em; display: flex; align-items: center; justify-content: center; max-width: 340px; width: 100%; cursor: pointer; }
@@ -63,7 +59,7 @@ class GhEventsLoot extends HTMLElement {
       </style>
       <div class="main">
         <div class="search-bar-container" role="search">
-          <input aria-label="Search" class="search-input" id="searchInput" placeholder="Search temples, bosses, loot..." type="text"/>
+          <input aria-label="Search" class="search-input" id="searchInput" placeholder="Search..." type="text"/>
           <button class="search-clear-btn" id="searchClearBtn" aria-label="Clear search" title="Clear search" tabindex="0" style="display:none;">×</button>
           <select id="sortSelect" aria-label="Sort events">
             <option value="name">Sort: Name</option>
@@ -86,7 +82,6 @@ class GhEventsLoot extends HTMLElement {
         name: "Valuable Events",
         url: "https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/untimedcore.json"
       }
-      // Add more sources as needed
     ];
     this.allEvents = [];
     this.currentSearch = '';
@@ -306,7 +301,6 @@ class GhEventsLoot extends HTMLElement {
   }
 
   getSVG(type) {
-    // Uses open source SVGs from https://tabler-icons.io/ (MIT)
     if (type === 'copy') {
       return `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>`;
     }
@@ -326,9 +320,7 @@ class GhEventsLoot extends HTMLElement {
       allSectionsDiv.innerHTML = `<div class="spinner" role="status" aria-label="Loading events"></div>`;
       return;
     }
-    // Filter
     let filtered = this.allEvents.filter(ev => this.eventMatchesSearch(ev, this.currentSearch));
-    // Sort
     if (this.currentSort === 'name') {
       filtered = filtered.slice().sort((a, b) => (a.name || '').localeCompare(b.name || ''));
     } else if (this.currentSort === 'location') {
@@ -343,7 +335,6 @@ class GhEventsLoot extends HTMLElement {
       allSectionsDiv.innerHTML = `<div class="empty-state"><img src="https://i.imgur.com/8z8Q2Hk.png" alt="No events"><div>No events found. Try a different search or reload data.</div></div>`;
       return;
     }
-    // Group
     const expansions = this.groupEvents(filtered);
     let allItemIds = [];
     filtered.forEach(event => {
@@ -383,7 +374,6 @@ class GhEventsLoot extends HTMLElement {
       expIdx++;
     }
     allSectionsDiv.innerHTML = html;
-    // Expand/collapse logic for sections and sources
     expIdx = 0;
     for (const [expansion, sources] of Object.entries(expansions)) {
       const section = sr.getElementById(`expansion-${expIdx}`);
@@ -413,7 +403,6 @@ class GhEventsLoot extends HTMLElement {
       }
       expIdx++;
     }
-    // Copy and loot show/hide logic
     expIdx = 0;
     for (const [expansion, sources] of Object.entries(expansions)) {
       let srcIdx = 0;
