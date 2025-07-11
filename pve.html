@@ -4,92 +4,65 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Gamers Hell</title>
-
   <style>
-    /* THEME VARIABLES */
-    body {
-      margin: 0; padding: 20px;
-      font-family: 'Courier New', monospace;
-      transition: background-color .3s, color .3s;
-    }
+    /* ────── THEME VARIABLES ────── */
+    body { margin:0; padding:20px; font-family:'Courier New', monospace; transition:.3s; }
     body[data-theme="hacker"] {
-      --bg: #000; --fg: #0f0;
-      --panel-bg: #111; --panel-border: #0f0; --panel-shadow: 0 0 8px #0f0;
-      --ctrl-bg: #222; --ctrl-fg: #0f0; --ctrl-border: #0f0;
-      --link: #0f0; --link-h: lime;
+      --bg:#000; --fg:#0f0;
+      --panel-bg:#111; --panel-border:#0f0; --panel-shadow:0 0 8px #0f0;
+      --ctrl-bg:#222; --ctrl-fg:#0f0; --ctrl-border:#0f0;
+      --link:#0f0; --link-h:lime;
     }
     body[data-theme="darkglass"] {
-      --bg: #0a1a26; --fg: #5df0ff;
-      --panel-bg: rgba(20,30,40,0.75); --panel-border: #5df0ff; --panel-shadow: 0 0 12px #5df0ff;
-      --ctrl-bg: rgba(40,50,60,0.7); --ctrl-fg: #5df0ff; --ctrl-border: #5df0ff;
-      --link: #5df0ff; --link-h: #a0ffff;
+      --bg:#0a1a26; --fg:#5df0ff;
+      --panel-bg:rgba(20,30,40,.75); --panel-border:#5df0ff; --panel-shadow:0 0 12px #5df0ff;
+      --ctrl-bg:rgba(40,50,60,.7); --ctrl-fg:#5df0ff; --ctrl-border:#5df0ff;
+      --link:#5df0ff; --link-h:#a0ffff;
     }
     body[data-theme="whitegloss"] {
-      --bg: #fafafa; --fg: #222;
-      --panel-bg: #fff; --panel-border: #ccc; --panel-shadow: 0 0 6px rgba(0,0,0,0.1);
-      --ctrl-bg: #f0f0f0; --ctrl-fg: #222; --ctrl-border: #bbb;
-      --link: #222; --link-h: #555;
+      --bg:#fafafa; --fg:#222;
+      --panel-bg:#fff; --panel-border:#ccc; --panel-shadow:0 0 6px rgba(0,0,0,.1);
+      --ctrl-bg:#f0f0f0; --ctrl-fg:#222; --ctrl-border:#bbb;
+      --link:#222; --link-h:#555;
     }
 
-    /* GLOBAL STYLES */
-    body {
-      background: var(--bg);
-      color: var(--fg);
+    /* ────── GLOBAL STYLES ────── */
+    body { background:var(--bg); color:var(--fg); }
+    h1 { text-align:center; margin:0 0 20px; }
+    a { color:var(--link); text-decoration:underline; transition:.3s; }
+    a:hover { color:var(--link-h); }
+    button, select, input {
+      background:var(--ctrl-bg); color:var(--ctrl-fg);
+      border:1px solid var(--ctrl-border);
+      padding:6px 12px; font:inherit; transition:.3s;
     }
-    h1 {
-      text-align: center;
-      margin: 0 0 20px;
-    }
-    a {
-      color: var(--link);
-      text-decoration: underline;
-      transition: color .3s;
-    }
-    a:hover {
-      color: var(--link-h);
-    }
-    button, input, select {
-      background: var(--ctrl-bg);
-      color: var(--ctrl-fg);
-      border: 1px solid var(--ctrl-border);
-      padding: 6px 12px;
-      font: inherit;
-      transition: background .3s, color .3s, border-color .3s;
-    }
-    button:hover, input:hover, select:hover {
-      filter: brightness(1.2);
-      cursor: pointer;
+    button:hover, select:hover, input:hover {
+      filter:brightness(1.2); cursor:pointer;
     }
 
-    /* LAYOUT */
+    /* ────── LAYOUT ────── */
     .toolbar {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
+      display:flex; justify-content:center; gap:10px; margin-bottom:20px;
     }
-    #themeSelector, #toggleTimer {
-      min-width: 140px;
-    }
+    #themeSelector, #toggleTimer { min-width:140px; }
     .main {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
+      display:flex; gap:20px; flex-wrap:wrap;
     }
-    #cmd { flex: 2; min-width: 300px; }
-    #timer { flex: 1; min-width: 200px; max-width: 300px; }
-    #timer.hidden { display: none; }
+    #cmd   { flex:2; min-width:300px; }
+    #timer { flex:1; min-width:200px; max-width:300px; }
+    #timer.hidden { display:none; }
     .panel {
-      background: var(--panel-bg);
-      border: 1px solid var(--panel-border);
-      box-shadow: var(--panel-shadow);
-      border-radius: 6px;
-      padding: 20px;
-      transition: background .3s, border .3s, box-shadow .3s;
+      background:var(--panel-bg);
+      border:1px solid var(--panel-border);
+      box-shadow:var(--panel-shadow);
+      border-radius:6px;
+      padding:20px;
+      transition:.3s;
     }
   </style>
 </head>
 <body data-theme="hacker">
+
   <div class="toolbar">
     <select id="themeSelector">
       <option value="hacker">Hacker Green</option>
@@ -108,62 +81,52 @@
 
   <script>
   (function(){
-    const themes      = ['hacker','darkglass','whitegloss'];
-    const themeSelect = document.getElementById('themeSelector');
-    const toggleBtn   = document.getElementById('toggleTimer');
-    const timerPane   = document.getElementById('timer');
+    const THEMES = ['hacker','darkglass','whitegloss'];
+    const themeSel = document.getElementById('themeSelector');
+    const toggleBtn = document.getElementById('toggleTimer');
+    const timerPanel = document.getElementById('timer');
 
     // Restore theme
     const savedTheme = localStorage.getItem('gh-theme');
-    if (savedTheme && themes.includes(savedTheme)) {
+    if (savedTheme && THEMES.includes(savedTheme)) {
       document.body.dataset.theme = savedTheme;
-      themeSelect.value = savedTheme;
+      themeSel.value = savedTheme;
     }
 
     // Restore timer visibility
-    if (localStorage.getItem('gh-timer-visible') === 'false') {
-      timerPane.classList.add('hidden');
+    if (localStorage.getItem('gh-timer-visible')==='false') {
+      timerPanel.classList.add('hidden');
       toggleBtn.textContent = 'Show Timer';
     }
 
     // Theme switcher
-    themeSelect.addEventListener('change', e => {
+    themeSel.addEventListener('change', e => {
       document.body.dataset.theme = e.target.value;
       localStorage.setItem('gh-theme', e.target.value);
     });
 
-    // Sidebar toggle
+    // Toggle timer sidebar
     toggleBtn.addEventListener('click', () => {
-      const hidden = timerPane.classList.toggle('hidden');
+      const hidden = timerPanel.classList.toggle('hidden');
       toggleBtn.textContent = hidden ? 'Show Timer' : 'Hide Timer';
       localStorage.setItem('gh-timer-visible', !hidden);
     });
 
-    // Dynamic fragment loader
-    async function loadFragment(url, containerId) {
-      const base = url.replace(/\/[^\/]*$/, '/');
-      const res  = await fetch(url);
-      const html = await res.text();
-      const doc  = new DOMParser().parseFromString(html, 'text/html');
+    // Fetch + inject an HTML fragment, then re-run its <script> tags
+    async function loadFragment(path, containerId) {
+      const base = path.replace(/\/[^/]*$/, '/');
+      const res  = await fetch(path);
+      const text = await res.text();
+      const doc  = new DOMParser().parseFromString(text, 'text/html');
 
-      // Import CSS
-      doc.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-        const clone = link.cloneNode();
-        clone.href = new URL(link.getAttribute('href'), base).href;
-        document.head.appendChild(clone);
-      });
-      doc.querySelectorAll('style').forEach(style => {
-        document.head.appendChild(style.cloneNode(true));
-      });
-
-      // Extract & remove scripts
+      // Grab and remove scripts
       const scripts = Array.from(doc.querySelectorAll('script'));
       scripts.forEach(s => s.remove());
 
       // Inject HTML
       document.getElementById(containerId).innerHTML = doc.body.innerHTML;
 
-      // Re-run scripts
+      // Re-execute scripts in order (preserves relative URLs)
       for (let old of scripts) {
         const s = document.createElement('script');
         if (old.src) {
@@ -178,11 +141,10 @@
       }
     }
 
-    // Load both panels
+    // Kick things off
     loadFragment('html/cmd.html',   'cmd');
     loadFragment('html/timer.html', 'timer');
   })();
   </script>
 </body>
 </html>
-```
