@@ -1,308 +1,502 @@
-First do this then but use:
-https://raw.githubusercontent.com/giovazz89/gw2-api-event-timers/main/events.json
-And
-https://raw.githubusercontent.com/blish-hud/Community-Module-Pack/refs/heads/master/Events%20Module/ref/events.json for creating our json file
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Multi-JSON Table & Dual Event Timer Sidebar</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; }
-        h1 { color: #333; margin-left: 2em; }
-        .json-section { margin: 2em; }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            margin-bottom: 2em;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 0.75em 1em;
-            text-align: left;
-        }
-        th { background: #e0e0e0; }
-        tr:nth-child(even) { background: #f9f9f9; }
-        .value { color: #3a7e1c; font-weight: bold; }
-        .copy-btn {
-            padding: 0.3em 1em;
-            background: #1976d2;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        .copy-btn:active { background: #0d47a1; }
-        /* Sidebar styles */
-        #sidebar {
-            position: fixed;
-            top: 0; right: 0;
-            width: 400px;
-            height: 100%;
-            background: #222;
-            color: #fff;
-            box-shadow: -2px 0 8px rgba(0,0,0,0.2);
-            padding: 2em 1em 1em 1em;
-            overflow-y: auto;
-            transition: transform 0.3s;
-            transform: translateX(100%);
-            z-index: 1000;
-        }
-        #sidebar.show { transform: translateX(0); }
-        #sidebar h2 { margin-top: 0; }
-        #sidebar .timer-source { margin-bottom: 2em; }
-        #sidebar .timer { margin: 1em 0; padding: 1em; background: #333; border-radius: 6px; }
-        #sidebar .event-title { font-weight: bold; }
-        #sidebar .event-time { color: #ffd700; }
-        #sidebar-toggle {
-            position: fixed;
-            top: 1em; right: 1em;
-            z-index: 1100;
-            background: #1976d2;
-            color: #fff;
-            border: none;
-            border-radius: 4px 0 0 4px;
-            padding: 0.7em 1.2em;
-            cursor: pointer;
-            font-size: 1em;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Gamers-Hell - Temple Events & Loot</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --main-bg: #232323;
+      --main-fg: #eee;
+      --card-bg: #292929;
+      --header-bg: #232323;
+      --footer-bg: #232323;
+      --search-bg: #181818;
+      --input-bg: #232323;
+      --input-fg: #eee;
+      --copy-bar-bg: #191919;
+      --copy-btn-bg: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
+      --copy-btn-hover-bg: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
+      --copy-btn-color: #eee;
+      --copy-btn-hover-color: #fff;
+      --accent: #6cf;
+      --table-th: #6cf;
+      --table-border: #444;
+    }
+    /* AMOLED Black Theme */
+    body.theme-dark {
+      --main-bg: #000;
+      --main-fg: #fff;
+      --card-bg: #111;
+      --header-bg: #000;
+      --footer-bg: #000;
+      --search-bg: #000;
+      --input-bg: #111;
+      --input-fg: #fff;
+      --copy-bar-bg: #111;
+      --copy-btn-bg: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
+      --copy-btn-hover-bg: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
+      --copy-btn-color: #fff;
+      --copy-btn-hover-color: #fff;
+      --accent: #0af;
+      --table-th: #0af;
+      --table-border: #222;
+    }
+    /* White (Light) Theme */
+    body.theme-light {
+      --main-bg: #f5f7fa;
+      --main-fg: #222;
+      --card-bg: #fff;
+      --header-bg: #e3e7ee;
+      --footer-bg: #e3e7ee;
+      --search-bg: #f5f7fa;
+      --input-bg: #fff;
+      --input-fg: #222;
+      --copy-bar-bg: #e9ecf2;
+      --copy-btn-bg: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
+      --copy-btn-hover-bg: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
+      --copy-btn-color: #222;
+      --copy-btn-hover-color: #222;
+      --accent: #3477c4;
+      --table-th: #3477c4;
+      --table-border: #cfd8e3;
+    }
+    /* Main structure */
+    body {
+      background: var(--main-bg);
+      color: var(--main-fg);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      transition: background 0.2s, color 0.2s;
+    }
+    header, footer {
+      background: var(--header-bg);
+      padding: 1em;
+      text-align: center;
+      color: var(--main-fg);
+    }
+    .main {
+      max-width: 900px;
+      margin: 2em auto;
+      background: var(--main-bg);
+      padding: 2em;
+      border-radius: 10px;
+    }
+    .search-bar-container {
+      display: flex;
+      gap: 1em;
+      margin-bottom: 2em;
+      background: var(--search-bg);
+      padding: 0.7em 1em;
+      border-radius: 8px;
+    }
+    .search-input, .theme-switcher {
+      padding: 0.5em;
+      border-radius: 4px;
+      border: none;
+      background: var(--input-bg);
+      color: var(--input-fg);
+    }
+    .copy-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      background: var(--copy-bar-bg);
+      border-radius: 6px;
+      margin-bottom: 1em;
+      padding: 0.7em 1em;
+    }
+    .copy-bar input {
+      flex: 1;
+      padding: 0.4em;
+      border-radius: 4px;
+      border: none;
+      background: var(--input-bg);
+      color: var(--input-fg);
+    }
+    .copy-bar button {
+      padding: 0.4em 1.5em;
+      border-radius: 4px;
+      border: none;
+      background: var(--copy-btn-bg) center/cover no-repeat, var(--copy-bar-bg);
+      color: var(--copy-btn-color);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      font-weight: bold;
+      outline: none;
+      min-width: 48px;
+      min-height: 32px;
+    }
+    .copy-bar button:hover, .copy-bar button:focus {
+      background: var(--copy-btn-hover-bg) center/cover no-repeat, var(--copy-bar-bg);
+      color: var(--copy-btn-hover-color);
+    }
+    .copy-bar .copy-msg {
+      display:none;
+      color:#6f6;
+      margin-left: 0.5em;
+    }
+    .event-list { margin-top: 2em; }
+    .event-card {
+      background: var(--card-bg);
+      margin-bottom: 2em;
+      padding: 1.5em;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px #0004;
+    }
+    .event-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .event-title {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .event-location {
+      font-size: 0.98em;
+      color: #bbb;
+      margin-left: 1em;
+    }
+    .drops-toggle {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-size: 1em;
+      cursor: pointer;
+      margin-left: auto;
+    }
+    .loot-list {
+      display: none;
+      margin-top: 1em;
+      background: #212121;
+      padding: 1em;
+      border-radius: 6px;
+    }
+    .loot-list.active { display: block; }
+    .loot-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5em;
+    }
+    .loot-table th, .loot-table td {
+      padding: 0.4em 0.7em;
+      text-align: left;
+    }
+    .loot-table th {
+      color: var(--table-th);
+      font-weight: bold;
+      border-bottom: 1px solid var(--table-border);
+    }
+    .loot-table td {
+      border-bottom: 1px solid var(--table-border);
+    }
+    .event-notes {
+      font-size: 0.95em;
+      color: #aaa;
+      margin-top: 0.7em;
+    }
+    .json-selector { margin-bottom: 1.5em; }
+    .json-selector label { margin-right: 0.5em; }
+    @media (max-width: 600px) {
+      .main { padding: 1em; }
+      .event-header { flex-direction: column; align-items: flex-start; }
+      .event-location { margin-left: 0; margin-top: 0.5em; }
+    }
+  </style>
 </head>
 <body>
-    <h1>Multi-JSON Table & Dual Event Timer Sidebar</h1>
-    <div class="json-section" id="tables-container">Loading tables...</div>
-    <button id="sidebar-toggle">Show Timers</button>
-    <div id="sidebar">
-        <h2>Event Timers</h2>
-        <div id="timers-container">
-            <div class="timer-source" id="timers-gw2api">
-                <h3>GW2 API Event Timers</h3>
-                <div>Loading timers...</div>
-            </div>
-            <div class="timer-source" id="timers-blish">
-                <h3>Blish HUD Event Timers</h3>
-                <div>Loading timers...</div>
-            </div>
-        </div>
+  <header>
+    <h1>Gamers-Hell</h1>
+  </header>
+
+  <main aria-label="Main content area" class="main" id="main" role="main" tabindex="-1">
+    <!-- JSON Selector -->
+    <div class="json-selector">
+      <label for="jsonSource">Select Data:</label>
+      <select id="jsonSource">
+        <option value="https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/temple.json">Temples of Orr</option>
+        <!-- Add more options here for additional JSONs -->
+      </select>
+      <input type="file" id="jsonFile" accept=".json" style="margin-left:1em;">
     </div>
-    <script>
-        // 1. List your JSON URLs here (add more as needed)
-        const jsonSources = [
-            {
-                url: 'https://raw.githubusercontent.com/geri0v/Gamers-Hell/main/json/temple.json',
-                label: 'Temples of Orr'
-            }
-            // Add more JSON sources as {url: '...', label: '...'}
-        ];
 
-        // 2. GW2 API price fetch helper
-        async function fetchItemPrices(ids) {
-            if (!ids.length) return {};
-            const url = `https://api.guildwars2.com/v2/commerce/prices?ids=${ids.join(',')}`;
-            const resp = await fetch(url);
-            if (!resp.ok) return {};
-            const data = await resp.json();
-            const prices = {};
-            data.forEach(item => {
-                prices[item.id] = item.sells.unit_price;
-            });
-            return prices;
+    <!-- Search and theme controls -->
+    <div class="search-bar-container" role="search">
+      <input
+        aria-label="Search"
+        class="search-input"
+        id="searchInput"
+        placeholder="Search temples, bosses, loot..."
+        type="text"
+      />
+      <select
+        aria-label="Theme"
+        class="theme-switcher"
+        id="themeSwitcher"
+      >
+        <option value="original">Original</option>
+        <option value="dark">Dark (AMOLED)</option>
+        <option value="light">White (Light)</option>
+      </select>
+      <button
+        aria-label="Keyboard shortcuts"
+        id="shortcutHelpBtn"
+        title="Keyboard shortcuts"
+      >?</button>
+    </div>
+
+    <div aria-live="polite" aria-relevant="additions" id="mainContent" tabindex="0">
+      <div id="event-list" class="event-list">
+        Loading temple events...
+      </div>
+    </div>
+
+    <footer>
+      © 2025 Gamers-Hell Community
+    </footer>
+  </main>
+
+  <script>
+    // --- Helper: Copy to clipboard ---
+    function setupCopyBar(copyBtn, copyInput, copyMsg) {
+      copyBtn.onclick = function() {
+        copyInput.select();
+        copyInput.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        copyMsg.style.display = 'inline';
+        setTimeout(() => { copyMsg.style.display = 'none'; }, 1200);
+      };
+    }
+
+    // --- Fetch GW2 Trading Post prices for item IDs ---
+    async function fetchTPPrices(itemIds) {
+      if (!itemIds.length) return {};
+      const chunkSize = 200; // API limit
+      let prices = {};
+      for (let i = 0; i < itemIds.length; i += chunkSize) {
+        const chunk = itemIds.slice(i, i + chunkSize);
+        const url = `https://api.guildwars2.com/v2/commerce/prices?ids=${chunk.join(',')}`;
+        try {
+          const resp = await fetch(url);
+          const data = await resp.json();
+          data.forEach(entry => {
+            prices[entry.id] = entry.sells && entry.sells.unit_price ? entry.sells.unit_price : 0;
+          });
+        } catch (e) {
+          // Ignore errors, leave price as 0
         }
-        function formatPrice(copper) {
-            if (typeof copper !== "number" || isNaN(copper)) return "Price unknown";
-            const g = Math.floor(copper / 10000);
-            const s = Math.floor((copper % 10000) / 100);
-            const c = copper % 100;
-            return `${g}g ${s}s ${c}c`;
+      }
+      return prices;
+    }
+
+    // --- Format GW2 currency ---
+    function formatGW2Currency(price) {
+      if (!price) return '';
+      const gold = Math.floor(price / 10000);
+      const silver = Math.floor((price % 10000) / 100);
+      const copper = price % 100;
+      return `${gold}g ${silver}s ${copper}c`;
+    }
+
+    // --- Render events with loot and TP prices ---
+    async function renderEvents(events) {
+      const container = document.getElementById('event-list');
+      if (!Array.isArray(events) || events.length === 0) {
+        container.textContent = 'No events found.';
+        return;
+      }
+      container.innerHTML = '';
+
+      // Collect all loot item IDs for TP price lookup
+      let allItemIds = [];
+      events.forEach(event => {
+        if (Array.isArray(event.loot)) {
+          event.loot.forEach(item => {
+            if (item.id) allItemIds.push(item.id);
+          });
         }
-        function buildRowStr(boss, waypoint, guaranteed, mostExp, value) {
-            return `${boss} | ${waypoint} | ${guaranteed} | ${mostExp} | ${value}`;
+      });
+      // Remove duplicates
+      allItemIds = [...new Set(allItemIds)];
+      const tpPrices = await fetchTPPrices(allItemIds);
+
+      events.forEach((event, idx) => {
+        // Copy-paste bar: event name, waypoint, loot
+        const copyBarId = `copy-bar-${idx}`;
+        const copyInputId = `copy-input-${idx}`;
+        const copyBtnId = `copy-btn-${idx}`;
+        const copyMsgId = `copy-msg-${idx}`;
+        // Loot (drops) section
+        const lootId = `loot-${idx}`;
+
+        // Compose loot info: if event.loot exists, use it, else fallback to bosses
+        let lootRows = '';
+        let lootCopy = '';
+        if (Array.isArray(event.loot) && event.loot.length) {
+          lootRows = event.loot.map(item => {
+            let tpValue = '';
+            if (item.id && tpPrices[item.id]) {
+              tpValue = formatGW2Currency(tpPrices[item.id]);
+            }
+            return `<tr>
+              <td>${item.name || ''}</td>
+              <td>${item.amount || ''}</td>
+              <td>${tpValue || (item.value ? item.value + ' gp' : '')}</td>
+            </tr>`;
+          }).join('');
+          lootCopy = event.loot.map(item => {
+            let tpValue = '';
+            if (item.id && tpPrices[item.id]) {
+              tpValue = ` (${formatGW2Currency(tpPrices[item.id])})`;
+            } else if (item.value) {
+              tpValue = ` (${item.value} gp)`;
+            }
+            let amount = item.amount ? ` [x${item.amount}]` : '';
+            return `${item.name || ''}${tpValue}${amount}`;
+          }).join(', ');
+        } else if (Array.isArray(event.bosses) && event.bosses.length) {
+          lootRows = event.bosses.map(boss =>
+            `<tr>
+              <td>${boss}</td>
+              <td></td>
+              <td></td>
+            </tr>`
+          ).join('');
+          lootCopy = event.bosses.map(boss => boss).join(', ');
+        } else {
+          lootRows = `<tr><td colspan="3" style="color:#888;">No loot info</td></tr>`;
+          lootCopy = 'No loot info';
         }
 
-        // 3. Render all JSON tables
-        async function renderTables() {
-            let html = '';
-            for (let sourceIdx = 0; sourceIdx < jsonSources.length; sourceIdx++) {
-                const {url, label} = jsonSources[sourceIdx];
-                try {
-                    const resp = await fetch(url);
-                    const data = await resp.json();
-                    // Assume same structure as temple.json. Adjust as needed for other JSONs.
-                    const temples = data["Temples of Orr"];
-                    // Collect all unique item IDs
-                    const allIds = new Set();
-                    temples.forEach(t => t.loot.forEach(l => l.id && allIds.add(l.id)));
-                    const prices = await fetchItemPrices([...allIds]);
-                    html += `<h2>${label}</h2><table>
-                        <thead>
-                            <tr>
-                                <th>Boss Name (Map)</th>
-                                <th>Waypoint</th>
-                                <th>Guaranteed Item</th>
-                                <th>Most Expensive Item</th>
-                                <th>Value</th>
-                                <th>Copy Row</th>
-                            </tr>
-                        </thead>
-                        <tbody>`;
-                    const rowStrs = [];
-                    temples.forEach((temple, idx) => {
-                        const boss = `${temple.name} (${temple.map})`;
-                        const waypoint = `<code>${temple.code}</code>`;
-                        const guaranteed = temple.loot && temple.loot.length > 0 ? temple.loot[0].name : "";
-                        let mostExp = guaranteed, value = "Price unknown";
-                        let maxPrice = -1, maxName = guaranteed;
-                        temple.loot.forEach(item => {
-                            if (item.id && prices[item.id] && prices[item.id] > maxPrice) {
-                                maxPrice = prices[item.id];
-                                maxName = item.name;
-                            }
-                        });
-                        if (maxPrice > 0) {
-                            mostExp = maxName;
-                            value = formatPrice(maxPrice);
-                        }
-                        html += `<tr>
-                            <td>${boss}</td>
-                            <td>${waypoint}</td>
-                            <td>${guaranteed}</td>
-                            <td>${mostExp}</td>
-                            <td class="value">${value}</td>
-                            <td><button class="copy-btn" onclick="copyRow('${sourceIdx}',${idx})">Copy Row</button></td>
-                        </tr>`;
-                        rowStrs.push(buildRowStr(
-                            boss,
-                            temple.code,
-                            guaranteed,
-                            mostExp,
-                            value
-                        ));
-                    });
-                    html += `</tbody></table>`;
-                    // Store for copy functionality
-                    window['rowStrs_' + sourceIdx] = rowStrs;
-                } catch (e) {
-                    html += `<div style="color:#d32f2f;">Failed to load ${label}: ${e.message}</div>`;
-                }
-            }
-            document.getElementById('tables-container').innerHTML = html;
-        }
-        // Copy row function supports multiple JSONs
-        window.copyRow = function(sourceIdx, idx) {
-            const rows = window['rowStrs_' + sourceIdx];
-            if (rows && rows[idx]) {
-                navigator.clipboard.writeText(rows[idx]);
-                const btns = document.querySelectorAll('.copy-btn');
-                btns[idx].textContent = "Copied!";
-                setTimeout(() => { btns[idx].textContent = "Copy Row"; }, 1200);
-            }
+        // Waypoint code
+        const waypoint = event.code ? event.code : '';
+
+        // Copy-paste value: Event | Waypoint | Loot
+        const copyValue = `${event.name || 'Unnamed Temple'} | ${waypoint} | ${lootCopy}`;
+
+        // Event card HTML
+        const eventDiv = document.createElement('div');
+        eventDiv.className = 'event-card';
+        eventDiv.innerHTML = `
+          <div class="copy-bar" id="${copyBarId}">
+            <input id="${copyInputId}" type="text" value="${copyValue.replace(/"/g, '&quot;')}" readonly>
+            <button id="${copyBtnId}">Copy</button>
+            <span class="copy-msg" id="${copyMsgId}">Copied!</span>
+          </div>
+          <div class="event-header" onclick="document.getElementById('${lootId}').classList.toggle('active')">
+            <span class="event-title">${event.name || 'Unnamed Temple'}</span>
+            <span class="event-location">${event.map || event.location || 'Unknown location'}</span>
+            <button class="drops-toggle" aria-controls="${lootId}" aria-expanded="false">Show Loot ▼</button>
+          </div>
+          <div class="loot-list" id="${lootId}">
+            <table class="loot-table">
+              <thead>
+                <tr><th>Item</th><th>Amount</th><th>Sell Value</th></tr>
+              </thead>
+              <tbody>
+                ${lootRows}
+              </tbody>
+            </table>
+            <div class="event-notes"><strong>Notes:</strong> ${event.notes || ''}</div>
+          </div>
+        `;
+        container.appendChild(eventDiv);
+
+        // Setup copy bar
+        setupCopyBar(
+          eventDiv.querySelector(`#${copyBtnId}`),
+          eventDiv.querySelector(`#${copyInputId}`),
+          eventDiv.querySelector(`#${copyMsgId}`)
+        );
+
+        // Loot toggle button
+        const toggleBtn = eventDiv.querySelector('.drops-toggle');
+        const lootList = eventDiv.querySelector('.loot-list');
+        toggleBtn.onclick = (e) => {
+          e.stopPropagation();
+          lootList.classList.toggle('active');
+          const expanded = lootList.classList.contains('active');
+          toggleBtn.textContent = expanded ? 'Hide Loot ▲' : 'Show Loot ▼';
+          toggleBtn.setAttribute('aria-expanded', expanded);
         };
-        renderTables();
+      });
+    }
 
-        // 4. Event Timer Sidebar (Dual Source)
-        const sidebar = document.getElementById('sidebar');
-        const toggleBtn = document.getElementById('sidebar-toggle');
-        toggleBtn.onclick = () => {
-            sidebar.classList.toggle('show');
-            toggleBtn.textContent = sidebar.classList.contains('show') ? "Hide Timers" : "Show Timers";
+    // --- Load and process JSON data ---
+    async function loadJsonData(source, fileContent) {
+      const container = document.getElementById('event-list');
+      container.textContent = 'Loading events...';
+      try {
+        let data;
+        if (fileContent) {
+          data = JSON.parse(fileContent);
+        } else {
+          const resp = await fetch(source);
+          data = await resp.json();
+        }
+        // Find the first array property in the JSON object
+        let events = [];
+        if (Array.isArray(data)) {
+          events = data;
+        } else if (typeof data === 'object') {
+          for (const key in data) {
+            if (Array.isArray(data[key])) {
+              events = data[key];
+              break;
+            }
+          }
+        }
+        await renderEvents(events);
+      } catch (e) {
+        container.textContent = 'Failed to load events.';
+      }
+    }
+
+    // --- Initial load ---
+    let currentJsonSource = document.getElementById('jsonSource').value;
+    loadJsonData(currentJsonSource);
+
+    // --- Change JSON source ---
+    document.getElementById('jsonSource').addEventListener('change', function() {
+      currentJsonSource = this.value;
+      loadJsonData(currentJsonSource);
+    });
+
+    // --- Load JSON from file ---
+    document.getElementById('jsonFile').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+          loadJsonData(null, ev.target.result);
         };
+        reader.readAsText(file);
+      }
+    });
 
-        // Helper: parse event times and calculate next occurrence
-        function getNextOccurrence(timeStr) {
-            // timeStr: "HH:MM" in UTC
-            const [h, m] = timeStr.split(':').map(Number);
-            const now = new Date();
-            const eventTime = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), h, m, 0));
-            if (eventTime < now) eventTime.setUTCDate(eventTime.getUTCDate() + 1);
-            return eventTime;
-        }
-        function formatCountdown(ms) {
-            if (ms < 0) ms = 0;
-            const totalSec = Math.floor(ms / 1000);
-            const h = Math.floor(totalSec / 3600);
-            const m = Math.floor((totalSec % 3600) / 60);
-            const s = totalSec % 60;
-            return `${h}h ${m}m ${s}s`;
-        }
+    // --- Search functionality ---
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const query = this.value.toLowerCase();
+      document.querySelectorAll('.event-card').forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(query) ? '' : 'none';
+      });
+    });
 
-        // Render timer list for a list of events
-        function renderEventTimers(eventTimers, targetId) {
-            const now = new Date();
-            let html = '';
-            eventTimers.forEach(ev => {
-                const next = getNextOccurrence(ev.time);
-                const countdown = formatCountdown(next - now);
-                html += `<div class="timer">
-                    <div class="event-title">${ev.name}</div>
-                    <div>Next: <span class="event-time">${next.toUTCString().slice(17,22)} UTC</span></div>
-                    <div>In: <span class="event-time">${countdown}</span></div>
-                </div>`;
-            });
-            document.getElementById(targetId).querySelector('div').innerHTML = html || 'No timers found.';
-        }
-
-        // Fetch and render timers from both sources
-        let eventTimersGW2API = [];
-        let eventTimersBlish = [];
-
-        // GW2 API Event Timers
-        function loadGW2APITimers() {
-            fetch('https://raw.githubusercontent.com/giovazz89/gw2-api-event-timers/main/events.json')
-                .then(resp => resp.json())
-                .then(data => {
-                    eventTimersGW2API = [];
-                    // Each event is an object with {name, schedule:[{time, ...}]}
-                    for (const key in data) {
-                        const ev = data[key];
-                        if (ev && ev.name && Array.isArray(ev.schedule)) {
-                            ev.schedule.forEach(entry => {
-                                if (entry.time) {
-                                    eventTimersGW2API.push({name: ev.name, time: entry.time});
-                                }
-                            });
-                        }
-                    }
-                    renderEventTimers(eventTimersGW2API, 'timers-gw2api');
-                })
-                .catch(e => {
-                    document.getElementById('timers-gw2api').querySelector('div').innerHTML = `<span style="color:#f88;">Failed to load events: ${e.message}</span>`;
-                });
-        }
-
-        // Blish HUD Event Timers
-        function loadBlishTimers() {
-            fetch('https://raw.githubusercontent.com/blish-hud/Community-Module-Pack/master/Events%20Module/ref/events.json')
-                .then(resp => resp.json())
-                .then(data => {
-                    eventTimersBlish = [];
-                    for (const key in data) {
-                        const ev = data[key];
-                        if (ev && ev.name && Array.isArray(ev.schedule)) {
-                            ev.schedule.forEach(entry => {
-                                if (entry.time) {
-                                    eventTimersBlish.push({name: ev.name, time: entry.time});
-                                }
-                            });
-                        }
-                    }
-                    renderEventTimers(eventTimersBlish, 'timers-blish');
-                })
-                .catch(e => {
-                    document.getElementById('timers-blish').querySelector('div').innerHTML = `<span style="color:#f88;">Failed to load events: ${e.message}</span>`;
-                });
-        }
-
-        // Initial load and periodic refresh
-        loadGW2APITimers();
-        loadBlishTimers();
-        setInterval(() => {
-            renderEventTimers(eventTimersGW2API, 'timers-gw2api');
-            renderEventTimers(eventTimersBlish, 'timers-blish');
-        }, 1000);
-    </script>
+    // --- Theme switcher ---
+    document.getElementById('themeSwitcher').addEventListener('change', function() {
+      document.body.classList.remove('theme-light', 'theme-dark');
+      if (this.value === 'light') {
+        document.body.classList.add('theme-light');
+      } else if (this.value === 'dark') {
+        document.body.classList.add('theme-dark');
+      }
+      // "original" is default, no class needed
+    });
+  </script>
 </body>
 </html>
