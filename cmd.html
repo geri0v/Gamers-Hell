@@ -3,66 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Gamers-Hell - Temple Events & Loot</title>
+  <title>Gamers-Hell - Events & Loot</title>
   <link rel="stylesheet" href="styles.css">
   <style>
     :root {
-      --main-bg: #232323;
-      --main-fg: #eee;
-      --card-bg: #292929;
-      --header-bg: #232323;
-      --footer-bg: #232323;
-      --search-bg: #181818;
-      --input-bg: #232323;
-      --input-fg: #eee;
-      --copy-bar-bg: #191919;
-      --copy-btn-bg: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
-      --copy-btn-hover-bg: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
-      --copy-btn-color: #eee;
+      --main-bg: #1e2630;
+      --main-fg: #f3f7fa;
+      --card-bg: #263142;
+      --header-bg: #232c3b;
+      --footer-bg: #232c3b;
+      --search-bg: #222a35;
+      --input-bg: #2c3746;
+      --input-fg: #e1e6ed;
+      --copy-bar-bg: #243049;
+      --copy-btn-bg: linear-gradient(135deg, #3b4b63 60%, #4a90e2 100%);
+      --copy-btn-hover-bg: linear-gradient(135deg, #4a90e2 60%, #3b4b63 100%);
+      --copy-btn-color: #e1e6ed;
       --copy-btn-hover-color: #fff;
-      --accent: #6cf;
-      --table-th: #6cf;
-      --table-border: #444;
+      --accent: #4a90e2;
+      --table-th: #4a90e2;
+      --table-border: #3b4b63;
+      --section-title-bg: #232c3b;
+      --section-title-fg: #e1e6ed;
+      --section-title-hover-bg: #4a90e2;
+      --section-title-hover-fg: #fff;
+      --spinner-size: 36px;
     }
-    /* AMOLED Black Theme */
-    body.theme-dark {
-      --main-bg: #000;
-      --main-fg: #fff;
-      --card-bg: #111;
-      --header-bg: #000;
-      --footer-bg: #000;
-      --search-bg: #000;
-      --input-bg: #111;
-      --input-fg: #fff;
-      --copy-bar-bg: #111;
-      --copy-btn-bg: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
-      --copy-btn-hover-bg: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
-      --copy-btn-color: #fff;
-      --copy-btn-hover-color: #fff;
-      --accent: #0af;
-      --table-th: #0af;
-      --table-border: #222;
-    }
-    /* White (Light) Theme */
-    body.theme-light {
-      --main-bg: #f5f7fa;
-      --main-fg: #222;
-      --card-bg: #fff;
-      --header-bg: #e3e7ee;
-      --footer-bg: #e3e7ee;
-      --search-bg: #f5f7fa;
-      --input-bg: #fff;
-      --input-fg: #222;
-      --copy-bar-bg: #e9ecf2;
-      --copy-btn-bg: url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
-      --copy-btn-hover-bg: url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
-      --copy-btn-color: #222;
-      --copy-btn-hover-color: #222;
-      --accent: #3477c4;
-      --table-th: #3477c4;
-      --table-border: #cfd8e3;
-    }
-    /* Main structure */
     body {
       background: var(--main-bg);
       color: var(--main-fg);
@@ -91,12 +57,14 @@
       padding: 0.7em 1em;
       border-radius: 8px;
     }
-    .search-input, .theme-switcher {
+    .search-input {
       padding: 0.5em;
       border-radius: 4px;
       border: none;
       background: var(--input-bg);
       color: var(--input-fg);
+      font-size: 1em;
+      flex: 1;
     }
     .copy-bar {
       display: flex;
@@ -114,28 +82,65 @@
       border: none;
       background: var(--input-bg);
       color: var(--input-fg);
+      font-size: 1em;
     }
     .copy-bar button {
       padding: 0.4em 1.5em;
       border-radius: 4px;
       border: none;
-      background: var(--copy-btn-bg) center/cover no-repeat, var(--copy-bar-bg);
+      background: var(--copy-btn-bg);
       color: var(--copy-btn-color);
       cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
       font-weight: bold;
       outline: none;
-      min-width: 48px;
+      min-width: 50px;
       min-height: 32px;
+      box-shadow: 0 2px 6px #0002;
+      font-size: 1em;
+      letter-spacing: 0.03em;
+      position: relative;
     }
-    .copy-bar button:hover, .copy-bar button:focus {
-      background: var(--copy-btn-hover-bg) center/cover no-repeat, var(--copy-bar-bg);
-      color: var(--copy-btn-hover-color);
+    .copy-bar button.copied {
+      background: #4a90e2 !important;
+      color: #fff !important;
+      transform: scale(1.08);
     }
     .copy-bar .copy-msg {
       display:none;
       color:#6f6;
       margin-left: 0.5em;
+    }
+    .json-selector { margin-bottom: 1.5em; }
+    .json-selector label { margin-right: 0.5em; }
+    .section-title {
+      background: var(--section-title-bg);
+      color: var(--section-title-fg);
+      padding: 1em 1.2em;
+      border-radius: 8px;
+      font-size: 1.3em;
+      font-weight: bold;
+      margin-bottom: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.2s, color 0.2s;
+      box-shadow: 0 2px 8px #0002;
+      border: none;
+      outline: none;
+    }
+    .section-title:hover, .section-title:focus {
+      background: var(--section-title-hover-bg);
+      color: var(--section-title-hover-fg);
+    }
+    .section-title .arrow {
+      margin-left: 0.7em;
+      font-size: 1.1em;
+      transition: transform 0.2s;
+    }
+    .section-title.collapsed .arrow {
+      transform: rotate(-90deg);
     }
     .event-list { margin-top: 2em; }
     .event-card {
@@ -158,7 +163,7 @@
     }
     .event-location {
       font-size: 0.98em;
-      color: #bbb;
+      color: #b3c6e0;
       margin-left: 1em;
     }
     .drops-toggle {
@@ -168,19 +173,28 @@
       font-size: 1em;
       cursor: pointer;
       margin-left: auto;
+      padding: 0.3em 0.7em;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .drops-toggle:hover, .drops-toggle:focus {
+      background: var(--accent);
+      color: #fff;
     }
     .loot-list {
       display: none;
       margin-top: 1em;
-      background: #212121;
+      background: #222a35;
       padding: 1em;
       border-radius: 6px;
+      overflow-x: auto;
     }
     .loot-list.active { display: block; }
     .loot-table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 0.5em;
+      min-width: 400px;
     }
     .loot-table th, .loot-table td {
       padding: 0.4em 0.7em;
@@ -194,17 +208,61 @@
     .loot-table td {
       border-bottom: 1px solid var(--table-border);
     }
+    .loot-table .icon-cell img {
+      width: 22px;
+      height: 22px;
+      vertical-align: middle;
+      margin-right: 6px;
+      border-radius: 3px;
+      background: #111;
+    }
     .event-notes {
       font-size: 0.95em;
-      color: #aaa;
+      color: #b3c6e0;
       margin-top: 0.7em;
     }
-    .json-selector { margin-bottom: 1.5em; }
-    .json-selector label { margin-right: 0.5em; }
+    .spinner {
+      display: inline-block;
+      width: var(--spinner-size);
+      height: var(--spinner-size);
+      border: 4px solid #4a90e2;
+      border-top: 4px solid #263142;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 2em auto;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .empty-state {
+      text-align: center;
+      color: #b3c6e0;
+      margin: 2em 0;
+      font-size: 1.2em;
+    }
+    .empty-state img {
+      width: 80px;
+      margin-bottom: 1em;
+      opacity: 0.7;
+    }
+    mark {
+      background: #4a90e2;
+      color: #fff;
+      border-radius: 3px;
+      padding: 0 2px;
+    }
     @media (max-width: 600px) {
       .main { padding: 1em; }
       .event-header { flex-direction: column; align-items: flex-start; }
       .event-location { margin-left: 0; margin-top: 0.5em; }
+      .loot-list { padding: 0.5em; }
+      .loot-table, .loot-table thead, .loot-table tbody, .loot-table tr, .loot-table th, .loot-table td {
+        display: block;
+        width: 100%;
+      }
+      .loot-table th { text-align: left; }
+      .loot-table tr { margin-bottom: 1em; }
+      .loot-table td { border-bottom: none; }
     }
   </style>
 </head>
@@ -214,17 +272,14 @@
   </header>
 
   <main aria-label="Main content area" class="main" id="main" role="main" tabindex="-1">
-    <!-- JSON Selector -->
     <div class="json-selector">
       <label for="jsonSource">Select Data:</label>
       <select id="jsonSource">
         <option value="https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/temple.json">Temples of Orr</option>
         <!-- Add more options here for additional JSONs -->
       </select>
-      <input type="file" id="jsonFile" accept=".json" style="margin-left:1em;">
     </div>
 
-    <!-- Search and theme controls -->
     <div class="search-bar-container" role="search">
       <input
         aria-label="Search"
@@ -233,67 +288,97 @@
         placeholder="Search temples, bosses, loot..."
         type="text"
       />
-      <select
-        aria-label="Theme"
-        class="theme-switcher"
-        id="themeSwitcher"
-      >
-        <option value="original">Original</option>
-        <option value="dark">Dark (AMOLED)</option>
-        <option value="light">White (Light)</option>
-      </select>
       <button
         aria-label="Keyboard shortcuts"
         id="shortcutHelpBtn"
         title="Keyboard shortcuts"
       >?</button>
+      <select id="sortSelect" aria-label="Sort events">
+        <option value="name">Sort: Name</option>
+        <option value="location">Sort: Location</option>
+        <option value="loot">Sort: Loot Value</option>
+      </select>
     </div>
 
     <div aria-live="polite" aria-relevant="additions" id="mainContent" tabindex="0">
-      <div id="event-list" class="event-list">
-        Loading temple events...
-      </div>
+      <div id="sections"></div>
     </div>
 
     <footer>
       © 2025 Gamers-Hell Community
     </footer>
-  </main>
 
+    <!-- Modal for event details -->
+    <div id="eventModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(30,38,48,0.95);z-index:1000;align-items:center;justify-content:center;">
+      <div style="background:var(--card-bg);padding:2em;border-radius:10px;max-width:90vw;max-height:90vh;overflow:auto;position:relative;">
+        <button id="closeModalBtn" style="position:absolute;top:1em;right:1em;background:#4a90e2;color:#fff;border:none;border-radius:4px;padding:0.4em 1em;cursor:pointer;">Close</button>
+        <div id="modalContent"></div>
+      </div>
+    </div>
+  </main>
   <script>
-    // --- Helper: Copy to clipboard ---
+    // --- Spinner and Empty State ---
+    function showSpinner(container) {
+      container.innerHTML = '<div class="spinner" aria-label="Loading..."></div>';
+    }
+    function showEmptyState(container, msg) {
+      container.innerHTML = `<div class="empty-state">
+        <img src="https://i.imgur.com/8z8Q2Hk.png" alt="No events">
+        <div>${msg}</div>
+      </div>`;
+    }
+
+    // --- Copy Bar Feedback ---
     function setupCopyBar(copyBtn, copyInput, copyMsg) {
       copyBtn.onclick = function() {
         copyInput.select();
         copyInput.setSelectionRange(0, 99999);
         document.execCommand('copy');
         copyMsg.style.display = 'inline';
-        setTimeout(() => { copyMsg.style.display = 'none'; }, 1200);
+        copyBtn.classList.add('copied');
+        copyBtn.innerText = "✔";
+        setTimeout(() => {
+          copyMsg.style.display = 'none';
+          copyBtn.classList.remove('copied');
+          copyBtn.innerText = "Copy";
+        }, 1000);
       };
     }
 
-    // --- Fetch GW2 Trading Post prices for item IDs ---
-    async function fetchTPPrices(itemIds) {
-      if (!itemIds.length) return {};
-      const chunkSize = 200; // API limit
-      let prices = {};
+    // --- GW2 API: Fetch Trading Post prices and item icons ---
+    async function fetchTPPricesAndIcons(itemIds) {
+      if (!itemIds.length) return { prices: {}, icons: {} };
+      const chunkSize = 200;
+      let prices = {}, icons = {};
+      // Prices
       for (let i = 0; i < itemIds.length; i += chunkSize) {
         const chunk = itemIds.slice(i, i + chunkSize);
-        const url = `https://api.guildwars2.com/v2/commerce/prices?ids=${chunk.join(',')}`;
         try {
-          const resp = await fetch(url);
+          const resp = await fetch(`https://api.guildwars2.com/v2/commerce/prices?ids=${chunk.join(',')}`);
           const data = await resp.json();
           data.forEach(entry => {
-            prices[entry.id] = entry.sells && entry.sells.unit_price ? entry.sells.unit_price : 0;
+            prices[entry.id] = {
+              sell: entry.sells && entry.sells.unit_price ? entry.sells.unit_price : 0,
+              buy: entry.buys && entry.buys.unit_price ? entry.buys.unit_price : 0,
+              demand: entry.buys && entry.buys.quantity ? entry.buys.quantity : 0
+            };
           });
-        } catch (e) {
-          // Ignore errors, leave price as 0
-        }
+        } catch (e) {}
       }
-      return prices;
+      // Icons
+      for (let i = 0; i < itemIds.length; i += chunkSize) {
+        const chunk = itemIds.slice(i, i + chunkSize);
+        try {
+          const resp = await fetch(`https://api.guildwars2.com/v2/items?ids=${chunk.join(',')}`);
+          const data = await resp.json();
+          data.forEach(entry => {
+            icons[entry.id] = entry.icon;
+          });
+        } catch (e) {}
+      }
+      return { prices, icons };
     }
 
-    // --- Format GW2 currency ---
     function formatGW2Currency(price) {
       if (!price) return '';
       const gold = Math.floor(price / 10000);
@@ -302,97 +387,65 @@
       return `${gold}g ${silver}s ${copper}c`;
     }
 
-    // --- Render events with loot and TP prices ---
-    async function renderEvents(events) {
-      const container = document.getElementById('event-list');
-      if (!Array.isArray(events) || events.length === 0) {
-        container.textContent = 'No events found.';
-        return;
+    // --- Highlight search matches ---
+    function highlight(text, query) {
+      if (!query) return text;
+      const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return text.replace(regex, '<mark>$1</mark>');
+    }
+
+    // --- Render a single event card ---
+    function renderEventCard(event, idx, searchQuery, tpPrices, tpIcons) {
+      let lootRows = '';
+      let lootCopy = '';
+      if (Array.isArray(event.loot) && event.loot.length) {
+        lootRows = event.loot.map(item => {
+          let tp = tpPrices[item.id] || {};
+          let icon = tpIcons[item.id] ? `<img src="${tpIcons[item.id]}" alt="" />` : '';
+          return `<tr>
+            <td class="icon-cell">${icon}${highlight(item.name || '', searchQuery)}</td>
+            <td>${item.amount || ''}</td>
+            <td>
+              ${tp.sell ? formatGW2Currency(tp.sell) : ''}
+              ${tp.buy ? `<br><span style="color:#6cf;font-size:0.93em;">Buy: ${formatGW2Currency(tp.buy)}</span>` : ''}
+              ${tp.demand ? `<br><span style="color:#e6b800;font-size:0.93em;">Demand: ${tp.demand}</span>` : ''}
+            </td>
+          </tr>`;
+        }).join('');
+        lootCopy = event.loot.map(item => {
+          let tp = tpPrices[item.id] || {};
+          let tpValue = tp.sell ? ` (${formatGW2Currency(tp.sell)})` : (item.value ? ` (${item.value} gp)` : '');
+          let amount = item.amount ? ` [x${item.amount}]` : '';
+          return `${item.name || ''}${tpValue}${amount}`;
+        }).join(', ');
+      } else if (Array.isArray(event.bosses) && event.bosses.length) {
+        lootRows = event.bosses.map(boss =>
+          `<tr>
+            <td>${highlight(boss, searchQuery)}</td>
+            <td></td>
+            <td></td>
+          </tr>`
+        ).join('');
+        lootCopy = event.bosses.map(boss => boss).join(', ');
+      } else {
+        lootRows = `<tr><td colspan="3" style="color:#888;">No loot info</td></tr>`;
+        lootCopy = 'No loot info';
       }
-      container.innerHTML = '';
-
-      // Collect all loot item IDs for TP price lookup
-      let allItemIds = [];
-      events.forEach(event => {
-        if (Array.isArray(event.loot)) {
-          event.loot.forEach(item => {
-            if (item.id) allItemIds.push(item.id);
-          });
-        }
-      });
-      // Remove duplicates
-      allItemIds = [...new Set(allItemIds)];
-      const tpPrices = await fetchTPPrices(allItemIds);
-
-      events.forEach((event, idx) => {
-        // Copy-paste bar: event name, waypoint, loot
-        const copyBarId = `copy-bar-${idx}`;
-        const copyInputId = `copy-input-${idx}`;
-        const copyBtnId = `copy-btn-${idx}`;
-        const copyMsgId = `copy-msg-${idx}`;
-        // Loot (drops) section
-        const lootId = `loot-${idx}`;
-
-        // Compose loot info: if event.loot exists, use it, else fallback to bosses
-        let lootRows = '';
-        let lootCopy = '';
-        if (Array.isArray(event.loot) && event.loot.length) {
-          lootRows = event.loot.map(item => {
-            let tpValue = '';
-            if (item.id && tpPrices[item.id]) {
-              tpValue = formatGW2Currency(tpPrices[item.id]);
-            }
-            return `<tr>
-              <td>${item.name || ''}</td>
-              <td>${item.amount || ''}</td>
-              <td>${tpValue || (item.value ? item.value + ' gp' : '')}</td>
-            </tr>`;
-          }).join('');
-          lootCopy = event.loot.map(item => {
-            let tpValue = '';
-            if (item.id && tpPrices[item.id]) {
-              tpValue = ` (${formatGW2Currency(tpPrices[item.id])})`;
-            } else if (item.value) {
-              tpValue = ` (${item.value} gp)`;
-            }
-            let amount = item.amount ? ` [x${item.amount}]` : '';
-            return `${item.name || ''}${tpValue}${amount}`;
-          }).join(', ');
-        } else if (Array.isArray(event.bosses) && event.bosses.length) {
-          lootRows = event.bosses.map(boss =>
-            `<tr>
-              <td>${boss}</td>
-              <td></td>
-              <td></td>
-            </tr>`
-          ).join('');
-          lootCopy = event.bosses.map(boss => boss).join(', ');
-        } else {
-          lootRows = `<tr><td colspan="3" style="color:#888;">No loot info</td></tr>`;
-          lootCopy = 'No loot info';
-        }
-
-        // Waypoint code
-        const waypoint = event.code ? event.code : '';
-
-        // Copy-paste value: Event | Waypoint | Loot
-        const copyValue = `${event.name || 'Unnamed Temple'} | ${waypoint} | ${lootCopy}`;
-
-        // Event card HTML
-        const eventDiv = document.createElement('div');
-        eventDiv.className = 'event-card';
-        eventDiv.innerHTML = `
-          <div class="copy-bar" id="${copyBarId}">
-            <input id="${copyInputId}" type="text" value="${copyValue.replace(/"/g, '&quot;')}" readonly>
-            <button id="${copyBtnId}">Copy</button>
-            <span class="copy-msg" id="${copyMsgId}">Copied!</span>
+      const waypoint = event.code ? event.code : '';
+      const copyValue = `${event.name || 'Unnamed Event'} | ${waypoint} | ${lootCopy}`;
+      return `
+        <div class="event-card" tabindex="0" aria-label="${event.name || 'Unnamed Event'}" data-idx="${idx}">
+          <div class="copy-bar">
+            <input id="copy-input-${idx}" type="text" value="${copyValue.replace(/"/g, '&quot;')}" readonly>
+            <button id="copy-btn-${idx}" aria-label="Copy">Copy</button>
+            <span class="copy-msg" id="copy-msg-${idx}">Copied!</span>
           </div>
-          <div class="event-header" onclick="document.getElementById('${lootId}').classList.toggle('active')">
-            <span class="event-title">${event.name || 'Unnamed Temple'}</span>
-            <span class="event-location">${event.map || event.location || 'Unknown location'}</span>
-            <button class="drops-toggle" aria-controls="${lootId}" aria-expanded="false">Show Loot ▼</button>
+          <div class="event-header" tabindex="0" aria-label="Show details for ${event.name || 'Unnamed Event'}" data-idx="${idx}">
+            <span class="event-title">${highlight(event.name || 'Unnamed Event', searchQuery)}</span>
+            <span class="event-location">${highlight(event.map || event.location || 'Unknown location', searchQuery)}</span>
+            <button class="drops-toggle" aria-controls="loot-${idx}" aria-expanded="false">Show Loot ▼</button>
           </div>
-          <div class="loot-list" id="${lootId}">
+          <div class="loot-list" id="loot-${idx}">
             <table class="loot-table">
               <thead>
                 <tr><th>Item</th><th>Amount</th><th>Sell Value</th></tr>
@@ -403,56 +456,182 @@
             </table>
             <div class="event-notes"><strong>Notes:</strong> ${event.notes || ''}</div>
           </div>
+        </div>
+      `;
+    }
+
+    // --- Render all sections from JSON (multiple keys) ---
+    async function renderSections(json, searchQuery, sortBy) {
+      const sectionsDiv = document.getElementById('sections');
+      showSpinner(sectionsDiv);
+
+      // Gather all arrays in the JSON (multiple sections)
+      let sections = [];
+      if (Array.isArray(json)) {
+        sections = [{ title: 'Events', events: json }];
+      } else if (typeof json === 'object') {
+        for (const key in json) {
+          if (Array.isArray(json[key])) {
+            sections.push({ title: key, events: json[key] });
+          }
+        }
+      }
+      if (!sections.length) {
+        showEmptyState(sectionsDiv, "No events found. Try loading a different file or source!");
+        return;
+      }
+
+      // Collect all item IDs for all sections for TP price/icon lookup
+      let allItemIds = [];
+      sections.forEach(section => {
+        section.events.forEach(event => {
+          if (Array.isArray(event.loot)) {
+            event.loot.forEach(item => { if (item.id) allItemIds.push(item.id); });
+          }
+        });
+      });
+      allItemIds = [...new Set(allItemIds)];
+      const { prices: tpPrices, icons: tpIcons } = await fetchTPPricesAndIcons(allItemIds);
+
+      // Render each section
+      let html = '';
+      sections.forEach((section, sidx) => {
+        // Sorting
+        let events = [...section.events];
+        if (sortBy === 'name') {
+          events.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+        } else if (sortBy === 'location') {
+          events.sort((a, b) => (a.map || a.location || '').localeCompare(b.map || b.location || ''));
+        } else if (sortBy === 'loot') {
+          events.sort((a, b) => {
+            // Sum sell values
+            const sum = ev =>
+              (Array.isArray(ev.loot) ? ev.loot.reduce((acc, item) =>
+                acc + ((tpPrices[item.id] && tpPrices[item.id].sell) || 0), 0) : 0);
+            return sum(b) - sum(a);
+          });
+        }
+        const sectionId = `section-${sidx}`;
+        html += `
+          <button class="section-title" id="${sectionId}-title" aria-expanded="true">
+            ${section.title} <span class="arrow">&#9660;</span>
+          </button>
+          <div id="${sectionId}-list" class="event-list">
+            ${events.length ? events.map((event, idx) =>
+              renderEventCard(event, `${sidx}-${idx}`, searchQuery, tpPrices, tpIcons)
+            ).join('') : `<div class="empty-state"><img src="https://i.imgur.com/8z8Q2Hk.png" alt="No events"><div>No events in this section.</div></div>`}
+          </div>
         `;
-        container.appendChild(eventDiv);
+      });
+      sectionsDiv.innerHTML = html;
 
-        // Setup copy bar
-        setupCopyBar(
-          eventDiv.querySelector(`#${copyBtnId}`),
-          eventDiv.querySelector(`#${copyInputId}`),
-          eventDiv.querySelector(`#${copyMsgId}`)
-        );
+      // Setup copy bars, loot toggles, and modals
+      sections.forEach((section, sidx) => {
+        section.events.forEach((event, idx) => {
+          const id = `${sidx}-${idx}`;
+          setupCopyBar(
+            document.getElementById(`copy-btn-${id}`),
+            document.getElementById(`copy-input-${id}`),
+            document.getElementById(`copy-msg-${id}`)
+          );
+          // Loot toggle
+          const toggleBtn = document.querySelector(`.event-card[data-idx="${id}"] .drops-toggle`);
+          const lootList = document.getElementById(`loot-${id}`);
+          toggleBtn.onclick = (e) => {
+            e.stopPropagation();
+            lootList.classList.toggle('active');
+            const expanded = lootList.classList.contains('active');
+            toggleBtn.textContent = expanded ? 'Hide Loot ▲' : 'Show Loot ▼';
+            toggleBtn.setAttribute('aria-expanded', expanded);
+          };
+          // Modal details
+          const header = document.querySelector(`.event-card[data-idx="${id}"] .event-header`);
+          header.onclick = function(e) {
+            if (e.target.classList.contains('drops-toggle')) return;
+            showEventModal(event, tpPrices, tpIcons);
+          };
+        });
+      });
 
-        // Loot toggle button
-        const toggleBtn = eventDiv.querySelector('.drops-toggle');
-        const lootList = eventDiv.querySelector('.loot-list');
-        toggleBtn.onclick = (e) => {
-          e.stopPropagation();
-          lootList.classList.toggle('active');
-          const expanded = lootList.classList.contains('active');
-          toggleBtn.textContent = expanded ? 'Hide Loot ▲' : 'Show Loot ▼';
-          toggleBtn.setAttribute('aria-expanded', expanded);
+      // Collapsible sections
+      sections.forEach((section, sidx) => {
+        const sectionBtn = document.getElementById(`section-${sidx}-title`);
+        const sectionList = document.getElementById(`section-${sidx}-list`);
+        const arrow = sectionBtn.querySelector('.arrow');
+        sectionBtn.onclick = function() {
+          if (sectionList.style.display === 'none') {
+            sectionList.style.display = '';
+            sectionBtn.setAttribute('aria-expanded', 'true');
+            arrow.innerHTML = '&#9660;';
+            sectionBtn.classList.remove('collapsed');
+          } else {
+            sectionList.style.display = 'none';
+            sectionBtn.setAttribute('aria-expanded', 'false');
+            arrow.innerHTML = '&#9654;';
+            sectionBtn.classList.add('collapsed');
+          }
         };
       });
     }
 
-    // --- Load and process JSON data ---
-    async function loadJsonData(source, fileContent) {
-      const container = document.getElementById('event-list');
-      container.textContent = 'Loading events...';
+    // --- Modal for event details ---
+    function showEventModal(event, tpPrices, tpIcons) {
+      const modal = document.getElementById('eventModal');
+      const modalContent = document.getElementById('modalContent');
+      let lootHtml = '';
+      if (Array.isArray(event.loot) && event.loot.length) {
+        lootHtml = event.loot.map(item => {
+          let tp = tpPrices[item.id] || {};
+          let icon = tpIcons[item.id] ? `<img src="${tpIcons[item.id]}" alt="" style="width:32px;height:32px;vertical-align:middle;margin-right:8px;border-radius:5px;background:#111;">` : '';
+          return `<div style="margin-bottom:0.7em;">
+            ${icon}<b>${item.name || ''}</b>
+            ${item.amount ? ` x${item.amount}` : ''}
+            ${tp.sell ? `<span style="margin-left:1em;">Sell: <b>${formatGW2Currency(tp.sell)}</b></span>` : ''}
+            ${tp.buy ? `<span style="margin-left:1em;">Buy: <b>${formatGW2Currency(tp.buy)}</b></span>` : ''}
+            ${tp.demand ? `<span style="margin-left:1em;">Demand: <b>${tp.demand}</b></span>` : ''}
+          </div>`;
+        }).join('');
+      }
+      modalContent.innerHTML = `
+        <h2 style="color:#4a90e2;">${event.name || 'Unnamed Event'}</h2>
+        <div style="margin-bottom:1em;">
+          <b>Location:</b> ${event.map || event.location || 'Unknown location'}
+        </div>
+        <div style="margin-bottom:1em;">
+          <b>Waypoint:</b> ${event.code || '<i>None</i>'}
+        </div>
+        <div style="margin-bottom:1em;">
+          <b>Notes:</b> ${event.notes || '<i>None</i>'}
+        </div>
+        <div>
+          <b>Loot:</b>
+          ${lootHtml || '<div style="color:#888;">No loot info</div>'}
+        </div>
+      `;
+      modal.style.display = 'flex';
+      document.getElementById('closeModalBtn').focus();
+    }
+    document.getElementById('closeModalBtn').onclick = function() {
+      document.getElementById('eventModal').style.display = 'none';
+    };
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') document.getElementById('eventModal').style.display = 'none';
+    });
+
+    // --- Load and process JSON data (multiple sections) ---
+    let currentJson = null;
+    let currentSort = 'name';
+    let currentSearch = '';
+    async function loadJsonData(source) {
+      const sectionsDiv = document.getElementById('sections');
+      showSpinner(sectionsDiv);
       try {
-        let data;
-        if (fileContent) {
-          data = JSON.parse(fileContent);
-        } else {
-          const resp = await fetch(source);
-          data = await resp.json();
-        }
-        // Find the first array property in the JSON object
-        let events = [];
-        if (Array.isArray(data)) {
-          events = data;
-        } else if (typeof data === 'object') {
-          for (const key in data) {
-            if (Array.isArray(data[key])) {
-              events = data[key];
-              break;
-            }
-          }
-        }
-        await renderEvents(events);
+        const resp = await fetch(source);
+        const data = await resp.json();
+        currentJson = data;
+        await renderSections(currentJson, currentSearch, currentSort);
       } catch (e) {
-        container.textContent = 'Failed to load events.';
+        showEmptyState(sectionsDiv, "Failed to load events. Try another file or source.");
       }
     }
 
@@ -466,36 +645,34 @@
       loadJsonData(currentJsonSource);
     });
 
-    // --- Load JSON from file ---
-    document.getElementById('jsonFile').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(ev) {
-          loadJsonData(null, ev.target.result);
-        };
-        reader.readAsText(file);
-      }
-    });
-
-    // --- Search functionality ---
+    // --- Search functionality with highlight ---
     document.getElementById('searchInput').addEventListener('input', function() {
-      const query = this.value.toLowerCase();
-      document.querySelectorAll('.event-card').forEach(item => {
-        const text = item.textContent.toLowerCase();
-        item.style.display = text.includes(query) ? '' : 'none';
-      });
+      currentSearch = this.value.trim();
+      if (currentJson) renderSections(currentJson, currentSearch, currentSort);
     });
 
-    // --- Theme switcher ---
-    document.getElementById('themeSwitcher').addEventListener('change', function() {
-      document.body.classList.remove('theme-light', 'theme-dark');
-      if (this.value === 'light') {
-        document.body.classList.add('theme-light');
-      } else if (this.value === 'dark') {
-        document.body.classList.add('theme-dark');
+    // --- Sorting functionality ---
+    document.getElementById('sortSelect').addEventListener('change', function() {
+      currentSort = this.value;
+      if (currentJson) renderSections(currentJson, currentSearch, currentSort);
+    });
+
+    // --- Keyboard navigation (basic) ---
+    document.addEventListener('keydown', function(e) {
+      if (!document.activeElement) return;
+      const cards = Array.from(document.querySelectorAll('.event-card'));
+      let idx = cards.indexOf(document.activeElement);
+      if (e.key === 'ArrowDown') {
+        if (idx >= 0 && idx < cards.length - 1) {
+          cards[idx + 1].focus();
+          e.preventDefault();
+        }
+      } else if (e.key === 'ArrowUp') {
+        if (idx > 0) {
+          cards[idx - 1].focus();
+          e.preventDefault();
+        }
       }
-      // "original" is default, no class needed
     });
   </script>
 </body>
