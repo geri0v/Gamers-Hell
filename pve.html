@@ -1,74 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gamers Hell</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gamers-Hell: Events & Timer</title>
   <style>
-    /* simple side-by-side containers */
-    html, body {
-      margin: 0; padding: 0; height: 100%;
-      font-family: monospace; background: #000; color: #0f0;
+    body {
+      background: #181c26;
+      color: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      background: #222;
+      color: #ffcc00;
+      padding: 1.1em 1em 1em 1em;
+      text-align: center;
+      position: relative;
+      font-size: 1.25em;
+      letter-spacing: 0.02em;
+      box-shadow: 0 2px 8px #0006;
+      z-index: 10;
+    }
+    .header-controls {
+      position: absolute;
+      top: 50%;
+      right: 1.2em;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 0.7em;
+      align-items: center;
+    }
+    .header-controls select,
+    .header-controls button {
+      border: 1px solid #ffcc00;
+      background: #181c26;
+      color: #ffcc00;
+      padding: 0.45em 1em;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .header-controls select:focus,
+    .header-controls button:focus {
+      outline: 2px solid #ffcc00;
     }
     .container {
-      display: flex; height: 100%;
+      flex: 1;
+      display: flex;
+      min-height: 0;
+      overflow: hidden;
     }
-    .panel {
-      flex: 1; overflow: auto; border-right: 1px solid #222;
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: #1e2630;
+      padding: 2em 0 2em 0;
+      overflow-y: auto;
     }
-    .panel:last-child { border-right: none; }
-  </style>
-</head>
-<body>
-
-  <div class="container">
-    <div id="cmd"   class="panel"></div>
-    <div id="timer" class="panel"></div>
-  </div>
-
-  <script>
-  (async function loadAll() {
-    async function loadPage(path, targetId) {
-      const raw = await fetch(path).then(r => r.text());
-      const doc = new DOMParser().parseFromString(raw, 'text/html');
-
-      // 1) import CSS (<link> + <style>)
-      doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-        const l = link.cloneNode();
-        l.href = new URL(link.href, path).href;
-        document.head.append(l);
-      });
-      doc.head.querySelectorAll('style').forEach(style => {
-        document.head.append(style.cloneNode(true));
-      });
-
-      // 2) inject body markup
-      const container = document.getElementById(targetId);
-      Array.from(doc.body.childNodes).forEach(node => {
-        container.appendChild(document.importNode(node, true));
-      });
-
-      // 3) re-run scripts in sequence
-      const scripts = doc.body.querySelectorAll('script');
-      for (let old of scripts) {
-        const s = document.createElement('script');
-        if (old.src) {
-          s.src = new URL(old.src, path).href;
-          s.async = false;
-          document.body.appendChild(s);
-          await new Promise(r => s.onload = r);
-        } else {
-          s.textContent = old.textContent;
-          document.body.appendChild(s);
-        }
+    aside {
+      width: 300px;
+      min-width: 220px;
+      max-width: 100vw;
+      background: #222;
+      color: #fff;
+      border-left: 1px solid #333;
+      border-radius: 12px 0 0 12px;
+      box-shadow: inset 0 0 6px #0004;
+      padding: 1.5em 1em 2em 1em;
+      overflow-y: auto;
+      z-index: 10;
+      transition: width 0.3s, padding 0.3s;
+    }
+    aside.hidden { display: none; }
+    .aside-header {
+      font-weight: bold;
+      color: #ffcc00;
+      font-size: 1.1em;
+      margin-bottom: 1em;
+      text-align: left;
+    }
+    aside select {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      min-width: 0;
+      font-size: 1em;
+      padding: 0.5em 0.7em;
+      border-radius: 6px;
+      border: 1px solid #444;
+      background: #1f1f1f;
+      color: #fff;
+      margin-bottom: 1em;
+    }
+    @media (max-width: 900px) {
+      .container { flex-direction: column; }
+      aside {
+        width: 100vw;
+        border-radius: 0;
+        border-left: none;
+        border-top: 1px solid #333;
+      }
+      main {
+        border-radius: 0 0 12px 12px;
+        padding: 1em 0.5em;
       }
     }
+    @media (max-width: 700px) {
+      main { padding: 0.5em 0; }
+    }
+    a {
+      color: #ffcc00;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    a:hover, a:focus {
+      color: #e84118;
+      outline: none;
+    }
+  </style>
+  <!-- GW2 web components -->
+  <script type="module" src="https://cdn.jsdelivr.net/gh/geri0v/Gamers-Hell/js/gw2-event-timer.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/gh/geri0v/Gamers-Hell/js/gh-events-loot.js"></script>
+</head>
+<body>
+  <header aria-label="Gamers-Hell: Events & Loot Explorer">
+    <span>🎮 Gamers-Hell: Events & Loot Explorer</span>
+    <span class="header-controls" role="region" aria-label="Theme and Sidebar Controls">
+      <label for="themeSelect" style="font-size:1em;">Theme:</label>
+      <select id="themeSelect" aria-label="Select theme">
+        <option value="darkglossy">Dark Glossy</option>
+        <option value="whiteglass">White Glass</option>
+      </select>
+      <button id="asideToggleBtn" aria-label="Toggle Timer Sidebar" title="Show or hide event timer sidebar">☰</button>
+    </span>
+  </header>
+  <div class="container">
+    <main aria-label="Main content" tabindex="-1">
+      <gh-events-loot id="eventsLoot" theme="darkglossy"></gh-events-loot>
+    </main>
+    <aside id="timerAside" aria-label="Event Timer Sidebar">
+      <div class="aside-header">Event Timer</div>
+      <gw2-event-timer></gw2-event-timer>
+      <nav aria-label="External Links" style="margin-top:2em;">
+        <a href="https://wiki.guildwars2.com/wiki/Event_timers" target="_blank" rel="noopener" aria-label="Official GW2 Event Timers Wiki">GW2 Event Timers Wiki</a>
+      </nav>
+    </aside>
+  </div>
+  <script>
+    // Theme switcher for gh-events-loot
+    const loot = document.getElementById('eventsLoot');
+    const themeSelect = document.getElementById('themeSelect');
+    themeSelect.addEventListener('change', function() {
+      loot.setAttribute('theme', this.value);
+    });
 
-    // load both panels
-    await loadPage('html/cmd.html', 'cmd');
-    await loadPage('html/timer.html', 'timer');
-  })();
+    // Sidebar (aside) toggle
+    const aside = document.getElementById('timerAside');
+    document.getElementById('asideToggleBtn').onclick = () => {
+      aside.classList.toggle('hidden');
+    };
   </script>
 </body>
 </html>
