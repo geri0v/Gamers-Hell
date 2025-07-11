@@ -1,107 +1,110 @@
-[
-  {
-    "name": "Eye of Zhaitan",
-    "expansion": "Core Tyria",
-    "map": "Straits of Devastation",
-    "code": "[&BPgCAAA=]",
-    "loot": [
-      {
-        "name": "Circle of Arah",
-        "id": 39320,
-        "code": "[&AgEzmgAA]"
-      }
-    ]
-  },
-  {
-    "name": "Rotbeard",
-    "expansion": "Core Tyria",
-    "map": "Cursed Shore",
-    "code": "[&BOQGAAA=]",
-    "loot": [
-      {
-        "name": "Rotbeard's Treasure",
-        "id": 39335,
-        "code": "[&AgEvmgAA]"
-      }
-    ]
-  },
-  {
-    "name": "Dredge Commissar",
-    "expansion": "Core Tyria",
-    "map": "Dredgehound Cliff’s",
-    "code": "[&BD8FAAA=]",
-    "loot": [
-      {
-        "name": "Commissar's Manifest",
-        "id": 39317,
-        "code": "[&AgEsmgAA]"
-      },
-      {
-        "name": "Dredge Commissar's Chest",
-        "id": 30696,
-        "code": "[&ClgSAAA=]"
-      }
-    ]
-  },
-  {
-    "name": "Ogre Wars",
-    "expansion": "Core Tyria",
-    "map": "Fields of Ruin",
-    "code": "[&BDwEAAA=]",
-    "loot": [
-      {
-        "name": "Ogre War Spoils",
-        "id": 39332,
-        "code": "[&AgGDtQAA]"
-      },
-      {
-        "name": "Ogre War Chest",
-        "id": 30701,
-        "code": "[&Cm4SAAA=]"
-      }
-    ]
-  },
-  {
-    "name": "Rhendak",
-    "expansion": "Core Tyria",
-    "map": "Diessa Plateau",
-    "code": "[&BNwAAAA=]",
-    "loot": [
-      {
-        "name": "Rhendak's Signet",
-        "id": 39328,
-        "code": "[&AgE5mgAA]"
-      },
-      {
-        "name": "Rhendak's Chest",
-        "id": 30728,
-        "code": "[&Ct4TAAA=]"
-      }
-    ]
-  },
-  {
-    "name": "Fire Shaman",
-    "expansion": "Core Tyria",
-    "map": "Iron Marches",
-    "code": "[&BO4BAAA=]",
-    "loot": [
-      {
-        "name": "Fire Shaman's Talisman",
-        "id": 39313,
-        "code": "[&CggUAAA=]"
-      },
-      {
-        "name": "Fire Shaman's Chest",
-        "id": 30714,
-        "code": "[&CgYUAAA=]"
-      }
-    ]
-  },
-  {
-    "name": "Nebo Terrace",
-    "expansion": "Core Tyria",
-    "map": "Gendarran Fields",
-    "code": "[&BIwBAAA=]",
-    "loot": []
-  }
-]
+{
+  "sourceName": "Valuable Events",
+  "events": [
+    {
+      "name": "Eye of Zhaitan",
+      "expansion": "Core Tyria",
+      "map": "Straits of Devastation",
+      "code": "[&BPgCAAA=]",
+      "loot": [
+        {
+          "name": "Circle of Arah",
+          "id": 39320,
+          "code": "[&AgEzmgAA]"
+        }
+      ]
+    },
+    {
+      "name": "Rotbeard",
+      "expansion": "Core Tyria",
+      "map": "Cursed Shore",
+      "code": "[&BOQGAAA=]",
+      "loot": [
+        {
+          "name": "Rotbeard's Treasure",
+          "id": 39335,
+          "code": "[&AgEvmgAA]"
+        }
+      ]
+    },
+    {
+      "name": "Dredge Commissar",
+      "expansion": "Core Tyria",
+      "map": "Dredgehound Cliff’s",
+      "code": "[&BD8FAAA=]",
+      "loot": [
+        {
+          "name": "Commissar's Manifest",
+          "id": 39317,
+          "code": "[&AgEsmgAA]"
+        },
+        {
+          "name": "Dredge Commissar's Chest",
+          "id": 30696,
+          "code": "[&ClgSAAA=]"
+        }
+      ]
+    },
+    {
+      "name": "Ogre Wars",
+      "expansion": "Core Tyria",
+      "map": "Fields of Ruin",
+      "code": "[&BDwEAAA=]",
+      "loot": [
+        {
+          "name": "Ogre War Spoils",
+          "id": 39332,
+          "code": "[&AgGDtQAA]"
+        },
+        {
+          "name": "Ogre War Chest",
+          "id": 30701,
+          "code": "[&Cm4SAAA=]"
+        }
+      ]
+    },
+    {
+      "name": "Rhendak",
+      "expansion": "Core Tyria",
+      "map": "Diessa Plateau",
+      "code": "[&BNwAAAA=]",
+      "loot": [
+        {
+          "name": "Rhendak's Signet",
+          "id": 39328,
+          "code": "[&AgE5mgAA]"
+        },
+        {
+          "name": "Rhendak's Chest",
+          "id": 30728,
+          "code": "[&Ct4TAAA=]"
+        }
+      ]
+    },
+    {
+      "name": "Fire Shaman",
+      "expansion": "Core Tyria",
+      "map": "Iron Marches",
+      "code": "[&BO4BAAA=]",
+      "loot": [
+        {
+          "name": "Fire Shaman's Talisman",
+          "id": 39313,
+          "code": "[&CggUAAA=]"
+        },
+        {
+          "name": "Fire Shaman's Chest",
+          "id": 30714,
+          "code": "[&CgYUAAA=]"
+        }
+      ]
+    },
+    {
+      "name": "Nebo Terrace",
+      "expansion": "Core Tyria",
+      "map": "Gendarran Fields",
+      "code": "[&BIwBAAA=]",
+      "loot": []
+    }
+  ]
+}
