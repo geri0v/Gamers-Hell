@@ -4,58 +4,96 @@
   <meta charset="UTF-8">
   <title>Gamers-Hell Unified</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Unified Overriding CSS with Dark/Light Theme Toggle -->
+  <!-- Global base styles for layout and theme only -->
   <style>
     :root {
-      --main-bg-dark: #181a1b;
-      --main-fg-dark: #f8f8f2;
-      --main-bg-light: #f8fcff;
-      --main-fg-light: #23272e;
       --accent: #2b4765;
       --accent-light: #3c6e8d;
-      --sidebar-bg-dark: #23272e;
-      --sidebar-fg-dark: #fff;
-      --sidebar-bg-light: #f0f0f0;
-      --sidebar-fg-light: #23272e;
-      --sidebar-width: 370px;
-      --transition: 0.3s cubic-bezier(.4,2,.6,1);
-      --radius: 14px;
-      --shadow: 0 8px 32px rgba(44,52,70,0.18);
-      --shadow-sidebar: -8px 0 36px rgba(44,52,70,0.23);
-      --border: 1px solid #222;
-      --border-light: 1px solid #ccc;
-      --table-header-bg-dark: #2b4765;
-      --table-header-bg-light: #e0e8f6;
+      --radius: 16px;
+      --sidebar-width: 360px;
+      --shadow: 0 4px 24px rgba(44,52,70,0.10);
+      --sidebar-z: 1000;
     }
     html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
-      min-height: 100vh;
       font-family: 'Segoe UI', Arial, sans-serif;
-      background: var(--main-bg-dark);
-      color: var(--main-fg-dark);
+      background: #181a1b;
+      color: #f8f8f2;
       transition: background 0.3s, color 0.3s;
+      min-height: 100vh;
+      min-width: 100vw;
+      overflow: hidden;
     }
     body.theme-light {
-      background: var(--main-bg-light);
-      color: var(--main-fg-light);
+      background: #f8fcff;
+      color: #23272e;
+    }
+    .theme-toggle-center {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1201;
+      pointer-events: auto;
+      user-select: auto;
+    }
+    .theme-toggle-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 8px 22px;
+      font-size: 1.08em;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0001;
+      transition: background 0.2s, color 0.2s;
+    }
+    .theme-toggle-btn:hover, .theme-toggle-btn:focus {
+      background: var(--accent-light);
+      color: #fff;
+      outline: none;
     }
     .container {
       display: flex;
-      min-height: 100vh;
+      height: 100vh;
       width: 100vw;
-      overflow-x: hidden;
+      overflow: hidden;
+      position: relative;
     }
     .main-content {
-      flex: 1 1 auto;
+      flex: 1 1 0;
       min-width: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-y: auto;
       background: inherit;
       color: inherit;
-      transition: filter 0.2s;
       padding: 0;
       box-sizing: border-box;
+      transition: background 0.3s, color 0.3s;
     }
-    /* Sidebar Styles */
+    .main-inner {
+      width: 100%;
+      max-width: 700px;
+      min-height: 70vh;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin: 48px 0 32px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-x: auto;
+      background: transparent;
+      transition: background 0.3s;
+      padding: 0;
+    }
     .sidebar {
       position: fixed;
       top: 0;
@@ -63,40 +101,39 @@
       width: var(--sidebar-width);
       max-width: 98vw;
       height: 100vh;
-      background: var(--sidebar-bg-dark);
-      color: var(--sidebar-fg-dark);
+      background: #23272e;
+      color: #fff;
       box-shadow: var(--shadow);
-      z-index: 1000;
+      z-index: var(--sidebar-z);
       display: flex;
       flex-direction: column;
       transform: translateX(100%);
-      transition: transform var(--transition), box-shadow 0.2s, background 0.3s, color 0.3s;
-      border-left: var(--border);
+      transition: transform 0.33s cubic-bezier(.4,2,.6,1), box-shadow 0.2s, background 0.3s, color 0.3s;
+      border-left: 1px solid #181a1b;
       overflow-y: auto;
     }
     body.theme-light .sidebar {
-      background: var(--sidebar-bg-light);
-      color: var(--sidebar-fg-light);
-      border-left: var(--border-light);
+      background: #f0f0f0;
+      color: #23272e;
+      border-left: 1px solid #ccc;
     }
     .sidebar.open {
       transform: translateX(0);
-      box-shadow: var(--shadow-sidebar);
     }
     .sidebar-toggle-btn {
       position: fixed;
       top: 18px;
-      right: 18px;
-      width: 44px;
-      height: 44px;
+      right: calc(var(--sidebar-width) + 12px);
+      width: 40px;
+      height: 40px;
       background: var(--accent);
       color: #fff;
       border: none;
-      border-radius: 4px;
+      border-radius: 7px;
       cursor: pointer;
       font-size: 22px;
-      z-index: 1100;
-      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      z-index: 1101;
+      box-shadow: 1px 1px 6px rgba(0,0,0,0.10);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -109,13 +146,6 @@
     .sidebar-toggle-btn:hover {
       background: var(--accent-light);
     }
-    /* Sidebar Content Container */
-    #sidebarContent {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 0 0 40px 0;
-    }
-    /* Main Content Loading/Error */
     .loading, .error {
       text-align: center;
       padding: 60px 0;
@@ -123,149 +153,30 @@
       font-size: 1.13em;
     }
     .error { color: #c00; }
-    /* Headings and Links */
-    h1, h2, h3, h4, h5, h6 {
-      color: var(--accent);
-      margin-top: 1.2em;
-      margin-bottom: 0.5em;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
-    body.theme-light h1, body.theme-light h2, body.theme-light h3, body.theme-light h4, body.theme-light h5, body.theme-light h6 {
-      color: var(--accent-light);
-    }
-    a {
-      color: #6ec6ff;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    a:hover, a:focus {
-      color: #f1c40f;
-      text-decoration: underline;
-    }
-    /* Form and control elements */
-    input, select, textarea, button {
-      font-family: inherit;
-      font-size: 1em;
-      border-radius: 6px;
-      border: 1px solid #444;
-      background: #23272e;
-      color: #fff;
-      margin: 0 4px 0 0;
-      padding: 6px 10px;
-      box-sizing: border-box;
-      outline: none;
-      transition: border 0.2s, background 0.2s, color 0.2s;
-    }
-    body.theme-light input, body.theme-light select, body.theme-light textarea, body.theme-light button {
-      background: #f0f0f0;
-      color: #23272e;
-      border: 1px solid #bbb;
-    }
-    input:focus, select:focus, textarea:focus, button:focus {
-      border-color: #f1c40f;
-      background: #181a1b;
-    }
-    body.theme-light input:focus, body.theme-light select:focus, body.theme-light textarea:focus, body.theme-light button:focus {
-      background: #fff;
-    }
-    button {
-      background: var(--accent);
-      color: #fff;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    button:hover {
-      background: var(--accent-light);
-    }
-    /* Table styling */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #181a1b;
-      color: var(--main-fg-dark);
-      margin-bottom: 1.5em;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: 0 2px 8px #0002;
-    }
-    body.theme-light table {
-      background: #fff;
-      color: var(--main-fg-light);
-    }
-    th, td {
-      padding: 8px 12px;
-      border-bottom: 1px solid #333;
-      text-align: left;
-    }
-    body.theme-light th, body.theme-light td {
-      border-bottom: 1px solid #ddd;
-    }
-    th {
-      background: var(--table-header-bg-dark);
-      color: #fff;
-      font-weight: 600;
-    }
-    body.theme-light th {
-      background: var(--table-header-bg-light);
-      color: #23272e;
-    }
-    tr:last-child td {
-      border-bottom: none;
-    }
-    /* Collapsible sections for categories */
-    details {
-      margin-bottom: 1em;
-      background: rgba(43,71,101,0.08);
-      border-radius: 8px;
-      padding: 5px 0 0 0;
-      transition: background 0.2s;
-    }
-    summary {
-      font-weight: bold;
-      font-size: 1.08em;
-      cursor: pointer;
-      outline: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      background: rgba(43,71,101,0.14);
-      color: var(--accent);
-      margin-bottom: 6px;
-      transition: background 0.2s, color 0.2s;
-    }
-    details[open] summary {
-      background: rgba(43,71,101,0.22);
-      color: #f1c40f;
-    }
     /* Responsive adjustments */
     @media (max-width: 900px) {
       .sidebar {
-        width: 100vw;
-        max-width: 100vw;
+        width: 99vw;
+        max-width: 99vw;
       }
       .sidebar-toggle-btn {
         right: 8px;
         top: 8px;
       }
+      .main-inner {
+        margin: 18px 0 18px 0;
+      }
     }
     @media (max-width: 600px) {
-      .main-content {
-        padding: 0 2vw;
+      .sidebar {
+        width: 100vw;
+        max-width: 100vw;
       }
-      #sidebarContent {
-        padding: 0 2vw 40px 2vw;
+      .main-inner {
+        margin: 8px 0 8px 0;
       }
     }
-    /* Prevent sidebar CSS from leaking out */
-    #sidebarContent * {
-      box-sizing: border-box;
-      font-family: inherit !important;
-      color: inherit !important;
-      background: inherit;
-    }
-    /* Scrollbar styling for sidebar */
+    /* Scrollbar styling */
     .sidebar, #sidebarContent {
       scrollbar-width: thin;
       scrollbar-color: #3c6e8d #23272e;
@@ -278,64 +189,175 @@
       background: #3c6e8d;
       border-radius: 6px;
     }
-    /* Timezone Selector Improvements */
-    .timezone-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 16px 0 18px 0;
-      padding: 0 20px 0 20px;
+    /* Prevent sidebar CSS from leaking out */
+    #sidebarContent * {
+      box-sizing: border-box;
+      font-family: inherit !important;
     }
-    .timezone-label {
-      font-size: 1em;
-      color: var(--accent);
-      font-weight: 500;
-    }
-    .theme-toggle-btn {
-      margin-left: auto;
-      background: transparent;
-      color: var(--accent);
-      border: 1px solid var(--accent);
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s, border 0.2s;
-    }
-    .theme-toggle-btn:hover {
-      background: var(--accent);
-      color: #fff;
+    /* Always show vertical scrollbars for both main and sidebar for usability */
+    .main-content, .sidebar {
+      overflow-y: auto;
     }
   </style>
 </head>
 <body>
+  <div class="theme-toggle-center">
+    <button id="themeToggleBtn" class="theme-toggle-btn" type="button" aria-label="Toggle theme">☀️ Light</button>
+  </div>
   <div class="container">
-    <div class="main-content" id="mainContent">
-      <div class="loading" id="mainLoading">Loading main content…</div>
-    </div>
-    <nav class="sidebar" id="sidebar" aria-label="Event Timer" tabindex="-1">
-      <div id="sidebarContent">
-        <div class="loading">Loading sidebar…</div>
+    <main class="main-content" id="mainContent">
+      <div class="main-inner" id="mainInner">
+        <div class="loading">Loading main content…</div>
       </div>
-    </nav>
+    </main>
+    <aside class="sidebar" id="sidebar" aria-label="Event Timer" tabindex="-1">
+      <div id="sidebarContent">
+        <div class="loading">Loading timer…</div>
+      </div>
+    </aside>
     <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Show or hide sidebar" tabindex="0">&laquo;</button>
   </div>
-  <!-- Theme toggle and timezone selector will be injected -->
   <script>
-    // THEME TOGGLE
+    // THEME TOGGLE LOGIC
     function setTheme(theme) {
       document.body.classList.toggle('theme-light', theme === 'light');
       localStorage.setItem('ghc-theme', theme);
       document.getElementById('themeToggleBtn').textContent = theme === 'light' ? '🌙 Dark' : '☀️ Light';
+      // Propagate .theme-light to both main and sidebar content
+      document.getElementById('mainInner').classList.toggle('theme-light', theme === 'light');
+      document.getElementById('sidebarContent').classList.toggle('theme-light', theme === 'light');
+      // If timer or cmd.html have their own theme toggling, trigger it here if needed
+      if(window.updateThemeForModules) window.updateThemeForModules(theme);
     }
     function toggleTheme() {
       const isLight = document.body.classList.contains('theme-light');
       setTheme(isLight ? 'dark' : 'light');
     }
-    // Inject theme toggle and timezone selector into sidebar after load
+    (() => {
+      const theme = localStorage.getItem('ghc-theme') || 'dark';
+      if (theme === 'light') document.body.classList.add('theme-light');
+      window.addEventListener('DOMContentLoaded', () => setTheme(theme));
+    })();
+    document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+
+    // SIDEBAR TOGGLE LOGIC
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('sidebarToggleBtn');
+    let sidebarOpen = false;
+    function toggleSidebar() {
+      sidebarOpen = !sidebarOpen;
+      sidebar.classList.toggle('open', sidebarOpen);
+      toggleBtn.innerHTML = sidebarOpen ? '&raquo;' : '&laquo;';
+      toggleBtn.setAttribute('aria-label', sidebarOpen ? 'Hide sidebar' : 'Show sidebar');
+      if (sidebarOpen) sidebar.focus();
+    }
+    toggleBtn.addEventListener('click', toggleSidebar);
+    toggleBtn.addEventListener('keydown', function(e) {
+      if (e.key === "Enter" || e.key === " ") {
+        toggleSidebar();
+        e.preventDefault();
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "Escape" && sidebarOpen) {
+        toggleSidebar();
+      }
+    });
+
+    // DYNAMIC CONTENT LOADING HELPERS
+    function extractParts(html, baseUrl) {
+      let head = '', body = html;
+      const headMatch = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
+      if (headMatch) head = headMatch[1];
+      const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+      if (bodyMatch) body = bodyMatch[1];
+      function absolutizePaths(str) {
+        return str.replace(/(href|src)=["'](?!https?:|\/\/|#|data:)([^"']+)["']/gi, (m, attr, path) => {
+          let abs = baseUrl.replace(/\/[^\/]*$/, '/') + path.replace(/^\.?\//, '');
+          return `${attr}="${abs}"`;
+        });
+      }
+      return {
+        head: absolutizePaths(head),
+        body: absolutizePaths(body)
+      };
+    }
+    function injectHeadCSS(headHtml) {
+      // Remove previous dynamic styles/links
+      document.querySelectorAll('link[data-dynamic], style[data-dynamic]').forEach(el => el.remove());
+      const temp = document.createElement('div');
+      temp.innerHTML = headHtml;
+      temp.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+        const newLink = document.createElement('link');
+        newLink.rel = 'stylesheet';
+        newLink.href = link.href;
+        newLink.setAttribute('data-dynamic', 'true');
+        document.head.appendChild(newLink);
+      });
+      temp.querySelectorAll('style').forEach(style => {
+        const newStyle = document.createElement('style');
+        newStyle.textContent = style.textContent;
+        newStyle.setAttribute('data-dynamic', 'true');
+        document.head.appendChild(newStyle);
+      });
+    }
+    function executeScripts(container) {
+      Array.from(container.querySelectorAll('script')).forEach(oldScript => {
+        const newScript = document.createElement('script');
+        if (oldScript.src) {
+          newScript.src = oldScript.src;
+        } else {
+          newScript.textContent = oldScript.textContent;
+        }
+        if (oldScript.type) newScript.type = oldScript.type;
+        container.appendChild(newScript);
+        oldScript.remove();
+      });
+    }
+
+    // LOAD MAIN CONTENT (cmd.html)
+    fetch('https://geri0v.github.io/Gamers-Hell/html/cmd.html')
+      .then(response => {
+        if (!response.ok) throw new Error('Main content not found');
+        return response.text();
+      })
+      .then(html => {
+        const parts = extractParts(html, 'https://geri0v.github.io/Gamers-Hell/html/cmd.html');
+        injectHeadCSS(parts.head);
+        const mainInner = document.getElementById('mainInner');
+        mainInner.innerHTML = parts.body;
+        executeScripts(mainInner);
+      })
+      .catch(error => {
+        document.getElementById('mainInner').innerHTML = "<div class='error'>Failed to load main content.</div>";
+        console.error(error);
+      });
+
+    // LOAD SIDEBAR CONTENT (timer.html)
+    fetch('https://geri0v.github.io/Gamers-Hell/html/timer.html')
+      .then(response => {
+        if (!response.ok) throw new Error('Sidebar content not found');
+        return response.text();
+      })
+      .then(html => {
+        const parts = extractParts(html, 'https://geri0v.github.io/Gamers-Hell/html/timer.html');
+        injectHeadCSS(parts.head); // Timer may have its own CSS
+        const sidebarContent = document.getElementById('sidebarContent');
+        sidebarContent.innerHTML = parts.body;
+        executeScripts(sidebarContent);
+        setTimeout(() => {
+          injectSidebarEnhancements();
+          document.dispatchEvent(new Event('timezoneChanged'));
+        }, 200);
+      })
+      .catch(error => {
+        document.getElementById('sidebarContent').innerHTML = "<div class='error'>Failed to load sidebar.</div>";
+        console.error(error);
+      });
+
+    // SIDEBAR ENHANCEMENTS (timezone, theme toggle)
     function injectSidebarEnhancements() {
       const sidebarContent = document.getElementById('sidebarContent');
-      // Find or create timezone selector and label
       let tzSel = sidebarContent.querySelector('#timezoneSelect');
       let tzLabel = sidebarContent.querySelector('label[for="timezoneSelect"]');
       if (!tzSel) {
@@ -348,17 +370,6 @@
         tzLabel.className = 'timezone-label';
         tzLabel.textContent = 'Timezone:';
       }
-      // Theme toggle button
-      let themeBtn = document.getElementById('themeToggleBtn');
-      if (!themeBtn) {
-        themeBtn = document.createElement('button');
-        themeBtn.id = 'themeToggleBtn';
-        themeBtn.className = 'theme-toggle-btn';
-        themeBtn.type = 'button';
-        themeBtn.textContent = '☀️ Light';
-        themeBtn.onclick = toggleTheme;
-      }
-      // Container
       let tzContainer = sidebarContent.querySelector('.timezone-container');
       if (!tzContainer) {
         tzContainer = document.createElement('div');
@@ -368,9 +379,7 @@
       tzContainer.innerHTML = '';
       tzContainer.appendChild(tzLabel);
       tzContainer.appendChild(tzSel);
-      tzContainer.appendChild(themeBtn);
 
-      // Populate timezone select
       let zones = [];
       try {
         zones = Intl.supportedValuesOf('timeZone');
@@ -390,154 +399,18 @@
       });
       tzSel.addEventListener('change', function() {
         localStorage.setItem('ghc-timezone', this.value);
-        // If the timer exposes a refresh function, call it
         if (window.updateEvents) window.updateEvents();
+        document.dispatchEvent(new Event('timezoneChanged'));
       });
     }
 
-    // Extract <head> and <body> content, fix resource paths
-    function extractParts(html, baseUrl) {
-      let head = '', body = html;
-      const headMatch = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
-      if (headMatch) head = headMatch[1];
-      const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-      if (bodyMatch) body = bodyMatch[1];
-
-      function absolutizePaths(str) {
-        return str.replace(/(href|src)=["'](?!https?:|\/\/|#|data:)([^"']+)["']/gi, (m, attr, path) => {
-          let abs = baseUrl.replace(/\/[^\/]*$/, '/') + path.replace(/^\.?\//, '');
-          return `${attr}="${abs}"`;
-        });
-      }
-      return {
-        head: absolutizePaths(head),
-        body: absolutizePaths(body)
-      };
-    }
-
-    // Inject CSS from <head>
-    function injectHeadCSS(headHtml) {
-      document.querySelectorAll('link[data-dynamic], style[data-dynamic]').forEach(el => el.remove());
-      const temp = document.createElement('div');
-      temp.innerHTML = headHtml;
-      temp.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-        const newLink = document.createElement('link');
-        newLink.rel = 'stylesheet';
-        newLink.href = link.href;
-        newLink.setAttribute('data-dynamic', 'true');
-        document.head.appendChild(newLink);
-      });
-      temp.querySelectorAll('style').forEach(style => {
-        const newStyle = document.createElement('style');
-        newStyle.textContent = style.textContent;
-        newStyle.setAttribute('data-dynamic', 'true');
-        document.head.appendChild(newStyle);
-      });
-    }
-
-    // Execute scripts in a container
-    function executeScripts(container) {
-      document.querySelectorAll('script[data-dynamic]').forEach(el => el.remove());
-      Array.from(container.querySelectorAll('script')).forEach(oldScript => {
-        const newScript = document.createElement('script');
-        if (oldScript.src) {
-          newScript.src = oldScript.src;
-        } else {
-          newScript.textContent = oldScript.textContent;
-        }
-        newScript.setAttribute('data-dynamic', 'true');
-        if (oldScript.type) newScript.type = oldScript.type;
-        document.body.appendChild(newScript);
-        oldScript.remove();
-      });
-    }
-
-    // Load main content
-    fetch('https://geri0v.github.io/Gamers-Hell/html/cmd.html')
-      .then(response => {
-        if (!response.ok) throw new Error('Main content not found');
-        return response.text();
-      })
-      .then(html => {
-        const parts = extractParts(html, 'https://geri0v.github.io/Gamers-Hell/html/cmd.html');
-        injectHeadCSS(parts.head);
-        document.getElementById('mainContent').innerHTML = parts.body;
-        executeScripts(document.getElementById('mainContent'));
-      })
-      .catch(error => {
-        document.getElementById('mainContent').innerHTML = "<div class='error'>Failed to load main content.</div>";
-        console.error(error);
-      });
-
-    // Load sidebar content
-    fetch('https://geri0v.github.io/Gamers-Hell/html/timer.html')
-      .then(response => {
-        if (!response.ok) throw new Error('Sidebar content not found');
-        return response.text();
-      })
-      .then(html => {
-        const parts = extractParts(html, 'https://geri0v.github.io/Gamers-Hell/html/timer.html');
-        injectHeadCSS(parts.head);
-        document.getElementById('sidebarContent').innerHTML = parts.body;
-        executeScripts(document.getElementById('sidebarContent'));
-        setTimeout(injectSidebarEnhancements, 200); // Wait for sidebar DOM to render
-      })
-      .catch(error => {
-        document.getElementById('sidebarContent').innerHTML = "<div class='error'>Failed to load sidebar.</div>";
-        console.error(error);
-      });
-
-    // Sidebar toggle logic
-    const sidebar = document.getElementById('sidebar');
-    const toggleBtn = document.getElementById('sidebarToggleBtn');
-    let sidebarOpen = false;
-    function toggleSidebar() {
-      sidebarOpen = !sidebarOpen;
-      sidebar.classList.toggle('open', sidebarOpen);
-      toggleBtn.innerHTML = sidebarOpen ? '&raquo;' : '&laquo;';
-      toggleBtn.setAttribute('aria-label', sidebarOpen ? 'Hide sidebar' : 'Show sidebar');
-      if (sidebarOpen) {
-        sidebar.focus();
-      }
-    }
-    toggleBtn.addEventListener('click', toggleSidebar);
-    toggleBtn.addEventListener('keydown', function(e) {
-      if (e.key === "Enter" || e.key === " ") {
-        toggleSidebar();
-        e.preventDefault();
-      }
-    });
-    document.addEventListener('keydown', function(e) {
-      if (e.key === "Escape" && sidebarOpen) {
-        toggleSidebar();
-      }
-    });
-
-    // Theme on load
-    (() => {
-      const theme = localStorage.getItem('ghc-theme') || 'dark';
-      if (theme === 'light') document.body.classList.add('theme-light');
-      window.addEventListener('DOMContentLoaded', () => {
-        // Add theme toggle if not present
-        if (!document.getElementById('themeToggleBtn')) {
-          const btn = document.createElement('button');
-          btn.id = 'themeToggleBtn';
-          btn.className = 'theme-toggle-btn';
-          btn.type = 'button';
-          btn.textContent = theme === 'light' ? '🌙 Dark' : '☀️ Light';
-          btn.onclick = toggleTheme;
-          document.body.appendChild(btn);
-        }
-      });
-    })();
-
-    // Collapsible details for Core Tyria and subcategories (ensure open/close works)
+    // Collapsible details for categories (only one open at a time)
     document.addEventListener('click', function(e) {
       if (e.target.tagName === 'SUMMARY') {
-        // Only allow one main category open at a time (optional)
-        if (e.target.parentElement.parentElement) {
-          Array.from(document.querySelectorAll('details')).forEach(d => {
-            if (d !== e.target.parentElement && d.open && d.parentElement === e.target.parentElement.parentElement) d.open = false;
+        const parentDetails = e.target.closest('details');
+        if (parentDetails) {
+          Array.from(parentDetails.parentElement.querySelectorAll('details')).forEach(d => {
+            if (d !== parentDetails) d.removeAttribute('open');
           });
         }
       }
