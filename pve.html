@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gamers-Hell Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #181a1b;
+      color: #f4f4f4;
+    }
+    body {
+      display: flex;
+      min-height: 100vh;
+    }
+    #sidebar {
+      width: 320px;
+      background: #23272a;
+      padding: 24px 16px;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.10);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      transition: width 0.2s;
+    }
+    #main-content {
+      flex: 1;
+      padding: 40px 24px;
+      background: #202225;
+      min-height: 100vh;
+      box-sizing: border-box;
+      overflow-x: auto;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 2rem;
+      color: #7289da;
+      letter-spacing: 1px;
+    }
+    @media (max-width: 900px) {
+      body { flex-direction: column; }
+      #sidebar { width: 100%; min-height: unset; box-shadow: none; }
+      #main-content { padding: 16px; }
+    }
+    .section-title {
+      margin: 0 0 16px 0;
+      font-size: 1.2rem;
+      color: #43b581;
+      letter-spacing: 0.5px;
+    }
+    /* Scrollbar styling */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-thumb { background: #2c2f33; border-radius: 4px; }
+    ::-webkit-scrollbar-track { background: #181a1b; }
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+    <div class="section-title">Timer</div>
+    <div id="timer-container">Loading timer...</div>
+  </div>
+  <div id="main-content">
+    <div class="section-title">Command Center</div>
+    <div id="cmd-container">Loading commands...</div>
+  </div>
+  <script>
+    // Helper to load HTML content into a target element
+    async function loadHTML(url, targetId) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Failed to load ' + url);
+        const html = await res.text();
+        document.getElementById(targetId).innerHTML = html;
+      } catch (e) {
+        document.getElementById(targetId).textContent = 'Error loading content.';
+      }
+    }
+
+    // Helper to dynamically load a JS file
+    function loadScript(url) {
+      const script = document.createElement('script');
+      script.src = url;
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+
+    // Helper to dynamically load a CSS file
+    function loadCSS(url) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = url;
+      document.head.appendChild(link);
+    }
+
+    // Load timer and command sections
+    window.addEventListener('DOMContentLoaded', () => {
+      loadHTML('html/timer.html', 'timer-container');
+      loadHTML('html/cmd.html', 'cmd-container');
+      // Uncomment and edit the following lines if you have extra JS/CSS files:
+      // loadScript('js/timer.js');
+      // loadScript('js/cmd.js');
+      // loadCSS('css/timer.css');
+      // loadCSS('css/cmd.css');
+    });
+  </script>
+</body>
+</html>
