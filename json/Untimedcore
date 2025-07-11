@@ -1,0 +1,111 @@
+[
+  {
+    "name": "Eye of Zhaitan",
+    "expansion": "Core Tyria",
+    "map": "Straits of Devastation",
+    "code": "[&BPgCAAA=]",
+    "loot": [
+      {
+        "name": "Circle of Arah",
+        "id": 39320
+      },
+      {
+        "code": "[&AgEzmgAA]",
+        "name": "Eye of Zhaitan's Loot",
+        "id": 39321
+      }
+    ]
+  },
+  {
+    "name": "Rotbeard",
+    "expansion": "Core Tyria",
+    "map": "Cursed Shore",
+    "code": "[&BOQGAAA=]",
+    "loot": [
+      {
+        "code": "[&AgEvmgAA]",
+        "name": "Rotbeard's Loot",
+        "id": 39322
+      }
+    ]
+  },
+  {
+    "name": "Dredge Commissar",
+    "expansion": "Core Tyria",
+    "map": "Dredgehound Cliff’s",
+    "code": "[&BD8FAAA=]",
+    "loot": [
+      {
+        "code": "[&AgEsmgAA]",
+        "name": "Dredge Commissar's Loot",
+        "id": 39323
+      },
+      {
+        "code": "[&ClgSAAA=]",
+        "name": "Dredge Commissar's Loot",
+        "id": 39324
+      }
+    ]
+  },
+  {
+    "name": "Ogre Wars",
+    "expansion": "Core Tyria",
+    "map": "Fields of Ruin",
+    "code": "[&BDwEAAA=]",
+    "loot": [
+      {
+        "code": "[&AgGDtQAA]",
+        "name": "Ogre Wars Loot",
+        "id": 39325
+      },
+      {
+        "code": "[&Cm4SAAA=]",
+        "name": "Ogre Wars Loot",
+        "id": 39326
+      }
+    ]
+  },
+  {
+    "name": "Rhendak",
+    "expansion": "Core Tyria",
+    "map": "Diessa Plateau",
+    "code": "[&BNwAAAA=]",
+    "loot": [
+      {
+        "code": "[&AgE5mgAA]",
+        "name": "Rhendak's Loot",
+        "id": 39327
+      },
+      {
+        "code": "[&Ct4TAAA=]",
+        "name": "Rhendak's Loot",
+        "id": 39328
+      }
+    ]
+  },
+  {
+    "name": "Fire Shaman",
+    "expansion": "Core Tyria",
+    "map": "Iron Marches",
+    "code": "[&BO4BAAA=]",
+    "loot": [
+      {
+        "code": "[&CggUAAA=]",
+        "name": "Fire Shaman's Loot",
+        "id": 39329
+      },
+      {
+        "code": "[&CgYUAAA=]",
+        "name": "Fire Shaman's Loot",
+        "id": 39330
+      }
+    ]
+  },
+  {
+    "name": "Nebo Terrace",
+    "expansion": "Core Tyria",
+    "map": "Gendarran Fields",
+    "code": "[&BIwBAAA=]",
+    "loot": []
+  }
+]
