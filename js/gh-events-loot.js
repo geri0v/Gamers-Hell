@@ -1,266 +1,67 @@
 class GhEventsLoot extends HTMLElement {
-  static get observedAttributes() { return ['theme']; }
-
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-
-    // Insert HTML and CSS into the Shadow DOM
     this.shadowRoot.innerHTML = `
       <style>
-        :host([theme="darkglossy"]) {
-          --card-bg: linear-gradient(135deg, rgba(24,28,38,0.98) 80%, rgba(60,110,141,0.13) 100%);
-          --accent: #ffcc00;
-          --fg: #fff;
-          --loot-table-header-bg: rgba(60,110,141,0.15);
-          --loot-table-border: 1px solid rgba(43,71,101,0.18);
-          --loot-muted: #aaa;
-          --glass-blur: blur(10px) saturate(1.4);
-        }
-        :host([theme="whiteglass"]) {
-          --card-bg: linear-gradient(120deg, rgba(255,255,255,0.95) 80%, rgba(43,71,101,0.07) 100%);
-          --accent: #2b4765;
-          --fg: #222;
-          --loot-table-header-bg: #e0e8f6;
-          --loot-table-border: 1px solid #dde6f2;
-          --loot-muted: #607080;
-          --glass-blur: blur(8px) saturate(1.2);
-        }
         :host {
-          --card-bg: linear-gradient(135deg, rgba(24,28,38,0.98) 80%, rgba(60,110,141,0.13) 100%);
-          --accent: #ffcc00;
-          --fg: #fff;
-          --loot-table-header-bg: rgba(60,110,141,0.15);
-          --loot-table-border: 1px solid rgba(43,71,101,0.18);
-          --loot-muted: #aaa;
-          --glass-blur: blur(10px) saturate(1.4);
+          --main-bg: #1e2630;
+          --main-fg: #f3f7fa;
+          --card-bg: linear-gradient(135deg, #232c3b 80%, #4a90e2 100%);
+          --search-bg: #222a35;
+          --input-bg: #2c3746;
+          --input-fg: #e1e6ed;
+          --copy-bar-bg: #243049;
+          --copy-btn-bg: linear-gradient(135deg, #3b4b63 60%, #4a90e2 100%);
+          --accent: #4a90e2;
+          --table-th: #4a90e2;
+          --table-border: #3b4b63;
+          --section-title-bg: #232c3b;
+          --section-title-fg: #e1e6ed;
+          --section-title-hover-bg: #4a90e2;
+          --section-title-hover-fg: #fff;
+          --spinner-size: 36px;
+          --transition: 0.2s cubic-bezier(.4,0,.2,1);
         }
-        .loot-panel {
-          max-width: 820px;
-          margin: 2em auto 0 auto;
-        }
-        .search-bar-container {
-          display: flex;
-          gap: 0.7em;
-          align-items: center;
-          margin-bottom: 1.5em;
-          background: rgba(0,0,0,0.06);
-          border-radius: 8px;
-          padding: 0.7em 1em;
-        }
-        .search-input {
-          flex: 1;
-          padding: 0.6em 1em;
-          border-radius: 7px;
-          border: 1px solid #bbb;
-          font-size: 1.05em;
-          background: #fff;
-          color: #222;
-        }
-        .search-clear-btn {
-          background: var(--accent);
-          color: #222;
-          border: none;
-          border-radius: 5px;
-          font-size: 1.2em;
-          padding: 0.2em 0.7em;
-          cursor: pointer;
-        }
-        .search-clear-btn:focus {
-          outline: 2px solid var(--accent);
-        }
-        select {
-          border-radius: 7px;
-          border: 1px solid #bbb;
-          font-size: 1.05em;
-          padding: 0.6em 1em;
-        }
-        .section-title, .source-title {
-          background: none;
-          border: none;
-          color: var(--accent);
-          font-size: 1.15em;
-          font-weight: bold;
-          margin: 1.2em 0 0.2em 0;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          gap: 0.5em;
-          transition: color 0.2s;
-        }
-        .section-title.collapsed .arrow,
-        .source-title.collapsed .arrow {
-          transform: rotate(-90deg);
-        }
-        .arrow {
-          display: inline-block;
-          transition: transform 0.2s;
-        }
-        .event-list {
-          margin-bottom: 1em;
-        }
-        .event-card {
-          background: var(--card-bg);
-          color: var(--fg);
-          border-radius: 16px;
-          box-shadow: 0 8px 40px #0007, 0 1.5px 4px #0003;
-          padding: 2em 1.5em;
-          margin-bottom: 2em;
-          backdrop-filter: var(--glass-blur);
-          border: 1.5px solid rgba(43,71,101,0.13);
-          transition: background 0.3s, color 0.3s;
-          position: relative;
-          animation: fadeIn .5s cubic-bezier(.4,2,.6,1);
-        }
-        .event-card:focus-within, .event-card:hover {
-          box-shadow: 0 12px 48px #0009;
-          outline: 2px solid var(--accent);
-        }
-        .event-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 1em;
-          margin-bottom: .7em;
-        }
-        .event-title {
-          font-size: 1.18em;
-          font-weight: bold;
-          color: var(--accent);
-        }
-        .event-location {
-          font-size: 1.03em;
-          color: #e6b800;
-          margin-left: 0.7em;
-        }
-        .copy-bar {
-          display: flex;
-          align-items: center;
-          gap: .5em;
-          margin-bottom: .6em;
-        }
-        .copy-bar input {
-          flex: 1;
-          border-radius: 5px;
-          border: 1px solid #444;
-          background: #222;
-          color: #fff;
-          font-size: 1em;
-          padding: 0.2em 0.6em;
-        }
-        .copy-bar button {
-          background: var(--accent);
-          color: #222;
-          border: none;
-          border-radius: 5px;
-          padding: 0.3em 1.1em;
-          font-size: 1em;
-          cursor: pointer;
-          transition: background 0.2s;
-        }
-        .copy-bar button.copied {
-          background: #2ecc40;
-          color: #fff;
-        }
-        .copy-msg {
-          display: none;
-          margin-left: 0.4em;
-          color: #2ecc40;
-          font-weight: bold;
-          font-size: 1em;
-        }
-        .drops-toggle {
-          background: var(--accent);
-          color: #222;
-          border: none;
-          border-radius: 5px;
-          padding: 0.3em 1.1em;
-          font-size: 1em;
-          cursor: pointer;
-          box-shadow: 0 2px 8px #0002;
-          transition: background 0.2s, color 0.2s;
-        }
-        .drops-toggle[aria-expanded="true"] {
-          background: #222;
-          color: var(--accent);
-        }
-        .loot-list { display: none; }
-        .loot-list.active { display: block; animation: fadeIn 0.4s; }
-        .loot-table {
-          width: 100%;
-          border-collapse: separate;
-          border-spacing: 0;
-          margin-bottom: 1em;
-          background: none;
-        }
-        .loot-table th, .loot-table td {
-          padding: 0.7em 0.8em;
-          text-align: left;
-          font-size: 1em;
-        }
-        .loot-table th {
-          background: var(--loot-table-header-bg);
-          color: var(--accent);
-          font-weight: 700;
-          border-bottom: var(--loot-table-border);
-        }
-        .loot-table td {
-          border-bottom: var(--loot-table-border);
-          color: var(--fg);
-        }
-        .icon-cell img {
-          width: 28px; height: 28px; vertical-align: middle; margin-right: 0.5em; border-radius: 4px;
-          box-shadow: 0 2px 6px #0004;
-        }
-        .loot-table .muted {
-          color: var(--loot-muted);
-          font-size: 0.96em;
-        }
-        .loot-table a {
-          color: var(--accent);
-          text-decoration: underline dotted;
-          margin-left: 0.3em;
-          font-size: 0.98em;
-        }
-        .loot-table a:hover {
-          color: #e84118;
-        }
-        .event-notes {
-          color: #aaa;
-          font-size: 0.97em;
-          margin-top: 0.6em;
-          background: rgba(255,255,255,0.03);
-          border-radius: 6px;
-          padding: 0.5em 0.8em;
-        }
-        .empty-state {
-          text-align: center;
-          color: #aaa;
-          margin: 3em 0;
-        }
-        .empty-state img {
-          width: 120px;
-          opacity: 0.7;
-        }
-        @keyframes fadeIn {
-          from { opacity:0; transform:translateY(24px);}
-          to   { opacity:1; transform:none;}
-        }
-        @media (max-width: 700px) {
-          .loot-panel {
-            padding: 1em 0.5em;
-            font-size: 1em;
-          }
-          .event-card {
-            padding: 0.7em 0.3em 1em 0.3em;
-            font-size: 1em;
-          }
-          .loot-table th, .loot-table td {
-            padding: 0.45em 0.3em;
-          }
-        }
+        .main { max-width: 950px; margin: 2em auto; background: var(--main-bg); padding: 2em 1.5em; border-radius: 16px; box-shadow: 0 4px 24px #0003; min-width: 0; position: relative; }
+        .search-bar-container { display: flex; gap: 1em; margin-bottom: 2em; background: var(--search-bg); padding: 1em; border-radius: 10px; align-items: center; position: sticky; top: 0; z-index: 8; }
+        .search-input { padding: 0.7em; border-radius: 6px; border: none; background: var(--input-bg); color: var(--input-fg); font-size: 1.1em; flex: 1; outline: none; }
+        .search-clear-btn, .reload-btn { background: none; border: none; font-size: 1.5em; color: var(--accent); cursor: pointer; margin-left: -2em; margin-right: 0.5em; padding: 0 0.3em; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
+        .reload-btn { background: var(--accent); color: #fff; font-size: 1.1em; padding: 0.5em 1.2em; font-weight: bold; margin-left: 0.5em; box-shadow: 0 2px 8px #0002; }
+        .copy-bar { display: flex; align-items: center; gap: 0.5em; background: var(--copy-bar-bg); border-radius: 8px; margin-bottom: 1em; padding: 0.7em 1em; }
+        .copy-bar input { flex: 1; padding: 0.4em; border-radius: 4px; border: none; background: var(--input-bg); color: var(--input-fg); font-size: 1em; outline: none; }
+        .copy-bar button { padding: 0.4em 1.5em; border-radius: 4px; border: none; background: var(--copy-btn-bg); color: #fff; cursor: pointer; font-weight: bold; min-width: 50px; min-height: 32px; box-shadow: 0 2px 6px #0002; font-size: 1em; display: flex; align-items: center; gap: 0.4em; }
+        .copy-bar button.copied { background: #4a90e2 !important; color: #fff !important; transform: scale(1.08); }
+        .copy-bar .copy-msg { display:none; color:#6f6; margin-left: 0.5em; }
+        .section-title { background: var(--section-title-bg); color: var(--section-title-fg); padding: 1em 1.2em; border-radius: 12px; font-size: 1.25em; font-weight: bold; margin-bottom: 1.5em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.7em; box-shadow: 0 2px 12px #0002; border: none; outline: none; width: 100%; max-width: 480px; margin: 0 auto 1.5em auto; user-select: none; }
+        .section-title .arrow { font-size: 1.1em; transition: transform var(--transition); }
+        .section-title.collapsed .arrow { transform: rotate(-90deg); }
+        .source-title { background: var(--card-bg); color: var(--accent); font-size: 1.1em; border: none; border-radius: 8px; margin: 1em auto 0.5em auto; padding: 0.8em 1em; display: flex; align-items: center; justify-content: center; max-width: 340px; width: 100%; cursor: pointer; }
+        .source-title .arrow { margin-left: 0.7em; }
+        .event-list { margin-top: 2em; }
+        .event-card { background: var(--card-bg); margin-bottom: 2em; padding: 1.5em; border-radius: 12px; box-shadow: 0 2px 12px #0004; transition: background var(--transition), box-shadow var(--transition), transform var(--transition); outline: none; min-width: 0; cursor: pointer; }
+        .event-card:focus-visible, .event-card:hover { box-shadow: 0 8px 32px #4a90e2bb, 0 2px 12px #0004; z-index: 2; }
+        .event-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; cursor: pointer; }
+        .event-title { font-size: 1.2em; font-weight: bold; }
+        .event-location { font-size: 0.98em; color: #b3c6e0; margin-left: 1em; }
+        .drops-toggle { background: none; border: none; color: var(--accent); font-size: 1em; cursor: pointer; margin-left: auto; padding: 0.3em 0.7em; border-radius: 4px; min-width: 44px; min-height: 44px; display: flex; align-items: center; gap: 0.3em; }
+        .drops-toggle svg { width: 1.2em; height: 1.2em; vertical-align: middle; }
+        .drops-toggle:hover, .drops-toggle:focus-visible { background: #2c3746; color: #fff; }
+        .loot-list { max-height: 0; overflow: hidden; margin-top: 1em; background: #222a35; padding: 0 1em; border-radius: 8px; transition: max-height 0.35s cubic-bezier(.4,0,.2,1), padding 0.2s; }
+        .loot-list.active { max-height: 1000px; padding: 1em; }
+        .loot-table { width: 100%; border-collapse: collapse; margin-top: 0.5em; min-width: 400px; }
+        .loot-table th, .loot-table td { padding: 0.4em 0.7em; text-align: left; }
+        .loot-table th { color: var(--table-th); font-weight: bold; border-bottom: 1px solid var(--table-border); }
+        .loot-table td { border-bottom: 1px solid var(--table-border); }
+        .loot-table .icon-cell img { width: 22px; height: 22px; vertical-align: middle; margin-right: 6px; border-radius: 3px; background: #111; }
+        .event-notes { font-size: 0.95em; color: #b3c6e0; margin-top: 0.7em; }
+        .spinner { display: inline-block; width: var(--spinner-size); height: var(--spinner-size); border: 4px solid #4a90e2; border-top: 4px solid #263142; border-radius: 50%; animation: spin 1s linear infinite; margin: 2em auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .empty-state { text-align: center; color: #b3c6e0; margin: 2em 0; font-size: 1.2em; }
+        .empty-state img { width: 80px; margin-bottom: 1em; opacity: 0.7; }
+        mark { background: #4a90e2; color: #fff; border-radius: 3px; padding: 0 2px; }
       </style>
-      <div class="loot-panel">
+      <div class="main">
         <div class="search-bar-container" role="search">
           <input aria-label="Search" class="search-input" id="searchInput" placeholder="Search temples, bosses, loot..." type="text"/>
           <button class="search-clear-btn" id="searchClearBtn" aria-label="Clear search" title="Clear search" tabindex="0" style="display:none;">×</button>
@@ -269,14 +70,13 @@ class GhEventsLoot extends HTMLElement {
             <option value="location">Sort: Location</option>
             <option value="loot">Sort: Loot Value</option>
           </select>
+          <button class="reload-btn" id="reloadBtn" aria-label="Reload events" title="Reload events">⟳ Reload</button>
         </div>
         <div aria-live="polite" aria-relevant="additions" id="mainContent" tabindex="0">
           <div id="allSections"></div>
         </div>
       </div>
     `;
-
-    // State
     this.jsonSources = [
       {
         name: "Temples of Orr",
@@ -286,10 +86,15 @@ class GhEventsLoot extends HTMLElement {
         name: "Valuable Events",
         url: "https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/untimedcore.json"
       }
+      // Add more sources as needed
     ];
     this.allEvents = [];
     this.currentSearch = '';
     this.currentSort = 'name';
+    this.isLoading = false;
+    this.cacheKey = 'gh_events_cache_multi';
+    this.cacheTimeKey = 'gh_events_cache_time_multi';
+    this.cacheMinutes = 15;
   }
 
   connectedCallback() {
@@ -309,42 +114,53 @@ class GhEventsLoot extends HTMLElement {
       this.currentSort = sr.getElementById('sortSelect').value;
       this.renderAllSections();
     });
-
-    this.fetchAllEvents().then(events => {
-      this.allEvents = events;
-      this.renderAllSections();
+    sr.getElementById('reloadBtn').addEventListener('click', () => {
+      this.fetchAllEvents(true);
     });
+    this.fetchAllEvents();
   }
 
-  attributeChangedCallback(name, oldVal, newVal) {
-    if (name === 'theme') {
-      this.renderAllSections(); // Re-render to apply theme
+  async fetchAllEvents(force = false) {
+    this.isLoading = true;
+    this.renderAllSections();
+    let cache = localStorage.getItem(this.cacheKey);
+    let cacheTime = localStorage.getItem(this.cacheTimeKey);
+    if (!force && cache && cacheTime && Date.now() - cacheTime < this.cacheMinutes * 60 * 1000) {
+      this.allEvents = JSON.parse(cache);
+      this.isLoading = false;
+      this.renderAllSections();
+      return;
     }
-  }
-
-  async fetchAllEvents() {
-    const all = await Promise.all(this.jsonSources.map(async (src) => {
-      try {
-        const resp = await fetch(src.url);
-        const json = await resp.json();
-        let events = [];
-        let sourceName = json.sourceName || src.name || 'Unknown Source';
-        if (Array.isArray(json)) {
-          events = json;
-        } else if (Array.isArray(json.events)) {
-          events = json.events;
-        } else if (typeof json === 'object') {
-          Object.values(json).forEach(val => {
-            if (Array.isArray(val)) events = events.concat(val);
-          });
+    try {
+      const all = await Promise.all(this.jsonSources.map(async (src) => {
+        try {
+          const resp = await fetch(src.url);
+          const json = await resp.json();
+          let events = [];
+          let sourceName = json.sourceName || src.name || 'Unknown Source';
+          if (Array.isArray(json)) {
+            events = json;
+          } else if (Array.isArray(json.events)) {
+            events = json.events;
+          } else if (typeof json === 'object') {
+            Object.values(json).forEach(val => {
+              if (Array.isArray(val)) events = events.concat(val);
+            });
+          }
+          events.forEach(ev => ev._sourceName = sourceName);
+          return events;
+        } catch (e) {
+          return [];
         }
-        events.forEach(ev => ev._sourceName = sourceName);
-        return events;
-      } catch (e) {
-        return [];
-      }
-    }));
-    return all.flat();
+      }));
+      this.allEvents = all.flat();
+      localStorage.setItem(this.cacheKey, JSON.stringify(this.allEvents));
+      localStorage.setItem(this.cacheTimeKey, Date.now());
+    } catch (e) {
+      this.allEvents = [];
+    }
+    this.isLoading = false;
+    this.renderAllSections();
   }
 
   groupEvents(events) {
@@ -435,8 +251,8 @@ class GhEventsLoot extends HTMLElement {
       lootRows = event.loot.map(item => {
         let tp = tpPrices[item.id] || {};
         let icon = tpIcons[item.id] ? `<img src="${tpIcons[item.id]}" alt="" />` : '';
-        let wikiLink = item.id ? `<a href="https://wiki.guildwars2.com/wiki/Special:Search/${encodeURIComponent(item.name || '')}" target="_blank" rel="noopener" aria-label="GW2 Wiki for ${item.name}" style="margin-left:0.3em;">Wiki</a>` : '';
-        let effLink = item.id ? `<a href="https://gw2efficiency.com/item/${item.id}" target="_blank" rel="noopener" aria-label="GW2Efficiency for ${item.name}" style="margin-left:0.3em;">Efficiency</a>` : '';
+        let wikiLink = item.id ? `<a href="https://wiki.guildwars2.com/wiki/Special:Search/${encodeURIComponent(item.name || '')}" target="_blank" rel="noopener" aria-label="GW2 Wiki for ${item.name}" style="margin-left:0.3em;">${this.getSVG('external')}</a>` : '';
+        let effLink = item.id ? `<a href="https://gw2efficiency.com/item/${item.id}" target="_blank" rel="noopener" aria-label="GW2Efficiency for ${item.name}" style="margin-left:0.3em;">${this.getSVG('external')}</a>` : '';
         return `<tr>
           <td class="icon-cell">${icon}${this.highlight(item.name || '', searchQuery)}${wikiLink}${effLink}</td>
           <td>${item.amount || ''}</td>
@@ -466,13 +282,13 @@ class GhEventsLoot extends HTMLElement {
       <div class="event-card" tabindex="0" aria-label="${event.name || 'Unnamed Event'}" data-idx="${idx}">
         <div class="copy-bar">
           <input id="copy-input-${idx}" type="text" value="${copyValue.replace(/"/g, '&quot;')}" readonly>
-          <button id="copy-btn-${idx}" aria-label="Copy">Copy</button>
+          <button id="copy-btn-${idx}" aria-label="Copy">${this.getSVG('copy')} Copy</button>
           <span class="copy-msg" id="copy-msg-${idx}">Copied!</span>
         </div>
         <div class="event-header" tabindex="0" aria-label="Show details for ${event.name || 'Unnamed Event'}" data-idx="${idx}">
           <span class="event-title">${this.highlight(event.name || 'Unnamed Event', searchQuery)}</span>
           <span class="event-location">${this.highlight(event.map || event.location || 'Unknown location', searchQuery)}</span>
-          <button class="drops-toggle" aria-controls="loot-${idx}" aria-expanded="false">Show Loot ▼</button>
+          <button class="drops-toggle" aria-controls="loot-${idx}" aria-expanded="false">${this.getSVG('expand')} Show Loot</button>
         </div>
         <div class="loot-list" id="loot-${idx}">
           <table class="loot-table">
@@ -489,18 +305,36 @@ class GhEventsLoot extends HTMLElement {
     `;
   }
 
+  getSVG(type) {
+    // Uses open source SVGs from https://tabler-icons.io/ (MIT)
+    if (type === 'copy') {
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>`;
+    }
+    if (type === 'expand') {
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>`;
+    }
+    if (type === 'external') {
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+    }
+    return '';
+  }
+
   async renderAllSections() {
     const sr = this.shadowRoot;
     const allSectionsDiv = sr.getElementById('allSections');
+    if (this.isLoading) {
+      allSectionsDiv.innerHTML = `<div class="spinner" role="status" aria-label="Loading events"></div>`;
+      return;
+    }
     // Filter
     let filtered = this.allEvents.filter(ev => this.eventMatchesSearch(ev, this.currentSearch));
     // Sort
     if (this.currentSort === 'name') {
-      filtered = filtered.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+      filtered = filtered.slice().sort((a, b) => (a.name || '').localeCompare(b.name || ''));
     } else if (this.currentSort === 'location') {
-      filtered = filtered.sort((a, b) => (a.map || a.location || '').localeCompare(b.map || b.location || ''));
+      filtered = filtered.slice().sort((a, b) => (a.map || a.location || '').localeCompare(b.map || b.location || ''));
     } else if (this.currentSort === 'loot') {
-      filtered = filtered.sort((a, b) => {
+      filtered = filtered.slice().sort((a, b) => {
         const getMaxSell = ev => Math.max(...(ev.loot || []).map(item => item.sell || 0), 0);
         return getMaxSell(b) - getMaxSell(a);
       });
@@ -549,8 +383,7 @@ class GhEventsLoot extends HTMLElement {
       expIdx++;
     }
     allSectionsDiv.innerHTML = html;
-
-    // Add expand/collapse logic and copy/toggle handlers
+    // Expand/collapse logic for sections and sources
     expIdx = 0;
     for (const [expansion, sources] of Object.entries(expansions)) {
       const section = sr.getElementById(`expansion-${expIdx}`);
@@ -580,6 +413,7 @@ class GhEventsLoot extends HTMLElement {
       }
       expIdx++;
     }
+    // Copy and loot show/hide logic
     expIdx = 0;
     for (const [expansion, sources] of Object.entries(expansions)) {
       let srcIdx = 0;
@@ -596,22 +430,25 @@ class GhEventsLoot extends HTMLElement {
             document.execCommand('copy');
             copyMsg.style.display = 'inline';
             copyBtn.classList.add('copied');
-            copyBtn.innerText = "✔";
+            copyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
             setTimeout(() => {
               copyMsg.style.display = 'none';
               copyBtn.classList.remove('copied');
-              copyBtn.innerText = "Copy";
+              copyBtn.innerHTML = `${this.getSVG('copy')} Copy`;
             }, 1000);
-          };
+          }.bind(this);
+          copyBtn.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { copyBtn.click(); e.preventDefault(); } };
           const toggleBtn = sr.querySelector(`.event-card[data-idx="${id}"] .drops-toggle`);
           const lootList = sr.getElementById(`loot-${id}`);
           toggleBtn.onclick = (e) => {
             e.stopPropagation();
             lootList.classList.toggle('active');
             const expanded = lootList.classList.contains('active');
-            toggleBtn.textContent = expanded ? 'Hide Loot ▲' : 'Show Loot ▼';
+            toggleBtn.innerHTML = `${this.getSVG('expand')} ${expanded ? 'Hide Loot' : 'Show Loot'}`;
             toggleBtn.setAttribute('aria-expanded', expanded);
+            lootList.setAttribute('aria-hidden', !expanded);
           };
+          toggleBtn.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { toggleBtn.click(); e.preventDefault(); } };
         });
         srcIdx++;
       }
