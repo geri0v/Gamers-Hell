@@ -4,27 +4,41 @@
   <meta charset="UTF-8">
   <title>Gamers-Hell Unified</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Unified Overriding CSS -->
+  <!-- Unified Overriding CSS with Dark/Light Theme Toggle -->
   <style>
     :root {
-      --main-bg: #181a1b;
-      --main-fg: #f8f8f2;
+      --main-bg-dark: #181a1b;
+      --main-fg-dark: #f8f8f2;
+      --main-bg-light: #f8fcff;
+      --main-fg-light: #23272e;
       --accent: #2b4765;
-      --sidebar-bg: #23272e;
-      --sidebar-fg: #fff;
+      --accent-light: #3c6e8d;
+      --sidebar-bg-dark: #23272e;
+      --sidebar-fg-dark: #fff;
+      --sidebar-bg-light: #f0f0f0;
+      --sidebar-fg-light: #23272e;
       --sidebar-width: 370px;
       --transition: 0.3s cubic-bezier(.4,2,.6,1);
       --radius: 14px;
       --shadow: 0 8px 32px rgba(44,52,70,0.18);
       --shadow-sidebar: -8px 0 36px rgba(44,52,70,0.23);
+      --border: 1px solid #222;
+      --border-light: 1px solid #ccc;
+      --table-header-bg-dark: #2b4765;
+      --table-header-bg-light: #e0e8f6;
     }
     html, body {
       margin: 0;
       padding: 0;
       min-height: 100vh;
       font-family: 'Segoe UI', Arial, sans-serif;
-      background: var(--main-bg);
-      color: var(--main-fg);
+      background: var(--main-bg-dark);
+      color: var(--main-fg-dark);
+      transition: background 0.3s, color 0.3s;
+    }
+    body.theme-light {
+      background: var(--main-bg-light);
+      color: var(--main-fg-light);
     }
     .container {
       display: flex;
@@ -35,8 +49,8 @@
     .main-content {
       flex: 1 1 auto;
       min-width: 0;
-      background: var(--main-bg);
-      color: var(--main-fg);
+      background: inherit;
+      color: inherit;
       transition: filter 0.2s;
       padding: 0;
       box-sizing: border-box;
@@ -49,16 +63,21 @@
       width: var(--sidebar-width);
       max-width: 98vw;
       height: 100vh;
-      background: var(--sidebar-bg);
-      color: var(--sidebar-fg);
+      background: var(--sidebar-bg-dark);
+      color: var(--sidebar-fg-dark);
       box-shadow: var(--shadow);
       z-index: 1000;
       display: flex;
       flex-direction: column;
       transform: translateX(100%);
-      transition: transform var(--transition), box-shadow 0.2s;
-      border-left: 1px solid #181a1b;
+      transition: transform var(--transition), box-shadow 0.2s, background 0.3s, color 0.3s;
+      border-left: var(--border);
       overflow-y: auto;
+    }
+    body.theme-light .sidebar {
+      background: var(--sidebar-bg-light);
+      color: var(--sidebar-fg-light);
+      border-left: var(--border-light);
     }
     .sidebar.open {
       transform: translateX(0);
@@ -88,7 +107,7 @@
       outline: 3px solid #f1c40f;
     }
     .sidebar-toggle-btn:hover {
-      background: #3c6e8d;
+      background: var(--accent-light);
     }
     /* Sidebar Content Container */
     #sidebarContent {
@@ -104,13 +123,16 @@
       font-size: 1.13em;
     }
     .error { color: #c00; }
-    /* Override headings and links for both main and sidebar */
+    /* Headings and Links */
     h1, h2, h3, h4, h5, h6 {
       color: var(--accent);
       margin-top: 1.2em;
       margin-bottom: 0.5em;
       font-weight: 600;
       letter-spacing: 0.01em;
+    }
+    body.theme-light h1, body.theme-light h2, body.theme-light h3, body.theme-light h4, body.theme-light h5, body.theme-light h6 {
+      color: var(--accent-light);
     }
     a {
       color: #6ec6ff;
@@ -133,11 +155,19 @@
       padding: 6px 10px;
       box-sizing: border-box;
       outline: none;
-      transition: border 0.2s, background 0.2s;
+      transition: border 0.2s, background 0.2s, color 0.2s;
+    }
+    body.theme-light input, body.theme-light select, body.theme-light textarea, body.theme-light button {
+      background: #f0f0f0;
+      color: #23272e;
+      border: 1px solid #bbb;
     }
     input:focus, select:focus, textarea:focus, button:focus {
       border-color: #f1c40f;
       background: #181a1b;
+    }
+    body.theme-light input:focus, body.theme-light select:focus, body.theme-light textarea:focus, body.theme-light button:focus {
+      background: #fff;
     }
     button {
       background: var(--accent);
@@ -148,31 +178,66 @@
       transition: background 0.2s;
     }
     button:hover {
-      background: #3c6e8d;
+      background: var(--accent-light);
     }
     /* Table styling */
     table {
       width: 100%;
       border-collapse: collapse;
       background: #181a1b;
-      color: var(--main-fg);
+      color: var(--main-fg-dark);
       margin-bottom: 1.5em;
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow: 0 2px 8px #0002;
+    }
+    body.theme-light table {
+      background: #fff;
+      color: var(--main-fg-light);
     }
     th, td {
       padding: 8px 12px;
       border-bottom: 1px solid #333;
       text-align: left;
     }
+    body.theme-light th, body.theme-light td {
+      border-bottom: 1px solid #ddd;
+    }
     th {
-      background: var(--accent);
+      background: var(--table-header-bg-dark);
       color: #fff;
       font-weight: 600;
     }
+    body.theme-light th {
+      background: var(--table-header-bg-light);
+      color: #23272e;
+    }
     tr:last-child td {
       border-bottom: none;
+    }
+    /* Collapsible sections for categories */
+    details {
+      margin-bottom: 1em;
+      background: rgba(43,71,101,0.08);
+      border-radius: 8px;
+      padding: 5px 0 0 0;
+      transition: background 0.2s;
+    }
+    summary {
+      font-weight: bold;
+      font-size: 1.08em;
+      cursor: pointer;
+      outline: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: rgba(43,71,101,0.14);
+      color: var(--accent);
+      margin-bottom: 6px;
+      transition: background 0.2s, color 0.2s;
+    }
+    details[open] summary {
+      background: rgba(43,71,101,0.22);
+      color: #f1c40f;
     }
     /* Responsive adjustments */
     @media (max-width: 900px) {
@@ -213,6 +278,34 @@
       background: #3c6e8d;
       border-radius: 6px;
     }
+    /* Timezone Selector Improvements */
+    .timezone-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 16px 0 18px 0;
+      padding: 0 20px 0 20px;
+    }
+    .timezone-label {
+      font-size: 1em;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .theme-toggle-btn {
+      margin-left: auto;
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -227,7 +320,81 @@
     </nav>
     <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Show or hide sidebar" tabindex="0">&laquo;</button>
   </div>
+  <!-- Theme toggle and timezone selector will be injected -->
   <script>
+    // THEME TOGGLE
+    function setTheme(theme) {
+      document.body.classList.toggle('theme-light', theme === 'light');
+      localStorage.setItem('ghc-theme', theme);
+      document.getElementById('themeToggleBtn').textContent = theme === 'light' ? '🌙 Dark' : '☀️ Light';
+    }
+    function toggleTheme() {
+      const isLight = document.body.classList.contains('theme-light');
+      setTheme(isLight ? 'dark' : 'light');
+    }
+    // Inject theme toggle and timezone selector into sidebar after load
+    function injectSidebarEnhancements() {
+      const sidebarContent = document.getElementById('sidebarContent');
+      // Find or create timezone selector and label
+      let tzSel = sidebarContent.querySelector('#timezoneSelect');
+      let tzLabel = sidebarContent.querySelector('label[for="timezoneSelect"]');
+      if (!tzSel) {
+        tzSel = document.createElement('select');
+        tzSel.id = 'timezoneSelect';
+      }
+      if (!tzLabel) {
+        tzLabel = document.createElement('label');
+        tzLabel.htmlFor = 'timezoneSelect';
+        tzLabel.className = 'timezone-label';
+        tzLabel.textContent = 'Timezone:';
+      }
+      // Theme toggle button
+      let themeBtn = document.getElementById('themeToggleBtn');
+      if (!themeBtn) {
+        themeBtn = document.createElement('button');
+        themeBtn.id = 'themeToggleBtn';
+        themeBtn.className = 'theme-toggle-btn';
+        themeBtn.type = 'button';
+        themeBtn.textContent = '☀️ Light';
+        themeBtn.onclick = toggleTheme;
+      }
+      // Container
+      let tzContainer = sidebarContent.querySelector('.timezone-container');
+      if (!tzContainer) {
+        tzContainer = document.createElement('div');
+        tzContainer.className = 'timezone-container';
+        sidebarContent.prepend(tzContainer);
+      }
+      tzContainer.innerHTML = '';
+      tzContainer.appendChild(tzLabel);
+      tzContainer.appendChild(tzSel);
+      tzContainer.appendChild(themeBtn);
+
+      // Populate timezone select
+      let zones = [];
+      try {
+        zones = Intl.supportedValuesOf('timeZone');
+      } catch {
+        zones = [
+          "Europe/Amsterdam", "Europe/London", "America/New_York", "America/Los_Angeles", "Asia/Tokyo", "UTC"
+        ];
+      }
+      tzSel.innerHTML = '';
+      const selected = localStorage.getItem('ghc-timezone') || 'Europe/Amsterdam';
+      zones.forEach(tz => {
+        const opt = document.createElement('option');
+        opt.value = tz;
+        opt.textContent = tz.replace('_',' ');
+        if (tz === selected) opt.selected = true;
+        tzSel.appendChild(opt);
+      });
+      tzSel.addEventListener('change', function() {
+        localStorage.setItem('ghc-timezone', this.value);
+        // If the timer exposes a refresh function, call it
+        if (window.updateEvents) window.updateEvents();
+      });
+    }
+
     // Extract <head> and <body> content, fix resource paths
     function extractParts(html, baseUrl) {
       let head = '', body = html;
@@ -313,6 +480,7 @@
         injectHeadCSS(parts.head);
         document.getElementById('sidebarContent').innerHTML = parts.body;
         executeScripts(document.getElementById('sidebarContent'));
+        setTimeout(injectSidebarEnhancements, 200); // Wait for sidebar DOM to render
       })
       .catch(error => {
         document.getElementById('sidebarContent').innerHTML = "<div class='error'>Failed to load sidebar.</div>";
@@ -342,6 +510,36 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === "Escape" && sidebarOpen) {
         toggleSidebar();
+      }
+    });
+
+    // Theme on load
+    (() => {
+      const theme = localStorage.getItem('ghc-theme') || 'dark';
+      if (theme === 'light') document.body.classList.add('theme-light');
+      window.addEventListener('DOMContentLoaded', () => {
+        // Add theme toggle if not present
+        if (!document.getElementById('themeToggleBtn')) {
+          const btn = document.createElement('button');
+          btn.id = 'themeToggleBtn';
+          btn.className = 'theme-toggle-btn';
+          btn.type = 'button';
+          btn.textContent = theme === 'light' ? '🌙 Dark' : '☀️ Light';
+          btn.onclick = toggleTheme;
+          document.body.appendChild(btn);
+        }
+      });
+    })();
+
+    // Collapsible details for Core Tyria and subcategories (ensure open/close works)
+    document.addEventListener('click', function(e) {
+      if (e.target.tagName === 'SUMMARY') {
+        // Only allow one main category open at a time (optional)
+        if (e.target.parentElement.parentElement) {
+          Array.from(document.querySelectorAll('details')).forEach(d => {
+            if (d !== e.target.parentElement && d.open && d.parentElement === e.target.parentElement.parentElement) d.open = false;
+          });
+        }
       }
     });
   </script>
