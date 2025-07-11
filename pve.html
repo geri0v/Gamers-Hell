@@ -1,148 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gamers Hell</title>
-
   <style>
-    /* ───────────—── THEME VARIABLES ───────────────────────────── */
-    body { margin:0; padding:20px; font-family:'Courier New', monospace; transition:.3s; }
-    body[data-theme="hacker"]   { --bg:#000; --fg:#0f0; --panel-bg:#111; --panel-border:#0f0; --panel-shadow:0 0 8px #0f0; --ctrl-bg:#222; --ctrl-fg:#0f0; --ctrl-border:#0f0; --link:#0f0; --link-h:lime; }
-    body[data-theme="darkglass"]{ --bg:#0a1a26; --fg:#5df0ff; --panel-bg:rgba(20,30,40,.75); --panel-border:#5df0ff; --panel-shadow:0 0 12px #5df0ff; --ctrl-bg:rgba(40,50,60,.7); --ctrl-fg:#5df0ff; --ctrl-border:#5df0ff; --link:#5df0ff; --link-h:#a0ffff; }
-    body[data-theme="whitegloss"]{ --bg:#fafafa; --fg:#222; --panel-bg:#fff; --panel-border:#ccc; --panel-shadow:0 0 6px rgba(0,0,0,.1); --ctrl-bg:#f0f0f0; --ctrl-fg:#222; --ctrl-border:#bbb; --link:#222; --link-h:#555; }
-
-    /* ───────────—── GLOBAL STYLES ─────────────────────────────── */
-    body { background:var(--bg); color:var(--fg); }
-    h1 { text-align:center; margin:0 0 20px; }
-    a { color:var(--link); text-decoration:underline; transition:.3s; }
-    a:hover { color:var(--link-h); }
-    button, select, input {
-      background:var(--ctrl-bg); color:var(--ctrl-fg);
-      border:1px solid var(--ctrl-border);
-      padding:6px 12px; font:inherit; transition:.3s;
+    body {
+      margin: 0;
+      font-family: monospace;
+      background: #000;
+      color: #0f0;
     }
-    button:hover, select:hover, input:hover {
-      filter:brightness(1.2); cursor:pointer;
+    .container {
+      display: flex;
+      height: 100vh;
     }
-
-    /* ───────────—── LAYOUT ─────────────────────────────────────── */
-    .toolbar {
-      display:flex; justify-content:center; gap:10px; margin-bottom:20px;
+    #cmd, #timer {
+      flex: 1;
+      padding: 10px;
+      overflow: auto;
+      border-right: 1px solid #222;
     }
-    #themeSelector, #toggleTimer { min-width:140px; }
-    .main {
-      display:flex; gap:20px; flex-wrap:wrap;
-    }
-    #cmd   { flex:2; min-width:300px; }
-    #timer { flex:1; min-width:200px; max-width:300px; }
-    #timer.hidden { display:none; }
-    .panel {
-      background:var(--panel-bg);
-      border:1px solid var(--panel-border);
-      box-shadow:var(--panel-shadow);
-      border-radius:6px;
-      padding:20px;
-      transition:.3s;
+    #timer {
+      border-right: none;
     }
   </style>
 </head>
-<body data-theme="hacker">
-  <div class="toolbar">
-    <select id="themeSelector">
-      <option value="hacker">Hacker Green</option>
-      <option value="darkglass">Dark Glass</option>
-      <option value="whitegloss">Glossy White</option>
-    </select>
-    <button id="toggleTimer">Hide Timer</button>
-  </div>
-
-  <h1>Gamers Hell</h1>
-  <div class="main">
-    <div id="cmd"   class="panel"></div>
-    <div id="timer" class="panel"></div>
+<body>
+  <div class="container">
+    <div id="cmd"></div>
+    <div id="timer"></div>
   </div>
 
   <script>
-  (function(){
-    const THEMES = ['hacker','darkglass','whitegloss'];
-    const themeSel = document.getElementById('themeSelector');
-    const toggleBtn = document.getElementById('toggleTimer');
-    const timerPanel = document.getElementById('timer');
-
-    // restore theme
-    const saved = localStorage.getItem('gh-theme');
-    if (saved && THEMES.includes(saved)) {
-      document.body.dataset.theme = saved;
-      themeSel.value = saved;
-    }
-
-    // restore timer visibility
-    if (localStorage.getItem('gh-timer-visible')==='false') {
-      timerPanel.classList.add('hidden');
-      toggleBtn.textContent = 'Show Timer';
-    }
-
-    // theme switcher
-    themeSel.addEventListener('change', e => {
-      document.body.dataset.theme = e.target.value;
-      localStorage.setItem('gh-theme', e.target.value);
-    });
-
-    // toggle timer sidebar
-    toggleBtn.addEventListener('click', () => {
-      const hidden = timerPanel.classList.toggle('hidden');
-      toggleBtn.textContent = hidden ? 'Show Timer' : 'Hide Timer';
-      localStorage.setItem('gh-timer-visible', !hidden);
-    });
-
-    // lightweight HTML loader that handles full pages
-    async function loadPage(path, containerId) {
-      const raw = await fetch(path).then(r=>r.text());
-      // extract <head> content
-      const headMatch = raw.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
-      if (headMatch) {
-        const headHtml = headMatch[1];
-        // inject <link> and <style>
-        headHtml.match(/<link[^>]+rel=["']stylesheet["'][^>]*>/gi)?.forEach(linkTag=> {
-          document.head.insertAdjacentHTML('beforeend', linkTag);
-        });
-        headHtml.match(/<style\b[^>]*>[\s\S]*?<\/style>/gi)?.forEach(styleTag=> {
-          document.head.insertAdjacentHTML('beforeend', styleTag);
-        });
-      }
-      // extract <body> content
-      const bodyMatch = raw.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-      const bodyHtml = bodyMatch ? bodyMatch[1] : raw;
-      // inject markup
-      const container = document.getElementById(containerId);
-      container.innerHTML = bodyHtml;
-      // extract & run scripts in order
-      const scriptRegex = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
-      let match;
-      while((match = scriptRegex.exec(raw)) !== null) {
-        const [full, attrs, code] = match;
-        const srcMatch = attrs.match(/src=["']([^"']+)["']/);
-        if (srcMatch) {
-          // external script
-          const script = document.createElement('script');
-          script.src = new URL(srcMatch[1], path).href;
-          script.async = false;
-          document.body.appendChild(script);
-          await new Promise(res=> script.onload = res);
-        } else if(code.trim()) {
-          // inline script
-          const script = document.createElement('script');
-          script.textContent = code;
-          document.body.appendChild(script);
-        }
-      }
+    async function loadPanel(path, targetId) {
+      const res  = await fetch(path);
+      const html = await res.text();
+      // If these are full HTML pages, extract just the <body> innerHTML:
+      const doc  = new DOMParser().parseFromString(html, 'text/html');
+      const content = doc.body ? doc.body.innerHTML : html;
+      document.getElementById(targetId).innerHTML = content;
     }
 
     // load your two pages
-    loadPage('html/cmd.html',   'cmd');
-    loadPage('html/timer.html', 'timer');
-  })();
+    loadPanel('html/cmd.html',   'cmd');
+    loadPanel('html/timer.html', 'timer');
   </script>
 </body>
 </html>
