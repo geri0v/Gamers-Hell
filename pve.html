@@ -6,61 +6,32 @@
   <title>Gamers Hell</title>
 
   <style>
-    /* ─────────────────────────────────────────────────────────────
-       THEME DEFINITIONS (via data-theme on <body>)  
-       We use CSS variables so every color updates dynamically.
-    ───────────────────────────────────────────────────────────── */
+    /* THEME VARIABLES */
     body {
       margin: 0; padding: 20px;
       font-family: 'Courier New', monospace;
       transition: background-color .3s, color .3s;
     }
-
-    /* Hacker Green (default) */
     body[data-theme="hacker"] {
-      --bg: #000;              /* page bg */
-      --fg: #0f0;              /* text */
-      --panel-bg: #111;        /* panel bg */
-      --panel-border: #0f0;    /* panel border */
-      --panel-shadow: 0 0 8px #0f0;
-      --ctrl-bg: #222;         /* buttons/inputs */
-      --ctrl-fg: #0f0;
-      --ctrl-border: #0f0;
-      --link: #0f0;
-      --link-h: lime;
+      --bg: #000; --fg: #0f0;
+      --panel-bg: #111; --panel-border: #0f0; --panel-shadow: 0 0 8px #0f0;
+      --ctrl-bg: #222; --ctrl-fg: #0f0; --ctrl-border: #0f0;
+      --link: #0f0; --link-h: lime;
     }
-
-    /* Dark Glass */
     body[data-theme="darkglass"] {
-      --bg: #0a1a26;
-      --fg: #5df0ff;
-      --panel-bg: rgba(20,30,40,0.75);
-      --panel-border: #5df0ff;
-      --panel-shadow: 0 0 12px #5df0ff;
-      --ctrl-bg: rgba(40,50,60,0.7);
-      --ctrl-fg: #5df0ff;
-      --ctrl-border: #5df0ff;
-      --link: #5df0ff;
-      --link-h: #a0ffff;
+      --bg: #0a1a26; --fg: #5df0ff;
+      --panel-bg: rgba(20,30,40,0.75); --panel-border: #5df0ff; --panel-shadow: 0 0 12px #5df0ff;
+      --ctrl-bg: rgba(40,50,60,0.7); --ctrl-fg: #5df0ff; --ctrl-border: #5df0ff;
+      --link: #5df0ff; --link-h: #a0ffff;
     }
-
-    /* Glossy White */
     body[data-theme="whitegloss"] {
-      --bg: #fafafa;
-      --fg: #222;
-      --panel-bg: #fff;
-      --panel-border: #ccc;
-      --panel-shadow: 0 0 6px rgba(0,0,0,0.1);
-      --ctrl-bg: #f0f0f0;
-      --ctrl-fg: #222;
-      --ctrl-border: #bbb;
-      --link: #222;
-      --link-h: #555;
+      --bg: #fafafa; --fg: #222;
+      --panel-bg: #fff; --panel-border: #ccc; --panel-shadow: 0 0 6px rgba(0,0,0,0.1);
+      --ctrl-bg: #f0f0f0; --ctrl-fg: #222; --ctrl-border: #bbb;
+      --link: #222; --link-h: #555;
     }
 
-    /* ─────────────────────────────────────────────────────────────
-       GLOBAL STYLES
-    ───────────────────────────────────────────────────────────── */
+    /* GLOBAL STYLES */
     body {
       background: var(--bg);
       color: var(--fg);
@@ -90,9 +61,7 @@
       cursor: pointer;
     }
 
-    /* ─────────────────────────────────────────────────────────────
-       LAYOUT
-    ───────────────────────────────────────────────────────────── */
+    /* LAYOUT */
     .toolbar {
       display: flex;
       justify-content: center;
@@ -133,81 +102,73 @@
   <h1>Gamers Hell</h1>
 
   <div class="main">
-    <div id="cmd"   class="panel"></div>
+    <div id="cmd" class="panel"></div>
     <div id="timer" class="panel"></div>
   </div>
 
   <script>
   (function(){
-    // ─────────────────────────────────────────────────────────────
-    // STATE + UI HOOKS
-    // ─────────────────────────────────────────────────────────────
-    const themes       = ['hacker','darkglass','whitegloss'];
-    const themeSelect  = document.getElementById('themeSelector');
-    const toggleTimer  = document.getElementById('toggleTimer');
-    const timerPanel   = document.getElementById('timer');
+    const themes      = ['hacker','darkglass','whitegloss'];
+    const themeSelect = document.getElementById('themeSelector');
+    const toggleBtn   = document.getElementById('toggleTimer');
+    const timerPane   = document.getElementById('timer');
 
-    // restore theme
+    // Restore theme
     const savedTheme = localStorage.getItem('gh-theme');
     if (savedTheme && themes.includes(savedTheme)) {
       document.body.dataset.theme = savedTheme;
       themeSelect.value = savedTheme;
     }
 
-    // restore timer visibility
+    // Restore timer visibility
     if (localStorage.getItem('gh-timer-visible') === 'false') {
-      timerPanel.classList.add('hidden');
-      toggleTimer.textContent = 'Show Timer';
+      timerPane.classList.add('hidden');
+      toggleBtn.textContent = 'Show Timer';
     }
 
-    // theme switcher
+    // Theme switcher
     themeSelect.addEventListener('change', e => {
       document.body.dataset.theme = e.target.value;
       localStorage.setItem('gh-theme', e.target.value);
     });
 
-    // sidebar toggle
-    toggleTimer.addEventListener('click', () => {
-      const hidden = timerPanel.classList.toggle('hidden');
-      toggleTimer.textContent = hidden ? 'Show Timer' : 'Hide Timer';
+    // Sidebar toggle
+    toggleBtn.addEventListener('click', () => {
+      const hidden = timerPane.classList.toggle('hidden');
+      toggleBtn.textContent = hidden ? 'Show Timer' : 'Hide Timer';
       localStorage.setItem('gh-timer-visible', !hidden);
     });
 
-    // ─────────────────────────────────────────────────────────────
-    // DYNAMIC FRAGMENT LOADER
-    // ─────────────────────────────────────────────────────────────
+    // Dynamic fragment loader
     async function loadFragment(url, containerId) {
-      const base = url.replace(/\/[^\/]*$/, '/'); // for resolving relative src/href
+      const base = url.replace(/\/[^\/]*$/, '/');
       const res  = await fetch(url);
       const html = await res.text();
-      // parse into a temp document
-      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const doc  = new DOMParser().parseFromString(html, 'text/html');
 
-      // 1) import <link rel="stylesheet"> and <style>
+      // Import CSS
       doc.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-        const n = link.cloneNode(true);
-        if (!n.href.startsWith('http')) {
-          n.href = new URL(link.getAttribute('href'), base).href;
-        }
-        document.head.appendChild(n);
+        const clone = link.cloneNode();
+        clone.href = new URL(link.getAttribute('href'), base).href;
+        document.head.appendChild(clone);
       });
       doc.querySelectorAll('style').forEach(style => {
         document.head.appendChild(style.cloneNode(true));
       });
 
-      // 2) extract scripts
+      // Extract & remove scripts
       const scripts = Array.from(doc.querySelectorAll('script'));
       scripts.forEach(s => s.remove());
 
-      // 3) inject HTML
+      // Inject HTML
       document.getElementById(containerId).innerHTML = doc.body.innerHTML;
 
-      // 4) re-run scripts in order
+      // Re-run scripts
       for (let old of scripts) {
         const s = document.createElement('script');
         if (old.src) {
           s.src = new URL(old.getAttribute('src'), base).href;
-          s.async = false; // preserve order
+          s.async = false;
           document.body.appendChild(s);
           await new Promise(r => s.onload = r);
         } else {
@@ -217,12 +178,11 @@
       }
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // KICK OFF BOTH PANELS
-    // ─────────────────────────────────────────────────────────────
+    // Load both panels
     loadFragment('html/cmd.html',   'cmd');
     loadFragment('html/timer.html', 'timer');
   })();
   </script>
 </body>
 </html>
+```
