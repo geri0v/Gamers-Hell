@@ -1,83 +1,86 @@
-[
-  {
-    "name": "Temple of Balthazar",
-    "expansion": "Core Tyria",
-    "map": "Straits of Devastation",
-    "code": "[&BNIEAAA=]",
-    "loot": [
-      {
-        "name": "Balthazar's Band",
-        "id": 39477
-      }
-    ]
-  },
-  {
-    "name": "Temple of Lyssa",
-    "expansion": "Core Tyria",
-    "map": "Malchor's Leap",
-    "code": "[&BKsCAAA=]",
-    "loot": [
-      {
-        "name": "Lyssa's Regalia",
-        "id": 39475,
-        "code": "[&AgGEtQAA]"
-      }
-    ]
-  },
-  {
-    "name": "Temple of Dwayna",
-    "expansion": "Core Tyria",
-    "map": "Malchor's Leap",
-    "code": "[&BLICAAA=]",
-    "loot": [
-      {
-        "name": "Dwayna's Tear",
-        "id": 39473,
-        "code": "[&AgE3mgAA]"
-      }
-    ]
-  },
-  {
-    "name": "Temple of Melandru",
-    "expansion": "Core Tyria",
-    "map": "Cursed Shore",
-    "code": "[&BBsDAAA=]",
-    "loot": [
-      {
-        "name": "Melandru’s Bloom",
-        "id": 39478,
-        "code": "[&AgE0mgAA]"
-      },
-      {
-        "name": "Melandru's Gaze",
-        "id": 39479,
-        "code": "[&Cm0SAAA=]"
-      }
-    ]
-  },
-  {
-    "name": "Temple of Grenth",
-    "expansion": "Core Tyria",
-    "map": "Cursed Shore",
-    "code": "[&BCIDAAA=]",
-    "loot": [
-      {
-        "name": "Signet of Grenth",
-        "id": 39476
-      }
-    ]
-  },
-  {
-    "name": "Gates of Arah",
-    "expansion": "Core Tyria",
-    "map": "Cursed Shore",
-    "code": "[&BCADAAA=]",
-    "loot": [
-      {
-        "name": "Arah's Treasure",
-        "id": 39480,
-        "code": "[&AgEvmgAA]"
-      }
-    ]
-  }
-]
+{
+  "sourceName": "Temples of Orr",
+  "events": [
+    {
+      "name": "Temple of Balthazar",
+      "expansion": "Core Tyria",
+      "map": "Straits of Devastation",
+      "code": "[&BNIEAAA=]",
+      "loot": [
+        {
+          "name": "Balthazar's Band",
+          "id": 39477
+        }
+      ]
+    },
+    {
+      "name": "Temple of Lyssa",
+      "expansion": "Core Tyria",
+      "map": "Malchor's Leap",
+      "code": "[&BKsCAAA=]",
+      "loot": [
+        {
+          "name": "Lyssa's Regalia",
+          "id": 39475,
+          "code": "[&AgGEtQAA]"
+        }
+      ]
+    },
+    {
+      "name": "Temple of Dwayna",
+      "expansion": "Core Tyria",
+      "map": "Malchor's Leap",
+      "code": "[&BLICAAA=]",
+      "loot": [
+        {
+          "name": "Dwayna's Tear",
+          "id": 39473,
+          "code": "[&AgE3mgAA]"
+        }
+      ]
+    },
+    {
+      "name": "Temple of Melandru",
+      "expansion": "Core Tyria",
+      "map": "Cursed Shore",
+      "code": "[&BBsDAAA=]",
+      "loot": [
+        {
+          "name": "Melandru’s Bloom",
+          "id": 39478,
+          "code": "[&AgE0mgAA]"
+        },
+        {
+          "name": "Melandru's Gaze",
+          "id": 39479,
+          "code": "[&Cm0SAAA=]"
+        }
+      ]
+    },
+    {
+      "name": "Temple of Grenth",
+      "expansion": "Core Tyria",
+      "map": "Cursed Shore",
+      "code": "[&BCIDAAA=]",
+      "loot": [
+        {
+          "name": "Signet of Grenth",
+          "id": 39476
+        }
+      ]
+    },
+    {
+      "name": "Gates of Arah",
+      "expansion": "Core Tyria",
+      "map": "Cursed Shore",
+      "code": "[&BCADAAA=]",
+      "loot": [
+        {
+          "name": "Arah's Treasure",
+          "id": 39480,
+          "code": "[&AgEvmgAA]"
+        }
+      ]
+    }
+  ]
+}
