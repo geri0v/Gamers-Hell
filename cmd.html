@@ -26,6 +26,10 @@
       --section-title-fg: #e1e6ed;
       --section-title-hover-bg: #4a90e2;
       --section-title-hover-fg: #fff;
+      --sidebar-bg: #263142;
+      --sidebar-fg: #e1e6ed;
+      --sidebar-active: #4a90e2;
+      --sidebar-shadow: 0 2px 16px #0003;
       --spinner-size: 36px;
       --transition: 0.25s cubic-bezier(.4,0,.2,1);
     }
@@ -44,6 +48,92 @@
       letter-spacing: 1px;
       font-size: 1.2em;
     }
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      min-width: 220px;
+      background: var(--sidebar-bg);
+      color: var(--sidebar-fg);
+      box-shadow: var(--sidebar-shadow);
+      padding: 1.5em 0.5em 1.5em 1em;
+      transition: background var(--transition), color var(--transition), transform var(--transition);
+      z-index: 10;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+    }
+    .sidebar.hidden {
+      transform: translateX(-110%);
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      z-index: 1001;
+      background: var(--sidebar-bg);
+      box-shadow: var(--sidebar-shadow);
+    }
+    .sidebar-toggle {
+      position: absolute;
+      right: -1.8em;
+      top: 1.2em;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.5em;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0002;
+      z-index: 1002;
+      transition: background var(--transition), color var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sidebar-toggle:focus {
+      outline: 2px solid var(--accent);
+    }
+    .sidebar-title {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 0.7em;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .sidebar-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2em;
+    }
+    .sidebar-link {
+      background: none;
+      border: none;
+      color: var(--sidebar-fg);
+      padding: 0.6em 1em;
+      border-radius: 7px;
+      font-size: 1em;
+      cursor: pointer;
+      text-align: left;
+      transition: background var(--transition), color var(--transition);
+      width: 100%;
+      outline: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .sidebar-link.active, .sidebar-link:focus, .sidebar-link:hover {
+      background: var(--sidebar-active);
+      color: #fff;
+    }
     .main {
       max-width: 950px;
       margin: 2em auto;
@@ -52,6 +142,8 @@
       border-radius: 16px;
       box-shadow: 0 4px 24px #0003;
       transition: background var(--transition);
+      flex: 1;
+      min-width: 0;
     }
     .search-bar-container {
       display: flex;
@@ -62,6 +154,9 @@
       border-radius: 10px;
       align-items: center;
       transition: background var(--transition);
+      position: sticky;
+      top: 0;
+      z-index: 8;
     }
     .search-input {
       padding: 0.7em;
@@ -73,6 +168,27 @@
       flex: 1;
       outline: none;
       transition: background var(--transition), color var(--transition);
+    }
+    .search-clear-btn {
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      color: var(--accent);
+      cursor: pointer;
+      margin-left: -2em;
+      margin-right: 0.5em;
+      padding: 0 0.3em;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition), color var(--transition);
+    }
+    .search-clear-btn:focus {
+      outline: 2px solid var(--accent);
+      background: #fff2;
     }
     .theme-toggle-btn {
       border: none;
@@ -91,6 +207,17 @@
       background: #fff;
       color: var(--accent);
       outline: 2px solid var(--accent);
+    }
+    .theme-select {
+      border-radius: 7px;
+      border: none;
+      background: var(--input-bg);
+      color: var(--input-fg);
+      padding: 0.5em 1em;
+      font-size: 1em;
+      margin-left: 0.5em;
+      outline: none;
+      transition: background var(--transition), color var(--transition);
     }
     .copy-bar {
       display: flex;
@@ -153,7 +280,7 @@
       align-items: center;
       justify-content: center;
       gap: 0.7em;
-      transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+      transition: background var(--transition), color var(--transition), box-shadow var(--transition), max-height 0.3s;
       box-shadow: 0 2px 12px #0002;
       border: none;
       outline: none;
@@ -162,6 +289,11 @@
       margin-left: auto;
       margin-right: auto;
       text-align: center;
+      user-select: none;
+    }
+    .section-title:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
     }
     .section-title:hover, .section-title:focus {
       background: var(--section-title-hover-bg);
@@ -181,7 +313,20 @@
       padding: 1.5em;
       border-radius: 12px;
       box-shadow: 0 2px 12px #0004;
-      transition: background var(--transition);
+      transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
+      outline: none;
+      min-width: 0;
+      cursor: pointer;
+    }
+    .event-card:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
+      box-shadow: 0 4px 24px var(--accent);
+    }
+    .event-card:hover {
+      box-shadow: 0 6px 24px #4a90e2aa;
+      transform: translateY(-2px) scale(1.01);
+      background: #2b3952;
     }
     .event-header {
       display: flex;
@@ -209,6 +354,13 @@
       padding: 0.3em 0.7em;
       border-radius: 4px;
       transition: background var(--transition), color var(--transition);
+      min-width: 44px;
+      min-height: 44px;
+      outline: none;
+    }
+    .drops-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      background: #fff2;
     }
     .drops-toggle:hover, .drops-toggle:focus {
       background: var(--accent);
@@ -221,7 +373,7 @@
       padding: 1em;
       border-radius: 8px;
       overflow-x: auto;
-      transition: background var(--transition);
+      transition: background var(--transition), max-height 0.3s;
     }
     .loot-list.active { display: block; }
     .loot-table {
@@ -238,6 +390,8 @@
       color: var(--table-th);
       font-weight: bold;
       border-bottom: 1px solid var(--table-border);
+      cursor: pointer;
+      user-select: none;
     }
     .loot-table td {
       border-bottom: 1px solid var(--table-border);
@@ -285,6 +439,24 @@
       border-radius: 3px;
       padding: 0 2px;
     }
+    @media (max-width: 900px) {
+      .layout { flex-direction: column; }
+      .sidebar {
+        position: static;
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        box-shadow: none;
+        flex-direction: row;
+        gap: 0.5em;
+        padding: 0.5em 0.5em 0.5em 0.5em;
+      }
+      .sidebar-toggle {
+        position: static;
+        margin-left: 0.5em;
+        margin-bottom: 0.5em;
+      }
+    }
     @media (max-width: 600px) {
       .main { padding: 1em; }
       .event-header { flex-direction: column; align-items: flex-start; }
@@ -320,6 +492,8 @@
       --section-title-fg: #1e2630;
       --section-title-hover-bg: #4a90e2;
       --section-title-hover-fg: #fff;
+      --sidebar-bg: #e8ecf3;
+      --sidebar-fg: #1e2630;
     }
   </style>
 </head>
@@ -327,45 +501,53 @@
   <header>
     <h1>Gamers-Hell</h1>
   </header>
-
-  <main aria-label="Main content area" class="main" id="main" role="main" tabindex="-1">
-    <div class="search-bar-container" role="search">
-      <input
-        aria-label="Search"
-        class="search-input"
-        id="searchInput"
-        placeholder="Search temples, bosses, loot..."
-        type="text"
-      />
-      <button
-        aria-label="Keyboard shortcuts"
-        id="shortcutHelpBtn"
-        title="Keyboard shortcuts"
-      >?</button>
-      <select id="sortSelect" aria-label="Sort events">
-        <option value="name">Sort: Name</option>
-        <option value="location">Sort: Location</option>
-        <option value="loot">Sort: Loot Value</option>
-      </select>
-      <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle light/dark theme">🌙</button>
-    </div>
-
-    <div aria-live="polite" aria-relevant="additions" id="mainContent" tabindex="0">
-      <div id="allSections"></div>
-    </div>
-
-    <footer>
-      © 2025 Gamers-Hell Community
-    </footer>
-
-    <!-- Modal for event details -->
-    <div id="eventModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(30,38,48,0.95);z-index:1000;align-items:center;justify-content:center;">
-      <div style="background:var(--card-bg);padding:2em;border-radius:10px;max-width:90vw;max-height:90vh;overflow:auto;position:relative;">
-        <button id="closeModalBtn" style="position:absolute;top:1em;right:1em;background:#4a90e2;color:#fff;border:none;border-radius:4px;padding:0.4em 1em;cursor:pointer;">Close</button>
-        <div id="modalContent"></div>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Expansion navigation">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Hide sidebar" tabindex="0">☰</button>
+      <div class="sidebar-title">Expansions</div>
+      <ul class="sidebar-list" id="expansionList" role="listbox"></ul>
+    </nav>
+    <main aria-label="Main content area" class="main" id="main" role="main" tabindex="-1">
+      <div class="search-bar-container" role="search">
+        <input
+          aria-label="Search"
+          class="search-input"
+          id="searchInput"
+          placeholder="Search temples, bosses, loot..."
+          type="text"
+        />
+        <button class="search-clear-btn" id="searchClearBtn" aria-label="Clear search" title="Clear search" tabindex="0" style="display:none;">×</button>
+        <button
+          aria-label="Keyboard shortcuts"
+          id="shortcutHelpBtn"
+          title="Keyboard shortcuts"
+        >?</button>
+        <select id="sortSelect" aria-label="Sort events">
+          <option value="name">Sort: Name</option>
+          <option value="location">Sort: Location</option>
+          <option value="loot">Sort: Loot Value</option>
+        </select>
+        <select class="theme-select" id="themeSelect" aria-label="Theme">
+          <option value="auto">Auto</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
       </div>
-    </div>
-  </main>
+      <div aria-live="polite" aria-relevant="additions" id="mainContent" tabindex="0">
+        <div id="allSections"></div>
+      </div>
+      <footer>
+        © 2025 Gamers-Hell Community
+      </footer>
+      <!-- Modal for event details -->
+      <div id="eventModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(30,38,48,0.95);z-index:1000;align-items:center;justify-content:center;">
+        <div style="background:var(--card-bg);padding:2em;border-radius:10px;max-width:90vw;max-height:90vh;overflow:auto;position:relative;">
+          <button id="closeModalBtn" style="position:absolute;top:1em;right:1em;background:#4a90e2;color:#fff;border:none;border-radius:4px;padding:0.4em 1em;cursor:pointer;">Close</button>
+          <div id="modalContent"></div>
+        </div>
+      </div>
+    </main>
+  </div>
   <script>
     // --- JSON sources ---
     const jsonSources = [
@@ -448,8 +630,8 @@
       return `${gold}g ${silver}s ${copper}c`;
     }
 
-    // --- Highlight search matches ---
-    function highlight(text, query) {
+    // --- Highlight search matches in all fields ---
+    function highlightAll(text, query) {
       if (!query) return text;
       const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
       return text.replace(regex, '<mark>$1</mark>');
@@ -459,7 +641,6 @@
     function eventMatchesSearch(event, query) {
       if (!query) return true;
       const q = query.toLowerCase();
-      // Check event name, map, code, notes, loot names
       if ((event.name && event.name.toLowerCase().includes(q)) ||
           (event.map && event.map.toLowerCase().includes(q)) ||
           (event.code && event.code.toLowerCase().includes(q)) ||
@@ -486,12 +667,16 @@
     function renderEventCard(event, idx, searchQuery, tpPrices, tpIcons) {
       let lootRows = '';
       let lootCopy = '';
+      let lootSortKey = 'name';
       if (Array.isArray(event.loot) && event.loot.length) {
-        lootRows = event.loot.map(item => {
+        let lootArr = [...event.loot];
+        lootRows = lootArr.map(item => {
           let tp = tpPrices[item.id] || {};
           let icon = tpIcons[item.id] ? `<img src="${tpIcons[item.id]}" alt="" />` : '';
+          let wikiLink = item.id ? `<a href="https://wiki.guildwars2.com/wiki/Special:Search/${encodeURIComponent(item.name || '')}" target="_blank" rel="noopener" aria-label="GW2 Wiki for ${item.name}" style="margin-left:0.3em;color:var(--accent);text-decoration:underline;">Wiki</a>` : '';
+          let effLink = item.id ? `<a href="https://gw2efficiency.com/item/${item.id}" target="_blank" rel="noopener" aria-label="GW2Efficiency for ${item.name}" style="margin-left:0.3em;color:var(--accent);text-decoration:underline;">Efficiency</a>` : '';
           return `<tr>
-            <td class="icon-cell">${icon}${highlight(item.name || '', searchQuery)}</td>
+            <td class="icon-cell">${icon}${highlightAll(item.name || '', searchQuery)}${wikiLink}${effLink}</td>
             <td>${item.amount || ''}</td>
             <td>
               ${tp.sell ? formatGW2Currency(tp.sell) : ''}
@@ -509,7 +694,7 @@
       } else if (Array.isArray(event.bosses) && event.bosses.length) {
         lootRows = event.bosses.map(boss =>
           `<tr>
-            <td>${highlight(boss, searchQuery)}</td>
+            <td>${highlightAll(boss, searchQuery)}</td>
             <td></td>
             <td></td>
           </tr>`
@@ -521,28 +706,34 @@
       }
       const waypoint = event.code ? event.code : '';
       const copyValue = `${event.name || 'Unnamed Event'} | ${waypoint} | ${lootCopy}`;
+      let imgHtml = event.image ? `<img src="${event.image}" alt="Event image" style="max-width:100%;max-height:160px;display:block;margin-bottom:0.7em;border-radius:6px;">` : '';
       return `
         <div class="event-card" tabindex="0" aria-label="${event.name || 'Unnamed Event'}" data-idx="${idx}">
           <div class="copy-bar">
-            <input id="copy-input-${idx}" type="text" value="${copyValue.replace(/"/g, '&quot;')}" readonly>
-            <button id="copy-btn-${idx}" aria-label="Copy">Copy</button>
+            <input id="copy-input-${idx}" type="text" value="${copyValue.replace(/"/g, '&quot;')}" readonly aria-label="Copy event summary">
+            <button id="copy-btn-${idx}" aria-label="Copy event summary">Copy</button>
             <span class="copy-msg" id="copy-msg-${idx}">Copied!</span>
           </div>
+          ${imgHtml}
           <div class="event-header" tabindex="0" aria-label="Show details for ${event.name || 'Unnamed Event'}" data-idx="${idx}">
-            <span class="event-title">${highlight(event.name || 'Unnamed Event', searchQuery)}</span>
-            <span class="event-location">${highlight(event.map || event.location || 'Unknown location', searchQuery)}</span>
-            <button class="drops-toggle" aria-controls="loot-${idx}" aria-expanded="false">Show Loot ▼</button>
+            <span class="event-title">${highlightAll(event.name || 'Unnamed Event', searchQuery)}</span>
+            <span class="event-location">${highlightAll(event.map || event.location || 'Unknown location', searchQuery)}</span>
+            <button class="drops-toggle" aria-controls="loot-${idx}" aria-expanded="false" tabindex="0" aria-label="Show/hide loot">Show Loot ▼</button>
           </div>
           <div class="loot-list" id="loot-${idx}">
-            <table class="loot-table">
+            <table class="loot-table" aria-label="Loot table">
               <thead>
-                <tr><th>Item</th><th>Amount</th><th>Sell Value</th></tr>
+                <tr>
+                  <th tabindex="0" aria-label="Sort loot by name">Item</th>
+                  <th tabindex="0" aria-label="Sort loot by amount">Amount</th>
+                  <th tabindex="0" aria-label="Sort loot by sell value">Sell Value</th>
+                </tr>
               </thead>
               <tbody>
                 ${lootRows}
               </tbody>
             </table>
-            <div class="event-notes"><strong>Notes:</strong> ${event.notes || ''}</div>
+            <div class="event-notes"><strong>Notes:</strong> ${highlightAll(event.notes || '', searchQuery)}</div>
           </div>
         </div>
       `;
@@ -553,7 +744,7 @@
       // Filter events by search
       const filteredEvents = allEvents.filter(ev => eventMatchesSearch(ev, searchQuery));
       if (!filteredEvents.length) {
-        return `<div class="empty-state"><img src="https://i.imgur.com/8z8Q2Hk.png" alt="No events"><div>No events found.</div></div>`;
+        return `<div class="empty-state"><img src="https://i.imgur.com/8z8Q2Hk.png" alt="No events"><div>No events found. Try a different search or reload data.</div></div>`;
       }
       // Group events by expansion
       const expansions = {};
@@ -593,7 +784,7 @@
         }
         const expSectionId = `expansion-${expIdx}`;
         html += `
-          <button class="section-title" id="${expSectionId}-title" aria-expanded="true">
+          <button class="section-title" id="${expSectionId}-title" aria-expanded="true" aria-controls="${expSectionId}-list" tabindex="0">
             ${expansion} <span class="arrow">&#9660;</span>
           </button>
           <div id="${expSectionId}-list" class="event-list">
@@ -605,6 +796,7 @@
         expIdx++;
       }
       renderAllByExpansion._expIdx = expIdx;
+      renderAllByExpansion._expansionNames = Object.keys(expansions);
       return html;
     }
 
@@ -617,17 +809,22 @@
         lootHtml = event.loot.map(item => {
           let tp = tpPrices[item.id] || {};
           let icon = tpIcons[item.id] ? `<img src="${tpIcons[item.id]}" alt="" style="width:32px;height:32px;vertical-align:middle;margin-right:8px;border-radius:5px;background:#111;">` : '';
+          let wikiLink = item.id ? `<a href="https://wiki.guildwars2.com/wiki/Special:Search/${encodeURIComponent(item.name || '')}" target="_blank" rel="noopener" aria-label="GW2 Wiki for ${item.name}" style="margin-left:0.3em;color:var(--accent);text-decoration:underline;">Wiki</a>` : '';
+          let effLink = item.id ? `<a href="https://gw2efficiency.com/item/${item.id}" target="_blank" rel="noopener" aria-label="GW2Efficiency for ${item.name}" style="margin-left:0.3em;color:var(--accent);text-decoration:underline;">Efficiency</a>` : '';
           return `<div style="margin-bottom:0.7em;">
             ${icon}<b>${item.name || ''}</b>
             ${item.amount ? ` x${item.amount}` : ''}
+            ${wikiLink}${effLink}
             ${tp.sell ? `<span style="margin-left:1em;">Sell: <b>${formatGW2Currency(tp.sell)}</b></span>` : ''}
             ${tp.buy ? `<span style="margin-left:1em;">Buy: <b>${formatGW2Currency(tp.buy)}</b></span>` : ''}
             ${tp.demand ? `<span style="margin-left:1em;">Demand: <b>${tp.demand}</b></span>` : ''}
           </div>`;
         }).join('');
       }
+      let imgHtml = event.image ? `<img src="${event.image}" alt="Event image" style="max-width:100%;max-height:200px;display:block;margin-bottom:1em;border-radius:8px;">` : '';
       modalContent.innerHTML = `
         <h2 style="color:#4a90e2;">${event.name || 'Unnamed Event'}</h2>
+        ${imgHtml}
         <div style="margin-bottom:1em;">
           <b>Location:</b> ${event.map || event.location || 'Unknown location'}
         </div>
@@ -656,6 +853,7 @@
     let allEvents = [];
     let currentSort = 'name';
     let currentSearch = '';
+    let currentExpansion = null;
 
     async function loadAllJsonData() {
       const allSectionsDiv = document.getElementById('allSections');
@@ -685,28 +883,148 @@
       renderAllSections();
     }
 
+    // --- Debounced search ---
+    let searchTimeout;
+    document.getElementById('searchInput').addEventListener('input', function() {
+      currentSearch = this.value.trim();
+      document.getElementById('searchClearBtn').style.display = currentSearch ? '' : 'none';
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(renderAllSections, 150);
+    });
+    document.getElementById('searchClearBtn').addEventListener('click', function() {
+      document.getElementById('searchInput').value = '';
+      currentSearch = '';
+      this.style.display = 'none';
+      renderAllSections();
+    });
+
+    // --- Sorting functionality ---
+    document.getElementById('sortSelect').addEventListener('change', function() {
+      currentSort = this.value;
+      renderAllSections();
+    });
+
+    // --- Theme toggle and auto theme ---
+    const themeSelect = document.getElementById('themeSelect');
+    function setTheme(mode) {
+      if (mode === 'auto') {
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        document.body.classList.toggle('light', prefersLight);
+      } else {
+        document.body.classList.toggle('light', mode === 'light');
+      }
+      localStorage.setItem('gh-theme', mode);
+    }
+    themeSelect.addEventListener('change', function() {
+      setTheme(this.value);
+    });
+    (() => {
+      const saved = localStorage.getItem('gh-theme');
+      if (saved) {
+        themeSelect.value = saved;
+        setTheme(saved);
+      } else {
+        themeSelect.value = 'auto';
+        setTheme('auto');
+      }
+      window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+        if (themeSelect.value === 'auto') setTheme('auto');
+      });
+    })();
+
+    // --- Sidebar expansion navigation ---
+    function updateSidebar(expansionNames) {
+      const sidebarList = document.getElementById('expansionList');
+      sidebarList.innerHTML = '';
+      expansionNames.forEach((name, idx) => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.className = 'sidebar-link';
+        btn.setAttribute('role', 'option');
+        btn.setAttribute('aria-label', `Jump to ${name}`);
+        btn.textContent = name;
+        btn.tabIndex = 0;
+        btn.onclick = () => {
+          const el = document.getElementById(`expansion-${idx}-title`);
+          if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
+          setActiveSidebar(idx);
+        };
+        btn.onfocus = () => setActiveSidebar(idx);
+        li.appendChild(btn);
+        sidebarList.appendChild(li);
+      });
+    }
+    function setActiveSidebar(idx) {
+      document.querySelectorAll('.sidebar-link').forEach((btn, i) => {
+        btn.classList.toggle('active', i === idx);
+      });
+    }
+    // Sidebar show/hide
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    let sidebarHidden = false;
+    sidebarToggle.onclick = () => {
+      sidebarHidden = !sidebarHidden;
+      sidebar.classList.toggle('hidden', sidebarHidden);
+      sidebarToggle.setAttribute('aria-label', sidebarHidden ? 'Show sidebar' : 'Hide sidebar');
+      sidebarToggle.textContent = sidebarHidden ? '→' : '☰';
+    };
+
+    // --- Keyboard navigation for expansion sections ---
+    document.addEventListener('keydown', function(e) {
+      // Expansion section keyboard nav
+      if (document.activeElement.classList.contains('section-title')) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          document.activeElement.click();
+          e.preventDefault();
+        }
+      }
+      // Event card navigation
+      if (document.activeElement.classList.contains('event-card')) {
+        const cards = Array.from(document.querySelectorAll('.event-card'));
+        let idx = cards.indexOf(document.activeElement);
+        if (e.key === 'ArrowDown') {
+          if (idx >= 0 && idx < cards.length - 1) {
+            cards[idx + 1].focus();
+            e.preventDefault();
+          }
+        } else if (e.key === 'ArrowUp') {
+          if (idx > 0) {
+            cards[idx - 1].focus();
+            e.preventDefault();
+          }
+        }
+      }
+    });
+
+    // --- Progressive rendering for expansions ---
     async function renderAllSections() {
       const allSectionsDiv = document.getElementById('allSections');
       showSpinner(allSectionsDiv);
-      allSectionsDiv.innerHTML = await renderAllByExpansion(allEvents, currentSearch, currentSort);
+      const html = await renderAllByExpansion(allEvents, currentSearch, currentSort);
+      allSectionsDiv.innerHTML = html;
 
-      // Setup collapsible expansion sections
+      // Sidebar navigation
+      const expNames = renderAllByExpansion._expansionNames || [];
+      updateSidebar(expNames);
+
+      // Collapsible expansion sections
       let expIdx = renderAllByExpansion._expIdx || 0;
       for (let i = 0; i < expIdx; i++) {
         const sectionBtn = document.getElementById(`expansion-${i}-title`);
         const sectionList = document.getElementById(`expansion-${i}-list`);
         const arrow = sectionBtn.querySelector('.arrow');
         sectionBtn.onclick = function() {
-          if (sectionList.style.display === 'none') {
-            sectionList.style.display = '';
-            sectionBtn.setAttribute('aria-expanded', 'true');
-            arrow.innerHTML = '&#9660;';
-            sectionBtn.classList.remove('collapsed');
-          } else {
-            sectionList.style.display = 'none';
-            sectionBtn.setAttribute('aria-expanded', 'false');
-            arrow.innerHTML = '&#9654;';
-            sectionBtn.classList.add('collapsed');
+          const isCollapsed = sectionList.style.display === 'none';
+          sectionList.style.display = isCollapsed ? '' : 'none';
+          sectionBtn.setAttribute('aria-expanded', isCollapsed ? 'true' : 'false');
+          arrow.innerHTML = isCollapsed ? '&#9660;' : '&#9654;';
+          sectionBtn.classList.toggle('collapsed', !isCollapsed);
+        };
+        sectionBtn.onkeydown = function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            this.click();
+            e.preventDefault();
           }
         };
       }
@@ -737,6 +1055,12 @@
             toggleBtn.textContent = expanded ? 'Hide Loot ▲' : 'Show Loot ▼';
             toggleBtn.setAttribute('aria-expanded', expanded);
           };
+          toggleBtn.onkeydown = function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              this.click();
+              e.preventDefault();
+            }
+          };
           // Modal details
           const header = document.querySelector(`.event-card[data-idx="${id}"] .event-header`);
           header.onclick = function(e) {
@@ -753,53 +1077,6 @@
         expIdx2++;
       }
     }
-
-    // --- Search functionality with highlight ---
-    document.getElementById('searchInput').addEventListener('input', function() {
-      currentSearch = this.value.trim();
-      renderAllSections();
-    });
-
-    // --- Sorting functionality ---
-    document.getElementById('sortSelect').addEventListener('change', function() {
-      currentSort = this.value;
-      renderAllSections();
-    });
-
-    // --- Keyboard navigation (basic) ---
-    document.addEventListener('keydown', function(e) {
-      if (!document.activeElement) return;
-      const cards = Array.from(document.querySelectorAll('.event-card'));
-      let idx = cards.indexOf(document.activeElement);
-      if (e.key === 'ArrowDown') {
-        if (idx >= 0 && idx < cards.length - 1) {
-          cards[idx + 1].focus();
-          e.preventDefault();
-        }
-      } else if (e.key === 'ArrowUp') {
-        if (idx > 0) {
-          cards[idx - 1].focus();
-          e.preventDefault();
-        }
-      }
-    });
-
-    // --- Theme toggle ---
-    const themeToggleBtn = document.getElementById('themeToggleBtn');
-    function setTheme(light) {
-      document.body.classList.toggle('light', light);
-      themeToggleBtn.innerText = light ? '🌞' : '🌙';
-      themeToggleBtn.title = light ? 'Switch to dark theme' : 'Switch to light theme';
-      localStorage.setItem('gh-theme', light ? 'light' : 'dark');
-    }
-    themeToggleBtn.onclick = () => setTheme(!document.body.classList.contains('light'));
-    // On load, set theme from localStorage or system
-    (() => {
-      const saved = localStorage.getItem('gh-theme');
-      if (saved === 'light' || (!saved && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-        setTheme(true);
-      }
-    })();
 
     // --- Initial load ---
     loadAllJsonData();
