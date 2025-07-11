@@ -1,172 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gamers-Hell: Events & Timer</title>
+  <meta charset="UTF-8">
+  <title>Gamers-Hell: Events & Timer (Single File Loader)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <style>
-    body {
-      background: #181c26;
-      color: #fff;
-      font-family: 'Segoe UI', Arial, sans-serif;
+    html, body {
+      height: 100%;
       margin: 0;
+      padding: 0;
+      background: #1e2630;
+      color: #f3f7fa;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      box-sizing: border-box;
+    }
+    body {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+    }
+    .side-by-side-container {
+      display: flex;
+      flex: 1 1 auto;
+      height: 100vh;
+      gap: 0;
+    }
+    .panel {
+      flex: 1 1 0;
+      min-width: 320px;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #263142;
+      background: #232c3b;
+      overflow: auto;
       height: 100vh;
     }
-    header {
-      background: #222;
-      color: #ffcc00;
-      padding: 1.1em 1em 1em 1em;
-      text-align: center;
-      position: relative;
-      font-size: 1.25em;
-      letter-spacing: 0.02em;
-      box-shadow: 0 2px 8px #0006;
-      z-index: 10;
+    .panel:last-child {
+      border-right: none;
     }
-    .header-controls {
-      position: absolute;
-      top: 50%;
-      right: 1.2em;
-      transform: translateY(-50%);
-      display: flex;
-      gap: 0.7em;
-      align-items: center;
-    }
-    .header-controls select,
-    .header-controls button {
-      border: 1px solid #ffcc00;
-      background: #181c26;
-      color: #ffcc00;
-      padding: 0.45em 1em;
-      border-radius: 6px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    .header-controls select:focus,
-    .header-controls button:focus {
-      outline: 2px solid #ffcc00;
-    }
-    .container {
-      flex: 1;
-      display: flex;
-      min-height: 0;
-      overflow: hidden;
-    }
-    main {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      background: #1e2630;
-      padding: 2em 0 2em 0;
-      overflow-y: auto;
-    }
-    aside {
-      width: 300px;
-      min-width: 220px;
-      max-width: 100vw;
-      background: #222;
-      color: #fff;
-      border-left: 1px solid #333;
-      border-radius: 12px 0 0 12px;
-      box-shadow: inset 0 0 6px #0004;
-      padding: 1.5em 1em 2em 1em;
-      overflow-y: auto;
-      z-index: 10;
-      transition: width 0.3s, padding 0.3s;
-    }
-    aside.hidden { display: none; }
-    .aside-header {
+    .panel-header {
+      background: #263142;
+      color: #4a90e2;
       font-weight: bold;
-      color: #ffcc00;
-      font-size: 1.1em;
-      margin-bottom: 1em;
-      text-align: left;
+      font-size: 1.2em;
+      padding: 1em;
+      text-align: center;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #1e2630;
     }
-    aside select {
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-      min-width: 0;
-      font-size: 1em;
-      padding: 0.5em 0.7em;
-      border-radius: 6px;
-      border: 1px solid #444;
-      background: #1f1f1f;
-      color: #fff;
-      margin-bottom: 1em;
+    .panel-content {
+      flex: 1 1 auto;
+      padding: 0;
+      overflow: auto;
+      min-height: 600px;
     }
     @media (max-width: 900px) {
-      .container { flex-direction: column; }
-      aside {
-        width: 100vw;
-        border-radius: 0;
-        border-left: none;
-        border-top: 1px solid #333;
+      .side-by-side-container {
+        flex-direction: column;
+        height: auto;
       }
-      main {
-        border-radius: 0 0 12px 12px;
-        padding: 1em 0.5em;
+      .panel {
+        border-right: none;
+        border-bottom: 1px solid #263142;
+        min-height: 350px;
+        height: 50vh;
+        max-height: 50vh;
+      }
+      .panel:last-child {
+        border-bottom: none;
       }
     }
-    @media (max-width: 700px) {
-      main { padding: 0.5em 0; }
-    }
-    a {
-      color: #ffcc00;
-      text-decoration: underline;
-      transition: color 0.2s;
-    }
-    a:hover, a:focus {
-      color: #e84118;
-      outline: none;
+    @media (max-width: 600px) {
+      .panel {
+        min-width: 0;
+        height: auto;
+        max-height: none;
+      }
+      .side-by-side-container {
+        height: auto;
+      }
     }
   </style>
-  <!-- GW2 web components -->
-  <script type="module" src="https://cdn.jsdelivr.net/gh/geri0v/Gamers-Hell/js/gw2-event-timer.js"></script>
-  <script type="module" src="https://cdn.jsdelivr.net/gh/geri0v/Gamers-Hell/js/gh-events-loot.js"></script>
 </head>
 <body>
-  <header aria-label="Gamers-Hell: Events & Loot Explorer">
-    <span>🎮 Gamers-Hell: Events & Loot Explorer</span>
-    <span class="header-controls" role="region" aria-label="Theme and Sidebar Controls">
-      <label for="themeSelect" style="font-size:1em;">Theme:</label>
-      <select id="themeSelect" aria-label="Select theme">
-        <option value="darkglossy">Dark Glossy</option>
-        <option value="whiteglass">White Glass</option>
-      </select>
-      <button id="asideToggleBtn" aria-label="Toggle Timer Sidebar" title="Show or hide event timer sidebar">☰</button>
-    </span>
-  </header>
-  <div class="container">
-    <main aria-label="Main content" tabindex="-1">
-      <gh-events-loot id="eventsLoot" theme="darkglossy"></gh-events-loot>
-    </main>
-    <aside id="timerAside" aria-label="Event Timer Sidebar">
-      <div class="aside-header">Event Timer</div>
-      <gw2-event-timer></gw2-event-timer>
-      <nav aria-label="External Links" style="margin-top:2em;">
-        <a href="https://wiki.guildwars2.com/wiki/Event_timers" target="_blank" rel="noopener" aria-label="Official GW2 Event Timers Wiki">GW2 Event Timers Wiki</a>
-      </nav>
-    </aside>
+  <div class="side-by-side-container">
+    <div class="panel" id="events-panel">
+      <div class="panel-header">Events & Loot</div>
+      <div class="panel-content" id="events-root">
+        <div style="padding:2em;text-align:center;color:#888;">Loading Events & Loot...</div>
+      </div>
+    </div>
+    <div class="panel" id="timer-panel">
+      <div class="panel-header">GW2 Event Timer</div>
+      <div class="panel-content" id="timer-root">
+        <div style="padding:2em;text-align:center;color:#888;">Loading GW2 Event Timer...</div>
+      </div>
+    </div>
   </div>
   <script>
-    // Theme switcher for gh-events-loot
-    const loot = document.getElementById('eventsLoot');
-    const themeSelect = document.getElementById('themeSelect');
-    themeSelect.addEventListener('change', function() {
-      loot.setAttribute('theme', this.value);
-    });
+    // Loads a JS file from a URL and runs it with the given root element.
+    function loadAppFromGithub(jsUrl, rootId) {
+      fetch(jsUrl)
+        .then(r => {
+          if (!r.ok) throw new Error("Failed to fetch " + jsUrl);
+          return r.text();
+        })
+        .then(code => {
+          const root = document.getElementById(rootId);
+          // Provide a minimal context for the app to use 'root' as its main container.
+          // If the app uses document.body, you may need to patch document.body.
+          // We'll patch document.body to point to root during execution.
+          const origBody = document.body;
+          Object.defineProperty(document, 'body', { get: () => root, configurable: true });
+          try {
+            // Run the fetched code in this context.
+            new Function(code)();
+          } catch (e) {
+            root.innerHTML = `<div style="color:#f66;padding:1em;">App failed to load: ${e.message}</div>`;
+          }
+          Object.defineProperty(document, 'body', { get: () => origBody });
+        })
+        .catch(err => {
+          const root = document.getElementById(rootId);
+          root.innerHTML = `<div style="color:#f66;padding:1em;">Failed to load app: ${err.message}</div>`;
+        });
+    }
 
-    // Sidebar (aside) toggle
-    const aside = document.getElementById('timerAside');
-    document.getElementById('asideToggleBtn').onclick = () => {
-      aside.classList.toggle('hidden');
-    };
+    // Load Events & Loot
+    loadAppFromGithub(
+      'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/js/gh-events-loot.js',
+      'events-root'
+    );
+
+    // Load GW2 Event Timer
+    loadAppFromGithub(
+      'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/js/gw2-event-timer.js',
+      'timer-root'
+    );
   </script>
 </body>
 </html>
