@@ -27,52 +27,80 @@
       --section-title-hover-bg: #4a90e2;
       --section-title-hover-fg: #fff;
       --spinner-size: 36px;
+      --transition: 0.25s cubic-bezier(.4,0,.2,1);
     }
     body {
       background: var(--main-bg);
       color: var(--main-fg);
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       margin: 0;
-      transition: background 0.2s, color 0.2s;
+      transition: background var(--transition), color var(--transition);
     }
     header, footer {
       background: var(--header-bg);
-      padding: 1em;
+      padding: 1.2em 0;
       text-align: center;
       color: var(--main-fg);
+      letter-spacing: 1px;
+      font-size: 1.2em;
     }
     .main {
-      max-width: 900px;
+      max-width: 950px;
       margin: 2em auto;
       background: var(--main-bg);
-      padding: 2em;
-      border-radius: 10px;
+      padding: 2em 1.5em;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px #0003;
+      transition: background var(--transition);
     }
     .search-bar-container {
       display: flex;
       gap: 1em;
       margin-bottom: 2em;
       background: var(--search-bg);
-      padding: 0.7em 1em;
-      border-radius: 8px;
+      padding: 1em;
+      border-radius: 10px;
+      align-items: center;
+      transition: background var(--transition);
     }
     .search-input {
-      padding: 0.5em;
-      border-radius: 4px;
+      padding: 0.7em;
+      border-radius: 6px;
       border: none;
       background: var(--input-bg);
       color: var(--input-fg);
-      font-size: 1em;
+      font-size: 1.1em;
       flex: 1;
+      outline: none;
+      transition: background var(--transition), color var(--transition);
+    }
+    .theme-toggle-btn {
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-weight: bold;
+      border-radius: 6px;
+      padding: 0.5em 1.2em;
+      cursor: pointer;
+      margin-left: 0.5em;
+      font-size: 1em;
+      transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+      box-shadow: 0 2px 8px #0002;
+    }
+    .theme-toggle-btn:hover, .theme-toggle-btn:focus {
+      background: #fff;
+      color: var(--accent);
+      outline: 2px solid var(--accent);
     }
     .copy-bar {
       display: flex;
       align-items: center;
       gap: 0.5em;
       background: var(--copy-bar-bg);
-      border-radius: 6px;
+      border-radius: 8px;
       margin-bottom: 1em;
       padding: 0.7em 1em;
+      transition: background var(--transition);
     }
     .copy-bar input {
       flex: 1;
@@ -82,6 +110,8 @@
       background: var(--input-bg);
       color: var(--input-fg);
       font-size: 1em;
+      outline: none;
+      transition: background var(--transition), color var(--transition);
     }
     .copy-bar button {
       padding: 0.4em 1.5em;
@@ -90,7 +120,7 @@
       background: var(--copy-btn-bg);
       color: var(--copy-btn-color);
       cursor: pointer;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+      transition: background var(--transition), color var(--transition), box-shadow var(--transition), transform var(--transition);
       font-weight: bold;
       outline: none;
       min-width: 50px;
@@ -110,33 +140,36 @@
       color:#6f6;
       margin-left: 0.5em;
     }
-    .json-selector { margin-bottom: 1.5em; }
-    .json-selector label { margin-right: 0.5em; }
     .section-title {
       background: var(--section-title-bg);
       color: var(--section-title-fg);
       padding: 1em 1.2em;
-      border-radius: 8px;
-      font-size: 1.3em;
+      border-radius: 12px;
+      font-size: 1.25em;
       font-weight: bold;
-      margin-bottom: 1em;
+      margin-bottom: 1.5em;
       cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      transition: background 0.2s, color 0.2s;
-      box-shadow: 0 2px 8px #0002;
+      justify-content: center;
+      gap: 0.7em;
+      transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+      box-shadow: 0 2px 12px #0002;
       border: none;
       outline: none;
+      width: 100%;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
     }
     .section-title:hover, .section-title:focus {
       background: var(--section-title-hover-bg);
       color: var(--section-title-hover-fg);
     }
     .section-title .arrow {
-      margin-left: 0.7em;
       font-size: 1.1em;
-      transition: transform 0.2s;
+      transition: transform var(--transition);
     }
     .section-title.collapsed .arrow {
       transform: rotate(-90deg);
@@ -146,8 +179,9 @@
       background: var(--card-bg);
       margin-bottom: 2em;
       padding: 1.5em;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px #0004;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px #0004;
+      transition: background var(--transition);
     }
     .event-header {
       display: flex;
@@ -174,7 +208,7 @@
       margin-left: auto;
       padding: 0.3em 0.7em;
       border-radius: 4px;
-      transition: background 0.2s, color 0.2s;
+      transition: background var(--transition), color var(--transition);
     }
     .drops-toggle:hover, .drops-toggle:focus {
       background: var(--accent);
@@ -185,8 +219,9 @@
       margin-top: 1em;
       background: #222a35;
       padding: 1em;
-      border-radius: 6px;
+      border-radius: 8px;
       overflow-x: auto;
+      transition: background var(--transition);
     }
     .loot-list.active { display: block; }
     .loot-table {
@@ -263,6 +298,29 @@
       .loot-table tr { margin-bottom: 1em; }
       .loot-table td { border-bottom: none; }
     }
+    /* Light Theme */
+    body.light {
+      --main-bg: #f6f8fa;
+      --main-fg: #1e2630;
+      --card-bg: #fff;
+      --header-bg: #f4f7fb;
+      --footer-bg: #f4f7fb;
+      --search-bg: #e8ecf3;
+      --input-bg: #fff;
+      --input-fg: #1e2630;
+      --copy-bar-bg: #f4f7fb;
+      --copy-btn-bg: linear-gradient(135deg, #e8ecf3 60%, #4a90e2 100%);
+      --copy-btn-hover-bg: linear-gradient(135deg, #4a90e2 60%, #e8ecf3 100%);
+      --copy-btn-color: #1e2630;
+      --copy-btn-hover-color: #fff;
+      --accent: #4a90e2;
+      --table-th: #4a90e2;
+      --table-border: #c3d1e6;
+      --section-title-bg: #e8ecf3;
+      --section-title-fg: #1e2630;
+      --section-title-hover-bg: #4a90e2;
+      --section-title-hover-fg: #fff;
+    }
   </style>
 </head>
 <body>
@@ -289,6 +347,7 @@
         <option value="location">Sort: Location</option>
         <option value="loot">Sort: Loot Value</option>
       </select>
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle light/dark theme">🌙</button>
     </div>
 
     <div aria-live="polite" aria-relevant="additions" id="mainContent" tabindex="0">
@@ -354,7 +413,6 @@
       if (!itemIds.length) return { prices: {}, icons: {} };
       const chunkSize = 200;
       let prices = {}, icons = {};
-      // Prices
       for (let i = 0; i < itemIds.length; i += chunkSize) {
         const chunk = itemIds.slice(i, i + chunkSize);
         try {
@@ -369,7 +427,6 @@
           });
         } catch (e) {}
       }
-      // Icons
       for (let i = 0; i < itemIds.length; i += chunkSize) {
         const chunk = itemIds.slice(i, i + chunkSize);
         try {
@@ -396,6 +453,33 @@
       if (!query) return text;
       const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
       return text.replace(regex, '<mark>$1</mark>');
+    }
+
+    // --- Search filter logic (matches all fields) ---
+    function eventMatchesSearch(event, query) {
+      if (!query) return true;
+      const q = query.toLowerCase();
+      // Check event name, map, code, notes, loot names
+      if ((event.name && event.name.toLowerCase().includes(q)) ||
+          (event.map && event.map.toLowerCase().includes(q)) ||
+          (event.code && event.code.toLowerCase().includes(q)) ||
+          (event.notes && event.notes.toLowerCase().includes(q))) {
+        return true;
+      }
+      if (Array.isArray(event.loot)) {
+        for (const item of event.loot) {
+          if ((item.name && item.name.toLowerCase().includes(q)) ||
+              (item.code && item.code.toLowerCase().includes(q))) {
+            return true;
+          }
+        }
+      }
+      if (Array.isArray(event.bosses)) {
+        for (const boss of event.bosses) {
+          if (boss && boss.toLowerCase().includes(q)) return true;
+        }
+      }
+      return false;
     }
 
     // --- Render a single event card ---
@@ -466,12 +550,14 @@
 
     // --- Render all events from all JSONs, grouped by expansion ---
     async function renderAllByExpansion(allEvents, searchQuery, sortBy) {
-      if (!allEvents.length) {
+      // Filter events by search
+      const filteredEvents = allEvents.filter(ev => eventMatchesSearch(ev, searchQuery));
+      if (!filteredEvents.length) {
         return `<div class="empty-state"><img src="https://i.imgur.com/8z8Q2Hk.png" alt="No events"><div>No events found.</div></div>`;
       }
       // Group events by expansion
       const expansions = {};
-      allEvents.forEach(ev => {
+      filteredEvents.forEach(ev => {
         const exp = ev.expansion || 'Unknown Expansion';
         if (!expansions[exp]) expansions[exp] = [];
         expansions[exp].push(ev);
@@ -479,7 +565,7 @@
 
       // Gather all item IDs for TP lookup
       let allItemIds = [];
-      allEvents.forEach(event => {
+      filteredEvents.forEach(event => {
         if (Array.isArray(event.loot)) {
           event.loot.forEach(item => { if (item.id) allItemIds.push(item.id); });
         }
@@ -628,7 +714,7 @@
       // Setup copy bars, loot toggles, modals, collapsibles for all events
       let expIdx2 = 0;
       const expansions = {};
-      allEvents.forEach(ev => {
+      allEvents.filter(ev => eventMatchesSearch(ev, currentSearch)).forEach(ev => {
         const exp = ev.expansion || 'Unknown Expansion';
         if (!expansions[exp]) expansions[exp] = [];
         expansions[exp].push(ev);
@@ -697,6 +783,23 @@
         }
       }
     });
+
+    // --- Theme toggle ---
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    function setTheme(light) {
+      document.body.classList.toggle('light', light);
+      themeToggleBtn.innerText = light ? '🌞' : '🌙';
+      themeToggleBtn.title = light ? 'Switch to dark theme' : 'Switch to light theme';
+      localStorage.setItem('gh-theme', light ? 'light' : 'dark');
+    }
+    themeToggleBtn.onclick = () => setTheme(!document.body.classList.contains('light'));
+    // On load, set theme from localStorage or system
+    (() => {
+      const saved = localStorage.getItem('gh-theme');
+      if (saved === 'light' || (!saved && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        setTheme(true);
+      }
+    })();
 
     // --- Initial load ---
     loadAllJsonData();
