@@ -1,420 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Gamers-Hell Unified</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Global base styles for layout and theme only -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gamers Hell Unified Dashboard</title>
+
+  <!-- 1) MASTER CSS where we’ll dump both panels’ scoped rules -->
+  <style id="master-css"></style>
+
+  <!-- 2) YOUR GLOBAL THEME (always on top) -->
   <style>
     :root {
-      --accent: #2b4765;
-      --accent-light: #3c6e8d;
-      --radius: 16px;
-      --sidebar-width: 360px;
-      --shadow: 0 4px 24px rgba(44,52,70,0.10);
-      --sidebar-z: 1000;
+      --bg: #121212;
+      --panel-bg: #1f1f1f;
+      --fg: #ffffff;
+      --accent: #ffcc00;
     }
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #181a1b;
-      color: #f8f8f2;
-      transition: background 0.3s, color 0.3s;
-      min-height: 100vh;
-      min-width: 100vw;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
       overflow: hidden;
     }
-    body.theme-light {
-      background: #f8fcff;
-      color: #23272e;
-    }
-    .theme-toggle-center {
-      position: fixed;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1201;
-      pointer-events: auto;
-      user-select: auto;
-    }
-    .theme-toggle-btn {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 7px;
-      padding: 8px 22px;
-      font-size: 1.08em;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 2px 8px #0001;
-      transition: background 0.2s, color 0.2s;
-    }
-    .theme-toggle-btn:hover, .theme-toggle-btn:focus {
-      background: var(--accent-light);
-      color: #fff;
-      outline: none;
-    }
-    .container {
-      display: flex;
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      position: relative;
-    }
-    .main-content {
-      flex: 1 1 0;
-      min-width: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      overflow-y: auto;
-      background: inherit;
-      color: inherit;
-      padding: 0;
-      box-sizing: border-box;
-      transition: background 0.3s, color 0.3s;
-    }
-    .main-inner {
-      width: 100%;
-      max-width: 700px;
-      min-height: 70vh;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      margin: 48px 0 32px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      overflow-x: auto;
-      background: transparent;
-      transition: background 0.3s;
-      padding: 0;
-    }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: var(--sidebar-width);
-      max-width: 98vw;
-      height: 100vh;
-      background: #23272e;
-      color: #fff;
-      box-shadow: var(--shadow);
-      z-index: var(--sidebar-z);
-      display: flex;
-      flex-direction: column;
-      transform: translateX(100%);
-      transition: transform 0.33s cubic-bezier(.4,2,.6,1), box-shadow 0.2s, background 0.3s, color 0.3s;
-      border-left: 1px solid #181a1b;
-      overflow-y: auto;
-    }
-    body.theme-light .sidebar {
-      background: #f0f0f0;
-      color: #23272e;
-      border-left: 1px solid #ccc;
-    }
-    .sidebar.open {
-      transform: translateX(0);
-    }
-    .sidebar-toggle-btn {
-      position: fixed;
-      top: 18px;
-      right: calc(var(--sidebar-width) + 12px);
-      width: 40px;
-      height: 40px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 7px;
-      cursor: pointer;
-      font-size: 22px;
-      z-index: 1101;
-      box-shadow: 1px 1px 6px rgba(0,0,0,0.10);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-      outline: none;
-    }
-    .sidebar-toggle-btn:focus {
-      outline: 3px solid #f1c40f;
-    }
-    .sidebar-toggle-btn:hover {
-      background: var(--accent-light);
-    }
-    .loading, .error {
+    header {
+      background: #222;
+      color: var(--accent);
+      padding: 1rem;
       text-align: center;
-      padding: 60px 0;
-      color: #aaa;
-      font-size: 1.13em;
+      font-size: 1.6rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
     }
-    .error { color: #c00; }
-    /* Responsive adjustments */
-    @media (max-width: 900px) {
-      .sidebar {
-        width: 99vw;
-        max-width: 99vw;
-      }
-      .sidebar-toggle-btn {
-        right: 8px;
-        top: 8px;
-      }
-      .main-inner {
-        margin: 18px 0 18px 0;
-      }
-    }
-    @media (max-width: 600px) {
-      .sidebar {
-        width: 100vw;
-        max-width: 100vw;
-      }
-      .main-inner {
-        margin: 8px 0 8px 0;
-      }
-    }
-    /* Scrollbar styling */
-    .sidebar, #sidebarContent {
-      scrollbar-width: thin;
-      scrollbar-color: #3c6e8d #23272e;
-    }
-    .sidebar::-webkit-scrollbar, #sidebarContent::-webkit-scrollbar {
-      width: 8px;
-      background: #23272e;
-    }
-    .sidebar::-webkit-scrollbar-thumb, #sidebarContent::-webkit-scrollbar-thumb {
-      background: #3c6e8d;
-      border-radius: 6px;
-    }
-    /* Prevent sidebar CSS from leaking out */
-    #sidebarContent * {
-      box-sizing: border-box;
-      font-family: inherit !important;
-    }
-    /* Always show vertical scrollbars for both main and sidebar for usability */
-    .main-content, .sidebar {
+    .container { display: flex; flex: 1; overflow: hidden; }
+    main, aside {
+      background: var(--panel-bg);
+      padding: 1rem;
       overflow-y: auto;
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.4);
     }
+    main { flex: 1; border-radius: 12px 0 0 12px; }
+    aside { width: 300px; border-left: 1px solid #333; border-radius: 0 12px 12px 0; }
+    h2 { color: var(--accent); margin-bottom: .5rem; }
+    .panel-wrapper { animation: fadeIn .4s ease-in; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
   </style>
 </head>
 <body>
-  <div class="theme-toggle-center">
-    <button id="themeToggleBtn" class="theme-toggle-btn" type="button" aria-label="Toggle theme">☀️ Light</button>
-  </div>
+
+  <header>🎮 Gamers Hell Unified Dashboard</header>
   <div class="container">
-    <main class="main-content" id="mainContent">
-      <div class="main-inner" id="mainInner">
-        <div class="loading">Loading main content…</div>
-      </div>
+    <main>
+      <h2>💻 Events &amp; Loot</h2>
+      <div id="cmdContainer" class="panel-wrapper cmd-panel">Loading commands…</div>
     </main>
-    <aside class="sidebar" id="sidebar" aria-label="Event Timer" tabindex="-1">
-      <div id="sidebarContent">
-        <div class="loading">Loading timer…</div>
-      </div>
+    <aside>
+      <h2>⏱ Event Timer</h2>
+      <div id="timerContainer" class="panel-wrapper timer-panel">Loading timer…</div>
     </aside>
-    <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Show or hide sidebar" tabindex="0">&laquo;</button>
   </div>
+
   <script>
-    // THEME TOGGLE LOGIC
-    function setTheme(theme) {
-      document.body.classList.toggle('theme-light', theme === 'light');
-      localStorage.setItem('ghc-theme', theme);
-      document.getElementById('themeToggleBtn').textContent = theme === 'light' ? '🌙 Dark' : '☀️ Light';
-      // Propagate .theme-light to both main and sidebar content
-      document.getElementById('mainInner').classList.toggle('theme-light', theme === 'light');
-      document.getElementById('sidebarContent').classList.toggle('theme-light', theme === 'light');
-      // If timer or cmd.html have their own theme toggling, trigger it here if needed
-      if(window.updateThemeForModules) window.updateThemeForModules(theme);
-    }
-    function toggleTheme() {
-      const isLight = document.body.classList.contains('theme-light');
-      setTheme(isLight ? 'dark' : 'light');
-    }
-    (() => {
-      const theme = localStorage.getItem('ghc-theme') || 'dark';
-      if (theme === 'light') document.body.classList.add('theme-light');
-      window.addEventListener('DOMContentLoaded', () => setTheme(theme));
-    })();
-    document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+    /**
+     * Fetch a panel, extract its <style> blocks, scope them,
+     * dump into #master-css, then inject HTML and re-run scripts.
+     */
+    async function loadPanel(url, containerId, wrapperClass) {
+      const res  = await fetch(url);
+      const text = await res.text();
+      const doc  = new DOMParser().parseFromString(text, 'text/html');
 
-    // SIDEBAR TOGGLE LOGIC
-    const sidebar = document.getElementById('sidebar');
-    const toggleBtn = document.getElementById('sidebarToggleBtn');
-    let sidebarOpen = false;
-    function toggleSidebar() {
-      sidebarOpen = !sidebarOpen;
-      sidebar.classList.toggle('open', sidebarOpen);
-      toggleBtn.innerHTML = sidebarOpen ? '&raquo;' : '&laquo;';
-      toggleBtn.setAttribute('aria-label', sidebarOpen ? 'Hide sidebar' : 'Show sidebar');
-      if (sidebarOpen) sidebar.focus();
-    }
-    toggleBtn.addEventListener('click', toggleSidebar);
-    toggleBtn.addEventListener('keydown', function(e) {
-      if (e.key === "Enter" || e.key === " ") {
-        toggleSidebar();
-        e.preventDefault();
-      }
-    });
-    document.addEventListener('keydown', function(e) {
-      if (e.key === "Escape" && sidebarOpen) {
-        toggleSidebar();
-      }
-    });
+      // 1) Grab all <style> content
+      const styleBlocks = Array.from(doc.querySelectorAll('style'))
+        .map(el => el.textContent);
 
-    // DYNAMIC CONTENT LOADING HELPERS
-    function extractParts(html, baseUrl) {
-      let head = '', body = html;
-      const headMatch = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
-      if (headMatch) head = headMatch[1];
-      const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-      if (bodyMatch) body = bodyMatch[1];
-      function absolutizePaths(str) {
-        return str.replace(/(href|src)=["'](?!https?:|\/\/|#|data:)([^"']+)["']/gi, (m, attr, path) => {
-          let abs = baseUrl.replace(/\/[^\/]*$/, '/') + path.replace(/^\.?\//, '');
-          return `${attr}="${abs}"`;
+      // 2) Remove any <style> or external CSS links
+      doc.querySelectorAll('style, link[rel="stylesheet"]').forEach(el => el.remove());
+
+      // 3) Scope each CSS block under .wrapperClass and append to master-css
+      const master = document.getElementById('master-css');
+      styleBlocks.forEach(cssText => {
+        // Prefix every selector (naively splits at {)
+        const scoped = cssText.replace(/([^\r\n,{}]+)(?=\s*\{)/g, selBlock => {
+          // leave @-rules alone
+          if (selBlock.trim().startsWith('@')) return selBlock;
+          // prefix each comma-separated selector
+          return selBlock.split(',')
+            .map(s => `.${wrapperClass} ${s.trim()}`)
+            .join(', ');
         });
-      }
-      return {
-        head: absolutizePaths(head),
-        body: absolutizePaths(body)
-      };
-    }
-    function injectHeadCSS(headHtml) {
-      // Remove previous dynamic styles/links
-      document.querySelectorAll('link[data-dynamic], style[data-dynamic]').forEach(el => el.remove());
-      const temp = document.createElement('div');
-      temp.innerHTML = headHtml;
-      temp.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-        const newLink = document.createElement('link');
-        newLink.rel = 'stylesheet';
-        newLink.href = link.href;
-        newLink.setAttribute('data-dynamic', 'true');
-        document.head.appendChild(newLink);
+        master.appendChild(document.createTextNode(scoped));
       });
-      temp.querySelectorAll('style').forEach(style => {
-        const newStyle = document.createElement('style');
-        newStyle.textContent = style.textContent;
-        newStyle.setAttribute('data-dynamic', 'true');
-        document.head.appendChild(newStyle);
-      });
-    }
-    function executeScripts(container) {
-      Array.from(container.querySelectorAll('script')).forEach(oldScript => {
+
+      // 4) Inject the sanitized HTML into its container
+      const wrapper = document.createElement('div');
+      wrapper.className = wrapperClass;
+      wrapper.innerHTML  = doc.body.innerHTML;
+      const container    = document.getElementById(containerId);
+      container.innerHTML = '';
+      container.appendChild(wrapper);
+
+      // 5) Re-execute inline scripts so functionality stays alive
+      wrapper.querySelectorAll('script').forEach(oldScript => {
         const newScript = document.createElement('script');
-        if (oldScript.src) {
-          newScript.src = oldScript.src;
-        } else {
-          newScript.textContent = oldScript.textContent;
-        }
-        if (oldScript.type) newScript.type = oldScript.type;
-        container.appendChild(newScript);
-        oldScript.remove();
+        if (oldScript.src) newScript.src = oldScript.src;
+        else               newScript.textContent = oldScript.textContent;
+        document.body.appendChild(newScript);
       });
     }
 
-    // LOAD MAIN CONTENT (cmd.html)
-    fetch('https://geri0v.github.io/Gamers-Hell/html/cmd.html')
-      .then(response => {
-        if (!response.ok) throw new Error('Main content not found');
-        return response.text();
-      })
-      .then(html => {
-        const parts = extractParts(html, 'https://geri0v.github.io/Gamers-Hell/html/cmd.html');
-        injectHeadCSS(parts.head);
-        const mainInner = document.getElementById('mainInner');
-        mainInner.innerHTML = parts.body;
-        executeScripts(mainInner);
-      })
-      .catch(error => {
-        document.getElementById('mainInner').innerHTML = "<div class='error'>Failed to load main content.</div>";
-        console.error(error);
-      });
-
-    // LOAD SIDEBAR CONTENT (timer.html)
-    fetch('https://geri0v.github.io/Gamers-Hell/html/timer.html')
-      .then(response => {
-        if (!response.ok) throw new Error('Sidebar content not found');
-        return response.text();
-      })
-      .then(html => {
-        const parts = extractParts(html, 'https://geri0v.github.io/Gamers-Hell/html/timer.html');
-        injectHeadCSS(parts.head); // Timer may have its own CSS
-        const sidebarContent = document.getElementById('sidebarContent');
-        sidebarContent.innerHTML = parts.body;
-        executeScripts(sidebarContent);
-        setTimeout(() => {
-          injectSidebarEnhancements();
-          document.dispatchEvent(new Event('timezoneChanged'));
-        }, 200);
-      })
-      .catch(error => {
-        document.getElementById('sidebarContent').innerHTML = "<div class='error'>Failed to load sidebar.</div>";
-        console.error(error);
-      });
-
-    // SIDEBAR ENHANCEMENTS (timezone, theme toggle)
-    function injectSidebarEnhancements() {
-      const sidebarContent = document.getElementById('sidebarContent');
-      let tzSel = sidebarContent.querySelector('#timezoneSelect');
-      let tzLabel = sidebarContent.querySelector('label[for="timezoneSelect"]');
-      if (!tzSel) {
-        tzSel = document.createElement('select');
-        tzSel.id = 'timezoneSelect';
-      }
-      if (!tzLabel) {
-        tzLabel = document.createElement('label');
-        tzLabel.htmlFor = 'timezoneSelect';
-        tzLabel.className = 'timezone-label';
-        tzLabel.textContent = 'Timezone:';
-      }
-      let tzContainer = sidebarContent.querySelector('.timezone-container');
-      if (!tzContainer) {
-        tzContainer = document.createElement('div');
-        tzContainer.className = 'timezone-container';
-        sidebarContent.prepend(tzContainer);
-      }
-      tzContainer.innerHTML = '';
-      tzContainer.appendChild(tzLabel);
-      tzContainer.appendChild(tzSel);
-
-      let zones = [];
-      try {
-        zones = Intl.supportedValuesOf('timeZone');
-      } catch {
-        zones = [
-          "Europe/Amsterdam", "Europe/London", "America/New_York", "America/Los_Angeles", "Asia/Tokyo", "UTC"
-        ];
-      }
-      tzSel.innerHTML = '';
-      const selected = localStorage.getItem('ghc-timezone') || 'Europe/Amsterdam';
-      zones.forEach(tz => {
-        const opt = document.createElement('option');
-        opt.value = tz;
-        opt.textContent = tz.replace('_',' ');
-        if (tz === selected) opt.selected = true;
-        tzSel.appendChild(opt);
-      });
-      tzSel.addEventListener('change', function() {
-        localStorage.setItem('ghc-timezone', this.value);
-        if (window.updateEvents) window.updateEvents();
-        document.dispatchEvent(new Event('timezoneChanged'));
-      });
-    }
-
-    // Collapsible details for categories (only one open at a time)
-    document.addEventListener('click', function(e) {
-      if (e.target.tagName === 'SUMMARY') {
-        const parentDetails = e.target.closest('details');
-        if (parentDetails) {
-          Array.from(parentDetails.parentElement.querySelectorAll('details')).forEach(d => {
-            if (d !== parentDetails) d.removeAttribute('open');
-          });
-        }
-      }
-    });
+    // Load both panels
+    loadPanel(
+      'https://raw.githubusercontent.com/geri0v/Gamers-Hell/main/html/cmd.html',
+      'cmdContainer',
+      'cmd-panel'
+    );
+    loadPanel(
+      'https://raw.githubusercontent.com/geri0v/Gamers-Hell/main/html/timer.html',
+      'timerContainer',
+      'timer-panel'
+    );
   </script>
 </body>
 </html>
