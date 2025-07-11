@@ -1,132 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gamers Hell Unified Dashboard</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Gamers Hell Ultimate Dashboard</title>
 
-  <!-- 1) MASTER CSS where we’ll dump both panels’ scoped rules -->
-  <style id="master-css"></style>
-
-  <!-- 2) YOUR GLOBAL THEME (always on top) -->
+  <!-- 1) GLOBAL THEME + copy-button images -->
   <style>
     :root {
-      --bg: #121212;
-      --panel-bg: #1f1f1f;
-      --fg: #ffffff;
-      --accent: #ffcc00;
+      --bg:           #121212;
+      --panel-bg:     #1f1f1f;
+      --fg:           #ffffff;
+      --accent:       #ffcc00;
+
+      --copy-btn-bg:        url('https://i.postimg.cc/Pf2Qp0Xq/World-Completion.png');
+      --copy-btn-hover-bg:  url('https://i.postimg.cc/qMNzGyvH/pve-e6fdf7c3.png');
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body.light-theme {
+      --bg:       #f8fcff;
+      --panel-bg: #ffffff;
+      --fg:       #222222;
+      --accent:   #2b4765;
+    }
+    body.original-theme {
+      --bg:       #1e2630;
+      --panel-bg: #263142;
+      --fg:       #f3f7fa;
+      --accent:   #4a90e2;
+    }
+
+    * { box-sizing: border-box; margin:0; padding:0; }
     body {
       background: var(--bg);
       color: var(--fg);
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      overflow: hidden;
+      font-family: 'Segoe UI',sans-serif;
+      display: flex; flex-direction: column; height:100vh; overflow:hidden;
+      transition: background .3s, color .3s;
     }
+
+    /* HEADER */
     header {
       background: #222;
+      padding: 1rem; text-align: center;
       color: var(--accent);
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.6rem;
+      position: relative;
       box-shadow: 0 2px 4px rgba(0,0,0,0.4);
     }
-    .container { display: flex; flex: 1; overflow: hidden; }
+    .header-controls {
+      position: absolute;
+      top:50%; right:1rem;
+      transform: translateY(-50%);
+      display: flex; gap:0.5rem;
+    }
+    .header-controls select,
+    .header-controls button {
+      border:1px solid var(--accent);
+      background:none;
+      color:var(--accent);
+      padding:4px 8px;
+      border-radius:4px;
+      font-size:.9rem;
+      cursor:pointer;
+      transition: background .2s;
+    }
+    .header-controls select:hover,
+    .header-controls button:hover {
+      background: rgba(255,204,0,0.1);
+    }
+
+    /* LAYOUT */
+    .container { display:flex; flex:1; overflow:hidden; }
     main, aside {
       background: var(--panel-bg);
-      padding: 1rem;
-      overflow-y: auto;
+      padding:1rem;
+      overflow-y:auto;
       box-shadow: inset 0 0 6px rgba(0,0,0,0.4);
+      transition: background .3s,color .3s;
     }
-    main { flex: 1; border-radius: 12px 0 0 12px; }
-    aside { width: 300px; border-left: 1px solid #333; border-radius: 0 12px 12px 0; }
-    h2 { color: var(--accent); margin-bottom: .5rem; }
-    .panel-wrapper { animation: fadeIn .4s ease-in; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    main {
+      flex:1;
+      border-radius: 0 12px 12px 0;
     }
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
-  </style>
-</head>
-<body>
+    aside {
+      width:300px;
+      border-left:1px solid #333;
+      border-radius: 12px 0 0 12px;
+      transition: width .3s, padding .3s;
+    }
+    aside.hidden { display:none; }
 
-  <header>🎮 Gamers Hell Unified Dashboard</header>
+    h2 {
+      color: var(--accent);
+      margin-bottom:.5rem;
+      font-size:1.2rem;
+    }
+    .panel-wrapper {
+      animation: fadeIn .4s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(10px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* COPY-BUTTON ICONS */
+    .cmd-panel .copy-bar button {
+      background: var(--copy-btn-bg) no-repeat center/contain;
+      width:32px; height:32px;
+      border:none; cursor:pointer; position:relative;
+      transition: background .2s;
+    }
+    .cmd-panel .copy-bar button:hover {
+      background: var(--copy-btn-hover-bg) no-repeat center/contain;
+    }
+    .cmd-panel .copy-bar button::after {
+      content:'Copy';
+      position:absolute; top:-1.4em; left:50%;
+      transform:translateX(-50%);
+      font-size:.75rem;
+      background:rgba(0,0,0,0.7);
+      color:#fff; padding:2px 4px;
+      border-radius:3px; opacity:0; transition:opacity .2s;
+      white-space:nowrap;
+    }
+    .cmd-panel .copy-bar button:hover::after {
+      opacity:1;
+    }
+
+    /* IMAGE HOVER EFFECT for Temples */
+    .cmd-panel .source-title img,
+    .cmd-panel .event-card img {
+      width:100%; max-width: 100%;
+      border-radius:8px;
+      transition: transform .2s;
+      display:block; margin:0 auto;
+    }
+    .cmd-panel .source-title:hover img,
+    .cmd-panel .event-card img:hover {
+      transform: scale(1.05);
+    }
+
+    /* TIMER HEADER CONTROLS */
+    .aside-header {
+      display:flex; justify-content:space-between; align-items:center;
+      margin-bottom:.5rem;
+    }
+    .aside-controls button {
+      border:1px solid var(--accent);
+      background:none;
+      color:var(--accent);
+      border-radius:4px;
+      padding:2px 6px;
+      cursor:pointer;
+      font-size:.9rem;
+      transition:background .2s;
+    }
+    .aside-controls button:hover {
+      background: rgba(255,204,0,0.1);
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width:8px; }
+    ::-webkit-scrollbar-thumb { background:#444; border-radius:4px; }
+  </style>
+
+  <!-- 2) MASTER CSS will be populated at runtime -->
+  <style id="master-css"></style>
+</head>
+
+<body>
+  <header>
+    🎮 Gamers Hell Ultimate Dashboard
+    <div class="header-controls">
+      <select id="themeSelector" aria-label="Select theme">
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+        <option value="original">Original</option>
+      </select>
+      <button id="toggleTimerBtn">Hide Timer</button>
+      <button id="refreshTimerBtn">Refresh Timers</button>
+    </div>
+  </header>
+
   <div class="container">
     <main>
       <h2>💻 Events &amp; Loot</h2>
-      <div id="cmdContainer" class="panel-wrapper cmd-panel">Loading commands…</div>
+      <div id="cmdContainer" class="panel-wrapper cmd-panel">
+        Loading commands…
+      </div>
     </main>
-    <aside>
-      <h2>⏱ Event Timer</h2>
-      <div id="timerContainer" class="panel-wrapper timer-panel">Loading timer…</div>
+
+    <aside id="timerSidebar">
+      <div class="aside-header">
+        <h2>⏱ Event Timer</h2>
+        <div class="aside-controls">
+          <!-- empty: controls live in header -->
+        </div>
+      </div>
+      <div id="timerContainer" class="panel-wrapper timer-panel">
+        Loading timer…
+      </div>
     </aside>
   </div>
 
   <script>
-    /**
-     * Fetch a panel, extract its <style> blocks, scope them,
-     * dump into #master-css, then inject HTML and re-run scripts.
-     */
-    async function loadPanel(url, containerId, wrapperClass) {
+  (function(){
+    const CMD_URL   = 'https://raw.githubusercontent.com/geri0v/Gamers-Hell/main/html/cmd.html';
+    const TIMER_URL = 'https://raw.githubusercontent.com/geri0v/Gamers-Hell/main/html/timer.html';
+
+    /* THEME SWITCHER */
+    const themeMap = { dark:'', light:'light-theme', original:'original-theme' };
+    const selTheme = document.getElementById('themeSelector');
+    selTheme.addEventListener('change', e => {
+      document.body.classList.remove(...Object.values(themeMap));
+      document.body.classList.add(themeMap[e.target.value]);
+    });
+    selTheme.value = 'dark';
+
+    /* SHOW/HIDE TIMER */
+    const btnToggle = document.getElementById('toggleTimerBtn');
+    btnToggle.addEventListener('click', () => {
+      const asd = document.getElementById('timerSidebar');
+      const hidden = asd.classList.toggle('hidden');
+      btnToggle.textContent = hidden ? 'Show Timer' : 'Hide Timer';
+    });
+
+    /* PANEL LOADER */
+    async function loadPanel(url, containerId, wrapperClass, onReady) {
       const res  = await fetch(url);
       const text = await res.text();
       const doc  = new DOMParser().parseFromString(text, 'text/html');
 
-      // 1) Grab all <style> content
-      const styleBlocks = Array.from(doc.querySelectorAll('style'))
-        .map(el => el.textContent);
+      // extract & remove <style>
+      const styles = Array.from(doc.querySelectorAll('style')).map(s=>s.textContent);
+      doc.querySelectorAll('style,link[rel="stylesheet"]').forEach(e=>e.remove());
+      // extract & remove <script>
+      const scripts = Array.from(doc.querySelectorAll('script'));
+      doc.querySelectorAll('script').forEach(e=>e.remove());
 
-      // 2) Remove any <style> or external CSS links
-      doc.querySelectorAll('style, link[rel="stylesheet"]').forEach(el => el.remove());
-
-      // 3) Scope each CSS block under .wrapperClass and append to master-css
+      // scope & append CSS
       const master = document.getElementById('master-css');
-      styleBlocks.forEach(cssText => {
-        // Prefix every selector (naively splits at {)
-        const scoped = cssText.replace(/([^\r\n,{}]+)(?=\s*\{)/g, selBlock => {
-          // leave @-rules alone
-          if (selBlock.trim().startsWith('@')) return selBlock;
-          // prefix each comma-separated selector
-          return selBlock.split(',')
-            .map(s => `.${wrapperClass} ${s.trim()}`)
-            .join(', ');
+      styles.forEach(cssText=>{
+        const scoped = cssText.replace(/([^\r\n,{}]+)(?=\s*\{)/g, sel=>{
+          if (sel.trim().startsWith('@')) return sel;
+          return sel.split(',').map(s=>`.${wrapperClass} ${s.trim()}`).join(', ');
         });
         master.appendChild(document.createTextNode(scoped));
       });
 
-      // 4) Inject the sanitized HTML into its container
-      const wrapper = document.createElement('div');
-      wrapper.className = wrapperClass;
-      wrapper.innerHTML  = doc.body.innerHTML;
-      const container    = document.getElementById(containerId);
+      // inject HTML
+      const container = document.getElementById(containerId);
       container.innerHTML = '';
-      container.appendChild(wrapper);
+      const wrap = document.createElement('div');
+      wrap.className = wrapperClass;
+      wrap.innerHTML = doc.body.innerHTML;
+      container.appendChild(wrap);
 
-      // 5) Re-execute inline scripts so functionality stays alive
-      wrapper.querySelectorAll('script').forEach(oldScript => {
-        const newScript = document.createElement('script');
-        if (oldScript.src) newScript.src = oldScript.src;
-        else               newScript.textContent = oldScript.textContent;
-        document.body.appendChild(newScript);
+      // remove stray text nodes of just “te”
+      wrap.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() === 'te') {
+          wrap.removeChild(node);
+        }
+      });
+
+      // load scripts sequentially
+      for (let old of scripts) {
+        if (old.src) {
+          await new Promise(r => {
+            const s = document.createElement('script');
+            s.src   = old.src; s.async = false;
+            s.onload = r;
+            document.body.appendChild(s);
+          });
+        } else {
+          const s = document.createElement('script');
+          s.textContent = old.textContent;
+          document.body.appendChild(s);
+        }
+      }
+
+      // panel-specific initialization
+      if (typeof onReady === 'function') onReady(wrap);
+    }
+
+    /* TIMER INIT: auto-detect & fire, then remove select */
+    async function initTimer(wrap) {
+      const sel = wrap.querySelector('select[name="timezone"]');
+      if (!sel) return;
+      const zones = await fetch('https://worldtimeapi.org/api/timezone').then(r=>r.json());
+      sel.innerHTML = zones.map(z=>`<option>${z}</option>`).join('');
+      const myTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (zones.includes(myTz)) sel.value = myTz;
+      sel.dispatchEvent(new Event('change'));
+      sel.remove();
+    }
+
+    /* COPY-BUTTON INIT */
+    function initCopy(wrap) {
+      wrap.querySelectorAll('.copy-bar').forEach(bar => {
+        const btn = bar.querySelector('button');
+        const inp = bar.querySelector('input');
+        const msg = bar.querySelector('.copy-msg');
+        btn.textContent = ''; // icon only
+        btn.addEventListener('click', ()=> {
+          inp.select();
+          navigator.clipboard.writeText(inp.value);
+          if (msg) {
+            msg.textContent = 'Copied!';
+            msg.style.display = 'inline';
+            setTimeout(()=> msg.style.display = 'none', 1500);
+          }
+        });
       });
     }
 
-    // Load both panels
-    loadPanel(
-      'https://raw.githubusercontent.com/geri0v/Gamers-Hell/main/html/cmd.html',
-      'cmdContainer',
-      'cmd-panel'
-    );
-    loadPanel(
-      'https://raw.githubusercontent.com/geri0v/Gamers-Hell/main/html/timer.html',
-      'timerContainer',
-      'timer-panel'
-    );
+    /* SORT-BY SELECT INIT */
+    function initSort(wrap) {
+      const sortSel = wrap.querySelector('select[name="sort"]');
+      const table   = wrap.querySelector('.loot-table');
+      if (!sortSel || !table) return;
+      const body = table.tBodies[0]||table;
+      sortSel.addEventListener('change', () => {
+        const val = sortSel.value; // e.g. 'value', 'name', etc.
+        const rows = Array.from(body.rows);
+        // find index of the column header containing val
+        const headers = Array.from(table.rows[0].cells);
+        const idx = headers.findIndex(th => th.innerText.toLowerCase().includes(val));
+        const asc = true;
+        rows.sort((a,b) => {
+          const aTxt = a.cells[idx].innerText.trim();
+          const bTxt = b.cells[idx].innerText.trim();
+          const aNum = parseFloat(aTxt), bNum = parseFloat(bTxt);
+          const diff = (isNaN(aNum)||isNaN(bNum))
+                       ? aTxt.localeCompare(bTxt)
+                       : aNum - bNum;
+          return diff;
+        });
+        rows.forEach(r => body.appendChild(r));
+      });
+    }
+
+    /* KICK OFF & AUTO-REFRESH */
+    document.getElementById('refreshTimerBtn')
+      .addEventListener('click', () => loadTimer());
+    setInterval(() => loadTimer(), 60000); // auto-refresh every minute
+
+    function loadCommands() {
+      loadPanel(CMD_URL, 'cmdContainer', 'cmd-panel', wrap => {
+        initCopy(wrap);
+        initSort(wrap);
+      });
+    }
+    function loadTimer() {
+      loadPanel(TIMER_URL, 'timerContainer', 'timer-panel', initTimer);
+    }
+
+    loadCommands();
+    loadTimer();
+  })();
   </script>
 </body>
 </html>
