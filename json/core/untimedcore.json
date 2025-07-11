@@ -7,12 +7,8 @@
     "loot": [
       {
         "name": "Circle of Arah",
-        "id": 39320
-      },
-      {
-        "code": "[&AgEzmgAA]",
-        "name": "Eye of Zhaitan's Loot",
-        "id": 39321
+        "id": 39320,
+        "code": "[&AgEzmgAA]"
       }
     ]
   },
@@ -23,9 +19,9 @@
     "code": "[&BOQGAAA=]",
     "loot": [
       {
-        "code": "[&AgEvmgAA]",
-        "name": "Rotbeard's Loot",
-        "id": 39322
+        "name": "Rotbeard's Treasure",
+        "id": 39335,
+        "code": "[&AgEvmgAA]"
       }
     ]
   },
@@ -36,14 +32,14 @@
     "code": "[&BD8FAAA=]",
     "loot": [
       {
-        "code": "[&AgEsmgAA]",
-        "name": "Dredge Commissar's Loot",
-        "id": 39323
+        "name": "Commissar's Manifest",
+        "id": 39317,
+        "code": "[&AgEsmgAA]"
       },
       {
-        "code": "[&ClgSAAA=]",
-        "name": "Dredge Commissar's Loot",
-        "id": 39324
+        "name": "Dredge Commissar's Chest",
+        "id": 30696,
+        "code": "[&ClgSAAA=]"
       }
     ]
   },
@@ -54,14 +50,14 @@
     "code": "[&BDwEAAA=]",
     "loot": [
       {
-        "code": "[&AgGDtQAA]",
-        "name": "Ogre Wars Loot",
-        "id": 39325
+        "name": "Ogre War Spoils",
+        "id": 39332,
+        "code": "[&AgGDtQAA]"
       },
       {
-        "code": "[&Cm4SAAA=]",
-        "name": "Ogre Wars Loot",
-        "id": 39326
+        "name": "Ogre War Chest",
+        "id": 30701,
+        "code": "[&Cm4SAAA=]"
       }
     ]
   },
@@ -72,14 +68,14 @@
     "code": "[&BNwAAAA=]",
     "loot": [
       {
-        "code": "[&AgE5mgAA]",
-        "name": "Rhendak's Loot",
-        "id": 39327
+        "name": "Rhendak's Signet",
+        "id": 39328,
+        "code": "[&AgE5mgAA]"
       },
       {
-        "code": "[&Ct4TAAA=]",
-        "name": "Rhendak's Loot",
-        "id": 39328
+        "name": "Rhendak's Chest",
+        "id": 30728,
+        "code": "[&Ct4TAAA=]"
       }
     ]
   },
@@ -90,14 +86,14 @@
     "code": "[&BO4BAAA=]",
     "loot": [
       {
-        "code": "[&CggUAAA=]",
-        "name": "Fire Shaman's Loot",
-        "id": 39329
+        "name": "Fire Shaman's Talisman",
+        "id": 39313,
+        "code": "[&CggUAAA=]"
       },
       {
-        "code": "[&CgYUAAA=]",
-        "name": "Fire Shaman's Loot",
-        "id": 39330
+        "name": "Fire Shaman's Chest",
+        "id": 30714,
+        "code": "[&CgYUAAA=]"
       }
     ]
   },
