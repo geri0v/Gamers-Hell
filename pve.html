@@ -4,29 +4,15 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Gamers Hell</title>
-  <style>
-    /* ────── THEME VARIABLES ────── */
-    body { margin:0; padding:20px; font-family:'Courier New', monospace; transition:.3s; }
-    body[data-theme="hacker"] {
-      --bg:#000; --fg:#0f0;
-      --panel-bg:#111; --panel-border:#0f0; --panel-shadow:0 0 8px #0f0;
-      --ctrl-bg:#222; --ctrl-fg:#0f0; --ctrl-border:#0f0;
-      --link:#0f0; --link-h:lime;
-    }
-    body[data-theme="darkglass"] {
-      --bg:#0a1a26; --fg:#5df0ff;
-      --panel-bg:rgba(20,30,40,.75); --panel-border:#5df0ff; --panel-shadow:0 0 12px #5df0ff;
-      --ctrl-bg:rgba(40,50,60,.7); --ctrl-fg:#5df0ff; --ctrl-border:#5df0ff;
-      --link:#5df0ff; --link-h:#a0ffff;
-    }
-    body[data-theme="whitegloss"] {
-      --bg:#fafafa; --fg:#222;
-      --panel-bg:#fff; --panel-border:#ccc; --panel-shadow:0 0 6px rgba(0,0,0,.1);
-      --ctrl-bg:#f0f0f0; --ctrl-fg:#222; --ctrl-border:#bbb;
-      --link:#222; --link-h:#555;
-    }
 
-    /* ────── GLOBAL STYLES ────── */
+  <style>
+    /* ───────────—── THEME VARIABLES ───────────────────────────── */
+    body { margin:0; padding:20px; font-family:'Courier New', monospace; transition:.3s; }
+    body[data-theme="hacker"]   { --bg:#000; --fg:#0f0; --panel-bg:#111; --panel-border:#0f0; --panel-shadow:0 0 8px #0f0; --ctrl-bg:#222; --ctrl-fg:#0f0; --ctrl-border:#0f0; --link:#0f0; --link-h:lime; }
+    body[data-theme="darkglass"]{ --bg:#0a1a26; --fg:#5df0ff; --panel-bg:rgba(20,30,40,.75); --panel-border:#5df0ff; --panel-shadow:0 0 12px #5df0ff; --ctrl-bg:rgba(40,50,60,.7); --ctrl-fg:#5df0ff; --ctrl-border:#5df0ff; --link:#5df0ff; --link-h:#a0ffff; }
+    body[data-theme="whitegloss"]{ --bg:#fafafa; --fg:#222; --panel-bg:#fff; --panel-border:#ccc; --panel-shadow:0 0 6px rgba(0,0,0,.1); --ctrl-bg:#f0f0f0; --ctrl-fg:#222; --ctrl-border:#bbb; --link:#222; --link-h:#555; }
+
+    /* ───────────—── GLOBAL STYLES ─────────────────────────────── */
     body { background:var(--bg); color:var(--fg); }
     h1 { text-align:center; margin:0 0 20px; }
     a { color:var(--link); text-decoration:underline; transition:.3s; }
@@ -40,7 +26,7 @@
       filter:brightness(1.2); cursor:pointer;
     }
 
-    /* ────── LAYOUT ────── */
+    /* ───────────—── LAYOUT ─────────────────────────────────────── */
     .toolbar {
       display:flex; justify-content:center; gap:10px; margin-bottom:20px;
     }
@@ -62,7 +48,6 @@
   </style>
 </head>
 <body data-theme="hacker">
-
   <div class="toolbar">
     <select id="themeSelector">
       <option value="hacker">Hacker Green</option>
@@ -73,9 +58,8 @@
   </div>
 
   <h1>Gamers Hell</h1>
-
   <div class="main">
-    <div id="cmd" class="panel"></div>
+    <div id="cmd"   class="panel"></div>
     <div id="timer" class="panel"></div>
   </div>
 
@@ -86,64 +70,78 @@
     const toggleBtn = document.getElementById('toggleTimer');
     const timerPanel = document.getElementById('timer');
 
-    // Restore theme
-    const savedTheme = localStorage.getItem('gh-theme');
-    if (savedTheme && THEMES.includes(savedTheme)) {
-      document.body.dataset.theme = savedTheme;
-      themeSel.value = savedTheme;
+    // restore theme
+    const saved = localStorage.getItem('gh-theme');
+    if (saved && THEMES.includes(saved)) {
+      document.body.dataset.theme = saved;
+      themeSel.value = saved;
     }
 
-    // Restore timer visibility
+    // restore timer visibility
     if (localStorage.getItem('gh-timer-visible')==='false') {
       timerPanel.classList.add('hidden');
       toggleBtn.textContent = 'Show Timer';
     }
 
-    // Theme switcher
+    // theme switcher
     themeSel.addEventListener('change', e => {
       document.body.dataset.theme = e.target.value;
       localStorage.setItem('gh-theme', e.target.value);
     });
 
-    // Toggle timer sidebar
+    // toggle timer sidebar
     toggleBtn.addEventListener('click', () => {
       const hidden = timerPanel.classList.toggle('hidden');
       toggleBtn.textContent = hidden ? 'Show Timer' : 'Hide Timer';
       localStorage.setItem('gh-timer-visible', !hidden);
     });
 
-    // Fetch + inject an HTML fragment, then re-run its <script> tags
-    async function loadFragment(path, containerId) {
-      const base = path.replace(/\/[^/]*$/, '/');
-      const res  = await fetch(path);
-      const text = await res.text();
-      const doc  = new DOMParser().parseFromString(text, 'text/html');
-
-      // Grab and remove scripts
-      const scripts = Array.from(doc.querySelectorAll('script'));
-      scripts.forEach(s => s.remove());
-
-      // Inject HTML
-      document.getElementById(containerId).innerHTML = doc.body.innerHTML;
-
-      // Re-execute scripts in order (preserves relative URLs)
-      for (let old of scripts) {
-        const s = document.createElement('script');
-        if (old.src) {
-          s.src = new URL(old.getAttribute('src'), base).href;
-          s.async = false;
-          document.body.appendChild(s);
-          await new Promise(r => s.onload = r);
-        } else {
-          s.textContent = old.textContent;
-          document.body.appendChild(s);
+    // lightweight HTML loader that handles full pages
+    async function loadPage(path, containerId) {
+      const raw = await fetch(path).then(r=>r.text());
+      // extract <head> content
+      const headMatch = raw.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
+      if (headMatch) {
+        const headHtml = headMatch[1];
+        // inject <link> and <style>
+        headHtml.match(/<link[^>]+rel=["']stylesheet["'][^>]*>/gi)?.forEach(linkTag=> {
+          document.head.insertAdjacentHTML('beforeend', linkTag);
+        });
+        headHtml.match(/<style\b[^>]*>[\s\S]*?<\/style>/gi)?.forEach(styleTag=> {
+          document.head.insertAdjacentHTML('beforeend', styleTag);
+        });
+      }
+      // extract <body> content
+      const bodyMatch = raw.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+      const bodyHtml = bodyMatch ? bodyMatch[1] : raw;
+      // inject markup
+      const container = document.getElementById(containerId);
+      container.innerHTML = bodyHtml;
+      // extract & run scripts in order
+      const scriptRegex = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
+      let match;
+      while((match = scriptRegex.exec(raw)) !== null) {
+        const [full, attrs, code] = match;
+        const srcMatch = attrs.match(/src=["']([^"']+)["']/);
+        if (srcMatch) {
+          // external script
+          const script = document.createElement('script');
+          script.src = new URL(srcMatch[1], path).href;
+          script.async = false;
+          document.body.appendChild(script);
+          await new Promise(res=> script.onload = res);
+        } else if(code.trim()) {
+          // inline script
+          const script = document.createElement('script');
+          script.textContent = code;
+          document.body.appendChild(script);
         }
       }
     }
 
-    // Kick things off
-    loadFragment('html/cmd.html',   'cmd');
-    loadFragment('html/timer.html', 'timer');
+    // load your two pages
+    loadPage('html/cmd.html',   'cmd');
+    loadPage('html/timer.html', 'timer');
   })();
   </script>
 </body>
