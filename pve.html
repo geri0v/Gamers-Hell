@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Gamers-Hell: Events & Timer (Single File Loader)</title>
+  <title>Gamers-Hell: Dynamic Index</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <style>
     html, body {
@@ -98,42 +98,39 @@
     </div>
   </div>
   <script>
-    // Loads a JS file from a URL and runs it with the given root element.
-    function loadAppFromGithub(jsUrl, rootId) {
+    // Dynamically fetch and run remote JS in the given root element.
+    function loadApp(jsUrl, rootId) {
       fetch(jsUrl)
         .then(r => {
-          if (!r.ok) throw new Error("Failed to fetch " + jsUrl);
+          if (!r.ok) throw new Error("Failed to fetch: " + jsUrl);
           return r.text();
         })
         .then(code => {
           const root = document.getElementById(rootId);
-          // Provide a minimal context for the app to use 'root' as its main container.
-          // If the app uses document.body, you may need to patch document.body.
-          // We'll patch document.body to point to root during execution.
+          // Patch document.body for this app's context.
           const origBody = document.body;
           Object.defineProperty(document, 'body', { get: () => root, configurable: true });
           try {
-            // Run the fetched code in this context.
             new Function(code)();
           } catch (e) {
-            root.innerHTML = `<div style="color:#f66;padding:1em;">App failed to load: ${e.message}</div>`;
+            root.innerHTML = '<div style="color:#f66;padding:1em;">App failed to load: ' + e.message + '</div>';
           }
           Object.defineProperty(document, 'body', { get: () => origBody });
         })
         .catch(err => {
           const root = document.getElementById(rootId);
-          root.innerHTML = `<div style="color:#f66;padding:1em;">Failed to load app: ${err.message}</div>`;
+          root.innerHTML = '<div style="color:#f66;padding:1em;">Failed to load app: ' + err.message + '</div>';
         });
     }
 
     // Load Events & Loot
-    loadAppFromGithub(
+    loadApp(
       'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/js/gh-events-loot.js',
       'events-root'
     );
 
     // Load GW2 Event Timer
-    loadAppFromGithub(
+    loadApp(
       'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/js/gw2-event-timer.js',
       'timer-root'
     );
