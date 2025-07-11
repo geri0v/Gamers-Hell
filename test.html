@@ -4,14 +4,27 @@
   <meta charset="UTF-8">
   <title>Gamers-Hell Unified</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Unified Overriding CSS -->
   <style>
+    :root {
+      --main-bg: #181a1b;
+      --main-fg: #f8f8f2;
+      --accent: #2b4765;
+      --sidebar-bg: #23272e;
+      --sidebar-fg: #fff;
+      --sidebar-width: 370px;
+      --transition: 0.3s cubic-bezier(.4,2,.6,1);
+      --radius: 14px;
+      --shadow: 0 8px 32px rgba(44,52,70,0.18);
+      --shadow-sidebar: -8px 0 36px rgba(44,52,70,0.23);
+    }
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      font-family: Arial, sans-serif;
-      background: #f8fcff;
-      color: #222;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--main-bg);
+      color: var(--main-fg);
     }
     .container {
       display: flex;
@@ -22,36 +35,42 @@
     .main-content {
       flex: 1 1 auto;
       min-width: 0;
-      padding: 0;
-      background: #f8fcff;
+      background: var(--main-bg);
+      color: var(--main-fg);
       transition: filter 0.2s;
+      padding: 0;
+      box-sizing: border-box;
     }
+    /* Sidebar Styles */
     .sidebar {
       position: fixed;
       top: 0;
       right: 0;
-      width: 360px;
+      width: var(--sidebar-width);
       max-width: 98vw;
       height: 100vh;
-      background: #222;
-      color: #fff;
-      box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+      background: var(--sidebar-bg);
+      color: var(--sidebar-fg);
+      box-shadow: var(--shadow);
       z-index: 1000;
       display: flex;
       flex-direction: column;
       transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(.4,2,.6,1);
+      transition: transform var(--transition), box-shadow 0.2s;
+      border-left: 1px solid #181a1b;
+      overflow-y: auto;
     }
     .sidebar.open {
       transform: translateX(0);
+      box-shadow: var(--shadow-sidebar);
     }
     .sidebar-toggle-btn {
       position: fixed;
-      top: 16px;
-      right: 16px;
+      top: 18px;
+      right: 18px;
       width: 44px;
       height: 44px;
-      background: #2b4765;
+      background: var(--accent);
       color: #fff;
       border: none;
       border-radius: 4px;
@@ -63,11 +82,100 @@
       align-items: center;
       justify-content: center;
       transition: background 0.2s;
+      outline: none;
+    }
+    .sidebar-toggle-btn:focus {
+      outline: 3px solid #f1c40f;
     }
     .sidebar-toggle-btn:hover {
       background: #3c6e8d;
     }
-    @media (max-width: 700px) {
+    /* Sidebar Content Container */
+    #sidebarContent {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0 0 40px 0;
+    }
+    /* Main Content Loading/Error */
+    .loading, .error {
+      text-align: center;
+      padding: 60px 0;
+      color: #aaa;
+      font-size: 1.13em;
+    }
+    .error { color: #c00; }
+    /* Override headings and links for both main and sidebar */
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--accent);
+      margin-top: 1.2em;
+      margin-bottom: 0.5em;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    a {
+      color: #6ec6ff;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    a:hover, a:focus {
+      color: #f1c40f;
+      text-decoration: underline;
+    }
+    /* Form and control elements */
+    input, select, textarea, button {
+      font-family: inherit;
+      font-size: 1em;
+      border-radius: 6px;
+      border: 1px solid #444;
+      background: #23272e;
+      color: #fff;
+      margin: 0 4px 0 0;
+      padding: 6px 10px;
+      box-sizing: border-box;
+      outline: none;
+      transition: border 0.2s, background 0.2s;
+    }
+    input:focus, select:focus, textarea:focus, button:focus {
+      border-color: #f1c40f;
+      background: #181a1b;
+    }
+    button {
+      background: var(--accent);
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #3c6e8d;
+    }
+    /* Table styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #181a1b;
+      color: var(--main-fg);
+      margin-bottom: 1.5em;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 2px 8px #0002;
+    }
+    th, td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #333;
+      text-align: left;
+    }
+    th {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
       .sidebar {
         width: 100vw;
         max-width: 100vw;
@@ -77,57 +185,137 @@
         top: 8px;
       }
     }
+    @media (max-width: 600px) {
+      .main-content {
+        padding: 0 2vw;
+      }
+      #sidebarContent {
+        padding: 0 2vw 40px 2vw;
+      }
+    }
+    /* Prevent sidebar CSS from leaking out */
+    #sidebarContent * {
+      box-sizing: border-box;
+      font-family: inherit !important;
+      color: inherit !important;
+      background: inherit;
+    }
+    /* Scrollbar styling for sidebar */
+    .sidebar, #sidebarContent {
+      scrollbar-width: thin;
+      scrollbar-color: #3c6e8d #23272e;
+    }
+    .sidebar::-webkit-scrollbar, #sidebarContent::-webkit-scrollbar {
+      width: 8px;
+      background: #23272e;
+    }
+    .sidebar::-webkit-scrollbar-thumb, #sidebarContent::-webkit-scrollbar-thumb {
+      background: #3c6e8d;
+      border-radius: 6px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="main-content" id="mainContent">
-      <div style="text-align:center;padding:60px 0;color:#aaa;" id="mainLoading">Loading main content...</div>
+      <div class="loading" id="mainLoading">Loading main content…</div>
     </div>
-    <nav class="sidebar" id="sidebar" aria-label="Event Timer">
+    <nav class="sidebar" id="sidebar" aria-label="Event Timer" tabindex="-1">
       <div id="sidebarContent">
-        <div style="text-align:center;padding:60px 0;color:#aaa;">Loading sidebar...</div>
+        <div class="loading">Loading sidebar…</div>
       </div>
     </nav>
-    <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Show or hide sidebar">&laquo;</button>
+    <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Show or hide sidebar" tabindex="0">&laquo;</button>
   </div>
   <script>
-    // Load main content from cmd.html
-    fetch('html/cmd.html')
-      .then(response => response.text())
+    // Extract <head> and <body> content, fix resource paths
+    function extractParts(html, baseUrl) {
+      let head = '', body = html;
+      const headMatch = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
+      if (headMatch) head = headMatch[1];
+      const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+      if (bodyMatch) body = bodyMatch[1];
+
+      function absolutizePaths(str) {
+        return str.replace(/(href|src)=["'](?!https?:|\/\/|#|data:)([^"']+)["']/gi, (m, attr, path) => {
+          let abs = baseUrl.replace(/\/[^\/]*$/, '/') + path.replace(/^\.?\//, '');
+          return `${attr}="${abs}"`;
+        });
+      }
+      return {
+        head: absolutizePaths(head),
+        body: absolutizePaths(body)
+      };
+    }
+
+    // Inject CSS from <head>
+    function injectHeadCSS(headHtml) {
+      document.querySelectorAll('link[data-dynamic], style[data-dynamic]').forEach(el => el.remove());
+      const temp = document.createElement('div');
+      temp.innerHTML = headHtml;
+      temp.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+        const newLink = document.createElement('link');
+        newLink.rel = 'stylesheet';
+        newLink.href = link.href;
+        newLink.setAttribute('data-dynamic', 'true');
+        document.head.appendChild(newLink);
+      });
+      temp.querySelectorAll('style').forEach(style => {
+        const newStyle = document.createElement('style');
+        newStyle.textContent = style.textContent;
+        newStyle.setAttribute('data-dynamic', 'true');
+        document.head.appendChild(newStyle);
+      });
+    }
+
+    // Execute scripts in a container
+    function executeScripts(container) {
+      document.querySelectorAll('script[data-dynamic]').forEach(el => el.remove());
+      Array.from(container.querySelectorAll('script')).forEach(oldScript => {
+        const newScript = document.createElement('script');
+        if (oldScript.src) {
+          newScript.src = oldScript.src;
+        } else {
+          newScript.textContent = oldScript.textContent;
+        }
+        newScript.setAttribute('data-dynamic', 'true');
+        if (oldScript.type) newScript.type = oldScript.type;
+        document.body.appendChild(newScript);
+        oldScript.remove();
+      });
+    }
+
+    // Load main content
+    fetch('https://geri0v.github.io/Gamers-Hell/html/cmd.html')
+      .then(response => {
+        if (!response.ok) throw new Error('Main content not found');
+        return response.text();
+      })
       .then(html => {
-        // Extract only the body content if possible
-        let bodyMatch = html.match(/<body[^>]*>([\\s\\S]*?)<\\/body>/i);
-        document.getElementById('mainContent').innerHTML = bodyMatch ? bodyMatch[1] : html;
+        const parts = extractParts(html, 'https://geri0v.github.io/Gamers-Hell/html/cmd.html');
+        injectHeadCSS(parts.head);
+        document.getElementById('mainContent').innerHTML = parts.body;
+        executeScripts(document.getElementById('mainContent'));
       })
       .catch(error => {
-        document.getElementById('mainContent').innerHTML = "<p style='color:#c00;text-align:center;'>Failed to load main content.</p>";
+        document.getElementById('mainContent').innerHTML = "<div class='error'>Failed to load main content.</div>";
         console.error(error);
       });
 
-    // Load sidebar content from timer.html
-    fetch('html/timer.html')
-      .then(response => response.text())
+    // Load sidebar content
+    fetch('https://geri0v.github.io/Gamers-Hell/html/timer.html')
+      .then(response => {
+        if (!response.ok) throw new Error('Sidebar content not found');
+        return response.text();
+      })
       .then(html => {
-        // Extract only the body content if possible
-        let bodyMatch = html.match(/<body[^>]*>([\\s\\S]*?)<\\/body>/i);
-        document.getElementById('sidebarContent').innerHTML = bodyMatch ? bodyMatch[1] : html;
-
-        // Look for any <script> tags in the loaded HTML and execute them
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = bodyMatch ? bodyMatch[1] : html;
-        tempDiv.querySelectorAll('script').forEach(script => {
-          const newScript = document.createElement('script');
-          if (script.src) {
-            newScript.src = script.src;
-          } else {
-            newScript.textContent = script.textContent;
-          }
-          document.body.appendChild(newScript);
-        });
+        const parts = extractParts(html, 'https://geri0v.github.io/Gamers-Hell/html/timer.html');
+        injectHeadCSS(parts.head);
+        document.getElementById('sidebarContent').innerHTML = parts.body;
+        executeScripts(document.getElementById('sidebarContent'));
       })
       .catch(error => {
-        document.getElementById('sidebarContent').innerHTML = "<p style='color:#c00;text-align:center;'>Failed to load sidebar.</p>";
+        document.getElementById('sidebarContent').innerHTML = "<div class='error'>Failed to load sidebar.</div>";
         console.error(error);
       });
 
@@ -140,8 +328,17 @@
       sidebar.classList.toggle('open', sidebarOpen);
       toggleBtn.innerHTML = sidebarOpen ? '&raquo;' : '&laquo;';
       toggleBtn.setAttribute('aria-label', sidebarOpen ? 'Hide sidebar' : 'Show sidebar');
+      if (sidebarOpen) {
+        sidebar.focus();
+      }
     }
     toggleBtn.addEventListener('click', toggleSidebar);
+    toggleBtn.addEventListener('keydown', function(e) {
+      if (e.key === "Enter" || e.key === " ") {
+        toggleSidebar();
+        e.preventDefault();
+      }
+    });
     document.addEventListener('keydown', function(e) {
       if (e.key === "Escape" && sidebarOpen) {
         toggleSidebar();
