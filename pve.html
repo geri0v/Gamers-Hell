@@ -1,50 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Gamers Hell</title>
   <style>
-    body {
-      margin: 0;
-      font-family: monospace;
-      background: #000;
-      color: #0f0;
-    }
+    /* simple two‐column layout */
+    html, body { margin:0; padding:0; height:100%; }
     .container {
       display: flex;
-      height: 100vh;
+      height: 100%;
     }
-    #cmd, #timer {
+    .panel {
       flex: 1;
-      padding: 10px;
       overflow: auto;
-      border-right: 1px solid #222;
+      border-right: 1px solid #ccc;
     }
-    #timer {
+    .panel:last-child {
       border-right: none;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div id="cmd"></div>
-    <div id="timer"></div>
+    <div id="cmd"   class="panel"></div>
+    <div id="timer" class="panel"></div>
   </div>
 
   <script>
-    async function loadPanel(path, targetId) {
+    async function loadFullPage(path, containerId) {
       const res  = await fetch(path);
-      const html = await res.text();
-      // If these are full HTML pages, extract just the <body> innerHTML:
-      const doc  = new DOMParser().parseFromString(html, 'text/html');
-      const content = doc.body ? doc.body.innerHTML : html;
-      document.getElementById(targetId).innerHTML = content;
+      const text = await res.text();
+      const doc  = new DOMParser().parseFromString(text, 'text/html');
+
+      // 1. import CSS from <head>
+      doc.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+        const clone = link.cloneNode();
+        // resolve relative href
+        clone.href = new URL(link.getAttribute('href'), path).href;
+        document.head.appendChild(clone);
+      });
+      doc.querySelectorAll('style').forEach(style => {
+        document.head.appendChild(style.cloneNode(true));
+      });
+
+      // 2. inject <body> content
+      const container = document.getElementById(containerId);
+      Array.from(doc.body.childNodes).forEach(node => {
+        container.appendChild(document.importNode(node, true));
+      });
+
+      // 3. re-execute scripts in order
+      const scripts = Array.from(doc.querySelectorAll('script'));
+      for (let old of scripts) {
+        const s = document.createElement('script');
+        if (old.src) {
+          s.src = new URL(old.getAttribute('src'), path).href;
+          s.async = false;
+          document.body.appendChild(s);
+          await new Promise(r => { s.onload = r; s.onerror = r; });
+        } else {
+          s.textContent = old.textContent;
+          document.body.appendChild(s);
+        }
+      }
     }
 
-    // load your two pages
-    loadPanel('html/cmd.html',   'cmd');
-    loadPanel('html/timer.html', 'timer');
+    // load both pages into panels
+    loadFullPage('html/cmd.html',   'cmd');
+    loadFullPage('html/timer.html', 'timer');
   </script>
 </body>
 </html>
+```
