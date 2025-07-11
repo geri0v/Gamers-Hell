@@ -1,4 +1,6 @@
 class GhEventsLoot extends HTMLElement {
+  static get observedAttributes() { return ['theme']; }
+
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -6,12 +8,259 @@ class GhEventsLoot extends HTMLElement {
     // Insert HTML and CSS into the Shadow DOM
     this.shadowRoot.innerHTML = `
       <style>
-        /* ...[Paste your entire <style> block here, unchanged]... */
+        :host([theme="darkglossy"]) {
+          --card-bg: linear-gradient(135deg, rgba(24,28,38,0.98) 80%, rgba(60,110,141,0.13) 100%);
+          --accent: #ffcc00;
+          --fg: #fff;
+          --loot-table-header-bg: rgba(60,110,141,0.15);
+          --loot-table-border: 1px solid rgba(43,71,101,0.18);
+          --loot-muted: #aaa;
+          --glass-blur: blur(10px) saturate(1.4);
+        }
+        :host([theme="whiteglass"]) {
+          --card-bg: linear-gradient(120deg, rgba(255,255,255,0.95) 80%, rgba(43,71,101,0.07) 100%);
+          --accent: #2b4765;
+          --fg: #222;
+          --loot-table-header-bg: #e0e8f6;
+          --loot-table-border: 1px solid #dde6f2;
+          --loot-muted: #607080;
+          --glass-blur: blur(8px) saturate(1.2);
+        }
+        :host {
+          --card-bg: linear-gradient(135deg, rgba(24,28,38,0.98) 80%, rgba(60,110,141,0.13) 100%);
+          --accent: #ffcc00;
+          --fg: #fff;
+          --loot-table-header-bg: rgba(60,110,141,0.15);
+          --loot-table-border: 1px solid rgba(43,71,101,0.18);
+          --loot-muted: #aaa;
+          --glass-blur: blur(10px) saturate(1.4);
+        }
+        .loot-panel {
+          max-width: 820px;
+          margin: 2em auto 0 auto;
+        }
+        .search-bar-container {
+          display: flex;
+          gap: 0.7em;
+          align-items: center;
+          margin-bottom: 1.5em;
+          background: rgba(0,0,0,0.06);
+          border-radius: 8px;
+          padding: 0.7em 1em;
+        }
+        .search-input {
+          flex: 1;
+          padding: 0.6em 1em;
+          border-radius: 7px;
+          border: 1px solid #bbb;
+          font-size: 1.05em;
+          background: #fff;
+          color: #222;
+        }
+        .search-clear-btn {
+          background: var(--accent);
+          color: #222;
+          border: none;
+          border-radius: 5px;
+          font-size: 1.2em;
+          padding: 0.2em 0.7em;
+          cursor: pointer;
+        }
+        .search-clear-btn:focus {
+          outline: 2px solid var(--accent);
+        }
+        select {
+          border-radius: 7px;
+          border: 1px solid #bbb;
+          font-size: 1.05em;
+          padding: 0.6em 1em;
+        }
+        .section-title, .source-title {
+          background: none;
+          border: none;
+          color: var(--accent);
+          font-size: 1.15em;
+          font-weight: bold;
+          margin: 1.2em 0 0.2em 0;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 0.5em;
+          transition: color 0.2s;
+        }
+        .section-title.collapsed .arrow,
+        .source-title.collapsed .arrow {
+          transform: rotate(-90deg);
+        }
+        .arrow {
+          display: inline-block;
+          transition: transform 0.2s;
+        }
+        .event-list {
+          margin-bottom: 1em;
+        }
+        .event-card {
+          background: var(--card-bg);
+          color: var(--fg);
+          border-radius: 16px;
+          box-shadow: 0 8px 40px #0007, 0 1.5px 4px #0003;
+          padding: 2em 1.5em;
+          margin-bottom: 2em;
+          backdrop-filter: var(--glass-blur);
+          border: 1.5px solid rgba(43,71,101,0.13);
+          transition: background 0.3s, color 0.3s;
+          position: relative;
+          animation: fadeIn .5s cubic-bezier(.4,2,.6,1);
+        }
+        .event-card:focus-within, .event-card:hover {
+          box-shadow: 0 12px 48px #0009;
+          outline: 2px solid var(--accent);
+        }
+        .event-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1em;
+          margin-bottom: .7em;
+        }
+        .event-title {
+          font-size: 1.18em;
+          font-weight: bold;
+          color: var(--accent);
+        }
+        .event-location {
+          font-size: 1.03em;
+          color: #e6b800;
+          margin-left: 0.7em;
+        }
+        .copy-bar {
+          display: flex;
+          align-items: center;
+          gap: .5em;
+          margin-bottom: .6em;
+        }
+        .copy-bar input {
+          flex: 1;
+          border-radius: 5px;
+          border: 1px solid #444;
+          background: #222;
+          color: #fff;
+          font-size: 1em;
+          padding: 0.2em 0.6em;
+        }
+        .copy-bar button {
+          background: var(--accent);
+          color: #222;
+          border: none;
+          border-radius: 5px;
+          padding: 0.3em 1.1em;
+          font-size: 1em;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .copy-bar button.copied {
+          background: #2ecc40;
+          color: #fff;
+        }
+        .copy-msg {
+          display: none;
+          margin-left: 0.4em;
+          color: #2ecc40;
+          font-weight: bold;
+          font-size: 1em;
+        }
+        .drops-toggle {
+          background: var(--accent);
+          color: #222;
+          border: none;
+          border-radius: 5px;
+          padding: 0.3em 1.1em;
+          font-size: 1em;
+          cursor: pointer;
+          box-shadow: 0 2px 8px #0002;
+          transition: background 0.2s, color 0.2s;
+        }
+        .drops-toggle[aria-expanded="true"] {
+          background: #222;
+          color: var(--accent);
+        }
+        .loot-list { display: none; }
+        .loot-list.active { display: block; animation: fadeIn 0.4s; }
+        .loot-table {
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0;
+          margin-bottom: 1em;
+          background: none;
+        }
+        .loot-table th, .loot-table td {
+          padding: 0.7em 0.8em;
+          text-align: left;
+          font-size: 1em;
+        }
+        .loot-table th {
+          background: var(--loot-table-header-bg);
+          color: var(--accent);
+          font-weight: 700;
+          border-bottom: var(--loot-table-border);
+        }
+        .loot-table td {
+          border-bottom: var(--loot-table-border);
+          color: var(--fg);
+        }
+        .icon-cell img {
+          width: 28px; height: 28px; vertical-align: middle; margin-right: 0.5em; border-radius: 4px;
+          box-shadow: 0 2px 6px #0004;
+        }
+        .loot-table .muted {
+          color: var(--loot-muted);
+          font-size: 0.96em;
+        }
+        .loot-table a {
+          color: var(--accent);
+          text-decoration: underline dotted;
+          margin-left: 0.3em;
+          font-size: 0.98em;
+        }
+        .loot-table a:hover {
+          color: #e84118;
+        }
+        .event-notes {
+          color: #aaa;
+          font-size: 0.97em;
+          margin-top: 0.6em;
+          background: rgba(255,255,255,0.03);
+          border-radius: 6px;
+          padding: 0.5em 0.8em;
+        }
+        .empty-state {
+          text-align: center;
+          color: #aaa;
+          margin: 3em 0;
+        }
+        .empty-state img {
+          width: 120px;
+          opacity: 0.7;
+        }
+        @keyframes fadeIn {
+          from { opacity:0; transform:translateY(24px);}
+          to   { opacity:1; transform:none;}
+        }
+        @media (max-width: 700px) {
+          .loot-panel {
+            padding: 1em 0.5em;
+            font-size: 1em;
+          }
+          .event-card {
+            padding: 0.7em 0.3em 1em 0.3em;
+            font-size: 1em;
+          }
+          .loot-table th, .loot-table td {
+            padding: 0.45em 0.3em;
+          }
+        }
       </style>
-      <header>
-        <h1>Gamers-Hell</h1>
-      </header>
-      <main aria-label="Main content area" class="main" id="main" role="main" tabindex="-1">
+      <div class="loot-panel">
         <div class="search-bar-container" role="search">
           <input aria-label="Search" class="search-input" id="searchInput" placeholder="Search temples, bosses, loot..." type="text"/>
           <button class="search-clear-btn" id="searchClearBtn" aria-label="Clear search" title="Clear search" tabindex="0" style="display:none;">×</button>
@@ -24,16 +273,7 @@ class GhEventsLoot extends HTMLElement {
         <div aria-live="polite" aria-relevant="additions" id="mainContent" tabindex="0">
           <div id="allSections"></div>
         </div>
-        <footer>
-          © 2025 Gamers-Hell Community
-        </footer>
-        <div id="eventModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(30,38,48,0.95);z-index:1000;align-items:center;justify-content:center;">
-          <div style="background:var(--card-bg);padding:2em;border-radius:10px;max-width:90vw;max-height:90vh;overflow:auto;position:relative;">
-            <button id="closeModalBtn" style="position:absolute;top:1em;right:1em;background:#4a90e2;color:#fff;border:none;border-radius:4px;padding:0.4em 1em;cursor:pointer;">Close</button>
-            <div id="modalContent"></div>
-          </div>
-        </div>
-      </main>
+      </div>
     `;
 
     // State
@@ -53,7 +293,6 @@ class GhEventsLoot extends HTMLElement {
   }
 
   connectedCallback() {
-    // Event listeners
     const sr = this.shadowRoot;
     sr.getElementById('searchInput').addEventListener('input', () => {
       this.currentSearch = sr.getElementById('searchInput').value.trim();
@@ -75,6 +314,12 @@ class GhEventsLoot extends HTMLElement {
       this.allEvents = events;
       this.renderAllSections();
     });
+  }
+
+  attributeChangedCallback(name, oldVal, newVal) {
+    if (name === 'theme') {
+      this.renderAllSections(); // Re-render to apply theme
+    }
   }
 
   async fetchAllEvents() {
@@ -190,8 +435,8 @@ class GhEventsLoot extends HTMLElement {
       lootRows = event.loot.map(item => {
         let tp = tpPrices[item.id] || {};
         let icon = tpIcons[item.id] ? `<img src="${tpIcons[item.id]}" alt="" />` : '';
-        let wikiLink = item.id ? `<a href="https://wiki.guildwars2.com/wiki/Special:Search/${encodeURIComponent(item.name || '')}" target="_blank" rel="noopener" aria-label="GW2 Wiki for ${item.name}" style="margin-left:0.3em;color:var(--accent);text-decoration:underline;">Wiki</a>` : '';
-        let effLink = item.id ? `<a href="https://gw2efficiency.com/item/${item.id}" target="_blank" rel="noopener" aria-label="GW2Efficiency for ${item.name}" style="margin-left:0.3em;color:var(--accent);text-decoration:underline;">Efficiency</a>` : '';
+        let wikiLink = item.id ? `<a href="https://wiki.guildwars2.com/wiki/Special:Search/${encodeURIComponent(item.name || '')}" target="_blank" rel="noopener" aria-label="GW2 Wiki for ${item.name}" style="margin-left:0.3em;">Wiki</a>` : '';
+        let effLink = item.id ? `<a href="https://gw2efficiency.com/item/${item.id}" target="_blank" rel="noopener" aria-label="GW2Efficiency for ${item.name}" style="margin-left:0.3em;">Efficiency</a>` : '';
         return `<tr>
           <td class="icon-cell">${icon}${this.highlight(item.name || '', searchQuery)}${wikiLink}${effLink}</td>
           <td>${item.amount || ''}</td>
@@ -247,11 +492,24 @@ class GhEventsLoot extends HTMLElement {
   async renderAllSections() {
     const sr = this.shadowRoot;
     const allSectionsDiv = sr.getElementById('allSections');
-    const filtered = this.allEvents.filter(ev => this.eventMatchesSearch(ev, this.currentSearch));
+    // Filter
+    let filtered = this.allEvents.filter(ev => this.eventMatchesSearch(ev, this.currentSearch));
+    // Sort
+    if (this.currentSort === 'name') {
+      filtered = filtered.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+    } else if (this.currentSort === 'location') {
+      filtered = filtered.sort((a, b) => (a.map || a.location || '').localeCompare(b.map || b.location || ''));
+    } else if (this.currentSort === 'loot') {
+      filtered = filtered.sort((a, b) => {
+        const getMaxSell = ev => Math.max(...(ev.loot || []).map(item => item.sell || 0), 0);
+        return getMaxSell(b) - getMaxSell(a);
+      });
+    }
     if (!filtered.length) {
       allSectionsDiv.innerHTML = `<div class="empty-state"><img src="https://i.imgur.com/8z8Q2Hk.png" alt="No events"><div>No events found. Try a different search or reload data.</div></div>`;
       return;
     }
+    // Group
     const expansions = this.groupEvents(filtered);
     let allItemIds = [];
     filtered.forEach(event => {
