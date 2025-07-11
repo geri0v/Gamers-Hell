@@ -1,111 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Gamers-Hell Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Gamers Hell</title>
+
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #181a1b;
-      color: #f4f4f4;
-    }
+    /* ─────────────────────────────────────────────────────────────
+       THEME DEFINITIONS (via data-theme on <body>)  
+       We use CSS variables so every color updates dynamically.
+    ───────────────────────────────────────────────────────────── */
     body {
-      display: flex;
-      min-height: 100vh;
+      margin: 0; padding: 20px;
+      font-family: 'Courier New', monospace;
+      transition: background-color .3s, color .3s;
     }
-    #sidebar {
-      width: 320px;
-      background: #23272a;
-      padding: 24px 16px;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.10);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      transition: width 0.2s;
+
+    /* Hacker Green (default) */
+    body[data-theme="hacker"] {
+      --bg: #000;              /* page bg */
+      --fg: #0f0;              /* text */
+      --panel-bg: #111;        /* panel bg */
+      --panel-border: #0f0;    /* panel border */
+      --panel-shadow: 0 0 8px #0f0;
+      --ctrl-bg: #222;         /* buttons/inputs */
+      --ctrl-fg: #0f0;
+      --ctrl-border: #0f0;
+      --link: #0f0;
+      --link-h: lime;
     }
-    #main-content {
-      flex: 1;
-      padding: 40px 24px;
-      background: #202225;
-      min-height: 100vh;
-      box-sizing: border-box;
-      overflow-x: auto;
+
+    /* Dark Glass */
+    body[data-theme="darkglass"] {
+      --bg: #0a1a26;
+      --fg: #5df0ff;
+      --panel-bg: rgba(20,30,40,0.75);
+      --panel-border: #5df0ff;
+      --panel-shadow: 0 0 12px #5df0ff;
+      --ctrl-bg: rgba(40,50,60,0.7);
+      --ctrl-fg: #5df0ff;
+      --ctrl-border: #5df0ff;
+      --link: #5df0ff;
+      --link-h: #a0ffff;
+    }
+
+    /* Glossy White */
+    body[data-theme="whitegloss"] {
+      --bg: #fafafa;
+      --fg: #222;
+      --panel-bg: #fff;
+      --panel-border: #ccc;
+      --panel-shadow: 0 0 6px rgba(0,0,0,0.1);
+      --ctrl-bg: #f0f0f0;
+      --ctrl-fg: #222;
+      --ctrl-border: #bbb;
+      --link: #222;
+      --link-h: #555;
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       GLOBAL STYLES
+    ───────────────────────────────────────────────────────────── */
+    body {
+      background: var(--bg);
+      color: var(--fg);
     }
     h1 {
-      margin-top: 0;
-      font-size: 2rem;
-      color: #7289da;
-      letter-spacing: 1px;
+      text-align: center;
+      margin: 0 0 20px;
     }
-    @media (max-width: 900px) {
-      body { flex-direction: column; }
-      #sidebar { width: 100%; min-height: unset; box-shadow: none; }
-      #main-content { padding: 16px; }
+    a {
+      color: var(--link);
+      text-decoration: underline;
+      transition: color .3s;
     }
-    .section-title {
-      margin: 0 0 16px 0;
-      font-size: 1.2rem;
-      color: #43b581;
-      letter-spacing: 0.5px;
+    a:hover {
+      color: var(--link-h);
     }
-    /* Scrollbar styling */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-thumb { background: #2c2f33; border-radius: 4px; }
-    ::-webkit-scrollbar-track { background: #181a1b; }
+    button, input, select {
+      background: var(--ctrl-bg);
+      color: var(--ctrl-fg);
+      border: 1px solid var(--ctrl-border);
+      padding: 6px 12px;
+      font: inherit;
+      transition: background .3s, color .3s, border-color .3s;
+    }
+    button:hover, input:hover, select:hover {
+      filter: brightness(1.2);
+      cursor: pointer;
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       LAYOUT
+    ───────────────────────────────────────────────────────────── */
+    .toolbar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    #themeSelector, #toggleTimer {
+      min-width: 140px;
+    }
+    .main {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    #cmd { flex: 2; min-width: 300px; }
+    #timer { flex: 1; min-width: 200px; max-width: 300px; }
+    #timer.hidden { display: none; }
+    .panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      box-shadow: var(--panel-shadow);
+      border-radius: 6px;
+      padding: 20px;
+      transition: background .3s, border .3s, box-shadow .3s;
+    }
   </style>
 </head>
-<body>
-  <div id="sidebar">
-    <div class="section-title">Timer</div>
-    <div id="timer-container">Loading timer...</div>
+<body data-theme="hacker">
+  <div class="toolbar">
+    <select id="themeSelector">
+      <option value="hacker">Hacker Green</option>
+      <option value="darkglass">Dark Glass</option>
+      <option value="whitegloss">Glossy White</option>
+    </select>
+    <button id="toggleTimer">Hide Timer</button>
   </div>
-  <div id="main-content">
-    <div class="section-title">Command Center</div>
-    <div id="cmd-container">Loading commands...</div>
+
+  <h1>Gamers Hell</h1>
+
+  <div class="main">
+    <div id="cmd"   class="panel"></div>
+    <div id="timer" class="panel"></div>
   </div>
+
   <script>
-    // Helper to load HTML content into a target element
-    async function loadHTML(url, targetId) {
-      try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('Failed to load ' + url);
-        const html = await res.text();
-        document.getElementById(targetId).innerHTML = html;
-      } catch (e) {
-        document.getElementById(targetId).textContent = 'Error loading content.';
+  (function(){
+    // ─────────────────────────────────────────────────────────────
+    // STATE + UI HOOKS
+    // ─────────────────────────────────────────────────────────────
+    const themes       = ['hacker','darkglass','whitegloss'];
+    const themeSelect  = document.getElementById('themeSelector');
+    const toggleTimer  = document.getElementById('toggleTimer');
+    const timerPanel   = document.getElementById('timer');
+
+    // restore theme
+    const savedTheme = localStorage.getItem('gh-theme');
+    if (savedTheme && themes.includes(savedTheme)) {
+      document.body.dataset.theme = savedTheme;
+      themeSelect.value = savedTheme;
+    }
+
+    // restore timer visibility
+    if (localStorage.getItem('gh-timer-visible') === 'false') {
+      timerPanel.classList.add('hidden');
+      toggleTimer.textContent = 'Show Timer';
+    }
+
+    // theme switcher
+    themeSelect.addEventListener('change', e => {
+      document.body.dataset.theme = e.target.value;
+      localStorage.setItem('gh-theme', e.target.value);
+    });
+
+    // sidebar toggle
+    toggleTimer.addEventListener('click', () => {
+      const hidden = timerPanel.classList.toggle('hidden');
+      toggleTimer.textContent = hidden ? 'Show Timer' : 'Hide Timer';
+      localStorage.setItem('gh-timer-visible', !hidden);
+    });
+
+    // ─────────────────────────────────────────────────────────────
+    // DYNAMIC FRAGMENT LOADER
+    // ─────────────────────────────────────────────────────────────
+    async function loadFragment(url, containerId) {
+      const base = url.replace(/\/[^\/]*$/, '/'); // for resolving relative src/href
+      const res  = await fetch(url);
+      const html = await res.text();
+      // parse into a temp document
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+
+      // 1) import <link rel="stylesheet"> and <style>
+      doc.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+        const n = link.cloneNode(true);
+        if (!n.href.startsWith('http')) {
+          n.href = new URL(link.getAttribute('href'), base).href;
+        }
+        document.head.appendChild(n);
+      });
+      doc.querySelectorAll('style').forEach(style => {
+        document.head.appendChild(style.cloneNode(true));
+      });
+
+      // 2) extract scripts
+      const scripts = Array.from(doc.querySelectorAll('script'));
+      scripts.forEach(s => s.remove());
+
+      // 3) inject HTML
+      document.getElementById(containerId).innerHTML = doc.body.innerHTML;
+
+      // 4) re-run scripts in order
+      for (let old of scripts) {
+        const s = document.createElement('script');
+        if (old.src) {
+          s.src = new URL(old.getAttribute('src'), base).href;
+          s.async = false; // preserve order
+          document.body.appendChild(s);
+          await new Promise(r => s.onload = r);
+        } else {
+          s.textContent = old.textContent;
+          document.body.appendChild(s);
+        }
       }
     }
 
-    // Helper to dynamically load a JS file
-    function loadScript(url) {
-      const script = document.createElement('script');
-      script.src = url;
-      script.defer = true;
-      document.body.appendChild(script);
-    }
-
-    // Helper to dynamically load a CSS file
-    function loadCSS(url) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = url;
-      document.head.appendChild(link);
-    }
-
-    // Load timer and command sections
-    window.addEventListener('DOMContentLoaded', () => {
-      loadHTML('html/timer.html', 'timer-container');
-      loadHTML('html/cmd.html', 'cmd-container');
-      // Uncomment and edit the following lines if you have extra JS/CSS files:
-      // loadScript('js/timer.js');
-      // loadScript('js/cmd.js');
-      // loadCSS('css/timer.css');
-      // loadCSS('css/cmd.css');
-    });
+    // ─────────────────────────────────────────────────────────────
+    // KICK OFF BOTH PANELS
+    // ─────────────────────────────────────────────────────────────
+    loadFragment('html/cmd.html',   'cmd');
+    loadFragment('html/timer.html', 'timer');
+  })();
   </script>
 </body>
 </html>
