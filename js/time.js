@@ -14,18 +14,14 @@ class Gw2EventTimer extends HTMLElement {
           --event-upcoming-fg: #fff;
           --toast-bg: #222c;
           --toast-fg: #fff;
-        }
-        body {
-          margin: 0;
-          padding: 0;
-          min-height: 100vh;
-          font-family: Arial, sans-serif;
-          background: var(--main-bg);
-          color: var(--main-fg);
+          --timer-max-width: 100vw;
           display: flex;
           flex-direction: column;
-          align-items: center;
-          justify-content: flex-start;
+          width: 100%;
+          height: 100%;
+          min-width: 0;
+          min-height: 0;
+          box-sizing: border-box;
         }
         .timer-container {
           margin-top: 40px;
@@ -34,11 +30,16 @@ class Gw2EventTimer extends HTMLElement {
           border-radius: 16px;
           box-shadow: 0 8px 32px rgba(0,0,0,0.12);
           padding: 32px 16px 24px 16px;
-          max-width: 540px;
+          max-width: var(--timer-max-width, 100vw);
           width: 100%;
+          height: 100%;
+          box-sizing: border-box;
           display: flex;
           flex-direction: column;
           align-items: stretch;
+          flex: 1 1 0;
+          min-width: 0;
+          min-height: 0;
         }
         .timer-controls {
           display: flex;
@@ -76,6 +77,7 @@ class Gw2EventTimer extends HTMLElement {
           display: flex;
           flex-direction: column;
           gap: 6px;
+          min-width: 0;
         }
         .event-row {
           display: flex;
