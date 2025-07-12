@@ -8,13 +8,11 @@ class Gw2EventMenu extends HTMLElement {
           --main-bg: #232c3b;
           --main-fg: #f3f7fa;
           --accent: #2b4765;
-          --menu-width: 220px;
-          --menu-width-mobile: 100vw;
-          --menu-header-bg: #29334a;
-          --menu-header-fg: #fff;
           --expansion-color: #f1c40f;
           --source-color: #7ed6df;
           --source-hover-bg: #2b4765;
+          --menu-width: 220px;
+          --menu-width-mobile: 100vw;
           display: block;
           height: 100%;
         }
@@ -32,8 +30,8 @@ class Gw2EventMenu extends HTMLElement {
           transition: width 0.3s;
         }
         .menu-header {
-          background: var(--menu-header-bg);
-          color: var(--menu-header-fg);
+          background: #29334a;
+          color: #fff;
           font-weight: bold;
           font-size: 1.13em;
           padding: 18px 18px 10px 18px;
@@ -41,6 +39,9 @@ class Gw2EventMenu extends HTMLElement {
           align-items: center;
           justify-content: space-between;
           border-bottom: 1px solid #2b4765;
+          position: sticky;
+          top: 0;
+          z-index: 2;
         }
         .toggle-btn {
           background: var(--accent);
@@ -116,7 +117,7 @@ class Gw2EventMenu extends HTMLElement {
           <span>Menu</span>
           <button class="toggle-btn" id="toggleBtn">Toon menu</button>
         </div>
-        <nav class="menu-list" id="menuList"></nav>
+        <nav class="menu-list" id="menuList" aria-label="Event menu"></nav>
       </div>
     `;
     this.menuContainer = this.shadowRoot.querySelector('.menu-container');
@@ -127,22 +128,40 @@ class Gw2EventMenu extends HTMLElement {
 
   connectedCallback() {
     this.toggleBtn.addEventListener('click', () => this.toggleMenu());
+    // Open by default on desktop, closed on mobile
+    this.setMenuDefault();
+    window.addEventListener('resize', () => this.setMenuDefault());
     this.renderMenuWhenReady();
   }
 
-  toggleMenu() {
-    this.open = !this.open;
-    if (this.open) {
-      this.menuContainer.classList.remove('closed');
-      this.toggleBtn.textContent = "Verberg menu";
+  setMenuDefault() {
+    if (window.innerWidth < 900) {
+      this.closeMenu();
     } else {
-      this.menuContainer.classList.add('closed');
-      this.toggleBtn.textContent = "Toon menu";
+      this.openMenu();
+    }
+  }
+
+  openMenu() {
+    this.open = true;
+    this.menuContainer.classList.remove('closed');
+    this.toggleBtn.textContent = "Verberg menu";
+  }
+  closeMenu() {
+    this.open = false;
+    this.menuContainer.classList.add('closed');
+    this.toggleBtn.textContent = "Toon menu";
+  }
+  toggleMenu() {
+    if (this.open) {
+      this.closeMenu();
+    } else {
+      this.openMenu();
     }
   }
 
   renderMenuWhenReady() {
-    // Wacht tot cmd.js geladen is
+    // Wait for cmd.js to finish loading
     if (window.allEvents && window.allEvents.length && typeof window.groupEvents === "function") {
       const expansions = window.groupEvents(window.allEvents);
       this.renderMenu(expansions);
