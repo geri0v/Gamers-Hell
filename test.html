@@ -17,7 +17,6 @@
       height: 100vh;
       width: 100vw;
     }
-    /* Topbar */
     .topbar {
       width: 100vw;
       height: 54px;
@@ -66,7 +65,6 @@
       font-size: 1.3em;
       margin-left: 2px;
     }
-    /* Layout */
     .container {
       display: flex;
       flex-direction: row;
@@ -83,8 +81,18 @@
       transition: filter 0.3s ease;
       background: #1e2630;
       z-index: 1;
+      display: flex;
+      flex-direction: column;
     }
-    /* Sidebar als flexbox kolom, NIET fixed */
+    #menu-container {
+      width: 100%;
+      margin-bottom: 1.5em;
+    }
+    #events-container {
+      width: 100%;
+      flex: 1 1 0;
+      min-width: 0;
+    }
     #timer-sidebar {
       width: 0;
       min-width: 0;
@@ -157,7 +165,10 @@
   </div>
   <!-- Main layout -->
   <div class="container">
-    <div class="main-content" id="main-content"></div>
+    <div class="main-content" id="main-content">
+      <div id="menu-container"></div>
+      <div id="events-container"></div>
+    </div>
     <aside id="timer-sidebar">
       <gw2-event-timer></gw2-event-timer>
     </aside>
@@ -233,6 +244,10 @@
       };
     })();
   </script>
-  <script src="https://geri0v.github.io/Gamers-Hell/js/cmd.js" onload="_restoreBody()"></script>
+
+  <!-- Laad cmd.js als hoofd-app -->
+  <script src="https://geri0v.github.io/Gamers-Hell/js/cmd2.js" onload="_restoreBody()"></script>
+  <!-- Laad menu.js NA cmd.js zodat het menu werkt met de geladen data -->
+  <script src="https://geri0v.github.io/Gamers-Hell/js/menu.js"></script>
 </body>
 </html>
