@@ -98,11 +98,8 @@
   }
 
   // --- 3. Inject Menu ---
-  function injectMenu(events) {
-    // Prefer #menu-container, fallback to #mainContent or body
-    let target = document.getElementById('menu-container') ||
-                 document.getElementById('mainContent') ||
-                 document.body;
+function injectMenu(events) {
+  let target = window.menuInjectTarget || document.getElementById('menu-sidebar') || document.body;
     const oldMenu = document.getElementById('exp-source-menu');
     if (oldMenu) oldMenu.remove();
     const menuDiv = document.createElement('div');
