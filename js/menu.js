@@ -1,4 +1,4 @@
-// menu.js - Hybrid Modern Version
+// menu.js - Sidebar Hybrid Modern Version
 (function() {
   // --- 1. Inject Menu Styles (scoped to #exp-source-menu) ---
   if (!document.getElementById('menu-style')) {
@@ -11,7 +11,7 @@
         border-radius: 12px;
         box-shadow: 0 2px 12px #0002;
         padding: 1.3em 1.5em 1.1em 1.5em;
-        max-width: 350px;
+        max-width: 340px;
         font-family: 'Segoe UI', Arial, sans-serif;
       }
       #exp-source-menu .expansion-group {
@@ -97,17 +97,19 @@
     return html;
   }
 
-  // --- 3. Inject Menu ---
-function injectMenu(events) {
-  let target = window.menuInjectTarget || document.getElementById('menu-sidebar') || document.body;
-    const oldMenu = document.getElementById('exp-source-menu');
+  // --- 3. Inject Menu in #menu-sidebar ---
+  function injectMenu(events) {
+    let target = document.getElementById('menu-sidebar') || document.body;
+    // Verwijder oud menu indien aanwezig
+    const oldMenu = target.querySelector('#exp-source-menu');
     if (oldMenu) oldMenu.remove();
     const menuDiv = document.createElement('div');
     menuDiv.innerHTML = buildMenu(events);
-    target.prepend(menuDiv.firstChild);
+    target.innerHTML = ''; // Zorg dat alleen het menu in de sidebar staat
+    target.appendChild(menuDiv.firstChild);
 
     // --- 4. Click Handlers and Active State ---
-    document.querySelectorAll('#exp-source-menu .menu-btn').forEach(btn => {
+    menuDiv.querySelectorAll('.menu-btn').forEach(btn => {
       btn.onclick = function() {
         const exp = decodeURIComponent(btn.getAttribute('data-exp'));
         const src = decodeURIComponent(btn.getAttribute('data-src'));
@@ -115,7 +117,7 @@ function injectMenu(events) {
           window.cmd_run(`show expansion "${exp}" source "${src}"`);
         }
         // Active state
-        document.querySelectorAll('#exp-source-menu .menu-btn').forEach(b => b.classList.remove('active'));
+        menuDiv.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
       };
     });
