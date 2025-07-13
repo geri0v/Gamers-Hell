@@ -1,6 +1,7 @@
+// == Gamers-Hell: menu.js ==
 (function() {
-  let activeExpansion = null;
-  let activeSource = null;
+  // Track the currently active expansion/source for highlighting
+  window._menuActive = window._menuActive || { expansion: null, source: null };
 
   window.renderMenu = function(menuStructure) {
     const menuDiv = document.getElementById('menu-placeholder');
@@ -20,7 +21,7 @@
           <ul class="menu-links">
             ${sources.map(src =>
               `<li>
-                <a href="#" data-expansion="${expansion}" data-source="${src}" class="menu-link${activeExpansion === expansion && activeSource === src ? ' active' : ''}">
+                <a href="#" data-expansion="${expansion}" data-source="${src}" class="menu-link${window._menuActive.expansion === expansion && window._menuActive.source === src ? ' active' : ''}">
                   <span style="font-family: var(--font-accent); color: var(--color-accent-emerald);">${src}</span>
                 </a>
               </li>`
@@ -31,13 +32,15 @@
       menuDiv.appendChild(expCard);
     });
 
+    // Attach click handlers for filtering and active highlighting
     menuDiv.querySelectorAll('.menu-links a').forEach(link => {
-      link.addEventListener('click', e => {
+      link.addEventListener('click', function(e) {
         e.preventDefault();
         const exp = link.getAttribute('data-expansion');
         const src = link.getAttribute('data-source');
-        activeExpansion = exp;
-        activeSource = src;
+        window._menuActive.expansion = exp;
+        window._menuActive.source = src;
+        // Remove all actives, then set current
         menuDiv.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
         link.classList.add('active');
         if (window.cmd_run) {
