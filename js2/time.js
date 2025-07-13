@@ -1,10 +1,13 @@
-// time.js — Advanced GW2 Event Timer with Delegation, Filtering, Modal, and Accurate Timer
-
 const EVENTS_URL = "https://raw.githubusercontent.com/blish-hud/Community-Module-Pack/refs/heads/master/Events%20Module/ref/events.json";
 const GW2_WIKI_BASE = "https://wiki.guildwars2.com/wiki/";
 
-// Default timezone (persisted in localStorage if available)
+let allEvents = [];
+let filteredEvents = [];
 let selectedTimeZone = localStorage.getItem('gh-tz') || Intl.DateTimeFormat().resolvedOptions().timeZone || "Europe/Amsterdam";
+let selectedCategory = localStorage.getItem('gh-cat') || "";
+let timerId = null;
+
+// Timezones for selector
 const timeZones = [
   "Europe/Amsterdam",
   "UTC",
@@ -13,11 +16,6 @@ const timeZones = [
   "Asia/Tokyo",
   "Australia/Sydney"
 ];
-
-let allEvents = [];
-let filteredEvents = [];
-let nextEventIndex = -1;
-let modal = null, modalContent = null, modalCloseBtn = null;
 
 function pad(num) { return num.toString().padStart(2, '0'); }
 
@@ -61,66 +59,63 @@ function formatShortTimeInTimeZone(date, timeZone) {
   }).format(date);
 }
 
-function createTimeZoneSelector() {
-  const container = document.createElement('div');
-  container.id = 'timezone-selector-container';
-  container.style.marginBottom = '12px';
-  container.style.textAlign = 'center';
-  container.style.color = 'var(--main-fg)';
+function createSelectors() {
+  // Timezone Selector
+  const tzContainer = document.createElement('div');
+  tzContainer.id = 'timezone-selector-container';
+  tzContainer.style.marginBottom = '12px';
+  tzContainer.style.textAlign = 'center';
 
-  const label = document.createElement('label');
-  label.htmlFor = 'timezone-select';
-  label.textContent = 'Select Timezone: ';
-  label.style.marginRight = '8px';
+  const tzLabel = document.createElement('label');
+  tzLabel.htmlFor = 'timezone-select';
+  tzLabel.textContent = 'Select Timezone: ';
+  tzLabel.style.marginRight = '8px';
 
-  const select = document.createElement('select');
-  select.id = 'timezone-select';
-  select.style.padding = '4px 8px';
-  select.style.borderRadius = '4px';
-  select.style.border = 'none';
-  select.style.background = 'var(--input-bg)';
-  select.style.color = 'var(--input-fg)';
-  select.style.fontSize = '1em';
+  const tzSelect = document.createElement('select');
+  tzSelect.id = 'timezone-select';
+  tzSelect.style.padding = '4px 8px';
+  tzSelect.style.borderRadius = '4px';
+  tzSelect.style.border = 'none';
+  tzSelect.style.background = 'var(--input-bg)';
+  tzSelect.style.color = 'var(--input-fg)';
+  tzSelect.style.fontSize = '1em';
 
   timeZones.forEach(tz => {
     const option = document.createElement('option');
     option.value = tz;
     option.textContent = tz;
     if (tz === selectedTimeZone) option.selected = true;
-    select.appendChild(option);
+    tzSelect.appendChild(option);
   });
 
-  select.addEventListener('change', () => {
-    selectedTimeZone = select.value;
+  tzSelect.addEventListener('change', () => {
+    selectedTimeZone = tzSelect.value;
     localStorage.setItem('gh-tz', selectedTimeZone);
-    updateEvents();
+    renderEventsList();
   });
 
-  container.appendChild(label);
-  container.appendChild(select);
-  return container;
-}
+  tzContainer.appendChild(tzLabel);
+  tzContainer.appendChild(tzSelect);
 
-function createCategoryFilter() {
-  const container = document.createElement('div');
-  container.id = 'category-filter-container';
-  container.style.marginBottom = '12px';
-  container.style.textAlign = 'center';
-  container.style.color = 'var(--main-fg)';
+  // Category Selector
+  const catContainer = document.createElement('div');
+  catContainer.id = 'category-filter-container';
+  catContainer.style.marginBottom = '12px';
+  catContainer.style.textAlign = 'center';
 
-  const label = document.createElement('label');
-  label.htmlFor = 'category-filter-select';
-  label.textContent = 'Filter by Category: ';
-  label.style.marginRight = '8px';
+  const catLabel = document.createElement('label');
+  catLabel.htmlFor = 'category-filter-select';
+  catLabel.textContent = 'Filter by Category: ';
+  catLabel.style.marginRight = '8px';
 
-  const select = document.createElement('select');
-  select.id = 'category-filter-select';
-  select.style.padding = '4px 8px';
-  select.style.borderRadius = '4px';
-  select.style.border = 'none';
-  select.style.background = 'var(--input-bg)';
-  select.style.color = 'var(--input-fg)';
-  select.style.fontSize = '1em';
+  const catSelect = document.createElement('select');
+  catSelect.id = 'category-filter-select';
+  catSelect.style.padding = '4px 8px';
+  catSelect.style.borderRadius = '4px';
+  catSelect.style.border = 'none';
+  catSelect.style.background = 'var(--input-bg)';
+  catSelect.style.color = 'var(--input-fg)';
+  catSelect.style.fontSize = '1em';
 
   const categories = new Set();
   allEvents.forEach(ev => {
@@ -130,33 +125,40 @@ function createCategoryFilter() {
   const defaultOption = document.createElement('option');
   defaultOption.value = '';
   defaultOption.textContent = 'All Categories';
-  select.appendChild(defaultOption);
+  catSelect.appendChild(defaultOption);
 
   Array.from(categories).sort().forEach(cat => {
     const option = document.createElement('option');
     option.value = cat;
     option.textContent = cat;
-    select.appendChild(option);
+    if (cat === selectedCategory) option.selected = true;
+    catSelect.appendChild(option);
   });
 
-  select.addEventListener('change', () => {
-    const val = select.value;
-    if (val === '') {
-      filteredEvents = allEvents.slice();
-    } else {
-      filteredEvents = allEvents.filter(ev => ev.category === val);
-    }
-    renderEventsList(filteredEvents);
+  catSelect.value = selectedCategory;
+
+  catSelect.addEventListener('change', () => {
+    selectedCategory = catSelect.value;
+    localStorage.setItem('gh-cat', selectedCategory);
+    renderEventsList();
   });
 
-  container.appendChild(label);
-  container.appendChild(select);
-  return container;
+  catContainer.appendChild(catLabel);
+  catContainer.appendChild(catSelect);
+
+  return [tzContainer, catContainer];
 }
 
-function renderEventsList(events) {
+function renderEventsList() {
   const now = new Date();
-  const eventList = events.filter(ev => ev.offset).map((ev, idx) => {
+  // Filter by category
+  let eventsToShow = allEvents;
+  if (selectedCategory) {
+    eventsToShow = allEvents.filter(ev => ev.category === selectedCategory);
+  }
+
+  // Prepare event list with countdowns
+  const eventList = eventsToShow.filter(ev => ev.offset).map((ev, idx) => {
     const eventDate = getEventDate(ev.offset);
     return {
       ...ev,
@@ -167,7 +169,7 @@ function renderEventsList(events) {
   }).filter(ev => ev.countdown >= 0)
     .sort((a, b) => a.countdown - b.countdown);
 
-  nextEventIndex = eventList.length > 0 ? 0 : -1;
+  filteredEvents = eventList;
 
   let html = `<div class="gh-event-timer-list">`;
   html += `<div class="gh-event-timer-now">Current Time: <span>${formatTimeInTimeZone(now, selectedTimeZone)}</span></div>`;
@@ -175,7 +177,7 @@ function renderEventsList(events) {
     html += `<div class="gh-event-none">No upcoming events.</div>`;
   } else {
     eventList.forEach((ev, i) => {
-      const highlightClass = (i === nextEventIndex) ? 'gh-event-next' : '';
+      const highlightClass = (i === 0) ? 'gh-event-next' : '';
       let wikiLink = '';
       if (ev.name) {
         const wikiName = encodeURIComponent(ev.name.replace(/ /g, '_'));
@@ -205,45 +207,53 @@ function renderEventsList(events) {
   container.insertAdjacentHTML('beforeend', html);
 }
 
-function renderEvents(events) {
+function renderSelectors() {
   const container = document.getElementById('gw2-event-timer');
-  container.innerHTML = '';
-  container.appendChild(createTimeZoneSelector());
-  container.appendChild(createCategoryFilter());
-  filteredEvents = events.slice();
-  allEvents = events.slice();
-  renderEventsList(filteredEvents);
+  // Remove old selectors if present
+  const oldTz = document.getElementById('timezone-selector-container');
+  const oldCat = document.getElementById('category-filter-container');
+  if (oldTz) oldTz.remove();
+  if (oldCat) oldCat.remove();
+  // Add new selectors
+  const [tz, cat] = createSelectors();
+  container.prepend(cat);
+  container.prepend(tz);
 }
 
 function setupCopyDelegation() {
   const container = document.getElementById('gw2-event-timer');
-  container.addEventListener('click', (e) => {
-    if (e.target && e.target.classList.contains('gh-event-copy-btn')) {
-      const btn = e.target;
-      const idx = btn.getAttribute('data-idx');
-      const event = filteredEvents.find(ev => ev.idx.toString() === idx);
-      if (!event) return;
-      const textToCopy = `${event.name} - ${event.waypoint || ''}`.trim();
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(textToCopy).then(() => {
+  if (!container._copyHandlerAttached) {
+    container.addEventListener('click', (e) => {
+      if (e.target && e.target.classList.contains('gh-event-copy-btn')) {
+        const btn = e.target;
+        const idx = btn.getAttribute('data-idx');
+        const event = filteredEvents.find(ev => ev.idx.toString() === idx);
+        if (!event) return;
+        const textToCopy = `${event.name} - ${event.waypoint || ''}`.trim();
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(textToCopy).then(() => {
+            btn.classList.add('copied');
+            btn.textContent = 'Copied!';
+            setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 1200);
+          });
+        } else {
+          const input = document.getElementById(`gh-waypoint-input-${idx}`);
+          input.select();
+          input.setSelectionRange(0, 99999);
+          document.execCommand('copy');
           btn.classList.add('copied');
           btn.textContent = 'Copied!';
           setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 1200);
-        });
-      } else {
-        const input = document.getElementById(`gh-waypoint-input-${idx}`);
-        input.select();
-        input.setSelectionRange(0, 99999);
-        document.execCommand('copy');
-        btn.classList.add('copied');
-        btn.textContent = 'Copied!';
-        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 1200);
+        }
       }
-    }
-  });
+    });
+    container._copyHandlerAttached = true;
+  }
 }
 
 function createModal() {
+  let modal = document.getElementById('gh-event-modal');
+  if (modal) return modal;
   modal = document.createElement('div');
   modal.id = 'gh-event-modal';
   modal.style.position = 'fixed';
@@ -260,7 +270,8 @@ function createModal() {
   modal.style.opacity = '0';
   modal.style.transition = 'opacity 0.3s ease';
 
-  modalContent = document.createElement('div');
+  const modalContent = document.createElement('div');
+  modalContent.id = 'gh-event-modal-content';
   modalContent.style.background = 'var(--card-bg)';
   modalContent.style.color = 'var(--main-fg)';
   modalContent.style.padding = '20px';
@@ -270,7 +281,7 @@ function createModal() {
   modalContent.style.overflowY = 'auto';
   modalContent.style.fontFamily = 'Segoe UI, Arial, sans-serif';
 
-  modalCloseBtn = document.createElement('button');
+  const modalCloseBtn = document.createElement('button');
   modalCloseBtn.textContent = 'Close';
   modalCloseBtn.style.marginTop = '12px';
   modalCloseBtn.style.padding = '8px 16px';
@@ -288,53 +299,59 @@ function createModal() {
   modal.appendChild(modalContent);
   modal.appendChild(modalCloseBtn);
   document.body.appendChild(modal);
+  return modal;
 }
 
 function showModal(contentHtml) {
-  if (!modal) createModal();
+  const modal = createModal();
+  const modalContent = modal.querySelector('#gh-event-modal-content');
   modalContent.innerHTML = contentHtml;
   modal.style.visibility = 'visible';
   modal.style.opacity = '1';
 }
 
 function hideModal() {
+  const modal = document.getElementById('gh-event-modal');
   if (modal) {
     modal.style.opacity = '0';
     setTimeout(() => {
-      if (modal) modal.style.visibility = 'hidden';
+      modal.style.visibility = 'hidden';
     }, 300);
   }
 }
 
 function setupEventDetailsModal() {
   const container = document.getElementById('gw2-event-timer');
-  container.addEventListener('click', (e) => {
-    if (e.target && e.target.classList.contains('gh-event-wiki-link')) {
-      e.preventDefault();
-      const eventDiv = e.target.closest('.gh-event-item');
-      if (!eventDiv) return;
-      const idx = eventDiv.getAttribute('data-idx');
-      const event = filteredEvents.find(ev => ev.idx.toString() === idx);
-      if (!event) return;
+  if (!container._modalHandlerAttached) {
+    container.addEventListener('click', (e) => {
+      if (e.target && e.target.classList.contains('gh-event-wiki-link')) {
+        e.preventDefault();
+        const eventDiv = e.target.closest('.gh-event-item');
+        if (!eventDiv) return;
+        const idx = eventDiv.getAttribute('data-idx');
+        const event = filteredEvents.find(ev => ev.idx.toString() === idx);
+        if (!event) return;
 
-      let content = `<h2>${event.name}</h2>`;
-      content += `<p><strong>Category:</strong> ${event.category || 'N/A'}</p>`;
-      content += `<p><strong>Start Time:</strong> ${formatTimeInTimeZone(event.eventDate, selectedTimeZone)} (${selectedTimeZone})</p>`;
-      content += `<p><strong>Waypoint:</strong> ${event.waypoint || 'N/A'}</p>`;
-      content += `<p><a href="${GW2_WIKI_BASE}${encodeURIComponent(event.name.replace(/ /g, '_'))}" target="_blank" rel="noopener noreferrer">Open full wiki page</a></p>`;
+        let content = `<h2>${event.name}</h2>`;
+        content += `<p><strong>Category:</strong> ${event.category || 'N/A'}</p>`;
+        content += `<p><strong>Start Time:</strong> ${formatTimeInTimeZone(event.eventDate, selectedTimeZone)} (${selectedTimeZone})</p>`;
+        content += `<p><strong>Waypoint:</strong> ${event.waypoint || 'N/A'}</p>`;
+        content += `<p><a href="${GW2_WIKI_BASE}${encodeURIComponent(event.name.replace(/ /g, '_'))}" target="_blank" rel="noopener noreferrer">Open full wiki page</a></p>`;
 
-      showModal(content);
-    }
-  });
+        showModal(content);
+      }
+    });
+    container._modalHandlerAttached = true;
+  }
 }
 
 // Advanced timer accuracy with recursive setTimeout
 function startAccurateTimer() {
   function tick() {
-    updateEvents();
+    renderEventsList();
     const now = Date.now();
     const delay = 1000 - (now % 1000);
-    setTimeout(tick, delay);
+    timerId = setTimeout(tick, delay);
   }
   tick();
 }
@@ -343,13 +360,14 @@ function updateEvents() {
   fetch(EVENTS_URL)
     .then(res => res.json())
     .then(events => {
-      allEvents = events.slice();
-      filteredEvents = allEvents.slice();
-      renderEvents(allEvents);
+      allEvents = events.slice().map((ev, idx) => ({...ev, idx}));
+      renderSelectors();
+      renderEventsList();
       setupCopyDelegation();
       setupEventDetailsModal();
     });
 }
 
 // Initial load and start timer
+updateEvents();
 startAccurateTimer();
