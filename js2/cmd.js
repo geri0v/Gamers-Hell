@@ -2,6 +2,7 @@
 
 // Utility: Convert value in copper to gold/silver/copper string
 function formatValue(copper) {
+    if (!copper || isNaN(copper)) return '-';
     const gold = Math.floor(copper / 10000);
     const silver = Math.floor((copper % 10000) / 100);
     const copperRem = copper % 100;
@@ -19,12 +20,21 @@ async function initApp() {
         'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/temples.json',
         'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/untimedcore.json'
     ];
-    const [temples, untimedcore] = await Promise.all(urls.map(url => fetch(url).then(r => r.json())));
+
+    let temples = [], untimedcore = [];
+    try {
+        [temples, untimedcore] = await Promise.all(urls.map(url => fetch(url).then(r => r.json())));
+    } catch (e) {
+        document.getElementById('cmd-app').innerHTML = `<div style="color:red;text-align:center;">Failed to fetch data.<br>${e.message}</div>`;
+        window.cmdAppLoaded = true;
+        return;
+    }
 
     // Merge and group data by expansion and then by sourceName
     const allData = [...temples, ...untimedcore];
     const grouped = {};
     allData.forEach(entry => {
+        if (!entry.expansion || !entry.sourceName) return;
         if (!grouped[entry.expansion]) grouped[entry.expansion] = {};
         if (!grouped[entry.expansion][entry.sourceName]) grouped[entry.expansion][entry.sourceName] = [];
         grouped[entry.expansion][entry.sourceName].push(entry);
@@ -95,6 +105,9 @@ async function initApp() {
         });
         container.appendChild(expDiv);
     });
+
+    // Signal to index.html that the app loaded successfully
+    window.cmdAppLoaded = true;
 }
 
 // Initialize on DOM ready
