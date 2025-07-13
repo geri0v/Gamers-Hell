@@ -1,8 +1,9 @@
+// == Gamers-Hell: Complete JS App for External CSS/Layout ==
+
 const DATA_URLS = [
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/temples.json',
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/untimedcore.json'
 ];
-
 const OTC_CSV_URL = 'https://raw.githubusercontent.com/otc-cirdan/gw2-items/master/items.csv';
 
 let allEvents = [];
@@ -199,6 +200,12 @@ function groupEvents(events) {
   return expansions;
 }
 
+function highlight(text, query) {
+  if (!query) return text;
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
+}
+
 function applyFilters() {
   let query = document.getElementById('search').value.toLowerCase();
   filteredEvents = allEvents.filter(ev =>
@@ -245,10 +252,88 @@ function showCopyNudge(btn) {
   setTimeout(() => nudge.remove(), 1200);
 }
 
+function showEventModal(ev) {
+  let modal = document.getElementById('eventModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'eventModal';
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100vw';
+    modal.style.height = '100vh';
+    modal.style.background = 'rgba(15,12,23,0.95)';
+    modal.style.zIndex = '1000';
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    modal.innerHTML = `
+      <div style="background:var(--color-card-bg);padding:2em;border-radius:10px;max-width:90vw;max-height:90vh;overflow:auto;position:relative;">
+        <button id="closeModalBtn" style="position:absolute;top:1em;right:1em;background:var(--color-accent-gold);color:#1b152c;border:none;border-radius:4px;padding:0.4em 1em;cursor:pointer;">Close</button>
+        <div id="modalContent"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    document.getElementById('closeModalBtn').onclick = () => {
+      modal.style.display = 'none';
+      document.getElementById('modalContent').innerHTML = '';
+    };
+  }
+  // Fill modal content
+  const mostValuable = getMostValuableLoot(ev.loot || []);
+  const mostValuableInfo = mostValuable ? itemCache[mostValuable.id] : null;
+  const mostValuableName = mostValuableInfo ? mostValuableInfo.name : (mostValuable?.name || '');
+  const mostValuableValue = mostValuableInfo
+    ? (mostValuableInfo.tp_value
+        ? `<span class="tp-value">${splitCoins(mostValuableInfo.tp_value)} <span style="font-size:0.95em;color:var(--color-accent-emerald);">(TP)</span></span>`
+        : (typeof mostValuableInfo.vendor_value === 'number'
+            ? `<span class="vendor-value">${splitCoins(mostValuableInfo.vendor_value)}</span>`
+            : (mostValuableInfo.accountbound ? `<span class="accountbound">Account Bound</span>` : '')))
+    : '';
+
+  const lootItems = (ev.loot || []).map(item => {
+    const info = item.id ? itemCache[item.id] : (item.name && itemCache[item.name]) ? itemCache[item.name] : {};
+    const displayName = info && info.name ? info.name : (item.name || item.id || item.code || 'Unknown Item');
+    const wikiUrl = createWikiUrl(item);
+    const icon = info && info.icon ? `<img src="${info.icon}" alt="" class="loot-icon">` : '';
+    let valueDisplay = '';
+    if (info && typeof info.tp_value === 'number') {
+      valueDisplay = `<span class="tp-value">${splitCoins(info.tp_value)} <span style="font-size:0.95em;color:var(--color-accent-emerald);">(TP)</span></span>`;
+    } else if (info && typeof info.vendor_value === 'number') {
+      valueDisplay = `<span class="vendor-value">${splitCoins(info.vendor_value)}</span>`;
+    } else if (info && info.accountbound) {
+      valueDisplay = `<span class="accountbound">Account Bound</span>`;
+    }
+    const chatLink = info && info.chat_link
+      ? ` <code>${info.chat_link}</code>`
+      : (item.code ? ` <code>${item.code}</code>` : '');
+    return `<li>
+      ${icon}
+      <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${displayName}</a>
+      ${valueDisplay}
+      ${chatLink}
+    </li>`;
+  }).join('');
+
+  document.getElementById('modalContent').innerHTML = `
+    <h2>${ev.name}</h2>
+    <div><b>Location:</b> ${ev.map || ''}</div>
+    <div><b>Waypoint:</b> ${ev.code ? `<code>${ev.code}</code>` : ''}</div>
+    <div><b>Best Loot:</b> ${mostValuableName} ${mostValuableValue}</div>
+    <div class="loot-section">
+      <ul class="loot-list">${lootItems}</ul>
+    </div>
+    <div class="event-notes"><strong>Notes:</strong> ${ev.notes || ''}</div>
+  `;
+  modal.style.display = 'flex';
+}
+
 function render() {
   const container = document.getElementById('events');
   container.innerHTML = '';
   const groups = groupEvents(filteredEvents);
+
+  let searchQuery = document.getElementById('search').value.trim();
 
   Object.entries(groups).forEach(([expansion, sources]) => {
     const expId = `expansion-${expansion.replace(/\s+/g, '_')}`;
@@ -317,9 +402,10 @@ function render() {
               const chatLink = info && info.chat_link
                 ? ` <code>${info.chat_link}</code>`
                 : (item.code ? ` <code>${item.code}</code>` : '');
+              // Highlight search term in loot
               return `<li>
                 ${icon}
-                <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${displayName}</a>
+                <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${highlight(displayName, searchQuery)}</a>
                 ${valueDisplay}
                 ${chatLink}
               </li>`;
@@ -338,22 +424,25 @@ function render() {
             eventCard.innerHTML = `
               <div class="card-header">
                 <h2>
-                  <a href="${eventWikiUrl}" target="_blank" class="event-name">${ev.name}</a>
+                  <a href="${eventWikiUrl}" target="_blank" class="event-name">${highlight(ev.name, searchQuery)}</a>
                 </h2>
               </div>
               <div class="card-body">
                 <div class="event-info">
-                  <span><b>Location:</b> ${ev.map || ''}</span>
+                  <span><b>Location:</b> ${highlight(ev.map || '', searchQuery)}</span>
                   <span><b>Waypoint:</b> ${ev.code ? `<code>${ev.code}</code>` : ''}</span>
                 </div>
                 <div class="event-loot-summary">
-                  <b>Best Loot:</b> ${mostValuableName} ${mostValuableValue}
+                  <b>Best Loot:</b> ${highlight(mostValuableName, searchQuery)} ${mostValuableValue}
                 </div>
                 <div class="copy-bar">
                   <input type="text" value="${copyValue}" readonly>
                   <button onclick="navigator.clipboard.writeText(this.previousElementSibling.value); showCopyNudge(this);">Copy</button>
                 </div>
                 ${lootSection}
+                <div style="margin-top:0.7em;">
+                  <button class="show-hide-toggle" onclick="showEventModal(${JSON.stringify(ev).replace(/"/g, '&quot;')})">More Details</button>
+                </div>
               </div>
             `;
             srcDiv.appendChild(eventCard);
@@ -364,8 +453,6 @@ function render() {
     }
     container.appendChild(expDiv);
   });
-
-  if (typeof renderMenu === "function") renderMenu();
 }
 
 window.toggleCoreTyria = toggleCoreTyria;
@@ -377,8 +464,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('search').addEventListener('input', applyFilters);
   document.body.addEventListener('click', function (e) {
     if (e.target.classList.contains('sort-btn')) {
-      sortKey = e.target.dataset.sort;
-      sortAsc = !sortAsc;
+      const newSortKey = e.target.dataset.sort;
+      if (sortKey === newSortKey) sortAsc = !sortAsc;
+      else { sortKey = newSortKey; sortAsc = true; }
+      document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
+      e.target.classList.add('active');
       applyFilters();
     }
   });
