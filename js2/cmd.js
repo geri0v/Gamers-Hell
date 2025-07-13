@@ -150,9 +150,10 @@ function render() {
   Object.entries(groups).forEach(([expansion, sources]) => {
     const expId = `expansion-${expansion.replace(/\s+/g, '_')}`;
     const expDiv = document.createElement('div');
-    expDiv.className = 'expansion';
+    expDiv.className = 'menu-card'; // Use card style for expansion group
     expDiv.id = expId;
 
+    // Expansion header
     if (expansion === 'Core Tyria') {
       expDiv.innerHTML = `<h2 style="cursor:pointer;" onclick="toggleCoreTyria()">
         ${coreTyriaCollapsed ? '▶' : '▼'} Core Tyria
@@ -161,13 +162,15 @@ function render() {
       expDiv.innerHTML = `<h2>${expansion}</h2>`;
     }
 
+    // Sources
     if (expansion !== 'Core Tyria' || !coreTyriaCollapsed) {
       Object.entries(sources).forEach(([source, events]) => {
         const srcId = `${expId}-source-${source.replace(/\s+/g, '_')}`;
         const srcDiv = document.createElement('div');
-        srcDiv.className = 'source';
+        srcDiv.className = 'menu-card'; // Use card style for source group
         srcDiv.id = srcId;
 
+        // Source header
         if (expansion === 'Core Tyria') {
           if (!(source in coreTyriaSourcesCollapsed)) coreTyriaSourcesCollapsed[source] = false;
           srcDiv.innerHTML = `<h3 style="cursor:pointer;" onclick="toggleCoreTyriaSource('${source.replace(/'/g, "\\'")}')">
@@ -177,6 +180,7 @@ function render() {
           srcDiv.innerHTML = `<h3>${source}</h3>`;
         }
 
+        // Events
         if (expansion !== 'Core Tyria' || !coreTyriaSourcesCollapsed[source]) {
           events.forEach(ev => {
             const mostValuable = getMostValuableLoot(ev.loot || [], itemCache);
@@ -188,6 +192,7 @@ function render() {
             const waypoint = ev.code ? ev.code : (ev.map || '');
             const copyValue = `${ev.name} | ${waypoint} | ${mostValuableName}${mostValuableValue ? ' (' + mostValuableValue.replace(/<[^>]+>/g, '') + ')' : ''}`;
 
+            // Loot items as a list
             const lootItems = (ev.loot || []).map(item => {
               let displayName = item.name || item.id || item.code || 'Unknown Item';
               let wikiUrl = item.id && itemCache[item.id] && itemCache[item.id].wiki
@@ -209,27 +214,39 @@ function render() {
                 ${chatLink}
               </li>`;
             }).join('');
+
+            // Loot section as a collapsible card
             const lootSection = lootItems
-              ? `<div class="loot-section">
-                  <button class="toggle-loot" onclick="this.nextElementSibling.classList.toggle('show')">Show/Hide Loot</button>
-                  <ul class="loot-list">${lootItems}</ul>
+              ? `<div class="show-hide-section collapsed loot-section">
+                  <button class="show-hide-toggle" onclick="this.parentElement.classList.toggle('collapsed')">Show/Hide Loot</button>
+                  <ul class="loot-list copy-paste-area">${lootItems}</ul>
                 </div>`
               : '';
+
             const eventWikiUrl = createWikiUrl(ev.name);
-            srcDiv.innerHTML += `
-              <div class="event">
+
+            // Render the event as a card!
+            const eventCard = document.createElement('article');
+            eventCard.className = 'event-card';
+            eventCard.innerHTML = `
+              <div class="card-header">
+                <span class="event-icon">🎲</span>
+                <h2><a href="${eventWikiUrl}" target="_blank" class="event-name">${ev.name}</a></h2>
+              </div>
+              <div class="card-body">
+                <div class="event-info">
+                  <span class="event-map">${ev.map ? `<b>Location:</b> ${ev.map}` : ''}</span>
+                  <span class="event-code">${ev.code ? `<b>Waypoint:</b> <code>${ev.code}</code>` : ''}</span>
+                  ${mostValuableName ? `<span class="event-loot"><b>Best Loot:</b> ${mostValuableName} ${mostValuableValue}</span>` : ''}
+                </div>
                 <div class="copy-bar">
                   <input type="text" value="${copyValue}" readonly>
                   <button onclick="navigator.clipboard.writeText(this.previousElementSibling.value)">Copy</button>
                 </div>
-                <div class="event-info">
-                  <a href="${eventWikiUrl}" target="_blank" rel="noopener noreferrer" class="event-name">${ev.name}</a>
-                  <span class="event-map">${ev.map}</span>
-                  <span class="event-code">${ev.code ? `<code>${ev.code}</code>` : ''}</span>
-                </div>
                 ${lootSection}
               </div>
             `;
+            srcDiv.appendChild(eventCard);
           });
         }
         expDiv.appendChild(srcDiv);
