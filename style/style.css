@@ -99,46 +99,6 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   background: var(--color-accent-emerald);
   transform: scale(1.1) rotate(10deg);
 }
-.sidebar-content {
-  padding: 2rem 1rem 1rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.sidebar-logo img {
-  width: 48px;
-  margin-bottom: 1rem;
-  filter: drop-shadow(0 0 8px var(--color-accent-gold));
-}
-.menu-title {
-  font-family: var(--font-heading);
-  color: var(--color-accent-gold);
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-  text-shadow: 0 0 6px var(--color-accent-emerald);
-}
-.menu-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-}
-.menu-links li {
-  margin: 0.7rem 0;
-}
-.menu-links a {
-  font-family: var(--font-accent);
-  color: var(--color-accent-emerald);
-  font-size: 1.1rem;
-  padding: 0.4rem 1rem;
-  border-radius: 6px;
-  display: block;
-  transition: background 0.2s, color 0.2s;
-}
-.menu-links a:hover {
-  background: var(--color-accent-gold);
-  color: #1b152c;
-}
 
 /* Sidebar Right (Timer) */
 #sidebar-right {
