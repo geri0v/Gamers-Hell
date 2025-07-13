@@ -2,138 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Gamers-Hell: Dynamic Index</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      background: #1e2630;
-      color: #f3f7fa;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      box-sizing: border-box;
-    }
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    .side-by-side-container {
-      display: flex;
-      flex: 1 1 auto;
-      height: 100vh;
-      gap: 0;
-    }
-    .panel {
-      flex: 1 1 0;
-      min-width: 320px;
-      display: flex;
-      flex-direction: column;
-      border-right: 1px solid #263142;
-      background: #232c3b;
-      overflow: auto;
-      height: 100vh;
-    }
-    .panel:last-child {
-      border-right: none;
-    }
-    .panel-header {
-      background: #263142;
-      color: #4a90e2;
-      font-weight: bold;
-      font-size: 1.2em;
-      padding: 1em;
-      text-align: center;
-      letter-spacing: 1px;
-      border-bottom: 1px solid #1e2630;
-    }
-    .panel-content {
-      flex: 1 1 auto;
-      padding: 0;
-      overflow: auto;
-      min-height: 600px;
-    }
-    @media (max-width: 900px) {
-      .side-by-side-container {
-        flex-direction: column;
-        height: auto;
-      }
-      .panel {
-        border-right: none;
-        border-bottom: 1px solid #263142;
-        min-height: 350px;
-        height: 50vh;
-        max-height: 50vh;
-      }
-      .panel:last-child {
-        border-bottom: none;
-      }
-    }
-    @media (max-width: 600px) {
-      .panel {
-        min-width: 0;
-        height: auto;
-        max-height: none;
-      }
-      .side-by-side-container {
-        height: auto;
-      }
-    }
-  </style>
+  <title>Gamers-Hell: Events & Timer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css">
 </head>
 <body>
-  <div class="side-by-side-container">
-    <div class="panel" id="events-panel">
-      <div class="panel-header">Events & Loot</div>
-      <div class="panel-content" id="events-root">
-        <div style="padding:2em;text-align:center;color:#888;">Loading Events & Loot...</div>
-      </div>
+<header style="position:relative;">
+  <h1>Gamers-Hell</h1>
+  <button id="themeToggle" aria-label="Toggle dark/light mode" style="position:absolute;top:1em;right:1em;">
+    🌙/☀️
+  </button>
+</header>
+  <main class="main" id="main" aria-label="Main content area" tabindex="-1">
+    <div class="search-bar-container" role="search">
+      <input aria-label="Search" class="search-input" id="searchInput" placeholder="Search temples, bosses, loot..." type="text"/>
+      <button class="search-clear-btn" id="searchClearBtn" aria-label="Clear search" title="Clear search" tabindex="0" style="display:none;">×</button>
+      <select id="sortSelect" aria-label="Sort events">
+        <option value="name">Sort: Name</option>
+        <option value="location">Sort: Location</option>
+        <option value="loot">Sort: Loot Value</option>
+      </select>
     </div>
-    <div class="panel" id="timer-panel">
-      <div class="panel-header">GW2 Event Timer</div>
-      <div class="panel-content" id="timer-root">
-        <div style="padding:2em;text-align:center;color:#888;">Loading GW2 Event Timer...</div>
-      </div>
-    </div>
+    <div id="events-container"></div>
+  </main>
+  <footer>
+    © 2025 Gamers-Hell Community
+  </footer>
+  <div id="eventModal" style="display:none;">
+    <div id="modalContent"></div>
+    <button id="closeModalBtn">Close</button>
   </div>
+  <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js" defer></script>
   <script>
-    // Dynamically fetch and run remote JS in the given root element.
-    function loadApp(jsUrl, rootId) {
-      fetch(jsUrl)
-        .then(r => {
-          if (!r.ok) throw new Error("Failed to fetch: " + jsUrl);
-          return r.text();
-        })
-        .then(code => {
-          const root = document.getElementById(rootId);
-          // Patch document.body for this app's context.
-          const origBody = document.body;
-          Object.defineProperty(document, 'body', { get: () => root, configurable: true });
-          try {
-            new Function(code)();
-          } catch (e) {
-            root.innerHTML = '<div style="color:#f66;padding:1em;">App failed to load: ' + e.message + '</div>';
-          }
-          Object.defineProperty(document, 'body', { get: () => origBody });
-        })
-        .catch(err => {
-          const root = document.getElementById(rootId);
-          root.innerHTML = '<div style="color:#f66;padding:1em;">Failed to load app: ' + err.message + '</div>';
-        });
-    }
-
-    // Load Events & Loot
-    loadApp(
-      'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/js/cmd.js',
-      'events-root'
-    );
-
-    // Load GW2 Event Timer
-    loadApp(
-      'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/js/time.js',
-      'timer-root'
-    );
+    document.addEventListener('DOMContentLoaded', function() {
+      const themeBtn = document.getElementById('themeToggle');
+      function setTheme(theme) {
+        if (theme === 'light') {
+          document.body.classList.add('light');
+          localStorage.setItem('gh-theme', 'light');
+          themeBtn.textContent = '🌙';
+        } else {
+          document.body.classList.remove('light');
+          localStorage.setItem('gh-theme', 'dark');
+          themeBtn.textContent = '☀️';
+        }
+      }
+      themeBtn.addEventListener('click', () => {
+        setTheme(document.body.classList.contains('light') ? 'dark' : 'light');
+      });
+      setTheme(localStorage.getItem('gh-theme') === 'light' ? 'light' : 'dark');
+    });
   </script>
 </body>
 </html>
