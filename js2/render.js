@@ -1,7 +1,6 @@
 // == Gamers-Hell: render.js ==
-import { getItemFullInfo } from './iteminfo.js';
 
-function splitCoins(coins) {
+window.splitCoins = function(coins) {
   if (typeof coins !== 'number' || isNaN(coins)) return '';
   const gold = Math.floor(coins / 10000);
   const silver = Math.floor((coins % 10000) / 100);
@@ -11,9 +10,9 @@ function splitCoins(coins) {
   if (gold || silver) str += `<span class="silver">${silver}s</span> `;
   str += `<span class="copper">${copper}c</span>`;
   return str.trim();
-}
+};
 
-export function showCopyNudge(btn) {
+window.showCopyNudge = function(btn) {
   const parent = btn.parentElement;
   const existing = parent.querySelector('.copy-nudge');
   if (existing) existing.remove();
@@ -22,9 +21,9 @@ export function showCopyNudge(btn) {
   nudge.textContent = 'Copied!';
   parent.appendChild(nudge);
   setTimeout(() => nudge.remove(), 1200);
-}
+};
 
-export async function renderEvents(events, container) {
+window.renderEvents = async function(events, container) {
   container.innerHTML = '';
   if (!events.length) {
     container.innerHTML = `<div class="empty-state">No events found.</div>`;
@@ -53,7 +52,7 @@ export async function renderEvents(events, container) {
         let enrichedLoot = [];
         if (Array.isArray(ev.loot)) {
           for (const item of ev.loot) {
-            const info = await getItemFullInfo(item.id || item.code || item.name);
+            const info = await window.getItemFullInfo(item.id || item.code || item.name);
             enrichedLoot.push({ ...item, ...info });
           }
         }
@@ -65,15 +64,14 @@ export async function renderEvents(events, container) {
           if (value > maxValue) {
             maxValue = value;
             mostValuable = item;
-            maxValue = value;
           }
         }
         // Card
         const lootRows = enrichedLoot.map(item => {
           let icon = item.icon ? `<img src="${item.icon}" alt="" class="loot-icon" />` : '';
           let wikiLink = item.name ? `<a href="https://wiki.guildwars2.com/wiki/${encodeURIComponent(item.name.replace(/ /g, '_'))}" target="_blank" rel="noopener" style="margin-left:0.3em;color:var(--color-accent-emerald);text-decoration:underline;">Wiki</a>` : '';
-          let sellValue = (typeof item.tp_value === 'number') ? `<span class="tp-value">${splitCoins(item.tp_value)}</span>` : '';
-          let vendorValue = (typeof item.vendor_value === 'number') ? `<span class="vendor-value">${splitCoins(item.vendor_value)}</span>` : '';
+          let sellValue = (typeof item.tp_value === 'number') ? `<span class="tp-value">${window.splitCoins(item.tp_value)}</span>` : '';
+          let vendorValue = (typeof item.vendor_value === 'number') ? `<span class="vendor-value">${window.splitCoins(item.vendor_value)}</span>` : '';
           let accountBound = item.accountbound ? `<span class="accountbound">Account Bound</span>` : '';
           return `<li>
             ${icon}
@@ -99,7 +97,7 @@ export async function renderEvents(events, container) {
               <span><b>Waypoint:</b> ${ev.code ? `<code>${ev.code}</code>` : ''}</span>
             </div>
             <div class="event-loot-summary">
-              <b>Best Loot:</b> ${mostValuable ? `<a href="https://wiki.guildwars2.com/wiki/${encodeURIComponent(mostValuable.name.replace(/ /g, '_'))}" target="_blank">${mostValuable.name}</a> ${typeof mostValuable.tp_value === 'number' ? `<span class="tp-value">${splitCoins(mostValuable.tp_value)}</span>` : typeof mostValuable.vendor_value === 'number' ? `<span class="vendor-value">${splitCoins(mostValuable.vendor_value)}</span>` : ''}` : 'N/A'}
+              <b>Best Loot:</b> ${mostValuable ? `<a href="https://wiki.guildwars2.com/wiki/${encodeURIComponent(mostValuable.name.replace(/ /g, '_'))}" target="_blank">${mostValuable.name}</a> ${typeof mostValuable.tp_value === 'number' ? `<span class="tp-value">${window.splitCoins(mostValuable.tp_value)}</span>` : typeof mostValuable.vendor_value === 'number' ? `<span class="vendor-value">${window.splitCoins(mostValuable.vendor_value)}</span>` : ''}` : 'N/A'}
             </div>
             <div class="copy-bar">
               <input type="text" value="${copyValue}" readonly>
@@ -115,7 +113,7 @@ export async function renderEvents(events, container) {
         card.querySelector('.copy-btn').onclick = function() {
           const input = card.querySelector('.copy-bar input');
           navigator.clipboard.writeText(input.value);
-          showCopyNudge(this);
+          window.showCopyNudge(this);
         };
         // Show/hide loot
         const lootBtn = card.querySelector('.show-hide-toggle');
@@ -132,4 +130,4 @@ export async function renderEvents(events, container) {
     }
     container.appendChild(expSection);
   }
-}
+};
