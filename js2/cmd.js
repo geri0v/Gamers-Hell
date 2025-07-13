@@ -174,6 +174,8 @@ async function loadData() {
   filteredEvents = events;
   await enrichLootWithApi();
   render();
+  // Expose expansions/sources for menu.js
+  if (window.renderMenu) window.renderMenu(getMenuStructure());
 }
 
 async function enrichLootWithApi() {
@@ -198,6 +200,18 @@ function groupEvents(events) {
     expansions[ev.expansion][ev.sourceName].push(ev);
   });
   return expansions;
+}
+
+function getMenuStructure() {
+  // Returns { expansion: [sourceName, ...], ... }
+  const structure = {};
+  allEvents.forEach(ev => {
+    if (!structure[ev.expansion]) structure[ev.expansion] = new Set();
+    structure[ev.expansion].add(ev.sourceName);
+  });
+  // Convert sets to arrays
+  Object.keys(structure).forEach(k => structure[k] = Array.from(structure[k]));
+  return structure;
 }
 
 function highlight(text, query) {
@@ -253,82 +267,6 @@ function showCopyNudge(btn) {
   nudge.textContent = 'Copied!';
   parent.appendChild(nudge);
   setTimeout(() => nudge.remove(), 1200);
-}
-
-function showEventModal(ev) {
-  let modal = document.getElementById('eventModal');
-  if (!modal) {
-    modal = document.createElement('div');
-    modal.id = 'eventModal';
-    modal.style.position = 'fixed';
-    modal.style.top = '0';
-    modal.style.left = '0';
-    modal.style.width = '100vw';
-    modal.style.height = '100vh';
-    modal.style.background = 'rgba(15,12,23,0.95)';
-    modal.style.zIndex = '1000';
-    modal.style.display = 'flex';
-    modal.style.alignItems = 'center';
-    modal.style.justifyContent = 'center';
-    modal.innerHTML = `
-      <div style="background:var(--color-card-bg);padding:2em;border-radius:10px;max-width:90vw;max-height:90vh;overflow:auto;position:relative;">
-        <button id="closeModalBtn" style="position:absolute;top:1em;right:1em;background:var(--color-accent-gold);color:#1b152c;border:none;border-radius:4px;padding:0.4em 1em;cursor:pointer;">Close</button>
-        <div id="modalContent"></div>
-      </div>
-    `;
-    document.body.appendChild(modal);
-    document.getElementById('closeModalBtn').onclick = () => {
-      modal.style.display = 'none';
-      document.getElementById('modalContent').innerHTML = '';
-    };
-  }
-  // Fill modal content
-  const mostValuable = getMostValuableLoot(ev.loot || []);
-  const mostValuableInfo = mostValuable ? itemCache[mostValuable.id] : null;
-  const mostValuableName = mostValuableInfo ? mostValuableInfo.name : (mostValuable?.name || '');
-  const mostValuableValue = mostValuableInfo
-    ? (mostValuableInfo.tp_value
-        ? `<span class="tp-value">${splitCoins(mostValuableInfo.tp_value)} <span style="font-size:0.95em;color:var(--color-accent-emerald);">(TP)</span></span>`
-        : (typeof mostValuableInfo.vendor_value === 'number'
-            ? `<span class="vendor-value">${splitCoins(mostValuableInfo.vendor_value)}</span>`
-            : (mostValuableInfo.accountbound ? `<span class="accountbound">Account Bound</span>` : '')))
-    : '';
-
-  const lootItems = (ev.loot || []).map(item => {
-    const info = item.id ? itemCache[item.id] : (item.name && itemCache[item.name]) ? itemCache[item.name] : {};
-    const displayName = info && info.name ? info.name : (item.name || item.id || item.code || 'Unknown Item');
-    const wikiUrl = createWikiUrl(item);
-    const icon = info && info.icon ? `<img src="${info.icon}" alt="" class="loot-icon">` : '';
-    let valueDisplay = '';
-    if (info && typeof info.tp_value === 'number') {
-      valueDisplay = `<span class="tp-value">${splitCoins(info.tp_value)} <span style="font-size:0.95em;color:var(--color-accent-emerald);">(TP)</span></span>`;
-    } else if (info && typeof info.vendor_value === 'number') {
-      valueDisplay = `<span class="vendor-value">${splitCoins(info.vendor_value)}</span>`;
-    } else if (info && info.accountbound) {
-      valueDisplay = `<span class="accountbound">Account Bound</span>`;
-    }
-    const chatLink = info && info.chat_link
-      ? ` <code>${info.chat_link}</code>`
-      : (item.code ? ` <code>${item.code}</code>` : '');
-    return `<li>
-      ${icon}
-      <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${displayName}</a>
-      ${valueDisplay}
-      ${chatLink}
-    </li>`;
-  }).join('');
-
-  document.getElementById('modalContent').innerHTML = `
-    <h2>${ev.name}</h2>
-    <div><b>Location:</b> ${ev.map || ''}</div>
-    <div><b>Waypoint:</b> ${ev.code ? `<code>${ev.code}</code>` : ''}</div>
-    <div><b>Best Loot:</b> ${mostValuableName} ${mostValuableValue}</div>
-    <div class="loot-section">
-      <ul class="loot-list">${lootItems}</ul>
-    </div>
-    <div class="event-notes"><strong>Notes:</strong> ${ev.notes || ''}</div>
-  `;
-  modal.style.display = 'flex';
 }
 
 function render() {
@@ -417,7 +355,7 @@ function render() {
             // Loot section as a collapsible card (always present if loot exists), BELOW the copy bar!
             const lootSection = lootItems
               ? `<div class="show-hide-section collapsed loot-section">
-                  <button class="show-hide-toggle">Show Loot ▼</button>
+                  <button class="show-hide-toggle" type="button">Show Loot ▼</button>
                   <ul class="loot-list copy-paste-area">${lootItems}</ul>
                 </div>`
               : '';
@@ -443,14 +381,11 @@ function render() {
                   <button class="copy-btn" type="button">Copy</button>
                 </div>
                 ${lootSection}
-                <div style="margin-top:0.7em;">
-                  <button class="show-hide-toggle more-details-btn" type="button">More Details</button>
-                </div>
               </div>
             `;
             srcDiv.appendChild(eventCard);
 
-            // After appending, add event listeners for copy, loot toggle, and modal
+            // After appending, add event listeners for copy and loot toggle
             const copyBtn = eventCard.querySelector('.copy-btn');
             copyBtn.onclick = function() {
               const input = copyBtn.previousElementSibling;
@@ -465,10 +400,6 @@ function render() {
                 lootToggle.textContent = section.classList.contains('collapsed') ? 'Show Loot ▼' : 'Hide Loot ▲';
               };
             }
-            const detailsBtn = eventCard.querySelector('.more-details-btn');
-            detailsBtn.onclick = function() {
-              showEventModal(ev);
-            };
           });
         }
         expDiv.appendChild(srcDiv);
