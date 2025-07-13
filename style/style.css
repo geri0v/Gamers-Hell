@@ -97,15 +97,6 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   background: var(--color-accent-emerald);
   transform: scale(1.1) rotate(10deg);
 }
-.sidebar-logo {
-  text-align: center;
-  margin-top: 2rem;
-  margin-bottom: 1.2rem;
-}
-.sidebar-logo img {
-  width: 48px;
-  filter: drop-shadow(0 0 8px var(--color-accent-gold));
-}
 
 /* Sidebar Menu Placeholder/Card Menu */
 #menu-placeholder {
@@ -165,6 +156,17 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
 .sidebar.collapsed #menu-placeholder,
 .sidebar.collapsed .sidebar-logo {
   display: none !important;
+}
+
+/* Sidebar Logo */
+.sidebar-logo {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1.2rem;
+}
+.sidebar-logo img {
+  width: 48px;
+  filter: drop-shadow(0 0 8px var(--color-accent-gold));
 }
 
 /* Sidebar Right (Timer) */
@@ -318,29 +320,7 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   box-shadow: 0 0 10px var(--color-accent-emerald);
 }
 
-/* Expansion/Source Toggles */
-.section-title, .source-title {
-  background: var(--color-card-bg);
-  color: var(--color-accent-gold);
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  border: none;
-  border-radius: 10px;
-  margin: 0.7em 0 0.7em 0;
-  padding: 0.8em 1.2em;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.7em;
-  transition: background 0.2s, color 0.2s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
-}
-.section-title .arrow, .source-title .arrow {
-  font-size: 1.1em;
-  margin-left: 0.6em;
-}
-
-/* Event Cards */
+/* Fantasy-Inspired Full-Width Event Cards */
 .event-grid {
   display: flex;
   flex-direction: column;
