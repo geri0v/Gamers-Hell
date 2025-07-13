@@ -7,6 +7,9 @@
   --border: #444;
   --radius: 10px;
   --transition: 0.2s;
+  --loot-bg: #23242e;
+  --loot-hover: #35364b;
+  --loot-icon-size: 24px;
 }
 
 body {
@@ -15,6 +18,20 @@ body {
   font-family: 'Segoe UI', Arial, sans-serif;
   margin: 0;
   padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5em 1em 3em 1em;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 0.5em;
+  color: var(--accent);
+  font-size: 2em;
+  letter-spacing: 1px;
 }
 
 h2, h3 {
@@ -88,12 +105,14 @@ h2, h3 {
   gap: 1em;
   margin-bottom: 0.5em;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .event-name {
   font-weight: bold;
   color: var(--accent);
   text-decoration: none;
+  font-size: 1.1em;
 }
 
 .event-name:hover {
@@ -102,6 +121,7 @@ h2, h3 {
 
 .event-map {
   color: var(--text);
+  opacity: 0.8;
 }
 
 .event-code code {
@@ -109,6 +129,7 @@ h2, h3 {
   color: var(--accent);
   padding: 0.1em 0.4em;
   border-radius: 4px;
+  font-size: 0.98em;
 }
 
 .loot-section {
@@ -123,26 +144,78 @@ h2, h3 {
   font-size: 0.95em;
   margin-bottom: 0.3em;
   text-decoration: underline;
+  padding: 0;
+  outline: none;
 }
 
 .loot-list {
   display: none;
   margin: 0.5em 0 0 0;
-  padding: 0 0 0 1em;
+  padding: 0 0 0 1.2em;
   list-style: disc;
+  background: var(--loot-bg);
+  border-radius: var(--radius);
 }
 
 .loot-list.show {
   display: block;
+  animation: fadeIn 0.2s;
+}
+
+@keyframes fadeIn {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+
+.loot-list li {
+  display: flex;
+  align-items: center;
+  padding: 0.25em 0;
+  gap: 0.5em;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.loot-list li:hover {
+  background: var(--loot-hover);
 }
 
 .loot-list li a {
   color: var(--accent);
   text-decoration: none;
+  font-weight: 500;
+  transition: text-decoration 0.15s;
 }
 
 .loot-list li a:hover {
   text-decoration: underline;
+}
+
+.loot-icon {
+  width: var(--loot-icon-size);
+  height: var(--loot-icon-size);
+  object-fit: contain;
+  margin-right: 0.3em;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px #0003;
+  background: #23242e;
+  border: 1px solid var(--border);
+}
+
+.loot-list code {
+  background: #1e1f29;
+  color: #e5c07b;
+  padding: 0.08em 0.38em;
+  border-radius: 4px;
+  margin-left: 0.2em;
+  font-size: 0.98em;
+}
+
+.loot-list .vendor-value, .loot-list .item-value {
+  color: #aaf7b8;
+  font-weight: 500;
+  margin-left: 0.3em;
+  font-size: 0.98em;
 }
 
 #search {
@@ -163,6 +236,7 @@ h2, h3 {
   gap: 1em;
   justify-content: center;
   margin-bottom: 1em;
+  flex-wrap: wrap;
 }
 
 .sort-btn {
@@ -172,10 +246,25 @@ h2, h3 {
   border-radius: var(--radius);
   padding: 0.5em 1.2em;
   cursor: pointer;
-  transition: background var(--transition);
+  transition: background var(--transition), color var(--transition);
+  font-size: 1em;
 }
 
 .sort-btn:hover {
   background: var(--accent);
   color: #222;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 0.5em;
+  }
+  .event-info {
+    flex-direction: column;
+    gap: 0.3em;
+  }
+  .sort-bar {
+    flex-direction: column;
+    gap: 0.5em;
+  }
 }
