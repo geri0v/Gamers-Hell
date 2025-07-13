@@ -145,6 +145,21 @@ a { color: inherit; text-decoration: none; }
   margin: 0.15rem 0;
   display: flex;
   align-items: center;
+  padding-left: 0.4rem;
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
+  border-left: 2px solid var(--color-accent-emerald);
+  border-radius: 3px;
+  background: rgba(27,21,44,0.3);
+  transition: background 0.2s;
+}
+.menu-source.menu-card {
+  /* If you uncomment in JS, sources will also look like cards */
+  background: var(--color-card-bg);
+  border: 2px solid var(--color-card-border);
+  margin-bottom: 0.7rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  padding: 0.5rem 0.8rem;
 }
 .menu-source-link {
   margin-left: 0.4rem;
@@ -228,10 +243,10 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 0 10px var(--color-accent-emerald);
 }
 
-/* Event Grid & Cards */
+/* Full-width Event Grid & Cards */
 .event-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px,1fr));
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 }
 .event-card,
@@ -243,6 +258,9 @@ a { color: inherit; text-decoration: none; }
   transition: box-shadow 0.2s, border-color 0.2s;
   position: relative;
   margin-bottom: 1.1rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto 1.1rem auto;
 }
 .event-card:hover,
 .copy-paste-area:hover {
@@ -292,49 +310,10 @@ a { color: inherit; text-decoration: none; }
   margin: 0.5rem 0;
 }
 
-/* Copy/Paste Area Makeover */
-.copy-paste-area {
-  padding: 1rem 1.2rem;
-  font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-  color: var(--color-accent-gold);
-  font-size: 1.06rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.18);
-  overflow-x: auto;
+/* Loot List, Icons, Values */
+.loot-section {
+  margin-top: 1rem;
 }
-.copy-paste-area::after {
-  content: 'Copy & Paste';
-  position: absolute;
-  top: 0.2rem;
-  right: 1rem;
-  font-size: 0.95rem;
-  color: var(--color-accent-emerald);
-  font-family: var(--font-accent);
-  opacity: 0.8;
-  z-index: 2;
-}
-
-/* Timer Sidebar */
-#sidebar-right {
-  border-left: 2px solid var(--color-accent-gold);
-}
-#sidebar-right .sidebar-toggle {
-  left: auto;
-  right: 1rem;
-}
-#timer {
-  margin-top: 4rem;
-  padding: 1rem;
-  background: rgba(255,255,255,0.05);
-  border-top: 1px solid rgba(255,255,255,0.1);
-  font-family: var(--font-accent);
-}
-.timer-title {
-  font-size: 1.3rem;
-  color: var(--color-accent-emerald);
-  margin-bottom: 0.5rem;
-}
-
-/* Animated Show/Hide for dynamic content */
 .show-hide-section {
   background: var(--color-card-bg);
   border-radius: 10px;
@@ -370,6 +349,133 @@ a { color: inherit; text-decoration: none; }
 .show-hide-toggle:hover {
   background: var(--color-accent-emerald);
   color: #fff;
+}
+.loot-list {
+  list-style: none;
+  margin: 0.5rem 0 0 0;
+  padding: 0;
+  font-size: 1.05rem;
+}
+.loot-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid rgba(63,163,125,0.08);
+}
+.loot-list li:last-child {
+  border-bottom: none;
+}
+.loot-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  vertical-align: middle;
+  background: #222;
+  box-shadow: 0 0 2px #000;
+  margin-right: 0.3rem;
+}
+.vendor-value, .tp-value {
+  margin-left: 0.3rem;
+  font-weight: bold;
+  font-size: 1.05em;
+}
+.gold { color: #ffd700; }
+.silver { color: #c0c0c0; }
+.copper { color: #c97a53; }
+.tp-value { color: var(--color-accent-emerald); margin-left: 0.7em; }
+
+/* Copy/Paste Area Makeover */
+.copy-paste-area {
+  padding: 1rem 1.2rem;
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+  color: var(--color-accent-gold);
+  font-size: 1.06rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+  overflow-x: auto;
+  position: relative;
+}
+.copy-paste-area::after {
+  content: 'Copy & Paste';
+  position: absolute;
+  top: 0.2rem;
+  right: 1rem;
+  font-size: 0.95rem;
+  color: var(--color-accent-emerald);
+  font-family: var(--font-accent);
+  opacity: 0.8;
+  z-index: 2;
+}
+
+/* Copy bar and nudge */
+.copy-bar { position: relative; display: flex; align-items: center; gap: 0.5rem; margin: 1rem 0; }
+.copy-bar input[type="text"] {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  color: var(--color-accent-gold);
+  font-family: 'Fira Mono', monospace;
+  font-size: 1.01em;
+  padding: 0.3em 0.6em;
+  flex: 1;
+}
+.copy-bar button {
+  background: var(--color-accent-emerald);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-family: var(--font-accent);
+  font-size: 1em;
+  padding: 0.3em 1em;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  transition: background 0.2s;
+  margin-left: 0.5em;
+}
+.copy-bar button:hover {
+  background: var(--color-accent-gold);
+  color: #1b152c;
+}
+.copy-nudge {
+  position: absolute;
+  right: 10px;
+  top: -24px;
+  background: var(--color-accent-emerald);
+  color: #fff;
+  font-size: 0.95rem;
+  padding: 2px 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  pointer-events: none;
+  opacity: 0.93;
+  z-index: 10;
+  animation: fadeOut 1.2s forwards;
+}
+@keyframes fadeOut {
+  0% { opacity: 0.93; }
+  80% { opacity: 0.93; }
+  100% { opacity: 0; }
+}
+
+/* Timer Sidebar */
+#sidebar-right {
+  border-left: 2px solid var(--color-accent-gold);
+}
+#sidebar-right .sidebar-toggle {
+  left: auto;
+  right: 1rem;
+}
+#timer {
+  margin-top: 4rem;
+  padding: 1rem;
+  background: rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-family: var(--font-accent);
+}
+.timer-title {
+  font-size: 1.3rem;
+  color: var(--color-accent-emerald);
+  margin-bottom: 0.5rem;
 }
 
 /* Animations */
@@ -409,5 +515,5 @@ a { color: inherit; text-decoration: none; }
   .sidebar { height: 50px; }
   .sidebar .sidebar-toggle { width: 2rem; height: 2rem; font-size: 1rem; }
   #search, .sort-btn { font-size: 0.9rem; padding: 0.5rem 0.8rem; }
-  .event-grid { grid-template-columns: 1fr; }
+  .event-grid { gap: 0.7rem; }
 }
