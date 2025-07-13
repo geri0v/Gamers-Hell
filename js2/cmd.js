@@ -1,5 +1,5 @@
-import { loadAllEvents } from './data.js';
-import { renderEvents } from './render.js';
+// == Gamers-Hell: cmd.js ==
+// Orchestrates everything: classic global version
 
 let allEvents = [];
 let filteredEvents = [];
@@ -33,7 +33,7 @@ function applyFilters() {
     if (vA > vB) return sortAsc ? 1 : -1;
     return 0;
   });
-  renderEvents(filteredEvents, document.getElementById('events'));
+  window.renderEvents(filteredEvents, document.getElementById('events'));
 }
 
 window.cmd_run = function(cmdString) {
@@ -41,36 +41,36 @@ window.cmd_run = function(cmdString) {
   if (match) {
     const [_, exp, src] = match;
     filteredEvents = allEvents.filter(ev => (ev.expansion || 'Unknown Expansion') === exp && (ev.sourceName || 'Unknown Source') === src);
-    renderEvents(filteredEvents, document.getElementById('events'));
+    window.renderEvents(filteredEvents, document.getElementById('events'));
     return;
   }
   match = cmdString.match(/^show expansion "(.+)"$/i);
   if (match) {
     const [_, exp] = match;
     filteredEvents = allEvents.filter(ev => (ev.expansion || 'Unknown Expansion') === exp);
-    renderEvents(filteredEvents, document.getElementById('events'));
+    window.renderEvents(filteredEvents, document.getElementById('events'));
     return;
   }
   match = cmdString.match(/^show source "(.+)"$/i);
   if (match) {
     const [_, src] = match;
     filteredEvents = allEvents.filter(ev => (ev.sourceName || 'Unknown Source') === src);
-    renderEvents(filteredEvents, document.getElementById('events'));
+    window.renderEvents(filteredEvents, document.getElementById('events'));
     return;
   }
   match = cmdString.match(/^show all$/i);
   if (match) {
     filteredEvents = allEvents;
-    renderEvents(filteredEvents, document.getElementById('events'));
+    window.renderEvents(filteredEvents, document.getElementById('events'));
     return;
   }
   alert("Unknown command: " + cmdString);
 };
 
 document.addEventListener('DOMContentLoaded', async function() {
-  allEvents = await loadAllEvents();
+  allEvents = await window.loadAllEvents();
   filteredEvents = allEvents;
-  renderEvents(filteredEvents, document.getElementById('events'));
+  window.renderEvents(filteredEvents, document.getElementById('events'));
   if (window.renderMenu) window.renderMenu(getMenuStructure(allEvents));
   document.getElementById('search').addEventListener('input', applyFilters);
   document.querySelectorAll('.sort-btn').forEach(btn => {
