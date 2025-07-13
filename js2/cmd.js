@@ -1,4 +1,4 @@
-// == Gamers-Hell: Full JS App for Modern Layout & Menu Integration ==
+// == Gamers-Hell: Full Enhanced JS App ==
 
 const DATA_URLS = [
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/temples.json',
@@ -10,32 +10,31 @@ let filteredEvents = [];
 let sortKey = 'name';
 let sortAsc = true;
 
+// For expansion/source collapse state
+const expansionCollapsed = {};
+const sourceCollapsed = {};
+
 function groupEvents(events) {
+  // Group by expansion, then by sourceName, both sorted alphabetically
   const expansions = {};
   events.forEach(ev => {
     const exp = ev.expansion || 'Unknown Expansion';
-    const src = ev.sourceName || ev._sourceName || 'Unknown Source';
+    const src = ev.sourceName || 'Unknown Source';
     if (!expansions[exp]) expansions[exp] = {};
     if (!expansions[exp][src]) expansions[exp][src] = [];
     expansions[exp][src].push(ev);
   });
-  return expansions;
-}
-
-// Expose menu structure for menu.js
-function getMenuStructure() {
-  const structure = {};
-  allEvents.forEach(ev => {
-    const exp = ev.expansion || 'Unknown Expansion';
-    const src = ev.sourceName || ev._sourceName || 'Unknown Source';
-    if (!structure[exp]) structure[exp] = new Set();
-    structure[exp].add(src);
+  // Sort expansions and sources
+  const sortedExpansions = {};
+  Object.keys(expansions).sort().forEach(exp => {
+    sortedExpansions[exp] = {};
+    Object.keys(expansions[exp]).sort().forEach(src => {
+      sortedExpansions[exp][src] = expansions[exp][src];
+    });
   });
-  Object.keys(structure).forEach(k => structure[k] = Array.from(structure[k]));
-  return structure;
+  return sortedExpansions;
 }
 
-// Copy nudge
 function showCopyNudge(btn) {
   const parent = btn.parentElement;
   const existing = parent.querySelector('.copy-nudge');
@@ -47,7 +46,18 @@ function showCopyNudge(btn) {
   setTimeout(() => nudge.remove(), 1200);
 }
 
-// Render event cards
+function splitCoins(coins) {
+  if (typeof coins !== 'number' || isNaN(coins)) return '';
+  const gold = Math.floor(coins / 10000);
+  const silver = Math.floor((coins % 10000) / 100);
+  const copper = coins % 100;
+  let str = '';
+  if (gold) str += `<span class="gold">${gold}g</span> `;
+  if (gold || silver) str += `<span class="silver">${silver}s</span> `;
+  str += `<span class="copper">${copper}c</span>`;
+  return str.trim();
+}
+
 function renderEvents() {
   const container = document.getElementById('events');
   container.innerHTML = '';
@@ -57,29 +67,72 @@ function renderEvents() {
   }
   const groups = groupEvents(filteredEvents);
   Object.entries(groups).forEach(([expansion, sources]) => {
+    // Expansion Toggle
+    const expSection = document.createElement('section');
+    expSection.className = 'expansion-section';
+
+    const expId = `exp-${expansion.replace(/\W/g, '')}`;
+    if (!(expId in expansionCollapsed)) expansionCollapsed[expId] = false;
+
+    const expToggle = document.createElement('button');
+    expToggle.className = 'section-title';
+    expToggle.innerHTML = `${expansion} <span class="arrow">${expansionCollapsed[expId] ? '&#9654;' : '&#9660;'}</span>`;
+    expToggle.setAttribute('aria-expanded', !expansionCollapsed[expId]);
+    expSection.appendChild(expToggle);
+
+    const srcContainer = document.createElement('div');
+    srcContainer.className = 'sources-container';
+    srcContainer.style.display = expansionCollapsed[expId] ? 'none' : '';
+
     Object.entries(sources).forEach(([source, events]) => {
+      // Source Toggle
+      const srcId = `${expId}-src-${source.replace(/\W/g, '')}`;
+      if (!(srcId in sourceCollapsed)) sourceCollapsed[srcId] = false;
+      const srcDiv = document.createElement('div');
+      srcDiv.className = 'source-section';
+      const srcToggle = document.createElement('button');
+      srcToggle.className = 'source-title';
+      srcToggle.innerHTML = `${source} <span class="arrow">${sourceCollapsed[srcId] ? '&#9654;' : '&#9660;'}</span>`;
+      srcToggle.setAttribute('aria-expanded', !sourceCollapsed[srcId]);
+      srcDiv.appendChild(srcToggle);
+
+      const eventList = document.createElement('div');
+      eventList.className = 'event-list';
+      eventList.style.display = sourceCollapsed[srcId] ? 'none' : '';
+
       events.forEach((ev, idx) => {
-        const lootListId = `loot-list-${expansion.replace(/\s/g,'_')}-${source.replace(/\s/g,'_')}-${idx}`;
-        // Copy value for copy bar
-        const lootNames = (ev.loot || []).map(item => item.name).join(', ');
-        const copyValue = `${ev.name || 'Unnamed Event'} | ${ev.code || ''} | ${lootNames}`;
-        // Build loot list HTML
+        // Loot Rendering (Show/Hide)
+        const lootListId = `loot-list-${expId}-${srcId}-${idx}`;
         let lootRows = '';
         if (Array.isArray(ev.loot) && ev.loot.length) {
           lootRows = ev.loot.map(item => {
+            // Icon
             let icon = item.icon ? `<img src="${item.icon}" alt="" class="loot-icon" />` : '';
-            let value = item.value ? `<span class="tp-value">${item.value}</span>` : '';
-            return `<li>${icon}${item.name || ''}${value}</li>`;
+            // Wiki link
+            let wikiLink = item.name ? `<a href="https://wiki.guildwars2.com/wiki/${encodeURIComponent(item.name.replace(/ /g, '_'))}" target="_blank" rel="noopener" style="margin-left:0.3em;color:var(--color-accent-emerald);text-decoration:underline;">Wiki</a>` : '';
+            // Sell/Vendor/Accountbound
+            let sellValue = (typeof item.tp_value === 'number') ? `<span class="tp-value">${splitCoins(item.tp_value)}</span>` : '';
+            let vendorValue = (typeof item.vendor_value === 'number') ? `<span class="vendor-value">${splitCoins(item.vendor_value)}</span>` : '';
+            let accountBound = item.accountbound ? `<span class="accountbound">Account Bound</span>` : '';
+            return `<li>
+              ${icon}
+              <a href="https://wiki.guildwars2.com/wiki/${encodeURIComponent(item.name.replace(/ /g, '_'))}" target="_blank" rel="noopener">${item.name}</a>
+              ${wikiLink}
+              ${sellValue}
+              ${vendorValue}
+              ${accountBound}
+            </li>`;
           }).join('');
         } else {
           lootRows = `<li style="color:#888;">No loot info</li>`;
         }
-        // Event card
         const card = document.createElement('div');
         card.className = 'event-card fullwidth-event-card';
         card.innerHTML = `
           <div class="card-header">
-            <h2 class="event-name">${ev.name || 'Unnamed Event'}</h2>
+            <h2 class="event-name">
+              <a href="https://wiki.guildwars2.com/wiki/${encodeURIComponent(ev.name.replace(/ /g, '_'))}" target="_blank" rel="noopener">${ev.name || 'Unnamed Event'}</a>
+            </h2>
           </div>
           <div class="card-body">
             <div class="event-info">
@@ -87,7 +140,7 @@ function renderEvents() {
               <span><b>Waypoint:</b> ${ev.code ? `<code>${ev.code}</code>` : ''}</span>
             </div>
             <div class="copy-bar">
-              <input type="text" value="${copyValue}" readonly>
+              <input type="text" value="${ev.name || ''} | ${ev.code || ''} | ${(ev.loot || []).map(item => item.name).join(', ')}" readonly>
               <button class="copy-btn" type="button">Copy</button>
             </div>
             <button class="show-hide-toggle" type="button" aria-controls="${lootListId}" aria-expanded="false">Show Loot ▼</button>
@@ -96,13 +149,13 @@ function renderEvents() {
             </ul>
           </div>
         `;
-        // Copy button logic
+        // Copy
         card.querySelector('.copy-btn').onclick = function() {
           const input = card.querySelector('.copy-bar input');
           navigator.clipboard.writeText(input.value);
           showCopyNudge(this);
         };
-        // Show/hide loot logic
+        // Show/hide loot
         const lootBtn = card.querySelector('.show-hide-toggle');
         const lootList = card.querySelector('.loot-list');
         lootBtn.onclick = function() {
@@ -111,9 +164,32 @@ function renderEvents() {
           lootBtn.textContent = isOpen ? 'Show Loot ▼' : 'Hide Loot ▲';
           lootBtn.setAttribute('aria-expanded', !isOpen);
         };
-        container.appendChild(card);
+        eventList.appendChild(card);
       });
+
+      srcDiv.appendChild(eventList);
+
+      // Source toggle logic
+      srcToggle.onclick = function() {
+        sourceCollapsed[srcId] = !sourceCollapsed[srcId];
+        eventList.style.display = sourceCollapsed[srcId] ? 'none' : '';
+        srcToggle.querySelector('.arrow').innerHTML = sourceCollapsed[srcId] ? '&#9654;' : '&#9660;';
+        srcToggle.setAttribute('aria-expanded', !sourceCollapsed[srcId]);
+      };
+
+      srcContainer.appendChild(srcDiv);
     });
+
+    // Expansion toggle logic
+    expToggle.onclick = function() {
+      expansionCollapsed[expId] = !expansionCollapsed[expId];
+      srcContainer.style.display = expansionCollapsed[expId] ? 'none' : '';
+      expToggle.querySelector('.arrow').innerHTML = expansionCollapsed[expId] ? '&#9654;' : '&#9660;';
+      expToggle.setAttribute('aria-expanded', !expansionCollapsed[expId]);
+    };
+
+    expSection.appendChild(srcContainer);
+    container.appendChild(expSection);
   });
 }
 
@@ -141,7 +217,7 @@ window.cmd_run = function(cmdString) {
   let match = cmdString.match(/^show expansion "(.+)" source "(.+)"$/i);
   if (match) {
     const [_, exp, src] = match;
-    filteredEvents = allEvents.filter(ev => (ev.expansion || 'Unknown Expansion') === exp && (ev.sourceName || ev._sourceName || 'Unknown Source') === src);
+    filteredEvents = allEvents.filter(ev => (ev.expansion || 'Unknown Expansion') === exp && (ev.sourceName || 'Unknown Source') === src);
     renderEvents();
     return;
   }
@@ -155,7 +231,7 @@ window.cmd_run = function(cmdString) {
   match = cmdString.match(/^show source "(.+)"$/i);
   if (match) {
     const [_, src] = match;
-    filteredEvents = allEvents.filter(ev => (ev.sourceName || ev._sourceName || 'Unknown Source') === src);
+    filteredEvents = allEvents.filter(ev => (ev.sourceName || 'Unknown Source') === src);
     renderEvents();
     return;
   }
@@ -196,7 +272,18 @@ document.addEventListener('DOMContentLoaded', async function() {
   filteredEvents = allEvents;
   renderEvents();
   // Expose menu structure for menu.js
-  if (window.renderMenu) window.renderMenu(getMenuStructure());
+  if (window.renderMenu) {
+    // Menu structure: { expansion: [sourceName, ...], ... }
+    const structure = {};
+    allEvents.forEach(ev => {
+      const exp = ev.expansion || 'Unknown Expansion';
+      const src = ev.sourceName || 'Unknown Source';
+      if (!structure[exp]) structure[exp] = new Set();
+      structure[exp].add(src);
+    });
+    Object.keys(structure).forEach(k => structure[k] = Array.from(structure[k]));
+    window.renderMenu(structure);
+  }
   // Search
   document.getElementById('search').addEventListener('input', applyFilters);
   // Sort
