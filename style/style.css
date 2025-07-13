@@ -1,23 +1,25 @@
+/*------------------------------
+  1. Variabelen & Baseline
+-------------------------------*/
 :root {
-  /* Color Palette */
+  /* Kleurenpalet */
   --color-bg-main: #1f1d2b;
   --color-bg-sidebar: #2a2736;
   --color-text-primary: #e1dace;
   --color-text-secondary: #a99f8e;
-  --color-accent: #f0b429;       /* goudachtig */
-  --color-highlight: #4ba785;    /* arcanegroen */
-  
-  /* Textures & Icons */
+  --color-accent: #f0b429;
+  --color-highlight: #4ba785;
+
+  /* Textuur sidebar */
   --texture-sidebar: url('assets/textures/parchment.png');
-  --icon-toggle: '\e800';        /* voorbeeld: custom iconfont code */
-  
-  /* Dimensions */
+
+  /* Dimensies */
   --sidebar-width: 280px;
   --sidebar-width-collapsed: 0;
   --sidebar-z: 10;
-  --sidebar-transition: 0.25s ease;
-  
-  /* Typography */
+  --transition-fast: 0.25s ease;
+
+  /* Typografie */
   --font-heading: 'Cinzel Decorative', serif;
   --font-body: 'Merriweather', serif;
 }
@@ -28,55 +30,46 @@
   box-sizing: border-box;
 }
 
-body, html {
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
   font-family: var(--font-body);
   color: var(--color-text-primary);
-  background-color: var(--color-bg-main);
+  background: var(--color-bg-main);
   overflow: hidden;
 }
+
+/*------------------------------
+  2. Layout
+-------------------------------*/
 .layout3col {
   display: flex;
-  width: 100vw;
   height: 100vh;
+  width: 100vw;
 }
 
+/* sidebars */
 .sidebar {
   position: relative;
   width: var(--sidebar-width);
   min-width: var(--sidebar-width);
-  max-width: 320px;
-  background-color: var(--color-bg-sidebar);
-  background-image: var(--texture-sidebar);
-  background-size: cover;
-  color: var(--color-text-primary);
+  background: var(--color-bg-sidebar) var(--texture-sidebar) center/cover;
   display: flex;
   flex-direction: column;
-  transition: width var(--sidebar-transition),
-              min-width var(--sidebar-transition),
-              padding var(--sidebar-transition);
+  transition: width var(--transition-fast), min-width var(--transition-fast), padding var(--transition-fast);
   z-index: var(--sidebar-z);
   overflow-y: auto;
 }
-
 #main-content {
-  flex: 1 1 auto;
-  min-width: 0;
+  flex: 1;
   padding: 2em 1.5em;
   overflow-y: auto;
 }
-/* Collapsed state */
-#sidebar-left.collapsed,
-#sidebar-right.collapsed {
-  width: var(--sidebar-width-collapsed);
-  min-width: var(--sidebar-width-collapsed);
-  padding: 0;
-  overflow: hidden;
-}
 
-/* Toggle button */
+/*------------------------------
+  3. Toggle Knoppen
+-------------------------------*/
 .sidebar-toggle {
   position: absolute;
   top: 12px;
@@ -84,54 +77,163 @@ body, html {
   height: 36px;
   border: none;
   border-radius: 50%;
-  background-color: var(--color-accent);
+  background: var(--color-accent);
   color: var(--color-bg-sidebar);
   font-family: var(--font-heading);
   font-size: 1.2em;
   cursor: pointer;
   z-index: calc(var(--sidebar-z) + 1);
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.2s, background 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .sidebar-toggle:hover {
-  background-color: var(--color-highlight);
+  background: var(--color-highlight);
 }
-
 .sidebar-toggle.left  { left: 12px; }
 .sidebar-toggle.right { right: 12px; }
-
-/* Rotatie-animatie bij togglen */
 .sidebar-toggle.rotate {
   transform: rotate(180deg);
 }
 
-/* Hide content when collapsed */
+/* content verbergen bij collapsed */
+#sidebar-left.collapsed,
+#sidebar-right.collapsed {
+  width: var(--sidebar-width-collapsed);
+  min-width: var(--sidebar-width-collapsed);
+  padding: 0;
+  overflow: hidden;
+}
 #sidebar-left.collapsed nav,
 #sidebar-right.collapsed #timer {
   display: none;
 }
+
+/*------------------------------
+  4. Navigatie & Lists
+-------------------------------*/
+nav .nav-list {
+  list-style: none;
+  padding: 1em;
+  margin: 0;
+}
+nav .nav-list li {
+  margin-bottom: 1em;
+}
+nav .nav-list a {
+  color: var(--color-text-primary);
+  text-decoration: none;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+nav .nav-list a:hover {
+  color: var(--color-accent);
+}
+nav .icon {
+  margin-right: 0.5em;
+  font-size: 1.3em;
+}
+
+/*------------------------------
+  5. Main Content & Cards
+-------------------------------*/
+.page-header h1 {
+  font-family: var(--font-heading);
+  font-size: 2em;
+  margin-bottom: 0.5em;
+  color: var(--color-highlight);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin-bottom: 1.5em;
+}
+
+.controls #search {
+  flex: 1;
+  padding: 0.6em 1em;
+  border: none;
+  border-radius: 4px;
+  background: #2e2a3a;
+  color: var(--color-text-primary);
+}
+.sort-bar {
+  display: flex;
+  gap: 0.5em;
+}
+.sort-btn {
+  background: var(--color-bg-sidebar);
+  border: 1px solid var(--color-highlight);
+  color: var(--color-text-secondary);
+  padding: 0.6em 1em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 3px;
+}
+.sort-btn:hover,
+.sort-btn.active {
+  background: var(--color-highlight);
+  color: var(--color-bg-sidebar);
+}
+
+.event-grid {
+  display: grid;
+  gap: 1.5em;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.event-card {
+  background: #2e2a3a;
+  border: 1px solid var(--color-highlight);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  transition: transform 0.2s;
+}
+.event-card:hover {
+  transform: translateY(-4px);
+}
+.card-header {
+  background: var(--color-highlight);
+  color: var(--color-bg-sidebar);
+  padding: 0.6em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.event-icon { font-size: 1.4em; }
+.card-body {
+  padding: 0.8em 1em;
+  color: var(--color-text-secondary);
+}
+.card-body p {
+  margin: 0.3em 0;
+}
+
+/*------------------------------
+  6. Responsiviteit
+-------------------------------*/
 @media (max-width: 900px) {
   .layout3col {
     flex-direction: column;
     height: 100dvh;
   }
-
   .sidebar {
     position: fixed;
     height: 100%;
-    max-width: 80vw;
     transform: translateX(-100%);
-    transition: transform var(--sidebar-transition);
+    max-width: 80vw;
+    transition: transform var(--transition-fast);
   }
-
   .sidebar.open {
     transform: translateX(0);
   }
-
   #main-content {
     padding: 1em;
     position: relative;
@@ -145,7 +247,6 @@ body, html {
     height: 32px;
     font-size: 1em;
   }
-
   #main-content {
     padding: 0.5em;
   }
