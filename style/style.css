@@ -73,6 +73,8 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
 }
 .sidebar.collapsed {
   width: var(--sidebar-width-collapsed);
+  min-width: var(--sidebar-width-collapsed);
+  overflow: hidden;
 }
 .sidebar .sidebar-toggle {
   position: absolute;
@@ -150,6 +152,11 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   position: relative;
   z-index: 2;
   min-width: var(--sidebar-width-collapsed);
+}
+#sidebar-right.collapsed {
+  width: var(--sidebar-width-collapsed);
+  min-width: var(--sidebar-width-collapsed);
+  overflow: hidden;
 }
 #sidebar-right .sidebar-toggle {
   left: auto;
@@ -353,6 +360,7 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   display: flex;
   align-items: center;
   gap: 0.7em;
+  position: relative;
 }
 .event-card .copy-bar input[type="text"] {
   background: rgba(255,255,255,0.10);
@@ -387,6 +395,18 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   box-shadow: 0 2px 8px rgba(0,0,0,0.18);
   transition: max-height 0.4s cubic-bezier(.4,2,.6,1), opacity 0.4s;
   border: 2px solid var(--color-card-border);
+  max-height: 1000px;
+  opacity: 1;
+  overflow: hidden;
+}
+.event-card .show-hide-section.collapsed {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 !important;
+  margin: 0 !important;
+  pointer-events: none;
+  overflow: hidden;
+  transition: max-height 0.4s, opacity 0.4s;
 }
 .event-card .show-hide-toggle {
   background: var(--color-accent-gold);
