@@ -1,6 +1,5 @@
 // == Gamers-Hell: menu.js ==
 (function() {
-  // Track the currently active expansion/source for highlighting
   window._menuActive = window._menuActive || { expansion: null, source: null };
 
   window.renderMenu = function(menuStructure) {
@@ -32,7 +31,6 @@
       menuDiv.appendChild(expCard);
     });
 
-    // Attach click handlers for filtering and active highlighting
     menuDiv.querySelectorAll('.menu-links a').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -40,7 +38,6 @@
         const src = link.getAttribute('data-source');
         window._menuActive.expansion = exp;
         window._menuActive.source = src;
-        // Remove all actives, then set current
         menuDiv.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
         link.classList.add('active');
         if (window.cmd_run) {
