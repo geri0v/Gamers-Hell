@@ -2,6 +2,15 @@
 
 let menuState = {}; // {expansion: {collapsed: bool, sources: {source: bool}}}
 
+// Sidebar show/hide toggle
+function toggleMenuSidebar() {
+  const sidebar = document.getElementById('sidebar-left');
+  sidebar.classList.toggle('collapsed');
+  const btn = document.getElementById('menu-toggle');
+  if (btn) btn.innerText = sidebar.classList.contains('collapsed') ? '☰ Show Menu' : '☰ Hide Menu';
+}
+
+// Ensure state for all expansions/sources in current data
 function ensureMenuState(groups) {
   Object.keys(groups).forEach(exp => {
     if (!menuState[exp]) menuState[exp] = {collapsed: false, sources: {}};
@@ -11,16 +20,7 @@ function ensureMenuState(groups) {
   });
 }
 
-// Toggle sidebar collapse
-function toggleMenuSidebar() {
-  const menu = document.getElementById('menu');
-  menu.classList.toggle('collapsed');
-  // Optionally update button text/icon
-  const btn = document.getElementById('menu-toggle');
-  if (btn) btn.innerText = menu.classList.contains('collapsed') ? '☰ Show Menu' : '☰ Hide Menu';
-}
-
-// Render the menu
+// Render the sidebar menu
 function renderMenu() {
   const groups = (window.getEventGroups && window.getEventGroups()) || {};
   ensureMenuState(groups);
