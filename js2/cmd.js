@@ -1,4 +1,5 @@
-// Gamers-Hell: Modern Event App (cmd.js)
+// Gamers-Hell: Modern Event App (cmd.js) with Theme Toggle
+
 const jsonSources = [
   {
     name: "Temples of Orr",
@@ -387,6 +388,27 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('eventModal').style.display = 'none';
     document.getElementById('modalContent').innerHTML = '';
   };
+
+  // === THEME TOGGLE LOGIC ===
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    function setTheme(theme) {
+      if (theme === 'light') {
+        document.body.classList.add('light');
+        localStorage.setItem('gh-theme', 'light');
+        themeBtn.textContent = '🌙';
+      } else {
+        document.body.classList.remove('light');
+        localStorage.setItem('gh-theme', 'dark');
+        themeBtn.textContent = '☀️';
+      }
+    }
+    themeBtn.addEventListener('click', () => {
+      setTheme(document.body.classList.contains('light') ? 'dark' : 'light');
+    });
+    setTheme(localStorage.getItem('gh-theme') === 'light' ? 'light' : 'dark');
+  }
+  // === END THEME TOGGLE LOGIC ===
 });
 
 (async function loadAndRenderAll() {
