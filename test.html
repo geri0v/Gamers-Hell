@@ -7,16 +7,18 @@
   <meta name="description" content="Guild Wars 2 event tracker and loot tables by Gamers-Hell.">
   <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css">
   <link rel="icon" href="https://wiki.guildwars2.com/favicon.ico">
+  <!-- Fantasy fonts for a GW2 vibe -->
+  <link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative:700|Almendra+SC|Merriweather:400,700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="layout3col">
     <!-- Sidebar Left (Menu) -->
     <aside class="sidebar" aria-label="Sidebar">
       <button class="sidebar-toggle" aria-label="Toggle sidebar" tabindex="0">☰</button>
-      <div class="sidebar-logo" style="text-align:center; margin-top:2rem;">
-        <img src="https://wiki.guildwars2.com/images/d/d2/Guild_emblem_004.png" alt="GW2 Logo" style="width:48px;filter:drop-shadow(0 0 8px var(--color-accent-gold));" />
+      <div class="sidebar-logo">
+        <img src="https://wiki.guildwars2.com/images/d/d2/Guild_emblem_004.png" alt="GW2 Logo" />
       </div>
-      <div id="menu-placeholder"></div>
+      <nav id="menu-placeholder" aria-label="Main menu"></nav>
     </aside>
 
     <!-- Main Content -->
@@ -52,27 +54,34 @@
     </aside>
   </div>
 
-  <!-- Modal for event details (created by JS if needed) -->
+  <!-- Modal root for event details (created by JS if needed) -->
+  <div id="event-modal-root" style="display:none;"></div>
 
-  <!-- Load menu.js first, then cmd.js -->
-  <script src="https://geri0v.github.io/Gamers-Hell/js2/menu.js"></script>
-  <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
+  <!-- Modular JS: load each file in order, classic (non-module) style -->
+  <script defer src="https://geri0v.github.io/Gamers-Hell/js2/data.js"></script>
+  <script defer src="https://geri0v.github.io/Gamers-Hell/js2/iteminfo.js"></script>
+  <script defer src="https://geri0v.github.io/Gamers-Hell/js2/render.js"></script>
+  <script defer src="https://geri0v.github.io/Gamers-Hell/js2/menu.js"></script>
+  <script defer src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
   <script>
     // Sidebar collapse for both left and right
-    document.querySelectorAll('.sidebar-toggle').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const parent = btn.closest('aside');
-        parent.classList.toggle('collapsed');
+    document.addEventListener('DOMContentLoaded', function() {
+      // Collapse logic (robust for dynamic content)
+      document.querySelectorAll('.sidebar-toggle').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const parent = btn.closest('aside');
+          if (parent) parent.classList.toggle('collapsed');
+        });
       });
+      // Live event timer
+      setInterval(() => {
+        const el = document.getElementById('timer-value');
+        if (el) {
+          const now = new Date();
+          el.textContent = now.toLocaleTimeString();
+        }
+      }, 1000);
     });
-    // Simple timer for right sidebar
-    setInterval(() => {
-      const el = document.getElementById('timer-value');
-      if (el) {
-        const now = new Date();
-        el.textContent = now.toLocaleTimeString();
-      }
-    }, 1000);
   </script>
 </body>
 </html>
