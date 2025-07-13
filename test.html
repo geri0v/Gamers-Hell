@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Almendra+SC&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400&display=swap" rel="stylesheet">
 
-  <!-- Fantasy CSS: Use the upgraded CSS above! -->
+  <!-- Fantasy CSS -->
   <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css" />
 </head>
 <body>
@@ -35,6 +35,7 @@
       </div>
 
       <div id="events" class="event-grid"></div>
+      <section id="dynamic-content"></section>
     </main>
 
     <!-- RIGHT SIDEBAR -->
@@ -42,16 +43,15 @@
       <button type="button" id="timer-toggle" class="sidebar-toggle right" aria-label="Show/hide timer">⏲</button>
       <section id="timer">
         <div class="timer-title">Timer</div>
-        <!-- Will be filled dynamically -->
       </section>
     </aside>
   </div>
 
-  <!-- MENU AND EVENT DATA -->
+  <!-- MENU AND EVENT DATA SCRIPTS -->
   <script src="https://geri0v.github.io/Gamers-Hell/js2/menu.js"></script>
   <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
 
-  <!-- INITIALIZATION, RENDERING, FILTER & SORT -->
+  <!-- UI Initialization and Enhancements -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // --- SIDEBAR TOGGLES ---
@@ -63,79 +63,7 @@
       document.getElementById('timer-toggle').addEventListener('click', () =>
         rightSidebar.classList.toggle('collapsed')
       );
-
-      // --- RENDER MENU ---
-      // If menu.js has its own renderMenu function, you can remove this block!
-      if (window.menuData) {
-        const menuData = window.menuData || [];
-        const nav = document.getElementById('menu');
-        if (menuData.length) {
-          const ul = document.createElement('ul');
-          ul.className = 'nav-list';
-          menuData.forEach(item => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-              <a href="${item.link || '#'}">
-                <span class="icon">${item.icon || ''}</span>
-                ${item.label}
-              </a>`;
-            ul.appendChild(li);
-          });
-          nav.appendChild(ul);
-        }
-      }
-
-      // --- RENDER & MANAGE EVENTS ---
-      const rawEvents = window.eventData || [];
-      let filteredEvents = [...rawEvents];
-      const container = document.getElementById('events');
-
-      function renderEvents(list) {
-        container.innerHTML = '';
-        list.forEach(evt => {
-          const card = document.createElement('article');
-          card.className = 'event-card';
-          card.innerHTML = `
-            <div class="card-header">
-              <span class="event-icon">${evt.icon || ''}</span>
-              <h2>${evt.name}</h2>
-            </div>
-            <div class="card-body">
-              <p class="map">Location: ${evt.map}</p>
-              <p class="loot">Loot: ${evt.loot}</p>
-            </div>`;
-          container.appendChild(card);
-        });
-      }
-      renderEvents(filteredEvents);
-
-      // --- SEARCH FILTER ---
-      document.getElementById('search').addEventListener('input', e => {
-        const term = e.target.value.toLowerCase();
-        filteredEvents = rawEvents.filter(evt =>
-          evt.name.toLowerCase().includes(term) ||
-          evt.map.toLowerCase().includes(term) ||
-          evt.loot.toLowerCase().includes(term)
-        );
-        renderEvents(filteredEvents);
-      });
-
-      // --- SORT BUTTONS ---
-      document.querySelectorAll('.sort-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-
-          const key = btn.dataset.sort;
-          filteredEvents.sort((a, b) => {
-            if (key === 'value') {
-              return (b.value || 0) - (a.value || 0);
-            }
-            return a[key].localeCompare(b[key]);
-          });
-          renderEvents(filteredEvents);
-        });
-      });
+      // Let menu.js and cmd.js handle menu and event rendering!
     });
   </script>
 </body>
