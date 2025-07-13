@@ -1,5 +1,3 @@
-// == Gamers-Hell: Cardlike Dynamic Menu.js ==
-
 (function() {
   let activeExpansion = null;
   let activeSource = null;
@@ -12,7 +10,6 @@
     Object.entries(menuStructure).forEach(([expansion, sources]) => {
       const expCard = document.createElement('div');
       expCard.className = 'menu-card';
-      expCard.style.marginBottom = '1.2rem';
       expCard.innerHTML = `
         <div class="card-header" style="cursor:pointer;">
           <span style="font-family: var(--font-heading); color: var(--color-accent-gold); font-size:1.15rem;">
@@ -34,7 +31,6 @@
       menuDiv.appendChild(expCard);
     });
 
-    // Add click handlers to menu links for filtering
     menuDiv.querySelectorAll('.menu-links a').forEach(link => {
       link.addEventListener('click', e => {
         e.preventDefault();
@@ -42,20 +38,10 @@
         const src = link.getAttribute('data-source');
         activeExpansion = exp;
         activeSource = src;
-
-        // Highlight active
         menuDiv.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
         link.classList.add('active');
-
-        // Use cmd_run if available (recommended), else fallback to direct filtering
         if (window.cmd_run) {
           window.cmd_run(`show expansion "${exp}" source "${src}"`);
-        } else if (window.allEvents && window.filteredEvents && window.render) {
-          window.filteredEvents = window.allEvents.filter(ev =>
-            (ev.expansion || 'Unknown Expansion') === exp &&
-            (ev.sourceName || ev._sourceName || 'Unknown Source') === src
-          );
-          window.render();
         }
       });
     });
