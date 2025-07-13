@@ -3,10 +3,7 @@
 const OTC_CSV_URL = 'https://raw.githubusercontent.com/otc-cirdan/gw2-items/master/items.csv';
 let otcCsvCache = null;
 
-/**
- * Load and cache OTC CSV data.
- */
-async function loadOtcCsv() {
+window.loadOtcCsv = async function() {
   if (otcCsvCache) return otcCsvCache;
   otcCsvCache = {};
   try {
@@ -23,120 +20,83 @@ async function loadOtcCsv() {
       if (obj.name) otcCsvCache[obj.name.toLowerCase()] = obj;
       if (obj.chatcode) otcCsvCache[obj.chatcode] = obj;
     }
-  } catch (e) {
-    // If fetch fails, cache remains empty
-  }
+  } catch (e) {}
   return otcCsvCache;
-}
+};
 
-/**
- * Fetch item info from GW2 API by item ID.
- */
-async function fetchFromApiById(itemId) {
-  try {
-    const resp = await fetch(`https://api.guildwars2.com/v2/items/${itemId}`);
-    if (!resp.ok) return null;
-    const data = await resp.json();
-    return {
-      id: data.id,
-      name: data.name,
-      chatcode: data.chat_link,
-      icon: data.icon,
-      description: data.description,
-      rarity: data.rarity,
-      type: data.type,
-      vendor_value: data.vendor_value,
-      flags: data.flags,
-      wiki: `https://wiki.guildwars2.com/wiki/${encodeURIComponent(data.name.replace(/ /g, '_'))}`,
-      accountbound: data.flags?.includes('AccountBound') || data.flags?.includes('AccountBoundOnUse')
-    };
-  } catch {
+window.getItemFullInfo = async function(query) {
+  async function fetchFromApiById(itemId) {
+    try {
+      const resp = await fetch(`https://api.guildwars2.com/v2/items/${itemId}`);
+      if (!resp.ok) return null;
+      const data = await resp.json();
+      return {
+        id: data.id,
+        name: data.name,
+        chatcode: data.chat_link,
+        icon: data.icon,
+        description: data.description,
+        rarity: data.rarity,
+        type: data.type,
+        vendor_value: data.vendor_value,
+        flags: data.flags,
+        wiki: `https://wiki.guildwars2.com/wiki/${encodeURIComponent(data.name.replace(/ /g, '_'))}`,
+        accountbound: data.flags?.includes('AccountBound') || data.flags?.includes('AccountBoundOnUse')
+      };
+    } catch { return null; }
+  }
+  async function fetchTpValueById(itemId) {
+    try {
+      const resp = await fetch(`https://api.guildwars2.com/v2/commerce/prices/${itemId}`);
+      if (!resp.ok) return null;
+      const data = await resp.json();
+      return data.sells && typeof data.sells.unit_price === 'number' ? data.sells.unit_price : null;
+    } catch { return null; }
+  }
+  async function fetchFromWikiByName(name) {
+    if (!name) return null;
+    try {
+      const url = `https://wiki.guildwars2.com/api.php?action=query&format=json&origin=*&prop=pageprops|info&titles=${encodeURIComponent(name)}`;
+      const resp = await fetch(url);
+      if (!resp.ok) return null;
+      const data = await resp.json();
+      if (!data.query || !data.query.pages) return null;
+      const page = Object.values(data.query.pages)[0];
+      if (!page || page.missing) return null;
+      return {
+        name: page.title,
+        wiki: `https://wiki.guildwars2.com/wiki/${encodeURIComponent(page.title.replace(/ /g, '_'))}`
+      };
+    } catch { return null; }
+  }
+  async function fetchFromBltcById(itemId) {
+    try {
+      const resp = await fetch(`https://api.gw2bltc.com/price/${itemId}`);
+      if (!resp.ok) return null;
+      const data = await resp.json();
+      if (!data || !data.sell) return null;
+      return { tp_value: data.sell };
+    } catch { return null; }
+  }
+  async function fetchFromOtcCsv(query) {
+    const cache = await window.loadOtcCsv();
+    if (!cache) return null;
+    if (typeof query === 'number' || /^\d+$/.test(query)) {
+      if (cache[query]) return cache[query];
+    }
+    if (typeof query === 'string') {
+      if (cache[query]) return cache[query];
+      if (cache[query.toLowerCase()]) return cache[query.toLowerCase()];
+    }
     return null;
   }
-}
 
-/**
- * Fetch TP value from GW2 API by item ID.
- */
-async function fetchTpValueById(itemId) {
-  try {
-    const resp = await fetch(`https://api.guildwars2.com/v2/commerce/prices/${itemId}`);
-    if (!resp.ok) return null;
-    const data = await resp.json();
-    return data.sells && typeof data.sells.unit_price === 'number' ? data.sells.unit_price : null;
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Fetch item info from GW2 Wiki by name.
- */
-async function fetchFromWikiByName(name) {
-  if (!name) return null;
-  try {
-    const url = `https://wiki.guildwars2.com/api.php?action=query&format=json&origin=*&prop=pageprops|info&titles=${encodeURIComponent(name)}`;
-    const resp = await fetch(url);
-    if (!resp.ok) return null;
-    const data = await resp.json();
-    if (!data.query || !data.query.pages) return null;
-    const page = Object.values(data.query.pages)[0];
-    if (!page || page.missing) return null;
-    return {
-      name: page.title,
-      wiki: `https://wiki.guildwars2.com/wiki/${encodeURIComponent(page.title.replace(/ /g, '_'))}`
-    };
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Fetch TP value from BLTC API by item ID (fallback).
- */
-async function fetchFromBltcById(itemId) {
-  try {
-    const resp = await fetch(`https://api.gw2bltc.com/price/${itemId}`);
-    if (!resp.ok) return null;
-    const data = await resp.json();
-    if (!data || !data.sell) return null;
-    return { tp_value: data.sell };
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Lookup item info in OTC CSV cache.
- */
-async function fetchFromOtcCsv(query) {
-  const cache = await loadOtcCsv();
-  if (!cache) return null;
-  if (typeof query === 'number' || /^\d+$/.test(query)) {
-    if (cache[query]) return cache[query];
-  }
-  if (typeof query === 'string') {
-    if (cache[query]) return cache[query];
-    if (cache[query.toLowerCase()]) return cache[query.toLowerCase()];
-  }
-  return null;
-}
-
-/**
- * Get full item info and values, prioritizing API, then Wiki, then BLTC, then OTC CSV.
- * Returns a normalized item object.
- */
-export async function getItemFullInfo(query) {
   let info = null;
   let itemId = null;
-
-  // 1. Try GW2 API by ID
   if (typeof query === 'number' || /^\d+$/.test(query)) {
     itemId = Number(query);
     info = await fetchFromApiById(itemId);
   }
-
-  // 2. Try GW2 API by chatcode (via OTC CSV)
   if (!info && typeof query === 'string' && query.startsWith('[&')) {
     const otc = await fetchFromOtcCsv(query);
     if (otc && otc.id) {
@@ -145,8 +105,6 @@ export async function getItemFullInfo(query) {
       if (info) info.chatcode = otc.chatcode;
     }
   }
-
-  // 3. Try GW2 API by name (via OTC CSV)
   if (!info && typeof query === 'string') {
     const otc = await fetchFromOtcCsv(query);
     if (otc && otc.id) {
@@ -155,13 +113,9 @@ export async function getItemFullInfo(query) {
       if (info) info.chatcode = otc.chatcode;
     }
   }
-
-  // 4. Try Wiki by name
   if (!info && typeof query === 'string') {
     info = await fetchFromWikiByName(query);
   }
-
-  // 5. Try OTC CSV fallback
   if (!info) {
     const otc = await fetchFromOtcCsv(query);
     if (otc) {
@@ -176,13 +130,10 @@ export async function getItemFullInfo(query) {
       };
     }
   }
-
-  // 6. If still not found, return minimal info
   if (!info) info = { name: query, wiki: undefined };
   if (!itemId && info.id) itemId = info.id;
   info.id = itemId || info.id;
 
-  // --- Value enrichment ---
   let tp_value = null, vendor_value = null;
   if (itemId) {
     tp_value = await fetchTpValueById(itemId);
@@ -199,15 +150,5 @@ export async function getItemFullInfo(query) {
   }
   info.tp_value = tp_value;
   info.vendor_value = vendor_value;
-
-  // Normalize chatcode field
-  if (!info.chatcode && info.chat_link) info.chatcode = info.chat_link;
-
-  // Normalize icon to empty string if missing
-  if (!info.icon) info.icon = '';
-
-  // Normalize accountbound to boolean
-  if (typeof info.accountbound !== 'boolean') info.accountbound = !!info.accountbound;
-
   return info;
-}
+};
