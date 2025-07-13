@@ -32,7 +32,7 @@ function renderMenu() {
   Object.entries(groups).forEach(([expansion, sources]) => {
     const expId = `expansion-${expansion.replace(/\s+/g, '_')}`;
     const expDiv = document.createElement('div');
-    expDiv.className = 'menu-expansion';
+    expDiv.className = 'menu-card'; // Use fantasy card look for expansions
 
     const arrow = menuState[expansion].collapsed ? '▶' : '▼';
     expDiv.innerHTML = `<div class="menu-exp-header" tabindex="0" onclick="toggleMenuExpansion('${expansion.replace(/'/g, "\\'")}')">${arrow} <span class="menu-exp-link" onclick="event.stopPropagation();jumpToSection('${expId}')">${expansion}</span></div>`;
@@ -46,6 +46,8 @@ function renderMenu() {
       const srcArrow = menuState[expansion].sources[source] ? '▶' : '▼';
       const srcDiv = document.createElement('div');
       srcDiv.className = 'menu-source';
+      // Uncomment the next line if you want sources to also look like cards:
+      // srcDiv.className += ' menu-card';
       srcDiv.innerHTML = `<div style="cursor:pointer;display:inline" onclick="toggleMenuSource('${expansion.replace(/'/g, "\\'")}', '${source.replace(/'/g, "\\'")}')">${srcArrow}</div>
         <span class="menu-source-link" onclick="event.stopPropagation();jumpToSection('${srcId}')">${source}</span>`;
       srcList.appendChild(srcDiv);
