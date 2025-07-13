@@ -1,6 +1,4 @@
-// gamers-hell.js
-// Handles dynamic content for Gamers-Hell app (no CSS or layout injection)
-
+// Gamers-Hell: Modern Event App (cmd.js)
 const jsonSources = [
   {
     name: "Temples of Orr",
@@ -183,7 +181,6 @@ function renderEventCard(event, idx, searchQuery, tpPrices, tpIcons, maxSellValu
   `;
 }
 
-// *** UPDATED: Use the correct container ID ***
 window.renderAllSections = async function(events, searchQuery, sortBy) {
   const allSectionsDiv = document.getElementById('events-container');
   if (!allSectionsDiv) {
@@ -235,7 +232,74 @@ window.renderAllSections = async function(events, searchQuery, sortBy) {
     expIdx++;
   }
   allSectionsDiv.innerHTML = html;
-  // (Collapse/expand and copy logic omitted for brevity, but should be included as in your original)
+
+  // Add expand/collapse, copy, and loot toggling logic
+  expIdx = 0;
+  for (const [expansion, sources] of Object.entries(expansions)) {
+    const section = document.getElementById(`expansion-${expIdx}`);
+    const btn = document.getElementById(`expansion-${expIdx}-title`);
+    const arrow = btn.querySelector('.arrow');
+    btn.onclick = function() {
+      const visible = section.dataset.expanded !== "false";
+      section.dataset.expanded = visible ? "false" : "true";
+      btn.classList.toggle('collapsed', visible);
+      arrow.innerHTML = visible ? '&#9654;' : '&#9660;';
+      Array.from(section.querySelectorAll('.source-title, .event-list')).forEach(el => {
+        el.style.display = visible ? 'none' : '';
+      });
+    };
+    let srcIdx = 0;
+    for (const sourceName of Object.keys(sources)) {
+      const srcBtn = document.getElementById(`expansion-${expIdx}-source-${srcIdx}-title`);
+      const srcList = document.getElementById(`expansion-${expIdx}-source-${srcIdx}`);
+      const srcArrow = srcBtn.querySelector('.arrow');
+      srcBtn.onclick = function() {
+        const visible = srcList.style.display !== 'none';
+        srcList.style.display = visible ? 'none' : '';
+        srcBtn.classList.toggle('collapsed', visible);
+        srcArrow.innerHTML = visible ? '&#9654;' : '&#9660;';
+      };
+      srcIdx++;
+    }
+    expIdx++;
+  }
+  expIdx = 0;
+  for (const [expansion, sources] of Object.entries(expansions)) {
+    let srcIdx = 0;
+    for (const sourceName of Object.keys(sources)) {
+      const evs = sources[sourceName];
+      evs.forEach((event, idx) => {
+        const id = `${expIdx}-${srcIdx}-${idx}`;
+        const copyBtn = document.getElementById(`copy-btn-${id}`);
+        const copyInput = document.getElementById(`copy-input-${id}`);
+        const copyMsg = document.getElementById(`copy-msg-${id}`);
+        copyBtn.onclick = function() {
+          copyInput.select();
+          copyInput.setSelectionRange(0, 99999);
+          document.execCommand('copy');
+          copyMsg.style.display = 'inline';
+          copyBtn.classList.add('copied');
+          copyBtn.innerText = "✔";
+          setTimeout(() => {
+            copyMsg.style.display = 'none';
+            copyBtn.classList.remove('copied');
+            copyBtn.innerText = "Copy";
+          }, 1000);
+        };
+        const toggleBtn = document.querySelector(`.event-card[data-idx="${id}"] .drops-toggle`);
+        const lootList = document.getElementById(`loot-${id}`);
+        toggleBtn.onclick = (e) => {
+          e.stopPropagation();
+          lootList.classList.toggle('active');
+          const expanded = lootList.classList.contains('active');
+          toggleBtn.textContent = expanded ? 'Hide Loot ▲' : 'Show Loot ▼';
+          toggleBtn.setAttribute('aria-expanded', expanded);
+        };
+      });
+      srcIdx++;
+    }
+    expIdx++;
+  }
 };
 
 window.cmd_run = function(cmdString) {
