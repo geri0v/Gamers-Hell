@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Gamers-Hell GW2 Events</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Guild Wars 2 event tracker and loot tables by Gamers-Hell.">
   <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css">
   <link rel="icon" href="https://wiki.guildwars2.com/favicon.ico">
 </head>
@@ -64,7 +65,22 @@
   <!-- Modal for event details (created by JS if needed) -->
 
   <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
-  <!-- Optional placeholders for future features -->
+  <!-- Optional: Enable sidebar collapsing and timer demo -->
+  <script>
+    document.querySelectorAll('.sidebar-toggle').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const parent = btn.closest('aside');
+        parent.classList.toggle('collapsed');
+      });
+    });
+    setInterval(() => {
+      const el = document.getElementById('timer-value');
+      if (el) {
+        const now = new Date();
+        el.textContent = now.toLocaleTimeString();
+      }
+    }, 1000);
+  </script>
   <!-- <script src="menu.js"></script> -->
   <!-- <script src="time.js"></script> -->
 </body>
