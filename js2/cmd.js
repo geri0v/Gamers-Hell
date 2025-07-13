@@ -183,8 +183,13 @@ function renderEventCard(event, idx, searchQuery, tpPrices, tpIcons, maxSellValu
   `;
 }
 
+// *** UPDATED: Use the correct container ID ***
 window.renderAllSections = async function(events, searchQuery, sortBy) {
   const allSectionsDiv = document.getElementById('events-container');
+  if (!allSectionsDiv) {
+    console.error("Container #events-container not found!");
+    return;
+  }
   allSectionsDiv.innerHTML = `<div class="spinner"></div>`;
   const filtered = events.filter(ev => eventMatchesSearch(ev, searchQuery));
   if (!filtered.length) {
