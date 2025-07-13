@@ -17,15 +17,22 @@ function getMenuStructure(events) {
   return structure;
 }
 
+function safeString(val) {
+  return (typeof val === 'string') ? val.toLowerCase() : '';
+}
+
 function applyFilters() {
-  let query = document.getElementById('search').value.toLowerCase();
+  const query = safeString(document.getElementById('search').value);
   filteredEvents = allEvents.filter(ev =>
-    (ev.name && ev.name.toLowerCase().includes(query)) ||
-    (ev.map && ev.map.toLowerCase().includes(query)) ||
-    (ev.loot && ev.loot.some(item => (item.name && item.name.toLowerCase().includes(query))))
+    safeString(ev.name).includes(query) ||
+    safeString(ev.map).includes(query) ||
+    (Array.isArray(ev.loot) && ev.loot.some(item => safeString(item.name).includes(query)))
   );
   filteredEvents.sort((a, b) => {
-    let vA = a[sortKey] || '', vB = b[sortKey] || '';
+    let vA = a[sortKey];
+    let vB = b[sortKey];
+    if (vA === undefined || vA === null) vA = '';
+    if (vB === undefined || vB === null) vB = '';
     if (typeof vA === 'string') vA = vA.toLowerCase();
     if (typeof vB === 'string') vB = vB.toLowerCase();
     if (vA < vB) return sortAsc ? -1 : 1;
