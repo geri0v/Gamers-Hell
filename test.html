@@ -1,24 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>GW2 Event & Loot Browser</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Global CSS -->
-  <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Fantasy‐CSS -->
+  <link
+    rel="stylesheet"
+    href="https://geri0v.github.io/Gamers-Hell/style/style.css"
+  />
 </head>
 <body>
-  <div class="container">
-    <h1>Guild Wars 2 Event & Loot Browser</h1>
-    <input id="search" type="text" placeholder="Search by event, location, or item..." autocomplete="off" />
-    <div class="sort-bar">
-      <button class="sort-btn" data-sort="name">Sort by Name</button>
-      <button class="sort-btn" data-sort="map">Sort by Location</button>
-      <button class="sort-btn" data-sort="value">Sort by Value</button>
-    </div>
-    <div id="events"></div>
+  <div class="layout3col">
+    <!-- LINKER SIDEBAR -->
+    <aside id="sidebar-left" class="sidebar">
+      <button
+        type="button"
+        id="menu-toggle"
+        class="sidebar-toggle left"
+      >☰</button>
+      <nav id="menu"></nav>
+    </aside>
+
+    <!-- HOOFDCONTENT -->
+    <main id="main-content">
+      <h1>Guild Wars 2 Event &amp; Loot Browser</h1>
+
+      <div class="controls">
+        <input
+          type="text"
+          id="search"
+          placeholder="Zoek op event, locatie of item…"
+          autocomplete="off"
+        />
+        <div class="sort-bar">
+          <button type="button" class="sort-btn" data-sort="name">
+            Naam
+          </button>
+          <button type="button" class="sort-btn" data-sort="map">
+            Locatie
+          </button>
+          <button type="button" class="sort-btn" data-sort="value">
+            Waarde
+          </button>
+        </div>
+      </div>
+
+      <div id="events" class="event-grid"></div>
+    </main>
+
+    <!-- RECHTER SIDEBAR -->
+    <aside id="sidebar-right" class="sidebar">
+      <button
+        type="button"
+        id="timer-toggle"
+        class="sidebar-toggle right"
+      >⏲</button>
+      <section id="timer">
+        <div class="timer-title">Timer</div>
+        <!-- Wordt later gevuld met JSON of API -->
+      </section>
+    </aside>
   </div>
-  <!-- App JavaScript -->
+
+  <!-- 1) LAAD JE DATA-SCRIPTS -->
+  <script src="https://geri0v.github.io/Gamers-Hell/js2/menu.js"></script>
   <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
+
+  <!-- 2) INITIALISATIE, RENDERING, FILTER & SORT -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- SIDEBAR TOGGLES ---
+      const leftSidebar = document.getElementById('sidebar-left');
+      const rightSidebar = document.getElementById('sidebar-right');
+      document
+        .getElementById('menu-toggle')
+        .addEventListener('click', () =>
+          leftSidebar.classList.toggle('collapsed')
+        );
+      document
+        .getElementById('timer-toggle')
+        .addEventListener('click', () =>
+          rightSidebar.classList.toggle('collapsed')
+        );
+
+      // --- RENDER MENU ---
+      const menuData = window.menuData || [];
+      const nav = document.getElementById('menu');
+      if (menuData.length) {
+        const ul = document.createElement('ul');
+        ul.className = 'nav-list';
+        menuData.forEach(item => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <a href="${item.link || '#'}">
+              <span class="icon">${item.icon || ''}</span>
+              ${item.label}
+            </a>`;
+          ul.appendChild(li);
+        });
+        nav.appendChild(ul);
+      }
+
+      // --- RENDER & MANAGE EVENTS ---
+      const rawEvents = window.eventData || [];
+      let filteredEvents = [...rawEvents];
+      const container = document.getElementById('events');
+
+      function renderEvents(list) {
+        container.innerHTML = '';
+        list.forEach(evt => {
+          const card = document.createElement('article');
+          card.className = 'event-card';
+          card.innerHTML = `
+            <div class="card-header">
+              <span class="event-icon">${evt.icon || ''}</span>
+              <h2>${evt.name}</h2>
+            </div>
+            <div class="card-body">
+              <p class="map">Map: ${evt.map}</p>
+              <p class="loot">Loot: ${evt.loot}</p>
+            </div>`;
+          container.appendChild(card);
+        });
+      }
+      renderEvents(filteredEvents);
+
+      // --- SEARCH FILTER ---
+      document
+        .getElementById('search')
+        .addEventListener('input', e => {
+          const term = e.target.value.toLowerCase();
+          filteredEvents = rawEvents.filter(evt =>
+            evt.name.toLowerCase().includes(term) ||
+            evt.map.toLowerCase().includes(term) ||
+            evt.loot.toLowerCase().includes(term)
+          );
+          renderEvents(filteredEvents);
+        });
+
+      // --- SORT BUTTONS ---
+      document.querySelectorAll('.sort-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Visuele “active” state
+          document
+            .querySelectorAll('.sort-btn')
+            .forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const key = btn.dataset.sort;
+          filteredEvents.sort((a, b) => {
+            if (key === 'value') {
+              // numeriek sorteren op evt.value (of 0 als niet aanwezig)
+              return (b.value || 0) - (a.value || 0);
+            }
+            // alfabetisch sorteren
+            return a[key].localeCompare(b[key]);
+          });
+          renderEvents(filteredEvents);
+        });
+      });
+    });
+  </script>
 </body>
 </html>
