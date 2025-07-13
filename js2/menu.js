@@ -47,7 +47,7 @@ function renderMenu() {
       const srcDiv = document.createElement('div');
       srcDiv.className = 'menu-source';
       // Uncomment the next line if you want sources to also look like cards:
-      // srcDiv.className += ' menu-card';
+      srcDiv.className += ' menu-card';
       srcDiv.innerHTML = `<div style="cursor:pointer;display:inline" onclick="toggleMenuSource('${expansion.replace(/'/g, "\\'")}', '${source.replace(/'/g, "\\'")}')">${srcArrow}</div>
         <span class="menu-source-link" onclick="event.stopPropagation();jumpToSection('${srcId}')">${source}</span>`;
       srcList.appendChild(srcDiv);
