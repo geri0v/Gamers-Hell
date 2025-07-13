@@ -19,7 +19,6 @@
   --transition: 0.2s cubic-bezier(.4,0,.2,1);
 }
 
-/* Light Theme: activated by .light on <body> */
 body.light {
   --main-bg: #f8fcff;
   --main-fg: #232c3b;
@@ -57,7 +56,7 @@ header, footer {
 }
 
 header {
-  padding-top: 4.5em; /* Makes room for stacked buttons */
+  padding-top: 5.5em;
 }
 
 .top-right-controls {
@@ -70,7 +69,7 @@ header {
   align-items: flex-end;
   z-index: 20;
 }
-#themeToggle, #sidebar-toggle {
+#themeToggle, #sidebar-toggle, #menu-toggle {
   min-width: 90px;
   font-size: 1.2em;
   background: var(--card-bg, #263142);
@@ -82,12 +81,12 @@ header {
   box-shadow: 0 2px 8px #0002;
   transition: background var(--transition), color var(--transition);
 }
-#sidebar-toggle {
+#sidebar-toggle, #menu-toggle {
   color: var(--main-fg, #f3f7fa);
   background: var(--accent, #4a90e2);
   font-weight: bold;
 }
-#sidebar-toggle:hover, #themeToggle:hover {
+#sidebar-toggle:hover, #themeToggle:hover, #menu-toggle:hover {
   background: var(--accent, #4a90e2);
   color: #fff;
 }
@@ -111,6 +110,85 @@ header {
     gap: 0;
   }
 }
+
+/* Left Menu Sidebar */
+#menu-sidebar {
+  width: 0;
+  min-width: 0;
+  max-width: 240px;
+  background: var(--card-bg, #263142);
+  box-shadow: 2px 0 16px #0005;
+  overflow: hidden;
+  transition: width 0.3s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 11;
+}
+#menu-sidebar.open {
+  width: 220px;
+  min-width: 180px;
+  border-right: 2px solid var(--accent, #4a90e2);
+}
+#menu-sidebar gh-menu-sidebar {
+  width: 100%;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+}
+@media (max-width: 900px) {
+  #menu-sidebar, #menu-sidebar.open {
+    width: 100vw;
+    max-width: 100vw;
+    min-width: 0;
+    height: auto;
+    border-right: none;
+    border-bottom: 2px solid var(--accent, #4a90e2);
+  }
+}
+
+/* Right Timer Sidebar */
+#timer-sidebar {
+  width: 0;
+  min-width: 0;
+  max-width: 380px;
+  background: var(--card-bg, #263142);
+  box-shadow: 2px 0 16px #0005;
+  overflow: hidden;
+  transition: width 0.3s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 10;
+}
+#timer-sidebar.open {
+  width: 380px;
+  min-width: 220px;
+  border-left: 2px solid var(--accent, #4a90e2);
+}
+#timer-sidebar gw2-event-timer {
+  --timer-max-width: 380px;
+  --timer-padding: 8px;
+  width: 100%;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+}
+@media (max-width: 900px) {
+  #timer-sidebar, #timer-sidebar.open {
+    width: 100vw;
+    max-width: 100vw;
+    min-width: 0;
+    height: auto;
+    border-left: none;
+    border-top: 2px solid var(--accent, #4a90e2);
+  }
+  #timer-sidebar gw2-event-timer { --timer-max-width: 100vw; }
+}
+
+/* gh-menu-sidebar internal styles are handled in its shadow DOM */
 
 /* Search Bar */
 .search-bar-container {
@@ -357,8 +435,8 @@ body.light .loot-list {
   display: inline-block;
   width: var(--spinner-size);
   height: var(--spinner-size);
-  border: 4px solid #4a90e2;
-  border-top: 4px solid #263142;
+  border: 4px solid var(--accent);
+  border-top: 4px solid var(--card-bg);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 2em auto;
@@ -389,44 +467,4 @@ mark {
 body.light mark {
   background: #ffe08a;
   color: #2b4765;
-}
-
-/* === Sidebar Timer Styles === */
-#timer-sidebar {
-  width: 0;
-  min-width: 0;
-  max-width: 380px;
-  background: var(--card-bg, #263142);
-  box-shadow: 2px 0 16px #0005;
-  overflow: hidden;
-  transition: width 0.3s cubic-bezier(.4,0,.2,1);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  z-index: 10;
-}
-#timer-sidebar.open {
-  width: 380px;
-  min-width: 220px;
-  border-left: 2px solid var(--accent, #4a90e2);
-}
-#timer-sidebar gw2-event-timer {
-  --timer-max-width: 380px;
-  --timer-padding: 8px;
-  width: 100%;
-  flex: 1;
-  min-width: 0;
-  min-height: 0;
-  display: flex;
-}
-@media (max-width: 900px) {
-  #timer-sidebar, #timer-sidebar.open {
-    width: 100vw;
-    max-width: 100vw;
-    min-width: 0;
-    height: auto;
-    border-left: none;
-    border-top: 2px solid var(--accent, #4a90e2);
-  }
-  #timer-sidebar gw2-event-timer { --timer-max-width: 100vw; }
 }
