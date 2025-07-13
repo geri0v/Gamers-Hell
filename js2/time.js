@@ -197,9 +197,208 @@ class Gw2EventTimer extends HTMLElement {
     this.selectedTimezone = localStorage.getItem('ghc-timezone') || 'Europe/Amsterdam';
   }
 
-  // ...rest of your methods remain unchanged...
-  // (connectedCallback, fetchEvents, updateEvents, etc.)
-  // (No logic changes needed unless you want new features)
+  connectedCallback() {
+    this.populateTimezoneSelect();
+    this.fetchEvents();
+    this.shadowRoot.getElementById('refreshEventsBtn').addEventListener('click', () => this.fetchEvents(true));
+    setInterval(() => this.fetchEvents(), 60000);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) this.fetchEvents();
+    });
+  }
+
+  getAllTimezones() {
+    try {
+      return Intl.supportedValuesOf('timeZone');
+    } catch {
+      return [
+        "Europe/Amsterdam", "Europe/London", "America/New_York", "America/Los_Angeles", "Asia/Tokyo", "UTC"
+      ];
+    }
+  }
+
+  populateTimezoneSelect() {
+    const tzSelect = this.shadowRoot.getElementById('timezoneSelect');
+    tzSelect.innerHTML = '';
+    this.getAllTimezones().forEach(tz => {
+      const opt = document.createElement('option');
+      opt.value = tz;
+      opt.textContent = tz.replace('_',' ');
+      if (tz === this.selectedTimezone) opt.selected = true;
+      tzSelect.appendChild(opt);
+    });
+    tzSelect.addEventListener('change', () => {
+      this.selectedTimezone = tzSelect.value;
+      localStorage.setItem('ghc-timezone', this.selectedTimezone);
+      this.updateEvents();
+    });
+  }
+
+  parseOffset(offset) {
+    let t = offset.replace('Z', '').split(':');
+    return { hour: parseInt(t[0], 10), minute: parseInt(t[1], 10) };
+  }
+
+  parseRepeat(repeat) {
+    let t = repeat.split(':');
+    return parseInt(t[0], 10) * 60 + parseInt(t[1], 10);
+  }
+
+  getNextOccurrence(offset, repeat) {
+    const now = new Date();
+    const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
+    const { hour, minute } = this.parseOffset(offset);
+    let eventTime = new Date(today.getTime());
+    eventTime.setUTCHours(hour, minute, 0, 0);
+    const repeatMinutes = this.parseRepeat(repeat);
+    while (eventTime < now) {
+      eventTime = new Date(eventTime.getTime() + repeatMinutes * 60000);
+    }
+    return eventTime;
+  }
+
+  toTimezoneStr(date, tz) {
+    return date.toLocaleTimeString('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit' });
+  }
+
+  getCountdownString(target) {
+    const now = new Date();
+    let diff = Math.max(0, Math.floor((target - now) / 1000));
+    let h = Math.floor(diff / 3600);
+    let m = Math.floor((diff % 3600) / 60);
+    let s = diff % 60;
+    return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  }
+
+  async fetchEvents(force) {
+    const eventList = this.shadowRoot.getElementById('eventList');
+    eventList.innerHTML = '<div class="spinner" role="status" aria-live="polite" aria-label="Loading events"></div>';
+    let cache = localStorage.getItem('ghc-events');
+    let cacheTime = localStorage.getItem('ghc-events-time');
+    if (!force && cache && cacheTime && Date.now() - cacheTime < 1000*60*15) {
+      this.events = JSON.parse(cache);
+      await this.updateEvents();
+      return;
+    }
+    try {
+      const response = await fetch(this.EVENTS_JSON_URL, { cache: "no-store" });
+      if (!response.ok) throw new Error("Failed to fetch events");
+      const data = await response.json();
+      this.events = data.filter(e => e.offset && e.repeat);
+      localStorage.setItem('ghc-events', JSON.stringify(this.events));
+      localStorage.setItem('ghc-events-time', Date.now());
+      this.showToast('Events updated!');
+    } catch (err) {
+      this.showToast('Failed to load events. Try again later.');
+      this.events = [];
+    }
+    await this.updateEvents();
+  }
+
+  async updateEvents() {
+    const eventList = this.shadowRoot.getElementById('eventList');
+    if (!this.events.length) {
+      eventList.innerHTML = '<div style="padding:20px;color:#aaa;">No events available.</div>';
+      return;
+    }
+    const now = new Date();
+    let nextEvents = this.events.map(event => {
+      const nextTime = this.getNextOccurrence(event.offset, event.repeat);
+      return {
+        name: event.name,
+        location: event.location || "",
+        waypoint: event.waypoint || "",
+        utcTime: nextTime,
+        localTime: this.toTimezoneStr(nextTime, this.selectedTimezone),
+        nextTime
+      };
+    });
+    nextEvents.sort((a, b) => a.utcTime - b.utcTime);
+    let nextIdx = nextEvents.findIndex(ev => ev.utcTime > now);
+    if (nextIdx === -1) nextIdx = 0;
+    let html = '';
+    nextEvents.forEach((event, idx) => {
+      const copyText = event.name + 
+        (event.location ? ` | ${event.location}` : "") + 
+        (event.waypoint ? ` | ${event.waypoint}` : "");
+      html += `<div class="event-row${idx === nextIdx ? ' upcoming' : ''}" 
+        tabindex="0" 
+        role="listitem"
+        data-copy="${encodeURIComponent(copyText)}"
+        title="Click to copy event info">
+        <div class="event-info">
+          <span class="event-name">${event.name}</span>
+          ${event.location ? `<span class="event-location">${event.location}</span>` : ""}
+          ${event.waypoint ? `<span class="event-waypoint">${event.waypoint}</span>` : ""}
+        </div>
+        <span class="event-time">
+          ${event.localTime}
+          <span class="event-countdown" data-idx="${idx}"></span>
+        </span>
+      </div>`;
+    });
+    eventList.innerHTML = html || `<div style="padding:20px;color:#aaa;">No events match your search.</div>`;
+
+    this.shadowRoot.querySelectorAll('.event-row').forEach(row => {
+      row.addEventListener('click', e => {
+        const text = decodeURIComponent(row.getAttribute('data-copy'));
+        this.copyEventInfo(text);
+      });
+      row.addEventListener('keydown', e => {
+        if (e.key === "Enter" || e.key === " ") {
+          const text = decodeURIComponent(row.getAttribute('data-copy'));
+          this.copyEventInfo(text);
+          e.preventDefault();
+        }
+      });
+    });
+
+    if (this.timerInterval) clearInterval(this.timerInterval);
+    this.timerInterval = setInterval(() => {
+      this.shadowRoot.querySelectorAll('.event-countdown').forEach(span => {
+        const idx = +span.getAttribute('data-idx');
+        if (nextEvents[idx]) {
+          span.textContent = "Next in: " + this.getCountdownString(nextEvents[idx].nextTime);
+        }
+      });
+    }, 1000);
+  }
+
+  copyEventInfo(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => {
+        this.showToast('Copied!');
+      }, () => {
+        this.fallbackCopyTextToClipboard(text);
+      });
+    } else {
+      this.fallbackCopyTextToClipboard(text);
+    }
+  }
+
+  fallbackCopyTextToClipboard(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.top = "-1000px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      this.showToast('Copied!');
+    } catch (err) {
+      this.showToast('Copy failed');
+    }
+    document.body.removeChild(textArea);
+  }
+
+  showToast(msg) {
+    const toast = this.shadowRoot.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1800);
+  }
 }
 
 customElements.define('gw2-event-timer', Gw2EventTimer);
