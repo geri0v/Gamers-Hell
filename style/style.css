@@ -1,221 +1,100 @@
-:root {
-  --main-bg: #1e2630;
-  --main-fg: #f3f7fa;
-  --card-bg: #263142;
-  --header-bg: #232c3b;
-  --footer-bg: #232c3b;
-  --input-bg: #2c3746;
-  --input-fg: #e1e6ed;
-  --copy-bar-bg: #243049;
-  --copy-btn-bg: linear-gradient(135deg, #3b4b63 60%, #4a90e2 100%);
-  --copy-btn-color: #fff;
-  --accent: #4a90e2;
-  --table-border: #3b4b63;
-  --section-title-fg: #e1e6ed;
-  --transition: 0.2s cubic-bezier(.4,0,.2,1);
+/* global.css */
+#cmd-app {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    max-width: 900px;
+    margin: 2rem auto;
+    background: #181c20;
+    color: #e0e6ef;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 6px 24px #0008;
 }
-
-body.light {
-  --main-bg: #f8fcff;
-  --main-fg: #232c3b;
-  --card-bg: #fff;
-  --header-bg: #e9eef5;
-  --footer-bg: #e9eef5;
-  --input-bg: #f3f7fa;
-  --input-fg: #232c3b;
-  --copy-bar-bg: #e9eef5;
-  --copy-btn-bg: linear-gradient(135deg, #b3c6e0 60%, #4a90e2 100%);
-  --accent: #2b4765;
-  --table-border: #b3c6e0;
-  --section-title-fg: #2b4765;
+.expansion {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #333;
+    padding-bottom: 1rem;
 }
-
-body {
-  background: var(--main-bg);
-  color: var(--main-fg);
-  font-family: 'Segoe UI', Arial, sans-serif;
-  margin: 0;
-  transition: background var(--transition), color var(--transition);
+.expansion h2 {
+    margin-top: 0;
+    color: #ffd700;
+    font-size: 1.5rem;
 }
-
-header, footer {
-  background: var(--header-bg);
-  color: var(--main-fg);
-  text-align: center;
-  font-size: 1.2em;
-  padding: 1.2em 0;
+.source h3 {
+    margin: 1rem 0 0.5rem 0;
+    color: #a0e7e5;
+    font-size: 1.2rem;
 }
-
-header { padding-top: 5.5em; }
-footer { background: var(--footer-bg); }
-
-.main {
-  max-width: 950px;
-  margin: 2em auto;
-  background: var(--main-bg);
-  padding: 2em 1.5em;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px #0003;
-  display: flex;
-  gap: 2em;
+.entry {
+    background: #23282f;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px #0004;
 }
-
-@media (max-width: 900px) {
-  .main { flex-direction: column; gap: 0; }
+.main-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
 }
-
-#timer-sidebar {
-  width: 0;
-  min-width: 0;
-  max-width: 380px;
-  background: var(--card-bg);
-  box-shadow: 2px 0 16px #0005;
-  overflow: hidden;
-  transition: width 0.3s cubic-bezier(.4,0,.2,1);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  z-index: 10;
+.waypoint, .location, .item {
+    min-width: 120px;
+    font-weight: 500;
 }
-#timer-sidebar.open {
-  width: 380px;
-  min-width: 220px;
-  border-left: 2px solid var(--accent);
+.item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
-@media (max-width: 900px) {
-  #timer-sidebar, #timer-sidebar.open {
-    width: 100vw;
-    max-width: 100vw;
-    min-width: 0;
-    height: auto;
-    border-left: none;
-    border-top: 2px solid var(--accent);
-  }
+.item-name {
+    color: #c5e1a5;
 }
-
-/* GW2 Event Timer Sidebar Styles */
-#gw2-event-timer {
-  width: 100%;
-  max-width: 360px;
-  margin: 0 auto;
-  background: var(--card-bg);
-  color: var(--main-fg);
-  border-radius: 12px;
-  box-shadow: 0 2px 12px #0002;
-  padding: 18px 12px 10px 12px;
-  font-family: inherit;
-  min-width: 0;
+.item-value {
+    margin-left: 0.5rem;
+    font-family: monospace;
+    color: #ffd700;
 }
-
-#gw2-event-timer .gh-event-timer-now {
-  font-size: 1.08em;
-  margin-bottom: 14px;
-  color: var(--accent);
-  text-align: center;
-  letter-spacing: 1px;
+.gold::after {
+    content: '🪙';
+    color: #ffd700;
+    margin-left: 2px;
 }
-
-#gw2-event-timer .gh-event-item {
-  border-bottom: 1px solid var(--table-border);
-  padding: 12px 0 8px 0;
-  margin-bottom: 2px;
+.silver::after {
+    content: '🪙';
+    color: #c0c0c0;
+    margin-left: 2px;
 }
-#gw2-event-timer .gh-event-item:last-child {
-  border-bottom: none;
+.copper::after {
+    content: '🪙';
+    color: #b87333;
+    margin-left: 2px;
 }
-#gw2-event-timer .gh-event-next {
-  background: rgba(74,144,226,0.08);
-  border-radius: 8px;
+.copy-btn, .toggle-btn {
+    background: #1e88e5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.25rem 0.75rem;
+    margin-left: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
 }
-
-#gw2-event-timer .gh-event-name {
-  font-weight: bold;
-  font-size: 1.1em;
-  margin-bottom: 3px;
-  color: var(--accent);
+.copy-btn:hover, .toggle-btn:hover {
+    background: #1565c0;
 }
-
-#gw2-event-timer .gh-event-time {
-  font-size: 0.97em;
-  margin-bottom: 2px;
-  display: flex;
-  gap: 0.7em;
-  align-items: center;
-  color: var(--main-fg);
+.drops {
+    margin-top: 0.75rem;
+    background: #101214;
+    border-radius: 4px;
+    padding: 0.75rem;
 }
-
-#gw2-event-timer .gh-event-time-utc {
-  color: #b3c6e0;
-  font-size: 0.93em;
+.drops ul {
+    list-style: disc inside;
+    margin: 0;
+    padding: 0 0 0 1rem;
 }
-
-#gw2-event-timer .gh-event-countdown {
-  font-size: 1.05em;
-  margin-bottom: 2px;
-  color: var(--section-title-fg);
-}
-
-#gw2-event-timer .gh-event-waypoint-bar {
-  margin-top: 3px;
-  display: flex;
-  align-items: center;
-  background: var(--copy-bar-bg);
-  border-radius: 6px;
-  padding: 3px 6px;
-  gap: 0.5em;
-  max-width: 280px;
-}
-
-#gw2-event-timer .gh-event-waypoint-input {
-  width: 120px;
-  background: var(--input-bg);
-  color: var(--input-fg);
-  border: none;
-  border-radius: 4px;
-  padding: 3px 7px;
-  font-family: monospace;
-  font-size: 1em;
-  margin-right: 5px;
-  outline: none;
-  transition: background var(--transition), color var(--transition);
-}
-#gw2-event-timer .gh-event-waypoint-input:focus {
-  background: var(--main-bg);
-  color: var(--accent);
-}
-#gw2-event-timer .gh-event-copy-btn {
-  padding: 4px 16px;
-  border-radius: 4px;
-  border: none;
-  background: var(--copy-btn-bg);
-  color: var(--copy-btn-color);
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1em;
-  min-width: 56px;
-  min-height: 32px;
-  box-shadow: 0 2px 6px #0002;
-  transition: background var(--transition), color var(--transition), transform var(--transition);
-  outline: none;
-}
-#gw2-event-timer .gh-event-copy-btn.copied,
-#gw2-event-timer .gh-event-copy-btn:active,
-#gw2-event-timer .gh-event-copy-btn:focus {
-  background: #4a90e2 !important;
-  color: #fff !important;
-  transform: scale(1.08);
-}
-#gw2-event-timer .gh-event-none {
-  text-align: center;
-  color: #b3c6e0;
-  margin: 2em 0;
-  font-size: 1.1em;
-}
-@media (max-width: 900px) {
-  #gw2-event-timer {
-    max-width: 100vw;
-    border-radius: 0 0 12px 12px;
-    box-shadow: none;
-    padding: 12px 4vw 8px 4vw;
-  }
+.drops li {
+    margin: 0.25rem 0;
+    color: #e0e6ef;
 }
