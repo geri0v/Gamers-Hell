@@ -10,6 +10,9 @@
   --loot-bg: #23242e;
   --loot-hover: #35364b;
   --loot-icon-size: 24px;
+  --gold: #ffd700;
+  --silver: #c0c0c0;
+  --copper: #b87333;
 }
 
 body {
@@ -37,6 +40,7 @@ h1 {
 h2, h3 {
   color: var(--accent);
   margin-top: 1.5em;
+  user-select: none;
 }
 
 .expansion {
@@ -47,12 +51,50 @@ h2, h3 {
   box-shadow: 0 2px 8px #0002;
 }
 
+.expansion h2 {
+  font-size: 1.4em;
+  margin: 0 0 0.7em 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.expansion h2[style*="cursor:pointer"] {
+  cursor: pointer;
+  transition: background 0.15s;
+  border-radius: 7px;
+  padding: 0.15em 0.5em;
+}
+
+.expansion h2[style*="cursor:pointer"]:hover {
+  background: var(--loot-hover);
+}
+
 .source {
   margin-bottom: 1em;
   padding: 1em;
   background: var(--bg);
   border-radius: var(--radius);
   border: 1px solid var(--border);
+}
+
+.source h3 {
+  font-size: 1.1em;
+  margin: 0 0 0.5em 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.source h3[style*="cursor:pointer"] {
+  cursor: pointer;
+  transition: background 0.15s;
+  border-radius: 7px;
+  padding: 0.12em 0.4em;
+}
+
+.source h3[style*="cursor:pointer"]:hover {
+  background: var(--loot-hover);
 }
 
 .event {
@@ -130,6 +172,7 @@ h2, h3 {
   padding: 0.1em 0.4em;
   border-radius: 4px;
   font-size: 0.98em;
+  letter-spacing: 1px;
 }
 
 .loot-section {
@@ -211,11 +254,34 @@ h2, h3 {
   font-size: 0.98em;
 }
 
-.loot-list .vendor-value, .loot-list .item-value {
-  color: #aaf7b8;
-  font-weight: 500;
+.vendor-value {
   margin-left: 0.3em;
+  font-weight: 500;
   font-size: 0.98em;
+  letter-spacing: 0.5px;
+}
+
+/* Gold/silver/copper coloring */
+.vendor-value {
+  color: var(--gold);
+}
+.vendor-value:after {
+  content: '';
+}
+.vendor-value .gold {
+  color: var(--gold);
+}
+.vendor-value .silver {
+  color: var(--silver);
+}
+.vendor-value .copper {
+  color: var(--copper);
+}
+
+/* Highlight waypoint chatcodes in copy bar */
+.copy-bar input[type="text"] {
+  font-family: 'Consolas', 'Menlo', 'Monaco', monospace;
+  letter-spacing: 0.5px;
 }
 
 #search {
