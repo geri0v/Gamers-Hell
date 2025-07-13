@@ -1,4 +1,4 @@
-// cmd.js - GW2 Event & Loot Browser with dynamic loot and copy bar
+// cmd.js - GW2 Event & Loot Browser with improved loot list, robust wiki links, and show/hide loot
 
 // CONFIGURATION
 const DATA_URLS = [
@@ -17,12 +17,22 @@ const tpCache = {};
 let coreTyriaCollapsed = false;
 const coreTyriaSourcesCollapsed = {};
 
-function createWikiUrl(nameOrCode) {
-  if (!nameOrCode) return '#';
-  if (nameOrCode.startsWith('[&')) {
-    return `https://wiki.guildwars2.com/wiki/Special:Search?search=${encodeURIComponent(nameOrCode)}`;
+// Robust wiki link function: prefers API name, then JSON name, then chat code, then ID
+function createWikiUrl(item) {
+  if (!item) return '#';
+  if (item.id && itemCache[item.id] && itemCache[item.id].name) {
+    return `https://wiki.guildwars2.com/wiki/${encodeURIComponent(itemCache[item.id].name.replace(/ /g, '_'))}`;
   }
-  return `https://wiki.guildwars2.com/wiki/${encodeURIComponent(nameOrCode.replace(/ /g, '_'))}`;
+  if (item.name) {
+    return `https://wiki.guildwars2.com/wiki/${encodeURIComponent(item.name.replace(/ /g, '_'))}`;
+  }
+  if (item.code && item.code.startsWith('[&')) {
+    return `https://wiki.guildwars2.com/wiki/Special:Search?search=${encodeURIComponent(item.code)}`;
+  }
+  if (item.id) {
+    return `https://wiki.guildwars2.com/wiki/Special:Search?search=${encodeURIComponent(item.id)}`;
+  }
+  return '#';
 }
 
 function splitCoins(coins) {
@@ -49,9 +59,8 @@ function getMostValuableLoot(lootArr, itemCache) {
   return maxItem || (lootArr[0] || null);
 }
 
-// --- Live TP Value (Trading Post) Fallback ---
+// Live TP Value (Trading Post) Fallback
 async function fetchTPValue(itemId) {
-  // 1. Try GW2 API Trading Post endpoint
   try {
     const apiRes = await fetch(`https://api.guildwars2.com/v2/commerce/prices/${itemId}`);
     if (apiRes.ok) {
@@ -62,7 +71,6 @@ async function fetchTPValue(itemId) {
       }
     }
   } catch (e) {}
-  // 2. Try GW2BLTC API (unofficial, public mirror, fallback)
   try {
     const bltcRes = await fetch(`https://api.gw2bltc.com/price/${itemId}`);
     if (bltcRes.ok) {
@@ -89,7 +97,6 @@ async function fetchItemInfo(id) {
       icon: data.icon,
       wiki: createWikiUrl(data.name),
     };
-    // Try to get live TP value as an extra property
     const tpValue = await fetchTPValue(id);
     if (tpValue !== null) {
       info.tp_value = tpValue;
@@ -178,7 +185,7 @@ function toggleCoreTyriaSource(source) {
   render();
 }
 
-// --- Copy nudge helper ---
+// Copy nudge helper
 function showCopyNudge(btn) {
   let nudge = document.createElement('span');
   nudge.className = 'copy-nudge';
@@ -187,7 +194,7 @@ function showCopyNudge(btn) {
   setTimeout(() => nudge.remove(), 1200);
 }
 
-// --- Main Render ---
+// Main Render
 function render() {
   const container = document.getElementById('events');
   container.innerHTML = '';
@@ -240,21 +247,17 @@ function render() {
 
             // Loot items as a list
             const lootItems = (ev.loot || []).map(item => {
-              let displayName = item.name || item.id || item.code || 'Unknown Item';
-              let wikiUrl = item.id && itemCache[item.id] && itemCache[item.id].wiki
-                ? itemCache[item.id].wiki
-                : createWikiUrl(item.name || item.code);
+              let displayName = (item.id && itemCache[item.id] && itemCache[item.id].name) ? itemCache[item.id].name : (item.name || item.id || item.code || 'Unknown Item');
+              let wikiUrl = createWikiUrl(item);
               let icon = item.id && itemCache[item.id] && itemCache[item.id].icon
                 ? `<img src="${itemCache[item.id].icon}" alt="" class="loot-icon">`
                 : '';
               let vendorValue = item.id && itemCache[item.id] && typeof itemCache[item.id].vendor_value === 'number'
                 ? `<span class="vendor-value">${splitCoins(itemCache[item.id].vendor_value)}</span>`
                 : '';
-              // --- Live TP value (if available) ---
-              let tpValue = '';
-              if (item.id && itemCache[item.id] && typeof itemCache[item.id].tp_value === 'number') {
-                tpValue = `<span class="tp-value" title="Trading Post lowest sell">${splitCoins(itemCache[item.id].tp_value)} <span style="font-size:0.95em;color:var(--color-accent-emerald);">(TP)</span></span>`;
-              }
+              let tpValue = (item.id && itemCache[item.id] && typeof itemCache[item.id].tp_value === 'number')
+                ? `<span class="tp-value" title="Trading Post lowest sell">${splitCoins(itemCache[item.id].tp_value)} <span style="font-size:0.95em;color:var(--color-accent-emerald);">(TP)</span></span>`
+                : '';
               let chatLink = item.id && itemCache[item.id] && itemCache[item.id].chat_link
                 ? ` <code>${itemCache[item.id].chat_link}</code>`
                 : (item.code ? ` <code>${item.code}</code>` : '');
@@ -275,7 +278,7 @@ function render() {
                 </div>`
               : '';
 
-            const eventWikiUrl = createWikiUrl(ev.name);
+            const eventWikiUrl = createWikiUrl({name: ev.name});
 
             // Render the event as a full-width card!
             const eventCard = document.createElement('article');
