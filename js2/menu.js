@@ -1,7 +1,6 @@
 // menu.js
 
 let menuState = {}; // {expansion: {collapsed: bool, sources: {source: bool}}}
-let menuOpen = false;
 
 function ensureMenuState(groups) {
   Object.keys(groups).forEach(exp => {
@@ -12,20 +11,13 @@ function ensureMenuState(groups) {
   });
 }
 
-// Toggle menu open/close
-function toggleMenu(force) {
-  menuOpen = typeof force === "boolean" ? force : !menuOpen;
+// Toggle sidebar collapse
+function toggleMenuSidebar() {
   const menu = document.getElementById('menu');
-  const overlay = document.getElementById('menu-overlay');
-  if (menuOpen) {
-    menu.classList.add('open');
-    overlay.classList.add('show');
-    document.body.classList.add('menu-open');
-  } else {
-    menu.classList.remove('open');
-    overlay.classList.remove('show');
-    document.body.classList.remove('menu-open');
-  }
+  menu.classList.toggle('collapsed');
+  // Optionally update button text/icon
+  const btn = document.getElementById('menu-toggle');
+  if (btn) btn.innerText = menu.classList.contains('collapsed') ? '☰ Show Menu' : '☰ Hide Menu';
 }
 
 // Render the menu
@@ -35,12 +27,7 @@ function renderMenu() {
 
   const menu = document.getElementById('menu');
   if (!menu) return;
-  menu.innerHTML = `
-    <div class="menu-header">
-      <span class="menu-title">Expansions</span>
-      <button class="menu-close-btn" onclick="toggleMenu(false)" aria-label="Close Menu">&times;</button>
-    </div>
-  `;
+  menu.innerHTML = `<div class="menu-title">Expansions</div>`;
 
   Object.entries(groups).forEach(([expansion, sources]) => {
     const expId = `expansion-${expansion.replace(/\s+/g, '_')}`;
@@ -83,7 +70,6 @@ function toggleMenuSource(expansion, source) {
 
 // Smooth scroll to section and auto-expand if needed
 function jumpToSection(id) {
-  // Expand section if collapsed
   const [expansionPart, ...rest] = id.split('-source-');
   const expansion = expansionPart.replace('expansion-', '').replace(/_/g, ' ');
   const source = rest.length ? rest.join('-source-').replace(/_/g, ' ') : null;
@@ -99,13 +85,12 @@ function jumpToSection(id) {
     setTimeout(() => jumpToSection(id), 100);
     return;
   }
-  toggleMenu(false);
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 
 // Expose for inline handlers
-window.toggleMenu = toggleMenu;
+window.toggleMenuSidebar = toggleMenuSidebar;
 window.toggleMenuExpansion = toggleMenuExpansion;
 window.toggleMenuSource = toggleMenuSource;
 window.jumpToSection = jumpToSection;
