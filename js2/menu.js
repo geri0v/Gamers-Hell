@@ -1,5 +1,3 @@
-// menu.js
-
 let menuState = {}; // {expansion: {collapsed: bool, sources: {source: bool}}}
 
 // Sidebar show/hide toggle
@@ -32,10 +30,15 @@ function renderMenu() {
   Object.entries(groups).forEach(([expansion, sources]) => {
     const expId = `expansion-${expansion.replace(/\s+/g, '_')}`;
     const expDiv = document.createElement('div');
-    expDiv.className = 'menu-card'; // Use fantasy card look for expansions
+    expDiv.className = 'menu-card';
 
     const arrow = menuState[expansion].collapsed ? '▶' : '▼';
-    expDiv.innerHTML = `<div class="menu-exp-header" tabindex="0" onclick="toggleMenuExpansion('${expansion.replace(/'/g, "\\'")}')">${arrow} <span class="menu-exp-link" onclick="event.stopPropagation();jumpToSection('${expId}')">${expansion}</span></div>`;
+    expDiv.innerHTML = `
+      <div class="menu-exp-header" tabindex="0" role="button" aria-expanded="${!menuState[expansion].collapsed}"
+        onclick="toggleMenuExpansion('${expansion.replace(/'/g, "\\'")}')">
+        ${arrow} <span class="menu-exp-link" onclick="event.stopPropagation();jumpToSection('${expId}')">${expansion}</span>
+      </div>
+    `;
 
     const srcList = document.createElement('div');
     srcList.className = 'menu-sources';
@@ -45,11 +48,15 @@ function renderMenu() {
       const srcId = `${expId}-source-${source.replace(/\s+/g, '_')}`;
       const srcArrow = menuState[expansion].sources[source] ? '▶' : '▼';
       const srcDiv = document.createElement('div');
-      srcDiv.className = 'menu-source';
-      // Uncomment the next line if you want sources to also look like cards:
-      srcDiv.className += ' menu-card';
-      srcDiv.innerHTML = `<div style="cursor:pointer;display:inline" onclick="toggleMenuSource('${expansion.replace(/'/g, "\\'")}', '${source.replace(/'/g, "\\'")}')">${srcArrow}</div>
-        <span class="menu-source-link" onclick="event.stopPropagation();jumpToSection('${srcId}')">${source}</span>`;
+      // Avoid duplicate menu-card class
+      srcDiv.className = 'menu-source menu-card';
+      srcDiv.innerHTML = `
+        <div style="cursor:pointer;display:inline" role="button" aria-expanded="${!menuState[expansion].sources[source]}"
+          onclick="toggleMenuSource('${expansion.replace(/'/g, "\\'")}', '${source.replace(/'/g, "\\'")}')">
+          ${srcArrow}
+        </div>
+        <span class="menu-source-link" onclick="event.stopPropagation();jumpToSection('${srcId}')">${source}</span>
+      `;
       srcList.appendChild(srcDiv);
     });
 
