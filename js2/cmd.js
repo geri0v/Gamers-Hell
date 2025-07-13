@@ -1,4 +1,4 @@
-// == Gamers-Hell: Modern Full JS App with Menu Integration ==
+// == Gamers-Hell: Full JS App for Modern Layout & Menu Integration ==
 
 const DATA_URLS = [
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/temples.json',
@@ -22,7 +22,6 @@ function groupEvents(events) {
   return expansions;
 }
 
-// Expose menu structure for menu.js
 function getMenuStructure() {
   const structure = {};
   allEvents.forEach(ev => {
@@ -35,7 +34,6 @@ function getMenuStructure() {
   return structure;
 }
 
-// Copy nudge
 function showCopyNudge(btn) {
   const parent = btn.parentElement;
   const existing = parent.querySelector('.copy-nudge');
@@ -47,7 +45,6 @@ function showCopyNudge(btn) {
   setTimeout(() => nudge.remove(), 1200);
 }
 
-// Render event cards
 function renderEvents() {
   const container = document.getElementById('events');
   container.innerHTML = '';
@@ -112,7 +109,6 @@ function renderEvents() {
   });
 }
 
-// Filtering & Sorting
 function applyFilters() {
   let query = document.getElementById('search').value.toLowerCase();
   filteredEvents = allEvents.filter(ev =>
@@ -131,7 +127,6 @@ function applyFilters() {
   renderEvents();
 }
 
-// Menu integration: allow menu.js to filter
 window.cmd_run = function(cmdString) {
   let match = cmdString.match(/^show expansion "(.+)" source "(.+)"$/i);
   if (match) {
@@ -163,7 +158,6 @@ window.cmd_run = function(cmdString) {
   alert("Unknown command: " + cmdString);
 };
 
-// Initial load
 document.addEventListener('DOMContentLoaded', async function() {
   const all = await Promise.all(DATA_URLS.map(async (url) => {
     try {
@@ -188,7 +182,6 @@ document.addEventListener('DOMContentLoaded', async function() {
   }));
   allEvents = all.flat();
   filteredEvents = allEvents;
-  window.render = renderEvents; // For menu.js fallback
   renderEvents();
   if (window.renderMenu) window.renderMenu(getMenuStructure());
   document.getElementById('search').addEventListener('input', applyFilters);
@@ -202,4 +195,6 @@ document.addEventListener('DOMContentLoaded', async function() {
       applyFilters();
     });
   });
+  // Expose render for menu.js fallback (optional)
+  window.render = renderEvents;
 });
