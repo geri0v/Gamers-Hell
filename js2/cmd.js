@@ -4,18 +4,15 @@ const DATA_URLS = [
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/untimedcore.json'
 ];
 
-// STATE
 let allEvents = [];
 let filteredEvents = [];
 let sortKey = 'name';
 let sortAsc = true;
-const itemCache = {}; // id -> item info
+const itemCache = {};
 
-// For collapsible UI
 let coreTyriaCollapsed = false;
 const coreTyriaSourcesCollapsed = {};
 
-// UTILS
 function createWikiUrl(nameOrCode) {
   if (!nameOrCode) return '#';
   if (nameOrCode.startsWith('[&')) {
@@ -48,7 +45,6 @@ function getMostValuableLoot(lootArr, itemCache) {
   return maxItem || (lootArr[0] || null);
 }
 
-// Fetch item info from GW2 API
 async function fetchItemInfo(id) {
   if (itemCache[id]) return itemCache[id];
   try {
@@ -70,7 +66,6 @@ async function fetchItemInfo(id) {
   }
 }
 
-// DATA LOADING
 async function loadData() {
   const allData = await Promise.all(DATA_URLS.map(url => fetch(url).then(r => r.json())));
   let events = [];
@@ -90,7 +85,6 @@ async function loadData() {
   render();
 }
 
-// Enrich loot items with GW2 API info where possible
 async function enrichLootWithApi() {
   const lootItems = [];
   allEvents.forEach(ev => {
@@ -102,7 +96,6 @@ async function enrichLootWithApi() {
   await Promise.all(uniqueIds.map(id => fetchItemInfo(id)));
 }
 
-// GROUPING
 function groupEvents(events) {
   const expansions = {};
   events.forEach(ev => {
@@ -113,7 +106,6 @@ function groupEvents(events) {
   return expansions;
 }
 
-// FILTER & SORT
 function applyFilters() {
   let query = document.getElementById('search').value.toLowerCase();
   filteredEvents = allEvents.filter(ev =>
@@ -141,7 +133,6 @@ function applyFilters() {
   render();
 }
 
-// COLLAPSE UI HELPERS
 function toggleCoreTyria() {
   coreTyriaCollapsed = !coreTyriaCollapsed;
   render();
@@ -151,20 +142,17 @@ function toggleCoreTyriaSource(source) {
   render();
 }
 
-// RENDER
 function render() {
   const container = document.getElementById('events');
   container.innerHTML = '';
   const groups = groupEvents(filteredEvents);
 
   Object.entries(groups).forEach(([expansion, sources]) => {
-    // Add an ID to the expansion div for menu.js
     const expId = `expansion-${expansion.replace(/\s+/g, '_')}`;
     const expDiv = document.createElement('div');
     expDiv.className = 'expansion';
     expDiv.id = expId;
 
-    // Expansion header (collapsible if Core Tyria)
     if (expansion === 'Core Tyria') {
       expDiv.innerHTML = `<h2 style="cursor:pointer;" onclick="toggleCoreTyria()">
         ${coreTyriaCollapsed ? '▶' : '▼'} Core Tyria
@@ -173,16 +161,13 @@ function render() {
       expDiv.innerHTML = `<h2>${expansion}</h2>`;
     }
 
-    // Show/hide sources for Core Tyria
     if (expansion !== 'Core Tyria' || !coreTyriaCollapsed) {
       Object.entries(sources).forEach(([source, events]) => {
-        // Add an ID to the source div for menu.js
         const srcId = `${expId}-source-${source.replace(/\s+/g, '_')}`;
         const srcDiv = document.createElement('div');
         srcDiv.className = 'source';
         srcDiv.id = srcId;
 
-        // Source header (collapsible if under Core Tyria)
         if (expansion === 'Core Tyria') {
           if (!(source in coreTyriaSourcesCollapsed)) coreTyriaSourcesCollapsed[source] = false;
           srcDiv.innerHTML = `<h3 style="cursor:pointer;" onclick="toggleCoreTyriaSource('${source.replace(/'/g, "\\'")}')">
@@ -192,23 +177,17 @@ function render() {
           srcDiv.innerHTML = `<h3>${source}</h3>`;
         }
 
-        // Show/hide events for Core Tyria sources
         if (expansion !== 'Core Tyria' || !coreTyriaSourcesCollapsed[source]) {
           events.forEach(ev => {
-            // Find most valuable loot item
             const mostValuable = getMostValuableLoot(ev.loot || [], itemCache);
             const mostValuableName = mostValuable ? (mostValuable.name || mostValuable.id || mostValuable.code) : '';
             const mostValuableValue = (mostValuable && mostValuable.id && itemCache[mostValuable.id])
               ? splitCoins(itemCache[mostValuable.id].vendor_value)
               : '';
 
-            // Waypoint chatcode or map
             const waypoint = ev.code ? ev.code : (ev.map || '');
-
-            // Copy bar value (strip HTML from value for copy)
             const copyValue = `${ev.name} | ${waypoint} | ${mostValuableName}${mostValuableValue ? ' (' + mostValuableValue.replace(/<[^>]+>/g, '') + ')' : ''}`;
 
-            // Loot list with API info or wiki fallback
             const lootItems = (ev.loot || []).map(item => {
               let displayName = item.name || item.id || item.code || 'Unknown Item';
               let wikiUrl = item.id && itemCache[item.id] && itemCache[item.id].wiki
@@ -259,15 +238,11 @@ function render() {
     container.appendChild(expDiv);
   });
 
-  // Sync menu after render if menu.js is loaded
   if (typeof renderMenu === "function") renderMenu();
 }
 
-// EVENT LISTENERS & COLLAPSE HOOKS
 window.toggleCoreTyria = toggleCoreTyria;
 window.toggleCoreTyriaSource = toggleCoreTyriaSource;
-
-// Expose grouped data for menu.js
 window.getEventGroups = () => groupEvents(filteredEvents);
 
 document.addEventListener('DOMContentLoaded', () => {
