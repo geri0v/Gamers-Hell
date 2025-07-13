@@ -131,3 +131,91 @@ header, footer {
 .empty-state { text-align: center; color: #b3c6e0; margin: 2em 0; font-size: 1.2em; }
 .empty-state img { width: 80px; margin-bottom: 1em; opacity: 0.7; }
 mark { background: #4a90e2; color: #fff; border-radius: 3px; padding: 0 2px; }
+#exp-source-menu {
+  margin-bottom: 2em;
+  background: #232c3b;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0002;
+  padding: 1.3em 1.5em 1.1em 1.5em;
+  max-width: 320px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.expansion-group {
+  margin-bottom: 1.1em;
+}
+.expansion-btn {
+  background: #232c3b;
+  color: #4a90e2;
+  font-size: 1.13em;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.18s, color 0.18s;
+  outline: none;
+}
+.expansion-btn.active,
+.expansion-btn:focus {
+  background: #2b4765;
+  color: #fff;
+}
+.expansion-btn .arrow {
+  font-size: 1.1em;
+  margin-left: 0.5em;
+  transition: transform 0.2s;
+}
+.expansion-btn.collapsed .arrow {
+  transform: rotate(-90deg);
+}
+ul.expansion-subs {
+  list-style: none;
+  padding: 0 0 0 0.2em;
+  margin: 0;
+  transition: max-height 0.2s;
+  overflow: hidden;
+}
+ul.expansion-subs.collapsed {
+  display: none;
+}
+#exp-source-menu li {
+  margin: 0.15em 0 0.15em 0;
+}
+#exp-source-menu .menu-btn {
+  background: #2b4765;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.38em 1.1em;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 0.01em;
+  transition: background 0.18s, color 0.18s, transform 0.18s;
+  outline: none;
+  box-shadow: 0 1px 4px #0001;
+  width: 100%;
+  text-align: left;
+}
+#exp-source-menu .menu-btn:hover, #exp-source-menu .menu-btn:focus {
+  background: #4a90e2;
+  color: #fff;
+  transform: scale(1.04);
+}
+#exp-source-menu .menu-btn.active {
+  background: #4a90e2;
+  color: #fff;
+  transform: scale(1.08);
+}
+@media (max-width: 600px) {
+  #exp-source-menu {
+    max-width: 98vw;
+    padding: 1em 2vw 1em 2vw;
+  }
+}
+
