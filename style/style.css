@@ -218,4 +218,173 @@ ul.expansion-subs.collapsed {
     padding: 1em 2vw 1em 2vw;
   }
 }
+gw2-event-timer,
+gw2-event-timer * {
+  box-sizing: border-box;
+}
+
+gw2-event-timer .timer-container {
+  margin-top: 40px;
+  background: #222;
+  color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  padding: 32px 16px 24px 16px;
+  max-width: 100vw;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+gw2-event-timer .timer-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  justify-content: flex-end;
+}
+
+gw2-event-timer label {
+  font-size: 1rem;
+  margin-right: 6px;
+}
+
+gw2-event-timer select,
+gw2-event-timer button {
+  font-size: 1rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin: 0;
+}
+
+gw2-event-timer button {
+  background: #2b4765;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+gw2-event-timer button:hover {
+  background: #3c6e8d;
+}
+
+gw2-event-timer .event-list {
+  width: 100%;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+gw2-event-timer .event-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid #333;
+  background: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  user-select: none;
+}
+gw2-event-timer .event-row.upcoming {
+  background: #29334a;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 4px;
+}
+gw2-event-timer .event-row:hover {
+  background: #2b4765bb;
+}
+gw2-event-timer .event-info {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  min-width: 0;
+}
+gw2-event-timer .event-name {
+  font-weight: bold;
+  font-size: 1.08em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+gw2-event-timer .event-location {
+  font-size: 0.98em;
+  color: #f1c40f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+gw2-event-timer .event-waypoint {
+  font-size: 0.95em;
+  color: #7ed6df;
+  margin-left: 2px;
+  white-space: nowrap;
+}
+gw2-event-timer .event-time {
+  flex: 1.2;
+  text-align: right;
+  font-family: monospace;
+  font-size: 1.07em;
+  min-width: 70px;
+  margin-left: 4px;
+}
+gw2-event-timer .event-countdown {
+  display: block;
+  font-size: 0.93em;
+  color: #f1c40f;
+  text-align: right;
+}
+gw2-event-timer .spinner {
+  border: 4px solid #eee;
+  border-top: 4px solid #2b4765;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  animation: spin 1s linear infinite;
+  margin: 30px auto;
+  display: block;
+}
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+gw2-event-timer #toast {
+  position: fixed;
+  left: 50%;
+  bottom: 36px;
+  transform: translateX(-50%) scale(0.9);
+  background: #222c;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-size: 1.1em;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3001;
+  box-shadow: 0 4px 24px #0005;
+  transition: opacity 0.3s, transform 0.3s;
+}
+gw2-event-timer #toast.show {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  pointer-events: auto;
+}
+@media (max-width: 600px) {
+  gw2-event-timer .timer-container {
+    max-width: 98vw;
+    padding: 12px 2vw 16px 2vw;
+  }
+  gw2-event-timer .event-list { font-size: 1rem; }
+}
 
