@@ -11,14 +11,41 @@ let sortKey = 'name';
 let sortAsc = true;
 const itemCache = {}; // id -> item info
 
+// For collapsible UI
+let coreTyriaCollapsed = false;
+const coreTyriaSourcesCollapsed = {};
+
 // UTILS
 function createWikiUrl(nameOrCode) {
-  // Prefer name; fallback to chat code
   if (!nameOrCode) return '#';
   if (nameOrCode.startsWith('[&')) {
     return `https://wiki.guildwars2.com/wiki/Special:Search?search=${encodeURIComponent(nameOrCode)}`;
   }
   return `https://wiki.guildwars2.com/wiki/${encodeURIComponent(nameOrCode.replace(/ /g, '_'))}`;
+}
+
+function splitCoins(coins) {
+  if (typeof coins !== 'number' || isNaN(coins)) return '';
+  const gold = Math.floor(coins / 10000);
+  const silver = Math.floor((coins % 10000) / 100);
+  const copper = coins % 100;
+  let str = '';
+  if (gold) str += `${gold}g `;
+  if (gold || silver) str += `${silver}s `;
+  str += `${copper}c`;
+  return str.trim();
+}
+
+function getMostValuableLoot(lootArr, itemCache) {
+  let maxValue = -1, maxItem = null;
+  lootArr.forEach(item => {
+    let value = (item.id && itemCache[item.id]) ? itemCache[item.id].vendor_value : 0;
+    if (value > maxValue) {
+      maxValue = value;
+      maxItem = item;
+    }
+  });
+  return maxItem || (lootArr[0] || null);
 }
 
 // Fetch item info from GW2 API
@@ -71,7 +98,6 @@ async function enrichLootWithApi() {
       if (item.id && !itemCache[item.id]) lootItems.push(item.id);
     });
   });
-  // Remove duplicates
   const uniqueIds = [...new Set(lootItems)];
   await Promise.all(uniqueIds.map(id => fetchItemInfo(id)));
 }
@@ -92,15 +118,16 @@ function applyFilters() {
   let query = document.getElementById('search').value.toLowerCase();
   filteredEvents = allEvents.filter(ev =>
     ev.name.toLowerCase().includes(query) ||
-    ev.map.toLowerCase().includes(query) ||
+    (ev.map && ev.map.toLowerCase().includes(query)) ||
     (ev.loot && ev.loot.some(item => (item.name && item.name.toLowerCase().includes(query))))
   );
   filteredEvents.sort((a, b) => {
     let vA, vB;
     if (sortKey === 'value') {
-      // Use vendor_value of first loot item (if available)
-      vA = (a.loot && a.loot[0] && a.loot[0].id && itemCache[a.loot[0].id]) ? itemCache[a.loot[0].id].vendor_value : 0;
-      vB = (b.loot && b.loot[0] && b.loot[0].id && itemCache[b.loot[0].id]) ? itemCache[b.loot[0].id].vendor_value : 0;
+      vA = (a.loot && getMostValuableLoot(a.loot, itemCache) && getMostValuableLoot(a.loot, itemCache).id && itemCache[getMostValuableLoot(a.loot, itemCache).id])
+        ? itemCache[getMostValuableLoot(a.loot, itemCache).id].vendor_value : 0;
+      vB = (b.loot && getMostValuableLoot(b.loot, itemCache) && getMostValuableLoot(b.loot, itemCache).id && itemCache[getMostValuableLoot(b.loot, itemCache).id])
+        ? itemCache[getMostValuableLoot(b.loot, itemCache).id].vendor_value : 0;
     } else {
       vA = a[sortKey] || '';
       vB = b[sortKey] || '';
@@ -114,6 +141,16 @@ function applyFilters() {
   render();
 }
 
+// COLLAPSE UI HELPERS
+function toggleCoreTyria() {
+  coreTyriaCollapsed = !coreTyriaCollapsed;
+  render();
+}
+function toggleCoreTyriaSource(source) {
+  coreTyriaSourcesCollapsed[source] = !coreTyriaSourcesCollapsed[source];
+  render();
+}
+
 // RENDER
 function render() {
   const container = document.getElementById('events');
@@ -122,68 +159,104 @@ function render() {
   Object.entries(groups).forEach(([expansion, sources]) => {
     const expDiv = document.createElement('div');
     expDiv.className = 'expansion';
-    expDiv.innerHTML = `<h2>${expansion}</h2>`;
-    Object.entries(sources).forEach(([source, events]) => {
-      const srcDiv = document.createElement('div');
-      srcDiv.className = 'source';
-      srcDiv.innerHTML = `<h3>${source}</h3>`;
-      events.forEach(ev => {
-        // Loot list with API info or wiki fallback
-        const lootItems = (ev.loot || []).map(item => {
-          let displayName = item.name || item.id || item.code || 'Unknown Item';
-          let wikiUrl = item.id && itemCache[item.id] && itemCache[item.id].wiki
-            ? itemCache[item.id].wiki
-            : createWikiUrl(item.name || item.code);
-          let icon = item.id && itemCache[item.id] && itemCache[item.id].icon
-            ? `<img src="${itemCache[item.id].icon}" alt="" class="loot-icon">`
-            : '';
-          let vendorValue = item.id && itemCache[item.id] && typeof itemCache[item.id].vendor_value === 'number'
-            ? ` - ${itemCache[item.id].vendor_value} coins`
-            : '';
-          let chatLink = item.id && itemCache[item.id] && itemCache[item.id].chat_link
-            ? ` <code>${itemCache[item.id].chat_link}</code>`
-            : (item.code ? ` <code>${item.code}</code>` : '');
-          return `<li>
-            ${icon}
-            <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${displayName}</a>
-            ${vendorValue}
-            ${chatLink}
-          </li>`;
-        }).join('');
-        const lootSection = lootItems
-          ? `<div class="loot-section">
-              <button class="toggle-loot" onclick="this.nextElementSibling.classList.toggle('show')">Show/Hide Loot</button>
-              <ul class="loot-list">${lootItems}</ul>
-            </div>`
-          : '';
-        const firstItem = (ev.loot && ev.loot[0]) ? (ev.loot[0].name || ev.loot[0].id || ev.loot[0].code) : '';
-        let firstItemValue = '';
-        if (ev.loot && ev.loot[0] && ev.loot[0].id && itemCache[ev.loot[0].id]) {
-          firstItemValue = itemCache[ev.loot[0].id].vendor_value;
+
+    // Expansion header (collapsible if Core Tyria)
+    if (expansion === 'Core Tyria') {
+      expDiv.innerHTML = `<h2 style="cursor:pointer;" onclick="toggleCoreTyria()">
+        ${coreTyriaCollapsed ? '▶' : '▼'} Core Tyria
+      </h2>`;
+    } else {
+      expDiv.innerHTML = `<h2>${expansion}</h2>`;
+    }
+
+    // Show/hide sources for Core Tyria
+    if (expansion !== 'Core Tyria' || !coreTyriaCollapsed) {
+      Object.entries(sources).forEach(([source, events]) => {
+        const srcDiv = document.createElement('div');
+        srcDiv.className = 'source';
+
+        // Source header (collapsible if under Core Tyria)
+        if (expansion === 'Core Tyria') {
+          if (!(source in coreTyriaSourcesCollapsed)) coreTyriaSourcesCollapsed[source] = false;
+          srcDiv.innerHTML = `<h3 style="cursor:pointer;" onclick="toggleCoreTyriaSource('${source.replace(/'/g, "\\'")}')">
+            ${coreTyriaSourcesCollapsed[source] ? '▶' : '▼'} ${source}
+          </h3>`;
+        } else {
+          srcDiv.innerHTML = `<h3>${source}</h3>`;
         }
-        const eventWikiUrl = createWikiUrl(ev.name);
-        srcDiv.innerHTML += `
-          <div class="event">
-            <div class="copy-bar">
-              <input type="text" value="${ev.name} | ${ev.map} | ${firstItem}${firstItemValue ? ' (' + firstItemValue + ' coins)' : ''}" readonly>
-              <button onclick="navigator.clipboard.writeText(this.previousElementSibling.value)">Copy</button>
-            </div>
-            <div class="event-info">
-              <a href="${eventWikiUrl}" target="_blank" rel="noopener noreferrer" class="event-name">${ev.name}</a>
-              <span class="event-map">${ev.map}</span>
-              <span class="event-code">${ev.code ? `<code>${ev.code}</code>` : ''}</span>
-            </div>
-            ${lootSection}
-          </div>
-        `;
+
+        // Show/hide events for Core Tyria sources
+        if (expansion !== 'Core Tyria' || !coreTyriaSourcesCollapsed[source]) {
+          events.forEach(ev => {
+            // Find most valuable loot item
+            const mostValuable = getMostValuableLoot(ev.loot || [], itemCache);
+            const mostValuableName = mostValuable ? (mostValuable.name || mostValuable.id || mostValuable.code) : '';
+            const mostValuableValue = (mostValuable && mostValuable.id && itemCache[mostValuable.id])
+              ? splitCoins(itemCache[mostValuable.id].vendor_value)
+              : '';
+
+            // Waypoint chatcode or map
+            const waypoint = ev.code ? ev.code : (ev.map || '');
+
+            // Copy bar value
+            const copyValue = `${ev.name} | ${waypoint} | ${mostValuableName}${mostValuableValue ? ' (' + mostValuableValue + ')' : ''}`;
+
+            // Loot list with API info or wiki fallback
+            const lootItems = (ev.loot || []).map(item => {
+              let displayName = item.name || item.id || item.code || 'Unknown Item';
+              let wikiUrl = item.id && itemCache[item.id] && itemCache[item.id].wiki
+                ? itemCache[item.id].wiki
+                : createWikiUrl(item.name || item.code);
+              let icon = item.id && itemCache[item.id] && itemCache[item.id].icon
+                ? `<img src="${itemCache[item.id].icon}" alt="" class="loot-icon">`
+                : '';
+              let vendorValue = item.id && itemCache[item.id] && typeof itemCache[item.id].vendor_value === 'number'
+                ? `<span class="vendor-value">${splitCoins(itemCache[item.id].vendor_value)}</span>`
+                : '';
+              let chatLink = item.id && itemCache[item.id] && itemCache[item.id].chat_link
+                ? ` <code>${itemCache[item.id].chat_link}</code>`
+                : (item.code ? ` <code>${item.code}</code>` : '');
+              return `<li>
+                ${icon}
+                <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${displayName}</a>
+                ${vendorValue}
+                ${chatLink}
+              </li>`;
+            }).join('');
+            const lootSection = lootItems
+              ? `<div class="loot-section">
+                  <button class="toggle-loot" onclick="this.nextElementSibling.classList.toggle('show')">Show/Hide Loot</button>
+                  <ul class="loot-list">${lootItems}</ul>
+                </div>`
+              : '';
+            const eventWikiUrl = createWikiUrl(ev.name);
+            srcDiv.innerHTML += `
+              <div class="event">
+                <div class="copy-bar">
+                  <input type="text" value="${copyValue}" readonly>
+                  <button onclick="navigator.clipboard.writeText(this.previousElementSibling.value)">Copy</button>
+                </div>
+                <div class="event-info">
+                  <a href="${eventWikiUrl}" target="_blank" rel="noopener noreferrer" class="event-name">${ev.name}</a>
+                  <span class="event-map">${ev.map}</span>
+                  <span class="event-code">${ev.code ? `<code>${ev.code}</code>` : ''}</span>
+                </div>
+                ${lootSection}
+              </div>
+            `;
+          });
+        }
+        expDiv.appendChild(srcDiv);
       });
-      expDiv.appendChild(srcDiv);
-    });
+    }
     container.appendChild(expDiv);
   });
 }
 
-// EVENT LISTENERS
+// EVENT LISTENERS & COLLAPSE HOOKS
+window.toggleCoreTyria = toggleCoreTyria;
+window.toggleCoreTyriaSource = toggleCoreTyriaSource;
+
 document.addEventListener('DOMContentLoaded', () => {
   loadData();
   document.getElementById('search').addEventListener('input', applyFilters);
