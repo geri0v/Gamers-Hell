@@ -1,7 +1,10 @@
+// cmd.js - GW2 Event & Loot Browser with Live TP Value Fallback
+
 // CONFIGURATION
 const DATA_URLS = [
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/temples.json',
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/untimedcore.json'
+  // Add more JSON URLs here as needed, e.g. Heart of Thorns, PoF, etc.
 ];
 
 let allEvents = [];
@@ -9,6 +12,7 @@ let filteredEvents = [];
 let sortKey = 'name';
 let sortAsc = true;
 const itemCache = {};
+const tpCache = {};
 
 let coreTyriaCollapsed = false;
 const coreTyriaSourcesCollapsed = {};
@@ -45,6 +49,47 @@ function getMostValuableLoot(lootArr, itemCache) {
   return maxItem || (lootArr[0] || null);
 }
 
+// --- Live TP Value (Trading Post) Fallback ---
+// Tries GW2 API first, then GW2BLTC, then GW2Spidy (if desired)
+async function fetchTPValue(itemId) {
+  // 1. Try GW2 API Trading Post endpoint
+  try {
+    const apiRes = await fetch(`https://api.guildwars2.com/v2/commerce/prices/${itemId}`);
+    if (apiRes.ok) {
+      const data = await apiRes.json();
+      // Use lowest sell offer as TP value
+      if (data && data.sells && typeof data.sells.unit_price === 'number') {
+        tpCache[itemId] = data.sells.unit_price;
+        return data.sells.unit_price;
+      }
+    }
+  } catch (e) {}
+  // 2. Try GW2BLTC API (unofficial, public mirror, fallback)
+  try {
+    const bltcRes = await fetch(`https://api.gw2bltc.com/price/${itemId}`);
+    if (bltcRes.ok) {
+      const data = await bltcRes.json();
+      if (data && typeof data.sell === 'number') {
+        tpCache[itemId] = data.sell;
+        return data.sell;
+      }
+    }
+  } catch (e) {}
+  // 3. (Optional) Try GW2Spidy API as another fallback
+  // Uncomment if you want to use GW2Spidy as a third fallback
+  // try {
+  //   const spidyRes = await fetch(`https://www.gw2spidy.com/api/v0.9/json/item/${itemId}`);
+  //   if (spidyRes.ok) {
+  //     const data = await spidyRes.json();
+  //     if (data && data.result && typeof data.result.min_sale_unit_price === 'number') {
+  //       tpCache[itemId] = data.result.min_sale_unit_price;
+  //       return data.result.min_sale_unit_price;
+  //     }
+  //   }
+  // } catch (e) {}
+  return null;
+}
+
 async function fetchItemInfo(id) {
   if (itemCache[id]) return itemCache[id];
   try {
@@ -58,6 +103,11 @@ async function fetchItemInfo(id) {
       icon: data.icon,
       wiki: createWikiUrl(data.name),
     };
+    // Try to get live TP value as an extra property
+    const tpValue = await fetchTPValue(id);
+    if (tpValue !== null) {
+      info.tp_value = tpValue;
+    }
     itemCache[id] = info;
     return info;
   } catch {
@@ -142,6 +192,16 @@ function toggleCoreTyriaSource(source) {
   render();
 }
 
+// --- Copy nudge helper ---
+function showCopyNudge(btn) {
+  let nudge = document.createElement('span');
+  nudge.className = 'copy-nudge';
+  nudge.textContent = 'Copied!';
+  btn.parentElement.appendChild(nudge);
+  setTimeout(() => nudge.remove(), 1200);
+}
+
+// --- Main Render ---
 function render() {
   const container = document.getElementById('events');
   container.innerHTML = '';
@@ -150,7 +210,7 @@ function render() {
   Object.entries(groups).forEach(([expansion, sources]) => {
     const expId = `expansion-${expansion.replace(/\s+/g, '_')}`;
     const expDiv = document.createElement('div');
-    expDiv.className = 'menu-card'; // Use card style for expansion group
+    expDiv.className = 'menu-card';
     expDiv.id = expId;
 
     // Expansion header
@@ -167,7 +227,7 @@ function render() {
       Object.entries(sources).forEach(([source, events]) => {
         const srcId = `${expId}-source-${source.replace(/\s+/g, '_')}`;
         const srcDiv = document.createElement('div');
-        srcDiv.className = 'menu-card'; // Use card style for source group
+        srcDiv.className = 'menu-card';
         srcDiv.id = srcId;
 
         // Source header
@@ -204,6 +264,11 @@ function render() {
               let vendorValue = item.id && itemCache[item.id] && typeof itemCache[item.id].vendor_value === 'number'
                 ? `<span class="vendor-value">${splitCoins(itemCache[item.id].vendor_value)}</span>`
                 : '';
+              // --- Live TP value (if available) ---
+              let tpValue = '';
+              if (item.id && itemCache[item.id] && typeof itemCache[item.id].tp_value === 'number') {
+                tpValue = `<span class="tp-value" title="Trading Post lowest sell">${splitCoins(itemCache[item.id].tp_value)} <span style="font-size:0.95em;color:var(--color-accent-emerald);">(TP)</span></span>`;
+              }
               let chatLink = item.id && itemCache[item.id] && itemCache[item.id].chat_link
                 ? ` <code>${itemCache[item.id].chat_link}</code>`
                 : (item.code ? ` <code>${item.code}</code>` : '');
@@ -211,11 +276,12 @@ function render() {
                 ${icon}
                 <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${displayName}</a>
                 ${vendorValue}
+                ${tpValue}
                 ${chatLink}
               </li>`;
             }).join('');
 
-            // Loot section as a collapsible card
+            // Loot section as a collapsible card (always present if loot exists)
             const lootSection = lootItems
               ? `<div class="show-hide-section collapsed loot-section">
                   <button class="show-hide-toggle" onclick="this.parentElement.classList.toggle('collapsed')">Show/Hide Loot</button>
@@ -225,9 +291,9 @@ function render() {
 
             const eventWikiUrl = createWikiUrl(ev.name);
 
-            // Render the event as a card!
+            // Render the event as a full-width card!
             const eventCard = document.createElement('article');
-            eventCard.className = 'event-card';
+            eventCard.className = 'event-card fullwidth-event-card';
             eventCard.innerHTML = `
               <div class="card-header">
                 <span class="event-icon">🎲</span>
@@ -241,7 +307,7 @@ function render() {
                 </div>
                 <div class="copy-bar">
                   <input type="text" value="${copyValue}" readonly>
-                  <button onclick="navigator.clipboard.writeText(this.previousElementSibling.value)">Copy</button>
+                  <button onclick="navigator.clipboard.writeText(this.previousElementSibling.value); showCopyNudge(this);">Copy</button>
                 </div>
                 ${lootSection}
               </div>
