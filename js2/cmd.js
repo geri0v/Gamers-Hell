@@ -245,10 +245,13 @@ function toggleCoreTyriaSource(source) {
 }
 
 function showCopyNudge(btn) {
+  const parent = btn.parentElement;
+  const existing = parent.querySelector('.copy-nudge');
+  if (existing) existing.remove();
   let nudge = document.createElement('span');
   nudge.className = 'copy-nudge';
   nudge.textContent = 'Copied!';
-  btn.parentElement.appendChild(nudge);
+  parent.appendChild(nudge);
   setTimeout(() => nudge.remove(), 1200);
 }
 
@@ -370,7 +373,7 @@ function render() {
 
         // Events
         if (expansion !== 'Core Tyria' || !coreTyriaSourcesCollapsed[source]) {
-          events.forEach(ev => {
+          events.forEach((ev, eventIndex) => {
             const eventWikiUrl = createEventWikiUrl(ev);
             const mostValuable = getMostValuableLoot(ev.loot || []);
             const mostValuableInfo = mostValuable ? itemCache[mostValuable.id] : null;
@@ -414,7 +417,7 @@ function render() {
             // Loot section as a collapsible card (always present if loot exists), BELOW the copy bar!
             const lootSection = lootItems
               ? `<div class="show-hide-section collapsed loot-section">
-                  <button class="show-hide-toggle" onclick="this.parentElement.classList.toggle('collapsed')">Show/Hide Loot</button>
+                  <button class="show-hide-toggle">Show Loot ▼</button>
                   <ul class="loot-list copy-paste-area">${lootItems}</ul>
                 </div>`
               : '';
@@ -437,15 +440,35 @@ function render() {
                 </div>
                 <div class="copy-bar">
                   <input type="text" value="${copyValue}" readonly>
-                  <button onclick="navigator.clipboard.writeText(this.previousElementSibling.value); showCopyNudge(this);">Copy</button>
+                  <button class="copy-btn" type="button">Copy</button>
                 </div>
                 ${lootSection}
                 <div style="margin-top:0.7em;">
-                  <button class="show-hide-toggle" onclick="showEventModal(${JSON.stringify(ev).replace(/"/g, '&quot;')})">More Details</button>
+                  <button class="show-hide-toggle more-details-btn" type="button">More Details</button>
                 </div>
               </div>
             `;
             srcDiv.appendChild(eventCard);
+
+            // After appending, add event listeners for copy, loot toggle, and modal
+            const copyBtn = eventCard.querySelector('.copy-btn');
+            copyBtn.onclick = function() {
+              const input = copyBtn.previousElementSibling;
+              navigator.clipboard.writeText(input.value);
+              showCopyNudge(copyBtn);
+            };
+            const lootToggle = eventCard.querySelector('.show-hide-section .show-hide-toggle');
+            if (lootToggle) {
+              lootToggle.onclick = function() {
+                const section = lootToggle.parentElement;
+                section.classList.toggle('collapsed');
+                lootToggle.textContent = section.classList.contains('collapsed') ? 'Show Loot ▼' : 'Hide Loot ▲';
+              };
+            }
+            const detailsBtn = eventCard.querySelector('.more-details-btn');
+            detailsBtn.onclick = function() {
+              showEventModal(ev);
+            };
           });
         }
         expDiv.appendChild(srcDiv);
