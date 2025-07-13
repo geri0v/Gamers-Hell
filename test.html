@@ -65,14 +65,15 @@
   <!-- Modal for event details (created by JS if needed) -->
 
   <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
-  <!-- Optional: Enable sidebar collapsing and timer demo -->
   <script>
+    // Sidebar collapse for both left and right
     document.querySelectorAll('.sidebar-toggle').forEach(btn => {
       btn.addEventListener('click', function() {
         const parent = btn.closest('aside');
         parent.classList.toggle('collapsed');
       });
     });
+    // Simple timer for right sidebar
     setInterval(() => {
       const el = document.getElementById('timer-value');
       if (el) {
