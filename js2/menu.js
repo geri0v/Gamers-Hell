@@ -1,102 +1,90 @@
-(function() {
-  // --- 1. Menu Builder ---
-  function buildMenu(events) {
-    const grouped = {};
-    events.forEach(ev => {
-      const exp = ev.expansion || 'Unknown Expansion';
-      const src = ev._sourceName || 'Unknown Source';
-      if (!grouped[exp]) grouped[exp] = new Set();
-      grouped[exp].add(src);
-    });
-    Object.keys(grouped).forEach(exp => grouped[exp] = Array.from(grouped[exp]));
-    let html = '<nav id="exp-source-menu">';
-    Object.entries(grouped).forEach(([exp, sources], i) => {
-      html += `
-        <div class="expansion-group">
-          <button class="expansion-btn" data-exp="${encodeURIComponent(exp)}" data-idx="${i}">
-            <span>${exp}</span>
-            <span class="arrow">&#9660;</span>
-          </button>
-          <ul class="expansion-subs" id="exp-subs-${i}">
-      `;
-      sources.forEach(src => {
-        html += `<li>
-          <button class="menu-btn" data-exp="${encodeURIComponent(exp)}" data-src="${encodeURIComponent(src)}">
-            ${src}
-          </button>
-        </li>`;
+class GhMenuSidebar extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.innerHTML = `
+      <style>
+        .menu-container {
+          background: var(--card-bg, #263142);
+          color: var(--main-fg, #f3f7fa);
+          border-radius: 0 16px 16px 0;
+          box-shadow: 2px 0 16px #0005;
+          padding: 32px 0 24px 0;
+          min-width: 200px;
+          width: 220px;
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 1.5em;
+        }
+        .menu-header {
+          font-size: 1.3em;
+          font-weight: bold;
+          padding: 0 1.5em;
+          margin-bottom: 1em;
+        }
+        nav {
+          display: flex;
+          flex-direction: column;
+          gap: 1em;
+        }
+        .menu-link {
+          color: var(--accent, #4a90e2);
+          background: none;
+          border: none;
+          text-align: left;
+          font-size: 1.08em;
+          padding: 0.6em 1.5em;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: background 0.2s, color 0.2s;
+        }
+        .menu-link.active,
+        .menu-link:hover {
+          background: var(--accent, #4a90e2);
+          color: #fff;
+        }
+        .menu-footer {
+          margin-top: auto;
+          padding: 1em 1.5em 0.5em 1.5em;
+          font-size: 0.98em;
+          color: #b3c6e0;
+        }
+        @media (max-width: 900px) {
+          .menu-container {
+            width: 100vw;
+            min-width: 0;
+            border-radius: 0 0 16px 16px;
+          }
+        }
+      </style>
+      <div class="menu-container">
+        <div class="menu-header">Menu</div>
+        <nav>
+          <button class="menu-link" data-section="events">Events</button>
+          <button class="menu-link" data-section="timer">Timer</button>
+          <button class="menu-link" data-section="about">About</button>
+        </nav>
+        <div class="menu-footer">© 2025 Gamers-Hell</div>
+      </div>
+    `;
+  }
+
+  connectedCallback() {
+    this.shadowRoot.querySelectorAll('.menu-link').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.shadowRoot.querySelectorAll('.menu-link').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        // Custom event for main app to listen to
+        this.dispatchEvent(new CustomEvent('navigate', {
+          detail: { section: btn.dataset.section },
+          bubbles: true,
+          composed: true
+        }));
       });
-      html += `</ul></div>`;
-    });
-    html += '</nav>';
-    return html;
-  }
-
-  // --- 2. Inject Menu ---
-  function injectMenu(events) {
-    let target = document.getElementById('menu-sidebar') || document.body;
-    const oldMenu = target.querySelector('#exp-source-menu');
-    if (oldMenu) oldMenu.remove();
-    const menuDiv = document.createElement('div');
-    menuDiv.innerHTML = buildMenu(events);
-    target.innerHTML = '';
-    target.appendChild(menuDiv.firstChild);
-
-    // --- 3. Expand/Collapse and Click Logic ---
-    menuDiv.querySelectorAll('.expansion-btn').forEach(btn => {
-      const idx = btn.getAttribute('data-idx');
-      const subs = menuDiv.querySelector(`#exp-subs-${idx}`);
-      const arrow = btn.querySelector('.arrow');
-      btn.onclick = function(e) {
-        const exp = decodeURIComponent(btn.getAttribute('data-exp'));
-        if (window.cmd_run) {
-          window.cmd_run(`show expansion "${exp}"`);
-        }
-        const isCollapsed = subs.style.display === 'none';
-        if (isCollapsed) {
-          subs.style.display = '';
-          arrow.innerHTML = '&#9660;';
-          btn.classList.remove('collapsed');
-        } else {
-          subs.style.display = 'none';
-          arrow.innerHTML = '&#9654;';
-          btn.classList.add('collapsed');
-        }
-        menuDiv.querySelectorAll('.expansion-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        menuDiv.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
-      };
-      subs.style.display = '';
-    });
-
-    menuDiv.querySelectorAll('.menu-btn').forEach(btn => {
-      btn.onclick = function(e) {
-        e.stopPropagation();
-        const exp = decodeURIComponent(btn.getAttribute('data-exp'));
-        const src = decodeURIComponent(btn.getAttribute('data-src'));
-        if (window.cmd_run) {
-          window.cmd_run(`show expansion "${exp}" source "${src}"`);
-        }
-        menuDiv.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const idx = btn.closest('.expansion-group').querySelector('.expansion-btn');
-        menuDiv.querySelectorAll('.expansion-btn').forEach(b => b.classList.remove('active'));
-        if (idx) idx.classList.add('active');
-      };
     });
   }
+}
 
-  // --- 4. Wait for events and render ---
-  function waitForEvents() {
-    if (window.allEvents && Array.isArray(window.allEvents) && window.allEvents.length > 0) {
-      injectMenu(window.allEvents);
-    } else {
-      setTimeout(waitForEvents, 100);
-    }
-  }
-
-  if (document.readyState !== 'loading') waitForEvents();
-  else document.addEventListener('DOMContentLoaded', waitForEvents);
-
-  window.menuReload = waitForEvents;
-})();
+customElements.define('gh-menu-sidebar', GhMenuSidebar);
