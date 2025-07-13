@@ -39,29 +39,6 @@ window.renderEvents = async function(events, container) {
     expansions[exp][src].push(ev);
   });
 
-  // Show a spinner while enriching everything
-  container.innerHTML = `<div class="spinner" aria-label="Loading events..."></div>`;
-
-  // Enrich ALL loot for ALL events before rendering anything
-  for (const exp of Object.values(expansions)) {
-    for (const src of Object.values(exp)) {
-      for (const ev of src) {
-        if (Array.isArray(ev.loot)) {
-          ev._enrichedLoot = [];
-          for (const item of ev.loot) {
-            // Await enrichment for each item (serially for reliability)
-            const info = await window.getItemFullInfo(item.id || item.code || item.name);
-            ev._enrichedLoot.push({ ...item, ...info });
-          }
-        } else {
-          ev._enrichedLoot = [];
-        }
-      }
-    }
-  }
-
-  // Now render everything
-  container.innerHTML = '';
   for (const [expansion, sources] of Object.entries(expansions)) {
     const expSection = document.createElement('section');
     expSection.className = 'expansion-section';
@@ -71,7 +48,14 @@ window.renderEvents = async function(events, container) {
       srcDiv.className = 'source-section';
       srcDiv.innerHTML = `<h3 class="source-title">${source}</h3>`;
       for (const ev of events) {
-        const enrichedLoot = ev._enrichedLoot || [];
+        // Enrich loot
+        let enrichedLoot = [];
+        if (Array.isArray(ev.loot)) {
+          for (const item of ev.loot) {
+            const info = await window.getItemFullInfo(item.id || item.code || item.name);
+            enrichedLoot.push({ ...item, ...info });
+          }
+        }
         // Most valuable loot
         let mostValuable = null;
         let maxValue = -1;
