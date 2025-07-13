@@ -1,68 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>GW2 Event & Loot Browser</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A fantasy-styled browser for Guild Wars 2 events and loot, with dynamic cards and live data.">
-  <link rel="icon" href="https://wiki.guildwars2.com/favicon.ico" />
-
-  <!-- Fantasy fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Almendra+SC&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400&display=swap" rel="stylesheet">
-
-  <!-- Fantasy CSS -->
-  <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css" />
+  <meta charset="UTF-8">
+  <title>Gamers-Hell GW2 Events</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css">
+  <link rel="icon" href="https://wiki.guildwars2.com/favicon.ico">
 </head>
 <body>
   <div class="layout3col">
-    <!-- LEFT SIDEBAR -->
-    <aside id="sidebar-left" class="sidebar">
-      <button type="button" id="menu-toggle" class="sidebar-toggle left" aria-label="Show/hide menu">☰</button>
-      <nav id="menu"></nav>
+    <!-- Sidebar Left (Menu) -->
+    <aside class="sidebar" aria-label="Sidebar">
+      <button class="sidebar-toggle" aria-label="Toggle sidebar" tabindex="0">☰</button>
+      <div class="sidebar-content">
+        <div class="sidebar-logo">
+          <img src="https://wiki.guildwars2.com/images/d/d2/Guild_emblem_004.png" alt="GW2 Logo" />
+        </div>
+        <div class="menu-title">Menu</div>
+        <nav>
+          <ul class="menu-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Event Guide</a></li>
+            <li><a href="#">Loot Tables</a></li>
+            <li><a href="#">Settings</a></li>
+          </ul>
+        </nav>
+      </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
-    <main id="main-content" role="main">
-      <h1>Guild Wars 2 Event & Loot Browser</h1>
+    <!-- Main Content -->
+    <main id="main-content" tabindex="-1">
+      <h1>Gamers-Hell GW2 Events</h1>
       <div class="controls">
-        <input type="text" id="search" placeholder="Search by event, location or item…" autocomplete="off" />
-        <div class="sort-bar">
-          <button type="button" class="sort-btn" data-sort="name">Name</button>
-          <button type="button" class="sort-btn" data-sort="map">Location</button>
-          <button type="button" class="sort-btn" data-sort="value">Value</button>
+        <input
+          id="search"
+          type="text"
+          placeholder="Search events, maps, loot..."
+          aria-label="Search"
+          autocomplete="off"
+        >
+        <div class="sort-bar" role="group" aria-label="Sort events">
+          <button class="sort-btn active" data-sort="name" type="button">Name</button>
+          <button class="sort-btn" data-sort="map" type="button">Location</button>
+          <button class="sort-btn" data-sort="value" type="button">Loot Value</button>
         </div>
       </div>
-      <div id="events" class="event-grid"></div>
+      <div id="events" class="event-grid" aria-live="polite"></div>
     </main>
 
-    <!-- RIGHT SIDEBAR -->
-    <aside id="sidebar-right" class="sidebar">
-      <button type="button" id="timer-toggle" class="sidebar-toggle right" aria-label="Show/hide timer">⏲</button>
-      <section id="timer">
-        <div class="timer-title">Timer</div>
-      </section>
+    <!-- Sidebar Right (Timer) -->
+    <aside id="sidebar-right" aria-label="Sidebar Right">
+      <button class="sidebar-toggle" aria-label="Toggle right sidebar" tabindex="0">☰</button>
+      <div class="timer-section">
+        <div class="timer-title">Event Timer</div>
+        <div class="timer-placeholder">
+          <span id="timer-value">00:00:00</span>
+          <div class="timer-desc">Next event starts soon!</div>
+        </div>
+      </div>
     </aside>
   </div>
 
-  <!-- MENU AND EVENT DATA SCRIPTS -->
-  <script src="https://geri0v.github.io/Gamers-Hell/js2/menu.js"></script>
-  <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
+  <!-- Modal for event details (created by JS if needed) -->
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Sidebar toggles
-      const leftSidebar = document.getElementById('sidebar-left');
-      const rightSidebar = document.getElementById('sidebar-right');
-      document.getElementById('menu-toggle').addEventListener('click', () =>
-        leftSidebar.classList.toggle('collapsed')
-      );
-      document.getElementById('timer-toggle').addEventListener('click', () =>
-        rightSidebar.classList.toggle('collapsed')
-      );
-      // Let menu.js and cmd.js handle menu and event rendering!
-    });
-  </script>
+  <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
+  <!-- Optional placeholders for future features -->
+  <!-- <script src="menu.js"></script> -->
+  <!-- <script src="time.js"></script> -->
 </body>
 </html>
