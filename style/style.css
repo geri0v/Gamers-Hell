@@ -1,4 +1,5 @@
 :root {
+  /* Core palette */
   --main-bg: #1e2630;
   --main-fg: #f3f7fa;
   --card-bg: #263142;
@@ -17,6 +18,13 @@
   --section-title-fg: #e1e6ed;
   --spinner-size: 36px;
   --transition: 0.2s cubic-bezier(.4,0,.2,1);
+
+  /* Timer component specific (for web component) */
+  --timer-max-width: 100vw;
+  --event-upcoming-bg: #29334a;
+  --event-upcoming-fg: #fff;
+  --toast-bg: #222c;
+  --toast-fg: #fff;
 }
 
 /* Light Theme Overrides */
@@ -36,6 +44,12 @@ body.light {
   --table-border: #b3c6e0;
   --section-title-bg: #e9eef5;
   --section-title-fg: #2b4765;
+
+  /* Timer component specific (for web component) */
+  --event-upcoming-bg: #e3e9f0;
+  --event-upcoming-fg: #2b4765;
+  --toast-bg: #f3f7fa;
+  --toast-fg: #2b4765;
 }
 
 /* General Layout */
