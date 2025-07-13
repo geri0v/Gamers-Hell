@@ -5,25 +5,104 @@
   <title>Gamers-Hell: Events & Timer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css">
+  <style>
+    header { position: relative; padding-top: 5.5em; }
+    .top-right-controls {
+      position: absolute;
+      top: 1em;
+      right: 1em;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+      align-items: flex-end;
+      z-index: 20;
+    }
+    #themeToggle, #sidebar-toggle {
+      min-width: 90px;
+      font-size: 1.2em;
+      background: var(--card-bg, #263142);
+      color: var(--accent, #4a90e2);
+      border: none;
+      border-radius: 8px;
+      padding: 0.5em 1em;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0002;
+      transition: background var(--transition), color var(--transition);
+    }
+    #sidebar-toggle {
+      color: var(--main-fg, #f3f7fa);
+      background: var(--accent, #4a90e2);
+      font-weight: bold;
+    }
+    #sidebar-toggle:hover, #themeToggle:hover {
+      background: var(--accent, #4a90e2);
+      color: #fff;
+    }
+    #timer-sidebar {
+      width: 0;
+      min-width: 0;
+      max-width: 380px;
+      background: var(--card-bg, #263142);
+      box-shadow: 2px 0 16px #0005;
+      overflow: hidden;
+      transition: width 0.3s cubic-bezier(.4,0,.2,1);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      z-index: 10;
+    }
+    #timer-sidebar.open {
+      width: 380px;
+      min-width: 220px;
+      border-left: 2px solid var(--accent, #4a90e2);
+    }
+    #timer-sidebar gw2-event-timer {
+      --timer-max-width: 380px;
+      --timer-padding: 8px;
+      width: 100%;
+      flex: 1;
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+    }
+    @media (max-width: 900px) {
+      .main { flex-direction: column; gap: 0; }
+      #timer-sidebar, #timer-sidebar.open {
+        width: 100vw;
+        max-width: 100vw;
+        min-width: 0;
+        height: auto;
+        border-left: none;
+        border-top: 2px solid var(--accent, #4a90e2);
+      }
+      #timer-sidebar gw2-event-timer { --timer-max-width: 100vw; }
+    }
+  </style>
 </head>
 <body>
-<header style="position:relative;">
-  <h1>Gamers-Hell</h1>
-  <button id="themeToggle" aria-label="Toggle dark/light mode" style="position:absolute;top:1em;right:1em;">
-    🌙/☀️
-  </button>
-</header>
-  <main class="main" id="main" aria-label="Main content area" tabindex="-1">
-    <div class="search-bar-container" role="search">
-      <input aria-label="Search" class="search-input" id="searchInput" placeholder="Search temples, bosses, loot..." type="text"/>
-      <button class="search-clear-btn" id="searchClearBtn" aria-label="Clear search" title="Clear search" tabindex="0" style="display:none;">×</button>
-      <select id="sortSelect" aria-label="Sort events">
-        <option value="name">Sort: Name</option>
-        <option value="location">Sort: Location</option>
-        <option value="loot">Sort: Loot Value</option>
-      </select>
+  <header>
+    <h1 style="margin:0;">Gamers-Hell</h1>
+    <div class="top-right-controls">
+      <button id="themeToggle" aria-label="Toggle light/dark mode">🌙/☀️</button>
+      <button id="sidebar-toggle" aria-label="Show/hide timer">⏱️ Timer</button>
     </div>
-    <div id="events-container"></div>
+  </header>
+  <main class="main" id="main" aria-label="Main content area" tabindex="-1" style="display:flex;gap:2em;">
+    <div style="flex:1;min-width:0;">
+      <div class="search-bar-container" role="search">
+        <input aria-label="Search" class="search-input" id="searchInput" placeholder="Search temples, bosses, loot..." type="text"/>
+        <button class="search-clear-btn" id="searchClearBtn" aria-label="Clear search" title="Clear search" tabindex="0" style="display:none;">×</button>
+        <select id="sortSelect" aria-label="Sort events">
+          <option value="name">Sort: Name</option>
+          <option value="location">Sort: Location</option>
+          <option value="loot">Sort: Loot Value</option>
+        </select>
+      </div>
+      <div id="events-container"></div>
+    </div>
+    <aside id="timer-sidebar">
+      <gw2-event-timer></gw2-event-timer>
+    </aside>
   </main>
   <footer>
     © 2025 Gamers-Hell Community
@@ -33,8 +112,10 @@
     <button id="closeModalBtn">Close</button>
   </div>
   <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js" defer></script>
+  <script src="https://geri0v.github.io/Gamers-Hell/js2/time.js" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Theme toggle logic
       const themeBtn = document.getElementById('themeToggle');
       function setTheme(theme) {
         if (theme === 'light') {
@@ -51,6 +132,25 @@
         setTheme(document.body.classList.contains('light') ? 'dark' : 'light');
       });
       setTheme(localStorage.getItem('gh-theme') === 'light' ? 'light' : 'dark');
+
+      // Sidebar timer toggle logic
+      const sidebar = document.getElementById('timer-sidebar');
+      const sidebarBtn = document.getElementById('sidebar-toggle');
+      function openSidebar() { sidebar.classList.add('open'); }
+      function closeSidebar() { sidebar.classList.remove('open'); }
+      function toggleSidebar() { sidebar.classList.contains('open') ? closeSidebar() : openSidebar(); }
+      sidebarBtn.addEventListener('click', toggleSidebar);
+
+      // Responsive: open by default on desktop, closed on mobile
+      function setSidebarDefault() {
+        if (window.innerWidth < 900) {
+          closeSidebar();
+        } else {
+          openSidebar();
+        }
+      }
+      window.addEventListener('resize', setSidebarDefault);
+      setSidebarDefault();
     });
   </script>
 </body>
