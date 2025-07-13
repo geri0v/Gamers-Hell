@@ -15,7 +15,6 @@
   --font-body: 'Merriweather', serif;
 }
 
-/* Reset & Base */
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -34,7 +33,6 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   outline-offset: 2px;
 }
 
-/* Layout */
 .layout3col {
   display: flex;
   width: 100vw;
@@ -158,13 +156,12 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   transition: background 0.2s;
 }
 .menu-source.menu-card {
-  /* If you uncomment in JS, sources will also look like cards */
   background: var(--color-card-bg);
   border: 2px solid var(--color-card-border);
   margin-bottom: 0.7rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.13);
   padding: 0.5rem 0.8rem;
-  border-left: none; /* Remove double border when both classes are present */
+  border-left: none;
 }
 .menu-source.menu-card .menu-source-link {
   font-weight: bold;
@@ -317,6 +314,16 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
 .card-body p {
   margin: 0.5rem 0;
 }
+.event-info span {
+  display: inline-block;
+  margin-right: 1.5em;
+  margin-bottom: 0.2em;
+}
+.event-loot-summary {
+  margin: 0.7em 0 0.7em 0;
+  font-size: 1.08em;
+  color: var(--color-accent-gold);
+}
 
 /* Loot List, Icons, Values */
 .loot-section {
@@ -390,6 +397,12 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   margin-left: 0.3rem;
   font-weight: bold;
   font-size: 1.05em;
+}
+.accountbound {
+  margin-left: 0.3rem;
+  color: #e67e22;
+  font-weight: bold;
+  font-size: 1.01em;
 }
 .gold { color: #ffd700; }
 .silver { color: #c0c0c0; }
@@ -489,13 +502,11 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   margin-bottom: 0.5rem;
 }
 
-/* Animations */
 @keyframes pulse {
   0%, 100% { transform: scale(1); opacity: 1; }
   50%      { transform: scale(1.2); opacity: 0.7; }
 }
 
-/* Responsive */
 @media (max-width: 900px) {
   .layout3col { flex-direction: column; }
   .sidebar {
