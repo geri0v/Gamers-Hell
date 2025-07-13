@@ -121,6 +121,28 @@ function highlight(text, query) {
   return text.replace(regex, '<mark>$1</mark>');
 }
 
+function sortEvents(events, sortBy, tpPrices) {
+  if (sortBy === "name") {
+    return events.slice().sort((a, b) =>
+      (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: "base" })
+    );
+  }
+  if (sortBy === "location") {
+    return events.slice().sort((a, b) =>
+      (a.map || a.location || "").localeCompare(b.map || b.location || "", undefined, { sensitivity: "base" })
+    );
+  }
+  if (sortBy === "loot") {
+    // Sort by max sell value of loot (descending)
+    return events.slice().sort((a, b) => {
+      const maxA = Math.max(...((a.loot || []).map(item => (tpPrices && tpPrices[item.id] && tpPrices[item.id].sell) || 0)), 0);
+      const maxB = Math.max(...((b.loot || []).map(item => (tpPrices && tpPrices[item.id] && tpPrices[item.id].sell) || 0)), 0);
+      return maxB - maxA;
+    });
+  }
+  return events;
+}
+
 function renderEventCard(event, idx, searchQuery, tpPrices, tpIcons, maxSellValue) {
   let lootRows = '';
   if (Array.isArray(event.loot) && event.loot.length) {
@@ -193,7 +215,6 @@ window.renderAllSections = async function(events, searchQuery, sortBy) {
     allSectionsDiv.innerHTML = `<div class="empty-state"><img src="https://i.imgur.com/8z8Q2Hk.png" alt="No events"><div>No events found. Try a different search or reload data.</div></div>`;
     return;
   }
-  const expansions = groupEvents(filtered);
   let allItemIds = [];
   filtered.forEach(event => {
     if (Array.isArray(event.loot)) {
@@ -202,6 +223,11 @@ window.renderAllSections = async function(events, searchQuery, sortBy) {
   });
   allItemIds = [...new Set(allItemIds)];
   const { prices: tpPrices, icons: tpIcons } = await fetchTPPricesAndIcons(allItemIds);
+
+  // SORTING: sort events before grouping
+  const sorted = sortEvents(filtered, sortBy, tpPrices);
+  const expansions = groupEvents(sorted);
+
   let html = '';
   let expIdx = 0;
   for (const [expansion, sources] of Object.entries(expansions)) {
