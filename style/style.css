@@ -468,3 +468,135 @@ body.light mark {
   background: #ffe08a;
   color: #2b4765;
 }
+
+/* ===========================
+   GW2 Event Timer Sidebar Styles
+   =========================== */
+#gw2-event-timer {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  background: var(--card-bg);
+  color: var(--main-fg);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0002;
+  padding: 18px 12px 10px 12px;
+  font-family: inherit;
+  min-width: 0;
+}
+
+#gw2-event-timer .gh-event-timer-now {
+  font-size: 1.08em;
+  margin-bottom: 14px;
+  color: var(--accent);
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+#gw2-event-timer .gh-event-item {
+  border-bottom: 1px solid var(--table-border);
+  padding: 12px 0 8px 0;
+  margin-bottom: 2px;
+}
+
+#gw2-event-timer .gh-event-item:last-child {
+  border-bottom: none;
+}
+
+#gw2-event-timer .gh-event-name {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 3px;
+  color: var(--accent);
+}
+
+#gw2-event-timer .gh-event-time {
+  font-size: 0.97em;
+  margin-bottom: 2px;
+  display: flex;
+  gap: 0.7em;
+  align-items: center;
+  color: var(--main-fg);
+}
+
+#gw2-event-timer .gh-event-time-utc {
+  color: #b3c6e0;
+  font-size: 0.93em;
+}
+
+#gw2-event-timer .gh-event-countdown {
+  font-size: 1.05em;
+  margin-bottom: 2px;
+  color: var(--section-title-fg);
+}
+
+#gw2-event-timer .gh-event-waypoint-bar {
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  background: var(--copy-bar-bg);
+  border-radius: 6px;
+  padding: 3px 6px;
+  gap: 0.5em;
+  max-width: 280px;
+}
+
+#gw2-event-timer .gh-event-waypoint-input {
+  width: 120px;
+  background: var(--input-bg);
+  color: var(--input-fg);
+  border: none;
+  border-radius: 4px;
+  padding: 3px 7px;
+  font-family: monospace;
+  font-size: 1em;
+  margin-right: 5px;
+  outline: none;
+  transition: background var(--transition), color var(--transition);
+}
+
+#gw2-event-timer .gh-event-waypoint-input:focus {
+  background: var(--main-bg);
+  color: var(--accent);
+}
+
+#gw2-event-timer .gh-event-copy-btn {
+  padding: 4px 16px;
+  border-radius: 4px;
+  border: none;
+  background: var(--copy-btn-bg);
+  color: var(--copy-btn-color);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1em;
+  min-width: 56px;
+  min-height: 32px;
+  box-shadow: 0 2px 6px #0002;
+  transition: background var(--transition), color var(--transition), transform var(--transition);
+  outline: none;
+}
+
+#gw2-event-timer .gh-event-copy-btn.copied,
+#gw2-event-timer .gh-event-copy-btn:active,
+#gw2-event-timer .gh-event-copy-btn:focus {
+  background: #4a90e2 !important;
+  color: #fff !important;
+  transform: scale(1.08);
+}
+
+#gw2-event-timer .gh-event-none {
+  text-align: center;
+  color: #b3c6e0;
+  margin: 2em 0;
+  font-size: 1.1em;
+}
+
+/* Responsive for sidebar */
+@media (max-width: 900px) {
+  #gw2-event-timer {
+    max-width: 100vw;
+    border-radius: 0 0 12px 12px;
+    box-shadow: none;
+    padding: 12px 4vw 8px 4vw;
+  }
+}
