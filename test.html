@@ -5,7 +5,7 @@
   <title>Gamers-Hell GW2 Events</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Guild Wars 2 event tracker and loot tables by Gamers-Hell.">
-  <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css">
+  <link rel="stylesheet" href="style.css">
   <link rel="icon" href="https://wiki.guildwars2.com/favicon.ico">
 </head>
 <body>
@@ -16,7 +16,7 @@
       <div class="sidebar-logo" style="text-align:center; margin-top:2rem;">
         <img src="https://wiki.guildwars2.com/images/d/d2/Guild_emblem_004.png" alt="GW2 Logo" style="width:48px;filter:drop-shadow(0 0 8px var(--color-accent-gold));" />
       </div>
-      <nav id="menu-placeholder" aria-label="Main menu"></nav>
+      <div id="menu-placeholder"></div>
     </aside>
 
     <!-- Main Content -->
@@ -53,29 +53,26 @@
   </div>
 
   <!-- Modal for event details (created by JS if needed) -->
-  <div id="event-modal-root" style="display:none;"></div>
 
   <!-- Load menu.js first, then cmd.js -->
-  <script src="https://geri0v.github.io/Gamers-Hell/js2/menu.js"></script>
-  <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
+  <script src="menu.js"></script>
+  <script src="cmd.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Sidebar collapse for both left and right
-      document.querySelectorAll('.sidebar-toggle').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const parent = btn.closest('aside');
-          parent.classList.toggle('collapsed');
-        });
+    // Sidebar collapse for both left and right
+    document.querySelectorAll('.sidebar-toggle').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const parent = btn.closest('aside');
+        parent.classList.toggle('collapsed');
       });
-      // Simple timer for right sidebar
-      setInterval(() => {
-        const el = document.getElementById('timer-value');
-        if (el) {
-          const now = new Date();
-          el.textContent = now.toLocaleTimeString();
-        }
-      }, 1000);
     });
+    // Simple timer for right sidebar
+    setInterval(() => {
+      const el = document.getElementById('timer-value');
+      if (el) {
+        const now = new Date();
+        el.textContent = now.toLocaleTimeString();
+      }
+    }, 1000);
   </script>
 </body>
 </html>
