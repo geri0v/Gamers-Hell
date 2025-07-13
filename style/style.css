@@ -125,6 +125,8 @@ h2, h3 {
   color: var(--text);
   font-size: 1em;
   outline: none;
+  font-family: 'Consolas', 'Menlo', 'Monaco', monospace;
+  letter-spacing: 0.5px;
 }
 
 .copy-bar button {
@@ -260,14 +262,6 @@ h2, h3 {
   font-size: 0.98em;
   letter-spacing: 0.5px;
 }
-
-/* Gold/silver/copper coloring */
-.vendor-value {
-  color: var(--gold);
-}
-.vendor-value:after {
-  content: '';
-}
 .vendor-value .gold {
   color: var(--gold);
 }
@@ -278,10 +272,48 @@ h2, h3 {
   color: var(--copper);
 }
 
-/* Highlight waypoint chatcodes in copy bar */
-.copy-bar input[type="text"] {
-  font-family: 'Consolas', 'Menlo', 'Monaco', monospace;
-  letter-spacing: 0.5px;
+/* Menu styles */
+#menu {
+  background: #23242e;
+  color: #eaeaea;
+  border-radius: 10px;
+  padding: 1em;
+  margin-bottom: 1.5em;
+  max-width: 300px;
+  font-size: 1em;
+}
+.menu-title {
+  font-weight: bold;
+  color: #ffb347;
+  margin-bottom: 0.7em;
+  font-size: 1.1em;
+  letter-spacing: 1px;
+}
+.menu-expansion {
+  margin-bottom: 0.7em;
+}
+.menu-exp-header {
+  font-weight: bold;
+  color: #ffb347;
+  margin-bottom: 0.2em;
+  user-select: none;
+}
+.menu-exp-link, .menu-source-link {
+  color: #ffb347;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 0.3em;
+}
+.menu-source {
+  margin-left: 1.2em;
+  margin-bottom: 0.2em;
+  user-select: none;
+}
+.menu-source-link {
+  color: #eaeaea;
+}
+.menu-source-link:hover, .menu-exp-link:hover {
+  color: #ffd580;
 }
 
 #search {
@@ -321,6 +353,15 @@ h2, h3 {
   color: #222;
 }
 
+@media (max-width: 900px) {
+  .container {
+    max-width: 100%;
+  }
+  #menu {
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 600px) {
   .container {
     padding: 0.5em;
@@ -332,5 +373,8 @@ h2, h3 {
   .sort-bar {
     flex-direction: column;
     gap: 0.5em;
+  }
+  #menu {
+    padding: 0.7em;
   }
 }
