@@ -34,6 +34,7 @@
       menuDiv.appendChild(expCard);
     });
 
+    // Add click handlers to menu links for filtering
     menuDiv.querySelectorAll('.menu-links a').forEach(link => {
       link.addEventListener('click', e => {
         e.preventDefault();
@@ -41,8 +42,12 @@
         const src = link.getAttribute('data-source');
         activeExpansion = exp;
         activeSource = src;
+
+        // Highlight active
         menuDiv.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
         link.classList.add('active');
+
+        // Use cmd_run if available (recommended), else fallback to direct filtering
         if (window.cmd_run) {
           window.cmd_run(`show expansion "${exp}" source "${src}"`);
         } else if (window.allEvents && window.filteredEvents && window.render) {
