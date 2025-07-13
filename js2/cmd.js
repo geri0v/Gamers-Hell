@@ -1,21 +1,192 @@
-// == Gamers-Hell: Full Enhanced JS App ==
+// == Gamers-Hell: Full Enhanced JS App with Item Enrichment ==
 
 const DATA_URLS = [
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/temples.json',
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/untimedcore.json'
 ];
+const OTC_CSV_URL = 'https://raw.githubusercontent.com/otc-cirdan/gw2-items/master/items.csv';
 
 let allEvents = [];
 let filteredEvents = [];
 let sortKey = 'name';
 let sortAsc = true;
-
-// For expansion/source collapse state
 const expansionCollapsed = {};
 const sourceCollapsed = {};
+let otcCsvCache = null;
+
+// === OTC CSV Loader ===
+async function loadOtcCsv() {
+  if (otcCsvCache) return otcCsvCache;
+  otcCsvCache = {};
+  try {
+    const res = await fetch(OTC_CSV_URL);
+    const text = await res.text();
+    const lines = text.split('\n');
+    const headers = lines[0].split(',');
+    for (let i = 1; i < lines.length; i++) {
+      const row = lines[i].split(',');
+      if (row.length !== headers.length) continue;
+      const obj = {};
+      headers.forEach((h, idx) => obj[h.trim()] = row[idx]?.trim());
+      if (obj.id) otcCsvCache[obj.id] = obj;
+      if (obj.name) otcCsvCache[obj.name.toLowerCase()] = obj;
+      if (obj.chatcode) otcCsvCache[obj.chatcode] = obj;
+    }
+  } catch (e) {}
+  return otcCsvCache;
+}
+
+// === Item Info & Value Lookup ===
+async function getItemFullInfo(query) {
+  // 1. Try GW2 API by ItemID
+  let info = null;
+  let itemId = null;
+  if (typeof query === 'number' || /^\d+$/.test(query)) {
+    itemId = Number(query);
+    info = await fetchFromApiById(itemId);
+  }
+  // 2. Try GW2 API by chatcode (need OTC CSV to map chatcode to id)
+  if (!info && typeof query === 'string' && query.startsWith('[&')) {
+    const otc = await fetchFromOtcCsv(query);
+    if (otc && otc.id) {
+      itemId = otc.id;
+      info = await fetchFromApiById(itemId);
+      if (info) info.chatcode = otc.chatcode;
+    }
+  }
+  // 3. Try GW2 API by name (need OTC CSV to map name to id)
+  if (!info && typeof query === 'string') {
+    const otc = await fetchFromOtcCsv(query);
+    if (otc && otc.id) {
+      itemId = otc.id;
+      info = await fetchFromApiById(itemId);
+      if (info) info.chatcode = otc.chatcode;
+    }
+  }
+  // 4. Try Wiki by name
+  if (!info && typeof query === 'string') {
+    info = await fetchFromWikiByName(query);
+  }
+  // 5. Try OTC CSV fallback
+  if (!info) {
+    const otc = await fetchFromOtcCsv(query);
+    if (otc) {
+      info = {
+        id: otc.id,
+        name: otc.name,
+        chatcode: otc.chatcode,
+        icon: otc.icon,
+        vendor_value: otc.vendor_value ? parseInt(otc.vendor_value) : undefined,
+        wiki: otc.name ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(otc.name.replace(/ /g, '_'))}` : undefined,
+        accountbound: otc.bound === 'AccountBound'
+      };
+    }
+  }
+  // 6. If still not found, return minimal info
+  if (!info) {
+    info = { name: query, wiki: undefined };
+  }
+  // Attach ItemID for value lookup
+  if (!itemId && info.id) itemId = info.id;
+  info.id = itemId || info.id;
+
+  // Value
+  let tp_value = null, vendor_value = null;
+  if (itemId) {
+    tp_value = await fetchTpValueById(itemId);
+    if (tp_value == null) {
+      const bltc = await fetchFromBltcById(itemId);
+      if (bltc && bltc.tp_value) tp_value = bltc.tp_value;
+    }
+  }
+  if (typeof info.vendor_value === 'number') vendor_value = info.vendor_value;
+  else if (info.vendor_value) vendor_value = parseInt(info.vendor_value);
+  else if (!vendor_value && itemId) {
+    const otc = await fetchFromOtcCsv(itemId);
+    if (otc && otc.vendor_value) vendor_value = parseInt(otc.vendor_value);
+  }
+  info.tp_value = tp_value;
+  info.vendor_value = vendor_value;
+  return info;
+}
+
+async function fetchFromApiById(itemId) {
+  try {
+    const resp = await fetch(`https://api.guildwars2.com/v2/items/${itemId}`);
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    return {
+      id: data.id,
+      name: data.name,
+      chatcode: data.chat_link,
+      icon: data.icon,
+      description: data.description,
+      rarity: data.rarity,
+      type: data.type,
+      vendor_value: data.vendor_value,
+      flags: data.flags,
+      wiki: `https://wiki.guildwars2.com/wiki/${encodeURIComponent(data.name.replace(/ /g, '_'))}`,
+      accountbound: data.flags?.includes('AccountBound') || data.flags?.includes('AccountBoundOnUse')
+    };
+  } catch {
+    return null;
+  }
+}
+async function fetchTpValueById(itemId) {
+  try {
+    const resp = await fetch(`https://api.guildwars2.com/v2/commerce/prices/${itemId}`);
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    return data.sells && typeof data.sells.unit_price === 'number' ? data.sells.unit_price : null;
+  } catch {
+    return null;
+  }
+}
+async function fetchFromWikiByName(name) {
+  if (!name) return null;
+  try {
+    const url = `https://wiki.guildwars2.com/api.php?action=query&format=json&origin=*&prop=pageprops|info&titles=${encodeURIComponent(name)}`;
+    const resp = await fetch(url);
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    if (!data.query || !data.query.pages) return null;
+    const page = Object.values(data.query.pages)[0];
+    if (!page || page.missing) return null;
+    return {
+      name: page.title,
+      wiki: `https://wiki.guildwars2.com/wiki/${encodeURIComponent(page.title.replace(/ /g, '_'))}`
+    };
+  } catch {
+    return null;
+  }
+}
+async function fetchFromBltcById(itemId) {
+  try {
+    const resp = await fetch(`https://api.gw2bltc.com/price/${itemId}`);
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    if (!data || !data.sell) return null;
+    return { tp_value: data.sell };
+  } catch {
+    return null;
+  }
+}
+async function fetchFromOtcCsv(query) {
+  const cache = await loadOtcCsv();
+  if (!cache) return null;
+  if (typeof query === 'number' || /^\d+$/.test(query)) {
+    if (cache[query]) return cache[query];
+  }
+  if (typeof query === 'string') {
+    if (cache[query]) return cache[query];
+    if (cache[query.toLowerCase()]) return cache[query.toLowerCase()];
+  }
+  return null;
+}
+
+// === Main Event Rendering ===
 
 function groupEvents(events) {
-  // Group by expansion, then by sourceName, both sorted alphabetically
   const expansions = {};
   events.forEach(ev => {
     const exp = ev.expansion || 'Unknown Expansion';
@@ -24,7 +195,6 @@ function groupEvents(events) {
     if (!expansions[exp][src]) expansions[exp][src] = [];
     expansions[exp][src].push(ev);
   });
-  // Sort expansions and sources
   const sortedExpansions = {};
   Object.keys(expansions).sort().forEach(exp => {
     sortedExpansions[exp] = {};
@@ -67,13 +237,10 @@ function renderEvents() {
   }
   const groups = groupEvents(filteredEvents);
   Object.entries(groups).forEach(([expansion, sources]) => {
-    // Expansion Toggle
     const expSection = document.createElement('section');
     expSection.className = 'expansion-section';
-
     const expId = `exp-${expansion.replace(/\W/g, '')}`;
     if (!(expId in expansionCollapsed)) expansionCollapsed[expId] = false;
-
     const expToggle = document.createElement('button');
     expToggle.className = 'section-title';
     expToggle.innerHTML = `${expansion} <span class="arrow">${expansionCollapsed[expId] ? '&#9654;' : '&#9660;'}</span>`;
@@ -85,7 +252,6 @@ function renderEvents() {
     srcContainer.style.display = expansionCollapsed[expId] ? 'none' : '';
 
     Object.entries(sources).forEach(([source, events]) => {
-      // Source Toggle
       const srcId = `${expId}-src-${source.replace(/\W/g, '')}`;
       if (!(srcId in sourceCollapsed)) sourceCollapsed[srcId] = false;
       const srcDiv = document.createElement('div');
@@ -101,16 +267,12 @@ function renderEvents() {
       eventList.style.display = sourceCollapsed[srcId] ? 'none' : '';
 
       events.forEach((ev, idx) => {
-        // Loot Rendering (Show/Hide)
         const lootListId = `loot-list-${expId}-${srcId}-${idx}`;
         let lootRows = '';
         if (Array.isArray(ev.loot) && ev.loot.length) {
           lootRows = ev.loot.map(item => {
-            // Icon
             let icon = item.icon ? `<img src="${item.icon}" alt="" class="loot-icon" />` : '';
-            // Wiki link
             let wikiLink = item.name ? `<a href="https://wiki.guildwars2.com/wiki/${encodeURIComponent(item.name.replace(/ /g, '_'))}" target="_blank" rel="noopener" style="margin-left:0.3em;color:var(--color-accent-emerald);text-decoration:underline;">Wiki</a>` : '';
-            // Sell/Vendor/Accountbound
             let sellValue = (typeof item.tp_value === 'number') ? `<span class="tp-value">${splitCoins(item.tp_value)}</span>` : '';
             let vendorValue = (typeof item.vendor_value === 'number') ? `<span class="vendor-value">${splitCoins(item.vendor_value)}</span>` : '';
             let accountBound = item.accountbound ? `<span class="accountbound">Account Bound</span>` : '';
@@ -149,13 +311,11 @@ function renderEvents() {
             </ul>
           </div>
         `;
-        // Copy
         card.querySelector('.copy-btn').onclick = function() {
           const input = card.querySelector('.copy-bar input');
           navigator.clipboard.writeText(input.value);
           showCopyNudge(this);
         };
-        // Show/hide loot
         const lootBtn = card.querySelector('.show-hide-toggle');
         const lootList = card.querySelector('.loot-list');
         lootBtn.onclick = function() {
@@ -169,7 +329,6 @@ function renderEvents() {
 
       srcDiv.appendChild(eventList);
 
-      // Source toggle logic
       srcToggle.onclick = function() {
         sourceCollapsed[srcId] = !sourceCollapsed[srcId];
         eventList.style.display = sourceCollapsed[srcId] ? 'none' : '';
@@ -180,7 +339,6 @@ function renderEvents() {
       srcContainer.appendChild(srcDiv);
     });
 
-    // Expansion toggle logic
     expToggle.onclick = function() {
       expansionCollapsed[expId] = !expansionCollapsed[expId];
       srcContainer.style.display = expansionCollapsed[expId] ? 'none' : '';
@@ -244,7 +402,7 @@ window.cmd_run = function(cmdString) {
   alert("Unknown command: " + cmdString);
 };
 
-// Initial load
+// Initial load with loot enrichment
 document.addEventListener('DOMContentLoaded', async function() {
   // Fetch all events
   const all = await Promise.all(DATA_URLS.map(async (url) => {
@@ -263,6 +421,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
       }
       events.forEach(ev => ev.sourceName = sourceName);
+      // Enrich loot items for each event
+      if (events.length) {
+        for (const ev of events) {
+          if (Array.isArray(ev.loot)) {
+            for (let i = 0; i < ev.loot.length; i++) {
+              const item = ev.loot[i];
+              const query = item.id || item.code || item.name;
+              if (!query) continue;
+              const info = await getItemFullInfo(query);
+              ev.loot[i] = { ...item, ...info };
+            }
+          }
+        }
+      }
       return events;
     } catch (e) {
       return [];
@@ -273,7 +445,6 @@ document.addEventListener('DOMContentLoaded', async function() {
   renderEvents();
   // Expose menu structure for menu.js
   if (window.renderMenu) {
-    // Menu structure: { expansion: [sourceName, ...], ... }
     const structure = {};
     allEvents.forEach(ev => {
       const exp = ev.expansion || 'Unknown Expansion';
