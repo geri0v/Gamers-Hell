@@ -205,7 +205,7 @@ function render() {
             // Waypoint chatcode or map
             const waypoint = ev.code ? ev.code : (ev.map || '');
 
-            // Copy bar value
+            // Copy bar value (strip HTML from value for copy)
             const copyValue = `${ev.name} | ${waypoint} | ${mostValuableName}${mostValuableValue ? ' (' + mostValuableValue.replace(/<[^>]+>/g, '') + ')' : ''}`;
 
             // Loot list with API info or wiki fallback
