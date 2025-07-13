@@ -1,8 +1,8 @@
-// CONFIGURATION
+// cmd.js - Feature-rich, user-friendly GW2 Event & Loot Browser
+
 const DATA_URLS = [
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/temples.json',
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/untimedcore.json'
-  // Add more JSON URLs as needed
 ];
 
 const OTC_CSV_URL = 'https://raw.githubusercontent.com/otc-cirdan/gw2-items/master/items.csv';
@@ -18,7 +18,7 @@ const otcCsvCache = {};
 let coreTyriaCollapsed = false;
 const coreTyriaSourcesCollapsed = {};
 
-// --- CSV Loader for OTC Cirdan GW2 Items ---
+// --- Load OTC CSV for fallback ---
 async function loadOtcCsv() {
   if (Object.keys(otcCsvCache).length > 0) return;
   try {
@@ -38,7 +38,6 @@ async function loadOtcCsv() {
   } catch {}
 }
 
-// --- Wiki Link Builder ---
 function createWikiUrl(item) {
   if (!item) return '#';
   if (item.id && itemCache[item.id] && itemCache[item.id].name) {
@@ -56,7 +55,6 @@ function createWikiUrl(item) {
   return '#';
 }
 
-// --- Event Wiki Link ---
 function createEventWikiUrl(event) {
   if (event.name) {
     return `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.name.replace(/ /g, '_'))}`;
@@ -64,7 +62,6 @@ function createEventWikiUrl(event) {
   return '#';
 }
 
-// --- Coin Formatter ---
 function splitCoins(coins) {
   if (typeof coins !== 'number' || isNaN(coins)) return '';
   const gold = Math.floor(coins / 10000);
@@ -77,7 +74,6 @@ function splitCoins(coins) {
   return str.trim();
 }
 
-// --- Most Valuable Loot ---
 function getMostValuableLoot(lootArr) {
   let maxValue = -1, maxItem = null;
   lootArr.forEach(item => {
@@ -90,7 +86,6 @@ function getMostValuableLoot(lootArr) {
   return maxItem || (lootArr[0] || null);
 }
 
-// --- Live TP Value (Trading Post) Fallback ---
 async function fetchTPValue(itemId) {
   try {
     const apiRes = await fetch(`https://api.guildwars2.com/v2/commerce/prices/${itemId}`);
@@ -115,9 +110,7 @@ async function fetchTPValue(itemId) {
   return null;
 }
 
-// --- Item Info Loader (API -> OTC CSV -> Wiki) ---
 async function fetchItemInfo(item) {
-  // Try by ID
   if (item.id && itemCache[item.id]) return itemCache[item.id];
   if (item.id) {
     try {
@@ -132,7 +125,6 @@ async function fetchItemInfo(item) {
           accountbound: data.flags?.includes('AccountBound') || data.flags?.includes('AccountBoundOnUse'),
           wiki: createWikiUrl({id: item.id}),
         };
-        // TP value
         const tpValue = await fetchTPValue(item.id);
         if (tpValue !== null) info.tp_value = tpValue;
         itemCache[item.id] = info;
@@ -140,7 +132,6 @@ async function fetchItemInfo(item) {
       }
     } catch {}
   }
-  // Try OTC CSV by chat code, then name
   await loadOtcCsv();
   let otc = null;
   if (item.code && otcCsvCache[item.code]) otc = otcCsvCache[item.code];
@@ -158,7 +149,6 @@ async function fetchItemInfo(item) {
     itemCache[item.id || otc.name] = info;
     return info;
   }
-  // Fallback: minimal info, try wiki by name
   return {
     name: item.name || item.id || item.code || 'Unknown Item',
     wiki: createWikiUrl(item),
@@ -166,7 +156,6 @@ async function fetchItemInfo(item) {
   };
 }
 
-// --- Data Loader ---
 async function loadData() {
   const allData = await Promise.all(DATA_URLS.map(url => fetch(url).then(r => r.json())));
   let events = [];
@@ -186,7 +175,6 @@ async function loadData() {
   render();
 }
 
-// --- Enrich Loot with API/CSV Info ---
 async function enrichLootWithApi() {
   const lootItems = [];
   allEvents.forEach(ev => {
@@ -196,13 +184,11 @@ async function enrichLootWithApi() {
       else if (item.name && !itemCache[item.name]) lootItems.push(item);
     });
   });
-  // Fetch all unique items
   for (const item of lootItems) {
     await fetchItemInfo(item);
   }
 }
 
-// --- Group Events ---
 function groupEvents(events) {
   const expansions = {};
   events.forEach(ev => {
@@ -213,7 +199,6 @@ function groupEvents(events) {
   return expansions;
 }
 
-// --- Filtering and Sorting ---
 function applyFilters() {
   let query = document.getElementById('search').value.toLowerCase();
   filteredEvents = allEvents.filter(ev =>
@@ -243,7 +228,6 @@ function applyFilters() {
   render();
 }
 
-// --- Collapsing ---
 function toggleCoreTyria() {
   coreTyriaCollapsed = !coreTyriaCollapsed;
   render();
@@ -253,7 +237,6 @@ function toggleCoreTyriaSource(source) {
   render();
 }
 
-// --- Copy nudge helper ---
 function showCopyNudge(btn) {
   let nudge = document.createElement('span');
   nudge.className = 'copy-nudge';
@@ -262,7 +245,6 @@ function showCopyNudge(btn) {
   setTimeout(() => nudge.remove(), 1200);
 }
 
-// --- Main Render ---
 function render() {
   const container = document.getElementById('events');
   container.innerHTML = '';
@@ -274,59 +256,54 @@ function render() {
     expDiv.className = 'menu-card';
     expDiv.id = expId;
 
-    // Expansion header
     expDiv.innerHTML = `<h2>${expansion}</h2>`;
 
-    // Sources
     Object.entries(sources).forEach(([source, events]) => {
       const srcId = `${expId}-source-${source.replace(/\s+/g, '_')}`;
       const srcDiv = document.createElement('div');
       srcDiv.className = 'menu-card';
       srcDiv.id = srcId;
-
       srcDiv.innerHTML = `<h3>${source}</h3>`;
 
       events.forEach(ev => {
-        // Build event info
-        const eventWikiUrl = createEventWikiUrl(ev);
         const mostValuable = getMostValuableLoot(ev.loot || []);
-        const mostValuableName = mostValuable && itemCache[mostValuable.id]
-          ? itemCache[mostValuable.id].name || mostValuable.name
-          : (mostValuable?.name || mostValuable?.id || mostValuable?.code || '');
-        const mostValuableValue = (mostValuable && mostValuable.id && itemCache[mostValuable.id])
-          ? splitCoins(itemCache[mostValuable.id].tp_value ?? itemCache[mostValuable.id].vendor_value)
+        const mostValuableInfo = mostValuable ? itemCache[mostValuable.id] : null;
+        const mostValuableName = mostValuableInfo ? mostValuableInfo.name : (mostValuable?.name || '');
+        const mostValuableValue = mostValuableInfo
+          ? (mostValuableInfo.tp_value
+              ? `<span class="tp-value">${splitCoins(mostValuableInfo.tp_value)} <span style="font-size:0.95em;color:var(--color-accent-emerald);">(TP)</span></span>`
+              : (typeof mostValuableInfo.vendor_value === 'number'
+                  ? `<span class="vendor-value">${splitCoins(mostValuableInfo.vendor_value)}</span>`
+                  : (mostValuableInfo.accountbound ? `<span class="accountbound">Account Bound</span>` : '')))
           : '';
+
         const waypoint = ev.code ? ev.code : (ev.map || '');
         const copyValue = `${ev.name} | ${waypoint} | ${mostValuableName}${mostValuableValue ? ' (' + mostValuableValue.replace(/<[^>]+>/g, '') + ')' : ''}`;
 
-        // Loot items
         const lootItems = (ev.loot || []).map(item => {
           const info = item.id ? itemCache[item.id] : (item.name && itemCache[item.name]) ? itemCache[item.name] : {};
-          let displayName = info && info.name ? info.name : (item.name || item.id || item.code || 'Unknown Item');
-          let wikiUrl = createWikiUrl(item);
-          let icon = info && info.icon ? `<img src="${info.icon}" alt="" class="loot-icon">` : '';
-          let value = '';
+          const displayName = info && info.name ? info.name : (item.name || item.id || item.code || 'Unknown Item');
+          const wikiUrl = createWikiUrl(item);
+          const icon = info && info.icon ? `<img src="${info.icon}" alt="" class="loot-icon">` : '';
+          let valueDisplay = '';
           if (info && typeof info.tp_value === 'number') {
-            value = `<span class="tp-value" title="Trading Post lowest sell">${splitCoins(info.tp_value)} <span style="font-size:0.95em;color:var(--color-accent-emerald);">(TP)</span></span>`;
+            valueDisplay = `<span class="tp-value">${splitCoins(info.tp_value)} <span style="font-size:0.95em;color:var(--color-accent-emerald);">(TP)</span></span>`;
           } else if (info && typeof info.vendor_value === 'number') {
-            value = `<span class="vendor-value">${splitCoins(info.vendor_value)}</span>`;
+            valueDisplay = `<span class="vendor-value">${splitCoins(info.vendor_value)}</span>`;
           } else if (info && info.accountbound) {
-            value = `<span class="vendor-value" style="color:var(--color-accent-emerald);">Accountbound</span>`;
-          } else {
-            value = `<span class="vendor-value" style="color:var(--color-accent-gold);">No Value</span>`;
+            valueDisplay = `<span class="accountbound">Account Bound</span>`;
           }
-          let chatLink = info && info.chat_link
+          const chatLink = info && info.chat_link
             ? ` <code>${info.chat_link}</code>`
             : (item.code ? ` <code>${item.code}</code>` : '');
           return `<li>
             ${icon}
             <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${displayName}</a>
-            ${value}
+            ${valueDisplay}
             ${chatLink}
           </li>`;
         }).join('');
 
-        // Loot section as a collapsible card (always present if loot exists)
         const lootSection = lootItems
           ? `<div class="show-hide-section collapsed loot-section">
               <button class="show-hide-toggle" onclick="this.parentElement.classList.toggle('collapsed')">Show/Hide Loot</button>
@@ -334,7 +311,8 @@ function render() {
             </div>`
           : '';
 
-        // Render the event as a full-width card!
+        const eventWikiUrl = createEventWikiUrl(ev);
+
         const eventCard = document.createElement('article');
         eventCard.className = 'event-card fullwidth-event-card';
         eventCard.innerHTML = `
@@ -347,7 +325,7 @@ function render() {
               <span><b>Waypoint:</b> ${ev.code ? `<code>${ev.code}</code>` : ''}</span>
             </div>
             <div class="event-loot-summary">
-              <b>Best Loot:</b> ${mostValuableName} ${mostValuableValue}
+              <b>Best Loot:</b> ${mostValuableName || ''} ${mostValuableValue || ''}
             </div>
             <div class="copy-bar">
               <input type="text" value="${copyValue}" readonly>
@@ -366,12 +344,10 @@ function render() {
   if (typeof renderMenu === "function") renderMenu();
 }
 
-// --- Expose for menu.js ---
 window.toggleCoreTyria = toggleCoreTyria;
 window.toggleCoreTyriaSource = toggleCoreTyriaSource;
 window.getEventGroups = () => groupEvents(filteredEvents);
 
-// --- Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
   loadData();
   document.getElementById('search').addEventListener('input', applyFilters);
