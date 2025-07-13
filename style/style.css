@@ -5,7 +5,7 @@
   --color-accent-emerald: #3fa37d;
   --color-text-light: #f3f0eb;
   --color-text-muted: #a0978e;
-  --color-card-bg: rgba(28,24,36,0.88);
+  --color-card-bg: rgba(28,24,36,0.93);
   --color-card-border: #3fa37d;
   --sidebar-width: 260px;
   --sidebar-width-collapsed: 60px;
@@ -29,9 +29,7 @@ html, body {
   overflow: hidden;
 }
 a { color: inherit; text-decoration: none; transition: color 0.2s; }
-a:hover {
-  color: var(--color-accent-emerald);
-}
+a:hover { color: var(--color-accent-emerald); }
 a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   outline: 2px solid var(--color-accent-emerald);
   outline-offset: 2px;
@@ -98,6 +96,77 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
 .sidebar .sidebar-toggle:hover {
   background: var(--color-accent-emerald);
   transform: scale(1.1) rotate(10deg);
+}
+
+/* Sidebar Menu Placeholder/Card Menu */
+#menu-placeholder {
+  padding: 2.2rem 0.7rem 1.2rem 0.7rem;
+}
+.menu-card {
+  background: var(--color-card-bg);
+  border: 2px solid var(--color-card-border);
+  border-radius: 14px;
+  box-shadow: 0 2px 10px #0006;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.menu-card .card-header {
+  background: rgba(27,21,44,0.93);
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--color-accent-emerald);
+  font-family: var(--font-heading);
+  font-size: 1.13rem;
+  color: var(--color-accent-gold);
+  letter-spacing: 1px;
+  text-shadow: 0 0 6px var(--color-accent-emerald);
+}
+.menu-card .card-body {
+  padding: 0.7rem 1rem 1rem 1rem;
+}
+.menu-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.menu-links li {
+  margin: 0.5rem 0;
+}
+.menu-link {
+  display: block;
+  font-family: var(--font-accent);
+  color: var(--color-accent-emerald);
+  font-size: 1.08rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+.menu-link:hover {
+  background: var(--color-accent-emerald);
+  color: #fff;
+}
+.menu-link.active {
+  background: var(--color-accent-gold);
+  color: #1b152c !important;
+  font-weight: bold;
+}
+
+/* Hide menu content when collapsed */
+.sidebar.collapsed #menu-placeholder,
+.sidebar.collapsed .sidebar-logo {
+  display: none !important;
+}
+
+/* Sidebar Logo */
+.sidebar-logo {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1.2rem;
+}
+.sidebar-logo img {
+  width: 48px;
+  filter: drop-shadow(0 0 8px var(--color-accent-gold));
 }
 
 /* Sidebar Right (Timer) */
@@ -348,26 +417,6 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   background: var(--color-accent-gold);
   color: #1b152c;
 }
-.event-card .show-hide-section {
-  background: var(--color-card-bg);
-  border-radius: 12px;
-  margin: 1.5em 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-  transition: max-height 0.4s cubic-bezier(.4,2,.6,1), opacity 0.4s;
-  border: 2px solid var(--color-card-border);
-  max-height: 1000px;
-  opacity: 1;
-  overflow: hidden;
-}
-.event-card .show-hide-section.collapsed {
-  max-height: 0;
-  opacity: 0;
-  padding: 0 !important;
-  margin: 0 !important;
-  pointer-events: none;
-  overflow: hidden;
-  transition: max-height 0.4s, opacity 0.4s;
-}
 .event-card .show-hide-toggle {
   background: var(--color-accent-gold);
   color: #1b152c;
@@ -380,6 +429,7 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.18);
   transition: background 0.2s, color 0.2s;
+  display: block;
 }
 .event-card .show-hide-toggle:hover {
   background: var(--color-accent-emerald);
@@ -390,6 +440,20 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   margin: 0.7em 0 0 0;
   padding: 0;
   font-size: 1.07rem;
+  max-height: 600px;
+  overflow: hidden;
+  transition: max-height 0.4s, opacity 0.4s;
+  opacity: 1;
+  display: block;
+}
+.event-card .loot-list[style*="display: none"] {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 !important;
+  margin: 0 !important;
+  pointer-events: none;
+  transition: max-height 0.4s, opacity 0.4s;
+  display: none;
 }
 .event-card .loot-list li {
   display: flex;
