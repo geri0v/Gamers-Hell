@@ -1,11 +1,5 @@
 // menu.js
 
-// You must expose groupEvents and filteredEvents from cmd.js, e.g.:
-// window.groupEvents = groupEvents;
-// window.filteredEvents = filteredEvents;
-// Or, add this at the end of your cmd.js:
-// window.getEventGroups = () => groupEvents(filteredEvents);
-
 let menuState = {}; // {expansion: {collapsed: bool, sources: {source: bool}}}
 
 function ensureMenuState(groups) {
@@ -19,7 +13,6 @@ function ensureMenuState(groups) {
 
 // Render the menu
 function renderMenu() {
-  // Get grouped data from cmd.js (filteredEvents should reflect current search/filter)
   const groups = (window.getEventGroups && window.getEventGroups()) || {};
   ensureMenuState(groups);
 
@@ -28,16 +21,13 @@ function renderMenu() {
   menu.innerHTML = '<div class="menu-title">Expansions</div>';
 
   Object.entries(groups).forEach(([expansion, sources]) => {
-    // Expansion header
     const expId = `expansion-${expansion.replace(/\s+/g, '_')}`;
     const expDiv = document.createElement('div');
     expDiv.className = 'menu-expansion';
 
-    // Toggle arrow
     const arrow = menuState[expansion].collapsed ? '▶' : '▼';
     expDiv.innerHTML = `<div class="menu-exp-header" style="cursor:pointer" onclick="toggleMenuExpansion('${expansion.replace(/'/g, "\\'")}')">${arrow} <span class="menu-exp-link" onclick="event.stopPropagation();jumpToSection('${expId}')">${expansion}</span></div>`;
 
-    // Sources list
     const srcList = document.createElement('div');
     srcList.className = 'menu-sources';
     srcList.style.display = menuState[expansion].collapsed ? 'none' : 'block';
@@ -55,6 +45,8 @@ function renderMenu() {
     expDiv.appendChild(srcList);
     menu.appendChild(expDiv);
   });
+
+  setupMenuScrollSpy();
 }
 
 // Toggle expansion collapse
@@ -71,6 +63,22 @@ function toggleMenuSource(expansion, source) {
 
 // Smooth scroll to section
 function jumpToSection(id) {
+  // Optionally expand sections before jumping
+  const [expansionPart, ...rest] = id.split('-source-');
+  const expansion = expansionPart.replace('expansion-', '').replace(/_/g, ' ');
+  const source = rest.length ? rest.join('-source-').replace(/_/g, ' ') : null;
+  if (menuState[expansion] && menuState[expansion].collapsed) {
+    menuState[expansion].collapsed = false;
+    renderMenu();
+    setTimeout(() => jumpToSection(id), 100);
+    return;
+  }
+  if (source && menuState[expansion] && menuState[expansion].sources[source]) {
+    menuState[expansion].sources[source] = false;
+    renderMenu();
+    setTimeout(() => jumpToSection(id), 100);
+    return;
+  }
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
@@ -80,10 +88,57 @@ window.toggleMenuExpansion = toggleMenuExpansion;
 window.toggleMenuSource = toggleMenuSource;
 window.jumpToSection = jumpToSection;
 
-// Re-render menu on DOMContentLoaded and after each main render
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(renderMenu, 500); // Wait for cmd.js to load and group data
-});
+// Scrollspy: highlight and autoscroll menu to active section
+function setupMenuScrollSpy() {
+  const menu = document.getElementById('menu');
+  if (!menu) return;
 
-// If your app updates filteredEvents/groups dynamically (e.g. on search/sort), 
-// call renderMenu() after each main render in cmd.js for perfect sync.
+  const links = menu.querySelectorAll('.menu-exp-link, .menu-source-link');
+  const idToMenuLink = {};
+  links.forEach(link => {
+    const onclickAttr = link.getAttribute('onclick');
+    if (!onclickAttr) return;
+    const match = onclickAttr.match(/jumpToSection\\('([^']+)'\\)/);
+    if (match) idToMenuLink[match[1]] = link;
+  });
+
+  function isElementVisible(el) {
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    return rect.top >= 0 && rect.top < window.innerHeight;
+  }
+
+  function scrollMenuToActive(activeLink) {
+    const menuRect = menu.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
+    if (linkRect.top < menuRect.top) {
+      menu.scrollTop -= (menuRect.top - linkRect.top + 5);
+    } else if (linkRect.bottom > menuRect.bottom) {
+      menu.scrollTop += (linkRect.bottom - menuRect.bottom + 5);
+    }
+  }
+
+  function onScroll() {
+    let activeId = null;
+    for (const id in idToMenuLink) {
+      const section = document.getElementById(id);
+      if (section && isElementVisible(section)) {
+        activeId = id;
+        break;
+      }
+    }
+    Object.values(idToMenuLink).forEach(link => link.classList.remove('active'));
+    if (activeId && idToMenuLink[activeId]) {
+      idToMenuLink[activeId].classList.add('active');
+      scrollMenuToActive(idToMenuLink[activeId]);
+    }
+  }
+
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+}
+
+// Initial render
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(renderMenu, 500);
+});
