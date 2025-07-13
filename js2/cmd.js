@@ -1,5 +1,4 @@
 // == Gamers-Hell: cmd.js ==
-// Orchestrates everything: classic global version
 
 let allEvents = [];
 let filteredEvents = [];
