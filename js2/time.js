@@ -56,7 +56,7 @@ function renderEvents(events) {
         <div class="gh-event-countdown">Countdown: <span>${formatCountdown(ev.countdown)}</span></div>
         <div class="gh-event-waypoint-bar">
           <input type="text" class="gh-event-waypoint-input" value="${ev.waypoint || ""}" readonly id="gh-waypoint-input-${ev.idx}">
-          <button class="gh-event-copy-btn" data-input="gh-waypoint-input-${ev.idx}">Copy</button>
+          <button class="gh-event-copy-btn" data-idx="${ev.idx}">Copy</button>
         </div>
       </div>
       `;
@@ -65,21 +65,24 @@ function renderEvents(events) {
   html += `</div>`;
   document.getElementById('gw2-event-timer').innerHTML = html;
 
-  // Copy waypoint logic
+  // Copy event name and waypoint logic
   document.querySelectorAll('.gh-event-copy-btn').forEach(btn => {
     btn.onclick = function() {
-      const inputId = btn.getAttribute('data-input');
-      const input = document.getElementById(inputId);
-      input.select();
-      input.setSelectionRange(0, 99999); // For mobile
-      // Try modern clipboard API first
+      const idx = btn.getAttribute('data-idx');
+      const event = eventList.find(e => e.idx.toString() === idx);
+      if (!event) return;
+      const textToCopy = `${event.name} - ${event.waypoint || ''}`.trim();
       if (navigator.clipboard) {
-        navigator.clipboard.writeText(input.value).then(() => {
+        navigator.clipboard.writeText(textToCopy).then(() => {
           btn.classList.add('copied');
           btn.textContent = 'Copied!';
           setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 1200);
         });
       } else {
+        // Fallback for older browsers
+        const input = document.getElementById(`gh-waypoint-input-${idx}`);
+        input.select();
+        input.setSelectionRange(0, 99999);
         document.execCommand('copy');
         btn.classList.add('copied');
         btn.textContent = 'Copied!';
