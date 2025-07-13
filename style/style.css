@@ -19,6 +19,25 @@
   --transition: 0.2s cubic-bezier(.4,0,.2,1);
 }
 
+/* Light Theme Overrides */
+body.light {
+  --main-bg: #f8fcff;
+  --main-fg: #222;
+  --card-bg: #fff;
+  --header-bg: #e9eef5;
+  --footer-bg: #e9eef5;
+  --search-bg: #e3e9f0;
+  --input-bg: #f3f7fa;
+  --input-fg: #222;
+  --copy-bar-bg: #e9eef5;
+  --copy-btn-bg: linear-gradient(135deg, #b3c6e0 60%, #4a90e2 100%);
+  --accent: #2b4765;
+  --table-th: #2b4765;
+  --table-border: #b3c6e0;
+  --section-title-bg: #e9eef5;
+  --section-title-fg: #2b4765;
+}
+
 /* General Layout */
 body {
   background: var(--main-bg);
@@ -318,4 +337,15 @@ mark {
   color: #fff;
   border-radius: 3px;
   padding: 0 2px;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .main {
+    padding: 1em 0.5em;
+  }
+  .loot-table {
+    min-width: 0;
+    font-size: 0.95em;
+  }
 }
