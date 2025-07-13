@@ -1,6 +1,7 @@
 // menu.js
 
 let menuState = {}; // {expansion: {collapsed: bool, sources: {source: bool}}}
+let menuOpen = false;
 
 function ensureMenuState(groups) {
   Object.keys(groups).forEach(exp => {
@@ -11,6 +12,22 @@ function ensureMenuState(groups) {
   });
 }
 
+// Toggle menu open/close
+function toggleMenu(force) {
+  menuOpen = typeof force === "boolean" ? force : !menuOpen;
+  const menu = document.getElementById('menu');
+  const overlay = document.getElementById('menu-overlay');
+  if (menuOpen) {
+    menu.classList.add('open');
+    overlay.classList.add('show');
+    document.body.classList.add('menu-open');
+  } else {
+    menu.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.classList.remove('menu-open');
+  }
+}
+
 // Render the menu
 function renderMenu() {
   const groups = (window.getEventGroups && window.getEventGroups()) || {};
@@ -18,7 +35,12 @@ function renderMenu() {
 
   const menu = document.getElementById('menu');
   if (!menu) return;
-  menu.innerHTML = '<div class="menu-title">Expansions</div>';
+  menu.innerHTML = `
+    <div class="menu-header">
+      <span class="menu-title">Expansions</span>
+      <button class="menu-close-btn" onclick="toggleMenu(false)" aria-label="Close Menu">&times;</button>
+    </div>
+  `;
 
   Object.entries(groups).forEach(([expansion, sources]) => {
     const expId = `expansion-${expansion.replace(/\s+/g, '_')}`;
@@ -26,7 +48,7 @@ function renderMenu() {
     expDiv.className = 'menu-expansion';
 
     const arrow = menuState[expansion].collapsed ? '▶' : '▼';
-    expDiv.innerHTML = `<div class="menu-exp-header" style="cursor:pointer" onclick="toggleMenuExpansion('${expansion.replace(/'/g, "\\'")}')">${arrow} <span class="menu-exp-link" onclick="event.stopPropagation();jumpToSection('${expId}')">${expansion}</span></div>`;
+    expDiv.innerHTML = `<div class="menu-exp-header" tabindex="0" onclick="toggleMenuExpansion('${expansion.replace(/'/g, "\\'")}')">${arrow} <span class="menu-exp-link" onclick="event.stopPropagation();jumpToSection('${expId}')">${expansion}</span></div>`;
 
     const srcList = document.createElement('div');
     srcList.className = 'menu-sources';
@@ -45,8 +67,6 @@ function renderMenu() {
     expDiv.appendChild(srcList);
     menu.appendChild(expDiv);
   });
-
-  setupMenuScrollSpy();
 }
 
 // Toggle expansion collapse
@@ -55,15 +75,15 @@ function toggleMenuExpansion(expansion) {
   renderMenu();
 }
 
-// Toggle source collapse (not used for scrolling, just for future extensibility)
+// Toggle source collapse
 function toggleMenuSource(expansion, source) {
   menuState[expansion].sources[source] = !menuState[expansion].sources[source];
   renderMenu();
 }
 
-// Smooth scroll to section
+// Smooth scroll to section and auto-expand if needed
 function jumpToSection(id) {
-  // Optionally expand sections before jumping
+  // Expand section if collapsed
   const [expansionPart, ...rest] = id.split('-source-');
   const expansion = expansionPart.replace('expansion-', '').replace(/_/g, ' ');
   const source = rest.length ? rest.join('-source-').replace(/_/g, ' ') : null;
@@ -79,66 +99,18 @@ function jumpToSection(id) {
     setTimeout(() => jumpToSection(id), 100);
     return;
   }
+  toggleMenu(false);
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 
-// Make functions globally accessible for inline handlers
+// Expose for inline handlers
+window.toggleMenu = toggleMenu;
 window.toggleMenuExpansion = toggleMenuExpansion;
 window.toggleMenuSource = toggleMenuSource;
 window.jumpToSection = jumpToSection;
 
-// Scrollspy: highlight and autoscroll menu to active section
-function setupMenuScrollSpy() {
-  const menu = document.getElementById('menu');
-  if (!menu) return;
-
-  const links = menu.querySelectorAll('.menu-exp-link, .menu-source-link');
-  const idToMenuLink = {};
-  links.forEach(link => {
-    const onclickAttr = link.getAttribute('onclick');
-    if (!onclickAttr) return;
-    const match = onclickAttr.match(/jumpToSection\\('([^']+)'\\)/);
-    if (match) idToMenuLink[match[1]] = link;
-  });
-
-  function isElementVisible(el) {
-    if (!el) return false;
-    const rect = el.getBoundingClientRect();
-    return rect.top >= 0 && rect.top < window.innerHeight;
-  }
-
-  function scrollMenuToActive(activeLink) {
-    const menuRect = menu.getBoundingClientRect();
-    const linkRect = activeLink.getBoundingClientRect();
-    if (linkRect.top < menuRect.top) {
-      menu.scrollTop -= (menuRect.top - linkRect.top + 5);
-    } else if (linkRect.bottom > menuRect.bottom) {
-      menu.scrollTop += (linkRect.bottom - menuRect.bottom + 5);
-    }
-  }
-
-  function onScroll() {
-    let activeId = null;
-    for (const id in idToMenuLink) {
-      const section = document.getElementById(id);
-      if (section && isElementVisible(section)) {
-        activeId = id;
-        break;
-      }
-    }
-    Object.values(idToMenuLink).forEach(link => link.classList.remove('active'));
-    if (activeId && idToMenuLink[activeId]) {
-      idToMenuLink[activeId].classList.add('active');
-      scrollMenuToActive(idToMenuLink[activeId]);
-    }
-  }
-
-  window.addEventListener('scroll', onScroll);
-  onScroll();
-}
-
-// Initial render
+// Render menu after DOM loaded and after each main render
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(renderMenu, 500);
 });
