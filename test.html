@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>GW2 Event & Loot Browser</title>
@@ -10,48 +10,48 @@
   <link href="https://fonts.googleapis.com/css2?family=Almendra+SC&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400&display=swap" rel="stylesheet">
 
-  <!-- Fantasy CSS: Gebruik de verbeterde CSS uit het vorige antwoord! -->
-  <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css" />
+  <!-- Fantasy CSS: Use the upgraded CSS above! -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="layout3col">
-    <!-- LINKER SIDEBAR -->
+    <!-- LEFT SIDEBAR -->
     <aside id="sidebar-left" class="sidebar">
-      <button type="button" id="menu-toggle" class="sidebar-toggle left" aria-label="Toon/verberg menu">☰</button>
+      <button type="button" id="menu-toggle" class="sidebar-toggle left" aria-label="Show/hide menu">☰</button>
       <nav id="menu"></nav>
     </aside>
 
-    <!-- HOOFDCONTENT -->
+    <!-- MAIN CONTENT -->
     <main id="main-content">
-      <h1>Guild Wars 2 Event &amp; Loot Browser</h1>
+      <h1>Guild Wars 2 Event & Loot Browser</h1>
 
       <div class="controls">
-        <input type="text" id="search" placeholder="Zoek op event, locatie of item…" autocomplete="off" />
+        <input type="text" id="search" placeholder="Search by event, location or item…" autocomplete="off" />
         <div class="sort-bar">
-          <button type="button" class="sort-btn" data-sort="name">Naam</button>
-          <button type="button" class="sort-btn" data-sort="map">Locatie</button>
-          <button type="button" class="sort-btn" data-sort="value">Waarde</button>
+          <button type="button" class="sort-btn" data-sort="name">Name</button>
+          <button type="button" class="sort-btn" data-sort="map">Location</button>
+          <button type="button" class="sort-btn" data-sort="value">Value</button>
         </div>
       </div>
 
       <div id="events" class="event-grid"></div>
     </main>
 
-    <!-- RECHTER SIDEBAR -->
+    <!-- RIGHT SIDEBAR -->
     <aside id="sidebar-right" class="sidebar">
-      <button type="button" id="timer-toggle" class="sidebar-toggle right" aria-label="Toon/verberg timer">⏲</button>
+      <button type="button" id="timer-toggle" class="sidebar-toggle right" aria-label="Show/hide timer">⏲</button>
       <section id="timer">
         <div class="timer-title">Timer</div>
-        <!-- Wordt later gevuld met JSON of API -->
+        <!-- Will be filled dynamically -->
       </section>
     </aside>
   </div>
 
-  <!-- MENU EN EVENT DATA -->
+  <!-- MENU AND EVENT DATA -->
   <script src="https://geri0v.github.io/Gamers-Hell/js2/menu.js"></script>
   <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
 
-  <!-- INITIALISATIE, RENDERING, FILTER & SORT -->
+  <!-- INITIALIZATION, RENDERING, FILTER & SORT -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // --- SIDEBAR TOGGLES ---
@@ -65,7 +65,7 @@
       );
 
       // --- RENDER MENU ---
-      // Let op: als je menu.js een eigen renderMenu-functie gebruikt, mag dit blokje weg!
+      // If menu.js has its own renderMenu function, you can remove this block!
       if (window.menuData) {
         const menuData = window.menuData || [];
         const nav = document.getElementById('menu');
@@ -101,7 +101,7 @@
               <h2>${evt.name}</h2>
             </div>
             <div class="card-body">
-              <p class="map">Map: ${evt.map}</p>
+              <p class="map">Location: ${evt.map}</p>
               <p class="loot">Loot: ${evt.loot}</p>
             </div>`;
           container.appendChild(card);
