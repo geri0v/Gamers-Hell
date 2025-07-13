@@ -361,3 +361,42 @@ body.light mark {
   background: #ffe08a;
   color: #2b4765;
 }
+/* === Sidebar Timer Styles === */
+#timer-sidebar {
+  width: 0;
+  min-width: 0;
+  max-width: 380px;
+  background: #222b38;
+  box-shadow: 2px 0 16px #0005;
+  overflow: hidden;
+  transition: width 0.3s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 10;
+}
+#timer-sidebar.open {
+  width: 380px;
+  min-width: 220px;
+  border-left: 2px solid #2b4765;
+}
+#timer-sidebar gw2-event-timer {
+  --timer-max-width: 380px;
+  --timer-padding: 8px;
+  width: 100%;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+}
+@media (max-width: 900px) {
+  #timer-sidebar, #timer-sidebar.open {
+    width: 100vw;
+    max-width: 100vw;
+    min-width: 0;
+    height: auto;
+    border-left: none;
+    border-top: 2px solid #2b4765;
+  }
+  #timer-sidebar gw2-event-timer { --timer-max-width: 100vw; }
+}
