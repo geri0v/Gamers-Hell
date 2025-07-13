@@ -1,5 +1,3 @@
-// menu.js - Upgraded Fantasy Sidebar Menu
-
 let menuState = {}; // {expansion: {collapsed: bool, sources: {source: bool}}}
 
 // Sidebar show/hide toggle
