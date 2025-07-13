@@ -1,38 +1,73 @@
 :root {
-  --sidebar-width: 270px;
+  /* Color Palette */
+  --color-bg-main: #1f1d2b;
+  --color-bg-sidebar: #2a2736;
+  --color-text-primary: #e1dace;
+  --color-text-secondary: #a99f8e;
+  --color-accent: #f0b429;       /* goudachtig */
+  --color-highlight: #4ba785;    /* arcanegroen */
+  
+  /* Textures & Icons */
+  --texture-sidebar: url('assets/textures/parchment.png');
+  --icon-toggle: '\e800';        /* voorbeeld: custom iconfont code */
+  
+  /* Dimensions */
+  --sidebar-width: 280px;
   --sidebar-width-collapsed: 0;
-  --sidebar-bg: #23242e;
   --sidebar-z: 10;
+  --sidebar-transition: 0.25s ease;
+  
+  /* Typography */
+  --font-heading: 'Cinzel Decorative', serif;
+  --font-body: 'Merriweather', serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body, html {
-  height: 100%;
   margin: 0;
   padding: 0;
+  height: 100%;
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-main);
+  overflow: hidden;
 }
-
 .layout3col {
   display: flex;
-  height: 100vh;
-  min-height: 100vh;
   width: 100vw;
-  overflow: hidden;
+  height: 100vh;
 }
 
 .sidebar {
   position: relative;
-  background: var(--sidebar-bg);
-  min-width: var(--sidebar-width);
-  max-width: 350px;
   width: var(--sidebar-width);
-  transition: width 0.2s, min-width 0.2s, padding 0.2s;
+  min-width: var(--sidebar-width);
+  max-width: 320px;
+  background-color: var(--color-bg-sidebar);
+  background-image: var(--texture-sidebar);
+  background-size: cover;
+  color: var(--color-text-primary);
   display: flex;
   flex-direction: column;
+  transition: width var(--sidebar-transition),
+              min-width var(--sidebar-transition),
+              padding var(--sidebar-transition);
   z-index: var(--sidebar-z);
-  overflow-x: hidden;
   overflow-y: auto;
 }
 
+#main-content {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 2em 1.5em;
+  overflow-y: auto;
+}
+/* Collapsed state */
 #sidebar-left.collapsed,
 #sidebar-right.collapsed {
   width: var(--sidebar-width-collapsed);
@@ -41,67 +76,77 @@ body, html {
   overflow: hidden;
 }
 
-#main-content {
-  flex: 1 1 0;
-  min-width: 0;
-  padding: 2em 1.5em;
-  background: #21222c;
-  overflow-y: auto;
-  height: 100vh;
-}
-
+/* Toggle button */
 .sidebar-toggle {
   position: absolute;
-  top: 10px;
+  top: 12px;
   width: 36px;
   height: 36px;
   border: none;
   border-radius: 50%;
-  background: #ffb347;
-  color: #23242e;
-  font-size: 1.4em;
-  font-weight: bold;
+  background-color: var(--color-accent);
+  color: var(--color-bg-sidebar);
+  font-family: var(--font-heading);
+  font-size: 1.2em;
   cursor: pointer;
   z-index: calc(var(--sidebar-z) + 1);
-  box-shadow: 0 2px 8px #0002;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease, background-color 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s;
 }
 
-.sidebar-toggle.left { left: 10px; }
-.sidebar-toggle.right { right: 10px; }
-
-.sidebar-toggle:hover { background: #ffd580; }
-
-#sidebar-left.collapsed .sidebar-toggle.left,
-#sidebar-right.collapsed .sidebar-toggle.right {
-  left: 10px;
-  right: 10px;
+.sidebar-toggle:hover {
+  background-color: var(--color-highlight);
 }
 
+.sidebar-toggle.left  { left: 12px; }
+.sidebar-toggle.right { right: 12px; }
+
+/* Rotatie-animatie bij togglen */
+.sidebar-toggle.rotate {
+  transform: rotate(180deg);
+}
+
+/* Hide content when collapsed */
 #sidebar-left.collapsed nav,
 #sidebar-right.collapsed #timer {
   display: none;
 }
-
-/* Responsive: on small screens, keep sidebars as overlays but toggles always visible */
 @media (max-width: 900px) {
   .layout3col {
-    flex-direction: row;
+    flex-direction: column;
     height: 100dvh;
   }
-  #main-content { padding: 1em; }
+
   .sidebar {
-    min-width: var(--sidebar-width);
-    width: var(--sidebar-width);
-    max-width: 90vw;
+    position: fixed;
+    height: 100%;
+    max-width: 80vw;
+    transform: translateX(-100%);
+    transition: transform var(--sidebar-transition);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  #main-content {
+    padding: 1em;
     position: relative;
+    z-index: 1;
   }
 }
 
 @media (max-width: 600px) {
-  .sidebar-toggle { width: 32px; height: 32px; font-size: 1.1em; }
-  #main-content { padding: 0.5em; }
+  .sidebar-toggle {
+    width: 32px;
+    height: 32px;
+    font-size: 1em;
+  }
+
+  #main-content {
+    padding: 0.5em;
+  }
 }
