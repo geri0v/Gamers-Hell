@@ -5,21 +5,19 @@
   <title>GW2 Event & Loot Browser</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Fantasy‐CSS -->
-  <link
-    rel="stylesheet"
-    href="https://geri0v.github.io/Gamers-Hell/style/style.css"
-  />
+  <!-- Fantasy fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Almendra+SC&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400&display=swap" rel="stylesheet">
+
+  <!-- Fantasy CSS: Gebruik de verbeterde CSS uit het vorige antwoord! -->
+  <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css" />
 </head>
 <body>
   <div class="layout3col">
     <!-- LINKER SIDEBAR -->
     <aside id="sidebar-left" class="sidebar">
-      <button
-        type="button"
-        id="menu-toggle"
-        class="sidebar-toggle left"
-      >☰</button>
+      <button type="button" id="menu-toggle" class="sidebar-toggle left" aria-label="Toon/verberg menu">☰</button>
       <nav id="menu"></nav>
     </aside>
 
@@ -28,22 +26,11 @@
       <h1>Guild Wars 2 Event &amp; Loot Browser</h1>
 
       <div class="controls">
-        <input
-          type="text"
-          id="search"
-          placeholder="Zoek op event, locatie of item…"
-          autocomplete="off"
-        />
+        <input type="text" id="search" placeholder="Zoek op event, locatie of item…" autocomplete="off" />
         <div class="sort-bar">
-          <button type="button" class="sort-btn" data-sort="name">
-            Naam
-          </button>
-          <button type="button" class="sort-btn" data-sort="map">
-            Locatie
-          </button>
-          <button type="button" class="sort-btn" data-sort="value">
-            Waarde
-          </button>
+          <button type="button" class="sort-btn" data-sort="name">Naam</button>
+          <button type="button" class="sort-btn" data-sort="map">Locatie</button>
+          <button type="button" class="sort-btn" data-sort="value">Waarde</button>
         </div>
       </div>
 
@@ -52,11 +39,7 @@
 
     <!-- RECHTER SIDEBAR -->
     <aside id="sidebar-right" class="sidebar">
-      <button
-        type="button"
-        id="timer-toggle"
-        class="sidebar-toggle right"
-      >⏲</button>
+      <button type="button" id="timer-toggle" class="sidebar-toggle right" aria-label="Toon/verberg timer">⏲</button>
       <section id="timer">
         <div class="timer-title">Timer</div>
         <!-- Wordt later gevuld met JSON of API -->
@@ -64,43 +47,42 @@
     </aside>
   </div>
 
-  <!-- 1) LAAD JE DATA-SCRIPTS -->
+  <!-- MENU EN EVENT DATA -->
   <script src="https://geri0v.github.io/Gamers-Hell/js2/menu.js"></script>
   <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
 
-  <!-- 2) INITIALISATIE, RENDERING, FILTER & SORT -->
+  <!-- INITIALISATIE, RENDERING, FILTER & SORT -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // --- SIDEBAR TOGGLES ---
       const leftSidebar = document.getElementById('sidebar-left');
       const rightSidebar = document.getElementById('sidebar-right');
-      document
-        .getElementById('menu-toggle')
-        .addEventListener('click', () =>
-          leftSidebar.classList.toggle('collapsed')
-        );
-      document
-        .getElementById('timer-toggle')
-        .addEventListener('click', () =>
-          rightSidebar.classList.toggle('collapsed')
-        );
+      document.getElementById('menu-toggle').addEventListener('click', () =>
+        leftSidebar.classList.toggle('collapsed')
+      );
+      document.getElementById('timer-toggle').addEventListener('click', () =>
+        rightSidebar.classList.toggle('collapsed')
+      );
 
       // --- RENDER MENU ---
-      const menuData = window.menuData || [];
-      const nav = document.getElementById('menu');
-      if (menuData.length) {
-        const ul = document.createElement('ul');
-        ul.className = 'nav-list';
-        menuData.forEach(item => {
-          const li = document.createElement('li');
-          li.innerHTML = `
-            <a href="${item.link || '#'}">
-              <span class="icon">${item.icon || ''}</span>
-              ${item.label}
-            </a>`;
-          ul.appendChild(li);
-        });
-        nav.appendChild(ul);
+      // Let op: als je menu.js een eigen renderMenu-functie gebruikt, mag dit blokje weg!
+      if (window.menuData) {
+        const menuData = window.menuData || [];
+        const nav = document.getElementById('menu');
+        if (menuData.length) {
+          const ul = document.createElement('ul');
+          ul.className = 'nav-list';
+          menuData.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+              <a href="${item.link || '#'}">
+                <span class="icon">${item.icon || ''}</span>
+                ${item.label}
+              </a>`;
+            ul.appendChild(li);
+          });
+          nav.appendChild(ul);
+        }
       }
 
       // --- RENDER & MANAGE EVENTS ---
@@ -128,34 +110,27 @@
       renderEvents(filteredEvents);
 
       // --- SEARCH FILTER ---
-      document
-        .getElementById('search')
-        .addEventListener('input', e => {
-          const term = e.target.value.toLowerCase();
-          filteredEvents = rawEvents.filter(evt =>
-            evt.name.toLowerCase().includes(term) ||
-            evt.map.toLowerCase().includes(term) ||
-            evt.loot.toLowerCase().includes(term)
-          );
-          renderEvents(filteredEvents);
-        });
+      document.getElementById('search').addEventListener('input', e => {
+        const term = e.target.value.toLowerCase();
+        filteredEvents = rawEvents.filter(evt =>
+          evt.name.toLowerCase().includes(term) ||
+          evt.map.toLowerCase().includes(term) ||
+          evt.loot.toLowerCase().includes(term)
+        );
+        renderEvents(filteredEvents);
+      });
 
       // --- SORT BUTTONS ---
       document.querySelectorAll('.sort-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-          // Visuele “active” state
-          document
-            .querySelectorAll('.sort-btn')
-            .forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
 
           const key = btn.dataset.sort;
           filteredEvents.sort((a, b) => {
             if (key === 'value') {
-              // numeriek sorteren op evt.value (of 0 als niet aanwezig)
               return (b.value || 0) - (a.value || 0);
             }
-            // alfabetisch sorteren
             return a[key].localeCompare(b[key]);
           });
           renderEvents(filteredEvents);
