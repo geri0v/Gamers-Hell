@@ -1,4 +1,4 @@
-// cmd.js - GW2 Event & Loot Browser with Live TP Value Fallback
+// cmd.js - GW2 Event & Loot Browser with dynamic loot and copy bar
 
 // CONFIGURATION
 const DATA_URLS = [
@@ -50,14 +50,12 @@ function getMostValuableLoot(lootArr, itemCache) {
 }
 
 // --- Live TP Value (Trading Post) Fallback ---
-// Tries GW2 API first, then GW2BLTC, then GW2Spidy (if desired)
 async function fetchTPValue(itemId) {
   // 1. Try GW2 API Trading Post endpoint
   try {
     const apiRes = await fetch(`https://api.guildwars2.com/v2/commerce/prices/${itemId}`);
     if (apiRes.ok) {
       const data = await apiRes.json();
-      // Use lowest sell offer as TP value
       if (data && data.sells && typeof data.sells.unit_price === 'number') {
         tpCache[itemId] = data.sells.unit_price;
         return data.sells.unit_price;
@@ -75,18 +73,6 @@ async function fetchTPValue(itemId) {
       }
     }
   } catch (e) {}
-  // 3. (Optional) Try GW2Spidy API as another fallback
-  // Uncomment if you want to use GW2Spidy as a third fallback
-  // try {
-  //   const spidyRes = await fetch(`https://www.gw2spidy.com/api/v0.9/json/item/${itemId}`);
-  //   if (spidyRes.ok) {
-  //     const data = await spidyRes.json();
-  //     if (data && data.result && typeof data.result.min_sale_unit_price === 'number') {
-  //       tpCache[itemId] = data.result.min_sale_unit_price;
-  //       return data.result.min_sale_unit_price;
-  //     }
-  //   }
-  // } catch (e) {}
   return null;
 }
 
