@@ -13,20 +13,7 @@
     <!-- Sidebar Left (Menu) -->
     <aside class="sidebar" aria-label="Sidebar">
       <button class="sidebar-toggle" aria-label="Toggle sidebar" tabindex="0">☰</button>
-      <div class="sidebar-content">
-        <div class="sidebar-logo">
-          <img src="https://wiki.guildwars2.com/images/d/d2/Guild_emblem_004.png" alt="GW2 Logo" />
-        </div>
-        <div class="menu-title">Menu</div>
-        <nav>
-          <ul class="menu-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Event Guide</a></li>
-            <li><a href="#">Loot Tables</a></li>
-            <li><a href="#">Settings</a></li>
-          </ul>
-        </nav>
-      </div>
+      <div id="menu-placeholder"></div>
     </aside>
 
     <!-- Main Content -->
@@ -62,8 +49,7 @@
     </aside>
   </div>
 
-  <!-- Modal for event details (created by JS if needed) -->
-
+  <script src="https://geri0v.github.io/Gamers-Hell/js2/menu.js"></script>
   <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
   <script>
     // Sidebar collapse for both left and right
@@ -82,7 +68,5 @@
       }
     }, 1000);
   </script>
-  <!-- <script src="menu.js"></script> -->
-  <!-- <script src="time.js"></script> -->
 </body>
 </html>
