@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <title>GW2 Event & Loot Browser</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A fantasy-styled browser for Guild Wars 2 events and loot, with dynamic cards and live data.">
+  <link rel="icon" href="https://wiki.guildwars2.com/favicon.ico" />
 
   <!-- Fantasy fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
@@ -22,9 +24,8 @@
     </aside>
 
     <!-- MAIN CONTENT -->
-    <main id="main-content">
+    <main id="main-content" role="main">
       <h1>Guild Wars 2 Event & Loot Browser</h1>
-
       <div class="controls">
         <input type="text" id="search" placeholder="Search by event, location or item…" autocomplete="off" />
         <div class="sort-bar">
@@ -33,8 +34,6 @@
           <button type="button" class="sort-btn" data-sort="value">Value</button>
         </div>
       </div>
-
-      <!-- Event grid will be filled by cmd.js -->
       <div id="events" class="event-grid"></div>
     </main>
 
@@ -43,7 +42,6 @@
       <button type="button" id="timer-toggle" class="sidebar-toggle right" aria-label="Show/hide timer">⏲</button>
       <section id="timer">
         <div class="timer-title">Timer</div>
-        <!-- Will be filled dynamically by cmd.js or your timer logic -->
       </section>
     </aside>
   </div>
@@ -52,7 +50,6 @@
   <script src="https://geri0v.github.io/Gamers-Hell/js2/menu.js"></script>
   <script src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
 
-  <!-- UI Initialization and Enhancements -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Sidebar toggles
