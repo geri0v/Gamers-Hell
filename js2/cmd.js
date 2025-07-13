@@ -30,9 +30,9 @@ function splitCoins(coins) {
   const silver = Math.floor((coins % 10000) / 100);
   const copper = coins % 100;
   let str = '';
-  if (gold) str += `${gold}g `;
-  if (gold || silver) str += `${silver}s `;
-  str += `${copper}c`;
+  if (gold) str += `<span class="gold">${gold}g</span> `;
+  if (gold || silver) str += `<span class="silver">${silver}s</span> `;
+  str += `<span class="copper">${copper}c</span>`;
   return str.trim();
 }
 
@@ -156,9 +156,13 @@ function render() {
   const container = document.getElementById('events');
   container.innerHTML = '';
   const groups = groupEvents(filteredEvents);
+
   Object.entries(groups).forEach(([expansion, sources]) => {
+    // Add an ID to the expansion div for menu.js
+    const expId = `expansion-${expansion.replace(/\s+/g, '_')}`;
     const expDiv = document.createElement('div');
     expDiv.className = 'expansion';
+    expDiv.id = expId;
 
     // Expansion header (collapsible if Core Tyria)
     if (expansion === 'Core Tyria') {
@@ -172,8 +176,11 @@ function render() {
     // Show/hide sources for Core Tyria
     if (expansion !== 'Core Tyria' || !coreTyriaCollapsed) {
       Object.entries(sources).forEach(([source, events]) => {
+        // Add an ID to the source div for menu.js
+        const srcId = `${expId}-source-${source.replace(/\s+/g, '_')}`;
         const srcDiv = document.createElement('div');
         srcDiv.className = 'source';
+        srcDiv.id = srcId;
 
         // Source header (collapsible if under Core Tyria)
         if (expansion === 'Core Tyria') {
@@ -199,7 +206,7 @@ function render() {
             const waypoint = ev.code ? ev.code : (ev.map || '');
 
             // Copy bar value
-            const copyValue = `${ev.name} | ${waypoint} | ${mostValuableName}${mostValuableValue ? ' (' + mostValuableValue + ')' : ''}`;
+            const copyValue = `${ev.name} | ${waypoint} | ${mostValuableName}${mostValuableValue ? ' (' + mostValuableValue.replace(/<[^>]+>/g, '') + ')' : ''}`;
 
             // Loot list with API info or wiki fallback
             const lootItems = (ev.loot || []).map(item => {
@@ -251,11 +258,17 @@ function render() {
     }
     container.appendChild(expDiv);
   });
+
+  // Sync menu after render if menu.js is loaded
+  if (typeof renderMenu === "function") renderMenu();
 }
 
 // EVENT LISTENERS & COLLAPSE HOOKS
 window.toggleCoreTyria = toggleCoreTyria;
 window.toggleCoreTyriaSource = toggleCoreTyriaSource;
+
+// Expose grouped data for menu.js
+window.getEventGroups = () => groupEvents(filteredEvents);
 
 document.addEventListener('DOMContentLoaded', () => {
   loadData();
