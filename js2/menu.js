@@ -11,7 +11,7 @@
       const expCard = document.createElement('div');
       expCard.className = 'menu-card';
       expCard.innerHTML = `
-        <div class="card-header" style="cursor:pointer;">
+        <div class="card-header" style="cursor:pointer;" tabindex="0" role="button" aria-expanded="true">
           <span style="font-family: var(--font-heading); color: var(--color-accent-gold); font-size:1.15rem;">
             ${expansion}
           </span>
