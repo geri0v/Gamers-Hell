@@ -1,18 +1,17 @@
 window.DATA_URLS = [
+  // Only raw.githubusercontent.com links!
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/temples.json',
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/untimedcore.json'
-  // Add more JSON URLs here as needed
 ];
 
 window.loadAllEvents = async function() {
   const all = await Promise.all(window.DATA_URLS.map(async (url) => {
     try {
       const resp = await fetch(url);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const json = await resp.json();
-      console.log('Loaded JSON:', url, json); // Debug
       let events = [];
-      // Accept multiple formats
-      if (Array.isArray(json) && json.length && json[0].events) {
+      if (Array.isArray(json) && json[0]?.events) {
         json.forEach(block => {
           const sourceName = block.sourceName || 'Unknown Source';
           (block.events || []).forEach(ev => {
@@ -20,7 +19,7 @@ window.loadAllEvents = async function() {
             events.push(ev);
           });
         });
-      } else if (Array.isArray(json) && json.length && json[0].name && json[0].loot) {
+      } else if (Array.isArray(json) && json[0]?.name && json[0]?.loot) {
         events = json;
       } else if (Array.isArray(json.events)) {
         const sourceName = json.sourceName || 'Unknown Source';
@@ -40,7 +39,8 @@ window.loadAllEvents = async function() {
       }
       return events;
     } catch (e) {
-      window.showToast(`Failed to load JSON: ${url}`);
+      window.showToast(`Failed to load JSON: ${url} (${e.message})`);
+      console.error(`Failed to load JSON: ${url}`, e);
       return [];
     }
   }));
