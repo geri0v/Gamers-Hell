@@ -1,5 +1,3 @@
-// == Gamers-Hell: cmd.js ==
-
 let allEvents = [];
 let filteredEvents = [];
 let sortKey = 'name';
@@ -21,7 +19,6 @@ function safeString(val) {
   return (typeof val === 'string') ? val.toLowerCase() : '';
 }
 
-// Compute event value for sorting
 function getEventValue(ev) {
   if (!Array.isArray(ev.loot)) return 0;
   return Math.max(
@@ -38,6 +35,7 @@ function applyFilters() {
   filteredEvents = allEvents.filter(ev =>
     safeString(ev.name).includes(query) ||
     safeString(ev.map).includes(query) ||
+    safeString(ev.sourceName).includes(query) ||
     (Array.isArray(ev.loot) && ev.loot.some(item => safeString(item.name).includes(query)))
   );
   filteredEvents.sort((a, b) => {
@@ -45,12 +43,15 @@ function applyFilters() {
     if (sortKey === 'value') {
       vA = getEventValue(a);
       vB = getEventValue(b);
+    } else if (sortKey === 'sourceName') {
+      vA = a.sourceName || '';
+      vB = b.sourceName || '';
     } else {
       vA = a[sortKey] || '';
       vB = b[sortKey] || '';
-      if (typeof vA === 'string') vA = vA.toLowerCase();
-      if (typeof vB === 'string') vB = vB.toLowerCase();
     }
+    if (typeof vA === 'string') vA = vA.toLowerCase();
+    if (typeof vB === 'string') vB = vB.toLowerCase();
     if (vA < vB) return sortAsc ? -1 : 1;
     if (vA > vB) return sortAsc ? 1 : -1;
     return 0;
