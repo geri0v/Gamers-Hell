@@ -45,9 +45,6 @@ function renderEventTable(events, sourceIdx, expIdx) {
           <th>Name</th>
           <th>Map</th>
           <th>Code</th>
-          <th>Wiki</th>
-          <th>Map Wiki</th>
-          <th>Copy</th>
         </tr>
       </thead>
       <tbody>
@@ -55,15 +52,23 @@ function renderEventTable(events, sourceIdx, expIdx) {
           const eventId = `event-${expIdx}-${sourceIdx}-${itemIdx}`;
           return `
             <tr>
-              <td>${item.name}</td>
-              <td>${item.map}</td>
+              <td>
+                ${item.wikiLink ? `<a href="${item.wikiLink}" target="_blank">${item.name}</a>` : item.name}
+              </td>
+              <td>
+                ${item.mapWikiLink ? `<a href="${item.mapWikiLink}" target="_blank">${item.map}</a>` : item.map}
+              </td>
               <td>${item.code || ''}</td>
-              <td>${item.wikiLink ? `<a href="${item.wikiLink}" target="_blank">Wiki</a>` : ''}</td>
-              <td>${item.mapWikiLink ? `<a href="${item.mapWikiLink}" target="_blank">Map Wiki</a>` : ''}</td>
-              <td>${createCopyBar(item)}</td>
             </tr>
             <tr>
-              <td colspan="6">${renderLoot(item.loot, eventId)}</td>
+              <td colspan="3">
+                ${createCopyBar(item)}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                ${renderLoot(item.loot, eventId)}
+              </td>
             </tr>
           `;
         }).join('')}
