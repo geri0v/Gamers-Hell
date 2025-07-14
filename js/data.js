@@ -4,7 +4,12 @@ const MANIFEST_URL = 'https://geri0v.github.io/Gamers-Hell/json/manifest.json';
 
 export async function fetchAllData(onProgress, batchSize = 5) {
   const manifest = await fetch(MANIFEST_URL).then(r => r.json());
-  const JSON_URLS = manifest.files.map(f => `https://geri0v.github.io/Gamers-Hell/json/${f}`);
+  // If your manifest.json uses full URLs, use the files directly:
+  // const JSON_URLS = manifest.files;
+  // If your manifest.json uses relative paths, use the following line:
+  const JSON_URLS = manifest.files.map(f => 
+    f.startsWith('http') ? f : `https://geri0v.github.io/Gamers-Hell/json/${f}`
+  );
   let allData = [];
   for (let i = 0; i < JSON_URLS.length; i += batchSize) {
     const batch = JSON_URLS.slice(i, i + batchSize);
