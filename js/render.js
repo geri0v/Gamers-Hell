@@ -8,13 +8,14 @@ function createCard(className, content) {
   return div;
 }
 
-function renderSubdata(item) {
-  if (!item.subdata || !Array.isArray(item.subdata)) return '';
+// Helper to render loot/items as subcards if present
+function renderLoot(loot) {
+  if (!Array.isArray(loot) || loot.length === 0) return '';
   return `
     <div class="subcards">
-      ${item.subdata.map(sub =>
+      ${loot.map(l =>
         `<div class="subcard">
-          ${Object.entries(sub).map(([k, v]) => `<div><strong>${k}:</strong> ${v}</div>`).join('')}
+          ${Object.entries(l).map(([k, v]) => `<div><strong>${k}:</strong> ${v}</div>`).join('')}
         </div>`
       ).join('')}
     </div>
@@ -34,18 +35,13 @@ export async function renderApp(containerId) {
       exp.sources.forEach(src => {
         const srcDiv = createCard('source-card', `<h3>${src.sourcename}</h3>`);
         src.items.forEach(item => {
-          const itemDiv = createCard(
-            'item-card',
-            `
-              <div>
-                ${Object.entries(item)
-                  .filter(([k]) => k !== 'subdata')
-                  .map(([k, v]) => `<div><strong>${k}:</strong> ${v}</div>`)
-                  .join('')}
-                ${renderSubdata(item)}
-              </div>
-            `
-          );
+          // Exclude loot from main details
+          const details = Object.entries(item)
+            .filter(([k]) => k !== 'loot' && k !== 'expansion' && k !== 'sourcename')
+            .map(([k, v]) => `<div><strong>${k}:</strong> ${Array.isArray(v) ? JSON.stringify(v) : v}</div>`)
+            .join('');
+          const lootSection = renderLoot(item.loot);
+          const itemDiv = createCard('item-card', `<div>${details}${lootSection}</div>`);
           srcDiv.appendChild(itemDiv);
         });
         expDiv.appendChild(srcDiv);
