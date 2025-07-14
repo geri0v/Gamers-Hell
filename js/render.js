@@ -1,10 +1,10 @@
 // render.js
-import { fetchAllData, groupAndSort } from './data.js';
-import { enrichData, formatPrice } from './loader.js';
-import { createCopyBar, getMostValuableDrop } from './copy.js';
-import { setupToggles } from './toggle.js';
-import { filterEvents } from './search.js';
-import { paginate } from './pagination.js';
+import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
+import { enrichData, formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
+import { createCopyBar, getMostValuableDrop } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
+import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
+import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
+import { paginate } from 'https://geri0v.github.io/Gamers-Hell/js/pagination.js';
 
 const PAGE_SIZE = 20;
 let currentPage = 1;
