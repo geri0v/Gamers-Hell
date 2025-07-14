@@ -1,5 +1,4 @@
-// https://geri0v.github.io/Gamers-Hell/js/toggle.js
-
+// toggle.js
 export function setupToggles() {
   document.addEventListener('click', function (e) {
     if (e.target.classList.contains('toggle-btn')) {
@@ -7,7 +6,9 @@ export function setupToggles() {
       const el = document.getElementById(targetId);
       if (el) {
         el.classList.toggle('hidden');
-        e.target.textContent = el.classList.contains('hidden') ? 'Show Loot' : 'Hide Loot';
+        const isHidden = el.classList.contains('hidden');
+        e.target.textContent = isHidden ? 'Show' : 'Hide';
+        e.target.setAttribute('aria-expanded', !isHidden);
       }
     }
   });
