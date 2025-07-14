@@ -1,6 +1,6 @@
-import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/data.js';
-import { enrichData, formatPrice } from 'https://geri0v.github.io/Gamers-Hell/loader.js';
-import { createCopyBar } from 'https://geri0v.github.io/Gamers-Hell/copy.js';
+import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
+import { enrichData, formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
+import { createCopyBar } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
 
 function createCard(className, content) {
   const div = document.createElement('div');
