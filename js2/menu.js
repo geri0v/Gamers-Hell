@@ -15,8 +15,9 @@
           <span style="font-family: var(--font-heading); color: var(--color-accent-gold); font-size:1.15rem;">
             ${expansion}
           </span>
+          <span class="exp-arrow" style="float:right;">▼</span>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="display:block;">
           <ul class="menu-links">
             ${sources.map(src =>
               `<li>
@@ -28,6 +29,14 @@
           </ul>
         </div>
       `;
+      // Expand/collapse logic for expansion
+      expCard.querySelector('.card-header').addEventListener('click', function() {
+        const body = expCard.querySelector('.card-body');
+        const arrow = expCard.querySelector('.exp-arrow');
+        const expanded = body.style.display !== 'none';
+        body.style.display = expanded ? 'none' : 'block';
+        arrow.textContent = expanded ? '▼' : '▲';
+      });
       menuDiv.appendChild(expCard);
     });
 
