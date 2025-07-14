@@ -1,4 +1,4 @@
-// data.js
+// https://geri0v.github.io/Gamers-Hell/js/data.js
 const MANIFEST_URL = 'https://geri0v.github.io/Gamers-Hell/json/manifest.json';
 
 export async function fetchAllData(onProgress, batchSize = 5) {
