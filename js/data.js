@@ -1,13 +1,12 @@
-// data.js
+// https://geri0v.github.io/Gamers-Hell/js/data.js
 
 const JSON_URLS = [
-   'https://geri0v.github.io/Gamers-Hell/json/core/temples.json',
+  'https://geri0v.github.io/Gamers-Hell/json/core/temples.json',
   'https://geri0v.github.io/Gamers-Hell/json/core/untimedcore.json',
   'https://geri0v.github.io/Gamers-Hell/json/core/wb.json'
-  // ...your list of JSON URLs
+  // Add more URLs as needed
 ];
 
-// Batch fetch with progress and error handling
 export async function fetchAllData(onProgress, batchSize = 5) {
   let allData = [];
   for (let i = 0; i < JSON_URLS.length; i += batchSize) {
