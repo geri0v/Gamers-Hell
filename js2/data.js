@@ -1,6 +1,6 @@
 window.DATA_URLS = [
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/temples.json',
-  'https://geri0v.github.io/Gamers-Hell/json/core/untimedcore.json'
+  'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/untimedcore.json'
   // Add more JSON URLs here as needed
 ];
 
