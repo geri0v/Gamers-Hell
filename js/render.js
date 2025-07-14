@@ -1,9 +1,16 @@
-// https://geri0v.github.io/Gamers-Hell/js/render.js
+// render.js
+import { fetchAllData, groupAndSort } from './data.js';
+import { enrichData, formatPrice } from './loader.js';
+import { createCopyBar, getMostValuableDrop } from './copy.js';
+import { setupToggles } from './toggle.js';
+import { filterEvents } from './search.js';
+import { paginate } from './pagination.js';
 
-import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
-import { enrichData, formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
-import { createCopyBar } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
-import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
+const PAGE_SIZE = 20;
+let currentPage = 1;
+let allEvents = [];
+let filteredEvents = [];
+let isLoading = false;
 
 function createCard(className, content) {
   const div = document.createElement('div');
@@ -13,14 +20,14 @@ function createCard(className, content) {
 }
 
 function createToggleButton(label, targetId) {
-  return `<button class="toggle-btn" data-target="${targetId}">${label}</button>`;
+  return `<button class="toggle-btn" data-target="${targetId}" aria-expanded="false">${label}</button>`;
 }
 
 function renderLoot(loot, eventId) {
   if (!Array.isArray(loot) || loot.length === 0) return '';
   const lootId = `loot-${eventId}`;
   return `
-    ${createToggleButton('Show Loot', lootId)}
+    ${createToggleButton('Show', lootId)}
     <div class="subcards hidden" id="${lootId}">
       ${loot.map(l => `
         <div class="subcard${l.guaranteed ? ' guaranteed' : ''}">
@@ -45,65 +52,116 @@ function renderProgressBar(percent) {
   `;
 }
 
+function renderSearchBar() {
+  return `
+    <div class="search-bar">
+      <input id="search-input" type="text" placeholder="Search event or map..." />
+      <select id="expansion-filter"><option value="">All Expansions</option></select>
+      <select id="rarity-filter">
+        <option value="">All Rarities</option>
+        <option value="Ascended">Ascended</option>
+        <option value="Exotic">Exotic</option>
+        <option value="Rare">Rare</option>
+        <option value="Masterwork">Masterwork</option>
+        <option value="Fine">Fine</option>
+        <option value="Basic">Basic</option>
+      </select>
+      <select id="sort-filter">
+        <option value="">Sort By</option>
+        <option value="name">Name</option>
+        <option value="expansion">Expansion</option>
+        <option value="map">Map</option>
+        <option value="value">Value</option>
+      </select>
+    </div>
+  `;
+}
+
+function updateExpansionOptions(events) {
+  const exps = [...new Set(events.map(e => e.expansion))].sort();
+  const select = document.getElementById('expansion-filter');
+  select.innerHTML = `<option value="">All Expansions</option>` +
+    exps.map(exp => `<option value="${exp}">${exp}</option>`).join('');
+}
+
+function renderEvents(events, container, append = false) {
+  if (!append) container.innerHTML = '';
+  events.forEach((item, idx) => {
+    const eventId = `event-${idx}`;
+    const details = Object.entries(item)
+      .filter(([k]) => k !== 'loot' && k !== 'expansion' && k !== 'sourcename')
+      .map(([k, v]) => {
+        if (k === 'wikiLink' && v) return `<div><strong>Wiki:</strong> <a href="${v}" target="_blank">${item.name}</a></div>`;
+        if (k === 'mapWikiLink' && v) return `<div><strong>Map Wiki:</strong> <a href="${v}" target="_blank">${item.map}</a></div>`;
+        return `<div><strong>${k}:</strong> ${Array.isArray(v) ? JSON.stringify(v) : v}</div>`;
+      })
+      .join('');
+    const lootSection = renderLoot(item.loot, eventId);
+    const copyBar = createCopyBar(item);
+    const itemDiv = createCard('item-card', `<div>${details}${lootSection}${copyBar}</div>`);
+    container.appendChild(itemDiv);
+  });
+}
+
+function applyFiltersAndRender(container) {
+  const searchTerm = document.getElementById('search-input').value;
+  const expansion = document.getElementById('expansion-filter').value;
+  const rarity = document.getElementById('rarity-filter').value;
+  const sortKey = document.getElementById('sort-filter').value;
+  filteredEvents = filterEvents(allEvents, { searchTerm, expansion, rarity, sortKey });
+  currentPage = 1;
+  renderEvents(paginate(filteredEvents, PAGE_SIZE, currentPage), container);
+}
+
 export async function renderApp(containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = renderProgressBar(0) + '<div>Loading...</div>';
-  let allData = [];
   let loaded = 0;
-  const total = 3; // Update if you change the number of JSONs
 
+  let progressPercent = 0;
   await fetchAllData(async (flat, url, err) => {
     loaded++;
-    const percent = Math.round((loaded / total) * 100);
-    container.innerHTML = renderProgressBar(percent) + '<div>Loading...</div>';
+    progressPercent = Math.round((loaded / 3) * 100);
+    container.innerHTML = renderProgressBar(progressPercent) + '<div>Loading...</div>';
     if (err) {
       container.innerHTML += `<div class="error">Failed to load ${url}: ${err}</div>`;
       return;
     }
     if (flat.length === 0) return;
     const enriched = await enrichData(flat);
-    allData = allData.concat(enriched);
-    const grouped = groupAndSort(allData);
+    allEvents = allEvents.concat(enriched);
 
-    container.innerHTML = renderProgressBar(percent);
-    grouped.forEach((exp, expIdx) => {
-      const expId = `expansion-${expIdx}`;
-      const expDiv = createCard('expansion-card', `
-        ${createToggleButton('Show/Hide', expId)}
-        <h2>${exp.expansion}</h2>
-        <div class="expansion-content" id="${expId}">
-        </div>
-      `);
-      exp.sources.forEach((src, srcIdx) => {
-        const srcId = `source-${expIdx}-${srcIdx}`;
-        const srcDiv = createCard('source-card', `
-          ${createToggleButton('Show/Hide', srcId)}
-          <h3>${src.sourcename}</h3>
-          <div class="source-content" id="${srcId}">
-          </div>
-        `);
-        src.items.forEach((item, itemIdx) => {
-          const eventId = `event-${expIdx}-${srcIdx}-${itemIdx}`;
-          const details = Object.entries(item)
-            .filter(([k]) => k !== 'loot' && k !== 'expansion' && k !== 'sourcename')
-            .map(([k, v]) => {
-              if (k === 'wikiLink' && v) return `<div><strong>Wiki:</strong> <a href="${v}" target="_blank">${item.name}</a></div>`;
-              if (k === 'mapWikiLink' && v) return `<div><strong>Map Wiki:</strong> <a href="${v}" target="_blank">${item.map}</a></div>`;
-              return `<div><strong>${k}:</strong> ${Array.isArray(v) ? JSON.stringify(v) : v}</div>`;
-            })
-            .join('');
-          const lootSection = renderLoot(item.loot, eventId);
-          const copyBar = createCopyBar(item);
-          const itemDiv = createCard('item-card', `<div>${details}${lootSection}${copyBar}</div>`);
-          srcDiv.querySelector('.source-content').appendChild(itemDiv);
-        });
-        expDiv.querySelector('.expansion-content').appendChild(srcDiv);
+    // After all loaded
+    if (loaded === 3) {
+      container.innerHTML = renderSearchBar() + `<div id="events-list" class="expansion-content"></div>`;
+      updateExpansionOptions(allEvents);
+      filteredEvents = allEvents;
+      const eventsList = document.getElementById('events-list');
+      renderEvents(paginate(filteredEvents, PAGE_SIZE, currentPage), eventsList);
+
+      // Setup search/filter
+      document.getElementById('search-input').addEventListener('input', () => applyFiltersAndRender(eventsList));
+      document.getElementById('expansion-filter').addEventListener('change', () => applyFiltersAndRender(eventsList));
+      document.getElementById('rarity-filter').addEventListener('change', () => applyFiltersAndRender(eventsList));
+      document.getElementById('sort-filter').addEventListener('change', () => applyFiltersAndRender(eventsList));
+
+      // Infinite scroll
+      window.addEventListener('scroll', () => {
+        if (isLoading) return;
+        const eventsList = document.getElementById('events-list');
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+          if (filteredEvents.length > PAGE_SIZE * currentPage) {
+            isLoading = true;
+            currentPage += 1;
+            renderEvents(paginate(filteredEvents, PAGE_SIZE, currentPage), eventsList, true);
+            isLoading = false;
+          }
+        }
       });
-      container.appendChild(expDiv);
-    });
-    setupToggles();
-  });
 
-  // For very large lists, implement virtualization/pagination here if needed.
+      setupToggles();
+    }
+  });
 }
+
 renderApp('app');
