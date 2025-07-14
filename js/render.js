@@ -1,6 +1,5 @@
 import { loadAllData } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
 
-// Helper: Render loot as a bulleted list
 function createLootList(loot) {
   if (!Array.isArray(loot) || loot.length === 0) return null;
   const ul = document.createElement('ul');
@@ -12,12 +11,10 @@ function createLootList(loot) {
   return ul;
 }
 
-// Helper: Render a single event (event name, copy bar placeholder, loot)
 function createEventItem(event) {
   const div = document.createElement('div');
   div.style.marginLeft = '2em';
 
-  // Event name
   const eventName = document.createElement('div');
   eventName.textContent = event.name || 'Unnamed Event';
   eventName.style.fontWeight = 'bold';
@@ -33,7 +30,6 @@ function createEventItem(event) {
   copyBar.style.borderRadius = '4px';
   div.appendChild(copyBar);
 
-  // Loot list
   const lootList = createLootList(event.loot);
   if (lootList) {
     lootList.style.marginLeft = '2em';
@@ -42,7 +38,6 @@ function createEventItem(event) {
   return div;
 }
 
-// Helper: Render all events for a source
 function createSourceSection(sourceName, events) {
   const container = document.createElement('div');
   const h3 = document.createElement('h3');
@@ -55,7 +50,6 @@ function createSourceSection(sourceName, events) {
   return container;
 }
 
-// Helper: Render a section for each expansion
 function createExpansionSection(expansion, sources) {
   const section = document.createElement('section');
   const h2 = document.createElement('h2');
@@ -76,20 +70,20 @@ async function displayData() {
     const data = await loadAllData();
     app.innerHTML = '';
 
-    // Flatten events and attach expansion/sourceName
+    // Step 1: Flatten all events, attaching expansion and sourceName
     let allEvents = [];
-    for (const key in data) {
-      const source = data[key];
-      if (source && Array.isArray(source.events)) {
-        source.events.forEach(event => {
-          event.expansion = event.expansion || source.expansion || 'Unknown Expansion';
-          event.sourceName = event.sourceName || source.sourceName || 'Unknown Source';
+    for (const groupKey in data) {
+      const group = data[groupKey];
+      if (Array.isArray(group)) {
+        group.forEach(event => {
+          event.expansion = event.expansion || 'Unknown Expansion';
+          event.sourceName = groupKey;
           allEvents.push(event);
         });
       }
     }
 
-    // Group: expansion -> sourceName -> [events]
+    // Step 2: Group by expansion, then by sourceName
     const expansionMap = {};
     allEvents.forEach(event => {
       const expansion = event.expansion;
@@ -99,7 +93,7 @@ async function displayData() {
       expansionMap[expansion][sourceName].push(event);
     });
 
-    // Render
+    // Step 3: Render the grouped view
     for (const [expansion, sourcesObj] of Object.entries(expansionMap)) {
       const sources = [];
       for (const [sourceName, events] of Object.entries(sourcesObj)) {
