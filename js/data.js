@@ -3,6 +3,7 @@
 const JSON_URLS = [
   'https://geri0v.github.io/Gamers-Hell/json/core/temples.json',
   'https://geri0v.github.io/Gamers-Hell/json/core/untimedcore.json',
+  'https://geri0v.github.io/Gamers-Hell/json/core/wb.json'
   // Add more URLs as needed
 ];
 
