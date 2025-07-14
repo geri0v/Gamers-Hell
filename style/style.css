@@ -1,1 +1,31 @@
+/* css/style.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 2em;
+  background: #f7f7f7;
+}
 
+section {
+  background: #fff;
+  margin-bottom: 2em;
+  padding: 1em;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+h2 {
+  color: #2d3e50;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+}
+
+ul {
+  padding-left: 1.5em;
+}
+
+li {
+  margin-bottom: 0.5em;
+  line-height: 1.5;
+  color: #444;
+}
