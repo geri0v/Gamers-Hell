@@ -21,6 +21,18 @@ function safeString(val) {
   return (typeof val === 'string') ? val.toLowerCase() : '';
 }
 
+// Compute event value for sorting
+function getEventValue(ev) {
+  if (!Array.isArray(ev.loot)) return 0;
+  return Math.max(
+    0,
+    ...ev.loot.map(item =>
+      (typeof item.tp_value === 'number' ? item.tp_value : 0) ||
+      (typeof item.vendor_value === 'number' ? item.vendor_value : 0)
+    )
+  );
+}
+
 function applyFilters() {
   const query = safeString(document.getElementById('search').value);
   filteredEvents = allEvents.filter(ev =>
@@ -29,12 +41,16 @@ function applyFilters() {
     (Array.isArray(ev.loot) && ev.loot.some(item => safeString(item.name).includes(query)))
   );
   filteredEvents.sort((a, b) => {
-    let vA = a[sortKey];
-    let vB = b[sortKey];
-    if (vA === undefined || vA === null) vA = '';
-    if (vB === undefined || vB === null) vB = '';
-    if (typeof vA === 'string') vA = vA.toLowerCase();
-    if (typeof vB === 'string') vB = vB.toLowerCase();
+    let vA, vB;
+    if (sortKey === 'value') {
+      vA = getEventValue(a);
+      vB = getEventValue(b);
+    } else {
+      vA = a[sortKey] || '';
+      vB = b[sortKey] || '';
+      if (typeof vA === 'string') vA = vA.toLowerCase();
+      if (typeof vB === 'string') vB = vB.toLowerCase();
+    }
     if (vA < vB) return sortAsc ? -1 : 1;
     if (vA > vB) return sortAsc ? 1 : -1;
     return 0;
