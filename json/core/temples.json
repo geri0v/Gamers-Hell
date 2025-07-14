@@ -1,87 +1,89 @@
 [
   {
     "expansion": "Core Tyria",
-    "sources": [
-      {
-        "sourceName": "Temples of Orr",
-        "events": [
-          {
-            "name": "Temple of Balthazar",
-            "map": "Straits of Devastation",
-            "code": "[&BNIEAAA=]",
-            "loot": [
-              {
-                "name": "Balthazar's Band",
-                "id": 39477
-              }
-            ]
-          },
-          {
-            "name": "Temple of Lyssa",
-            "map": "Malchor's Leap",
-            "code": "[&BKsCAAA=]",
-            "loot": [
-              {
-                "name": "Lyssa's Regalia",
-                "id": 39475,
-                "code": "[&AgGEtQAA]"
-              }
-            ]
-          },
-          {
-            "name": "Temple of Dwayna",
-            "map": "Malchor's Leap",
-            "code": "[&BLICAAA=]",
-            "loot": [
-              {
-                "name": "Dwayna's Tear",
-                "id": 39473,
-                "code": "[&AgE3mgAA]"
-              }
-            ]
-          },
-          {
-            "name": "Temple of Melandru",
-            "map": "Cursed Shore",
-            "code": "[&BBsDAAA=]",
-            "loot": [
-              {
-                "name": "Melandru’s Bloom",
-                "id": 39478,
-                "code": "[&AgE0mgAA]"
-              },
-              {
-                "name": "Melandru's Gaze",
-                "id": 39479,
-                "code": "[&Cm0SAAA=]"
-              }
-            ]
-          },
-          {
-            "name": "Temple of Grenth",
-            "map": "Cursed Shore",
-            "code": "[&BCIDAAA=]",
-            "loot": [
-              {
-                "name": "Signet of Grenth",
-                "id": 39476
-              }
-            ]
-          },
-          {
-            "name": "Gates of Arah",
-            "map": "Cursed Shore",
-            "code": "[&BCADAAA=]",
-            "loot": [
-              {
-                "name": "Arah's Treasure",
-                "id": 39480,
-                "code": "[&AgEvmgAA]"
-              }
-            ]
-          }
-        ]
-      }
+    "sourcename": "Temples of Orr",
+    "name": "Temple of Balthazar",
+    "map": "Straits of Devastation",
+    "code": "[&BNIEAAA=]",
+    "loot": [
+      { "name": "Balthazar's Band", "id": 39477, "rarity": "Exotic" },
+      { "name": "Balthazar's Band", "id": 19346, "rarity": "Fine" },
+      { "name": "Obsidian Shard", "guaranteed": true },
+      { "name": "Essence of Luck", "guaranteed": true }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "Temples of Orr",
+    "name": "Temple of Lyssa",
+    "map": "Malchor's Leap",
+    "code": "[&BKsCAAA=]",
+    "loot": [
+      { "name": "Lyssa's Regalia", "id": 39475, "rarity": "Exotic" },
+      { "name": "Lyssa's Regalia", "id": 19345, "rarity": "Fine" },
+      { "name": "Lyssa's Mirror", "id": 31065, "rarity": "Exotic" },
+      { "name": "Lyssa's Mask", "id": 31067, "rarity": "Exotic" },
+      { "name": "Obsidian Shard", "guaranteed": true },
+      { "name": "Essence of Luck", "guaranteed": true }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "Temples of Orr",
+    "name": "Temple of Dwayna",
+    "map": "Malchor's Leap",
+    "code": "[&BLICAAA=]",
+    "loot": [
+      { "name": "Dwayna's Tear", "id": 39473, "rarity": "Trophy", "code": "[&AgE3mgAA]" },
+      { "name": "Dwayna's Embrace", "id": 39479, "rarity": "Exotic" },
+      { "name": "Star of Dwayna", "id": 39476, "rarity": "Exotic" },
+      { "name": "Seal of Dwayna", "rarity": "Trophy" },
+      { "name": "Wings of Dwayna", "id": 31070, "rarity": "Exotic" },
+      { "name": "Feathers of Dwayna", "id": 31073, "rarity": "Exotic" },
+      { "name": "Obsidian Shard", "guaranteed": true },
+      { "name": "Essence of Luck", "guaranteed": true }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "Temples of Orr",
+    "name": "Temple of Melandru",
+    "map": "Cursed Shore",
+    "code": "[&BBsDAAA=]",
+    "loot": [
+      { "name": "Melandru's Bloom", "id": 39480, "rarity": "Exotic" },
+      { "name": "Melandru's Bloom", "id": 19348, "rarity": "Fine" },
+      { "name": "Melandru's Gaze", "id": 31061, "rarity": "Exotic" },
+      { "name": "Melandru's Leaf", "id": 31062, "rarity": "Exotic" },
+      { "name": "Obsidian Shard", "guaranteed": true },
+      { "name": "Essence of Luck", "guaranteed": true }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "Temples of Orr",
+    "name": "Temple of Grenth",
+    "map": "Cursed Shore",
+    "code": "[&BCIDAAA=]",
+    "loot": [
+      { "name": "Signet of Grenth", "id": 39483, "rarity": "Exotic" },
+      { "name": "Signet of Grenth", "id": 19349, "rarity": "Fine" },
+      { "name": "Grenth's Mask", "id": 31068, "rarity": "Exotic" },
+      { "name": "Grenth's Ice", "id": 31060, "rarity": "Exotic" },
+      { "name": "Obsidian Shard", "guaranteed": true },
+      { "name": "Essence of Luck", "guaranteed": true }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "Temples of Orr",
+    "name": "Gates of Arah",
+    "map": "Cursed Shore",
+    "code": "[&BCADAAA=]",
+    "loot": [
+      { "name": "Arah's Treasure", "id": 39480, "rarity": "Exotic" },
+      { "name": "Obsidian Shard", "guaranteed": true },
+      { "name": "Essence of Luck", "guaranteed": true }
     ]
   }
 ]
