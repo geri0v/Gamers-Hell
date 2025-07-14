@@ -1,6 +1,5 @@
 import { loadAllData } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
 
-// Helper: Render loot as a bulleted list
 function createLootList(loot) {
   if (!Array.isArray(loot) || loot.length === 0) return null;
   const ul = document.createElement('ul');
@@ -12,18 +11,15 @@ function createLootList(loot) {
   return ul;
 }
 
-// Helper: Render a single event (event name, copy bar placeholder, loot)
 function createEventItem(event) {
   const div = document.createElement('div');
   div.style.marginLeft = '2em';
 
-  // Event name
   const eventName = document.createElement('div');
   eventName.textContent = event.name || 'Unnamed Event';
   eventName.style.fontWeight = 'bold';
   div.appendChild(eventName);
 
-  // Placeholder for copy-paste bar
   const copyBar = document.createElement('div');
   copyBar.textContent = '(Copy-paste bar here)';
   copyBar.style.fontFamily = 'monospace';
@@ -33,7 +29,6 @@ function createEventItem(event) {
   copyBar.style.borderRadius = '4px';
   div.appendChild(copyBar);
 
-  // Loot list
   const lootList = createLootList(event.loot);
   if (lootList) {
     lootList.style.marginLeft = '2em';
@@ -42,7 +37,6 @@ function createEventItem(event) {
   return div;
 }
 
-// Helper: Render all events for a source
 function createSourceSection(source) {
   const container = document.createElement('div');
   const h3 = document.createElement('h3');
@@ -55,7 +49,6 @@ function createSourceSection(source) {
   return container;
 }
 
-// Helper: Render a section for each expansion
 function createExpansionSection(expansion) {
   const section = document.createElement('section');
   const h2 = document.createElement('h2');
@@ -73,13 +66,10 @@ async function displayData() {
   const app = document.getElementById('app');
   app.textContent = 'Loading...';
   try {
-    // loadAllData should now return an array of expansions
     const data = await loadAllData();
     app.innerHTML = '';
 
-    // If your data.js returns an object with a property containing the array,
-    // e.g. { expansions: [ ... ] }, then use: data.expansions.forEach(...)
-    // If it returns the array directly, use:
+    // If your data is an array of expansions:
     data.forEach(expansion => {
       app.appendChild(createExpansionSection(expansion));
     });
