@@ -1,15 +1,13 @@
 // == Gamers-Hell: render.js ==
-// This version assumes window.DATA_URLS and window.loadAllEvents are defined in data.js (not here).
 
-// Utility: Show a toast message for errors or info
 window.showToast = function(msg) {
   const toast = document.getElementById('toast');
+  if (!toast) return;
   toast.textContent = msg;
   toast.style.display = 'block';
   setTimeout(() => { toast.style.display = 'none'; }, 4000);
 };
 
-// Utility: Format coin values into GW2 style
 window.splitCoins = function(coins) {
   if (typeof coins !== 'number' || isNaN(coins)) return '';
   const gold = Math.floor(coins / 10000);
@@ -22,7 +20,6 @@ window.splitCoins = function(coins) {
   return str.trim();
 };
 
-// Utility: Show "Copied!" nudge when copying loot/event info
 window.showCopyNudge = function(btn) {
   const parent = btn.parentElement;
   const existing = parent.querySelector('.copy-nudge');
@@ -34,8 +31,8 @@ window.showCopyNudge = function(btn) {
   setTimeout(() => nudge.remove(), 1200);
 };
 
-// Main event rendering function
 window.renderEvents = async function(events, container) {
+  if (!container) return;
   container.innerHTML = '';
   if (!events.length) {
     container.innerHTML = `<div class="empty-state">No events found. Check your JSON URLs and structure.</div>`;
@@ -45,8 +42,8 @@ window.renderEvents = async function(events, container) {
   // Group events by expansion and sourceName
   const expansions = {};
   events.forEach(ev => {
-    const exp = ev.expansion || 'Unknown Expansion';
-    const src = ev.sourceName || 'Unknown Source';
+    const exp = ev?.expansion || 'Unknown Expansion';
+    const src = ev?.sourceName || 'Unknown Source';
     if (!expansions[exp]) expansions[exp] = {};
     if (!expansions[exp][src]) expansions[exp][src] = [];
     expansions[exp][src].push(ev);
@@ -75,11 +72,15 @@ window.renderEvents = async function(events, container) {
       for (const ev of events) {
         let enrichedLoot = [];
         if (Array.isArray(ev.loot)) {
-          for (const item of ev.loot) {
-            // Use iteminfo.js for enrichment (caching is handled there)
-            const info = await window.getItemFullInfo(item.id || item.code || item.name);
-            enrichedLoot.push({ ...item, ...info });
-          }
+          enrichedLoot = await Promise.all(ev.loot.map(async item => {
+            try {
+              const info = await window.getItemFullInfo(item.id || item.code || item.name);
+              return { ...item, ...info };
+            } catch (e) {
+              console.error('Failed to enrich loot', item, e);
+              return item;
+            }
+          }));
         }
         // Find most valuable loot
         let mostValuable = null;
