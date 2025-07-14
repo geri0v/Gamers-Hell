@@ -1,5 +1,5 @@
 // render.js
-import { fetchAllData, groupAndSort } from './data.js';
+import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
 
 function createCard(className, content) {
   const div = document.createElement('div');
@@ -9,7 +9,6 @@ function createCard(className, content) {
 }
 
 function renderSubdata(item) {
-  // Render subdata as smaller cards
   if (!item.subdata || !Array.isArray(item.subdata)) return '';
   return `
     <div class="subcards">
