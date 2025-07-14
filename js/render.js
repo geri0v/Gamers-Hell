@@ -62,3 +62,7 @@ export async function renderApp(containerId) {
     });
   } catch (e) {
     container.innerHTML = `<div class="error">Failed to load data: ${e}</div>`;
+  }
+}
+
+renderApp('app');
