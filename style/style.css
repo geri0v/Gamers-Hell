@@ -132,6 +132,22 @@ body {
   padding: 1rem;
   border-radius: 4px;
 }
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 2.5em; /* Matches copy bar height */
+}
+.search-bar input,
+.search-bar select {
+  font-size: 1em;
+  padding: 0.3em 0.6em;
+  border-radius: 4px;
+  border: 1px solid #bdbdbd;
+  height: 2.2em; /* Matches copy bar input height */
+}
 @media (max-width: 800px) {
   .event-table, .expansion-card, .source-card {
     font-size: 0.92em;
