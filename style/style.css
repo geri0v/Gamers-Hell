@@ -85,6 +85,20 @@ body {
 .copy-btn:hover {
   background: #1769aa;
 }
+.progress-bar-container {
+  width: 100%;
+  background: #e0e0e0;
+  height: 14px;
+  border-radius: 8px;
+  margin-bottom: 1em;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: #2196f3;
+  width: 0%;
+  transition: width 0.3s;
+}
 .error {
   color: #d32f2f;
   background: #ffebee;
