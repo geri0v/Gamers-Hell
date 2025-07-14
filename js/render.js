@@ -147,6 +147,14 @@ function applyFiltersAndRender(container, allEvents) {
   setupToggles();
 }
 
+function renderProgressBar(percent) {
+  return `
+    <div class="progress-bar-container">
+      <div class="progress-bar" style="width:${percent}%;"></div>
+    </div>
+  `;
+}
+
 export async function renderApp(containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = renderProgressBar(0) + '<div>Loading...</div>';
