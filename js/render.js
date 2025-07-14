@@ -4,6 +4,7 @@ import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell
 import { enrichData, formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
 import { createCopyBar } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
 import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
+import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
 
 function createCard(className, content) {
   const div = document.createElement('div');
@@ -82,12 +83,68 @@ function renderEventTable(events, sourceIdx, expIdx) {
   `;
 }
 
-function renderProgressBar(percent) {
+function renderSearchBar() {
   return `
-    <div class="progress-bar-container">
-      <div class="progress-bar" style="width:${percent}%;"></div>
+    <div class="search-bar">
+      <input id="search-input" type="text" placeholder="Search event or map..." />
+      <select id="expansion-filter"><option value="">All Expansions</option></select>
+      <select id="rarity-filter">
+        <option value="">All Rarities</option>
+        <option value="Ascended">Ascended</option>
+        <option value="Exotic">Exotic</option>
+        <option value="Rare">Rare</option>
+        <option value="Masterwork">Masterwork</option>
+        <option value="Fine">Fine</option>
+        <option value="Basic">Basic</option>
+      </select>
+      <select id="sort-filter">
+        <option value="">Sort By</option>
+        <option value="name">Name</option>
+        <option value="expansion">Expansion</option>
+        <option value="map">Map</option>
+        <option value="value">Value</option>
+      </select>
     </div>
   `;
+}
+
+function updateExpansionOptions(events) {
+  const exps = [...new Set(events.map(e => e.expansion))].sort();
+  const select = document.getElementById('expansion-filter');
+  select.innerHTML = `<option value="">All Expansions</option>` +
+    exps.map(exp => `<option value="${exp}">${exp}</option>`).join('');
+}
+
+function applyFiltersAndRender(container, allEvents) {
+  const searchTerm = document.getElementById('search-input').value;
+  const expansion = document.getElementById('expansion-filter').value;
+  const rarity = document.getElementById('rarity-filter').value;
+  const sortKey = document.getElementById('sort-filter').value;
+  const filteredEvents = filterEvents(allEvents, { searchTerm, expansion, rarity, sortKey });
+  const grouped = groupAndSort(filteredEvents);
+
+  container.innerHTML = '';
+  grouped.forEach((exp, expIdx) => {
+    const expId = `expansion-${expIdx}`;
+    const expDiv = createCard('expansion-card', `
+      ${createToggleButton('Show/Hide', expId)}
+      <h2>${exp.expansion}</h2>
+      <div class="expansion-content" id="${expId}"></div>
+    `);
+    exp.sources.forEach((src, srcIdx) => {
+      const srcId = `source-${expIdx}-${srcIdx}`;
+      const srcDiv = createCard('source-card', `
+        ${createToggleButton('Show/Hide', srcId)}
+        <h3>${src.sourcename}</h3>
+        <div class="source-content" id="${srcId}">
+          ${renderEventTable(src.items, srcIdx, expIdx)}
+        </div>
+      `);
+      expDiv.querySelector('.expansion-content').appendChild(srcDiv);
+    });
+    container.appendChild(expDiv);
+  });
+  setupToggles();
 }
 
 export async function renderApp(containerId) {
@@ -108,31 +165,18 @@ export async function renderApp(containerId) {
     if (flat.length === 0) return;
     const enriched = await enrichData(flat);
     allData = allData.concat(enriched);
-    const grouped = groupAndSort(allData);
 
-    container.innerHTML = renderProgressBar(percent);
-    grouped.forEach((exp, expIdx) => {
-      const expId = `expansion-${expIdx}`;
-      const expDiv = createCard('expansion-card', `
-        ${createToggleButton('Show/Hide', expId)}
-        <h2>${exp.expansion}</h2>
-        <div class="expansion-content" id="${expId}">
-        </div>
-      `);
-      exp.sources.forEach((src, srcIdx) => {
-        const srcId = `source-${expIdx}-${srcIdx}`;
-        const srcDiv = createCard('source-card', `
-          ${createToggleButton('Show/Hide', srcId)}
-          <h3>${src.sourcename}</h3>
-          <div class="source-content" id="${srcId}">
-            ${renderEventTable(src.items, srcIdx, expIdx)}
-          </div>
-        `);
-        expDiv.querySelector('.expansion-content').appendChild(srcDiv);
-      });
-      container.appendChild(expDiv);
-    });
-    setupToggles();
+    if (loaded === total) {
+      container.innerHTML = renderSearchBar() + `<div id="events-list"></div>`;
+      updateExpansionOptions(allData);
+      const eventsList = document.getElementById('events-list');
+      applyFiltersAndRender(eventsList, allData);
+
+      document.getElementById('search-input').addEventListener('input', () => applyFiltersAndRender(eventsList, allData));
+      document.getElementById('expansion-filter').addEventListener('change', () => applyFiltersAndRender(eventsList, allData));
+      document.getElementById('rarity-filter').addEventListener('change', () => applyFiltersAndRender(eventsList, allData));
+      document.getElementById('sort-filter').addEventListener('change', () => applyFiltersAndRender(eventsList, allData));
+    }
   });
 }
 
