@@ -25,30 +25,28 @@ const files = {
 
 // Main loader: merges all sources into a single array of expansions
 export async function loadAllData() {
-  // Load each file and collect all source objects
-  const sourceObjects = [];
-  for (const urls of Object.values(files)) {
-    const source = await tryFetch(urls);
-    // If the file is an array (already in new format), merge all expansions
-    if (Array.isArray(source)) {
-      sourceObjects.push(...source);
-    } else {
-      // If the file is a single source object, push it
-      sourceObjects.push(source);
-    }
-  }
+  // Fetch all sources in parallel
+  const fetchPromises = Object.values(files).map(urls =>
+    tryFetch(urls).catch(e => {
+      console.warn('Failed to load:', urls, e);
+      return null;
+    })
+  );
+  const results = await Promise.all(fetchPromises);
+  const validResults = results.filter(r => r !== null);
 
   // Merge sources into expansions
   const expansionsMap = {};
-  for (const source of sourceObjects) {
-    // Determine expansion name (from object or first event)
+  for (const source of validResults) {
+    // Defensive: skip if not an object
+    if (!source || typeof source !== 'object') continue;
+
     let expansionName = source.expansion;
     if (!expansionName && Array.isArray(source.events) && source.events.length > 0) {
       expansionName = source.events[0].expansion;
     }
     if (!expansionName) expansionName = 'Unknown Expansion';
 
-    // Create expansion group if not present
     if (!expansionsMap[expansionName]) {
       expansionsMap[expansionName] = { expansion: expansionName, sources: [] };
     }
@@ -57,6 +55,5 @@ export async function loadAllData() {
       events: Array.isArray(source.events) ? source.events : []
     });
   }
-  // Return as array for render.js
   return Object.values(expansionsMap);
 }
