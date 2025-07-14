@@ -6,7 +6,6 @@ function createLootList(loot) {
   const ul = document.createElement('ul');
   loot.forEach(item => {
     const li = document.createElement('li');
-    // Show both item name and chatcode if available
     li.textContent = item.name + (item.code ? ` (${item.code})` : '');
     ul.appendChild(li);
   });
@@ -15,7 +14,6 @@ function createLootList(loot) {
 
 // Helper: Render the copy-paste bar
 function createCopyBar(event) {
-  // Use the first loot item's name or code, if available
   let lootLabel = '';
   if (Array.isArray(event.loot) && event.loot.length > 0) {
     const firstLoot = event.loot[0];
@@ -42,16 +40,13 @@ function createEventItem(event) {
   const div = document.createElement('div');
   div.style.marginLeft = '2em';
 
-  // Event name and location
   const eventName = document.createElement('div');
   eventName.textContent = `${event.name || 'Unnamed Event'} (${event.map || 'Unknown Location'})`;
   eventName.style.fontWeight = 'bold';
   div.appendChild(eventName);
 
-  // Copy-paste bar
   div.appendChild(createCopyBar(event));
 
-  // Loot list
   const lootList = createLootList(event.loot);
   if (lootList) {
     lootList.style.marginLeft = '2em';
@@ -67,22 +62,36 @@ function createSourceSection(source) {
   h3.textContent = source.sourceName;
   container.appendChild(h3);
 
-  source.events.forEach(event => {
-    container.appendChild(createEventItem(event));
-  });
+  if (Array.isArray(source.events)) {
+    source.events.forEach(event => {
+      container.appendChild(createEventItem(event));
+    });
+  } else {
+    const warning = document.createElement('div');
+    warning.textContent = 'No events found for this source.';
+    warning.style.color = 'red';
+    container.appendChild(warning);
+  }
   return container;
 }
 
-// Helper: Render a section for each expansion
+// Helper: Render a section for each expansion, with defensive check
 function createExpansionSection(expansion) {
   const section = document.createElement('section');
   const h2 = document.createElement('h2');
   h2.textContent = expansion.expansion;
   section.appendChild(h2);
 
-  expansion.sources.forEach(source => {
-    section.appendChild(createSourceSection(source));
-  });
+  if (Array.isArray(expansion.sources)) {
+    expansion.sources.forEach(source => {
+      section.appendChild(createSourceSection(source));
+    });
+  } else {
+    const warning = document.createElement('div');
+    warning.textContent = 'No sources found for this expansion.';
+    warning.style.color = 'red';
+    section.appendChild(warning);
+  }
 
   return section;
 }
@@ -91,11 +100,13 @@ async function displayData() {
   const app = document.getElementById('app');
   app.textContent = 'Loading...';
   try {
-    // loadAllData should return an array of expansions
     const data = await loadAllData();
     app.innerHTML = '';
 
-    (Array.isArray(data) ? data : Object.values(data)).forEach(expansion => {
+    // Defensive: handle if data is array or object
+    const expansions = Array.isArray(data) ? data : Object.values(data);
+
+    expansions.forEach(expansion => {
       app.appendChild(createExpansionSection(expansion));
     });
   } catch (error) {
