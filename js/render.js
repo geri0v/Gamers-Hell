@@ -1,5 +1,5 @@
-// render.js
 import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
+import { enrichData } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
 
 function createCard(className, content) {
   const div = document.createElement('div');
@@ -27,7 +27,8 @@ export async function renderApp(containerId) {
   container.innerHTML = '<div>Loading...</div>';
   try {
     const rawData = await fetchAllData();
-    const grouped = groupAndSort(rawData);
+    const enrichedData = await enrichData(rawData); // <-- Enrich here!
+    const grouped = groupAndSort(enrichedData);
 
     container.innerHTML = '';
     grouped.forEach(exp => {
