@@ -4,7 +4,6 @@ const itemCache = {};
 const priceCache = {};
 const wikiCache = {};
 let otcPrices = null;
-let metaBattleData = null;
 
 async function fetchJson(url) {
   try {
@@ -64,43 +63,6 @@ function parseCSVPrices(csvText) {
   return map;
 }
 
-async function fetchPriceGW2BLTC(itemId) {
-  try {
-    const response = await fetch(`https://www.gw2bltc.com/api/v2/price/${itemId}`);
-    if (!response.ok) throw new Error('GW2BLTC fetch failed');
-    const data = await response.json();
-    if (data && data.price) return data.price;
-  } catch {
-    return null;
-  }
-  return null;
-}
-
-async function fetchPriceGW2Spidy(itemId) {
-  try {
-    const response = await fetch(`https://www.gw2spidy.com/api/v0.9/json/item/${itemId}`);
-    if (!response.ok) throw new Error('GW2Spidy fetch failed');
-    const data = await response.json();
-    if (data && data.item && data.item.sells && data.item.sells.unit_price) return data.item.sells.unit_price;
-  } catch {
-    return null;
-  }
-  return null;
-}
-
-async function fetchMetaBattleData() {
-  if (metaBattleData) return metaBattleData;
-  // Example MetaBattle API endpoint (replace with actual if available)
-  const url = 'https://api.metabattle.com/v1/items'; // Hypothetical
-  try {
-    const data = await fetchJson(url);
-    metaBattleData = data || null;
-    return metaBattleData;
-  } catch {
-    return null;
-  }
-}
-
 async function getItemPrice(itemId) {
   // Try GW2 API first
   let price = await fetchItemPriceGW2API(itemId);
@@ -109,18 +71,6 @@ async function getItemPrice(itemId) {
   // Then OTC CSV
   const otc = await fetchOTCPrices();
   if (otc && otc[itemId]) return otc[itemId];
-
-  // Then GW2BLTC
-  price = await fetchPriceGW2BLTC(itemId);
-  if (price != null) return price;
-
-  // Then GW2Spidy
-  price = await fetchPriceGW2Spidy(itemId);
-  if (price != null) return price;
-
-  // Then MetaBattle
-  const meta = await fetchMetaBattleData();
-  if (meta && meta[itemId] && meta[itemId].price) return meta[itemId].price;
 
   return null;
 }
@@ -165,14 +115,11 @@ export async function enrichData(data, onProgress) {
     if (priceResults[i] != null) detailsMap[id].price = priceResults[i];
   });
 
-  // Enrich each event
   for (const event of data) {
-    // Enrich event icon if available (optional: from API or MetaBattle if available)
     event.wikiLink = generateWikiLink(event.name);
     event.mapWikiLink = generateWikiLink(event.map);
 
-    // Enrich waypoint name and wiki link dynamically if available in JSON or fetched (fallback logic can be added here)
-    // For now, assume waypointName and waypointWikiLink are in JSON or can be enriched similarly
+    // Waypoint name enrichment (if present in JSON)
     if (event.waypointName) {
       event.waypointWikiLink = generateWikiLink(event.waypointName);
     }
@@ -193,7 +140,6 @@ export async function enrichData(data, onProgress) {
         item.guaranteed = !!item.guaranteed;
       });
     }
-
     if (onProgress) onProgress(event);
   }
   return data;
