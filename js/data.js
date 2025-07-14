@@ -1,14 +1,17 @@
 // data.js
 
-// List all your JSON URLs here, or generate this array dynamically if needed.
 const JSON_URLS = [
   'https://geri0v.github.io/Gamers-Hell/json/core/temples.json',
   'https://geri0v.github.io/Gamers-Hell/json/core/untimedcore.json',
   // Add more URLs as needed
 ];
 
-// Helper to flatten the nested structure
+// Helper to flatten the nested structure or pass through if already flat
 function flatten(dataArr) {
+  if (Array.isArray(dataArr) && dataArr.length > 0 && dataArr[0].sourcename) {
+    // Data is already flat, just return as is
+    return dataArr;
+  }
   const flat = [];
   dataArr.forEach(expansionObj => {
     const expansion = expansionObj.expansion || 'Unknown Expansion';
