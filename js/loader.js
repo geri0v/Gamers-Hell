@@ -1,4 +1,4 @@
-// loader.js
+// https://geri0v.github.io/Gamers-Hell/js/loader.js
 
 const itemCache = {};
 const priceCache = {};
@@ -83,6 +83,7 @@ export async function enrichData(data, onProgress) {
           item.accountBound = details.flags ? details.flags.includes('AccountBound') : false;
           item.chatCode = details.chat_link || null;
           item.price = details.price || null;
+          item.vendorValue = details.vendor_value ? details.vendor_value : null;
         } else {
           item.wikiLink = generateWikiLink(item.name);
         }
