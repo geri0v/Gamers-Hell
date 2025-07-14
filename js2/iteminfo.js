@@ -8,6 +8,7 @@ window.loadOtcCsv = async function() {
   otcCsvCache = {};
   try {
     const res = await fetch(OTC_CSV_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const text = await res.text();
     const lines = text.split('\n');
     const headers = lines[0].split(',');
@@ -20,7 +21,9 @@ window.loadOtcCsv = async function() {
       if (obj.name) otcCsvCache[obj.name.toLowerCase()] = obj;
       if (obj.chatcode) otcCsvCache[obj.chatcode] = obj;
     }
-  } catch (e) {}
+  } catch (e) {
+    console.error('Failed to load OTC CSV', e);
+  }
   return otcCsvCache;
 };
 
@@ -43,7 +46,10 @@ window.getItemFullInfo = async function(query) {
         wiki: `https://wiki.guildwars2.com/wiki/${encodeURIComponent(data.name.replace(/ /g, '_'))}`,
         accountbound: data.flags?.includes('AccountBound') || data.flags?.includes('AccountBoundOnUse')
       };
-    } catch { return null; }
+    } catch (e) {
+      console.error('Failed to fetch from API by ID', e);
+      return null;
+    }
   }
   async function fetchTpValueById(itemId) {
     try {
@@ -51,7 +57,10 @@ window.getItemFullInfo = async function(query) {
       if (!resp.ok) return null;
       const data = await resp.json();
       return data.sells && typeof data.sells.unit_price === 'number' ? data.sells.unit_price : null;
-    } catch { return null; }
+    } catch (e) {
+      console.error('Failed to fetch TP value', e);
+      return null;
+    }
   }
   async function fetchFromWikiByName(name) {
     if (!name) return null;
@@ -67,7 +76,10 @@ window.getItemFullInfo = async function(query) {
         name: page.title,
         wiki: `https://wiki.guildwars2.com/wiki/${encodeURIComponent(page.title.replace(/ /g, '_'))}`
       };
-    } catch { return null; }
+    } catch (e) {
+      console.error('Failed to fetch from Wiki by name', e);
+      return null;
+    }
   }
   async function fetchFromBltcById(itemId) {
     try {
@@ -76,7 +88,10 @@ window.getItemFullInfo = async function(query) {
       const data = await resp.json();
       if (!data || !data.sell) return null;
       return { tp_value: data.sell };
-    } catch { return null; }
+    } catch (e) {
+      console.error('Failed to fetch from BLTC by ID', e);
+      return null;
+    }
   }
   async function fetchFromOtcCsv(query) {
     const cache = await window.loadOtcCsv();
