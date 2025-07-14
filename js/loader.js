@@ -4,6 +4,7 @@ const itemCache = {};
 const priceCache = {};
 const wikiCache = {};
 let otcPrices = null;
+let waypointCache = {};
 
 async function fetchJson(url) {
   try {
@@ -64,14 +65,10 @@ function parseCSVPrices(csvText) {
 }
 
 async function getItemPrice(itemId) {
-  // Try GW2 API first
   let price = await fetchItemPriceGW2API(itemId);
   if (price != null) return price;
-
-  // Then OTC CSV
   const otc = await fetchOTCPrices();
   if (otc && otc[itemId]) return otc[itemId];
-
   return null;
 }
 
@@ -83,6 +80,33 @@ function generateWikiLink(name) {
   const link = `${baseUrl}${encoded}`;
   wikiCache[name] = link;
   return link;
+}
+
+// --- Dynamic Waypoint Name By Chatcode ---
+async function fetchAllWaypoints() {
+  if (Object.keys(waypointCache).length > 0) return waypointCache;
+  // Get all map IDs
+  const mapIds = await fetchJson('https://api.guildwars2.com/v2/maps');
+  if (!mapIds) return waypointCache;
+  // Fetch POIs for each map, but limit concurrency to avoid overloading the API
+  const batchSize = 10;
+  for (let i = 0; i < mapIds.length; i += batchSize) {
+    const batch = mapIds.slice(i, i + batchSize);
+    const results = await Promise.allSettled(batch.map(id => fetchJson(`https://api.guildwars2.com/v2/maps/${id}`)));
+    results.forEach(res => {
+      if (res.status === "fulfilled" && res.value && res.value.points_of_interest) {
+        Object.values(res.value.points_of_interest).forEach(poi => {
+          if (poi.type === 'waypoint' && poi.chat_link) {
+            waypointCache[poi.chat_link] = {
+              name: poi.name,
+              wiki: generateWikiLink(poi.name)
+            };
+          }
+        });
+      }
+    });
+  }
+  return waypointCache;
 }
 
 export function formatPrice(copper) {
@@ -115,13 +139,20 @@ export async function enrichData(data, onProgress) {
     if (priceResults[i] != null) detailsMap[id].price = priceResults[i];
   });
 
+  // Fetch all waypoints once, cache in memory
+  await fetchAllWaypoints();
+
   for (const event of data) {
     event.wikiLink = generateWikiLink(event.name);
     event.mapWikiLink = generateWikiLink(event.map);
 
-    // Waypoint name enrichment (if present in JSON)
-    if (event.waypointName) {
-      event.waypointWikiLink = generateWikiLink(event.waypointName);
+    // Dynamic waypoint enrichment by chatcode
+    if (event.code && waypointCache[event.code]) {
+      event.waypointName = waypointCache[event.code].name;
+      event.waypointWikiLink = waypointCache[event.code].wiki;
+    } else {
+      event.waypointName = null;
+      event.waypointWikiLink = null;
     }
 
     if (Array.isArray(event.loot)) {
