@@ -1,4 +1,5 @@
-// Minimal i18n example (expand as needed)
+// == Gamers-Hell: lang.js ==
+
 const translations = {
   en: {
     "Search events, maps, loot...": "Search events, maps, loot...",
@@ -11,12 +12,20 @@ const translations = {
   },
   // Add more languages here
 };
+
 function t(key) {
   const lang = localStorage.getItem('lang') || 'en';
-  return translations[lang] && translations[lang][key] ? translations[lang][key] : key;
+  if (translations[lang] && translations[lang][key]) return translations[lang][key];
+  // Warn if missing translation
+  if (!translations[lang] || !translations[lang][key]) {
+    console.warn(`Missing translation for "${key}" in "${lang}"`);
+  }
+  return key;
 }
+
 document.addEventListener('DOMContentLoaded', () => {
   const select = document.getElementById('lang-select');
+  if (!select) return;
   select.innerHTML = Object.keys(translations).map(l =>
     `<option value="${l}">${l.toUpperCase()}</option>`
   ).join('');
