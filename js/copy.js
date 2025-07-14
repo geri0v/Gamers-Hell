@@ -1,4 +1,4 @@
-// copy.js
+// https://geri0v.github.io/Gamers-Hell/js/copy.js
 
 import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
 
@@ -18,16 +18,21 @@ function getMostValuableDrop(loot) {
 export function createCopyBar(event) {
   const guaranteed = (event.loot || []).filter(l => l.guaranteed);
   const guaranteedNames = guaranteed.map(l =>
-    `${l.name}${l.price ? ` (${formatPrice(l.price)})` : ''}${l.accountBound ? ' (Accountbound)' : ''}`
+    `${l.name}${l.price ? ` (${formatPrice(l.price)})` : ''}${l.vendorValue ? ` (Vendor: ${formatPrice(l.vendorValue)})` : ''}${l.accountBound ? ' (Accountbound)' : ''}`
   ).join(', ') || 'None';
 
   const chance = (event.loot || []).filter(l => !l.guaranteed);
   const mostVal = getMostValuableDrop(chance);
   const chanceString = mostVal
-    ? `${mostVal.name}${mostVal.price ? ` (${formatPrice(mostVal.price)})` : ''}${mostVal.accountBound ? ' (Accountbound)' : ''}`
+    ? `${mostVal.name}${mostVal.price ? ` (${formatPrice(mostVal.price)})` : ''}${mostVal.vendorValue ? ` (Vendor: ${formatPrice(mostVal.vendorValue)})` : ''}${mostVal.accountBound ? ' (Accountbound)' : ''}`
     : 'N/A';
 
-  const text = `${event.name} | ${event.map} | WP: ${event.code} | Guaranteed drops: ${guaranteedNames} | Chance of: ${chanceString}`;
+  // Enforce 198 character limit, abbreviate if needed
+  let text = `${event.name} | ${event.map} | WP: ${event.code} | Guaranteed drops: ${guaranteedNames} | Chance of: ${chanceString}`;
+  if (text.length > 198) {
+    text = text.slice(0, 195) + '...';
+  }
+
   return `
     <div class="copy-bar">
       <input type="text" class="copy-input" value="${text.replace(/"/g, '&quot;')}" readonly>
