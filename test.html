@@ -2,74 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Gamers-Hell GW2 Events</title>
+  <title>Gamers-Hell Data Viewer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Guild Wars 2 event tracker and loot tables by Gamers-Hell.">
   <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css">
-  <link rel="icon" href="https://wiki.guildwars2.com/favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative:700|Almendra+SC|Merriweather:400,700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="topbar">
-    <button id="theme-toggle" aria-label="Switch Theme"></button>
-    <a href="README.md" target="_blank" class="readme-link">README</a>
-    <select id="lang-select" aria-label="Select Language"></select>
-  </div>
-  <div class="layout3col">
-    <aside class="sidebar" aria-label="Sidebar">
-      <button class="sidebar-toggle" aria-label="Toggle sidebar" tabindex="0">☰</button>
-      <div class="sidebar-logo">
-        <img src="https://wiki.guildwars2.com/images/d/d2/Guild_emblem_004.png" alt="GW2 Logo" />
-      </div>
-      <nav id="menu-placeholder" aria-label="Main menu"></nav>
-    </aside>
-    <main id="main-content" tabindex="-1">
-      <h1>Gamers-Hell GW2 Events</h1>
-      <div class="controls">
-        <input id="search" type="text" placeholder="Search events, maps, loot..." aria-label="Search" autocomplete="off">
-        <div class="sort-bar" role="group" aria-label="Sort events">
-          <!-- Remove sort if you wish, or keep these: -->
-          <button class="sort-btn active" data-sort="name" type="button">Name</button>
-          <button class="sort-btn" data-sort="map" type="button">Location</button>
-          <button class="sort-btn" data-sort="sourceName" type="button">Source</button>
-          <button class="sort-btn" data-sort="value" type="button">Loot Value</button>
-        </div>
-      </div>
-      <div id="events" class="event-grid" aria-live="polite"></div>
-    </main>
-    <aside id="sidebar-right" aria-label="Sidebar Right">
-      <button class="sidebar-toggle" aria-label="Toggle right sidebar" tabindex="0">☰</button>
-      <div class="timer-section">
-        <div class="timer-title">Event Timer</div>
-        <div class="timer-placeholder">
-          <span id="timer-value">00:00:00</span>
-          <div class="timer-desc">Next event starts soon!</div>
-        </div>
-      </div>
-    </aside>
-  </div>
-  <div id="event-modal-root" style="display:none;"></div>
-  <div id="toast" class="toast" style="display:none;"></div>
-  <script defer src="https://geri0v.github.io/Gamers-Hell/js2/data.js"></script>
-  <script defer src="https://geri0v.github.io/Gamers-Hell/js2/iteminfo.js"></script>
-  <script defer src="https://geri0v.github.io/Gamers-Hell/js2/render.js"></script>
-  <script defer src="https://geri0v.github.io/Gamers-Hell/js2/menu.js"></script>
-  <script defer src="https://geri0v.github.io/Gamers-Hell/js2/cmd.js"></script>
-  <script defer src="https://geri0v.github.io/Gamers-Hell/js2/theme.js"></script>
-  <script defer src="https://geri0v.github.io/Gamers-Hell/js2/lang.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.sidebar-toggle').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const parent = btn.closest('aside');
-          if (parent) parent.classList.toggle('collapsed');
-        });
-      });
-      setInterval(() => {
-        const el = document.getElementById('timer-value');
-        if (el) el.textContent = new Date().toLocaleTimeString();
-      }, 1000);
-    });
-  </script>
+  <div id="app">Loading...</div>
+  <script type="module" src="https://geri0v.github.io/Gamers-Hell/js/render.js"></script>
 </body>
 </html>
