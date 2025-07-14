@@ -1,13 +1,9 @@
-// https://geri0v.github.io/Gamers-Hell/js/data.js
-
-const JSON_URLS = [
-  'https://geri0v.github.io/Gamers-Hell/json/core/temples.json',
-  'https://geri0v.github.io/Gamers-Hell/json/core/untimedcore.json',
-  'https://geri0v.github.io/Gamers-Hell/json/core/wb.json'
-  // Add more URLs as needed
-];
+// data.js
+const MANIFEST_URL = 'https://geri0v.github.io/Gamers-Hell/json/manifest.json';
 
 export async function fetchAllData(onProgress, batchSize = 5) {
+  const manifest = await fetch(MANIFEST_URL).then(r => r.json());
+  const JSON_URLS = manifest.files.map(f => `https://geri0v.github.io/Gamers-Hell/json/${f}`);
   let allData = [];
   for (let i = 0; i < JSON_URLS.length; i += batchSize) {
     const batch = JSON_URLS.slice(i, i + batchSize);
