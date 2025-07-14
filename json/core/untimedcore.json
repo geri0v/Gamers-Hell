@@ -1,110 +1,98 @@
 [
   {
     "expansion": "Core Tyria",
-    "sources": [
-      {
-        "sourceName": "Valuable Events",
-        "events": [
-          {
-            "name": "Eye of Zhaitan",
-            "map": "Straits of Devastation",
-            "code": "[&BPgCAAA=]",
-            "loot": [
-              {
-                "name": "Circle of Arah",
-                "id": 39320,
-                "code": "[&AgEzmgAA]"
-              }
-            ]
-          },
-          {
-            "name": "Rotbeard",
-            "map": "Cursed Shore",
-            "code": "[&BOQGAAA=]",
-            "loot": [
-              {
-                "name": "Rotbeard's Treasure",
-                "id": 39335,
-                "code": "[&AgEvmgAA]"
-              }
-            ]
-          },
-          {
-            "name": "Dredge Commissar",
-            "map": "Dredgehound Cliff’s",
-            "code": "[&BD8FAAA=]",
-            "loot": [
-              {
-                "name": "Commissar's Manifest",
-                "id": 39317,
-                "code": "[&AgEsmgAA]"
-              },
-              {
-                "name": "Dredge Commissar's Chest",
-                "id": 30696,
-                "code": "[&ClgSAAA=]"
-              }
-            ]
-          },
-          {
-            "name": "Ogre Wars",
-            "map": "Fields of Ruin",
-            "code": "[&BDwEAAA=]",
-            "loot": [
-              {
-                "name": "Ogre War Spoils",
-                "id": 39332,
-                "code": "[&AgGDtQAA]"
-              },
-              {
-                "name": "Ogre War Chest",
-                "id": 30701,
-                "code": "[&Cm4SAAA=]"
-              }
-            ]
-          },
-          {
-            "name": "Rhendak",
-            "map": "Diessa Plateau",
-            "code": "[&BNwAAAA=]",
-            "loot": [
-              {
-                "name": "Rhendak's Signet",
-                "id": 39328,
-                "code": "[&AgE5mgAA]"
-              },
-              {
-                "name": "Rhendak's Chest",
-                "id": 30728,
-                "code": "[&Ct4TAAA=]"
-              }
-            ]
-          },
-          {
-            "name": "Fire Shaman",
-            "map": "Iron Marches",
-            "code": "[&BO4BAAA=]",
-            "loot": [
-              {
-                "name": "Fire Shaman's Talisman",
-                "id": 39313,
-                "code": "[&CggUAAA=]"
-              },
-              {
-                "name": "Fire Shaman's Chest",
-                "id": 30714,
-                "code": "[&CgYUAAA=]"
-              }
-            ]
-          },
-          {
-            "name": "Nebo Terrace",
-            "map": "Gendarran Fields",
-            "code": "[&BIwBAAA=]",
-            "loot": []
-          }
-        ]
-      }
+    "sourcename": "Valuable Events",
+    "name": "Eye of Zhaitan",
+    "map": "Straits of Devastation",
+    "code": "[&BPgCAAA=]",
+    "loot": [
+      { "name": "Circle of Arah", "id": 39478, "rarity": "Exotic" },
+      { "name": "Circle of Arah", "id": 19345, "rarity": "Fine" },
+      { "name": "Obsidian Shard", "guaranteed": true },
+      { "name": "Essence of Luck", "guaranteed": true },
+      { "name": "Champion Bag of Booty" }
     ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "Valuable Events",
+    "name": "Rotbeard",
+    "map": "Cursed Shore",
+    "code": "[&BOQGAAA=]",
+    "loot": [
+      { "name": "Rotbeard's Treasure", "id": 39471, "rarity": "Exotic" },
+      { "name": "Rotbeard's Treasure", "id": 19344, "rarity": "Fine" },
+      { "name": "Obsidian Shard", "guaranteed": true },
+      { "name": "Essence of Luck", "guaranteed": true },
+      { "name": "Champion Bag of Booty" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "Valuable Events",
+    "name": "Dredge Commissar",
+    "map": "Dredgehaunt Cliffs",
+    "code": "[&BD8FAAA=]",
+    "loot": [
+      { "name": "Commissar's Manifesto", "id": 39468, "rarity": "Exotic" },
+      { "name": "Commissar's Manifesto", "id": 19337, "rarity": "Fine" },
+      { "name": "Call of the Commissar", "id": 39318 },
+      { "name": "Obsidian Shard", "guaranteed": true },
+      { "name": "Essence of Luck", "guaranteed": true },
+      { "name": "Champion Bag of Booty" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "Valuable Events",
+    "name": "Ogre Wars",
+    "map": "Fields of Ruin",
+    "code": "[&BDwEAAA=]",
+    "loot": [
+      { "name": "Karmic Enrichment", "id": 39332, "rarity": "Fine" },
+      { "name": "Sam", "id": 30698, "rarity": "Exotic" },
+      { "name": "Obsidian Shard", "guaranteed": true },
+      { "name": "Essence of Luck", "guaranteed": true },
+      { "name": "Champion Bag of Booty" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "Valuable Events",
+    "name": "Rhendak",
+    "map": "Diessa Plateau",
+    "code": "[&BNwAAAA=]",
+    "loot": [
+      { "name": "Rhendak's Signet", "id": 39481, "rarity": "Exotic" },
+      { "name": "Rhendak's Signet", "id": 19353, "rarity": "Fine" },
+      { "name": "Singed Ritualist Bag", "id": 39195, "rarity": "Exotic" },
+      { "name": "Light Ritual Bag", "id": 39196, "rarity": "Basic" },
+      { "name": "Obsidian Shard", "guaranteed": true },
+      { "name": "Essence of Luck", "guaranteed": true },
+      { "name": "Champion Bag of Booty" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "Valuable Events",
+    "name": "Fire Shaman",
+    "map": "Iron Marches",
+    "code": "[&BO4BAAA=]",
+    "loot": [
+      { "name": "Syzygy", "id": 39313, "rarity": "Ascended" },
+      { "name": "Small Ritual Bag", "id": 39197, "rarity": "Basic" },
+      { "name": "Tiny Ritual Bag", "id": 39198, "rarity": "Basic" },
+      { "name": "Obsidian Shard", "guaranteed": true },
+      { "name": "Essence of Luck", "guaranteed": true },
+      { "name": "Champion Bag of Booty" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "Valuable Events",
+    "name": "Nebo Terrace",
+    "map": "Gendarran Fields",
+    "code": "[&BIwBAAA=]",
+    "loot": []
   }
 ]
