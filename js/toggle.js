@@ -1,4 +1,5 @@
-// toggle.js
+// https://geri0v.github.io/Gamers-Hell/js/toggle.js
+
 export function setupToggles() {
   document.addEventListener('click', function (e) {
     if (e.target.classList.contains('toggle-btn')) {
