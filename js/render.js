@@ -1,5 +1,6 @@
-import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
-import { enrichData, formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
+import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/data.js';
+import { enrichData, formatPrice } from 'https://geri0v.github.io/Gamers-Hell/loader.js';
+import { createCopyBar } from 'https://geri0v.github.io/Gamers-Hell/copy.js';
 
 function createCard(className, content) {
   const div = document.createElement('div');
@@ -20,58 +21,42 @@ function renderLoot(loot) {
           ${l.chatCode ? `<div><strong>Chatcode:</strong> ${l.chatCode}</div>` : ''}
           ${l.accountBound !== undefined ? `<div><strong>Accountbound:</strong> ${l.accountBound ? 'Yes' : 'No'}</div>` : ''}
           ${l.guaranteed ? `<div class="guaranteed-badge">Guaranteed</div>` : ''}
-          ${Object.entries(l)
-            .filter(([k]) => !['name','icon','wikiLink','price','chatCode','accountBound','guaranteed'].includes(k))
-            .map(([k, v]) => `<div><strong>${k}:</strong> ${v}</div>`).join('')}
         </div>
       `).join('')}
     </div>
   `;
 }
 
-// Find the most valuable drop (by price, fallback to rarity)
-function getMostValuableDrop(loot) {
-  if (!Array.isArray(loot) || loot.length === 0) return null;
-  let maxItem = null;
-  for (const item of loot) {
-    if (item.price && (!maxItem || item.price > maxItem.price)) maxItem = item;
-  }
-  if (maxItem) return maxItem;
-  // Fallback: pick the first Exotic or highest rarity
-  const rarityOrder = ['Ascended', 'Exotic', 'Rare', 'Masterwork', 'Fine', 'Basic'];
-  return loot.slice().sort((a, b) => rarityOrder.indexOf(a.rarity || 'Basic') - rarityOrder.indexOf(b.rarity || 'Basic'))[0];
-}
-
-// Copy-paste bar logic
-function createCopyBar(event) {
-  const guaranteedDrops = (event.loot || []).filter(l => l.guaranteed).map(l => l.name).join(', ') || 'None';
-  const mostVal = getMostValuableDrop(event.loot);
-  const valDrop = mostVal ? mostVal.name : 'N/A';
-  const text = `name: ${event.name} | map: ${event.map} | Waypoint: ${event.code} | Guaranteed drops: ${guaranteedDrops} | Most value Drop: ${valDrop}`;
+// Progress bar rendering
+function renderProgressBar(percent) {
   return `
-    <div class="copy-bar">
-      <input type="text" class="copy-input" value="${text.replace(/"/g, '&quot;')}" readonly>
-      <button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.value)">Copy</button>
+    <div class="progress-bar-container">
+      <div class="progress-bar" style="width:${percent}%;"></div>
     </div>
   `;
 }
 
 export async function renderApp(containerId) {
   const container = document.getElementById(containerId);
-  container.innerHTML = '<div>Loading...</div>';
+  container.innerHTML = renderProgressBar(0) + '<div>Loading...</div>';
   let allData = [];
+  let loaded = 0;
+  const total = 3; // Update if you change the number of JSONs
+
   await fetchAllData(async (flat, url, err) => {
+    loaded++;
+    const percent = Math.round((loaded / total) * 100);
+    container.innerHTML = renderProgressBar(percent) + '<div>Loading...</div>';
     if (err) {
       container.innerHTML += `<div class="error">Failed to load ${url}: ${err}</div>`;
       return;
     }
     if (flat.length === 0) return;
-    // Enrich and render this chunk
     const enriched = await enrichData(flat);
     allData = allData.concat(enriched);
     const grouped = groupAndSort(allData);
 
-    container.innerHTML = '';
+    container.innerHTML = renderProgressBar(percent);
     grouped.forEach(exp => {
       const expDiv = createCard('expansion-card', `<h2>${exp.expansion}</h2>`);
       exp.sources.forEach(src => {
@@ -95,6 +80,7 @@ export async function renderApp(containerId) {
       container.appendChild(expDiv);
     });
   });
-}
 
+  // TODO: For very large lists, implement virtualization/pagination here.
+}
 renderApp('app');
