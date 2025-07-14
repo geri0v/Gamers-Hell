@@ -4,13 +4,28 @@ const JSON_URLS = [
   'https://geri0v.github.io/Gamers-Hell/json/core/temples.json',
   'https://geri0v.github.io/Gamers-Hell/json/core/untimedcore.json',
   'https://geri0v.github.io/Gamers-Hell/json/core/wb.json'
-  // Add more URLs as needed
 ];
+
+export async function fetchAllData(onProgress) {
+  // Fetch each JSON individually and flatten as it arrives
+  let allData = [];
+  for (const url of JSON_URLS) {
+    try {
+      const res = await fetch(url);
+      const dataArr = await res.json();
+      const flat = flatten(dataArr);
+      allData = allData.concat(flat);
+      if (onProgress) onProgress(flat, url);
+    } catch (e) {
+      if (onProgress) onProgress([], url, e);
+    }
+  }
+  return allData;
+}
 
 // Helper to flatten the nested structure or pass through if already flat
 function flatten(dataArr) {
   if (Array.isArray(dataArr) && dataArr.length > 0 && dataArr[0].sourcename) {
-    // Data is already flat, just return as is
     return dataArr;
   }
   const flat = [];
@@ -30,19 +45,6 @@ function flatten(dataArr) {
   return flat;
 }
 
-export async function fetchAllData() {
-  // Fetch all JSONs in parallel
-  const results = await Promise.all(
-    JSON_URLS.map(url =>
-      fetch(url)
-        .then(res => res.json())
-        .catch(() => []) // If a file fails, skip it
-    )
-  );
-  // Flatten and combine all results
-  return results.flatMap(flatten);
-}
-
 // Group and sort by expansion, then by sourcename
 export function groupAndSort(data) {
   const grouped = {};
@@ -53,7 +55,6 @@ export function groupAndSort(data) {
     if (!grouped[exp][src]) grouped[exp][src] = [];
     grouped[exp][src].push(item);
   });
-
   return Object.keys(grouped).sort().map(expansion => ({
     expansion,
     sources: Object.keys(grouped[expansion]).sort().map(sourcename => ({
