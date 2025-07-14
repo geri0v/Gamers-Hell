@@ -102,4 +102,62 @@ window.renderEvents = async function(events, container) {
             }).join('');
             const copyValue = `${ev.name || ''} | ${ev.code || ''} | ${(enrichedLoot || []).map(item => item.name).join(', ')}`;
             const card = document.createElement('div');
-            card.className =
+            card.className = 'event-card fullwidth-event-card';
+            card.style.margin = '0 auto';
+            card.innerHTML = `
+              <div class="card-header">
+                <h2 class="event-name">
+                  <a href="https://wiki.guildwars2.com/wiki/${encodeURIComponent((ev.name||'').replace(/ /g, '_'))}" target="_blank" rel="noopener">${ev.name || 'Unnamed Event'}</a>
+                </h2>
+              </div>
+              <div class="card-body">
+                <div class="event-info">
+                  <span><b>Location:</b> ${
+                    ev.map
+                      ? `<a href="https://wiki.guildwars2.com/wiki/${encodeURIComponent(ev.map.replace(/ /g, '_'))}" target="_blank" rel="noopener">${ev.map}</a>`
+                      : ''
+                  }</span>
+                  <span><b>Waypoint:</b> ${ev.code ? `<code>${ev.code}</code>` : ''}</span>
+                </div>
+                <div class="event-loot-summary">
+                  <b>Best Loot:</b> ${mostValuable ? `<a href="https://wiki.guildwars2.com/wiki/${encodeURIComponent(mostValuable.name.replace(/ /g, '_'))}" target="_blank">${mostValuable.name}</a> ${typeof mostValuable.tp_value === 'number' ? `<span class="tp-value">${window.splitCoins(mostValuable.tp_value)}</span>` : typeof mostValuable.vendor_value === 'number' ? `<span class="vendor-value">${window.splitCoins(mostValuable.vendor_value)}</span>` : ''}` : 'N/A'}
+                </div>
+                <div class="copy-bar">
+                  <input type="text" value="${copyValue}" readonly>
+                  <button class="copy-btn" type="button">Copy</button>
+                </div>
+                <button class="show-hide-toggle" type="button" aria-controls="loot-${ev.name}" aria-expanded="false">Show Loot ▼</button>
+                <ul class="loot-list copy-paste-area" id="loot-${ev.name}" style="display:none;">
+                  ${lootRows}
+                </ul>
+              </div>
+            `;
+            card.querySelector('.copy-btn').onclick = function() {
+              const input = card.querySelector('.copy-bar input');
+              navigator.clipboard.writeText(input.value);
+              window.showCopyNudge(this);
+            };
+            const lootBtn = card.querySelector('.show-hide-toggle');
+            const lootList = card.querySelector('.loot-list');
+            lootBtn.onclick = function() {
+              const isOpen = lootList.style.display === 'block';
+              lootList.style.display = isOpen ? 'none' : 'block';
+              lootBtn.textContent = isOpen ? 'Show Loot ▼' : 'Hide Loot ▲';
+              lootBtn.setAttribute('aria-expanded', !isOpen);
+            };
+            eventsContainer.appendChild(card);
+          }
+          if (!events.length) eventsContainer.innerHTML = `<div class="empty-state">No events found.</div>`;
+        }
+      });
+      sourcesContainer.appendChild(srcDiv);
+    });
+    expSection.querySelector('.section-title').addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+      this.textContent = expanded ? `${expansion} ▼` : `${expansion} ▲`;
+      expSection.querySelector('.sources-container').style.display = expanded ? 'none' : 'block';
+    });
+    container.appendChild(expSection);
+  });
+};
