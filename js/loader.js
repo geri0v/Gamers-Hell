@@ -74,6 +74,11 @@ export async function enrichData(data, onProgress) {
     event.wikiLink = generateWikiLink(event.name);
     event.mapWikiLink = generateWikiLink(event.map);
 
+    // Waypoint enrichment: expects event.waypointName in your data
+    if (event.waypointName) {
+      event.waypointWikiLink = generateWikiLink(event.waypointName);
+    }
+
     if (Array.isArray(event.loot)) {
       event.loot.forEach(item => {
         if (item.id && detailsMap[item.id]) {
