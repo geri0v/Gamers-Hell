@@ -15,8 +15,8 @@
   --font-body: 'Merriweather', serif;
 }
 
-/* THEME SWITCHER CLASSES */
-body.theme-original { }
+/* Theme Switcher */
+body.theme-original {}
 body.theme-darkfantasy {
   --color-bg-deep: #140010;
   --color-bg-gradient: linear-gradient(135deg,#2b0b1f 0%,#140010 100%);
@@ -84,7 +84,7 @@ body.theme-lightfantasy {
   padding: 0.3em 1em;
 }
 
-/* Fix for topbar overlay: add top padding to layout */
+/* Padding for fixed topbar */
 .layout3col { padding-top: 60px; }
 .sidebar, #sidebar-right { z-index: 101; }
 .topbar { z-index: 100; }
@@ -100,7 +100,7 @@ html, body {
   font-family: var(--font-body);
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: auto; /* Allow scrolling */
 }
 a { color: inherit; text-decoration: none; transition: color 0.2s; }
 a:hover { color: var(--color-accent-emerald); }
@@ -130,7 +130,7 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   z-index: 0;
 }
 
-/* Sidebar Left (Menu) */
+/* Sidebar Left */
 .sidebar {
   width: var(--sidebar-width);
   background: url('https://wiki.guildwars2.com/images/thumb/7/7c/AsuraIsland_Sketch_wallpaper.jpg/1920px-AsuraIsland_Sketch_wallpaper.jpg') no-repeat center/cover, #1b152c;
@@ -172,7 +172,7 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   transform: scale(1.1) rotate(10deg);
 }
 
-/* Sidebar Menu Placeholder/Card Menu */
+/* Sidebar Menu */
 #menu-placeholder {
   padding: 2.2rem 0.7rem 1.2rem 0.7rem;
 }
@@ -233,14 +233,10 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   color: #1b152c !important;
   font-weight: bold;
 }
-
-/* Hide menu content when collapsed */
 .sidebar.collapsed #menu-placeholder,
 .sidebar.collapsed .sidebar-logo {
   display: none !important;
 }
-
-/* Sidebar Logo */
 .sidebar-logo {
   text-align: center;
   margin-top: 2rem;
@@ -424,8 +420,6 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   font-size: 1.1em;
   margin-left: 0.6em;
 }
-
-/* Centering for Expansion/Source Sections */
 .expansion-section, .source-section {
   display: flex;
   flex-direction: column;
@@ -641,24 +635,6 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
 @keyframes skeleton-shimmer {
   0% { background-position: 100% 0; }
   100% { background-position: 0 0; }
-}
-
-/* Retro loading bar */
-.retro-loader-bar {
-  width: 100%;
-  height: 22px;
-  background: #222;
-  border: 2px solid var(--color-accent-gold);
-  border-radius: 7px;
-  overflow: hidden;
-  margin: 1em 0;
-  position: relative;
-}
-.retro-loader-bar-inner {
-  height: 100%;
-  background: linear-gradient(90deg, var(--color-accent-gold) 60%, var(--color-accent-emerald) 100%);
-  transition: width 0.3s;
-  box-shadow: 0 0 10px var(--color-accent-gold);
 }
 
 /* Toast for errors */
