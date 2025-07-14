@@ -52,4 +52,5 @@ export async function renderApp(containerId) {
     container.innerHTML = `<div class="error">Failed to load data: ${e}</div>`;
   }
 }
+
 renderApp('app');
