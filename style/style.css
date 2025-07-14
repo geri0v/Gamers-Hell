@@ -120,6 +120,14 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   color: var(--color-accent-gold);
   letter-spacing: 1px;
   text-shadow: 0 0 6px var(--color-accent-emerald);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.menu-card .exp-arrow {
+  font-size: 1.2em;
+  margin-left: 0.5em;
 }
 .menu-card .card-body {
   padding: 0.7rem 1rem 1rem 1rem;
@@ -181,6 +189,7 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
   position: relative;
   z-index: 2;
   min-width: var(--sidebar-width-collapsed);
+  transition: width var(--transition-speed), padding var(--transition-speed);
 }
 #sidebar-right.collapsed {
   width: var(--sidebar-width-collapsed);
@@ -340,6 +349,19 @@ a:focus, .menu-exp-header:focus, .menu-source-link:focus {
 .section-title .arrow, .source-title .arrow {
   font-size: 1.1em;
   margin-left: 0.6em;
+}
+
+/* Centering for Expansion/Source Sections */
+.expansion-section, .source-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sources-container, .events-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Event Cards */
