@@ -1,3 +1,5 @@
+// js/render.js
+
 import { loadAllData } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
 
 // Helper to create a section for each expansion
@@ -21,27 +23,28 @@ async function displayData() {
   const app = document.getElementById('app');
   app.textContent = 'Loading...';
   try {
-    console.log("Loading data...");
     const data = await loadAllData();
-    console.log("Data loaded:", data);
-
     app.innerHTML = '';
+
+    // Combine all items from all data sources into one array (handles arrays and objects)
     let allItems = [];
     for (const key in data) {
       if (Array.isArray(data[key])) {
         allItems = allItems.concat(data[key]);
+      } else if (typeof data[key] === 'object' && data[key] !== null) {
+        allItems = allItems.concat(Object.values(data[key]));
       }
     }
-    console.log("All items:", allItems);
 
+    // Group by expansion
     const expansions = {};
     allItems.forEach(item => {
       const expansion = item.expansion || 'Unknown Expansion';
       if (!expansions[expansion]) expansions[expansion] = [];
       expansions[expansion].push(item);
     });
-    console.log("Grouped by expansion:", expansions);
 
+    // Render each expansion group
     for (const [expansion, items] of Object.entries(expansions)) {
       app.appendChild(createExpansionSection(expansion, items));
     }
