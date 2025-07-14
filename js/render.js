@@ -1,6 +1,9 @@
+// https://geri0v.github.io/Gamers-Hell/js/render.js
+
 import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
 import { enrichData, formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
 import { createCopyBar } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
+import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
 
 function createCard(className, content) {
   const div = document.createElement('div');
@@ -9,15 +12,22 @@ function createCard(className, content) {
   return div;
 }
 
-function renderLoot(loot) {
+function createToggleButton(label, targetId) {
+  return `<button class="toggle-btn" data-target="${targetId}">${label}</button>`;
+}
+
+function renderLoot(loot, eventId) {
   if (!Array.isArray(loot) || loot.length === 0) return '';
+  const lootId = `loot-${eventId}`;
   return `
-    <div class="subcards">
+    ${createToggleButton('Show Loot', lootId)}
+    <div class="subcards hidden" id="${lootId}">
       ${loot.map(l => `
         <div class="subcard${l.guaranteed ? ' guaranteed' : ''}">
           ${l.icon ? `<img src="${l.icon}" alt="" style="height:1.2em;vertical-align:middle;margin-right:0.3em;">` : ''}
           ${l.wikiLink ? `<a href="${l.wikiLink}" target="_blank">${l.name}</a>` : l.name}
           ${l.price !== undefined && l.price !== null ? `<div><strong>Price:</strong> ${formatPrice(l.price)}</div>` : ''}
+          ${l.vendorValue !== undefined && l.vendorValue !== null ? `<div><strong>Vendor:</strong> ${formatPrice(l.vendorValue)}</div>` : ''}
           ${l.chatCode ? `<div><strong>Chatcode:</strong> ${l.chatCode}</div>` : ''}
           ${l.accountBound !== undefined ? `<div><strong>Accountbound:</strong> ${l.accountBound ? 'Yes' : 'No'}</div>` : ''}
           ${l.guaranteed ? `<div class="guaranteed-badge">Guaranteed</div>` : ''}
@@ -27,7 +37,6 @@ function renderLoot(loot) {
   `;
 }
 
-// Progress bar rendering
 function renderProgressBar(percent) {
   return `
     <div class="progress-bar-container">
@@ -57,11 +66,24 @@ export async function renderApp(containerId) {
     const grouped = groupAndSort(allData);
 
     container.innerHTML = renderProgressBar(percent);
-    grouped.forEach(exp => {
-      const expDiv = createCard('expansion-card', `<h2>${exp.expansion}</h2>`);
-      exp.sources.forEach(src => {
-        const srcDiv = createCard('source-card', `<h3>${src.sourcename}</h3>`);
-        src.items.forEach(item => {
+    grouped.forEach((exp, expIdx) => {
+      const expId = `expansion-${expIdx}`;
+      const expDiv = createCard('expansion-card', `
+        ${createToggleButton('Show/Hide', expId)}
+        <h2>${exp.expansion}</h2>
+        <div class="expansion-content" id="${expId}">
+        </div>
+      `);
+      exp.sources.forEach((src, srcIdx) => {
+        const srcId = `source-${expIdx}-${srcIdx}`;
+        const srcDiv = createCard('source-card', `
+          ${createToggleButton('Show/Hide', srcId)}
+          <h3>${src.sourcename}</h3>
+          <div class="source-content" id="${srcId}">
+          </div>
+        `);
+        src.items.forEach((item, itemIdx) => {
+          const eventId = `event-${expIdx}-${srcIdx}-${itemIdx}`;
           const details = Object.entries(item)
             .filter(([k]) => k !== 'loot' && k !== 'expansion' && k !== 'sourcename')
             .map(([k, v]) => {
@@ -70,17 +92,18 @@ export async function renderApp(containerId) {
               return `<div><strong>${k}:</strong> ${Array.isArray(v) ? JSON.stringify(v) : v}</div>`;
             })
             .join('');
-          const lootSection = renderLoot(item.loot);
+          const lootSection = renderLoot(item.loot, eventId);
           const copyBar = createCopyBar(item);
           const itemDiv = createCard('item-card', `<div>${details}${lootSection}${copyBar}</div>`);
-          srcDiv.appendChild(itemDiv);
+          srcDiv.querySelector('.source-content').appendChild(itemDiv);
         });
-        expDiv.appendChild(srcDiv);
+        expDiv.querySelector('.expansion-content').appendChild(srcDiv);
       });
       container.appendChild(expDiv);
     });
+    setupToggles();
   });
 
-  // TODO: For very large lists, implement virtualization/pagination here.
+  // For very large lists, implement virtualization/pagination here if needed.
 }
 renderApp('app');
