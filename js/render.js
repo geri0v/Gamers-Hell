@@ -26,13 +26,12 @@ async function displayData() {
     const data = await loadAllData();
     app.innerHTML = '';
 
-    // Combine all items from all data sources into one array (handles arrays and objects)
+    // Combine all items from all data sources into one array (extract from .events)
     let allItems = [];
     for (const key in data) {
-      if (Array.isArray(data[key])) {
-        allItems = allItems.concat(data[key]);
-      } else if (typeof data[key] === 'object' && data[key] !== null) {
-        allItems = allItems.concat(Object.values(data[key]));
+      const source = data[key];
+      if (source && Array.isArray(source.events)) {
+        allItems = allItems.concat(source.events);
       }
     }
 
