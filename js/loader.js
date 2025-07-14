@@ -9,9 +9,7 @@ async function fetchJson(url) {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
-  } catch {
-    return null;
-  }
+  } catch { return null; }
 }
 
 async function fetchItemDetails(itemId) {
@@ -46,9 +44,8 @@ export function formatPrice(copper) {
   return `${gold}g ${silver}s ${copperRemainder}c`;
 }
 
-// Main enrichment function with global item info cache
 export async function enrichData(data, onProgress) {
-  // Build a set of all unique item IDs in all loot arrays
+  // Gather all unique item IDs
   const uniqueItemIds = new Set();
   data.forEach(event => {
     if (Array.isArray(event.loot)) {
@@ -68,11 +65,11 @@ export async function enrichData(data, onProgress) {
   // Map item details and prices for quick lookup
   const detailsMap = {};
   Array.from(uniqueItemIds).forEach((id, i) => {
-    detailsMap[id] = itemDetailsResults[i];
+    detailsMap[id] = itemDetailsResults[i] || {};
     if (priceResults[i] != null) detailsMap[id].price = priceResults[i];
   });
 
-  // Now enrich each event/loot item
+  // Enrich each event/loot item
   for (const event of data) {
     event.wikiLink = generateWikiLink(event.name);
     event.mapWikiLink = generateWikiLink(event.map);
