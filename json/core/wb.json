@@ -1,0 +1,217 @@
+[
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "World Bosses",
+    "name": "Fire Elemental",
+    "map": "Metrica Province",
+    "code": "[&BEYAAAA=]",
+    "loot": [
+      { "name": "Fire Elemental Core", "id": 38162, "rarity": "Rare" },
+      { "name": "Dragonite Ore", "id": 46733, "guaranteed": true },
+      { "name": "Essence of Luck", "id": 43273, "guaranteed": true },
+      { "name": "Mystic Coin", "id": 19675, "rarity": "Exotic" },
+      { "name": "Black Lion Chest Key", "id": 42942, "rarity": "Rare" },
+      { "name": "Large Crafting Bag", "id": 70252, "rarity": "Rare" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "World Bosses",
+    "name": "Karka Queen",
+    "map": "Southsun Cove",
+    "code": "[&BNcGAAA=]",
+    "loot": [
+      { "name": "Dragonite Ore", "id": 46733, "guaranteed": true },
+      { "name": "Essence of Luck", "id": 43273, "guaranteed": true },
+      { "name": "Karka Shell", "id": 37897, "rarity": "Rare" },
+      { "name": "Mini Karka", "id": 42497, "rarity": "Mini" },
+      { "name": "Karka Queen's Shell", "id": 38181, "rarity": "Trophy" },
+      { "name": "Karka Queen's Claw", "id": 38182, "rarity": "Trophy" },
+      { "name": "Karka Queen's Eye", "id": 38183, "rarity": "Trophy" },
+      { "name": "Large Crafting Bag", "id": 70252, "rarity": "Rare" },
+      { "name": "Mystic Coin", "id": 19675, "rarity": "Exotic" },
+      { "name": "Black Lion Chest Key", "id": 42942, "rarity": "Rare" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "World Bosses",
+    "name": "Jungle Wurm",
+    "map": "Caledon Forest",
+    "code": "[&BEEFAAA=]",
+    "loot": [
+      { "name": "Dragonite Ore", "id": 46733, "guaranteed": true },
+      { "name": "Essence of Luck", "id": 43273, "guaranteed": true },
+      { "name": "Jungle Wurm Trophy", "id": 38163, "rarity": "Rare" },
+      { "name": "Wurm's Maw", "id": 38164, "rarity": "Rare" },
+      { "name": "Mystic Coin", "id": 19675, "rarity": "Exotic" },
+      { "name": "Black Lion Chest Key", "id": 42942, "rarity": "Rare" },
+      { "name": "Large Crafting Bag", "id": 70252, "rarity": "Rare" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "World Bosses",
+    "name": "Megadestroyer",
+    "map": "Mount Maelstrom",
+    "code": "[&BM0CAAA=]",
+    "loot": [
+      { "name": "Dragonite Ore", "id": 46733, "guaranteed": true },
+      { "name": "Essence of Luck", "id": 43273, "guaranteed": true },
+      { "name": "Megadestroyer's Claw", "id": 38190, "rarity": "Rare" },
+      { "name": "Megadestroyer's Fang", "id": 38191, "rarity": "Rare" },
+      { "name": "Megadestroyer's Eye", "id": 38192, "rarity": "Rare" },
+      { "name": "Mystic Coin", "id": 19675, "rarity": "Exotic" },
+      { "name": "Black Lion Chest Key", "id": 42942, "rarity": "Rare" },
+      { "name": "Large Crafting Bag", "id": 70252, "rarity": "Rare" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "World Bosses",
+    "name": "Shadow Behemoth",
+    "map": "Queensdale",
+    "code": "[&BPwAAAA=]",
+    "loot": [
+      { "name": "Dragonite Ore", "id": 46733, "guaranteed": true },
+      { "name": "Essence of Luck", "id": 43273, "guaranteed": true },
+      { "name": "Behemoth's Maw", "id": 38166, "rarity": "Rare" },
+      { "name": "Behemoth's Eye", "id": 38167, "rarity": "Rare" },
+      { "name": "Mystic Coin", "id": 19675, "rarity": "Exotic" },
+      { "name": "Black Lion Chest Key", "id": 42942, "rarity": "Rare" },
+      { "name": "Large Crafting Bag", "id": 70252, "rarity": "Rare" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "World Bosses",
+    "name": "Tequatl the Sunless",
+    "map": "Sparkfly Fen",
+    "code": "[&BNABAAA=]",
+    "loot": [
+      { "name": "Dragonite Ore", "id": 46733, "guaranteed": true },
+      { "name": "Essence of Luck", "id": 43273, "guaranteed": true },
+      { "name": "Tequatl's Fang", "id": 38168, "rarity": "Rare" },
+      { "name": "Mini Tequatl the Sunless", "id": 44834, "rarity": "Rare" },
+      { "name": "Ascended Weapon Chest", "id": 39192, "rarity": "Exotic" },
+      { "name": "Large Crafting Bag", "id": 70252, "rarity": "Rare" },
+      { "name": "Mystic Coin", "id": 19675, "rarity": "Exotic" },
+      { "name": "Black Lion Chest Key", "id": 42942, "rarity": "Rare" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "World Bosses",
+    "name": "The Shatterer",
+    "map": "Blazeridge Steppes",
+    "code": "[&BE4DAAA=]",
+    "loot": [
+      { "name": "Dragonite Ore", "id": 46733, "guaranteed": true },
+      { "name": "Essence of Luck", "id": 43273, "guaranteed": true },
+      { "name": "Shatterer's Crystal", "id": 38169, "rarity": "Rare" },
+      { "name": "Shatterer's Claw", "id": 38170, "rarity": "Rare" },
+      { "name": "Mystic Coin", "id": 19675, "rarity": "Exotic" },
+      { "name": "Black Lion Chest Key", "id": 42942, "rarity": "Rare" },
+      { "name": "Large Crafting Bag", "id": 70252, "rarity": "Rare" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "World Bosses",
+    "name": "Frozen Maw",
+    "map": "Wayfarer Foothills",
+    "code": "[&BH4BAAA=]",
+    "loot": [
+      { "name": "Dragonite Ore", "id": 46733, "guaranteed": true },
+      { "name": "Essence of Luck", "id": 43273, "guaranteed": true },
+      { "name": "Maw's Claw", "id": 38171, "rarity": "Rare" },
+      { "name": "Maw's Fang", "id": 38172, "rarity": "Rare" },
+      { "name": "Mystic Coin", "id": 19675, "rarity": "Exotic" },
+      { "name": "Black Lion Chest Key", "id": 42942, "rarity": "Rare" },
+      { "name": "Large Crafting Bag", "id": 70252, "rarity": "Rare" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "World Bosses",
+    "name": "Modniir Ulgoth",
+    "map": "Harathi Hinterlands",
+    "code": "[&BLEAAAA=]",
+    "loot": [
+      { "name": "Dragonite Ore", "id": 46733, "guaranteed": true },
+      { "name": "Essence of Luck", "id": 43273, "guaranteed": true },
+      { "name": "Ulgoth's Horn", "id": 38173, "rarity": "Rare" },
+      { "name": "Ulgoth's Fang", "id": 38174, "rarity": "Rare" },
+      { "name": "Mystic Coin", "id": 19675, "rarity": "Exotic" },
+      { "name": "Black Lion Chest Key", "id": 42942, "rarity": "Rare" },
+      { "name": "Large Crafting Bag", "id": 70252, "rarity": "Rare" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "World Bosses",
+    "name": "Golem Mark II",
+    "map": "Mount Maelstrom",
+    "code": "[&BNQCAAA=]",
+    "loot": [
+      { "name": "Dragonite Ore", "id": 46733, "guaranteed": true },
+      { "name": "Essence of Luck", "id": 43273, "guaranteed": true },
+      { "name": "Golem's Core", "id": 38175, "rarity": "Rare" },
+      { "name": "Mystic Coin", "id": 19675, "rarity": "Exotic" },
+      { "name": "Black Lion Chest Key", "id": 42942, "rarity": "Rare" },
+      { "name": "Large Crafting Bag", "id": 70252, "rarity": "Rare" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "World Bosses",
+    "name": "Taidha Covington",
+    "map": "Bloodtide Coast",
+    "code": "[&BKgBAAA=]",
+    "loot": [
+      { "name": "Dragonite Ore", "id": 46733, "guaranteed": true },
+      { "name": "Essence of Luck", "id": 43273, "guaranteed": true },
+      { "name": "Old Reliable", "id": 37610, "rarity": "Exotic" },
+      { "name": "Trusty Rusty", "id": 37611, "rarity": "Exotic" },
+      { "name": "Large Crafting Bag", "id": 70252, "rarity": "Rare" },
+      { "name": "Mystic Coin", "id": 19675, "rarity": "Exotic" },
+      { "name": "Black Lion Chest Key", "id": 42942, "rarity": "Rare" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "World Bosses",
+    "name": "Evolved Jungle Wurm",
+    "map": "Bloodtide Coast",
+    "code": "[&BKoBAAA=]",
+    "loot": [
+      { "name": "Dragonite Ore", "id": 46733, "guaranteed": true },
+      { "name": "Essence of Luck", "id": 43273, "guaranteed": true },
+      { "name": "Pile of Regurgitated Armor", "id": 66937, "rarity": "Exotic" },
+      { "name": "Evolved Wurm's Fang", "id": 38177, "rarity": "Rare" },
+      { "name": "Evolved Wurm's Claw", "id": 38178, "rarity": "Rare" },
+      { "name": "Mini Evolved Jungle Wurm", "id": 46006, "rarity": "Mini" }, 
+      { "name": "Mystic Coin", "id": 19675, "rarity": "Exotic" },
+      { "name": "Black Lion Chest Key", "id": 42942, "rarity": "Rare" },
+      { "name": "Large Crafting Bag", "id": 70252, "rarity": "Rare" }
+    ]
+  },
+  {
+    "expansion": "Core Tyria",
+    "sourcename": "World Bosses",
+    "name": "Claw of Jormag",
+    "map": "Frostgorge Sound",
+    "code": "[&BHoCAAA=]",
+    "loot": [
+      { "name": "Dragonite Ore", "id": 46733, "guaranteed": true },
+      { "name": "Essence of Luck", "id": 43273, "guaranteed": true },
+      { "name": "Claw of Jormag's Scale", "id": 38178, "rarity": "Rare" },
+      { "name": "Claw of Jormag's Fang", "id": 38179, "rarity": "Rare" },
+      { "name": "Claw of Jormag's Eye", "id": 38180, "rarity": "Rare" },
+      { "name": "Mini Claw of Jormag", "id": 46007, "rarity": "Mini" },
+      { "name": "Mystic Coin", "id": 19675, "rarity": "Exotic" },
+      { "name": "Black Lion Chest Key", "id": 42942, "rarity": "Rare" },
+      { "name": "Large Crafting Bag", "id": 70252, "rarity": "Rare" }
+    ]
+  }
+]
