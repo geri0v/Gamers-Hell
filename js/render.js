@@ -6,6 +6,11 @@ import { createCopyBar } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
 import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
 import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
 
+let allData = [];
+let currentPage = 1;
+const PAGE_SIZE = 20;
+let isLoading = false;
+
 function createCard(className, content) {
   const div = document.createElement('div');
   div.className = className;
@@ -115,15 +120,23 @@ function updateExpansionOptions(events) {
     exps.map(exp => `<option value="${exp}">${exp}</option>`).join('');
 }
 
-function applyFiltersAndRender(container, allEvents) {
+function paginate(array, pageSize, pageNumber) {
+  return array.slice(0, pageSize * pageNumber);
+}
+
+function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = false) {
   const searchTerm = document.getElementById('search-input').value;
   const expansion = document.getElementById('expansion-filter').value;
   const rarity = document.getElementById('rarity-filter').value;
   const sortKey = document.getElementById('sort-filter').value;
   const filteredEvents = filterEvents(allEvents, { searchTerm, expansion, rarity, sortKey });
-  const grouped = groupAndSort(filteredEvents);
+  const pagedEvents = paginate(filteredEvents, PAGE_SIZE, pageNumber);
+  const grouped = groupAndSort(pagedEvents);
 
-  container.innerHTML = '';
+  if (!append) {
+    container.innerHTML = '';
+  }
+
   grouped.forEach((exp, expIdx) => {
     const expId = `expansion-${expIdx}`;
     const expDiv = createCard('expansion-card', `
@@ -158,7 +171,7 @@ function renderProgressBar(percent) {
 export async function renderApp(containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = renderProgressBar(0) + '<div>Loading...</div>';
-  let allData = [];
+  allData = [];
   let loaded = 0;
   const total = 3; // Adjust if you change the number of JSON files
 
@@ -178,12 +191,46 @@ export async function renderApp(containerId) {
       container.innerHTML = renderSearchBar() + `<div id="events-list"></div>`;
       updateExpansionOptions(allData);
       const eventsList = document.getElementById('events-list');
-      applyFiltersAndRender(eventsList, allData);
+      currentPage = 1;
+      applyFiltersAndRender(eventsList, allData, currentPage, false);
 
-      document.getElementById('search-input').addEventListener('input', () => applyFiltersAndRender(eventsList, allData));
-      document.getElementById('expansion-filter').addEventListener('change', () => applyFiltersAndRender(eventsList, allData));
-      document.getElementById('rarity-filter').addEventListener('change', () => applyFiltersAndRender(eventsList, allData));
-      document.getElementById('sort-filter').addEventListener('change', () => applyFiltersAndRender(eventsList, allData));
+      // Search/filter/sort event handlers
+      document.getElementById('search-input').addEventListener('input', () => {
+        currentPage = 1;
+        applyFiltersAndRender(eventsList, allData, currentPage, false);
+      });
+      document.getElementById('expansion-filter').addEventListener('change', () => {
+        currentPage = 1;
+        applyFiltersAndRender(eventsList, allData, currentPage, false);
+      });
+      document.getElementById('rarity-filter').addEventListener('change', () => {
+        currentPage = 1;
+        applyFiltersAndRender(eventsList, allData, currentPage, false);
+      });
+      document.getElementById('sort-filter').addEventListener('change', () => {
+        currentPage = 1;
+        applyFiltersAndRender(eventsList, allData, currentPage, false);
+      });
+
+      // Infinite scroll
+      window.addEventListener('scroll', () => {
+        if (isLoading) return;
+        const containerHeight = document.documentElement.scrollHeight;
+        const scrollPosition = window.scrollY + window.innerHeight;
+        const searchTerm = document.getElementById('search-input').value;
+        const expansion = document.getElementById('expansion-filter').value;
+        const rarity = document.getElementById('rarity-filter').value;
+        const sortKey = document.getElementById('sort-filter').value;
+        const filteredEvents = filterEvents(allData, { searchTerm, expansion, rarity, sortKey });
+        if (scrollPosition > containerHeight - 100) {
+          if (filteredEvents.length > PAGE_SIZE * currentPage) {
+            isLoading = true;
+            currentPage++;
+            applyFiltersAndRender(eventsList, allData, currentPage, true);
+            isLoading = false;
+          }
+        }
+      });
     }
   });
 }
