@@ -1,4 +1,5 @@
-// render.js
+// https://geri0v.github.io/Gamers-Hell/js/render.js
+
 import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
 import { enrichData, formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
 import { createCopyBar, getMostValuableDrop } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
@@ -131,7 +132,6 @@ export async function renderApp(containerId) {
     const enriched = await enrichData(flat);
     allEvents = allEvents.concat(enriched);
 
-    // After all loaded
     if (loaded === 3) {
       container.innerHTML = renderSearchBar() + `<div id="events-list" class="expansion-content"></div>`;
       updateExpansionOptions(allEvents);
@@ -139,13 +139,11 @@ export async function renderApp(containerId) {
       const eventsList = document.getElementById('events-list');
       renderEvents(paginate(filteredEvents, PAGE_SIZE, currentPage), eventsList);
 
-      // Setup search/filter
       document.getElementById('search-input').addEventListener('input', () => applyFiltersAndRender(eventsList));
       document.getElementById('expansion-filter').addEventListener('change', () => applyFiltersAndRender(eventsList));
       document.getElementById('rarity-filter').addEventListener('change', () => applyFiltersAndRender(eventsList));
       document.getElementById('sort-filter').addEventListener('change', () => applyFiltersAndRender(eventsList));
 
-      // Infinite scroll
       window.addEventListener('scroll', () => {
         if (isLoading) return;
         const eventsList = document.getElementById('events-list');
