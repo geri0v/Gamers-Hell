@@ -1,8 +1,7 @@
-// == Gamers-Hell: data.js ==
-
 window.DATA_URLS = [
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/temples.json',
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/untimedcore.json'
+  // Add more JSON URLs here as needed
 ];
 
 window.loadAllEvents = async function() {
@@ -39,7 +38,7 @@ window.loadAllEvents = async function() {
       }
       return events;
     } catch (e) {
-      console.error('Failed to load JSON:', url, e);
+      window.showToast(`Failed to load JSON: ${url}`);
       return [];
     }
   }));
