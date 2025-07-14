@@ -9,7 +9,9 @@ window.loadAllEvents = async function() {
     try {
       const resp = await fetch(url);
       const json = await resp.json();
+      console.log('Loaded JSON:', url, json); // Debug
       let events = [];
+      // Accept multiple formats
       if (Array.isArray(json) && json.length && json[0].events) {
         json.forEach(block => {
           const sourceName = block.sourceName || 'Unknown Source';
