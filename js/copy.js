@@ -2,17 +2,17 @@
 
 import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
 
-// Find the most valuable drop (by price, fallback to rarity)
-function getMostValuableDrop(loot) {
+export function getMostValuableDrop(loot) {
   if (!Array.isArray(loot) || loot.length === 0) return null;
   let maxItem = null;
   for (const item of loot) {
     if (item.price && (!maxItem || item.price > maxItem.price)) maxItem = item;
   }
   if (maxItem) return maxItem;
-  // Fallback: pick the first Exotic or highest rarity
   const rarityOrder = ['Ascended', 'Exotic', 'Rare', 'Masterwork', 'Fine', 'Basic'];
-  return loot.slice().sort((a, b) => rarityOrder.indexOf(a.rarity || 'Basic') - rarityOrder.indexOf(b.rarity || 'Basic'))[0];
+  return loot.slice().sort((a, b) =>
+    rarityOrder.indexOf(a.rarity || 'Basic') - rarityOrder.indexOf(b.rarity || 'Basic')
+  )[0];
 }
 
 export function createCopyBar(event) {
@@ -27,7 +27,6 @@ export function createCopyBar(event) {
     ? `${mostVal.name}${mostVal.price ? ` (${formatPrice(mostVal.price)})` : ''}${mostVal.vendorValue ? ` (Vendor: ${formatPrice(mostVal.vendorValue)})` : ''}${mostVal.accountBound ? ' (Accountbound)' : ''}`
     : 'N/A';
 
-  // Enforce 198 character limit, abbreviate if needed
   let text = `${event.name} | ${event.map} | WP: ${event.code} | Guaranteed drops: ${guaranteedNames} | Chance of: ${chanceString}`;
   if (text.length > 198) {
     text = text.slice(0, 195) + '...';
