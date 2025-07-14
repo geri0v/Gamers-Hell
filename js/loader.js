@@ -1,37 +1,44 @@
 // loader.js
 
-// Utility: Fetch JSON with error handling
+const itemCache = {};
+const priceCache = {};
+const wikiCache = {};
+
 async function fetchJson(url) {
   try {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
-  } catch (error) {
+  } catch {
     return null;
   }
 }
 
-// Fetch item details from GW2 API
 async function fetchItemDetails(itemId) {
-  return await fetchJson(`https://api.guildwars2.com/v2/items/${itemId}`);
+  if (itemCache[itemId]) return itemCache[itemId];
+  const data = await fetchJson(`https://api.guildwars2.com/v2/items/${itemId}`);
+  if (data) itemCache[itemId] = data;
+  return data;
 }
 
-// Fetch price from GW2 API
 async function fetchItemPrice(itemId) {
+  if (priceCache[itemId]) return priceCache[itemId];
   const data = await fetchJson(`https://api.guildwars2.com/v2/commerce/prices/${itemId}`);
-  return data && data.sells ? data.sells.unit_price : null;
+  if (data && data.sells) priceCache[itemId] = data.sells.unit_price;
+  return priceCache[itemId] || null;
 }
 
-// Generate a GW2Wiki link for any name
 function generateWikiLink(name) {
   if (!name) return null;
+  if (wikiCache[name]) return wikiCache[name];
   const baseUrl = 'https://wiki.guildwars2.com/wiki/';
   const encoded = encodeURIComponent(name.replace(/ /g, '_'));
-  return `${baseUrl}${encoded}`;
+  const link = `${baseUrl}${encoded}`;
+  wikiCache[name] = link;
+  return link;
 }
 
-// Format price from copper to gold/silver/copper
-function formatPrice(copper) {
+export function formatPrice(copper) {
   if (copper == null) return 'N/A';
   const gold = Math.floor(copper / 10000);
   const silver = Math.floor((copper % 10000) / 100);
@@ -39,31 +46,53 @@ function formatPrice(copper) {
   return `${gold}g ${silver}s ${copperRemainder}c`;
 }
 
-// Main enrichment function
-export async function enrichData(data) {
+// Main enrichment function with global item info cache
+export async function enrichData(data, onProgress) {
+  // Build a set of all unique item IDs in all loot arrays
+  const uniqueItemIds = new Set();
+  data.forEach(event => {
+    if (Array.isArray(event.loot)) {
+      event.loot.forEach(item => {
+        if (item.id) uniqueItemIds.add(item.id);
+      });
+    }
+  });
+
+  // Fetch all unique item details and prices in advance
+  const itemDetailsPromises = Array.from(uniqueItemIds).map(id => fetchItemDetails(id));
+  const itemDetailsResults = await Promise.all(itemDetailsPromises);
+
+  const pricePromises = Array.from(uniqueItemIds).map(id => fetchItemPrice(id));
+  const priceResults = await Promise.all(pricePromises);
+
+  // Map item details and prices for quick lookup
+  const detailsMap = {};
+  Array.from(uniqueItemIds).forEach((id, i) => {
+    detailsMap[id] = itemDetailsResults[i];
+    if (priceResults[i] != null) detailsMap[id].price = priceResults[i];
+  });
+
+  // Now enrich each event/loot item
   for (const event of data) {
     event.wikiLink = generateWikiLink(event.name);
     event.mapWikiLink = generateWikiLink(event.map);
 
     if (Array.isArray(event.loot)) {
-      for (const item of event.loot) {
-        if (item.id) {
-          const details = await fetchItemDetails(item.id);
-          if (details) {
-            item.icon = details.icon;
-            item.wikiLink = generateWikiLink(details.name);
-            item.accountBound = details.flags ? details.flags.includes('AccountBound') : false;
-            item.chatCode = details.chat_link || null;
-            item.price = await fetchItemPrice(item.id);
-          }
+      event.loot.forEach(item => {
+        if (item.id && detailsMap[item.id]) {
+          const details = detailsMap[item.id];
+          item.icon = details.icon;
+          item.wikiLink = generateWikiLink(details.name);
+          item.accountBound = details.flags ? details.flags.includes('AccountBound') : false;
+          item.chatCode = details.chat_link || null;
+          item.price = details.price || null;
         } else {
           item.wikiLink = generateWikiLink(item.name);
         }
         item.guaranteed = !!item.guaranteed;
-      }
+      });
     }
+    if (onProgress) onProgress(event);
   }
   return data;
 }
-
-export { formatPrice };
