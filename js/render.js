@@ -37,7 +37,6 @@ function renderLoot(loot, eventId) {
   `;
 }
 
-// Renders the event table for a source. Waypoint name (with wiki link) is shown in the Code column.
 function renderEventTable(events, sourceIdx, expIdx) {
   return `
     <table class="event-table">
@@ -96,7 +95,7 @@ export async function renderApp(containerId) {
   container.innerHTML = renderProgressBar(0) + '<div>Loading...</div>';
   let allData = [];
   let loaded = 0;
-  const total = 3; // Update if you change the number of JSONs
+  const total = 3; // Adjust if you change the number of JSON files
 
   await fetchAllData(async (flat, url, err) => {
     loaded++;
