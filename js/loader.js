@@ -7,7 +7,6 @@ async function fetchJson(url) {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
   } catch (error) {
-    console.error(`Failed to fetch ${url}:`, error);
     return null;
   }
 }
@@ -17,11 +16,10 @@ async function fetchItemDetails(itemId) {
   return await fetchJson(`https://api.guildwars2.com/v2/items/${itemId}`);
 }
 
-// Fetch event details from GW2 API (by name, not direct lookup)
-async function fetchEventDetails(eventName) {
-  // The GW2 API does not provide direct name lookup for events
-  // You may need to cache event IDs or use a mapping
-  return null; // Placeholder for event enrichment logic
+// Fetch price from GW2 API
+async function fetchItemPrice(itemId) {
+  const data = await fetchJson(`https://api.guildwars2.com/v2/commerce/prices/${itemId}`);
+  return data && data.sells ? data.sells.unit_price : null;
 }
 
 // Generate a GW2Wiki link for any name
@@ -44,14 +42,9 @@ function formatPrice(copper) {
 // Main enrichment function
 export async function enrichData(data) {
   for (const event of data) {
-    // Event wiki links
     event.wikiLink = generateWikiLink(event.name);
     event.mapWikiLink = generateWikiLink(event.map);
 
-    // Event API details (if available)
-    // Optionally implement fetchEventDetails(event.name) for eventId/eventApi
-
-    // Enrich loot
     if (Array.isArray(event.loot)) {
       for (const item of event.loot) {
         if (item.id) {
@@ -59,17 +52,18 @@ export async function enrichData(data) {
           if (details) {
             item.icon = details.icon;
             item.wikiLink = generateWikiLink(details.name);
-            // Price: fetch from GW2 API commerce endpoint
-            // e.g., https://api.guildwars2.com/v2/commerce/prices/[item_id]
-            // For brevity, fetch and format price here if needed
             item.accountBound = details.flags ? details.flags.includes('AccountBound') : false;
-            item.guaranteed = item.guaranteed || false;
             item.chatCode = details.chat_link || null;
+            item.price = await fetchItemPrice(item.id);
           }
+        } else {
+          item.wikiLink = generateWikiLink(item.name);
         }
-        // Fallbacks (wiki, BLTC, GW2Spidy, GuildJen, CSV) can be added here if API fails
+        item.guaranteed = !!item.guaranteed;
       }
     }
   }
   return data;
 }
+
+export { formatPrice };
