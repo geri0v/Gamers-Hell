@@ -1,7 +1,10 @@
+// == Gamers-Hell: data.js ==
+
 window.DATA_URLS = [
-  // Only raw.githubusercontent.com links!
+  // Use only raw.githubusercontent.com links!
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/temples.json',
   'https://raw.githubusercontent.com/geri0v/Gamers-Hell/refs/heads/main/json/core/untimedcore.json'
+  // Add more JSON URLs here as needed
 ];
 
 window.loadAllEvents = async function() {
@@ -11,7 +14,8 @@ window.loadAllEvents = async function() {
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const json = await resp.json();
       let events = [];
-      if (Array.isArray(json) && json[0]?.events) {
+      // Accept multiple formats
+      if (Array.isArray(json) && json.length && json[0].events) {
         json.forEach(block => {
           const sourceName = block.sourceName || 'Unknown Source';
           (block.events || []).forEach(ev => {
@@ -19,7 +23,7 @@ window.loadAllEvents = async function() {
             events.push(ev);
           });
         });
-      } else if (Array.isArray(json) && json[0]?.name && json[0]?.loot) {
+      } else if (Array.isArray(json) && json.length && json[0].name && json[0].loot) {
         events = json;
       } else if (Array.isArray(json.events)) {
         const sourceName = json.sourceName || 'Unknown Source';
