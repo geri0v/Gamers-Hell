@@ -8,21 +8,20 @@ function createCard(className, content) {
   return div;
 }
 
-// Helper to render loot/items as subcards if present
 function renderLoot(loot) {
   if (!Array.isArray(loot) || loot.length === 0) return '';
   return `
     <div class="subcards">
       ${loot.map(l => `
-        <div class="subcard">
+        <div class="subcard${l.guaranteed ? ' guaranteed' : ''}">
           ${l.icon ? `<img src="${l.icon}" alt="" style="height:1.2em;vertical-align:middle;margin-right:0.3em;">` : ''}
           ${l.wikiLink ? `<a href="${l.wikiLink}" target="_blank">${l.name}</a>` : l.name}
-          ${l.price !== undefined ? `<div><strong>Price:</strong> ${formatPrice(l.price)}</div>` : ''}
+          ${l.price !== undefined && l.price !== null ? `<div><strong>Price:</strong> ${formatPrice(l.price)}</div>` : ''}
           ${l.chatCode ? `<div><strong>Chatcode:</strong> ${l.chatCode}</div>` : ''}
           ${l.accountBound !== undefined ? `<div><strong>Accountbound:</strong> ${l.accountBound ? 'Yes' : 'No'}</div>` : ''}
-          ${l.guaranteed ? `<div style="color:green;"><strong>Guaranteed</strong></div>` : ''}
+          ${l.guaranteed ? `<div class="guaranteed-badge">Guaranteed</div>` : ''}
           ${Object.entries(l)
-            .filter(([k]) => !['name', 'icon', 'wikiLink', 'price', 'chatCode', 'accountBound', 'guaranteed'].includes(k))
+            .filter(([k]) => !['name','icon','wikiLink','price','chatCode','accountBound','guaranteed'].includes(k))
             .map(([k, v]) => `<div><strong>${k}:</strong> ${v}</div>`).join('')}
         </div>
       `).join('')}
@@ -30,13 +29,47 @@ function renderLoot(loot) {
   `;
 }
 
+// Find the most valuable drop (by price, fallback to rarity)
+function getMostValuableDrop(loot) {
+  if (!Array.isArray(loot) || loot.length === 0) return null;
+  let maxItem = null;
+  for (const item of loot) {
+    if (item.price && (!maxItem || item.price > maxItem.price)) maxItem = item;
+  }
+  if (maxItem) return maxItem;
+  // Fallback: pick the first Exotic or highest rarity
+  const rarityOrder = ['Ascended', 'Exotic', 'Rare', 'Masterwork', 'Fine', 'Basic'];
+  return loot.slice().sort((a, b) => rarityOrder.indexOf(a.rarity || 'Basic') - rarityOrder.indexOf(b.rarity || 'Basic'))[0];
+}
+
+// Copy-paste bar logic
+function createCopyBar(event) {
+  const guaranteedDrops = (event.loot || []).filter(l => l.guaranteed).map(l => l.name).join(', ') || 'None';
+  const mostVal = getMostValuableDrop(event.loot);
+  const valDrop = mostVal ? mostVal.name : 'N/A';
+  const text = `name: ${event.name} | map: ${event.map} | Waypoint: ${event.code} | Guaranteed drops: ${guaranteedDrops} | Most value Drop: ${valDrop}`;
+  return `
+    <div class="copy-bar">
+      <input type="text" class="copy-input" value="${text.replace(/"/g, '&quot;')}" readonly>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.value)">Copy</button>
+    </div>
+  `;
+}
+
 export async function renderApp(containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = '<div>Loading...</div>';
-  try {
-    const rawData = await fetchAllData();
-    const enrichedData = await enrichData(rawData);
-    const grouped = groupAndSort(enrichedData);
+  let allData = [];
+  await fetchAllData(async (flat, url, err) => {
+    if (err) {
+      container.innerHTML += `<div class="error">Failed to load ${url}: ${err}</div>`;
+      return;
+    }
+    if (flat.length === 0) return;
+    // Enrich and render this chunk
+    const enriched = await enrichData(flat);
+    allData = allData.concat(enriched);
+    const grouped = groupAndSort(allData);
 
     container.innerHTML = '';
     grouped.forEach(exp => {
@@ -53,16 +86,15 @@ export async function renderApp(containerId) {
             })
             .join('');
           const lootSection = renderLoot(item.loot);
-          const itemDiv = createCard('item-card', `<div>${details}${lootSection}</div>`);
+          const copyBar = createCopyBar(item);
+          const itemDiv = createCard('item-card', `<div>${details}${lootSection}${copyBar}</div>`);
           srcDiv.appendChild(itemDiv);
         });
         expDiv.appendChild(srcDiv);
       });
       container.appendChild(expDiv);
     });
-  } catch (e) {
-    container.innerHTML = `<div class="error">Failed to load data: ${e}</div>`;
-  }
+  });
 }
 
 renderApp('app');
