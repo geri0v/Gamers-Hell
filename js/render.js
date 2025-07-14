@@ -5,6 +5,7 @@ import { enrichData, formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js
 import { createCopyBar } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
 import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
 import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
+import { paginate } from 'https://geri0v.github.io/Gamers-Hell/js/pagination.js';
 
 let allData = [];
 let currentPage = 1;
@@ -118,10 +119,6 @@ function updateExpansionOptions(events) {
   const select = document.getElementById('expansion-filter');
   select.innerHTML = `<option value="">All Expansions</option>` +
     exps.map(exp => `<option value="${exp}">${exp}</option>`).join('');
-}
-
-function paginate(array, pageSize, pageNumber) {
-  return array.slice(0, pageSize * pageNumber);
 }
 
 function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = false) {
