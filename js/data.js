@@ -1,35 +1,42 @@
 // data.js
-export async function fetchAllData() {
-  const urls = [
-    'https://geri0v.github.io/Gamers-Hell/json/core/temples.json',
-    'https://geri0v.github.io/Gamers-Hell/json/core/untimedcore.json'
-  ];
 
-  // Fetch both JSONs in parallel
-  const results = await Promise.all(urls.map(url => fetch(url).then(res => res.json())));
+// List all your JSON URLs here, or generate this array dynamically if needed.
+const JSON_URLS = [
+  'https://geri0v.github.io/Gamers-Hell/json/core/temples.json',
+  'https://geri0v.github.io/Gamers-Hell/json/core/untimedcore.json',
+  // Add more URLs as needed
+];
 
-  // Flatten the nested structure: expansion -> sources[] -> events[]
-  function flatten(dataArr) {
-    const flat = [];
-    dataArr.forEach(expansionObj => {
-      const expansion = expansionObj.expansion || 'Unknown Expansion';
-      (expansionObj.sources || []).forEach(sourceObj => {
-        const sourcename = sourceObj.sourceName || 'Unknown Source';
-        (sourceObj.events || []).forEach(eventObj => {
-          // Each event becomes a flat item with expansion and sourcename
-          flat.push({
-            expansion,
-            sourcename,
-            ...eventObj
-          });
+// Helper to flatten the nested structure
+function flatten(dataArr) {
+  const flat = [];
+  dataArr.forEach(expansionObj => {
+    const expansion = expansionObj.expansion || 'Unknown Expansion';
+    (expansionObj.sources || []).forEach(sourceObj => {
+      const sourcename = sourceObj.sourceName || 'Unknown Source';
+      (sourceObj.events || []).forEach(eventObj => {
+        flat.push({
+          expansion,
+          sourcename,
+          ...eventObj
         });
       });
     });
-    return flat;
-  }
+  });
+  return flat;
+}
 
-  // Combine and flatten all sources
-  return flatten(results[0]).concat(flatten(results[1]));
+export async function fetchAllData() {
+  // Fetch all JSONs in parallel
+  const results = await Promise.all(
+    JSON_URLS.map(url =>
+      fetch(url)
+        .then(res => res.json())
+        .catch(() => []) // If a file fails, skip it
+    )
+  );
+  // Flatten and combine all results
+  return results.flatMap(flatten);
 }
 
 // Group and sort by expansion, then by sourcename
@@ -43,7 +50,6 @@ export function groupAndSort(data) {
     grouped[exp][src].push(item);
   });
 
-  // Sort expansions and sources alphabetically
   return Object.keys(grouped).sort().map(expansion => ({
     expansion,
     sources: Object.keys(grouped[expansion]).sort().map(sourcename => ({
