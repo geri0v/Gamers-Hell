@@ -37,6 +37,7 @@ function renderLoot(loot, eventId) {
   `;
 }
 
+// Renders the event table for a source. Waypoint name (with wiki link) is shown in the Code column.
 function renderEventTable(events, sourceIdx, expIdx) {
   return `
     <table class="event-table">
@@ -58,7 +59,12 @@ function renderEventTable(events, sourceIdx, expIdx) {
               <td>
                 ${item.mapWikiLink ? `<a href="${item.mapWikiLink}" target="_blank">${item.map}</a>` : item.map}
               </td>
-              <td>${item.code || ''}</td>
+              <td>
+                ${item.waypointName && item.waypointWikiLink
+                  ? `<a href="${item.waypointWikiLink}" target="_blank">${item.waypointName}</a> `
+                  : ''}
+                ${item.code || ''}
+              </td>
             </tr>
             <tr>
               <td colspan="3">
