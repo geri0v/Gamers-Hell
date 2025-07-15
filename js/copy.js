@@ -41,7 +41,7 @@ export function createCopyBar(event) {
   if (text.length > 198) {
     text = text.slice(0, 195) + '...';
   }
-
+  
   return `
     <div class="copy-bar" role="group" aria-label="Copy event summary">
       <input type="text" class="copy-input" value="${text.replace(/"/g, '&quot;')}" readonly aria-readonly="true" />
