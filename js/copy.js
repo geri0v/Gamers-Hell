@@ -1,5 +1,3 @@
-// https://geri0v.github.io/Gamers-Hell/js/copy.js
-
 import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
 
 export function getMostValuableDrop(loot) {
@@ -14,6 +12,19 @@ export function getMostValuableDrop(loot) {
     rarityOrder.indexOf(a.rarity || 'Basic') - rarityOrder.indexOf(b.rarity || 'Basic')
   )[0];
 }
+
+// The nudge function must be globally accessible
+window.copyWithNudge = function(button) {
+  navigator.clipboard.writeText(button.previousElementSibling.value).then(() => {
+    const original = button.textContent;
+    button.textContent = 'Copied!';
+    button.setAttribute('aria-live', 'polite');
+    setTimeout(() => {
+      button.textContent = original;
+      button.removeAttribute('aria-live');
+    }, 1000);
+  });
+};
 
 export function createCopyBar(event) {
   const guaranteed = (event.loot || []).filter(l => l.guaranteed);
@@ -33,9 +44,9 @@ export function createCopyBar(event) {
   }
 
   return `
-    <div class="copy-bar">
-      <input type="text" class="copy-input" value="${text.replace(/"/g, '&quot;')}" readonly>
-      <button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.value)">Copy</button>
+    <div class="copy-bar" role="group" aria-label="Copy event summary">
+      <input type="text" class="copy-input" value="${text.replace(/"/g, '&quot;')}" readonly aria-readonly="true" />
+      <button class="copy-btn" onclick="copyWithNudge(this)" aria-label="Copy event summary">Copy</button>
     </div>
   `;
 }
