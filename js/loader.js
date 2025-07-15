@@ -82,7 +82,7 @@ function generateWikiLink(name) {
   return link;
 }
 
-// Return all unique waypoint chatcodes used in this batch of events (as trimmed strings)
+// Get all unique waypoint chatcodes in this batch of events (as trimmed strings)
 function waypointChatcodesInEvents(eventArr) {
   const codes = new Set();
   for (const event of eventArr) {
@@ -93,22 +93,18 @@ function waypointChatcodesInEvents(eventArr) {
   return Array.from(codes);
 }
 
-// Find waypoints for a list of chatcodes by searching only relevant maps
+// Find waypoints for a list of chatcodes by searching only relevant maps (not entire API)
 async function fetchWaypointsByChatcodes(chatcodes) {
   if (!chatcodes.length) return {};
   const toFind = chatcodes.filter(code => !waypointCache[code]);
   if (!toFind.length) return waypointCache;
 
-  // Find out which map IDs are most likely to contain these chatcodes by brute force, but ONLY search as many as needed.
-  // For performance, try a reasonable chunk (scanning up to N maps or until all needed codes found)
   const mapIds = await fetchJson('https://api.guildwars2.com/v2/maps');
   if (!mapIds) return waypointCache;
 
   let codesLeft = new Set(toFind);
-  const batchSize = 10;
-  // To prevent ultra-slow loading, bail after 100 maps if not found
-  let scanned = 0, maxScans = 100;
-
+  const batchSize = 12;
+  let scanned = 0, maxScans = 90;
   for (let i = 0; i < mapIds.length && codesLeft.size && scanned < maxScans; i += batchSize, scanned += batchSize) {
     const batch = mapIds.slice(i, i + batchSize);
     const maps = await Promise.allSettled(batch.map(id => fetchJson(`https://api.guildwars2.com/v2/maps/${id}`)));
@@ -139,7 +135,7 @@ export function formatPrice(copper) {
 }
 
 export async function enrichData(events, onProgress) {
-  // Items enrichment (unchanged)
+  // Items enrichment
   const uniqueItemIds = new Set();
   events.forEach(event => {
     if (Array.isArray(event.loot)) {
@@ -160,7 +156,7 @@ export async function enrichData(events, onProgress) {
     if (priceResults[i] != null) detailsMap[id].price = priceResults[i];
   });
 
-  // ---- Efficient waypoint enrichment ----
+  // Waypoint enrichment, only for chatcodes present in JSON
   const chatcodes = waypointChatcodesInEvents(events);
   await fetchWaypointsByChatcodes(chatcodes);
 
@@ -168,7 +164,7 @@ export async function enrichData(events, onProgress) {
     event.wikiLink = generateWikiLink(event.name);
     event.mapWikiLink = generateWikiLink(event.map);
 
-    // Only use chatcodes present in JSON batch; never scan more than needed
+    // Assign waypointName and link if found
     if (event.code && waypointCache[event.code]) {
       event.waypointName = waypointCache[event.code].name;
       event.waypointWikiLink = waypointCache[event.code].wiki;
@@ -177,7 +173,6 @@ export async function enrichData(events, onProgress) {
       event.waypointWikiLink = null;
     }
 
-    // Enrich loot if present
     if (Array.isArray(event.loot)) {
       event.loot.forEach(item => {
         if (item.id && detailsMap[item.id]) {
