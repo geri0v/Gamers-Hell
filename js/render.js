@@ -1,8 +1,6 @@
-// https://geri0v.github.io/Gamers-Hell/js/render.js
-
 import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
-import { enrichData, formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
-import { createCopyBar } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
+import { enrichData, formatPrice, startAutoRefreshPrices } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
+import { createCopyBar, createMostValuableBadge, getMostValuableDrop } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
 import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
 import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
 import { paginate } from 'https://geri0v.github.io/Gamers-Hell/js/pagination.js';
@@ -12,20 +10,16 @@ let currentPage = 1;
 const PAGE_SIZE = 20;
 let isLoading = false;
 let columnSort = {};
-let inlineDescriptions = {};
-
-function createCard(className, content) {
-  const div = document.createElement('div');
-  div.className = className;
-  div.innerHTML = content;
-  return div;
-}
+let compactLootLayout = false;
+let autoRefreshEnabled = false;
 
 function renderSearchAndSort() {
   return `
     <div id="main-controls-wrap">
       <div id="side-buttons">
         <button class="side-btn" id="side-help" aria-label="Help" tabindex="0">?</button>
+        <button class="side-btn" id="toggle-compact" aria-label="Toggle loot layout" tabindex="0" title="Toggle between compact and detailed loot card layouts">🗂️</button>
+        <button class="side-btn" id="toggle-autorefresh" aria-label="Toggle auto-refresh prices" tabindex="0" title="Auto-refresh prices">⟳</button>
       </div>
       <div class="search-sort-card">
         <div class="search-bar-row">
@@ -42,6 +36,13 @@ function renderSearchAndSort() {
             <option value="Fine">Fine</option>
             <option value="Basic">Basic</option>
           </select>
+          <input id="lootname-filter" aria-label="Loot name filter" type="text" placeholder="Loot name..." style="width: 10em;" />
+          <input id="loottype-filter" aria-label="Loot type filter" type="text" placeholder="Type..." style="width: 7em;" />
+          <input id="vendormin-filter" aria-label="Minimum vendor value" type="number" min="0" placeholder="Min vendor" style="width: 6em;" />
+          <input id="vendormax-filter" aria-label="Maximum vendor value" type="number" min="0" placeholder="Max vendor" style="width: 6em;" />
+          <input id="chatcode-filter" aria-label="Chat code filter" type="text" placeholder="Chatcode..." style="width:6em;" />
+          <label><input type="checkbox" id="guaranteedonly-filter" /> Guaranteed</label>
+          <label><input type="checkbox" id="chanceonly-filter" /> Chance</label>
         </div>
         <div class="sort-row">
           <select id="sort-filter" aria-label="Sort by">
@@ -73,11 +74,12 @@ function alwaysSortIcons(col, activeCol, dir) {
 function renderLootCards(loot, eventId) {
   if (!Array.isArray(loot) || loot.length === 0) return '';
   const lootId = `loot-${eventId}`;
+  const mostValDrop = getMostValuableDrop(loot);
   return `
     <button class="toggle-btn" data-target="${lootId}" aria-expanded="false">Show</button>
-    <div class="subcards hidden" id="${lootId}">
+    <div class="subcards${compactLootLayout ? ' compact' : ''} hidden" id="${lootId}">
       ${loot.map(l => `
-        <div class="subcard${l.guaranteed ? ' guaranteed' : ''}">
+        <div class="subcard${l.guaranteed ? ' guaranteed' : ''}${l === mostValDrop ? ' most-valuable' : ''}">
           ${l.icon ? `<img src="${l.icon}" alt="" style="height:1.2em;vertical-align:middle;margin-right:0.3em;">` : ''}
           ${l.wikiLink ? `<a href="${l.wikiLink}" target="_blank">${l.name}</a>` : l.name}
           ${l.price !== undefined && l.price !== null ? `<div><strong>Price:</strong> ${formatPrice(l.price)}</div>` : ''}
@@ -85,6 +87,7 @@ function renderLootCards(loot, eventId) {
           ${l.chatCode ? `<div><strong>Chatcode:</strong> ${l.chatCode}</div>` : ''}
           ${l.accountBound !== undefined ? `<div><strong>Accountbound:</strong> ${l.accountBound ? 'Yes' : 'No'}</div>` : ''}
           ${l.guaranteed ? `<div class="guaranteed-badge">Guaranteed</div>` : ''}
+          ${l === mostValDrop ? createMostValuableBadge(l) : ''}
         </div>
       `).join('')}
     </div>
@@ -109,7 +112,6 @@ function renderEventTable(events, sourceIdx, expIdx) {
           const eventId = `event-${expIdx}-${sourceIdx}-${itemIdx}`;
           const anchor = "event-" + (item.name || "").replace(/\W/g, "");
           let codePart = item.code || '';
-          // 💡 Use enriched .waypointName and .waypointWikiLink if available, using 'chatcode' or 'code'
           if (item.waypointName && item.waypointWikiLink)
             codePart = `<a href="${item.waypointWikiLink}" target="_blank">${item.waypointName}</a> ${item.code}`;
           return `
@@ -158,12 +160,26 @@ function renderNoResults() {
   return `<div class="no-results" aria-live="polite">No results found. Try changing your filter, search, or expansion.</div>`;
 }
 
+function getFiltersFromUI() {
+  return {
+    searchTerm: document.getElementById('search-input').value,
+    expansion: document.getElementById('expansion-filter').value,
+    rarity: document.getElementById('rarity-filter').value,
+    lootName: document.getElementById('lootname-filter').value,
+    itemType: document.getElementById('loottype-filter').value,
+    vendorValueMin: document.getElementById('vendormin-filter').value ? Number(document.getElementById('vendormin-filter').value) : undefined,
+    vendorValueMax: document.getElementById('vendormax-filter').value ? Number(document.getElementById('vendormax-filter').value) : undefined,
+    chatcode: document.getElementById('chatcode-filter').value,
+    guaranteedOnly: document.getElementById('guaranteedonly-filter').checked,
+    chanceOnly: document.getElementById('chanceonly-filter').checked,
+    sortKey: document.getElementById('sort-filter').value
+  };
+}
+
 function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = false) {
-  const searchTerm = document.getElementById('search-input').value;
-  const expansion = document.getElementById('expansion-filter').value;
-  const rarity = document.getElementById('rarity-filter').value;
-  const sortKey = document.getElementById('sort-filter').value;
-  let filteredEvents = filterEvents(allEvents, { searchTerm, expansion, rarity, sortKey });
+  const filters = getFiltersFromUI();
+  let filteredEvents = filterEvents(allEvents, filters);
+
   if (columnSort.key && columnSort.dir) {
     filteredEvents = filteredEvents.slice().sort((a, b) => {
       const key = columnSort.key;
@@ -206,7 +222,7 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
   });
   setupToggles();
 
-  // Table header sorting
+  // Table header sorting + keyboard
   container.querySelectorAll('.event-table th[data-sort-key]').forEach(th => {
     th.onclick = () => {
       const key = th.dataset.sortKey;
@@ -219,16 +235,15 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
     th.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') th.click(); };
   });
 
-  // Description show/hide toggle
+  // Expandable descriptions from wiki
   container.querySelectorAll(".inline-desc").forEach(async (div) => {
     const anchor = div.id && div.id.startsWith('desc-event-') ? div.id.replace('desc-', '') : null;
     if (!anchor) return;
     const event = allData.find(e => ("event-" + (e.name || "").replace(/\W/g, "")) === anchor);
     if (!event) return;
     let desc = await (async () => {
-      // Fetch short event/map description from wiki via loader
       try {
-        const ghdvLang = 'en'; // Language selector is not active
+        const ghdvLang = 'en';
         const wikiName = event.waypointName || event.name;
         const domain = ghdvLang === "en" ? "wiki.guildwars2.com" : `${ghdvLang}.wiki.guildwars2.com`;
         const url = `https://${domain}/api.php?action=query&prop=extracts&exsentences=2&format=json&origin=*&titles=${encodeURIComponent(wikiName)}`;
@@ -264,7 +279,13 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
   });
 }
 
-// Main app load and event listeners
+function createCard(className, content) {
+  const div = document.createElement('div');
+  div.className = className;
+  div.innerHTML = content;
+  return div;
+}
+
 export async function renderApp(containerId) {
   const faviconURL = "https://wiki.guildwars2.com/favicon.ico";
   let link = document.createElement("link");
@@ -298,43 +319,36 @@ export async function renderApp(containerId) {
       currentPage = 1;
       applyFiltersAndRender(eventsList, allData, currentPage, false);
 
-      document.getElementById('search-input').addEventListener('input', () => {
-        currentPage = 1;
+      // Filter and search controls with ARIA/live update/keyboard shortcut handling
+      [
+        'search-input', 'expansion-filter', 'rarity-filter', 'lootname-filter',
+        'loottype-filter', 'vendormin-filter', 'vendormax-filter',
+        'chatcode-filter', 'guaranteedonly-filter', 'chanceonly-filter', 'sort-filter'
+      ].forEach(id => {
+        document.getElementById(id).addEventListener('input', () => {
+          currentPage = 1;
+          applyFiltersAndRender(eventsList, allData, currentPage, false);
+        });
+        document.getElementById(id).addEventListener('change', () => {
+          currentPage = 1;
+          applyFiltersAndRender(eventsList, allData, currentPage, false);
+        });
+      });
+
+      document.getElementById('toggle-compact').addEventListener('click', () => {
+        compactLootLayout = !compactLootLayout;
         applyFiltersAndRender(eventsList, allData, currentPage, false);
       });
-      document.getElementById('expansion-filter').addEventListener('change', () => {
-        currentPage = 1;
-        applyFiltersAndRender(eventsList, allData, currentPage, false);
-      });
-      document.getElementById('rarity-filter').addEventListener('change', () => {
-        currentPage = 1;
-        applyFiltersAndRender(eventsList, allData, currentPage, false);
-      });
-      document.getElementById('sort-filter').addEventListener('change', () => {
-        currentPage = 1;
-        columnSort = {};
-        applyFiltersAndRender(eventsList, allData, currentPage, false);
-      });
-      window.addEventListener('scroll', () => {
-        if (isLoading) return;
-        const containerHeight = document.documentElement.scrollHeight;
-        const scrollPosition = window.scrollY + window.innerHeight;
-        const searchTerm = document.getElementById('search-input').value;
-        const expansion = document.getElementById('expansion-filter').value;
-        const rarity = document.getElementById('rarity-filter').value;
-        const sortKey = document.getElementById('sort-filter').value;
-        const filteredEvents = filterEvents(allData, { searchTerm, expansion, rarity, sortKey });
-        if (scrollPosition > containerHeight - 100) {
-          if (filteredEvents.length > PAGE_SIZE * currentPage) {
-            isLoading = true;
-            currentPage++;
-            applyFiltersAndRender(eventsList, allData, currentPage, true);
-            isLoading = false;
-          }
+
+      document.getElementById('toggle-autorefresh').addEventListener('click', () => {
+        autoRefreshEnabled = !autoRefreshEnabled;
+        if (autoRefreshEnabled) {
+          startAutoRefreshPrices(allData, () => applyFiltersAndRender(eventsList, allData, currentPage, false));
+        } else {
+          startAutoRefreshPrices(allData, null); // Clears interval if any
         }
       });
 
-      // Help modal
       document.getElementById('side-help').addEventListener('click', () => {
         if (document.getElementById('modal-help')) return;
         const modal = document.createElement('div');
@@ -347,11 +361,14 @@ export async function renderApp(containerId) {
             <h2 style="margin-top:0;font-size:1.2em">How to Use the Visualizer</h2>
             <ul style="margin:1em 0 1em 1em;">
               <li><strong>Search:</strong> Type a map or event name.</li>
+              <li><strong>Filter:</strong> Search and filter on loot, type, code, vendor, guaranteed/chance.</li>
               <li><strong>Sort:</strong> Click any column header or use dropdown.</li>
               <li><strong>Toggle:</strong> Expand/collapse sections with Tab/Click/Enter.</li>
               <li><strong>Copy:</strong> Select the bar or press copy, get a nudge.</li>
               <li><strong>Deep linking:</strong> Use the 🔗 icon next to each event.</li>
-              <li><strong>Mobile/Tablet:</strong> All features are touch-friendly.</li>
+              <li><strong>Loot layout:</strong> Use 🗂️ for compact/detailed loot style.</li>
+              <li><strong>Prices:</strong> ⟳ auto-refreshes prices every 5 minutes.</li>
+              <li><strong>Accessibility:</strong> All major flows support keyboard + ARIA.</li>
               <li><strong>Close:</strong> Click outside or press <kbd>Esc</kbd>.</li>
             </ul>
           </div>
@@ -363,6 +380,23 @@ export async function renderApp(containerId) {
         window.addEventListener('keydown', function onEscHelp(evt) {
           if (evt.key === 'Escape') { modal.remove(); window.removeEventListener('keydown', onEscHelp);}
         });
+      });
+
+      // Infinite scroll for large result sets
+      window.addEventListener('scroll', () => {
+        if (isLoading) return;
+        const containerHeight = document.documentElement.scrollHeight;
+        const scrollPosition = window.scrollY + window.innerHeight;
+        const filters = getFiltersFromUI();
+        const filteredEvents = filterEvents(allData, filters);
+        if (scrollPosition > containerHeight - 100) {
+          if (filteredEvents.length > PAGE_SIZE * currentPage) {
+            isLoading = true;
+            currentPage++;
+            applyFiltersAndRender(eventsList, allData, currentPage, true);
+            isLoading = false;
+          }
+        }
       });
     }
   });
