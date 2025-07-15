@@ -1,15 +1,17 @@
-// info.js — Unified Data Aggregator for GW2
+// info.js — Unified Data Aggregator for GW2 APIs and CSV sources
 
 const GW2TREASURES_BEARER = "e53da4d7-cb26-4225-b8fb-dfe4a81ad834";
 const EXTRA_CSV_SOURCES = [
-  // Add HTTPS price CSVs if available
+  // Example: 'https://yourdomain.com/gw2-prices.csv'
 ];
 
+// Simple in-memory caches
 const itemCache = new Map();
 const priceCache = new Map();
 const waypointCache = new Map();
 const wikiDescCache = new Map();
 
+// Utility: Fetch JSON
 async function safeFetchJson(url, options = {}) {
   try {
     const res = await fetch(url, options);
@@ -20,6 +22,7 @@ async function safeFetchJson(url, options = {}) {
   }
 }
 
+// Utility: Fetch plain text
 async function safeFetchText(url) {
   try {
     const res = await fetch(url);
@@ -30,7 +33,7 @@ async function safeFetchText(url) {
   }
 }
 
-// GW2 API
+// GW2 API — Bulk item details
 export async function fetchGW2ItemsBulk(ids) {
   if (!ids.length) return [];
   const chunkSize = 200, results = [];
@@ -42,6 +45,7 @@ export async function fetchGW2ItemsBulk(ids) {
   return results;
 }
 
+// GW2 API — Bulk price details
 export async function fetchGW2PricesBulk(ids) {
   if (!ids.length) return [];
   const chunkSize = 200, results = [];
@@ -53,7 +57,7 @@ export async function fetchGW2PricesBulk(ids) {
   return results;
 }
 
-// Wiki API: short descriptions
+// GW2 Wiki — Plaintext description for items/events/etc.
 export async function fetchWikiDescription(name) {
   if (!name) return "";
   if (wikiDescCache.has(name)) return wikiDescCache.get(name);
@@ -69,7 +73,7 @@ export async function fetchWikiDescription(name) {
   return desc;
 }
 
-// GW2Treasures API
+// GW2Treasures API — Bulk item details
 export async function fetchGW2TreasuresBulkItems(ids) {
   if (!ids.length) return [];
   try {
@@ -88,6 +92,7 @@ export async function fetchGW2TreasuresBulkItems(ids) {
   }
 }
 
+// GW2Treasures API — Bulk TP prices
 export async function fetchGW2TreasuresBulkPrices(ids) {
   if (!ids.length) return [];
   try {
@@ -106,6 +111,7 @@ export async function fetchGW2TreasuresBulkPrices(ids) {
   }
 }
 
+// GW2Treasures API — Bulk container (e.g. chest) contents
 export async function fetchGW2TreasuresContainerContents(ids) {
   if (!ids.length) return [];
   try {
@@ -124,7 +130,7 @@ export async function fetchGW2TreasuresContainerContents(ids) {
   }
 }
 
-// CSV fallback for prices
+// CSV Fallback (for TP prices)
 export async function fetchCSVPrices() {
   let combined = {};
   for (const url of EXTRA_CSV_SOURCES) {
@@ -143,7 +149,7 @@ export async function fetchCSVPrices() {
   return combined;
 }
 
-// Waypoint code resolution via GW2 API
+// Waypoint code → human name + wiki link (using official API only)
 export async function resolveWaypoints(chatcodes) {
   const uncached = chatcodes.filter(c => !waypointCache.has(c));
   if (!uncached.length) return Object.fromEntries(waypointCache);
@@ -170,7 +176,8 @@ export async function resolveWaypoints(chatcodes) {
   return Object.fromEntries(waypointCache);
 }
 
-// Core aggregator: Official API → Wiki → GW2Treasures → CSV
+// Core enrichment: Official API → Wiki → GW2Treasures → CSV fallback (for prices)
+// Output: array of item objects with price field filled in
 export async function enrichItemsAndPrices(itemIds) {
   let items = await fetchGW2ItemsBulk(itemIds);
   let prices = await fetchGW2PricesBulk(itemIds);
@@ -191,8 +198,18 @@ export async function enrichItemsAndPrices(itemIds) {
   }));
 }
 
+// Container/bundle enrichment
 export async function enrichContainerContents(containerIds) {
   let contents = await fetchGW2TreasuresContainerContents(containerIds);
   if (!contents) contents = [];
   return contents;
+}
+
+// Currency formatting utility (for use in render/UI)
+export function formatPrice(copper) {
+  if (copper == null) return 'N/A';
+  const gold = Math.floor(copper / 10000);
+  const silver = Math.floor((copper % 10000) / 100);
+  const copperRemainder = copper % 100;
+  return `${gold}g ${silver}s ${copperRemainder}c`;
 }
