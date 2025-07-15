@@ -6,8 +6,7 @@ let waypointCache = {};
 
 // Extra price sources
 const EXTRA_PRICE_CSVS = [
-  'http://api.gw2tp.com/1/bulk/items.csv',
-  'http://www.gw2spidy.com/api/v0.9/csv/all-items/*all*'
+  'http://api.gw2tp.com/1/bulk/items.csv'
 ];
 
 async function fetchJson(url) {
