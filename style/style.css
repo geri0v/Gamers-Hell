@@ -209,8 +209,7 @@ body {
 .copy-btn:focus,
 .toggle-btn:focus,
 #side-help:focus,
-#toggle-compact:focus,
-#toggle-autorefresh:focus {
+#toggle-compact:focus {
   outline: 2px solid #1976d2;
   outline-offset: 2px;
   box-shadow: 0 0 6px #1976d2aa;
