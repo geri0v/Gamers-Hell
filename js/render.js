@@ -1,11 +1,9 @@
+// render.js — for new info.js + infoload.js enrichment architecture
+
 import { loadAndEnrichData } from 'https://geri0v.github.io/Gamers-Hell/js/infoload.js';
 import { groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
 import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/info.js';
-import {
-  createCopyBar,
-  createMostValuableBadge,
-  getMostValuableDrop
-} from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
+import { createCopyBar, createMostValuableBadge, getMostValuableDrop } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
 import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
 import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
 import { paginate } from 'https://geri0v.github.io/Gamers-Hell/js/pagination.js';
@@ -17,7 +15,6 @@ let isLoading = false;
 let columnSort = {};
 let compactLootLayout = false;
 
-// ------- UI Component Generators ------- //
 function renderSearchAndSort() {
   return `
     <div id="main-controls-wrap">
@@ -135,8 +132,8 @@ function renderEventTable(events, sourceIdx, expIdx) {
   `;
 }
 
-function applyFiltersAndRender(container, events, page = 1, append = false) {
-  const filters = {
+function getFiltersFromUI() {
+  return {
     searchTerm: document.getElementById('search-input').value,
     expansion: document.getElementById('expansion-filter').value,
     rarity: document.getElementById('rarity-filter').value,
@@ -149,6 +146,10 @@ function applyFiltersAndRender(container, events, page = 1, append = false) {
     chanceOnly: document.getElementById('chanceonly-filter').checked,
     sortKey: document.getElementById('sort-filter').value
   };
+}
+
+function applyFiltersAndRender(container, events, page = 1, append = false) {
+  const filters = getFiltersFromUI();
 
   let filtered = filterEvents(events, filters);
   if (columnSort.key && columnSort.dir) {
@@ -188,7 +189,6 @@ function applyFiltersAndRender(container, events, page = 1, append = false) {
   });
 
   setupToggles();
-  // Column Header Sorting
   container.querySelectorAll('th[data-sort-key]').forEach(th => {
     th.onclick = () => {
       const key = th.dataset.sortKey;
@@ -201,7 +201,6 @@ function applyFiltersAndRender(container, events, page = 1, append = false) {
   });
 }
 
-// ------- App Entrypoint ------- //
 export async function renderApp(containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = renderProgressBar(10) + '<div>Loading events...</div>';
@@ -215,7 +214,6 @@ export async function renderApp(containerId) {
   const evtList = document.getElementById('events-list');
   applyFiltersAndRender(evtList, allData);
 
-  // Set up filter listeners
   [
     'search-input', 'expansion-filter', 'rarity-filter',
     'lootname-filter', 'loottype-filter', 'vendormin-filter',
@@ -250,7 +248,6 @@ export async function renderApp(containerId) {
     document.body.appendChild(modal);
   });
 
-  // Infinite Scroll
   window.addEventListener('scroll', () => {
     if (isLoading) return;
     const bottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 100;
@@ -262,3 +259,6 @@ export async function renderApp(containerId) {
     }
   });
 }
+
+// To auto-run on page load (can also use as module)
+renderApp('app');
