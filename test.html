@@ -2,10 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Gamers-Hell GW2 Visualizer (Base App)</title>
+  <title>Gamers-Hell Data Visualizer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="https://wiki.guildwars2.com/favicon.ico">
+  <meta name="description" content="Guild Wars 2 interactive loot and event visualizer with search, sorting, waypoints, and live enrichment.">
+  <meta name="theme-color" content="#2196F3">
+  <link rel="icon" href="https://wiki.guildwars2.com/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css">
+  <link rel="modulepreload" href="https://geri0v.github.io/Gamers-Hell/js/render.js">
 </head>
 <body>
   <div class="topbar">
@@ -17,6 +20,11 @@
   </div>
   <div id="app"></div>
   <div class="footer">Guild Wars 2 event/loot visualizer • Gamers-Hell community project</div>
+  <noscript>
+    <div style="text-align:center; padding: 2em; font-weight: bold;">
+      ⚠️ JavaScript is required to use the Gamers-Hell Data Visualizer. Please enable JavaScript in your browser.
+    </div>
+  </noscript>
   <script type="module" src="https://geri0v.github.io/Gamers-Hell/js/render.js"></script>
 </body>
 </html>
