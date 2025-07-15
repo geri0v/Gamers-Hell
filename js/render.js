@@ -6,7 +6,7 @@ import { createCopyBar } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
 import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
 import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
 import { paginate } from 'https://geri0v.github.io/Gamers-Hell/js/pagination.js';
-import { getCurrentLang, listLangOptionsHTML, setCurrentLang } from 'https://geri0v.github.io/Gamers-Hell/js/lang.js';
+import { getCurrentLang, langMenuHTML, setCurrentLang } from 'https://geri0v.github.io/Gamers-Hell/js/lang.js'
 
 let allData = [];
 let currentPage = 1;
