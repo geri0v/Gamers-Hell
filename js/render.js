@@ -1,6 +1,6 @@
 import { fetchAllData } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
 import { enrichData } from 'https://geri0v.github.io/Gamers-Hell/js/dataEnrich.js';
-import { getCurrentLang, setCurrentLang } from 'https://geri0v.github.io/Gamers-Hell/js/lang.js';
+import { getCurrentLang } from 'https://geri0v.github.io/Gamers-Hell/js/lang.js';
 import { renderSearchBar } from 'https://geri0v.github.io/Gamers-Hell/js/searchBar.js';
 import { renderEventTables } from 'https://geri0v.github.io/Gamers-Hell/js/eventTable.js';
 import { bindHandlers } from 'https://geri0v.github.io/Gamers-Hell/js/handlers.js';
