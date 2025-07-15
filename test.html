@@ -4,13 +4,40 @@
   <meta charset="UTF-8">
   <title>Gamers-Hell Data Visualizer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Optional: Add a favicon if you have one -->
+
+  <!-- Description for SEO and tooltips -->
+  <meta name="description" content="Guild Wars 2 interactive loot and event visualizer with search, sorting, waypoints, and live enrichment.">
+
+  <!-- Bookmark / URL thumbnail support -->
+  <meta property="og:title" content="Gamers-Hell GW2 Data Visualizer">
+  <meta property="og:description" content="Interactive event and loot viewer for Guild Wars 2 with dynamic waypoint and wiki data.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://geri0v.github.io/Gamers-Hell/">
+
+  <!-- Theme color for mobile browsers -->
+  <meta name="theme-color" content="#2196F3">
+
+  <!-- Favicon – use your own OR fall back to official GW2 wiki icon -->
   <link rel="icon" href="https://geri0v.github.io/Gamers-Hell/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="https://wiki.guildwars2.com/favicon.ico" type="image/x-icon">
+
+  <!-- CSS styles -->
   <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css">
+
+  <!-- Optional: Preload render.js since it's the entry point -->
+  <link rel="modulepreload" href="https://geri0v.github.io/Gamers-Hell/js/render.js">
 </head>
 <body>
-  <div id="app">Loading...</div>
-  <!-- Main entry point: loads your app as an ES module -->
+  <div id="app">Loading the visualizer...</div>
+
+  <!-- Noscript fallback -->
+  <noscript>
+    <div style="text-align: center; padding: 2em; font-weight: bold;">
+      ⚠️ JavaScript is required to use the Gamers-Hell Data Visualizer. Please enable JavaScript in your browser.
+    </div>
+  </noscript>
+
+  <!-- Main entry point: starts the app -->
   <script type="module" src="https://geri0v.github.io/Gamers-Hell/js/render.js"></script>
 </body>
 </html>
