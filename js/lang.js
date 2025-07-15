@@ -1,4 +1,4 @@
-// https://geri0v.github.io/Gamers-Hell/js/lang.js
+// lang.js
 
 export const SUPPORTED_LANGS = ["en", "de", "fr", "es", "zh"];
 
@@ -20,15 +20,12 @@ export function setCurrentLang(lang) {
   window.location.reload();
 }
 
-// ✅ Correct export: langMenuHTML
-export function langMenuHTML(current) {
+// 👇 Here is your requested function!
+export function listLangOptionsHTML(current) {
+  // Returns HTML for language buttons, highlighting current
   return SUPPORTED_LANGS.map(lang => {
     const flag = {
-      en: "🇬🇧",
-      de: "🇩🇪",
-      fr: "🇫🇷",
-      es: "🇪🇸",
-      zh: "🇨🇳"
+      en: "🇬🇧", de: "🇩🇪", fr: "🇫🇷", es: "🇪🇸", zh: "🇨🇳"
     }[lang] || "🌐";
     return `<button class="side-btn" data-lang="${lang}" aria-label="${lang.toUpperCase()} Language"${lang === current ? ' style="font-weight:bold;"' : ''}>${flag}</button>`;
   }).join("");
