@@ -1,30 +1,28 @@
-// https://geri0v.github.io/Gamers-Hell/js/search.js
+import { filterEventsExtended } from './data.js';
 
-export function filterEvents(events, { searchTerm, expansion, rarity, sortKey }) {
+// Simple fuzzy search helper (typo-tolerance)
+function fuzzyMatch(str, pattern) {
+  str = str.toLowerCase();
+  pattern = pattern.toLowerCase();
+  let patternIdx = 0;
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === pattern[patternIdx]) {
+      patternIdx++;
+      if (patternIdx === pattern.length) return true;
+    }
+  }
+  return false;
+}
+
+export function filterEvents(events, filters) {
+  const { searchTerm, expansion, rarity, lootName, itemType, vendorValueMin, vendorValueMax, chatcode, guaranteedOnly, chanceOnly, sortKey } = filters;
   let filtered = events;
   if (searchTerm) {
-    const term = searchTerm.toLowerCase();
     filtered = filtered.filter(e =>
-      (e.name && e.name.toLowerCase().includes(term)) ||
-      (e.map && e.map.toLowerCase().includes(term))
+      fuzzyMatch(e.name || '', searchTerm) ||
+      fuzzyMatch(e.map || '', searchTerm)
     );
   }
-  if (expansion) {
-    filtered = filtered.filter(e => e.expansion === expansion);
-  }
-  if (rarity) {
-    filtered = filtered.filter(e =>
-      (e.loot || []).some(l => l.rarity === rarity)
-    );
-  }
-  if (sortKey) {
-    filtered = filtered.slice().sort((a, b) => {
-      const aVal = (a[sortKey] || '').toLowerCase();
-      const bVal = (b[sortKey] || '').toLowerCase();
-      if (aVal < bVal) return -1;
-      if (aVal > bVal) return 1;
-      return 0;
-    });
-  }
+  filtered = filterEventsExtended(filtered, { expansion, rarity, lootName, itemType, vendorValueMin, vendorValueMax, chatcode, guaranteedOnly, chanceOnly, sortKey });
   return filtered;
 }
