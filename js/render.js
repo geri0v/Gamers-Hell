@@ -44,28 +44,29 @@ function renderLoot(loot, eventId) {
   `;
 }
 
-function renderEventTable(events, sourceIdx, expIdx) {
+function renderEventTable(events, sourceIdx, expIdx, sorting = {}) {
+  // Table accessibility props
   return `
-    <table class="event-table">
+    <table class="event-table" role="table" aria-label="Event Table">
       <thead>
-        <tr>
-          <th>Name</th>
-          <th>Map</th>
-          <th>Code</th>
+        <tr role="row">
+          <th role="columnheader" scope="col" aria-sort="${sorting.key==='name'?sorting.dir:'none'}" tabindex="0" data-sort-key="name">Name</th>
+          <th role="columnheader" scope="col" aria-sort="${sorting.key==='map'?sorting.dir:'none'}" tabindex="0" data-sort-key="map">Map</th>
+          <th role="columnheader" scope="col" aria-sort="${sorting.key==='code'?sorting.dir:'none'}" tabindex="0" data-sort-key="code">Code</th>
         </tr>
       </thead>
       <tbody>
         ${events.map((item, itemIdx) => {
           const eventId = `event-${expIdx}-${sourceIdx}-${itemIdx}`;
           return `
-            <tr>
-              <td>
+            <tr role="row">
+              <td role="cell">
                 ${item.wikiLink ? `<a href="${item.wikiLink}" target="_blank">${item.name}</a>` : item.name}
               </td>
-              <td>
+              <td role="cell">
                 ${item.mapWikiLink ? `<a href="${item.mapWikiLink}" target="_blank">${item.map}</a>` : item.map}
               </td>
-              <td>
+              <td role="cell">
                 ${item.waypointName && item.waypointWikiLink
                   ? `<a href="${item.waypointWikiLink}" target="_blank">${item.waypointName}</a> `
                   : ''}
@@ -90,26 +91,31 @@ function renderEventTable(events, sourceIdx, expIdx) {
 }
 
 function renderSearchBar() {
+  // Updated to match copy bar and center filters below input
   return `
     <div class="search-bar">
-      <input id="search-input" type="text" placeholder="Search event or map..." />
-      <select id="expansion-filter"><option value="">All Expansions</option></select>
-      <select id="rarity-filter">
-        <option value="">All Rarities</option>
-        <option value="Ascended">Ascended</option>
-        <option value="Exotic">Exotic</option>
-        <option value="Rare">Rare</option>
-        <option value="Masterwork">Masterwork</option>
-        <option value="Fine">Fine</option>
-        <option value="Basic">Basic</option>
-      </select>
-      <select id="sort-filter">
-        <option value="">Sort By</option>
-        <option value="name">Name</option>
-        <option value="expansion">Expansion</option>
-        <option value="map">Map</option>
-        <option value="value">Value</option>
-      </select>
+      <div class="search-row">
+        <input id="search-input" aria-label="Search events or map" type="text" placeholder="Search event or map..." />
+      </div>
+      <div class="filter-row">
+        <select id="expansion-filter" aria-label="Filter by Expansion"><option value="">All Expansions</option></select>
+        <select id="rarity-filter" aria-label="Filter by Rarity">
+          <option value="">All Rarities</option>
+          <option value="Ascended">Ascended</option>
+          <option value="Exotic">Exotic</option>
+          <option value="Rare">Rare</option>
+          <option value="Masterwork">Masterwork</option>
+          <option value="Fine">Fine</option>
+          <option value="Basic">Basic</option>
+        </select>
+        <select id="sort-filter" aria-label="Sort by">
+          <option value="">Sort By</option>
+          <option value="name">Name</option>
+          <option value="expansion">Expansion</option>
+          <option value="map">Map</option>
+          <option value="value">Value</option>
+        </select>
+      </div>
     </div>
   `;
 }
@@ -121,12 +127,21 @@ function updateExpansionOptions(events) {
     exps.map(exp => `<option value="${exp}">${exp}</option>`).join('');
 }
 
-function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = false) {
+function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = false, columnSort = {}) {
   const searchTerm = document.getElementById('search-input').value;
   const expansion = document.getElementById('expansion-filter').value;
   const rarity = document.getElementById('rarity-filter').value;
-  const sortKey = document.getElementById('sort-filter').value;
-  const filteredEvents = filterEvents(allEvents, { searchTerm, expansion, rarity, sortKey });
+  let sortKey = document.getElementById('sort-filter').value;
+  let sortDir = 'asc';
+
+  // If sorting is by click on column header
+  if (columnSort.key) {
+    sortKey = columnSort.key;
+    sortDir = columnSort.dir;
+  }
+
+  let filteredEvents = filterEvents(allEvents, { searchTerm, expansion, rarity, sortKey });
+  if (sortKey && sortDir === 'desc') filteredEvents = filteredEvents.reverse();
   const pagedEvents = paginate(filteredEvents, PAGE_SIZE, pageNumber);
   const grouped = groupAndSort(pagedEvents);
 
@@ -147,7 +162,7 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
         ${createToggleButton('Show/Hide', srcId)}
         <h3>${src.sourcename}</h3>
         <div class="source-content" id="${srcId}">
-          ${renderEventTable(src.items, srcIdx, expIdx)}
+          ${renderEventTable(src.items, srcIdx, expIdx, columnSort)}
         </div>
       `);
       expDiv.querySelector('.expansion-content').appendChild(srcDiv);
@@ -155,11 +170,25 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
     container.appendChild(expDiv);
   });
   setupToggles();
+
+  // Table column sorting on click (keyboard also with tabindex)
+  container.querySelectorAll('.event-table th[data-sort-key]').forEach(th => {
+    th.addEventListener('click', () => {
+      let dir = th.getAttribute('aria-sort') === 'ascending' ? 'desc' : 'asc';
+      currentPage = 1;
+      applyFiltersAndRender(container, allData, currentPage, false, { key: th.dataset.sortKey, dir });
+    });
+    th.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        th.click();
+      }
+    });
+  });
 }
 
 function renderProgressBar(percent) {
   return `
-    <div class="progress-bar-container">
+    <div class="progress-bar-container" aria-label="Loading Progress">
       <div class="progress-bar" style="width:${percent}%;"></div>
     </div>
   `;
