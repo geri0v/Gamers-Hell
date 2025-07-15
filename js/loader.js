@@ -4,9 +4,8 @@ const wikiCache = {};
 let otcPrices = null;
 let waypointCache = {};
 
-// Only include HTTPS-enabled sources (GW2TP is HTTP-only and breaks on most sites, so leave empty for now)
 const EXTRA_PRICE_CSVS = [
-  // Add HTTPS CSV URLs if available, otherwise leave as []
+  // Add only HTTPS CSV URLs if you have them; otherwise leave empty
 ];
 
 async function fetchJson(url) {
@@ -139,11 +138,6 @@ export function formatPrice(copper) {
   const silver = Math.floor((copper % 10000) / 100);
   const copperRemainder = copper % 100;
   return `${gold}g ${silver}s ${copperRemainder}c`;
-}
-
-// Optional: Price auto-refresh remains as in your existing code, but disables if none available
-export function startAutoRefreshPrices(events, onProgress) {
-  // Not needed if OTC is empty and price data only comes from direct API.
 }
 
 export async function enrichData(events, onProgress) {
