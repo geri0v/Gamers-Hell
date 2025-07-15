@@ -13,6 +13,7 @@ export function getMostValuableDrop(loot) {
   )[0];
 }
 
+// The copyWithNudge function attaches 'Copied!' feedback on the copy button
 window.copyWithNudge = function(button) {
   navigator.clipboard.writeText(button.previousElementSibling.value).then(() => {
     const original = button.textContent;
@@ -41,7 +42,7 @@ export function createCopyBar(event) {
   if (text.length > 198) {
     text = text.slice(0, 195) + '...';
   }
-  
+
   return `
     <div class="copy-bar" role="group" aria-label="Copy event summary">
       <input type="text" class="copy-input" value="${text.replace(/"/g, '&quot;')}" readonly aria-readonly="true" />
