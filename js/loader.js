@@ -1,3 +1,5 @@
+// loader.js — Fixed and Fully Compatible with All Features
+
 const itemCache = {};
 const priceCache = {};
 const wikiCache = {};
@@ -5,9 +7,11 @@ let otcPrices = null;
 let waypointCache = {};
 
 const EXTRA_PRICE_CSVS = [
-  // Add only HTTPS CSV URLs if you have them; otherwise leave empty
+  // Add HTTPS CSV URLs if available, otherwise leave empty
+  // e.g. 'https://yourdomain.github.io/items.csv'
 ];
 
+// -- Utility fetch functions --
 async function fetchJson(url) {
   try {
     const response = await fetch(url);
@@ -24,6 +28,7 @@ async function fetchText(url) {
   } catch { return null; }
 }
 
+// -- Item & Price enrichment --
 async function fetchItemDetails(itemId) {
   if (itemCache[itemId]) return itemCache[itemId];
   const data = await fetchJson(`https://api.guildwars2.com/v2/items/${itemId}`);
@@ -80,6 +85,7 @@ async function getItemPrice(itemId) {
   return null;
 }
 
+// -- Wiki/waypoint helpers --
 function generateWikiLink(name) {
   if (!name) return null;
   if (wikiCache[name]) return wikiCache[name];
@@ -132,6 +138,7 @@ async function fetchWaypointsByChatcodes(chatcodes) {
   return waypointCache;
 }
 
+// -- Price formatting --
 export function formatPrice(copper) {
   if (copper == null) return 'N/A';
   const gold = Math.floor(copper / 10000);
@@ -140,6 +147,43 @@ export function formatPrice(copper) {
   return `${gold}g ${silver}s ${copperRemainder}c`;
 }
 
+// -- Price Auto-Refresh for Live Data --
+let autoRefreshInterval = null;
+
+export function startAutoRefreshPrices(events, onProgress) {
+  if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+  autoRefreshInterval = setInterval(async () => {
+    Object.keys(priceCache).forEach(k => delete priceCache[k]);
+    otcPrices = null;
+    // Gather all unique item IDs from events
+    const uniqueItemIds = new Set();
+    events.forEach(event => {
+      if (Array.isArray(event.loot)) {
+        event.loot.forEach(item => {
+          if (item.id) uniqueItemIds.add(item.id);
+        });
+      }
+    });
+    // Fetch and update prices
+    const pricePromises = Array.from(uniqueItemIds).map(id => getItemPrice(id));
+    const priceResults = await Promise.all(pricePromises);
+    Array.from(uniqueItemIds).forEach((id, i) => {
+      const price = priceResults[i];
+      events.forEach(event => {
+        if (Array.isArray(event.loot)) {
+          event.loot.forEach(item => {
+            if (item.id === id) {
+              item.price = price || item.price || null;
+            }
+          });
+        }
+      });
+    });
+    if (onProgress) onProgress(events);
+  }, 300000); // 5 minutes
+}
+
+// -- Data enrichment --
 export async function enrichData(events, onProgress) {
   const uniqueItemIds = new Set();
   events.forEach(event => {
@@ -160,6 +204,7 @@ export async function enrichData(events, onProgress) {
     if (priceResults[i] != null) detailsMap[id].price = priceResults[i];
   });
 
+  // Waypoint enrichment
   const chatcodes = waypointChatcodesInEvents(events);
   await fetchWaypointsByChatcodes(chatcodes);
 
