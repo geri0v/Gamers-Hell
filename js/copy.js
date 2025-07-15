@@ -1,4 +1,4 @@
-import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
+import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/info.js';
 
 export function getMostValuableDrop(loot) {
   if (!Array.isArray(loot) || loot.length === 0) return null;
