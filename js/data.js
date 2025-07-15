@@ -2,8 +2,7 @@ const MANIFEST_URL = 'https://geri0v.github.io/Gamers-Hell/json/manifest.json';
 
 // Include extra CSV-based price/item sources (public)
 const EXTRA_CSV_SOURCES = [
-  'http://api.gw2tp.com/1/bulk/items.csv',
-  'http://www.gw2spidy.com/api/v0.9/csv/all-items/*all*'
+  'http://api.gw2tp.com/1/bulk/items.csv'
 ];
 
 export async function fetchAllData(onProgress, batchSize = 5) {
