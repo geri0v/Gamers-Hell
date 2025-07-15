@@ -1,36 +1,38 @@
-import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/utils.js';
+import { formatPrice } from "https://geri0v.github.io/Gamers-Hell/js/utils.js";
 
 export function getMostValuableDrop(loot = []) {
-  const chanceLoot = loot.filter(l => !l.guaranteed);
-  let maxItem = chanceLoot.reduce((prev, curr) =>
-    (!prev || (curr.price || 0) > (prev.price || 0)) ? curr : prev, null
-  );
-
+  if (!Array.isArray(loot) || loot.length === 0) return null;
+  let maxItem = null;
+  for (const item of loot) {
+    if (item.price && (!maxItem || item.price > maxItem.price)) maxItem = item;
+  }
   if (maxItem) return maxItem;
-
   const rarityOrder = ['Ascended', 'Exotic', 'Rare', 'Masterwork', 'Fine', 'Basic'];
-  return chanceLoot.sort((a, b) =>
+  return loot.slice().sort((a, b) =>
     rarityOrder.indexOf(a.rarity || 'Basic') - rarityOrder.indexOf(b.rarity || 'Basic')
   )[0] || null;
 }
 
 export function createCopyBar(event) {
   const guaranteed = (event.loot || []).filter(l => l.guaranteed);
-  const guaranteedStr = guaranteed.map(l =>
-    `${l.name}${l.price ? ` (${formatPrice(l.price)})` : ''}`
+  const guaranteedNames = guaranteed.map(l =>
+    `${l.name}${l.price ? ` (${formatPrice(l.price)})` : ''}${l.vendorValue ? ` (Vendor: ${formatPrice(l.vendorValue)})` : ''}${l.accountBound ? ' (Accountbound)' : ''}`
   ).join(', ') || 'None';
 
   const mostVal = getMostValuableDrop(event.loot);
-  const chanceStr = mostVal
-    ? `${mostVal.name}${mostVal.price ? ` (${formatPrice(mostVal.price)})` : ''}`
+  const chanceString = mostVal
+    ? `${mostVal.name}${mostVal.price ? ` (${formatPrice(mostVal.price)})` : ''}${mostVal.vendorValue ? ` (Vendor: ${formatPrice(mostVal.vendorValue)})` : ''}${mostVal.accountBound ? ' (Accountbound)' : ''}`
     : 'N/A';
 
-  let txt = `${event.name} | ${event.map} | WP: ${event.code} | Guaranteed drops: ${guaranteedStr} | Chance of: ${chanceStr}`;
-  if (txt.length > 198) txt = txt.slice(0, 195) + '...';
-
+  let text = `${event.name} | ${event.map} | WP: ${event.code} | Guaranteed drops: ${guaranteedNames} | Chance of: ${chanceString}`;
+  if (text.length > 198) {
+    text = text.slice(0, 195) + '...';
+  }
+  // Clipboard
   return `
-    <div class="copy-bar">
-      <input type="text" class="copy-input" value="${txt}" readonly />
-      <button class="copy-btn" onclick="navigator.clipboard.writeText('${txt}').then(btn => { this.innerText = 'Copied!'; setTimeout(() => this.innerText = 'Copy', 1000); })">Copy</button>
-    </div>`;
+    <div class="copy-bar" role="group" aria-label="Copy event summary">
+      <input type="text" class="copy-input" value="${text.replace(/"/g, '&quot;')}" readonly aria-readonly="true" />
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.value).then(()=>{const orig=this.textContent;this.textContent='Copied!';setTimeout(()=>this.textContent=orig,1000);});" aria-label="Copy event summary">Copy</button>
+    </div>
+  `;
 }
