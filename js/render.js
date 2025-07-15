@@ -6,7 +6,6 @@ import { createCopyBar } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
 import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
 import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
 import { paginate } from 'https://geri0v.github.io/Gamers-Hell/js/pagination.js';
-import { getCurrentLang, langMenuHTML, setCurrentLang } from 'https://geri0v.github.io/Gamers-Hell/js/lang.js'
 
 let allData = [];
 let currentPage = 1;
@@ -14,7 +13,6 @@ const PAGE_SIZE = 20;
 let isLoading = false;
 let columnSort = {};
 let inlineDescriptions = {};
-let ghdvLang = getCurrentLang();
 
 function createCard(className, content) {
   const div = document.createElement('div');
@@ -28,7 +26,6 @@ function renderSearchAndSort() {
     <div id="main-controls-wrap">
       <div id="side-buttons">
         <button class="side-btn" id="side-help" aria-label="Help" tabindex="0">?</button>
-        <button class="side-btn" id="side-lang" aria-label="Change language" tabindex="0">🌐</button>
       </div>
       <div class="search-sort-card">
         <div class="search-bar-row">
@@ -67,27 +64,10 @@ function updateExpansionOptions(events) {
     exps.map(exp => `<option value="${exp}">${exp}</option>`).join('');
 }
 
-async function getInlineDescription(event) {
-  if (!event.wikiLink) return "";
-  const key = (event.waypointName || event.name) + "::" + (event.map || "") + "::" + ghdvLang;
-  if (inlineDescriptions[key]) return inlineDescriptions[key];
-  const domain = ghdvLang === "en" ? "wiki.guildwars2.com" : `${ghdvLang}.wiki.guildwars2.com`;
-  const url = `https://${domain}/api.php?action=query&prop=extracts&exsentences=2&format=json&origin=*&titles=${encodeURIComponent(event.waypointName || event.name)}`;
-  try {
-    const res = await fetch(url);
-    if (res.ok) {
-      const data = await res.json();
-      let desc = "";
-      const p = data.query && data.query.pages;
-      for (const k in p) {
-        if (p[k].extract) desc = p[k].extract.replace(/<[^>]+>/g, '').trim();
-      }
-      desc = desc.replace(/\s*\[\d+\]/g, ''); // Remove references
-      inlineDescriptions[key] = desc;
-      return desc;
-    }
-  } catch {}
-  return "";
+function alwaysSortIcons(col, activeCol, dir) {
+  let icon = "▲▼";
+  if (col === activeCol) icon = dir === "asc" ? "▲" : "▼";
+  return `<span class="sort-icons">${icon}</span>`;
 }
 
 function renderLootCards(loot, eventId) {
@@ -111,12 +91,6 @@ function renderLootCards(loot, eventId) {
   `;
 }
 
-function alwaysSortIcons(col, activeCol, dir) {
-  let icon = "▲▼";
-  if (col === activeCol) icon = dir === "asc" ? "▲" : "▼";
-  return `<span class="sort-icons">${icon}</span>`;
-}
-
 function renderEventTable(events, sourceIdx, expIdx) {
   function sortClass(col) {
     return columnSort.key === col ? (columnSort.dir === 'asc' ? 'sorted-asc active' : 'sorted-desc active') : '';
@@ -135,6 +109,7 @@ function renderEventTable(events, sourceIdx, expIdx) {
           const eventId = `event-${expIdx}-${sourceIdx}-${itemIdx}`;
           const anchor = "event-" + (item.name || "").replace(/\W/g, "");
           let codePart = item.code || '';
+          // 💡 Use enriched .waypointName and .waypointWikiLink if available, using 'chatcode' or 'code'
           if (item.waypointName && item.waypointWikiLink)
             codePart = `<a href="${item.waypointWikiLink}" target="_blank">${item.waypointName}</a> ${item.code}`;
           return `
@@ -250,7 +225,27 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
     if (!anchor) return;
     const event = allData.find(e => ("event-" + (e.name || "").replace(/\W/g, "")) === anchor);
     if (!event) return;
-    let desc = await getInlineDescription(event);
+    let desc = await (async () => {
+      // Fetch short event/map description from wiki via loader
+      try {
+        const ghdvLang = 'en'; // Language selector is not active
+        const wikiName = event.waypointName || event.name;
+        const domain = ghdvLang === "en" ? "wiki.guildwars2.com" : `${ghdvLang}.wiki.guildwars2.com`;
+        const url = `https://${domain}/api.php?action=query&prop=extracts&exsentences=2&format=json&origin=*&titles=${encodeURIComponent(wikiName)}`;
+        const res = await fetch(url);
+        if (res.ok) {
+          const data = await res.json();
+          let d = "";
+          const p = data.query && data.query.pages;
+          for (const k in p) {
+            if (p[k].extract) d = p[k].extract.replace(/<[^>]+>/g, '').trim();
+          }
+          d = d.replace(/\s*\[\d+\]/g, '');
+          return d;
+        }
+      } catch {}
+      return "";
+    })();
     const toggleBtn = div.querySelector('.inline-desc-toggle');
     const content = div.querySelector('.desc-content');
     let expanded = false;
@@ -292,7 +287,7 @@ export async function renderApp(containerId) {
       return;
     }
     if (flat.length === 0) return;
-    const enriched = await enrichData(flat, null, ghdvLang);
+    const enriched = await enrichData(flat);
     allData = allData.concat(enriched);
     if (loaded === total) {
       container.innerHTML =
@@ -367,33 +362,6 @@ export async function renderApp(containerId) {
         setTimeout(() => modal.focus(), 100);
         window.addEventListener('keydown', function onEscHelp(evt) {
           if (evt.key === 'Escape') { modal.remove(); window.removeEventListener('keydown', onEscHelp);}
-        });
-      });
-
-      // Language modal
-      document.getElementById('side-lang').addEventListener('click', () => {
-        if (document.getElementById('modal-lang')) return;
-        const modal = document.createElement('div');
-        modal.id = 'modal-lang';
-        Object.assign(modal.style, {
-          position: 'fixed', top:0,left:0,right:0,bottom:0,background: 'rgba(24,32,54,.5)', display:'flex',alignItems:'center',justifyContent:'center',zIndex: 10001,
-        });
-        modal.innerHTML = `
-          <div style="background:#fff;border-radius:10px;padding:1.5em 2em 1.5em 2em;min-width:270px;max-width:350px;text-align:center;box-shadow:0 4px 20px #2343a633;">
-            <div style="margin:0 0 0.7em 0;font-size:1.2em;">🌐 Select Language</div>
-            <div>${listLangOptionsHTML(ghdvLang)}</div>
-            <div style="margin-top:1.6em;font-size:0.98em;color:#555">Reloads site in the chosen language (if supported by the GW2 API/wiki).</div>
-          </div>
-        `;
-        modal.tabIndex = -1;
-        modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
-        modal.querySelectorAll('button[data-lang]').forEach(btn => {
-          btn.onclick = () => { setCurrentLang(btn.dataset.lang); };
-        });
-        document.body.appendChild(modal);
-        setTimeout(() => modal.focus(), 100);
-        window.addEventListener('keydown', function onEscLang(evt) {
-          if (evt.key === 'Escape') { modal.remove(); window.removeEventListener('keydown', onEscLang);}
         });
       });
     }
