@@ -1,3 +1,5 @@
+// https://geri0v.github.io/Gamers-Hell/js/lang.js
+
 export const SUPPORTED_LANGS = ["en", "de", "fr", "es", "zh"];
 
 export function detectBrowserLang() {
@@ -15,14 +17,10 @@ export function setCurrentLang(lang) {
   localStorage.setItem('lang', lang);
   window.location.reload();
 }
-export function langMenuHTML(current) {
+export function listLangOptionsHTML(current) {
   return SUPPORTED_LANGS.map(l =>
     `<button class="side-btn" data-lang="${l}" aria-label="${l.toUpperCase()} Language"${l===current?' style="font-weight:bold;"':''}>
       ${l === "en" ? "🇬🇧" : l === "de" ? "🇩🇪" : l === "fr" ? "🇫🇷" : l === "es" ? "🇪🇸" : "🇨🇳"}
     </button>`
   ).join("");
-}
-export function getWikiLink(name, lang="en") {
-  const sub = lang !== 'en' ? `${lang}.` : '';
-  return `https://${sub}wiki.guildwars2.com/wiki/${encodeURIComponent(name.replace(/ /g, "_"))}`;
 }
