@@ -11,7 +11,7 @@ let data = [];
 const lang = getCurrentLang();
 const APP_CONTAINER_ID = 'app';
 
-document.addEventListener('DOMContentLoaded', async () => {
+window.addEventListener('DOMContentLoaded', async () => {
   const container = document.getElementById(APP_CONTAINER_ID);
   container.innerHTML = '<div class="loader">Loading data...</div>';
 
@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     container.innerHTML = renderSearchBar();
     const list = document.createElement('div');
     list.id = 'events-list';
+    list.className = 'centered-wrap';
     container.appendChild(list);
 
     await renderEventTables(data, list);
@@ -30,6 +31,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupToggles();
     showModals(lang);
   } catch (err) {
-    container.innerHTML = `<p>Error loading data: ${err.message}</p>`;
+    container.innerHTML = `<p>Error loading data: ${err.message || err}</p>`;
   }
 });
