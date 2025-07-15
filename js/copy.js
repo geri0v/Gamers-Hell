@@ -13,7 +13,6 @@ export function getMostValuableDrop(loot) {
   )[0];
 }
 
-// The nudge function must be globally accessible
 window.copyWithNudge = function(button) {
   navigator.clipboard.writeText(button.previousElementSibling.value).then(() => {
     const original = button.textContent;
