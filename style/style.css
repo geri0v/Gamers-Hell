@@ -112,11 +112,23 @@ body {
   z-index: 2;
   user-select: none;
 }
-.event-table th.sorted-asc::after {
-  content: " ▲";
+.event-table th.sorted-asc::after { content: " ▲"; }
+.event-table th.sorted-desc::after { content: " ▼"; }
+.inline-desc {
+  color: #444;
+  font-size: 0.99em;
+  margin: 0.35em 0;
+  line-height: 1.5em;
+  max-height: 3.1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.event-table th.sorted-desc::after {
-  content: " ▼";
+.inline-desc-toggle {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: #1976d2;
+  font-size: 0.91em;
 }
 .subcards {
   display: flex;
