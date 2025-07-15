@@ -4,9 +4,9 @@ const wikiCache = {};
 let otcPrices = null;
 let waypointCache = {};
 
-// Extra price sources
+// Only include HTTPS-enabled sources (GW2TP is HTTP-only and breaks on most sites, so leave empty for now)
 const EXTRA_PRICE_CSVS = [
-  'http://api.gw2tp.com/1/bulk/items.csv'
+  // Add HTTPS CSV URLs if available, otherwise leave as []
 ];
 
 async function fetchJson(url) {
@@ -141,37 +141,9 @@ export function formatPrice(copper) {
   return `${gold}g ${silver}s ${copperRemainder}c`;
 }
 
-// Auto-refresh prices every 5 minutes (enable from UI)
-let autoRefreshInterval = null;
+// Optional: Price auto-refresh remains as in your existing code, but disables if none available
 export function startAutoRefreshPrices(events, onProgress) {
-  if (autoRefreshInterval) clearInterval(autoRefreshInterval);
-  autoRefreshInterval = setInterval(async () => {
-    Object.keys(priceCache).forEach(k => delete priceCache[k]);
-    otcPrices = null;
-    const uniqueItemIds = new Set();
-    events.forEach(event => {
-      if (Array.isArray(event.loot)) {
-        event.loot.forEach(item => {
-          if (item.id) uniqueItemIds.add(item.id);
-        });
-      }
-    });
-    const pricePromises = Array.from(uniqueItemIds).map(id => getItemPrice(id));
-    const priceResults = await Promise.all(pricePromises);
-    Array.from(uniqueItemIds).forEach((id, i) => {
-      const price = priceResults[i];
-      events.forEach(event => {
-        if (Array.isArray(event.loot)) {
-          event.loot.forEach(item => {
-            if (item.id === id) {
-              item.price = price || item.price || null;
-            }
-          });
-        }
-      });
-    });
-    if (onProgress) onProgress(events);
-  }, 300000);
+  // Not needed if OTC is empty and price data only comes from direct API.
 }
 
 export async function enrichData(events, onProgress) {
@@ -194,7 +166,6 @@ export async function enrichData(events, onProgress) {
     if (priceResults[i] != null) detailsMap[id].price = priceResults[i];
   });
 
-  // Waypoint enrichment for the new code column
   const chatcodes = waypointChatcodesInEvents(events);
   await fetchWaypointsByChatcodes(chatcodes);
 
