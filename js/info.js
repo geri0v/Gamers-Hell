@@ -8,7 +8,7 @@ const priceCache = new Map();
 const waypointCache = new Map();
 const wikiDescCache = new Map();
 
-//---- Utility Fetchers ----//
+// ---- Utility Fetchers ---- //
 async function safeFetchJson(url, options = {}) {
   try {
     const res = await fetch(url, options);
@@ -29,7 +29,16 @@ async function safeFetchText(url) {
   }
 }
 
-//---- GW2 Official API ----//
+// ---- Price Formatting Utility (Now Exported) ---- //
+function formatPrice(copper) {
+  if (copper == null) return 'N/A';
+  const gold = Math.floor(copper / 10000);
+  const silver = Math.floor((copper % 10000) / 100);
+  const copperRemainder = copper % 100;
+  return `${gold}g ${silver}s ${copperRemainder}c`;
+}
+
+// ---- GW2 Official API ---- //
 async function fetchGW2ItemsBulk(ids) {
   if (!ids.length) return [];
   const chunkSize = 200;
@@ -56,7 +65,7 @@ async function fetchGW2PricesBulk(ids) {
   return results;
 }
 
-//---- Wiki (for descriptions only) ----//
+// ---- Wiki (for descriptions only) ---- //
 async function fetchWikiDescription(name) {
   if (!name) return "";
   if (wikiDescCache.has(name)) return wikiDescCache.get(name);
@@ -72,7 +81,7 @@ async function fetchWikiDescription(name) {
   return desc;
 }
 
-//---- GW2Treasures API ----//
+// ---- GW2Treasures API ---- //
 async function fetchGW2TreasuresBulkItems(ids) {
   if (!ids.length) return [];
   try {
@@ -127,7 +136,7 @@ async function fetchGW2TreasuresContainerContents(ids) {
   }
 }
 
-//---- Public CSV Fallback ----//
+// ---- Public CSV Fallback ---- //
 async function fetchCSVPrices() {
   let combined = {};
   for (const url of EXTRA_CSV_SOURCES) {
@@ -148,7 +157,7 @@ async function fetchCSVPrices() {
   return combined;
 }
 
-//---- Waypoint Code to Name (Official API only) ----//
+// ---- Waypoint Code to Name (Official API only) ---- //
 async function resolveWaypoints(chatcodes) {
   const uncached = chatcodes.filter(c => !waypointCache.has(c));
   if (!uncached.length) return Object.fromEntries(waypointCache);
@@ -175,7 +184,7 @@ async function resolveWaypoints(chatcodes) {
   return Object.fromEntries(waypointCache);
 }
 
-//---- Core Aggregator ----//
+// ---- Core Aggregator ---- //
 async function enrichItemsAndPrices(itemIds) {
   // 1. Try Official API
   let items = await fetchGW2ItemsBulk(itemIds);
@@ -217,7 +226,7 @@ async function enrichContainerContents(containerIds) {
   return contents;
 }
 
-// Only export each symbol ONCE below
+// ---- Exports (No Duplicates) ---- //
 export {
   fetchGW2ItemsBulk,
   fetchGW2PricesBulk,
@@ -228,5 +237,6 @@ export {
   fetchWikiDescription,
   resolveWaypoints,
   enrichItemsAndPrices,
-  enrichContainerContents
+  enrichContainerContents,
+  formatPrice
 };
