@@ -1,5 +1,3 @@
-// https://geri0v.github.io/Gamers-Hell/js/copy.js
-
 import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
 
 export function getMostValuableDrop(loot) {
@@ -50,4 +48,9 @@ export function createCopyBar(event) {
       <button class="copy-btn" onclick="copyWithNudge(this)" aria-label="Copy event summary">Copy</button>
     </div>
   `;
+}
+
+export function createMostValuableBadge(item) {
+  if (!item) return '';
+  return `<span class="most-valuable-badge" title="Most valuable drop">💰</span>`;
 }
