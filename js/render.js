@@ -1,5 +1,6 @@
-import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
-import { enrichData, formatPrice, startAutoRefreshPrices } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
+import { loadAndEnrichData } from 'https://geri0v.github.io/Gamers-Hell/js/infoload.js';
+import { groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
+import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/info.js';
 import { createCopyBar, createMostValuableBadge, getMostValuableDrop } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
 import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
 import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
@@ -11,7 +12,6 @@ const PAGE_SIZE = 20;
 let isLoading = false;
 let columnSort = {};
 let compactLootLayout = false;
-let autoRefreshEnabled = false;
 
 function renderSearchAndSort() {
   return `
@@ -19,7 +19,6 @@ function renderSearchAndSort() {
       <div id="side-buttons">
         <button class="side-btn" id="side-help" aria-label="Help" tabindex="0">?</button>
         <button class="side-btn" id="toggle-compact" aria-label="Toggle loot layout" tabindex="0" title="Toggle between compact and detailed loot card layouts">🗂️</button>
-        <button class="side-btn" id="toggle-autorefresh" aria-label="Toggle auto-refresh prices" tabindex="0" title="Auto-refresh prices">⟳</button>
       </div>
       <div class="search-sort-card">
         <div class="search-bar-row">
@@ -131,7 +130,7 @@ function renderEventTable(events, sourceIdx, expIdx) {
               <td colspan="3">
                 <div class="inline-desc" id="desc-${anchor}" aria-live="polite">
                   Description: <button class="inline-desc-toggle" tabindex="0">Show</button>
-                  <span class="desc-content" style="display:none;"></span>
+                  <span class="desc-content" style="display:none;">${item.description || ""}</span>
                 </div>
               </td>
             </tr>
@@ -222,7 +221,7 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
   });
   setupToggles();
 
-  // Table header sorting + keyboard
+  // Table sorting handlers
   container.querySelectorAll('.event-table th[data-sort-key]').forEach(th => {
     th.onclick = () => {
       const key = th.dataset.sortKey;
@@ -233,49 +232,6 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
       applyFiltersAndRender(container, allData, currentPage, false);
     };
     th.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') th.click(); };
-  });
-
-  // Expandable descriptions from wiki
-  container.querySelectorAll(".inline-desc").forEach(async (div) => {
-    const anchor = div.id && div.id.startsWith('desc-event-') ? div.id.replace('desc-', '') : null;
-    if (!anchor) return;
-    const event = allData.find(e => ("event-" + (e.name || "").replace(/\W/g, "")) === anchor);
-    if (!event) return;
-    let desc = await (async () => {
-      try {
-        const ghdvLang = 'en';
-        const wikiName = event.waypointName || event.name;
-        const domain = ghdvLang === "en" ? "wiki.guildwars2.com" : `${ghdvLang}.wiki.guildwars2.com`;
-        const url = `https://${domain}/api.php?action=query&prop=extracts&exsentences=2&format=json&origin=*&titles=${encodeURIComponent(wikiName)}`;
-        const res = await fetch(url);
-        if (res.ok) {
-          const data = await res.json();
-          let d = "";
-          const p = data.query && data.query.pages;
-          for (const k in p) {
-            if (p[k].extract) d = p[k].extract.replace(/<[^>]+>/g, '').trim();
-          }
-          d = d.replace(/\s*\[\d+\]/g, '');
-          return d;
-        }
-      } catch {}
-      return "";
-    })();
-    const toggleBtn = div.querySelector('.inline-desc-toggle');
-    const content = div.querySelector('.desc-content');
-    let expanded = false;
-    toggleBtn.onclick = function() {
-      expanded = !expanded;
-      if (expanded) {
-        content.textContent = desc;
-        content.style.display = '';
-        toggleBtn.textContent = 'Hide';
-      } else {
-        content.textContent = '';
-        content.style.display = 'none';
-        toggleBtn.textContent = 'Show';
-      }
-    };
   });
 }
 
@@ -297,109 +253,95 @@ export async function renderApp(containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = renderProgressBar(0) + '<div>Loading...</div>';
   allData = [];
-  let loaded = 0;
-  const total = 3;
-  await fetchAllData(async (flat, url, err) => {
-    loaded++;
-    const percent = Math.round((loaded / total) * 100);
-    container.innerHTML = renderProgressBar(percent) + '<div>Loading...</div>';
-    if (err) {
-      container.innerHTML += `<div class="error">Failed to load ${url}: ${err}</div>`;
-      return;
-    }
-    if (flat.length === 0) return;
-    const enriched = await enrichData(flat);
-    allData = allData.concat(enriched);
-    if (loaded === total) {
-      container.innerHTML =
-        `<div class="sticky-bar">${renderSearchAndSort()}</div>
-         <div id="events-list" class="centered-wrap"></div>`;
-      updateExpansionOptions(allData);
-      const eventsList = document.getElementById('events-list');
+  currentPage = 1;
+  compactLootLayout = false;
+
+  let percent = 10;
+  container.innerHTML = renderProgressBar(percent) + '<div>Loading events...</div>';
+
+  // Use new loader
+  allData = await loadAndEnrichData(event => {
+    percent += 5;
+    container.innerHTML = renderProgressBar(percent) + '<div>Enriching data...</div>';
+  });
+
+  container.innerHTML =
+    `<div class="sticky-bar">${renderSearchAndSort()}</div>
+     <div id="events-list" class="centered-wrap"></div>`;
+  updateExpansionOptions(allData);
+  const eventsList = document.getElementById('events-list');
+  applyFiltersAndRender(eventsList, allData, currentPage, false);
+
+  // Filters & Search
+  [
+    'search-input', 'expansion-filter', 'rarity-filter', 'lootname-filter',
+    'loottype-filter', 'vendormin-filter', 'vendormax-filter',
+    'chatcode-filter', 'guaranteedonly-filter', 'chanceonly-filter', 'sort-filter'
+  ].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
       currentPage = 1;
       applyFiltersAndRender(eventsList, allData, currentPage, false);
+    });
+    document.getElementById(id).addEventListener('change', () => {
+      currentPage = 1;
+      applyFiltersAndRender(eventsList, allData, currentPage, false);
+    });
+  });
 
-      // Filter and search controls with ARIA/live update/keyboard shortcut handling
-      [
-        'search-input', 'expansion-filter', 'rarity-filter', 'lootname-filter',
-        'loottype-filter', 'vendormin-filter', 'vendormax-filter',
-        'chatcode-filter', 'guaranteedonly-filter', 'chanceonly-filter', 'sort-filter'
-      ].forEach(id => {
-        document.getElementById(id).addEventListener('input', () => {
-          currentPage = 1;
-          applyFiltersAndRender(eventsList, allData, currentPage, false);
-        });
-        document.getElementById(id).addEventListener('change', () => {
-          currentPage = 1;
-          applyFiltersAndRender(eventsList, allData, currentPage, false);
-        });
-      });
+  document.getElementById('toggle-compact').addEventListener('click', () => {
+    compactLootLayout = !compactLootLayout;
+    applyFiltersAndRender(eventsList, allData, currentPage, false);
+  });
 
-      document.getElementById('toggle-compact').addEventListener('click', () => {
-        compactLootLayout = !compactLootLayout;
-        applyFiltersAndRender(eventsList, allData, currentPage, false);
-      });
+  document.getElementById('side-help').addEventListener('click', () => {
+    if (document.getElementById('modal-help')) return;
+    const modal = document.createElement('div');
+    modal.id = 'modal-help';
+    Object.assign(modal.style, {
+      position: 'fixed', top:0,left:0,right:0,bottom:0,background: 'rgba(24,32,54,.65)', display:'flex',alignItems:'center',justifyContent:'center',zIndex: 10000,
+    });
+    modal.innerHTML = `
+      <div style="background:#fff;border-radius:10px;padding:2em 2.7em 2em 2.7em;max-width:410px;text-align:left;box-shadow:0 10px 40px #2343a633;">
+        <h2 style="margin-top:0;font-size:1.2em">How to Use the Visualizer</h2>
+        <ul style="margin:1em 0 1em 1em;">
+          <li><strong>Search:</strong> Type a map or event name.</li>
+          <li><strong>Filter:</strong> Search and filter on loot, type, code, vendor, guaranteed/chance.</li>
+          <li><strong>Sort:</strong> Click any column header or use dropdown.</li>
+          <li><strong>Toggle:</strong> Expand/collapse sections with Tab/Click/Enter.</li>
+          <li><strong>Copy:</strong> Select the bar or press copy, get a nudge.</li>
+          <li><strong>Deep linking:</strong> Use the 🔗 icon next to each event.</li>
+          <li><strong>Loot layout:</strong> Use 🗂️ for compact/detailed loot style.</li>
+          <li><strong>Accessibility:</strong> All major flows support keyboard + ARIA.</li>
+          <li><strong>Close:</strong> Click outside or press <kbd>Esc</kbd>.</li>
+        </ul>
+      </div>
+    `;
+    modal.tabIndex = -1;
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+    document.body.appendChild(modal);
+    setTimeout(() => modal.focus(), 100);
+    window.addEventListener('keydown', function onEscHelp(evt) {
+      if (evt.key === 'Escape') { modal.remove(); window.removeEventListener('keydown', onEscHelp);}
+    });
+  });
 
-      document.getElementById('toggle-autorefresh').addEventListener('click', () => {
-        autoRefreshEnabled = !autoRefreshEnabled;
-        if (autoRefreshEnabled) {
-          startAutoRefreshPrices(allData, () => applyFiltersAndRender(eventsList, allData, currentPage, false));
-        } else {
-          startAutoRefreshPrices(allData, null); // Clears interval if any
-        }
-      });
-
-      document.getElementById('side-help').addEventListener('click', () => {
-        if (document.getElementById('modal-help')) return;
-        const modal = document.createElement('div');
-        modal.id = 'modal-help';
-        Object.assign(modal.style, {
-          position: 'fixed', top:0,left:0,right:0,bottom:0,background: 'rgba(24,32,54,.65)', display:'flex',alignItems:'center',justifyContent:'center',zIndex: 10000,
-        });
-        modal.innerHTML = `
-          <div style="background:#fff;border-radius:10px;padding:2em 2.7em 2em 2.7em;max-width:410px;text-align:left;box-shadow:0 10px 40px #2343a633;">
-            <h2 style="margin-top:0;font-size:1.2em">How to Use the Visualizer</h2>
-            <ul style="margin:1em 0 1em 1em;">
-              <li><strong>Search:</strong> Type a map or event name.</li>
-              <li><strong>Filter:</strong> Search and filter on loot, type, code, vendor, guaranteed/chance.</li>
-              <li><strong>Sort:</strong> Click any column header or use dropdown.</li>
-              <li><strong>Toggle:</strong> Expand/collapse sections with Tab/Click/Enter.</li>
-              <li><strong>Copy:</strong> Select the bar or press copy, get a nudge.</li>
-              <li><strong>Deep linking:</strong> Use the 🔗 icon next to each event.</li>
-              <li><strong>Loot layout:</strong> Use 🗂️ for compact/detailed loot style.</li>
-              <li><strong>Prices:</strong> ⟳ auto-refreshes prices every 5 minutes.</li>
-              <li><strong>Accessibility:</strong> All major flows support keyboard + ARIA.</li>
-              <li><strong>Close:</strong> Click outside or press <kbd>Esc</kbd>.</li>
-            </ul>
-          </div>
-        `;
-        modal.tabIndex = -1;
-        modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
-        document.body.appendChild(modal);
-        setTimeout(() => modal.focus(), 100);
-        window.addEventListener('keydown', function onEscHelp(evt) {
-          if (evt.key === 'Escape') { modal.remove(); window.removeEventListener('keydown', onEscHelp);}
-        });
-      });
-
-      // Infinite scroll for large result sets
-      window.addEventListener('scroll', () => {
-        if (isLoading) return;
-        const containerHeight = document.documentElement.scrollHeight;
-        const scrollPosition = window.scrollY + window.innerHeight;
-        const filters = getFiltersFromUI();
-        const filteredEvents = filterEvents(allData, filters);
-        if (scrollPosition > containerHeight - 100) {
-          if (filteredEvents.length > PAGE_SIZE * currentPage) {
-            isLoading = true;
-            currentPage++;
-            applyFiltersAndRender(eventsList, allData, currentPage, true);
-            isLoading = false;
-          }
-        }
-      });
+  // Infinite scroll for large result sets
+  window.addEventListener('scroll', () => {
+    if (isLoading) return;
+    const containerHeight = document.documentElement.scrollHeight;
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const filters = getFiltersFromUI();
+    const filteredEvents = filterEvents(allData, filters);
+    if (scrollPosition > containerHeight - 100) {
+      if (filteredEvents.length > PAGE_SIZE * currentPage) {
+        isLoading = true;
+        currentPage++;
+        applyFiltersAndRender(eventsList, allData, currentPage, true);
+        isLoading = false;
+      }
     }
   });
 }
 
+// Auto-run if desired (or call from HTML)
 renderApp('app');
