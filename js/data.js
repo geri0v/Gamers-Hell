@@ -1,10 +1,8 @@
-// Only working CSV sources (remove all broken ones and keep only https URLs or those you have checked)
+// Only working CSV sources (optional, fill for extra HTTPS CSVs if needed)
 const EXTRA_CSV_SOURCES = [
-  // Optionally add more CSV URLs here that are HTTPS and working
   // e.g., 'https://yourdomain.github.io/yourrepo/items.csv'
 ];
 
-// Manifest-driven data loading
 const MANIFEST_URL = 'https://geri0v.github.io/Gamers-Hell/json/manifest.json';
 
 export async function fetchAllData(onProgress, batchSize = 5) {
@@ -41,7 +39,6 @@ export async function fetchAllData(onProgress, batchSize = 5) {
         allData = allData.concat(flat);
         if (onProgress) onProgress(flat, url, null);
       } else {
-        // Continue on error, never halt loading
         if (onProgress) onProgress([], url, (result.reason ? result.reason : "Unknown error"));
       }
     });
@@ -97,4 +94,71 @@ export function groupAndSort(data) {
       items: grouped[expansion][sourcename]
     }))
   }));
+}
+
+// Extended filtering for advanced search
+export function filterEventsExtended(events, { searchTerm, expansion, rarity, lootName, itemType, vendorValueMin, vendorValueMax, chatcode, guaranteedOnly, chanceOnly, sortKey }) {
+  let filtered = events;
+  if (searchTerm) {
+    const term = searchTerm.toLowerCase();
+    filtered = filtered.filter(e =>
+      (e.name && e.name.toLowerCase().includes(term)) ||
+      (e.map && e.map.toLowerCase().includes(term))
+    );
+  }
+  if (expansion) {
+    filtered = filtered.filter(e => e.expansion === expansion);
+  }
+  if (rarity) {
+    filtered = filtered.filter(e =>
+      (e.loot || []).some(l => l.rarity === rarity)
+    );
+  }
+  if (lootName) {
+    const ln = lootName.toLowerCase();
+    filtered = filtered.filter(e =>
+      (e.loot || []).some(l => l.name && l.name.toLowerCase().includes(ln))
+    );
+  }
+  if (itemType) {
+    const it = itemType.toLowerCase();
+    filtered = filtered.filter(e =>
+      (e.loot || []).some(l => l.type && l.type.toLowerCase() === it)
+    );
+  }
+  if (vendorValueMin !== undefined) {
+    filtered = filtered.filter(e =>
+      (e.loot || []).some(l => l.vendorValue !== undefined && l.vendorValue >= vendorValueMin)
+    );
+  }
+  if (vendorValueMax !== undefined) {
+    filtered = filtered.filter(e =>
+      (e.loot || []).some(l => l.vendorValue !== undefined && l.vendorValue <= vendorValueMax)
+    );
+  }
+  if (chatcode) {
+    filtered = filtered.filter(e =>
+      (e.loot || []).some(l => l.chatCode && l.chatCode.toLowerCase() === chatcode.toLowerCase())
+    );
+  }
+  if (guaranteedOnly) {
+    filtered = filtered.filter(e =>
+      (e.loot || []).some(l => l.guaranteed)
+    );
+  }
+  if (chanceOnly) {
+    filtered = filtered.filter(e =>
+      (e.loot || []).some(l => !l.guaranteed)
+    );
+  }
+  if (sortKey) {
+    filtered = filtered.slice().sort((a, b) => {
+      const aVal = (a[sortKey] || '').toLowerCase();
+      const bVal = (b[sortKey] || '').toLowerCase();
+      if (aVal < bVal) return -1;
+      if (aVal > bVal) return 1;
+      return 0;
+    });
+  }
+  return filtered;
 }
