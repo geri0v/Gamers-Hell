@@ -10,17 +10,26 @@ export function detectBrowserLang() {
   }
   return "en";
 }
+
 export function getCurrentLang() {
   return localStorage.getItem('lang') || detectBrowserLang();
 }
+
 export function setCurrentLang(lang) {
   localStorage.setItem('lang', lang);
   window.location.reload();
 }
-export function listLangOptionsHTML(current) {
-  return SUPPORTED_LANGS.map(l =>
-    `<button class="side-btn" data-lang="${l}" aria-label="${l.toUpperCase()} Language"${l===current?' style="font-weight:bold;"':''}>
-      ${l === "en" ? "🇬🇧" : l === "de" ? "🇩🇪" : l === "fr" ? "🇫🇷" : l === "es" ? "🇪🇸" : "🇨🇳"}
-    </button>`
-  ).join("");
+
+// ✅ Correct export: langMenuHTML
+export function langMenuHTML(current) {
+  return SUPPORTED_LANGS.map(lang => {
+    const flag = {
+      en: "🇬🇧",
+      de: "🇩🇪",
+      fr: "🇫🇷",
+      es: "🇪🇸",
+      zh: "🇨🇳"
+    }[lang] || "🌐";
+    return `<button class="side-btn" data-lang="${lang}" aria-label="${lang.toUpperCase()} Language"${lang === current ? ' style="font-weight:bold;"' : ''}>${flag}</button>`;
+  }).join("");
 }
