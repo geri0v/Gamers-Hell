@@ -1,3 +1,5 @@
+// https://geri0v.github.io/Gamers-Hell/js/copy.js
+
 import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
 
 export function getMostValuableDrop(loot) {
