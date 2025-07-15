@@ -82,7 +82,6 @@ function generateWikiLink(name) {
   return link;
 }
 
-// Get all unique waypoint chatcodes in this batch of events (as trimmed strings)
 function waypointChatcodesInEvents(eventArr) {
   const codes = new Set();
   for (const event of eventArr) {
@@ -93,18 +92,15 @@ function waypointChatcodesInEvents(eventArr) {
   return Array.from(codes);
 }
 
-// Find waypoints for a list of chatcodes by searching only relevant maps (not entire API)
 async function fetchWaypointsByChatcodes(chatcodes) {
   if (!chatcodes.length) return {};
   const toFind = chatcodes.filter(code => !waypointCache[code]);
   if (!toFind.length) return waypointCache;
-
   const mapIds = await fetchJson('https://api.guildwars2.com/v2/maps');
   if (!mapIds) return waypointCache;
-
   let codesLeft = new Set(toFind);
-  const batchSize = 12;
-  let scanned = 0, maxScans = 90;
+  const batchSize = 13;
+  let scanned = 0, maxScans = 77;
   for (let i = 0; i < mapIds.length && codesLeft.size && scanned < maxScans; i += batchSize, scanned += batchSize) {
     const batch = mapIds.slice(i, i + batchSize);
     const maps = await Promise.allSettled(batch.map(id => fetchJson(`https://api.guildwars2.com/v2/maps/${id}`)));
@@ -135,7 +131,6 @@ export function formatPrice(copper) {
 }
 
 export async function enrichData(events, onProgress) {
-  // Items enrichment
   const uniqueItemIds = new Set();
   events.forEach(event => {
     if (Array.isArray(event.loot)) {
@@ -144,19 +139,16 @@ export async function enrichData(events, onProgress) {
       });
     }
   });
-
   const itemDetailsPromises = Array.from(uniqueItemIds).map(id => fetchItemDetails(id));
   const itemDetailsResults = await Promise.all(itemDetailsPromises);
   const pricePromises = Array.from(uniqueItemIds).map(id => getItemPrice(id));
   const priceResults = await Promise.all(pricePromises);
-
   const detailsMap = {};
   Array.from(uniqueItemIds).forEach((id, i) => {
     detailsMap[id] = itemDetailsResults[i] || {};
     if (priceResults[i] != null) detailsMap[id].price = priceResults[i];
   });
 
-  // Waypoint enrichment, only for chatcodes present in JSON
   const chatcodes = waypointChatcodesInEvents(events);
   await fetchWaypointsByChatcodes(chatcodes);
 
@@ -164,7 +156,7 @@ export async function enrichData(events, onProgress) {
     event.wikiLink = generateWikiLink(event.name);
     event.mapWikiLink = generateWikiLink(event.map);
 
-    // Assign waypointName and link if found
+    // Waypoint enrichment
     if (event.code && waypointCache[event.code]) {
       event.waypointName = waypointCache[event.code].name;
       event.waypointWikiLink = waypointCache[event.code].wiki;
@@ -172,7 +164,6 @@ export async function enrichData(events, onProgress) {
       event.waypointName = null;
       event.waypointWikiLink = null;
     }
-
     if (Array.isArray(event.loot)) {
       event.loot.forEach(item => {
         if (item.id && detailsMap[item.id]) {
