@@ -1,35 +1,30 @@
-import { getMostValuableDrop } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
+// https://geri0v.github.io/Gamers-Hell/js/search.js
 
 export function filterEvents(events, { searchTerm, expansion, rarity, sortKey }) {
   let filtered = events;
-
   if (searchTerm) {
     const term = searchTerm.toLowerCase();
-    filtered = filtered.filter(ev =>
-      (ev.name && ev.name.toLowerCase().includes(term)) ||
-      (ev.map && ev.map.toLowerCase().includes(term))
+    filtered = filtered.filter(e =>
+      (e.name && e.name.toLowerCase().includes(term)) ||
+      (e.map && e.map.toLowerCase().includes(term))
     );
   }
-
   if (expansion) {
-    filtered = filtered.filter(ev => ev.expansion === expansion);
+    filtered = filtered.filter(e => e.expansion === expansion);
   }
-
   if (rarity) {
-    filtered = filtered.filter(ev =>
-      Array.isArray(ev.loot) && ev.loot.some(item => item.rarity === rarity)
+    filtered = filtered.filter(e =>
+      (e.loot || []).some(l => l.rarity === rarity)
     );
   }
-
   if (sortKey) {
-    filtered = filtered.slice();
-    filtered.sort((a, b) => {
-      if (sortKey === 'value') {
-        return (getMostValuableDrop(b.loot)?.price || 0) - (getMostValuableDrop(a.loot)?.price || 0);
-      }
-      return ((a[sortKey] || '') + '').localeCompare((b[sortKey] || '') + '');
+    filtered = filtered.slice().sort((a, b) => {
+      const aVal = (a[sortKey] || '').toLowerCase();
+      const bVal = (b[sortKey] || '').toLowerCase();
+      if (aVal < bVal) return -1;
+      if (aVal > bVal) return 1;
+      return 0;
     });
   }
-
   return filtered;
 }
