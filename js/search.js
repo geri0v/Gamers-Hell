@@ -1,6 +1,6 @@
-import { filterEventsExtended } from './data.js';
+import { filterEventsExtended } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
 
-// Simple fuzzy search helper (typo-tolerance)
+// Simple fuzzy search: allows flexible matching
 function fuzzyMatch(str, pattern) {
   str = str.toLowerCase();
   pattern = pattern.toLowerCase();
@@ -23,6 +23,7 @@ export function filterEvents(events, filters) {
       fuzzyMatch(e.map || '', searchTerm)
     );
   }
+  // Use full extended filtering with rest of parameters
   filtered = filterEventsExtended(filtered, { expansion, rarity, lootName, itemType, vendorValueMin, vendorValueMax, chatcode, guaranteedOnly, chanceOnly, sortKey });
   return filtered;
 }
