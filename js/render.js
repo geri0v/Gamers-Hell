@@ -1,15 +1,21 @@
+// https://geri0v.github.io/Gamers-Hell/js/render.js
+
 import { fetchAllData, groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
 import { enrichData, formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/loader.js';
 import { createCopyBar } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
 import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
 import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
 import { paginate } from 'https://geri0v.github.io/Gamers-Hell/js/pagination.js';
+import { getCurrentLang, listLangOptionsHTML, setCurrentLang } from 'https://geri0v.github.io/Gamers-Hell/js/lang.js';
+import { showReadmeModal } from 'https://geri0v.github.io/Gamers-Hell/js/readme.js';
 
 let allData = [];
 let currentPage = 1;
 const PAGE_SIZE = 20;
 let isLoading = false;
 let columnSort = {};
+let inlineDescriptions = {};
+let ghdvLang = getCurrentLang();
 
 function createCard(className, content) {
   const div = document.createElement('div');
@@ -24,6 +30,7 @@ function renderSearchAndSort() {
       <div id="side-buttons">
         <button class="side-btn" id="side-help" aria-label="Help" tabindex="0">?</button>
         <button class="side-btn" id="side-lang" aria-label="Change language" tabindex="0">🌐</button>
+        <button class="side-btn" id="side-readme" aria-label="Show readme/info" tabindex="0">📄</button>
       </div>
       <div class="search-sort-card">
         <div class="search-bar-row">
@@ -62,6 +69,29 @@ function updateExpansionOptions(events) {
     exps.map(exp => `<option value="${exp}">${exp}</option>`).join('');
 }
 
+async function getInlineDescription(event) {
+  if (!event.wikiLink) return "";
+  const key = (event.waypointName || event.name) + "::" + (event.map || "") + "::" + ghdvLang;
+  if (inlineDescriptions[key]) return inlineDescriptions[key];
+  const domain = ghdvLang === "en" ? "wiki.guildwars2.com" : `${ghdvLang}.wiki.guildwars2.com`;
+  const url = `https://${domain}/api.php?action=query&prop=extracts&exsentences=2&format=json&origin=*&titles=${encodeURIComponent(event.waypointName || event.name)}`;
+  try {
+    const res = await fetch(url);
+    if (res.ok) {
+      const data = await res.json();
+      let desc = "";
+      const p = data.query && data.query.pages;
+      for (const k in p) {
+        if (p[k].extract) desc = p[k].extract.replace(/<[^>]+>/g, '').trim();
+      }
+      desc = desc.replace(/\s*\[\d+\]/g, ''); // Remove reference numbers
+      inlineDescriptions[key] = desc;
+      return desc;
+    }
+  } catch {}
+  return "";
+}
+
 function renderLootCards(loot, eventId) {
   if (!Array.isArray(loot) || loot.length === 0) return '';
   const lootId = `loot-${eventId}`;
@@ -83,25 +113,32 @@ function renderLootCards(loot, eventId) {
   `;
 }
 
+function alwaysSortIcons(col, activeCol, dir) {
+  let icon = "▲▼";
+  if (col === activeCol) icon = dir === "asc" ? "▲" : "▼";
+  return `<span class="sort-icons">${icon}</span>`;
+}
+
 function renderEventTable(events, sourceIdx, expIdx) {
   function sortClass(col) {
-    if (columnSort.key === col) return columnSort.dir === 'asc' ? 'sorted-asc' : 'sorted-desc';
-    return '';
+    return columnSort.key === col ? (columnSort.dir === 'asc' ? 'sorted-asc active' : 'sorted-desc active') : '';
   }
-
   return `
     <table class="event-table" role="table" aria-label="Event Table">
       <thead>
         <tr role="row">
-          <th role="columnheader" scope="col" aria-sort="${columnSort.key === 'name' ? columnSort.dir : 'none'}" tabindex="0" data-sort-key="name" class="${sortClass('name')}">Name</th>
-          <th role="columnheader" scope="col" aria-sort="${columnSort.key === 'map' ? columnSort.dir : 'none'}" tabindex="0" data-sort-key="map" class="${sortClass('map')}">Map</th>
-          <th role="columnheader" scope="col" aria-sort="${columnSort.key === 'code' ? columnSort.dir : 'none'}" tabindex="0" data-sort-key="code" class="${sortClass('code')}">Code</th>
+          <th role="columnheader" scope="col" aria-sort="${columnSort.key === 'name' ? columnSort.dir : 'none'}" tabindex="0" data-sort-key="name" class="${sortClass('name')}">Name${alwaysSortIcons("name", columnSort.key, columnSort.dir)}</th>
+          <th role="columnheader" scope="col" aria-sort="${columnSort.key === 'map' ? columnSort.dir : 'none'}" tabindex="0" data-sort-key="map" class="${sortClass('map')}">Map${alwaysSortIcons("map", columnSort.key, columnSort.dir)}</th>
+          <th role="columnheader" scope="col" aria-sort="${columnSort.key === 'code' ? columnSort.dir : 'none'}" tabindex="0" data-sort-key="code" class="${sortClass('code')}">Code${alwaysSortIcons("code", columnSort.key, columnSort.dir)}</th>
         </tr>
       </thead>
       <tbody>
         ${events.map((item, itemIdx) => {
           const eventId = `event-${expIdx}-${sourceIdx}-${itemIdx}`;
           const anchor = "event-" + (item.name || "").replace(/\W/g, "");
+          let codePart = item.code || '';
+          if (item.waypointName && item.waypointWikiLink)
+            codePart = `<a href="${item.waypointWikiLink}" target="_blank">${item.waypointName}</a> ${item.code}`;
           return `
             <tr role="row" id="${anchor}">
               <td role="cell">
@@ -112,10 +149,15 @@ function renderEventTable(events, sourceIdx, expIdx) {
                 ${item.mapWikiLink ? `<a href="${item.mapWikiLink}" target="_blank">${item.map}</a>` : item.map}
               </td>
               <td role="cell">
-                ${item.waypointName && item.waypointWikiLink
-                  ? `<a href="${item.waypointWikiLink}" target="_blank">${item.waypointName}</a> `
-                  : ''}
-                ${item.code || ''}
+                ${codePart}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <div class="inline-desc" id="desc-${anchor}" aria-live="polite">
+                  Description: <button class="inline-desc-toggle" tabindex="0">Show</button>
+                  <span class="desc-content" style="display:none;"></span>
+                </div>
               </td>
             </tr>
             <tr>
@@ -164,6 +206,7 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
     });
   }
   const pagedEvents = paginate(filteredEvents, PAGE_SIZE, pageNumber);
+
   const grouped = groupAndSort(pagedEvents);
 
   if (!append) container.innerHTML = '';
@@ -176,14 +219,14 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
     const expId = `expansion-${expIdx}`;
     const expDiv = createCard('expansion-card', `
       <button class="toggle-btn" data-target="${expId}" aria-expanded="false">Show/Hide</button>
-      <h2>${exp.expansion}</h2>
+      <h2 style="text-align:center">${exp.expansion}</h2>
       <div class="expansion-content" id="${expId}"></div>
     `);
     exp.sources.forEach((src, srcIdx) => {
       const srcId = `source-${expIdx}-${srcIdx}`;
       const srcDiv = createCard('source-card', `
         <button class="toggle-btn" data-target="${srcId}" aria-expanded="false">Show/Hide</button>
-        <h3>${src.sourcename}</h3>
+        <h3 style="text-align:center">${src.sourcename}</h3>
         <div class="source-content" id="${srcId}">
           ${renderEventTable(src.items, srcIdx, expIdx)}
         </div>
@@ -194,7 +237,7 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
   });
   setupToggles();
 
-  // Table header click sort
+  // Table header sorting
   container.querySelectorAll('.event-table th[data-sort-key]').forEach(th => {
     th.onclick = () => {
       const key = th.dataset.sortKey;
@@ -206,9 +249,41 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
     };
     th.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') th.click(); };
   });
+
+  // Description show/hide toggle
+  container.querySelectorAll(".inline-desc").forEach(async (div) => {
+    const anchor = div.id && div.id.startsWith('desc-event-') ? div.id.replace('desc-', '') : null;
+    if (!anchor) return;
+    const event = allData.find(e => ("event-" + (e.name || "").replace(/\W/g, "")) === anchor);
+    if (!event) return;
+    let desc = await getInlineDescription(event);
+    const toggleBtn = div.querySelector('.inline-desc-toggle');
+    const content = div.querySelector('.desc-content');
+    let expanded = false;
+    toggleBtn.onclick = function() {
+      expanded = !expanded;
+      if (expanded) {
+        content.textContent = desc;
+        content.style.display = '';
+        toggleBtn.textContent = 'Hide';
+      } else {
+        content.textContent = '';
+        content.style.display = 'none';
+        toggleBtn.textContent = 'Show';
+      }
+    };
+  });
 }
 
 export async function renderApp(containerId) {
+  document.querySelector('link[rel="icon"]')?.remove();
+  const faviconURL = "https://wiki.guildwars2.com/favicon.ico";
+  let link = document.createElement("link");
+  link.rel = "icon";
+  link.href = faviconURL;
+  link.type = "image/x-icon";
+  document.head.appendChild(link);
+
   const container = document.getElementById(containerId);
   container.innerHTML = renderProgressBar(0) + '<div>Loading...</div>';
   allData = [];
@@ -223,7 +298,7 @@ export async function renderApp(containerId) {
       return;
     }
     if (flat.length === 0) return;
-    const enriched = await enrichData(flat);
+    const enriched = await enrichData(flat, null, ghdvLang);
     allData = allData.concat(enriched);
     if (loaded === total) {
       container.innerHTML =
@@ -234,7 +309,6 @@ export async function renderApp(containerId) {
       currentPage = 1;
       applyFiltersAndRender(eventsList, allData, currentPage, false);
 
-      // Controls and event listeners as previously provided.
       document.getElementById('search-input').addEventListener('input', () => {
         currentPage = 1;
         applyFiltersAndRender(eventsList, allData, currentPage, false);
@@ -252,8 +326,6 @@ export async function renderApp(containerId) {
         columnSort = {};
         applyFiltersAndRender(eventsList, allData, currentPage, false);
       });
-
-      // Infinite scroll
       window.addEventListener('scroll', () => {
         if (isLoading) return;
         const containerHeight = document.documentElement.scrollHeight;
@@ -273,7 +345,6 @@ export async function renderApp(containerId) {
         }
       });
 
-      // Help and language controls as before...
       document.getElementById('side-help').addEventListener('click', () => {
         if (document.getElementById('modal-help')) return;
         const modal = document.createElement('div');
@@ -285,11 +356,12 @@ export async function renderApp(containerId) {
           <div style="background:#fff;border-radius:10px;padding:2em 2.7em 2em 2.7em;max-width:410px;text-align:left;box-shadow:0 10px 40px #2343a633;">
             <h2 style="margin-top:0;font-size:1.2em">How to Use the Visualizer</h2>
             <ul style="margin:1em 0 1em 1em;">
-              <li><strong>Search:</strong> Use Tap/Click or <kbd>Tab</kbd>. Type to filter by event/map name.</li>
-              <li><strong>Sort:</strong> Click a heading or use the sort dropdown. Use <kbd>Tab</kbd>, <kbd>Enter</kbd>.</li>
-              <li><strong>Toggle sections:</strong> <kbd>Tab</kbd> to toggle, use Enter/Space.</li>
-              <li><strong>Copy:</strong> <kbd>Tab</kbd> and <kbd>Enter</kbd> copies bar; “Copied!” indicator shows success.</li>
-              <li><strong>Deep links:</strong> Click 🔗 to copy/share a direct link to that event.</li>
+              <li><strong>Search:</strong> Type a map or event name.</li>
+              <li><strong>Sort:</strong> Click any column header or use dropdown.</li>
+              <li><strong>Toggle:</strong> Expand/collapse sections with Tab/Click/Enter.</li>
+              <li><strong>Copy:</strong> Select the bar or press copy, get a nudge.</li>
+              <li><strong>Deep linking:</strong> Use the 🔗 icon next to each event.</li>
+              <li><strong>Mobile/Tablet:</strong> All features are touch-friendly.</li>
               <li><strong>Close:</strong> Click outside or press <kbd>Esc</kbd>.</li>
             </ul>
           </div>
@@ -302,9 +374,35 @@ export async function renderApp(containerId) {
           if (evt.key === 'Escape') { modal.remove(); window.removeEventListener('keydown', onEscHelp);}
         });
       });
-      document.getElementById('side-lang').addEventListener('click', () => {
-        alert('Language switch: Coming soon! The visualizer will fetch GW2 data/wiki with your chosen language.');
+
+      document.getElementById('side-lang').addEventListener('click', (e) => {
+        if (document.getElementById('modal-lang')) return;
+        const modal = document.createElement('div');
+        modal.id = 'modal-lang';
+        Object.assign(modal.style, {
+          position: 'fixed', top:0,left:0,right:0,bottom:0,background: 'rgba(24,32,54,.5)', display:'flex',alignItems:'center',justifyContent:'center',zIndex: 10001,
+        });
+        modal.innerHTML = `
+          <div style="background:#fff;border-radius:10px;padding:1.5em 2em 1.5em 2em;min-width:270px;max-width:350px;text-align:center;box-shadow:0 4px 20px #2343a633;">
+            <div style="margin:0 0 0.7em 0;font-size:1.2em;">🌐 Select Language</div>
+            <div>${listLangOptionsHTML(ghdvLang)}</div>
+            <div style="margin-top:1.6em;font-size:0.98em;color:#555">Reloads site in the chosen language (if supported by the GW2 API/wiki).</div>
+          </div>
+        `;
+        modal.tabIndex = -1;
+        modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+        modal.querySelectorAll('button[data-lang]').forEach(btn => {
+          btn.onclick = () => { setCurrentLang(btn.dataset.lang); };
+        });
+        document.body.appendChild(modal);
+        setTimeout(() => modal.focus(), 100);
+        window.addEventListener('keydown', function onEscLang(evt) {
+          if (evt.key === 'Escape') { modal.remove(); window.removeEventListener('keydown', onEscLang);}
+        });
       });
+
+      document.getElementById('side-readme').addEventListener('click', showReadmeModal);
+
     }
   });
 }
