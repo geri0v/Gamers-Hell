@@ -1,10 +1,14 @@
-// https://geri0v.github.io/Gamers-Hell/js/loader.js
-
 const itemCache = {};
 const priceCache = {};
 const wikiCache = {};
 let otcPrices = null;
 let waypointCache = {};
+
+// Extra price sources
+const EXTRA_PRICE_CSVS = [
+  'http://api.gw2tp.com/1/bulk/items.csv',
+  'http://www.gw2spidy.com/api/v0.9/csv/all-items/*all*'
+];
 
 async function fetchJson(url) {
   try {
@@ -36,12 +40,18 @@ async function fetchItemPriceGW2API(itemId) {
   return priceCache[itemId] || null;
 }
 
-async function fetchOTCPrices() {
+async function fetchExtraCSVPrices() {
   if (otcPrices) return otcPrices;
-  const csvUrl = 'https://raw.githubusercontent.com/otc-cirdan/gw2-items/refs/heads/master/items.csv';
-  const csvText = await fetchText(csvUrl);
-  if (!csvText) return null;
-  otcPrices = parseCSVPrices(csvText);
+  let combinedPrices = {};
+  for (const csvUrl of EXTRA_PRICE_CSVS) {
+    const csvText = await fetchText(csvUrl);
+    if (!csvText) continue;
+    const prices = parseCSVPrices(csvText);
+    if (prices) {
+      combinedPrices = { ...combinedPrices, ...prices };
+    }
+  }
+  otcPrices = combinedPrices;
   return otcPrices;
 }
 
@@ -67,7 +77,7 @@ function parseCSVPrices(csvText) {
 async function getItemPrice(itemId) {
   let price = await fetchItemPriceGW2API(itemId);
   if (price != null) return price;
-  const otc = await fetchOTCPrices();
+  const otc = await fetchExtraCSVPrices();
   if (otc && otc[itemId]) return otc[itemId];
   return null;
 }
@@ -132,6 +142,39 @@ export function formatPrice(copper) {
   return `${gold}g ${silver}s ${copperRemainder}c`;
 }
 
+// Auto-refresh prices every 5 minutes (enable from UI)
+let autoRefreshInterval = null;
+export function startAutoRefreshPrices(events, onProgress) {
+  if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+  autoRefreshInterval = setInterval(async () => {
+    Object.keys(priceCache).forEach(k => delete priceCache[k]);
+    otcPrices = null;
+    const uniqueItemIds = new Set();
+    events.forEach(event => {
+      if (Array.isArray(event.loot)) {
+        event.loot.forEach(item => {
+          if (item.id) uniqueItemIds.add(item.id);
+        });
+      }
+    });
+    const pricePromises = Array.from(uniqueItemIds).map(id => getItemPrice(id));
+    const priceResults = await Promise.all(pricePromises);
+    Array.from(uniqueItemIds).forEach((id, i) => {
+      const price = priceResults[i];
+      events.forEach(event => {
+        if (Array.isArray(event.loot)) {
+          event.loot.forEach(item => {
+            if (item.id === id) {
+              item.price = price || item.price || null;
+            }
+          });
+        }
+      });
+    });
+    if (onProgress) onProgress(events);
+  }, 300000);
+}
+
 export async function enrichData(events, onProgress) {
   const uniqueItemIds = new Set();
   events.forEach(event => {
@@ -152,26 +195,23 @@ export async function enrichData(events, onProgress) {
     if (priceResults[i] != null) detailsMap[id].price = priceResults[i];
   });
 
-  // Waypoint enrichment: prefer event.chatcode if present, else event.code
+  // Waypoint enrichment for the new code column
   const chatcodes = waypointChatcodesInEvents(events);
   await fetchWaypointsByChatcodes(chatcodes);
 
   for (const event of events) {
     event.wikiLink = generateWikiLink(event.name);
     event.mapWikiLink = generateWikiLink(event.map);
-
-    // Fix: For code col: use event.chatcode (if exists), else event.code
     let codeRaw = event.chatcode || event.code || "";
     if (waypointCache[codeRaw]) {
       event.waypointName = waypointCache[codeRaw].name;
       event.waypointWikiLink = waypointCache[codeRaw].wiki;
-      event.code = codeRaw; // Always show the code we resolved
+      event.code = codeRaw;
     } else {
       event.waypointName = null;
       event.waypointWikiLink = null;
       event.code = codeRaw;
     }
-
     if (Array.isArray(event.loot)) {
       event.loot.forEach(item => {
         if (item.id && detailsMap[item.id]) {
@@ -182,6 +222,7 @@ export async function enrichData(events, onProgress) {
           item.chatCode = details.chat_link || null;
           item.price = details.price || null;
           item.vendorValue = details.vendor_value ? details.vendor_value : null;
+          item.type = details.type || null;
         } else {
           item.wikiLink = generateWikiLink(item.name);
         }
