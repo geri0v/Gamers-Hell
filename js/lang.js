@@ -1,5 +1,3 @@
-// https://geri0v.github.io/Gamers-Hell/js/lang.js
-
 export const SUPPORTED_LANGS = ["en", "de", "fr", "es", "zh"];
 
 export function detectBrowserLang() {
@@ -11,30 +9,31 @@ export function detectBrowserLang() {
   return "en";
 }
 
-export async function fetchGW2Translation(type, id, lang) {
-  // type: "items", "maps", etc. id: GW2 id, lang: "en", "de"...
-  try {
-    const res = await fetch(`https://api.guildwars2.com/v2/${type}/${id}?lang=${lang}`);
-    if (res.ok) return await res.json();
-  } catch {}
-  return null;
+export function listLangOptionsHTML(current) {
+  return SUPPORTED_LANGS.map(l => `<button class="side-btn" data-lang="${l}" aria-label="${l.toUpperCase()} Language"${l===current?' style="font-weight:bold;"':''}>${langIcon(l)}</button>`).join("");
 }
 
-export async function fetchWikiSnippet(name, lang) {
-  // Only works reliably for "en", "de", "fr", "es", "zh"
-  // Uses MW API.
-  const domain = lang === "en"
-    ? "wiki.guildwars2.com"
-    : `${lang}.wiki.guildwars2.com`;
-  const url = `https://${domain}/api.php?action=query&prop=extracts&exintro&exsentences=2&format=json&origin=*&titles=${encodeURIComponent(name)}`;
-  try {
-    const res = await fetch(url);
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (!data.query || !data.query.pages) return null;
-    for (const k of Object.keys(data.query.pages)) {
-      if (data.query.pages[k].extract) return data.query.pages[k].extract.replace(/<[^>]+>/g, '').trim();
-    }
-  } catch {}
-  return null;
+function langIcon(l) {
+  switch(l) {
+    case "de": return "🇩🇪";
+    case "fr": return "🇫🇷";
+    case "es": return "🇪🇸";
+    case "zh": return "🇨🇳";
+    default: return "🇬🇧";
+  }
+}
+
+export function setCurrentLang(lang) {
+  localStorage.setItem('lang', lang);
+  window.location.reload();
+}
+
+export function getCurrentLang() {
+  return localStorage.getItem('lang') || detectBrowserLang();
+}
+
+// Returns a url for wiki in selected lang, else fallback to en
+export function getWikiLink(name, lang) {
+  const sub = lang !== 'en' ? `${lang}.` : '';
+  return `https://${sub}wiki.guildwars2.com/wiki/${encodeURIComponent(name.replace(/ /g, "_"))}`;
 }
