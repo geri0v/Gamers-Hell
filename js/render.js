@@ -4,12 +4,14 @@ import { createCopyBar } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
 import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
 import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
 import { paginate } from 'https://geri0v.github.io/Gamers-Hell/js/pagination.js';
+import { detectBrowserLang, fetchWikiSnippet } from 'https://geri0v.github.io/Gamers-Hell/js/lang.js';
 
 let allData = [];
 let currentPage = 1;
 const PAGE_SIZE = 20;
 let isLoading = false;
 let columnSort = {};
+let inlineDescriptions = {};
 
 function createCard(className, content) {
   const div = document.createElement('div');
@@ -22,8 +24,8 @@ function renderSearchAndSort() {
   return `
     <div id="main-controls-wrap">
       <div id="side-buttons">
-        <button class="side-btn" id="side-help" aria-label="Show controls help" tabindex="0">?</button>
-        <!-- Future: <button class="side-btn" id="side-lang" aria-label="Translate" tabindex="0">🌐</button> -->
+        <button class="side-btn" id="side-help" aria-label="Help" tabindex="0">?</button>
+        <button class="side-btn" id="side-lang" aria-label="Change language" tabindex="0">🌐</button>
       </div>
       <div class="search-sort-card">
         <div class="search-bar-row">
@@ -62,6 +64,19 @@ function updateExpansionOptions(events) {
     exps.map(exp => `<option value="${exp}">${exp}</option>`).join('');
 }
 
+// UTIL: fetch and cache description for event/map inline-description line
+async function getInlineDescription(event) {
+  const key = event.name + "::" + (event.map || "");
+  if (inlineDescriptions[key]) return inlineDescriptions[key];
+  // Use current language, fallback "en"
+  const lang = window.ghdvLang || detectBrowserLang();
+  let desc = await fetchWikiSnippet(event.waypointName || event.name, lang) || "";
+  desc = desc.replace(/\s*\[\d+\]/g, ''); // remove wiki reference numbers
+  if (desc.length > 180) desc = desc.slice(0,176) + '…';
+  inlineDescriptions[key] = desc;
+  return desc;
+}
+
 function renderLootCards(loot, eventId) {
   if (!Array.isArray(loot) || loot.length === 0) return '';
   const lootId = `loot-${eventId}`;
@@ -84,7 +99,6 @@ function renderLootCards(loot, eventId) {
 }
 
 function renderEventTable(events, sourceIdx, expIdx) {
-  // Sorting arrow logic
   function sortClass(col) {
     if (columnSort.key === col) return columnSort.dir === 'asc' ? 'sorted-asc' : 'sorted-desc';
     return '';
@@ -102,11 +116,12 @@ function renderEventTable(events, sourceIdx, expIdx) {
       <tbody>
         ${events.map((item, itemIdx) => {
           const eventId = `event-${expIdx}-${sourceIdx}-${itemIdx}`;
+          const anchor = "event-" + (item.name || "").replace(/\W/g, "");
           return `
-            <tr role="row" id="event-${item.name.replace(/\W/g, '')}">
+            <tr role="row" id="${anchor}">
               <td role="cell">
                 ${item.wikiLink ? `<a href="${item.wikiLink}" target="_blank">${item.name}</a>` : item.name}
-                <a href="#event-${item.name.replace(/\W/g, '')}" aria-label="Direct link to ${item.name}" style="color: #666; text-decoration:none; margin-left:0.3em; font-size:0.96em;">🔗</a>
+                <a href="#${anchor}" aria-label="Direct link to ${item.name}" style="color: #666; text-decoration:none; margin-left:0.3em; font-size:0.96em;">🔗</a>
               </td>
               <td role="cell">
                 ${item.mapWikiLink ? `<a href="${item.mapWikiLink}" target="_blank">${item.map}</a>` : item.map}
@@ -116,6 +131,11 @@ function renderEventTable(events, sourceIdx, expIdx) {
                   ? `<a href="${item.waypointWikiLink}" target="_blank">${item.waypointName}</a> `
                   : ''}
                 ${item.code || ''}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <div class="inline-desc" id="desc-${anchor}" aria-live="polite"></div>
               </td>
             </tr>
             <tr>
@@ -147,7 +167,6 @@ function renderNoResults() {
   return `<div class="no-results" aria-live="polite">No results found. Try changing your filter, search, or expansion.</div>`;
 }
 
-// Main filter/apply logic must ensure sticky header, centered controls
 function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = false) {
   const searchTerm = document.getElementById('search-input').value;
   const expansion = document.getElementById('expansion-filter').value;
@@ -164,7 +183,6 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
       return 0;
     });
   }
-
   const pagedEvents = paginate(filteredEvents, PAGE_SIZE, pageNumber);
   const grouped = groupAndSort(pagedEvents);
 
@@ -206,9 +224,22 @@ function applyFiltersAndRender(container, allEvents, pageNumber = 1, append = fa
       currentPage = 1;
       applyFiltersAndRender(container, allData, currentPage, false);
     };
-    th.onkeydown = e => {
-      if (e.key === 'Enter' || e.key === ' ') th.click();
-    };
+    th.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') th.click(); };
+  });
+
+  // Fetch inline descriptions
+  container.querySelectorAll(".inline-desc").forEach(async (div) => {
+    if (!div.dataset.loaded && div.id && div.id.startsWith('desc-event-')) {
+      div.dataset.loaded = "1";
+      const anchor = div.id.replace('desc-', '');
+      const event = allData.find(e => ("event-" + (e.name || "").replace(/\W/g, "")) === anchor);
+      if (event) {
+        const desc = await getInlineDescription(event);
+        if (desc) {
+          div.textContent = desc;
+        }
+      }
+    }
   });
 }
 
@@ -217,7 +248,7 @@ export async function renderApp(containerId) {
   container.innerHTML = renderProgressBar(0) + '<div>Loading...</div>';
   allData = [];
   let loaded = 0;
-  const total = 3; // adjust based on manifest
+  const total = 3;
   await fetchAllData(async (flat, url, err) => {
     loaded++;
     const percent = Math.round((loaded / total) * 100);
@@ -238,7 +269,7 @@ export async function renderApp(containerId) {
       currentPage = 1;
       applyFiltersAndRender(eventsList, allData, currentPage, false);
 
-      // Hook up controls
+      // Controls and event listeners
       document.getElementById('search-input').addEventListener('input', () => {
         currentPage = 1;
         applyFiltersAndRender(eventsList, allData, currentPage, false);
@@ -253,11 +284,9 @@ export async function renderApp(containerId) {
       });
       document.getElementById('sort-filter').addEventListener('change', () => {
         currentPage = 1;
-        columnSort = {}; // filter dropdown disables header sort
+        columnSort = {};
         applyFiltersAndRender(eventsList, allData, currentPage, false);
       });
-
-      // Infinite scroll
       window.addEventListener('scroll', () => {
         if (isLoading) return;
         const containerHeight = document.documentElement.scrollHeight;
@@ -276,8 +305,7 @@ export async function renderApp(containerId) {
           }
         }
       });
-
-      // Help dialogue
+      // "?" Help dialog
       document.getElementById('side-help').addEventListener('click', () => {
         if (document.getElementById('modal-help')) return;
         const modal = document.createElement('div');
@@ -289,12 +317,11 @@ export async function renderApp(containerId) {
           <div style="background:#fff;border-radius:10px;padding:2em 2.7em 2em 2.7em;max-width:410px;text-align:left;box-shadow:0 10px 40px #2343a633;">
             <h2 style="margin-top:0;font-size:1.2em">How to Use the Visualizer</h2>
             <ul style="margin:1em 0 1em 1em;">
-              <li><strong>Search:</strong> Focus the bar with Tap/Click or <kbd>Tab</kbd>. Type to filter by event/map name.</li>
-              <li><strong>Sort:</strong> Click a heading or use the sort dropdown to sort events. Use <kbd>Tab</kbd>, <kbd>Enter</kbd>.</li>
-              <li><strong>Toggle sections:</strong> Access via <kbd>Tab</kbd> and <kbd>Enter</kbd>/<kbd>Space</kbd>.</li>
-              <li><strong>Copy bar:</strong> Use <kbd>Tab</kbd> and <kbd>Enter</kbd> to copy event text; receives a "Copied!" indicator.</li>
-              <li><strong>Deep links:</strong> Click 🔗 next to an event name to copy/share a direct link to that event.</li>
-              <li><strong>Mobile:</strong> All controls are touch-friendly and swipeable.</li>
+              <li><strong>Search:</strong> Use Tap/Click or <kbd>Tab</kbd>. Type to filter by event/map name.</li>
+              <li><strong>Sort:</strong> Click a heading or use the sort dropdown. Use <kbd>Tab</kbd>, <kbd>Enter</kbd>.</li>
+              <li><strong>Toggle sections:</strong> <kbd>Tab</kbd> to toggle, use Enter/Space.</li>
+              <li><strong>Copy:</strong> <kbd>Tab</kbd> and <kbd>Enter</kbd> copies bar; “Copied!” indicator shows success.</li>
+              <li><strong>Deep links:</strong> Click 🔗 to copy/share a direct link to that event.</li>
               <li><strong>Close:</strong> Click outside or press <kbd>Esc</kbd>.</li>
             </ul>
           </div>
@@ -307,9 +334,11 @@ export async function renderApp(containerId) {
           if (evt.key === 'Escape') { modal.remove(); window.removeEventListener('keydown', onEscHelp);}
         });
       });
-
+      // 🌐 Language selection (future: cycle language and reload with translated strings)
+      document.getElementById('side-lang').addEventListener('click', () => {
+        alert('Language switch: Coming soon! The visualizer will fetch GW2 data/wiki with your chosen language.');
+      });
     }
   });
 }
-
 renderApp('app');
