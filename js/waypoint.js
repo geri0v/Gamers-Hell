@@ -1,55 +1,65 @@
+/**
+ * resolveWaypoints(chatcodes: string[]) → Map of chat_code → { name, wiki }
+ * Dynamically crawls POIs by map/floor/continent to get live waypoint names.
+ * Lightweight, zero static files.
+ */
+
 export async function resolveWaypoints(chatcodes = []) {
   const uniqueCodes = [...new Set(chatcodes.map(c => c.trim()).filter(Boolean))];
-  const result = {};
   const waypointMap = {};
-  const continents = [1, 2];
+  const result = {};
+
+  if (uniqueCodes.length === 0) return result;
+
+  const continents = [1, 2]; // Tyria, Mists
 
   try {
+    // Step 1: Fetch continent floor metadata
     const continentMeta = await Promise.all(
-      continents.map(id => fetch(`https://api.guildwars2.com/v2/continents/${id}`).then(r => r.json()))
+      continents.map(id =>
+        fetch(`https://api.guildwars2.com/v2/continents/${id}`).then(r => r.json())
+      )
     );
 
-    const floorFetches = [];
-    continentMeta.forEach((continent, idx) => {
-      const floorIds = continent?.floors || [];
-      floorFetches.push(
-        fetch(`https://api.guildwars2.com/v2/continents/${continents[idx]}/floors?ids=${floorIds.join(',')}`)
-          .then(r => r.json())
-          .catch(() => [])
-      );
+    // Step 2: Fetch floors data that lists maps and POIs
+    const floorFetches = continentMeta.map((cMeta, i) => {
+      const floorIds = cMeta.floors || [];
+      const ids = floorIds.slice(0, 10).join(','); // limit for speed (you can extend)
+      return fetch(`https://api.guildwars2.com/v2/continents/${continents[i]}/floors?ids=${ids}`)
+        .then(r => r.json())
+        .catch(() => []);
     });
 
     const allFloors = await Promise.all(floorFetches);
-    const all = allFloors.flat(1);
+    const flatFloors = allFloors.flat();
 
-    all.forEach(floor => {
+    // Step 3: Crawl regions → maps → POIs in each floor
+    for (const floor of flatFloors) {
       const regions = floor?.regions || {};
-      Object.values(regions).forEach(region => {
+      for (const region of Object.values(regions)) {
         const maps = region?.maps || {};
-        Object.values(maps).forEach(map => {
-          const pois = map?.points_of_interest || {};
-          Object.values(pois).forEach(poi => {
-            if (poi?.type === "waypoint" && poi.chat_link && poi.name) {
-              waypointMap[poi.chat_link.trim()] = {
+        for (const subMap of Object.values(maps)) {
+          const pois = subMap?.points_of_interest || {};
+          for (const poi of Object.values(pois)) {
+            const code = poi?.chat_link?.trim();
+            if (poi?.type === "waypoint" && code && poi?.name && uniqueCodes.includes(code)) {
+              waypointMap[code] = {
                 name: poi.name,
-                wiki: `https://wiki.guildwars2.com/wiki/${encodeURIComponent(poi.name.replace(/ /g, "_"))}`
+                wiki: `https://wiki.guildwars2.com/wiki/${encodeURIComponent(poi.name.replace(/ /g, '_'))}`
               };
             }
-          });
-        });
-      });
-    });
+          }
+        }
+      }
+    }
 
-    uniqueCodes.forEach(code => {
-      result[code] = waypointMap[code] || null;
+    uniqueCodes.forEach(c => {
+      result[c] = waypointMap[c] || null;
     });
 
     return result;
-  } catch (e) {
-    console.error("Waypoint resolution error:", e);
-    return uniqueCodes.reduce((acc, c) => {
-      acc[c] = null;
-      return acc;
-    }, {});
+  } catch (err) {
+    console.error("Waypoint resolution failed:", err);
+    return Object.fromEntries(uniqueCodes.map(code => [code, null]));
   }
 }
