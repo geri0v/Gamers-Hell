@@ -6,7 +6,23 @@ import { fetchWaypoints } from './waypoint.js';  // Your waypoint fetching modul
 const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQI6XWf68WL1QBPkqgaNoFvNS4yV47h1OZ_E8MEZQiVBSMYVKNpeMWR49rJgNDJATkswIZiqktmrcxx/pub?output=csv';
 const OTC_CSV_URL = 'https://raw.githubusercontent.com/otc-cirdan/gw2-items/refs/heads/master/items.csv';
  // Replace with your OTC CSV URL
-const GW2TREASURES_API = 'https://api.gw2treasures.com/item/prices?ids=';
+const GW2TREASURES_ITEM_URL = 'https://api.gw2treasures.com/items';
+
+async function fetchGw2TreasuresItems(itemIds = []) {
+  if (!itemIds.length) return {};
+  try {
+    const res = await fetch(GW2TREASURES_ITEM_URL + '?ids=' + itemIds.join(','), {
+      headers: {
+        Authorization: `Bearer e53da4d7-cb26-4225-b8fb-dfe4a81ad834`
+      }
+    });
+    if (!res.ok) throw new Error('GW2Treasures fetch failed');
+    return await res.json();
+  } catch (err) {
+    console.warn('GW2Treasures fetch error:', err);
+    return {};
+  }
+}
 
 const GW2_API = {
   MAPS: 'https://api.guildwars2.com/v2/maps',
