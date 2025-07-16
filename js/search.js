@@ -1,7 +1,9 @@
 import { filterEventsExtended } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
 
-// Simple fuzzy search: allows flexible matching
-function fuzzyMatch(str, pattern) {
+/**
+ * Basic fuzzy matching (term matches character order loosely)
+ */
+function fuzzyMatch(str = '', pattern = '') {
   str = str.toLowerCase();
   pattern = pattern.toLowerCase();
   let patternIdx = 0;
@@ -14,16 +16,22 @@ function fuzzyMatch(str, pattern) {
   return false;
 }
 
+/**
+ * Perform enriched event filtering
+ * @param {Array} events - Event objects to filter
+ * @param {Object} filters - All filter states from UI
+ */
 export function filterEvents(events, filters) {
-  const { searchTerm, expansion, rarity, lootName, itemType, vendorValueMin, vendorValueMax, chatcode, guaranteedOnly, chanceOnly, sortKey } = filters;
-  let filtered = events;
-  if (searchTerm) {
-    filtered = filtered.filter(e =>
-      fuzzyMatch(e.name || '', searchTerm) ||
-      fuzzyMatch(e.map || '', searchTerm)
+  const { searchTerm, ...rest } = filters;
+
+  let subset = events;
+
+  if (searchTerm && searchTerm.trim().length) {
+    const term = searchTerm.trim();
+    subset = events.filter(e =>
+      fuzzyMatch(e.name || '', term) || fuzzyMatch(e.map || '', term)
     );
   }
-  // Use full extended filtering with rest of parameters
-  filtered = filterEventsExtended(filtered, { expansion, rarity, lootName, itemType, vendorValueMin, vendorValueMax, chatcode, guaranteedOnly, chanceOnly, sortKey });
-  return filtered;
+
+  return filterEventsExtended(subset, rest);
 }
