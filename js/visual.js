@@ -1,12 +1,12 @@
-// visual.js (final)
 import { loadAndEnrichData } from './infoload.js';
 import { renderSearchBar, renderFilterBar, renderSortButtons, filterEvents } from './search.js';
 import { renderEventGroups } from './card.js';
 import { groupByExpansionAndSource } from './event.js';
 import { paginate } from './pagination.js';
+import { appendTerminal, startTerminal, endTerminal } from './terminal.js';
 
 let allEvents = [];
-let currentFilters = { searchTerm: '', expansion: '', rarity: '', lootType: '' };
+let currentFilters = { searchTerm: '', expansion: '', rarity: '', lootType: '', eventName: '' };
 let currentSort = '';
 let currentPage = 1;
 let pageSize = 20;
@@ -19,25 +19,30 @@ function updateUI() {
 
   const app = document.getElementById('app');
   app.innerHTML = '';
-  app.appendChild(renderSearchBar(term => {
+
+  const topUI = document.createElement('div');
+  topUI.className = 'top-ui-bar';
+  topUI.appendChild(renderSearchBar(term => {
     currentFilters.searchTerm = term;
     updateUI();
   }));
 
-  app.appendChild(renderFilterBar({
+  topUI.appendChild(renderFilterBar({
     expansions: getUnique(allEvents.map(e => e.expansion)),
     rarities: getUnique(allEvents.flatMap(e => e.loot?.map(l => l.rarity))),
+    events: getUnique(allEvents.map(e => e.name)), // for event dropdown
     current: currentFilters
   }, (key, val) => {
     currentFilters[key] = val;
     updateUI();
   }));
 
-  app.appendChild(renderSortButtons(key => {
+  topUI.appendChild(renderSortButtons(key => {
     currentSort = key;
     updateUI();
   }));
 
+  app.appendChild(topUI);
   app.appendChild(renderEventGroups(grouped));
 }
 
@@ -60,12 +65,27 @@ function applySort(events, key) {
   });
 }
 
-window.addEventListener('DOMContentLoaded', async () => {
-  const terminal = document.querySelector('#terminal');
-  terminal.classList.add('matrix-mode');
+async function boot() {
+  startTerminal();
 
-  allEvents = await loadAndEnrichData();
+  try {
+    appendTerminal('📦 Checking for cache...', 'progress');
 
-  setTimeout(() => terminal.classList.add('hidden'), 3000);
-  updateUI();
-});
+    const events = await loadAndEnrichData(ev => {
+      appendTerminal(`➕ ${ev.name} loaded [${ev.map}]`, 'success');
+    });
+
+    allEvents = events;
+    applyFiltersAndRender();
+
+    appendTerminal(`✅ Loaded ${events.length} events.`, 'success');
+    endTerminal(true);
+
+  } catch (e) {
+    console.error(e);
+    appendTerminal('🔥 Failed to load or enrich data.', 'error');
+    endTerminal(false);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', boot);
