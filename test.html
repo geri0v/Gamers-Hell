@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GW2 Event Visualizer</title>
 
-  <!-- Optional: Favicon -->
+  <!-- Favicon -->
   <link rel="icon" href="https://wiki.guildwars2.com/favicon.ico" type="image/x-icon" />
 
   <!-- Stylesheet -->
@@ -13,22 +13,22 @@
 </head>
 <body>
 
-  <!-- App Container -->
+  <!-- App Mount Point -->
   <div id="app">
     <div class="progress-bar-container">
-      <div class="progress-bar" style="width: 10%;"></div>
+      <div class="progress-bar" style="width: 30%;"></div>
     </div>
-    <p style="text-align:center;">Loading event data...</p>
+    <p style="text-align:center;">Loading events and loot data...</p>
   </div>
 
-  <!-- Fallback if JavaScript is disabled -->
+  <!-- No JS Fallback -->
   <noscript>
-    <div style="padding:2em;text-align:center;background:#ffeb3b;">
+    <div style="padding:2em;text-align:center;background:#fff3cd;color:#222;">
       ⚠️ This application requires JavaScript to function. Please enable JavaScript in your browser.
     </div>
   </noscript>
 
-  <!-- Main App Script (modular ES6) -->
+  <!-- Main App Script -->
   <script type="module" src="js/render.js"></script>
 </body>
 </html>
