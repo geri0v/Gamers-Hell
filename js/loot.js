@@ -20,17 +20,22 @@ export function renderLootCards(lootList) {
     lootCard.className = 'loot-card';
     if (item === mostValuable) lootCard.classList.add('most-valuable');
 
+    // Tooltip-enhanced rarity badge
+    const raritySpan = item.rarity
+      ? `<span class="loot-rarity rarity-${item.rarity.toLowerCase()}" title="Rarity: ${item.rarity}">${item.rarity}</span>`
+      : '';
+
     lootCard.innerHTML = `
       ${item.icon ? `<img src="${item.icon}" class="loot-icon" alt="${item.name} icon" />` : ''}
       <div class="loot-info">
         <a href="${item.wikiLink}" target="_blank">${item.name}</a>
-        <span class="loot-rarity rarity-${(item.rarity || '').toLowerCase()}">${item.rarity || ''}</span>
+        ${raritySpan}
         <div class="loot-meta">
           <span>Price: ${formatCopper(item.price)}</span>
           ${item.vendorValue ? `<span>Vendor: ${formatCopper(item.vendorValue)}</span>` : ''}
-          ${item.accountBound ? '<span class="loot-ab">Accountbound</span>' : ''}
-          ${item.guaranteed ? '<span class="loot-guaranteed">Guaranteed</span>' : ''}
-          ${item.chatCode ? `<code class="loot-chatcode">${item.chatCode}</code>` : ''}
+          ${item.accountBound ? '<span class="loot-ab" title="Item is Account Bound">Accountbound</span>' : ''}
+          ${item.guaranteed ? '<span class="loot-guaranteed" title="Always drops from event">Guaranteed</span>' : ''}
+          ${item.chatCode ? `<code class="loot-chatcode" title="Waypoints or item chat code">${item.chatCode}</code>` : ''}
           ${item === mostValuable ? createMostValuableBadge(item) : ''}
         </div>
       </div>
