@@ -1,164 +1,132 @@
-// Only working CSV sources (optional, fill for extra HTTPS CSVs if needed)
 const EXTRA_CSV_SOURCES = [
-  // e.g., 'https://yourdomain.github.io/yourrepo/items.csv'
+  // Example: 'https://yourdomain.com/custom-prices.csv'
 ];
 
 const MANIFEST_URL = 'https://geri0v.github.io/Gamers-Hell/json/manifest.json';
 
-export async function fetchAllData(onProgress, batchSize = 5) {
+/**
+ * Fetch and process all files listed in manifest.json + extra sources.
+ */
+export async function fetchAllData(onProgress = null, batchSize = 5) {
   const manifest = await fetch(MANIFEST_URL).then(r => r.json());
-  const JSON_URLS = manifest.files.map(f =>
+  const urls = manifest.files.map(f =>
     f.startsWith('http') ? f : `https://geri0v.github.io/Gamers-Hell/json/${f}`
-  );
-  const allUrls = JSON_URLS.concat(EXTRA_CSV_SOURCES);
+  ).concat(EXTRA_CSV_SOURCES);
 
   let allData = [];
-  for (let i = 0; i < allUrls.length; i += batchSize) {
-    const batch = allUrls.slice(i, i + batchSize);
+
+  for (let i = 0; i < urls.length; i += batchSize) {
+    const batch = urls.slice(i, i + batchSize);
     const results = await Promise.allSettled(batch.map(async url => {
       try {
-        if (url.endsWith('.csv')) {
-          const res = await fetch(url);
-          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-          const text = await res.text();
-          return parseCSVToJSON(text);
-        } else {
-          const res = await fetch(url);
-          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-          return await res.json();
-        }
-      } catch (e) {
-        return []; // Fail gracefully: treat as empty data
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text = await res.text();
+        return url.endsWith('.csv') ? parseCSVToJSON(text) : JSON.parse(text);
+      } catch {
+        return [];
       }
     }));
 
     results.forEach((result, idx) => {
-      const url = batch[idx];
-      if (result.status === 'fulfilled') {
-        const flat = flatten(result.value);
-        allData = allData.concat(flat);
-        if (onProgress) onProgress(flat, url, null);
-      } else {
-        if (onProgress) onProgress([], url, (result.reason ? result.reason : "Unknown error"));
-      }
+      const resultData = result.status === 'fulfilled' ? result.value : [];
+      const flat = flatten(resultData);
+      allData = allData.concat(flat);
+      if (onProgress) onProgress(flat, urls[idx], result.reason || null);
     });
   }
+
   return allData;
 }
 
+/**
+ * Parse CSV as simple array of objects.
+ */
 function parseCSVToJSON(csvText) {
-  const lines = csvText.split('\n');
-  const header = lines[0].split(',');
-  const data = [];
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i];
-    if (!line.trim()) continue;
+  const lines = csvText.split('\n').filter(line => line.trim());
+  const header = lines[0].split(',').map(h => h.trim());
+  return lines.slice(1).map(line => {
     const cols = line.split(',');
     const obj = {};
-    for (let j = 0; j < header.length; j++) {
-      obj[header[j].trim()] = cols[j] ? cols[j].trim() : '';
-    }
-    data.push(obj);
-  }
-  return data;
+    header.forEach((key, i) => {
+      obj[key] = cols[i] ? cols[i].trim() : '';
+    });
+    return obj;
+  });
 }
 
+/**
+ * Flatten all: expansion → sources → events into event[].
+ */
 function flatten(dataArr) {
-  if (Array.isArray(dataArr) && dataArr.length > 0 && dataArr[0].sourcename) return dataArr;
+  if (Array.isArray(dataArr) && dataArr[0]?.sourcename) return dataArr;
+
   const flat = [];
   dataArr.forEach(expansionObj => {
     const expansion = expansionObj.expansion || 'Unknown Expansion';
     (expansionObj.sources || []).forEach(sourceObj => {
-      const sourcename = sourceObj.sourceName || 'Unknown Source';
-      (sourceObj.events || []).forEach(eventObj => {
-        flat.push({ expansion, sourcename, ...eventObj });
+      const sourcename = sourceObj.sourceName || sourceObj.sourcename || 'Unknown Source';
+      (sourceObj.events || []).forEach(event => {
+        flat.push({ expansion, sourcename, ...event });
       });
     });
   });
   return flat;
 }
 
+/**
+ * Re-group from flat → by expansion and source (for tables/layout).
+ */
 export function groupAndSort(data) {
   const grouped = {};
   data.forEach(item => {
-    const exp = item.expansion || 'Unknown Expansion';
-    const src = item.sourcename || 'Unknown Source';
-    if (!grouped[exp]) grouped[exp] = {};
-    if (!grouped[exp][src]) grouped[exp][src] = [];
+    const exp = item.expansion || 'Unknown';
+    const src = item.sourcename || 'Unknown';
+    grouped[exp] = grouped[exp] || {};
+    grouped[exp][src] = grouped[exp][src] || [];
     grouped[exp][src].push(item);
   });
-  return Object.keys(grouped).sort().map(expansion => ({
+
+  return Object.entries(grouped).sort().map(([expansion, sources]) => ({
     expansion,
-    sources: Object.keys(grouped[expansion]).sort().map(sourcename => ({
+    sources: Object.entries(sources).sort().map(([sourcename, items]) => ({
       sourcename,
-      items: grouped[expansion][sourcename]
+      items
     }))
   }));
 }
 
-// Extended filtering for advanced search
-export function filterEventsExtended(events, { searchTerm, expansion, rarity, lootName, itemType, vendorValueMin, vendorValueMax, chatcode, guaranteedOnly, chanceOnly, sortKey }) {
-  let filtered = events;
-  if (searchTerm) {
-    const term = searchTerm.toLowerCase();
-    filtered = filtered.filter(e =>
-      (e.name && e.name.toLowerCase().includes(term)) ||
-      (e.map && e.map.toLowerCase().includes(term))
-    );
-  }
-  if (expansion) {
-    filtered = filtered.filter(e => e.expansion === expansion);
-  }
-  if (rarity) {
-    filtered = filtered.filter(e =>
-      (e.loot || []).some(l => l.rarity === rarity)
-    );
-  }
-  if (lootName) {
-    const ln = lootName.toLowerCase();
-    filtered = filtered.filter(e =>
-      (e.loot || []).some(l => l.name && l.name.toLowerCase().includes(ln))
-    );
-  }
-  if (itemType) {
-    const it = itemType.toLowerCase();
-    filtered = filtered.filter(e =>
-      (e.loot || []).some(l => l.type && l.type.toLowerCase() === it)
-    );
-  }
-  if (vendorValueMin !== undefined) {
-    filtered = filtered.filter(e =>
-      (e.loot || []).some(l => l.vendorValue !== undefined && l.vendorValue >= vendorValueMin)
-    );
-  }
-  if (vendorValueMax !== undefined) {
-    filtered = filtered.filter(e =>
-      (e.loot || []).some(l => l.vendorValue !== undefined && l.vendorValue <= vendorValueMax)
-    );
-  }
-  if (chatcode) {
-    filtered = filtered.filter(e =>
-      (e.loot || []).some(l => l.chatCode && l.chatCode.toLowerCase() === chatcode.toLowerCase())
-    );
-  }
-  if (guaranteedOnly) {
-    filtered = filtered.filter(e =>
-      (e.loot || []).some(l => l.guaranteed)
-    );
-  }
-  if (chanceOnly) {
-    filtered = filtered.filter(e =>
-      (e.loot || []).some(l => !l.guaranteed)
-    );
-  }
-  if (sortKey) {
-    filtered = filtered.slice().sort((a, b) => {
-      const aVal = (a[sortKey] || '').toLowerCase();
-      const bVal = (b[sortKey] || '').toLowerCase();
-      if (aVal < bVal) return -1;
-      if (aVal > bVal) return 1;
-      return 0;
-    });
-  }
-  return filtered;
+/**
+ * Extended filter logic (shared between render + search)
+ */
+export function filterEventsExtended(events, {
+  expansion, rarity, lootName, itemType,
+  vendorValueMin, vendorValueMax,
+  chatcode, guaranteedOnly, chanceOnly, sortKey
+}) {
+  return events.filter(e => {
+    if (expansion && e.expansion !== expansion) return false;
+    if (rarity && !(e.loot || []).some(l => l.rarity === rarity)) return false;
+    if (lootName) {
+      const val = lootName.toLowerCase();
+      if (!(e.loot || []).some(l => l.name?.toLowerCase().includes(val))) return false;
+    }
+    if (itemType) {
+      const val = itemType.toLowerCase();
+      if (!(e.loot || []).some(l => l.type?.toLowerCase() === val)) return false;
+    }
+    if (vendorValueMin !== undefined) {
+      if (!(e.loot || []).some(l => l.vendorValue >= vendorValueMin)) return false;
+    }
+    if (vendorValueMax !== undefined) {
+      if (!(e.loot || []).some(l => l.vendorValue <= vendorValueMax)) return false;
+    }
+    if (chatcode) {
+      const val = chatcode.toLowerCase();
+      if (!(e.loot || []).some(l => l.chatCode?.toLowerCase() === val)) return false;
+    }
+    if (guaranteedOnly && !(e.loot || []).some(l => l.guaranteed)) return false;
+    if (chanceOnly && !(e.loot || []).some(l => !l.guaranteed)) return false;
+    return true;
+  });
 }
