@@ -8,12 +8,11 @@
   <!-- Favicon -->
   <link rel="icon" href="https://wiki.guildwars2.com/favicon.ico" type="image/x-icon" />
 
-  <!-- Stylesheet via GitHub Page -->
+  <!-- ✅ this loads light style.css -->
   <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css" />
 </head>
 <body>
 
-  <!-- App Mount Point -->
   <div id="app">
     <div class="progress-bar-container">
       <div class="progress-bar" style="width: 30%;"></div>
@@ -21,15 +20,16 @@
     <p style="text-align:center;">Loading events and loot data...</p>
   </div>
 
-  <!-- No JavaScript Fallback -->
   <noscript>
     <div style="padding:2em;text-align:center;background:#fff3cd;color:#222;">
-      ⚠️ JavaScript is required to run this app. Please enable it in your browser.
+      ⚠️ This application requires JavaScript to function. Please enable JavaScript in your browser.
     </div>
   </noscript>
 
-  <!-- Load Debug Console & Main UI Renderer from GitHub Pages -->
+  <!-- ✅ load only render.js -->
   <script type="module" src="https://geri0v.github.io/Gamers-Hell/js/console.js"></script>
   <script type="module" src="https://geri0v.github.io/Gamers-Hell/js/render.js"></script>
+
+  <!-- ❌ DO NOT load visual.js here unless you are testing that version -->
 </body>
 </html>
