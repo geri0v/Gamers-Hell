@@ -1,6 +1,4 @@
 const GW2TREASURES_BEARER = "e53da4d7-cb26-4225-b8fb-dfe4a81ad834";
-const EXTRA_CSV_SOURCES = [];
-
 const waypointCache = new Map();
 const wikiDescCache = new Map();
 
@@ -68,52 +66,40 @@ export async function fetchGW2TreasuresBulkPrices(ids) {
   return res.ok ? await res.json() : [];
 }
 
-export async function fetchGW2TreasuresContainerContents(ids) {
-  const res = await fetch("https://api.gw2treasures.com/items/bulk/container-contents", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${GW2TREASURES_BEARER}`
-    },
-    body: JSON.stringify(ids)
-  });
-  return res.ok ? await res.json() : [];
-}
-
 export async function fetchWikiDescription(name) {
-  if (!name) return "";
+  if (!name) return '';
   if (wikiDescCache.has(name)) return wikiDescCache.get(name);
-
   const url = `https://wiki.guildwars2.com/api.php?action=query&prop=extracts&explaintext&format=json&origin=*&titles=${encodeURIComponent(name)}&exsentences=2`;
   const data = await safeFetchJson(url);
   let desc = "";
-
   if (data?.query?.pages) {
-    for (const key in data.query.pages) {
-      if (data.query.pages[key].extract) {
-        desc = data.query.pages[key].extract.split('. ').slice(0, 2).join('. ') + '.';
+    for (const page of Object.values(data.query.pages)) {
+      if (page.extract) {
+        desc = page.extract
+          .split('. ')
+          .slice(0, 2)
+          .join('. ') + '.';
         break;
       }
     }
   }
-
   wikiDescCache.set(name, desc);
   return desc;
 }
 
-// ✅ Replaced 429-prone map resolver with one-shot POI dump
+// ✅ Waypoint Name resolver — successful replacement
 export async function resolveWaypoints(chatcodes) {
   const uncached = chatcodes.filter(c => !waypointCache.has(c));
   if (!uncached.length) return Object.fromEntries(waypointCache);
 
-  const allPOIs = await safeFetchJson(`https://api.guildwars2.com/v2/points-of-interest?ids=all`);
-  if (!Array.isArray(allPOIs)) return Object.fromEntries(waypointCache);
+  const pois = await safeFetchJson(`https://api.guildwars2.com/v2/points-of-interest?ids=all`);
+  if (!Array.isArray(pois)) return Object.fromEntries(waypointCache);
 
-  for (const poi of allPOIs) {
-    if (poi.type === "waypoint" && poi.chat_link && uncached.includes(poi.chat_link)) {
+  for (const poi of pois) {
+    if (poi.type === "waypoint" && poi.chat_link) {
       waypointCache.set(poi.chat_link, {
         name: poi.name,
-        wiki: `https://wiki.guildwars2.com/wiki/${encodeURIComponent(poi.name.replace(/ /g, "_"))}`
+        wiki: `https://wiki.guildwars2.com/wiki/${encodeURIComponent(poi.name.replace(/ /g, '_'))}`
       });
     }
   }
@@ -121,26 +107,12 @@ export async function resolveWaypoints(chatcodes) {
   return Object.fromEntries(waypointCache);
 }
 
+// 🧾 Optional CSV price fallback (can be removed/filled)
 export async function fetchCSVPrices() {
-  let prices = {};
-  for (const url of EXTRA_CSV_SOURCES) {
-    const text = await safeFetchText(url);
-    if (!text) continue;
-    const lines = text.split('\n');
-    const headers = lines[0].split(',');
-    const idIdx = headers.indexOf('item_id');
-    const priceIdx = headers.indexOf('buy_price');
-
-    for (let i = 1; i < lines.length; i++) {
-      const cols = lines[i].split(',');
-      const id = parseInt(cols[idIdx]);
-      const price = parseInt(cols[priceIdx]);
-      if (!isNaN(id) && !isNaN(price)) prices[id] = price;
-    }
-  }
-  return prices;
+  return {};
 }
 
+// 💰 format price prettily
 export function formatPrice(copper) {
   if (copper == null) return 'N/A';
   const g = Math.floor(copper / 10000);
@@ -149,6 +121,7 @@ export function formatPrice(copper) {
   return `${g}g ${s}s ${c}c`;
 }
 
+// 🧩 Core enrichment
 export async function enrichItemsAndPrices(itemIds) {
   const items = await fetchGW2ItemsBulk(itemIds) || [];
   const prices = await fetchGW2PricesBulk(itemIds) || [];
@@ -159,21 +132,16 @@ export async function enrichItemsAndPrices(itemIds) {
 
   const priceMap = new Map();
   [...fallbackPrices, ...prices].forEach(p => {
-    const price = p.sells?.unit_price || p.buy?.unit_price;
+    const price = p.sells?.unit_price || p.buy?.unit_price || null;
     if (p.id != null) priceMap.set(p.id, price);
   });
 
-  for (const [id, p] of Object.entries(csvPrices)) {
-    if (!priceMap.has(Number(id))) priceMap.set(Number(id), p);
+  for (const [id, price] of Object.entries(csvPrices)) {
+    if (!priceMap.has(Number(id))) priceMap.set(Number(id), price);
   }
 
   return (fallbackItems || items).map(item => ({
     ...item,
     price: priceMap.get(item.id) ?? null
   }));
-}
-
-export async function enrichContainerContents(containerIds) {
-  const contents = await fetchGW2TreasuresContainerContents(containerIds);
-  return contents || [];
 }
