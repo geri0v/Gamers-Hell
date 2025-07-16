@@ -1,7 +1,7 @@
-/* Reset & Layout */
+/* Layout base */
 body {
   font-family: Arial, sans-serif;
-  background: #f9f9f9;
+  background: #f8f9fa;
   margin: 0;
   padding: 0;
 }
@@ -9,48 +9,40 @@ body {
 #app {
   max-width: 1200px;
   margin: 2em auto;
-  padding: 1rem;
+  padding: 0 1.5em;
 }
 
-/* === Toolbar Rows === */
+/* === Toolbar === */
 #main-controls-wrap {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 1em;
+  margin-bottom: 1.5em;
 }
 
-.toolbar-top {
+.toolbar-top,
+.filter-row {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75em;
   align-items: center;
 }
 
-.filter-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75em;
+input[type="text"],
+input[type="number"],
+select {
+  font-size: 1em;
+  padding: 0.45em 0.6em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: #fff;
 }
 
 #search-input {
   flex: 1;
-  min-width: 280px;
-  padding: 0.5em;
-  font-size: 1em;
-  border: 1px solid #bbb;
-  border-radius: 5px;
-}
-
-/* === Inputs / Selects === */
-input[type="text"],
-input[type="number"],
-select {
-  padding: 0.4em 0.6em;
-  font-size: 1em;
-  border-radius: 5px;
-  border: 1px solid #bbb;
-  background: #fff;
+  min-width: 320px;
+  font-size: 1.1em;
+  padding: 0.6em 0.8em;
 }
 
 /* === Buttons === */
@@ -59,19 +51,19 @@ select {
 .copy-btn {
   font-size: 1em;
   font-weight: bold;
-  padding: 0.4em 0.8em;
-  color: #fff;
   background: #1976d2;
+  color: white;
   border: none;
   border-radius: 6px;
+  padding: 0.45em 0.85em;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s ease;
 }
 
 .side-btn:hover,
 .toggle-btn:hover,
 .copy-btn:hover {
-  background: #125a9c;
+  background: #0e5ca2;
 }
 
 .side-btn:focus,
@@ -83,30 +75,30 @@ select:focus {
   outline-offset: 2px;
 }
 
-/* === Event Table === */
+/* === Event Tables === */
 .event-table {
   width: 100%;
-  background: #e3f2fd;
   border-collapse: collapse;
-  margin: 1.5em 0;
-  border-radius: 4px;
+  margin: 2em 0;
+  border-radius: 6px;
   overflow: hidden;
+  background-color: #e3f2fd;
 }
 
 .event-table th,
 .event-table td {
-  padding: 0.6em 0.8em;
+  padding: 0.6em 0.75em;
   border-bottom: 1px solid #bbdefb;
   text-align: center;
 }
 
 .event-table th {
   background-color: #bbdefb;
-  font-weight: bold;
-  cursor: pointer;
   position: sticky;
   top: 0;
   z-index: 1;
+  cursor: pointer;
+  user-select: none;
 }
 
 /* === Copy Bar === */
@@ -116,7 +108,7 @@ select:focus {
   align-items: center;
   gap: 0.5em;
   background: #fff;
-  padding: 0.4em 0.6em;
+  padding: 0.5em;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -128,6 +120,7 @@ select:focus {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f5f5f5;
+  min-width: 300px;
 }
 
 /* === Loot Cards === */
@@ -139,91 +132,76 @@ select:focus {
 }
 
 .subcard {
-  background: #fffbe6;
-  border: 1px solid #ffeb80;
+  background: #fffde7;
+  border: 1px solid #ffe082;
   border-radius: 6px;
   padding: 0.5em;
-  min-width: 120px;
+  min-width: 140px;
   max-width: 200px;
   display: flex;
   flex-direction: column;
-  gap: 0.3em;
+  align-items: flex-start;
+  gap: 0.4em;
 }
 
-/* Loot Icon Natural Size */
+/* Icons with natural size */
 .subcard img {
   height: auto;
-  max-height: 28px;
+  max-height: 32px;
   width: auto;
   vertical-align: middle;
   border-radius: 4px;
 }
 
-/* Badges */
+/* Guaranteed + most-valuable styling */
 .subcard.guaranteed {
-  border: 2px solid #4caf50;
+  border: 2px solid #43a047;
   background: #e8f5e9;
 }
 
 .subcard.most-valuable {
-  border: 2px solid #d4af37;
-  background: #fff8e1;
-  box-shadow: 0 0 10px #fbc02d70;
+  border: 2px solid #f9a825;
+  background: #fffbe6;
+  box-shadow: 0 0 10px #fbc02ddd;
 }
 
 .guaranteed-badge {
   font-size: 0.85em;
   font-weight: bold;
-  background: #4caf50;
+  background: #43a047;
   color: white;
   border-radius: 4px;
-  padding: 0.1em 0.6em;
-  margin-top: 0.3em;
+  padding: 0.2em 0.6em;
+  margin-top: 0.2em;
 }
 
 .most-valuable-badge {
   font-size: 1.15em;
   background: #ffd700;
   color: #6c5700;
-  padding: 0.1em 0.4em;
-  border-radius: 4px;
-  margin-top: 0.2em;
-}
-
-/* === Loot Compact Layout === */
-.subcards.compact .subcard {
-  min-width: 90px;
-  max-width: 110px;
-  padding: 0.3em;
-  font-size: 0.9em;
-  align-items: flex-start;
+  padding: 0.2em 0.4em;
   border-radius: 4px;
 }
 
-.subcards.compact {
-  max-height: 96px;
-  overflow-y: auto;
-}
-
-/* === Description Box === */
+/* === Descriptions === */
 .inline-desc {
   font-size: 0.95em;
-  color: #333;
+  color: #444;
+  padding: 0.6em;
   background: #f9f9f9;
-  margin-top: 0.4em;
-  padding: 0.5em;
   border-left: 4px solid #2196f3;
-  border-radius: 4px;
+  border-radius: 5px;
+  margin-top: 0.6em;
 }
 
 /* === Progress Bar === */
 .progress-bar-container {
+  height: 1.2em;
   width: 100%;
   max-width: 300px;
-  margin: 1em auto;
-  height: 1.2em;
   background: #dbefff;
   border-radius: 8px;
+  margin: 1em auto;
 }
 
 .progress-bar {
@@ -233,11 +211,11 @@ select:focus {
   transition: width 0.3s;
 }
 
-/* === Modal === */
+/* === Modal Help Overlay === */
 #modal-help {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0,0,0,0.5);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -252,18 +230,19 @@ select:focus {
   box-shadow: 0 0 12px #3338;
 }
 
-/* === Hidden Utility === */
+/* === Hidden Utility */
 .hidden {
   display: none !important;
 }
 
-/* === No Results === */
+/* === No results */
 .no-results {
   font-size: 1.1em;
-  padding: 1em;
-  border-radius: 6px;
   background: #fff3cd;
-  border: 1px solid #ffecb5;
+  border-radius: 6px;
+  padding: 1em;
   text-align: center;
-  margin-top: 2em;
+  margin: 2em auto;
+  max-width: 400px;
+  border: 1px solid #ffeeba;
 }
