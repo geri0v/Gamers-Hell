@@ -1,130 +1,49 @@
 // search.js
-import { filterEventsExtended } from './data.js';
+// Flexible search and filter for deep-dive GW2 event browser
 
-// === Render Search Bar ===
-export function renderSearchBar(onSearch) {
-  const wrap = document.createElement('div');
-  wrap.className = 'search-bar';
-
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.placeholder = 'Search events or maps...';
-  input.autocomplete = 'off';
-  input.value = '';
-  input.addEventListener('input', e => onSearch(e.target.value));
-  wrap.appendChild(input);
-
-  return wrap;
-}
-
-// === Render Filter Bar ===
-export function renderFilterBar(options, onChange) {
-  const container = document.createElement('div');
-  container.className = 'filter-bar';
-
-  // Helper for select box
-  const select = (label, list, key, current) => {
-    const wrap = document.createElement('label');
-    wrap.className = 'filter-item';
-    wrap.textContent = `${label}: `;
-
-    const dropdown = document.createElement('select');
-    list.forEach(({ val, text }) => {
-      const opt = document.createElement('option');
-      opt.value = val;
-      opt.textContent = text;
-      if (val === current) opt.selected = true;
-      dropdown.appendChild(opt);
-    });
-    dropdown.addEventListener('change', e => onChange(key, e.target.value));
-    wrap.appendChild(dropdown);
-    container.appendChild(wrap);
-  };
-
-  // === ORDER: Expansion | Event | Rarity | Loot Type ===
-  select('Expansion', options.expansions, 'expansion', options.current.expansion);
-
-  if (options.events && options.events.length) {
-    select(
-      'Event',
-      [{ val: '', text: 'All Events' }, ...options.events],
-      'eventName',
-      options.current.eventName
-    );
-  }
-
-  select('Rarity', options.rarities, 'rarity', options.current.rarity);
-
-  select('Loot Type', [
-    { val: '', text: 'All Loot' },
-    { val: 'guaranteed', text: 'Guaranteed Only' },
-    { val: 'chance', text: 'Chance Only' }
-  ], 'lootType', options.current.lootType);
-
-  return container;
-}
-
-// === Render Sort Buttons ===
-export function renderSortButtons(onSort) {
-  const sortWrap = document.createElement('div');
-  sortWrap.className = 'sort-bar';
-
-  ['Name', 'Map', 'Value'].forEach(key => {
-    const btn = document.createElement('button');
-    btn.textContent = `Sort by ${key}`;
-    btn.className = 'sort-btn';
-    btn.addEventListener('click', () => onSort(key.toLowerCase()));
-    sortWrap.appendChild(btn);
-  });
-
-  return sortWrap;
-}
-
-// === Fuzzy Matching ===
-export function fuzzyMatch(str, pattern) {
-  str = (str || '').toLowerCase();
-  pattern = (pattern || '').toLowerCase();
-  let patternIdx = 0;
-  for (let i = 0; i < str.length; i++) {
-    if (str[i] === pattern[patternIdx]) {
-      patternIdx++;
-      if (patternIdx === pattern.length) return true;
-    }
-  }
-  return false;
-}
-
-// === Filter Events Main Logic ===
+/**
+ * Filters events array using multiple criteria and loot tags.
+ * @param {Array} events - Array of enriched event objects.
+ * @param {Object} filters - { searchTerm, expansion, map, eventName, rarity, lootType }
+ * @returns {Array} - Filtered events.
+ */
 export function filterEvents(events, filters) {
-  let subset = events;
-  const {
-    searchTerm, lootType, expansion, rarity, itemType, eventName, ...rest
-  } = filters;
-
-  // Fuzzy search on event name or map
-  if (searchTerm && searchTerm.trim().length) {
-    const term = searchTerm.trim();
-    subset = subset.filter(e =>
-      fuzzyMatch(e.name || '', term) ||
-      fuzzyMatch(e.map || '', term)
-    );
-  }
-
-  // Event name filter (dropdown selection)
-  if (eventName && eventName.trim()) {
-    subset = subset.filter(e => (e.name || '') === eventName);
-  }
-
-  // Loot type filtering
-  if (lootType === 'guaranteed') {
-    subset = subset.filter(e => (e.loot || []).some(i => i.guaranteed === true));
-  } else if (lootType === 'chance') {
-    subset = subset.filter(e => (e.loot || []).some(i => i.guaranteed !== true));
-  }
-
-  // Pass remaining filters to extended logic
-  return filterEventsExtended(subset, {
-    expansion, rarity, itemType,
-    ...rest
+  return events.filter(event => {
+    // Search term on event name or loot items
+    if (filters.searchTerm) {
+      const term = filters.searchTerm.toLowerCase();
+      const inEvent = event.name.toLowerCase().includes(term);
+      const inLoot = (event.loot || []).some(i => i.name.toLowerCase().includes(term));
+      if (!inEvent && !inLoot) return false;
+    }
+    // Expansion
+    if (filters.expansion && filters.expansion !== '' && event.expansion !== filters.expansion) return false;
+    // Map
+    if (filters.map && filters.map !== '' && event.map !== filters.map) return false;
+    // Event name
+    if (filters.eventName && filters.eventName !== '' && event.name !== filters.eventName) return false;
+    // Rarity (loot must have at least one match)
+    if (filters.rarity && filters.rarity !== '') {
+      const hasRarity = (event.loot || []).some(item => {
+        return item.rarity && item.rarity.toLowerCase() === filters.rarity.toLowerCase();
+      });
+      if (!hasRarity) return false;
+    }
+    // Loot tag filter (guaranteed, collectible, achievement)
+    if (filters.lootType && filters.lootType !== '') {
+      switch (filters.lootType) {
+        case 'guaranteed':
+          if (!event.loot || !event.loot.some(item => item.guaranteed)) return false;
+          break;
+        case 'collectible':
+          if (!event.loot || !event.loot.some(item => item.collectible)) return false;
+          break;
+        case 'achievement':
+          if (!event.loot || !event.loot.some(item => item.achievementLinked)) return false;
+          break;
+        default: break;
+      }
+    }
+    return true;
   });
 }
