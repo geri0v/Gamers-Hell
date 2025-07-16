@@ -1,10 +1,10 @@
 /**
- * resolveWaypoints(chatcodes: string[]) → Map of chat_code → { name, wiki }
+ * fetchWaypoints(chatcodes: string[]) → Map of chat_code → { name, wiki }
  * Dynamically crawls POIs by map/floor/continent to get live waypoint names.
  * Lightweight, zero static files.
  */
 
-export async function resolveWaypoints(chatcodes = []) {
+export async function fetchWaypoints(chatcodes = []) {
   const uniqueCodes = [...new Set(chatcodes.map(c => c.trim()).filter(Boolean))];
   const waypointMap = {};
   const result = {};
