@@ -1,73 +1,93 @@
-import { getTpUrl } from './tp.js';
+import Papa from 'papaparse';
+import { getTpUrl } from './tp.js'; // Your Trading Post URL generator
 
+// === Configuration ===
+const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQI6XWf68WL1QBPkqgaNoFvNS4yV47h1OZ_E8MEZQiVBSMYVKNpeMWR49rJgNDJATkswIZiqktmrcxx/pub?output=csv';
+const GOOGLE_SHEET_POST_URL = 'https://script.google.com/macros/s/AKfycbxU0jDf9q-stm0niABqB7o0eFp_hyRcVdlduYT1dWHRPio0NF4raVulsT6Dw4DODXsx/exec';
 const GW2_API = {
   MAPS: 'https://api.guildwars2.com/v2/maps',
   EVENTS: 'https://api.guildwars2.com/v1/event_details.json',
+  WAYPOINTS: 'https://api.guildwars2.com/v2/points_of_interest',
 };
+const GW2TREASURES_API = 'https://api.gw2treasures.com/item/prices?ids=';
+const OTC_CSV_URL = 'https://your-csv-source/otc_itemlist.csv'; // Replace or add more sources here
 
-const GOOGLE_SHEET_SCRIPT = 'https://script.google.com/macros/s/AKfycbxU0jDf9q-stm0niABqB7o0eFp_hyRcVdlduYT1dWHRPio0NF4raVulsT6Dw4DODXsx/exec';
-
-const GW2TREASURES_API = 'https://api.gw2treasures.com/item/prices?ids='; // Example endpoint
-
-const FILTER_CONTAINERS = [
+const JUNK_FILTER_REGEX = [
   /chest/i, /bag/i, /box/i, /bundle/i, /cache/i,
   /pouch/i, /sack/i, /^container$/i, /^trophy$/i, /^reward$/i,
 ];
 
-// === Utility Functions ===
-
+// === Utility ===
 function isJunkOrContainer(name) {
-  return FILTER_CONTAINERS.some(rx => rx.test(name));
+  if (!name) return false;
+  return JUNK_FILTER_REGEX.some(rx => rx.test(name));
 }
 
-function normalizeWikiName(name) {
-  return name.trim().replace(/\s+/g, '_');
-}
+// === Fetching Functions ===
 
-// === API Fetchers ===
-
-async function fetchAllApiMaps() {
+// Fetch maps with batching from GW2 API
+async function fetchApiMaps() {
   const ids = await fetch(GW2_API.MAPS).then(r => r.json());
-  const all = [];
+  const result = [];
   for (let i = 0; i < ids.length; i += 100) {
     const chunk = ids.slice(i, i + 100).join(',');
-    const maps = await fetch(`${GW2_API.MAPS}?ids=${chunk}`).then(r => r.json());
-    all.push(...maps);
+    const mapsChunk = await fetch(`${GW2_API.MAPS}?ids=${chunk}`).then(r => r.json());
+    result.push(...mapsChunk);
   }
-  return all.filter(m => m.type === 'Public');
+  return result;
 }
 
-async function fetchAllApiEvents() {
+// Fetch events from GW2 API
+async function fetchApiEvents() {
   const res = await fetch(GW2_API.EVENTS);
+  if (!res.ok) throw new Error('Failed to fetch API events');
   const data = await res.json();
   return Object.values(data.events);
 }
 
-// Fetch enriched loot data from Sheet backend (primary deep loot source)
-async function fetchSheetLootIndex() {
-  const res = await fetch(`${GOOGLE_SHEET_SCRIPT}?format=json`);
-  if (!res.ok) throw new Error('Failed to fetch loot from Sheet backend');
-  const rows = await res.json();
-
-  const lootIndex = {};
-  for (const row of rows) {
-    if (!lootIndex[row.SourceName]) lootIndex[row.SourceName] = [];
-    if (isJunkOrContainer(row.LootItem)) continue; // Filter junk containers here
-    lootIndex[row.SourceName].push({
-      name: row.LootItem,
-      rarity: row.Rarity,
-      guaranteed: row.Guaranteed === 'Yes',
-      accountBound: row.AccountBound === 'Yes',
-      collectible: row.Collectible === 'Yes',
-      achievementLinked: row.AchievementLinked === 'Yes',
-      tp: row.TPLink,
-      wikiUrl: row.WikiLink,
-    });
-  }
-  return lootIndex;
+// Fetch waypoints and POIs from GW2 API for enrichment
+async function fetchApiWaypoints() {
+  const res = await fetch(GW2_API.WAYPOINTS);
+  if (!res.ok) throw new Error('Failed to fetch waypoints');
+  const data = await res.json();
+  return data; // Contains POI entries, including waypoints
 }
 
-// Fetch Gw2Treasures prices for given item IDs (mapping needs to be managed externally)
+// Fetch full loot and all other mixed data from your Google Sheet CSV (multi-purpose sheet)
+async function fetchSheetDataCsv() {
+  const res = await fetch(GOOGLE_SHEET_CSV_URL);
+  if (!res.ok) throw new Error('Failed to fetch Sheet CSV data');
+  const csvText = await res.text();
+  return new Promise((resolve, reject) => {
+    Papa.parse(csvText, {
+      header: true,
+      skipEmptyLines: true,
+      complete: results => resolve(results.data),
+      error: err => reject(err),
+    });
+  });
+}
+
+// Fetch optional OTC item list CSV, e.g., with additional properties
+async function fetchOtcCsv() {
+  try {
+    const res = await fetch(OTC_CSV_URL);
+    if (!res.ok) return [];
+    const text = await res.text();
+    return new Promise((resolve, reject) => {
+      Papa.parse(text, {
+        header: true,
+        skipEmptyLines: true,
+        complete: results => resolve(results.data),
+        error: err => reject(err),
+      });
+    });
+  } catch {
+    return [];
+  }
+}
+
+// Fetch prices metadata from gw2treasures (placeholder)
 async function fetchGw2TreasuresPrices(itemIds = []) {
   if (!itemIds.length) return {};
   const prices = {};
@@ -79,73 +99,143 @@ async function fetchGw2TreasuresPrices(itemIds = []) {
       if (!res.ok) continue;
       const data = await res.json();
       Object.assign(prices, data);
-    } catch (e) {
-      // Ignore failed batches
+    } catch {
+      // Ignore batch errors silently
     }
   }
   return prices;
 }
 
-// Post a loot record back to Google Sheets backend
-async function postLoot(eventName, loot) {
-  const body = new URLSearchParams({
-    EventName: eventName,
-    LootItem: loot.name,
-    Rarity: loot.rarity || '',
-    Guaranteed: loot.guaranteed ? 'Yes' : '',
-    AccountBound: loot.accountBound ? 'Yes' : '',
-    Collectible: loot.collectible ? 'Yes' : '',
-    AchievementLinked: loot.achievementLinked ? 'Yes' : '',
-    Tp: loot.tp || '',
-    WikiUrl: loot.wikiUrl || '',
-    Timestamp: new Date().toISOString(),
+// === Data Processing ===
+
+// Organize raw sheet rows keyed by SourceName and by MapName for event, chest, or other sources
+function organizeSheetData(rows) {
+  const lootBySource = {};
+  const additionalByMap = {}; // For non-loot rows holding metadata for maps or waypoints
+
+  rows.forEach(row => {
+    // Assign loot to source key (Event/Chest)
+    if (row['Event/Chest']) {
+      const src = row['Event/Chest'];
+      if (!lootBySource[src]) lootBySource[src] = [];
+      // Don't filter garbage here to preserve ALL data; filtering can be done later by UI
+      lootBySource[src].push({
+        mapName: row.MapName,
+        waypoint: row.Waypoint,
+        sourceType: row['Event/Chest'] ? row['Event/Chest'] : '',
+        item: row.Item,
+        rarity: row.Rarity,
+        guaranteed: row.Guaranteed === 'Yes',
+        collectible: row.Collectible === 'Yes',
+        bound: row.Bound === 'Yes',
+        achievementLinked: row.AchievementLinked === 'Yes',
+        tpLink: row.TPLink,
+        wikiLink: row.WikiLink,
+        timestamp: row.Timestamp,
+      });
+    } else if (row.MapName) {
+      // Possibly map/metadata row (can be extended)
+      if (!additionalByMap[row.MapName]) additionalByMap[row.MapName] = [];
+      additionalByMap[row.MapName].push(row);
+    }
   });
 
-  return fetch(GOOGLE_SHEET_SCRIPT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body,
-  });
+  return { lootBySource, additionalByMap };
 }
 
-// === Merge Helpers ===
-
-/**
- * Merge two arrays keyed by 'id', prioritizing sheetData entries.
- */
-function mergeById(sheetData, apiData) {
+// Merge maps/events arrays keyed by id, preferring sheet data (or add your merge rules)
+function mergeById(sheetData = [], apiData = []) {
   const map = new Map();
-  apiData.forEach(item => map.set(item.id, item));
-  sheetData.forEach(item => map.set(item.id, item)); // Sheet data overrides
+  apiData.forEach(d => map.set(d.id, d));
+  sheetData.forEach(d => map.set(d.id, d)); // sheet overwrites api duplicates by id
   return Array.from(map.values());
 }
 
-// === Main Function ===
-
-/**
- * Fetch all possible data from every source, merge, enrich, and prepare dataset keyed by map.
- */
-export async function generateDeepEventDataset() {
-  // 1. Fetch all data concurrently
-  const [apiMaps, apiEvents, sheetLoot] = await Promise.all([
+// Attach enriched data and merge all sources into a final, comprehensive object keyed by map name
+export async function generateCompleteDataset() {
+  // Fetch everything concurrently
+  const [
+    apiMaps,
+    apiEvents,
+    apiWaypoints,
+    sheetRawRows,
+    otcItemsRaw,
+  ] = await Promise.all([
     fetchAllApiMaps(),
     fetchAllApiEvents(),
-    fetchSheetLootIndex(),
+    fetchApiWaypoints(),
+    fetchSheetDataCsv(),
+    fetchOtcCsv()
   ]);
 
-  // 2. Merge maps and events if you have sheet stored maps/events (implement if applicable)
-  // For now, we assume API maps/events are canonical. Extend this as needed.
+  // Organize sheet loot and metadata
+  const { lootBySource, additionalByMap } = organizeSheetData(sheetRawRows);
 
-  // 3. Create quick id-based map lookup
-  const mapById = new Map(apiMaps.map(m => [m.id, m]));
+  // Merge maps if sheet contains map data (or extend to merge metadata)
+  // Here assuming no separate map data on sheet, else mergeById(sheetMaps, apiMaps)
+  const maps = apiMaps;
 
-  // 4. Build events grouped by map with loot enriched from Sheet loot index
+  // Merge events similarly if sheet events available, else apiEvents only
+  const events = apiEvents;
+
+  // Build lookup map by ID
+  const mapById = new Map(maps.map(m => [m.id, m]));
+
+  // Map OTC items by name or id for downstream enrichment
+  const otcByName = {};
+  otcItemsRaw.forEach(item => {
+    if (item.Name) otcByName[item.Name] = item;
+  });
+
+  // Collect all unique loot item names
+  const lootItemNames = new Set();
+  Object.values(lootBySource).forEach(arr => {
+    arr.forEach(i => {
+      if (i.item && !isJunkOrContainer(i.item)) {
+        lootItemNames.add(i.item);
+      }
+    });
+  });
+
+  // Placeholder: Map item names to item IDs for gw2treasures request
+  // (requires your own mapping logic, e.g., from OTC or other source)
+  const itemNameToId = {}; // Fill this mapping per your data
+  const itemIdsToFetch = [...lootItemNames].map(name => itemNameToId[name]).filter(Boolean);
+
+  // Fetch prices from Gw2Treasures
+  const pricesById = await fetchGw2TreasuresPrices(itemIdsToFetch);
+
+  // --- Compose the comprehensive dataset keyed by map name --- 
   const eventsByMap = {};
-  for (const event of apiEvents) {
-    const map = mapById.get(event.map_id);
-    if (!map) continue;
 
-    const loot = sheetLoot[event.name] || [];
+  events.forEach(event => {
+    const map = mapById.get(event.map_id);
+    if (!map) return;
+
+    const lootForEvent = lootBySource[event.name] || [];
+
+    // Enrich each loot item with trading post links and prices if available
+    const enrichedLoot = lootForEvent.map(loot => {
+      const itemId = itemNameToId[loot.item];
+      const priceInfo = itemId ? pricesById[itemId] : null;
+      
+      return {
+        name: loot.item,
+        rarity: loot.rarity,
+        guaranteed: loot.guaranteed,
+        collectible: loot.collectible,
+        bound: loot.bound,
+        achievementLinked: loot.achievementLinked,
+        tp: loot.tpLink || (itemId ? getTpUrl(itemId) : ''),
+        wikiUrl: loot.wikiLink,
+        price: priceInfo?.price || null,
+        price_usd: priceInfo?.price_usd || null,
+        timestamp: loot.timestamp,
+        mapName: loot.mapName || map.name,
+        waypoint: loot.waypoint || '',
+        sourceType: loot.sourceType || ''
+      };
+    });
 
     const enrichedEvent = {
       id: event.id,
@@ -154,15 +244,27 @@ export async function generateDeepEventDataset() {
       region: map.region_name || 'Unknown',
       expansion: map.continent_name || 'Core',
       level: event.level || null,
-      waypoint: '', // extend with waypoints if available later
-      loot,
+      waypoint: '', // Optionally enhance with waypoints lookup later
+      loot: enrichedLoot,
+      additionalMetadata: additionalByMap[map.name] || []
     };
 
     if (!eventsByMap[map.name]) eventsByMap[map.name] = [];
     eventsByMap[map.name].push(enrichedEvent);
-  }
+  });
 
-  // 5. Optionally enrich loot with prices or other data here (fetchGw2TreasuresPrices)
-
-  return eventsByMap;
+  return {
+    maps,
+    events,
+    eventsByMap,
+    rawLoot: lootBySource,
+    rawMetadata: additionalByMap,
+    otcItems: otcItemsRaw,
+    pricesById,
+  };
 }
+
+// Export postLoot for external use (posting loot updates to Google Sheets backend)
+export {
+  postLoot,
+};
