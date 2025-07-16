@@ -1,6 +1,6 @@
-import { fetchAllData } from './data.js';
-import { enrichItemsAndPrices, fetchWikiDescription } from './info.js';
-import { resolveWaypoints } from './waypoint.js';
+import { fetchAllData } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
+import { enrichItemsAndPrices, fetchWikiDescription } from 'https://geri0v.github.io/Gamers-Hell/js/info.js';
+import { resolveWaypoints } from 'https://geri0v.github.io/Gamers-Hell/js/waypoint.js';
 
 export async function loadAndEnrichData(onProgress = null) {
   const rawEvents = await fetchAllData();
