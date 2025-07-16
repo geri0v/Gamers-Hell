@@ -3,8 +3,8 @@ import { groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
 import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/info.js';
 import {
   createCopyBar,
-  createMostValuableBadge,
-  getMostValuableDrop
+  getMostValuableDrop,
+  createMostValuableBadge
 } from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
 import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
 import { paginate } from 'https://geri0v.github.io/Gamers-Hell/js/pagination.js';
@@ -23,8 +23,8 @@ function createCard(className, content) {
 }
 
 function trimTo2Sentences(text) {
-  const sentenceMatch = text.match(/^(.+?[.!?])\s+(.+?[.!?])/);
-  return sentenceMatch ? `${sentenceMatch[1]} ${sentenceMatch[2]}` : text;
+  const match = text.match(/^(.+?[.!?])\s+(.+?[.!?])/);
+  return match ? `${match[1]} ${match[2]}` : text;
 }
 
 function renderToolbar() {
@@ -82,7 +82,7 @@ function renderLootCards(loot, eventId) {
   return `
     <div class="subcards" id="loot-${eventId}">
       ${loot.map(l => `
-        <div class="subcard${l.guaranteed ? " guaranteed" : ""}${l === mostVal ? " most-valuable" : ""}">
+        <div class="subcard${l.guaranteed ? ' guaranteed' : ''}${l === mostVal ? ' most-valuable' : ''}">
           ${l.icon ? `<img src="${l.icon}" alt="">` : ''}
           ${l.wikiLink ? `<a href="${l.wikiLink}" target="_blank">${l.name}</a>` : l.name}
           ${l.price != null ? `<div><strong>Price:</strong> ${formatPrice(l.price)}</div>` : ''}
@@ -143,7 +143,11 @@ function applyFiltersAndRender(container, data, page = 1, append = false) {
   let filtered = filterEvents(data, filters);
 
   if (filters.sortKey) {
-    const { key, dir } = columnSort = { key: filters.sortKey, dir: columnSort.dir === 'asc' ? 'desc' : 'asc' };
+    const { key, dir } = columnSort = {
+      key: filters.sortKey,
+      dir: columnSort.dir === 'asc' ? 'desc' : 'asc'
+    };
+
     filtered = filtered.sort((a, b) => {
       if (key === 'value') return (dir === 'asc' ? 1 : -1) * ((a.value || 0) - (b.value || 0));
       return (a[key] || '').localeCompare(b[key] || '') * (dir === 'asc' ? 1 : -1);
@@ -154,6 +158,7 @@ function applyFiltersAndRender(container, data, page = 1, append = false) {
   const grouped = groupAndSort(paged);
 
   if (!append) container.innerHTML = '';
+
   if (!grouped.length) {
     container.innerHTML = '<div class="no-results">No matching events found.</div>';
     return;
@@ -187,9 +192,22 @@ export async function renderApp(containerId) {
   appEl.innerHTML = renderToolbar() + '<div id="events-list"></div>';
   const list = document.getElementById('events-list');
 
-  allData = await loadAndEnrichData();
-  updateExpansionOptions(allData);
-  applyFiltersAndRender(list, allData, 1);
+  try {
+    console.log("🌀 Loading and enriching data...");
+    allData = await loadAndEnrichData();
+    console.log("✅ Enriched events:", allData.length);
+
+    // ✅ REMOVE the loading bar & text
+    const spinner = appEl.querySelector(".progress-bar-container");
+    spinner?.remove();
+    appEl.querySelector("p")?.remove();
+
+    updateExpansionOptions(allData);
+    applyFiltersAndRender(list, allData, 1);
+  } catch (err) {
+    console.error("❌ Failed to load app:", err);
+    appEl.innerHTML = `<div class="no-results">Error loading event data. Please try again later.</div>`;
+  }
 
   [
     'search-input', 'lootname-filter', 'loottype-filter',
@@ -201,7 +219,7 @@ export async function renderApp(containerId) {
     );
   });
 
-  // README popup
+  // README Modal
   document.getElementById("readme-btn").addEventListener("click", async () => {
     if (document.getElementById('modal-readme')) return;
     const modal = document.createElement('div');
@@ -222,7 +240,7 @@ export async function renderApp(containerId) {
     document.body.appendChild(modal);
   });
 
-  // Help modal
+  // Help Modal
   document.getElementById("side-help").addEventListener("click", () => {
     if (document.getElementById("modal-help")) return;
     const modal = document.createElement('div');
@@ -246,7 +264,7 @@ export async function renderApp(containerId) {
     document.body.appendChild(modal);
   });
 
-  // Infinite scroll: stops at last page
+  // Infinite scroll
   window.addEventListener("scroll", () => {
     if (isLoading) return;
     const filters = getFiltersFromUI();
