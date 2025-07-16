@@ -1,21 +1,19 @@
-import { loadAndEnrichData } from './infoload.js';
-import { groupAndSort } from './data.js';
-import { formatPrice } from './info.js';
+import { loadAndEnrichData } from 'https://geri0v.github.io/Gamers-Hell/js/infoload.js';
+import { groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
+import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/info.js';
 import {
   createCopyBar,
   createMostValuableBadge,
   getMostValuableDrop
-} from './copy.js';
-import { filterEvents } from './search.js';
-import { paginate } from './pagination.js';
+} from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
+import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
+import { paginate } from 'https://geri0v.github.io/Gamers-Hell/js/pagination.js';
 
 let allData = [];
 let currentPage = 1;
 let isLoading = false;
 let columnSort = {};
 const PAGE_SIZE = 20;
-
-const renderedSet = new Set();
 
 function createCard(className, content) {
   const div = document.createElement('div');
@@ -35,18 +33,14 @@ function renderToolbar() {
         <input id="lootname-filter" placeholder="Loot name" />
         <input id="loottype-filter" placeholder="Type" />
         <input id="chatcode-filter" placeholder="Chatcode" />
-        <input id="minprice-filter" type="number" placeholder="Min price" />
-        <input id="maxprice-filter" type="number" placeholder="Max price" />
-        <input id="vendormin-filter" type="number" placeholder="Min vendor" />
-        <input id="vendormax-filter" type="number" placeholder="Max vendor" />
       </div>
       <div class="filter-row">
         <select id="sort-filter">
           <option value="">Sort By</option>
           <option value="name">Name</option>
           <option value="map">Map</option>
-          <option value="waypointName">WP Name</option>
-          <option value="code">WP Code</option>
+          <option value="waypointName">Waypoint Name</option>
+          <option value="code">Waypoint Code</option>
           <option value="value">Highest Value</option>
         </select>
         <select id="expansion-filter"><option value="">All Expansions</option></select>
@@ -68,10 +62,6 @@ function getFiltersFromUI() {
     lootName: document.getElementById('lootname-filter').value,
     itemType: document.getElementById('loottype-filter').value,
     chatcode: document.getElementById('chatcode-filter').value,
-    vendorValueMin: Number(document.getElementById('vendormin-filter').value) || undefined,
-    vendorValueMax: Number(document.getElementById('vendormax-filter').value) || undefined,
-    minprice: Number(document.getElementById('minprice-filter').value) || undefined,
-    maxprice: Number(document.getElementById('maxprice-filter').value) || undefined,
     guaranteedOnly: document.getElementById('guaranteedonly-filter').checked,
     chanceOnly: document.getElementById('chanceonly-filter').checked,
     sortKey: document.getElementById('sort-filter').value,
@@ -87,7 +77,7 @@ function renderLootCards(loot, eventId) {
     <div class="subcards" id="loot-${eventId}">
       ${loot.map(l => `
         <div class="subcard${l.guaranteed ? ' guaranteed' : ''}${l === mostVal ? ' most-valuable' : ''}">
-          ${l.icon ? `<img src="${l.icon}" alt="" />` : ''}
+          ${l.icon ? `<img src="${l.icon}" alt="">` : ''}
           ${l.wikiLink ? `<a href="${l.wikiLink}" target="_blank">${l.name}</a>` : l.name}
           ${l.price != null ? `<div><strong>Price:</strong> ${formatPrice(l.price)}</div>` : ''}
           ${l.vendorValue ? `<div><strong>Vendor:</strong> ${formatPrice(l.vendorValue)}</div>` : ''}
@@ -108,35 +98,32 @@ function renderEventTable(events, srcIdx, expIdx) {
         <tr>
           <th data-sort-key="name">Name</th>
           <th data-sort-key="map">Map</th>
-          <th data-sort-key="waypointName">WP Name</th>
-          <th data-sort-key="code">WP Code</th>
+          <th data-sort-key="waypointName">Waypoint Name</th>
+          <th data-sort-key="code">Waypoint Code</th>
         </tr>
       </thead>
       <tbody>
         ${events.map((e, idx) => {
           const eventId = `ev-${expIdx}-${srcIdx}-${idx}`;
-          e.value = maxPriceFromLoot(e.loot);
+          e.value = Math.max(...(e.loot || []).map(l => l.price ?? 0));
           return `
             <tr id="${eventId}">
               <td><a href="${e.wikiLink}" target="_blank">${e.name}</a></td>
               <td>${e.mapWikiLink ? `<a href="${e.mapWikiLink}" target="_blank">${e.map}</a>` : e.map}</td>
-              <td>${e.waypointName && e.waypointWikiLink ? `<a href="${e.waypointWikiLink}" target="_blank">${e.waypointName}</a>` : (e.waypointName || '–')}</td>
+              <td>${e.waypointName && e.waypointWikiLink
+                ? `<a href="${e.waypointWikiLink}" target="_blank">${e.waypointName}</a>`
+                : (e.waypointName || '–')}</td>
               <td>${e.code || '–'}</td>
             </tr>
             <tr><td colspan="4">${createCopyBar(e)}</td></tr>
-            <tr><td colspan="4">
-              ${e.description ? `<div class="inline-desc"><strong>Description:</strong> ${e.description}</div>` : ''}
-            </td></tr>
+            ${e.description ? `<tr><td colspan="4"><div class="inline-desc"><strong>Description:</strong> ${e.description}</div></td></tr>` : ''}
             <tr><td colspan="4">${renderLootCards(e.loot, eventId)}</td></tr>
+            <tr><td colspan="4"><hr class="event-separator"></td></tr>
           `;
         }).join('')}
       </tbody>
     </table>
   `;
-}
-
-function maxPriceFromLoot(loot = []) {
-  return Math.max(...loot.map(l => l.price ?? 0));
 }
 
 function updateExpansionOptions(events) {
@@ -148,17 +135,6 @@ function updateExpansionOptions(events) {
 function applyFiltersAndRender(container, data, page = 1, append = false) {
   const filters = getFiltersFromUI();
   let filtered = filterEvents(data, filters);
-
-  if (filters.minprice !== undefined) {
-    filtered = filtered.filter(e =>
-      (e.loot || []).some(l => l.price >= filters.minprice)
-    );
-  }
-  if (filters.maxprice !== undefined) {
-    filtered = filtered.filter(e =>
-      (e.loot || []).some(l => l.price <= filters.maxprice)
-    );
-  }
 
   if (filters.sortKey) {
     filtered = filtered.sort((a, b) => {
@@ -178,18 +154,27 @@ function applyFiltersAndRender(container, data, page = 1, append = false) {
 
   grouped.forEach((exp, expIdx) => {
     const expCard = createCard('expansion-card', `
-      <h2>${exp.expansion}</h2>
+      <h2 class="section-header">${exp.expansion}</h2>
       <div class="expansion-content" id="exp-${expIdx}"></div>
     `);
     exp.sources.forEach((src, srcIdx) => {
       const srcTable = renderEventTable(src.items, srcIdx, expIdx);
       const srcCard = createCard('source-card', `
-        <h3>${src.sourcename}</h3>
+        <h3 class="subsection-header">${src.sourcename}</h3>
         <div>${srcTable}</div>
       `);
       expCard.querySelector('.expansion-content').appendChild(srcCard);
     });
     container.appendChild(expCard);
+  });
+
+  // Enable sorting via table headers
+  container.querySelectorAll('th[data-sort-key]').forEach(th => {
+    th.onclick = () => {
+      const key = th.dataset.sortKey;
+      columnSort = { key, dir: columnSort.key === key && columnSort.dir === 'asc' ? 'desc' : 'asc' };
+      applyFiltersAndRender(container, allData, 1);
+    };
   });
 }
 
@@ -198,27 +183,19 @@ export async function renderApp(containerId) {
   appEl.innerHTML = renderToolbar() + '<div id="events-list"></div>';
   const list = document.getElementById('events-list');
 
-  allData = await loadAndEnrichData(evt => {
-    document.body.style.cursor = 'wait';
-  });
-  document.body.style.cursor = 'default';
-
+  allData = await loadAndEnrichData();
   updateExpansionOptions(allData);
   applyFiltersAndRender(list, allData, 1);
 
-  const inputs = [
+  [
     'search-input', 'lootname-filter', 'loottype-filter',
-    'chatcode-filter', 'minprice-filter', 'maxprice-filter',
-    'vendormin-filter', 'vendormax-filter', 'sort-filter',
-    'expansion-filter', 'rarity-filter', 'guaranteedonly-filter', 'chanceonly-filter'
-  ];
-  inputs.forEach(id =>
-    document.getElementById(id)?.addEventListener('input', () =>
-      applyFiltersAndRender(list, allData, 1)
-    )
-  );
+    'chatcode-filter', 'sort-filter', 'expansion-filter',
+    'rarity-filter', 'guaranteedonly-filter', 'chanceonly-filter'
+  ].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', () => applyFiltersAndRender(list, allData, 1));
+  });
 
-  // Help Modal
   document.getElementById("side-help").addEventListener("click", () => {
     if (document.getElementById("modal-help")) return;
     const modal = document.createElement('div');
@@ -232,25 +209,25 @@ export async function renderApp(containerId) {
       <div class="modal-content" style="background:white;padding:2em;border-radius:8px;max-width:520px;">
         <h2>How to Use</h2>
         <ul>
-          <li>Use search and filters to find specific events</li>
-          <li>Click event names or waypoints to open them on the wiki</li>
-          <li>All loot and descriptions are now shown inline</li>
+          <li>Use search & filters above</li>
+          <li>Click names or maps to open the wiki</li>
+          <li>Loot and descriptions are shown inline</li>
         </ul>
-        <button class="copy-btn" onclick="this.closest('#modal-help').remove()">Close</button>
+        <button class="copy-btn" onclick="document.getElementById('modal-help').remove()">Close</button>
       </div>
     `;
     document.body.appendChild(modal);
   });
 
-  // Infinite scroll
-  window.addEventListener("scroll", () => {
+  // 💡 Infinite scroll fix: do not re-render existing data
+  window.addEventListener('scroll', () => {
     if (isLoading) return;
-    const filters = getFiltersFromUI();
-    const filtered = filterEvents(allData, filters);
-    if (
-      window.scrollY + window.innerHeight >= document.body.offsetHeight - 150 &&
-      filtered.length > PAGE_SIZE * currentPage
-    ) {
+    const bottom = window.scrollY + window.innerHeight >= document.body.offsetHeight - 200;
+    if (!bottom) return;
+
+    const filtered = filterEvents(allData, getFiltersFromUI());
+    const currentRendered = PAGE_SIZE * currentPage;
+    if (filtered.length > currentRendered) {
       isLoading = true;
       currentPage++;
       applyFiltersAndRender(list, allData, currentPage, true);
@@ -259,5 +236,5 @@ export async function renderApp(containerId) {
   });
 }
 
-// Init on page load
+// Init
 renderApp('app');
