@@ -24,20 +24,12 @@
   margin: 0;
 }
 
-.terminal-info {
-  color: #85d6ff;
-}
-.terminal-success {
-  color: #61bd4f;
-}
-.terminal-progress {
-  color: #ffd452;
-}
-.terminal-error {
-  color: #ff6666;
-}
+.terminal-info { color: #85d6ff; }
+.terminal-success { color: #61bd4f; }
+.terminal-progress { color: #ffd452; }
+.terminal-error { color: #ff6666; }
 
-/* ========== LAYOUT WRAPPERS ========== */
+/* ========== GLOBAL ========== */
 
 body {
   background: #151a22;
@@ -50,123 +42,151 @@ body {
 #app {
   max-width: 1024px;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: 24px 16px 60px;
 }
 
-/* ========== SEARCH + FILTER UI ========== */
+/* ========== STICKY UI BAR ========== */
+
+.top-ui-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #151a22;
+  border-bottom: 1px solid #223;
+  padding-bottom: 12px;
+}
+
+/* ========== SEARCH BAR ========== */
 
 .search-bar {
   display: flex;
   justify-content: center;
-  margin: 20px auto 16px;
+  margin: 14px auto;
   max-width: 800px;
+  width: 100%;
 }
 
 .search-bar input {
   width: 100%;
-  background: #232831;
-  color: #e6e8eb;
-  border: 1px solid #444;
-  border-radius: 6px;
   padding: 10px 12px;
   font-size: 1em;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background: #232831;
+  color: #e6e8eb;
+  font-family: inherit;
 }
+
+.search-bar input:focus {
+  outline: 2px solid #65bfff;
+}
+
+/* ========== FILTER BAR ========== */
 
 .filter-bar {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   gap: 14px;
-  margin-bottom: 18px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.filter-item, .filter-checkbox {
+  display: flex;
+  align-items: center;
 }
 
 .filter-item select {
   background: #2e323d;
-  color: #e6e8eb;
+  color: #f5faff;
+  padding: 6px 10px;
   border: none;
-  padding: 6px 8px;
   border-radius: 4px;
   font-size: 0.95em;
 }
 
+/* ========== SORT BUTTONS ========== */
+
 .sort-bar {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
-  flex-wrap: wrap;
-  margin: 16px auto;
+  margin-bottom: 18px;
 }
 
 .sort-btn {
   background: #65bfff;
-  color: #101115;
-  font-weight: 600;
   border: none;
-  border-radius: 5px;
+  font-weight: bold;
+  border-radius: 4px;
   padding: 6px 14px;
+  color: #101115;
   cursor: pointer;
 }
 
 .sort-btn:hover {
-  background-color: #40ba8e;
+  background: #40ba8e;
 }
 
-/* ========== EXPANSIONS / EVENTS ========== */
+/* ========== GROUP HEADERS ========== */
 
 .expansion-group h2 {
   color: #659bec;
   font-size: 1.8em;
-  margin-top: 30px;
   border-bottom: 2px solid #3c475a;
-  padding-bottom: 4px;
+  padding-bottom: 6px;
+  margin-top: 32px;
 }
 
 .expansion-group h3 {
   color: #93b0e9;
-  margin-top: 18px;
-  font-size: 1.3em;
-  margin-bottom: 10px;
+  font-size: 1.25em;
+  margin-top: 20px;
+  margin-bottom: 12px;
 }
+
+/* ========== EVENT CARD ========== */
 
 .event-card {
   background: #222830;
-  margin-bottom: 24px;
-  padding: 16px 18px 18px;
+  padding: 16px 20px;
   border-radius: 8px;
+  margin-bottom: 24px;
   box-shadow: 0 0 10px #0006;
 }
 
-/* ========== EVENT TOP INFO BAR ========== */
+/* ========== INFO BAR ========== */
 
 .event-info-bar {
   display: flex;
   flex-wrap: wrap;
+  font-size: 0.95em;
   gap: 18px;
-  font-size: 0.97em;
   color: #b1e2fc;
   margin-bottom: 10px;
 }
 
 .event-info-bar a {
-  color: #92cfff;
+  color: #91c8ff;
   text-decoration: underline;
 }
 
 .event-info-bar code {
   background: #1b262b;
   color: #abfca4;
-  padding: 1px 6px;
-  border-radius: 4px;
-  font-size: 0.9em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.88em;
 }
 
 /* ========== DESCRIPTION ========== */
 
 .event-desc {
-  color: #efffec;
   font-size: 1em;
-  margin: 0 0 12px 0;
-  line-height: 1.35;
+  color: #efffec;
+  line-height: 1.4;
+  margin-bottom: 10px;
 }
 
 /* ========== COPY BAR ========== */
@@ -176,42 +196,42 @@ body {
   align-items: center;
   background: #2b313b;
   border-radius: 6px;
-  margin-top: 8px;
   padding: 6px 8px;
+  margin-top: 10px;
 }
 
 .copy-input {
   background: transparent;
   border: none;
   color: #fafafa;
-  font-family: inherit;
   font-size: 1em;
+  font-family: inherit;
   flex: 1;
-  padding: 3px 6px;
+  padding: 4px 6px;
 }
 
 .copy-btn {
   background: #65bfff;
-  border: none;
   color: #101115;
-  font-weight: bold;
-  padding: 5px 12px;
-  margin-left: 8px;
+  font-weight: 600;
+  padding: 6px 14px;
+  margin-left: 10px;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.copy-btn:hover {
-  background: #40ba8e;
+.copy-btn:focus {
+  outline: 2px solid #40ba8e;
 }
 
-/* ========== LOOT DISPLAY (HORIZONTAL CARDS) ========== */
+/* ========== LOOT CARDS (HORIZONTAL) ========== */
 
 .loot-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 14px;
+  margin-top: 12px;
 }
 
 .loot-card {
@@ -221,13 +241,12 @@ body {
   border: 1px solid #3a3a44;
   border-radius: 6px;
   padding: 8px 10px;
+  min-width: 260px;
   background: #1c2129;
-  width: 270px;
 }
 
 .loot-card:hover {
-  outline: 1px solid #65bfff;
-  background-color: #1e262d;
+  box-shadow: 0 0 0 2px #65bfff inset;
 }
 
 .loot-card.most-valuable {
@@ -243,10 +262,6 @@ body {
   background: #252a32;
 }
 
-.loot-info {
-  flex: 1;
-}
-
 .loot-info a {
   color: #a8e8ff;
   font-weight: bold;
@@ -260,16 +275,17 @@ body {
 }
 
 .loot-meta span {
+  display: inline-block;
   margin-right: 10px;
-}
-
-.loot-guaranteed {
-  color: #6fed81;
-  font-weight: bold;
 }
 
 .loot-ab {
   color: #ffd16f;
+  font-weight: 600;
+}
+
+.loot-guaranteed {
+  color: #6fed81;
   font-weight: bold;
 }
 
@@ -284,4 +300,39 @@ body {
 
 .most-valuable-badge {
   margin-left: 8px;
-  font-size:
+  font-size: 1em;
+  vertical-align: middle;
+  cursor: help;
+  color: #ffe973;
+}
+
+/* Rarity Colors */
+
+.loot-rarity {
+  margin-left: 6px;
+  font-weight: bold;
+  font-size: 0.95em;
+  text-transform: capitalize;
+}
+
+.rarity-ascended { color: #ff81d6; }
+.rarity-exotic { color: #ffa800; }
+.rarity-rare { color: #f7df48; }
+.rarity-masterwork { color: #3bc778; }
+.rarity-fine { color: #62dbec; }
+.rarity-basic { color: #b4b4b4; }
+
+/* ========== NO RESULTS / FALLBACK ========== */
+
+.no-results {
+  text-align: center;
+  color: #ff8888;
+  font-style: italic;
+  padding: 30px;
+}
+
+/* ========== SCROLL SENTINEL ELEMENT ========== */
+#infinite-scroll-sentinel {
+  height: 1px;
+  width: 100%;
+}
