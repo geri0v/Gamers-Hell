@@ -1,6 +1,7 @@
 // search.js
 import { filterEventsExtended } from './data.js';
 
+// Search bar rendering (type="text", always usable)
 export function renderSearchBar(onSearch) {
   const wrap = document.createElement('div');
   wrap.className = 'search-bar';
@@ -16,10 +17,12 @@ export function renderSearchBar(onSearch) {
   return wrap;
 }
 
+// Filter bar rendering with event dropdown
 export function renderFilterBar(options, onChange) {
   const container = document.createElement('div');
   container.className = 'filter-bar';
 
+  // Helper: dropdown select
   const select = (label, list, key, current) => {
     const wrap = document.createElement('label');
     wrap.className = 'filter-item';
@@ -39,9 +42,13 @@ export function renderFilterBar(options, onChange) {
   };
 
   select('Expansion', options.expansions, 'expansion', options.current.expansion);
+  // Event selector (optional, place between expansion and rarity)
+  if (options.events && options.events.length) {
+    select('Event', options.events, 'eventName', options.current.eventName);
+  }
   select('Rarity', options.rarities, 'rarity', options.current.rarity);
   select('Loot Type', [
-    { val: '', text: 'All' },
+    { val: '', text: 'All Loot' },
     { val: 'guaranteed', text: 'Guaranteed Only' },
     { val: 'chance', text: 'Chance Only' }
   ], 'lootType', options.current.lootType);
@@ -49,6 +56,7 @@ export function renderFilterBar(options, onChange) {
   return container;
 }
 
+// Sort buttons rendering
 export function renderSortButtons(onSort) {
   const sortWrap = document.createElement('div');
   sortWrap.className = 'sort-bar';
@@ -64,28 +72,10 @@ export function renderSortButtons(onSort) {
   return sortWrap;
 }
 
-export function filterEvents(events, filters) {
-  const { searchTerm, lootType, ...rest } = filters;
-
-  let subset = events;
-
-  if (searchTerm && searchTerm.trim()) {
-    const term = searchTerm.trim().toLowerCase();
-    subset = events.filter(e =>
-      fuzzyMatch(e.name || '', term) ||
-      fuzzyMatch(e.map || '', term)
-    );
-  }
-
-  if (lootType === 'guaranteed') rest.guaranteedOnly = true;
-  if (lootType === 'chance') rest.chanceOnly = true;
-
-  return filterEventsExtended(subset, rest);
-}
-
+// Fuzzy matching utility
 export function fuzzyMatch(str, pattern) {
-  str = str.toLowerCase();
-  pattern = pattern.toLowerCase();
+  str = (str || '').toLowerCase();
+  pattern = (pattern || '').toLowerCase();
   let patternIdx = 0;
   for (let i = 0; i < str.length; i++) {
     if (str[i] === pattern[patternIdx]) {
@@ -94,4 +84,37 @@ export function fuzzyMatch(str, pattern) {
     }
   }
   return false;
+}
+
+// Main event filtering function
+export function filterEvents(events, filters) {
+  let subset = events;
+  const { searchTerm, lootType, expansion, rarity, itemType, eventName, ...rest } = filters;
+
+  // Search term (fuzzy match on name or map)
+  if (searchTerm && searchTerm.trim().length) {
+    const term = searchTerm.trim();
+    subset = subset.filter(e =>
+      fuzzyMatch(e.name || '', term) ||
+      fuzzyMatch(e.map || '', term)
+    );
+  }
+
+  // Event dropdown filter (exact match)
+  if (eventName && eventName.trim().length) {
+    subset = subset.filter(e => (e.name || '') === eventName);
+  }
+
+  // Loot type filter
+  if (lootType === 'guaranteed') {
+    subset = subset.filter(e => (e.loot || []).some(i => i.guaranteed === true));
+  } else if (lootType === 'chance') {
+    subset = subset.filter(e => (e.loot || []).some(i => i.guaranteed !== true));
+  }
+
+  // Pass remaining filters to data.js extended filter
+  return filterEventsExtended(subset, {
+    expansion, rarity, itemType,
+    ...rest
+  });
 }
