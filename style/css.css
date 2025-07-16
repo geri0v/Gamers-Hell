@@ -1,356 +1,176 @@
-/* ========== TERMINAL ========== */
+// visual.js — Final Full Version (Steps 0–8)
 
-#terminal {
-  background: #1a1e25;
-  color: #e6e8eb;
-  font-size: 1rem;
-  padding: 14px;
-  border-bottom: 2px solid #232831;
-  height: 160px;
-  overflow-y: auto;
-  font-family: monospace;
+import { loadAndEnrichData } from './infoload.js';
+import {
+  renderSearchBar,
+  renderFilterBar,
+  renderSortButtons,
+  filterEvents
+} from './search.js';
+import { renderEventGroups } from './card.js';
+import { groupByExpansionAndSource } from './event.js';
+import { paginate } from './pagination.js';
+import {
+  startTerminal,
+  appendTerminal,
+  endTerminal
+} from './terminal.js';
+import {
+  saveEventCache,
+  loadEventCache,
+  getCacheInfo,
+  clearEventCache
+} from './cache.js';
+
+// === State ===
+let allEvents = [];
+let currentFilters = {
+  searchTerm: '',
+  expansion: '',
+  rarity: '',
+  lootType: '',
+  itemType: '',
+  eventName: ''
+};
+let currentSort = '';
+let currentPage = 1;
+const pageSize = 20;
+
+// === Helpers ===
+function getUnique(list) {
+  return [...new Set(list.filter(Boolean))].sort().map(v => ({ val: v, text: v }));
 }
 
-#terminal.matrix-mode {
-  background: #000;
-  color: #00ff00;
+function applySort(events, key) {
+  return events.slice().sort((a, b) => {
+    switch (key) {
+      case 'name': return (a.name || '').localeCompare(b.name || '');
+      case 'map': return (a.map || '').localeCompare(b.map || '');
+      case 'value': {
+        const aVal = Math.max(...(a.loot || []).map(i => i.price || 0));
+        const bVal = Math.max(...(b.loot || []).map(i => i.price || 0));
+        return bVal - aVal;
+      }
+      default: return 0;
+    }
+  });
 }
 
-#terminal.hidden {
-  display: none;
+function setupInfiniteScroll() {
+  const sentinel = document.getElementById('infinite-scroll-sentinel');
+  if (!sentinel) return;
+
+  if (window.infiniteScrollObserver) {
+    window.infiniteScrollObserver.disconnect();
+  }
+
+  window.infiniteScrollObserver = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      const filtered = filterEvents(allEvents, currentFilters);
+      const sorted = currentSort ? applySort(filtered, currentSort) : filtered;
+      const paginated = paginate(sorted, pageSize, currentPage);
+      if (paginated.length < sorted.length) {
+        currentPage++;
+        updateUI();
+      }
+    }
+  }, { root: null, threshold: 1.0 });
+
+  window.infiniteScrollObserver.observe(sentinel);
 }
 
-.terminal-line { margin: 0; }
-.terminal-info { color: #85d6ff; }
-.terminal-success { color: #61bd4f; }
-.terminal-progress { color: #ffd452; }
-.terminal-error { color: #ff6666; }
+// === Cache Status UI Bar ===
+function renderCacheInfoBar() {
+  const info = getCacheInfo();
+  const bar = document.createElement('div');
+  bar.className = 'cache-info-bar';
+  bar.textContent = info
+    ? `🧠 Cache: ${new Date(info.timestamp).toLocaleString()} • Events: ${info.size} • Expired: ${info.expired ? 'Yes' : 'No'}`
+    : '🧠 No cache loaded.';
 
-/* ========== LAYOUT BASE ========== */
+  const clearBtn = document.createElement('button');
+  clearBtn.textContent = 'Clear Cache';
+  clearBtn.onclick = () => {
+    clearEventCache();
+    appendTerminal('🧹 Cache cleared.', 'info');
+    updateUI();
+  };
 
-body {
-  margin: 0;
-  padding: 0;
-  background: #151a22;
-  color: #f0f4f8;
-  font-family: 'Fira Code', monospace, monospace;
+  bar.appendChild(clearBtn);
+  return bar;
 }
 
-#app {
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 24px 16px 60px;
+// === Main Renderer ===
+function updateUI() {
+  const filtered = filterEvents(allEvents, currentFilters);
+  const sorted = currentSort ? applySort(filtered, currentSort) : filtered;
+  const paginated = paginate(sorted, pageSize, currentPage);
+  const grouped = groupByExpansionAndSource(paginated);
+
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+
+  const topUI = document.createElement('div');
+  topUI.className = 'top-ui-bar';
+
+  topUI.appendChild(renderSearchBar(term => {
+    currentFilters.searchTerm = term;
+    updateUI();
+  }));
+
+  topUI.appendChild(renderFilterBar({
+    expansions: getUnique(allEvents.map(e => e.expansion)),
+    events: getUnique(allEvents.map(e => e.name)),
+    rarities: getUnique(allEvents.flatMap(e => (e.loot || []).map(l => l.rarity))),
+    current: currentFilters
+  }, (key, val) => {
+    currentFilters[key] = val;
+    updateUI();
+  }));
+
+  topUI.appendChild(renderSortButtons(key => {
+    currentSort = key;
+    updateUI();
+  }));
+
+  topUI.appendChild(renderCacheInfoBar());
+
+  app.appendChild(topUI);
+  app.appendChild(renderEventGroups(grouped));
+
+  // Scroll sentinel for infinite loading
+  if (!document.getElementById('infinite-scroll-sentinel')) {
+    const sentinel = document.createElement('div');
+    sentinel.id = 'infinite-scroll-sentinel';
+    sentinel.style.height = '1px';
+    app.appendChild(sentinel);
+    setupInfiniteScroll();
+  }
 }
 
-/* ========== STICKY TOP UI BAR ========== */
+// === Boot Sequence ===
+async function boot() {
+  startTerminal();
+  let events = loadEventCache();
 
-.top-ui-bar {
-  position: sticky;
-  top: 0;
-  z-index: 101;
-  background: #151a22;
-  border-bottom: 1px solid #223;
-  padding-bottom: 12px;
-  margin-bottom: 12px;
+  if (events) {
+    appendTerminal(`⚡ Loaded ${events.length} events from cache.`, 'success');
+  } else {
+    appendTerminal('🌐 Fetching event data from source...', 'progress');
+    events = await loadAndEnrichData(ev => {
+      appendTerminal(`➕ ${ev.name} loaded [${ev.map}]`, 'info');
+    });
+
+    saveEventCache(events);
+    appendTerminal('📦 Saved to cache.', 'success');
+  }
+
+  allEvents = events;
+  currentPage = 1;
+  updateUI();
+
+  appendTerminal(`✅ App is ready. Displaying ${events.length} events.`, 'success');
+  endTerminal(true);
 }
 
-/* ========== SEARCH BAR ========== */
-
-.search-bar {
-  display: flex;
-  justify-content: center;
-  margin: 20px auto;
-  max-width: 900px;
-}
-
-.search-bar input {
-  width: 100%;
-  background: #232831;
-  color: #e6e8eb;
-  border: 1px solid #444;
-  border-radius: 6px;
-  padding: 10px 14px;
-  font-size: 1em;
-}
-
-.search-bar input:focus {
-  outline: 2px solid #65bfff;
-}
-
-/* ========== FILTER BAR ========== */
-
-.filter-bar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 14px;
-  margin: 12px auto 16px;
-}
-
-.filter-item {
-  display: flex;
-  align-items: center;
-}
-
-.filter-item select {
-  background: #2e323d;
-  color: #f5faff;
-  padding: 6px 10px;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.95em;
-  font-family: inherit;
-}
-
-/* ========== SORT BUTTONS ========== */
-
-.sort-bar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.sort-btn {
-  background: #65bfff;
-  border: none;
-  font-weight: bold;
-  border-radius: 4px;
-  padding: 6px 14px;
-  color: #101115;
-  cursor: pointer;
-}
-
-.sort-btn:hover {
-  background: #40ba8e;
-}
-
-/* ========== EVENT GROUP HEADERS ========== */
-
-.expansion-group h2 {
-  color: #659bec;
-  font-size: 1.8em;
-  margin-top: 32px;
-  padding-bottom: 4px;
-  border-bottom: 2px solid #3c475a;
-}
-
-.expansion-group h3 {
-  color: #93b0e9;
-  font-size: 1.25em;
-  margin-top: 18px;
-  margin-bottom: 10px;
-}
-
-/* ========== EVENT CARD ========== */
-
-.event-card {
-  background: #222830;
-  padding: 16px 20px;
-  border-radius: 8px;
-  margin-bottom: 26px;
-  box-shadow: 0 0 12px #0006;
-}
-
-/* ========== EVENT INFO BAR ========== */
-
-.event-info-bar {
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 0.95em;
-  color: #b1e2fc;
-  gap: 18px;
-  margin-bottom: 10px;
-}
-
-.event-info-bar a {
-  color: #91c8ff;
-  text-decoration: underline;
-}
-
-.event-info-bar code {
-  background: #1b262b;
-  color: #abfca4;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.88em;
-}
-
-/* ========== DESCRIPTION ========== */
-
-.event-desc {
-  font-size: 1em;
-  color: #efffec;
-  line-height: 1.4;
-  margin-bottom: 12px;
-}
-
-/* ========== COPY BAR ========== */
-
-.copy-bar {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  background: #2b313b;
-  border-radius: 6px;
-  padding: 6px 8px;
-  margin-top: 10px;
-}
-
-.copy-input {
-  background: transparent;
-  color: #fafafa;
-  flex: 1;
-  border: none;
-  font-size: 1em;
-  padding: 4px 0;
-  font-family: inherit;
-}
-
-.copy-btn {
-  background: #65bfff;
-  color: #101115;
-  font-weight: 600;
-  margin-left: 10px;
-  padding: 6px 14px;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-}
-
-.copy-btn:hover {
-  background-color: #40ba8e;
-}
-
-/* ========== LOOT CARDS GRID ========== */
-
-.loot-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 12px;
-}
-
-.loot-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
-  background: #1c2129;
-  border: 1px solid #333c47;
-  border-radius: 6px;
-  min-width: 260px;
-}
-
-.loot-card.most-valuable {
-  border-color: gold;
-  background: rgba(255, 217, 0, 0.08);
-}
-
-.loot-icon {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
-  border-radius: 4px;
-  background: #252a32;
-}
-
-.loot-info a {
-  color: #a8e8ff;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.loot-meta {
-  font-size: 0.86em;
-  color: #c8ecff;
-  margin-top: 4px;
-}
-
-.loot-meta span {
-  margin-right: 10px;
-  display: inline-block;
-}
-
-.loot-ab {
-  color: #ffd16f;
-  font-weight: 500;
-}
-.loot-guaranteed {
-  color: #6fed81;
-  font-weight: 500;
-}
-.loot-chatcode {
-  background: #293d29;
-  color: #affcaf;
-  padding: 2px 6px;
-  font-family: monospace;
-  border-radius: 4px;
-  font-size: 0.9em;
-}
-.loot-rarity {
-  font-size: 0.9em;
-  font-weight: bold;
-  margin-left: 6px;
-}
-
-.rarity-ascended { color: #ff81d6; }
-.rarity-exotic { color: #ffa800; }
-.rarity-rare { color: #f7df48; }
-.rarity-masterwork { color: #3bc778; }
-.rarity-fine { color: #62dbec; }
-.rarity-basic { color: #cccccc; }
-
-.most-valuable-badge {
-  font-size: 1.1em;
-  vertical-align: middle;
-  margin-left: 6px;
-  color: #ffe973;
-  cursor: help;
-}
-
-/* ========== CACHE INFO BAR ========== */
-
-.cache-info-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  background: #232a33;
-  color: #bde0ff;
-  font-size: 0.95em;
-  padding: 8px 12px;
-  border-bottom: 1px solid #314155;
-  margin: 6px auto 14px;
-}
-
-.cache-info-bar button {
-  background: #ff8592;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 4px 14px;
-  font-weight: bold;
-  font-size: 0.94em;
-  cursor: pointer;
-}
-.cache-info-bar button:hover {
-  background: #d93854;
-}
-
-/* ========== NO RESULTS / EMPTY STATE ========== */
-
-.no-results {
-  text-align: center;
-  color: #ff8888;
-  padding: 30px;
-  font-style: italic;
-}
-
-/* ========== INFINITE SCROLL MARKER ========== */
-
-#infinite-scroll-sentinel {
-  height: 1px;
-  width: 100%;
-}
+window.addEventListener('DOMContentLoaded', boot);
