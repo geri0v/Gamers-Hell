@@ -70,3 +70,6 @@ export async function fetchWaypoints(chatcodes = []) {
     return Object.fromEntries(uniqueCodes.map(code => [code, null]));
   }
 }
+
+// Alias export voor backwards compatibiliteit
+export { fetchWaypoints as resolveWaypoints };
