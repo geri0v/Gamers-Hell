@@ -1,4 +1,4 @@
-// visual.js — Fully Updated Version
+// visual.js — Fully Updated + Event Dropdown + Terminal + Sticky UI + Scroll
 
 import { loadAndEnrichData } from './infoload.js';
 import { renderSearchBar, renderFilterBar, renderSortButtons, filterEvents } from './search.js';
@@ -15,52 +15,11 @@ let currentFilters = {
   rarity: '',
   lootType: '',
   itemType: '',
-  eventName: '',
+  eventName: ''
 };
 let currentSort = '';
 let currentPage = 1;
-let pageSize = 20;
-
-// --- UI Rendering
-function updateUI() {
-  const filtered = filterEvents(allEvents, currentFilters);
-  const sorted = currentSort ? applySort(filtered, currentSort) : filtered;
-  const paginated = paginate(sorted, pageSize, currentPage);
-  const grouped = groupByExpansionAndSource(paginated);
-
-  const app = document.getElementById('app');
-  app.innerHTML = '';
-
-  // Top sticky UI
-  const topUI = document.createElement('div');
-  topUI.className = 'top-ui-bar';
-
-  // Search bar
-  topUI.appendChild(renderSearchBar(term => {
-    currentFilters.searchTerm = term;
-    updateUI();
-  }));
-
-  // Filter bar (expansions, events, rarities, loot type)
-  topUI.appendChild(renderFilterBar({
-    expansions: getUnique(allEvents.map(e => e.expansion)),
-    rarities: getUnique(allEvents.flatMap(e => (e.loot || []).map(l => l.rarity))),
-    events: getUnique(allEvents.map(e => e.name)),
-    current: currentFilters
-  }, (key, val) => {
-    currentFilters[key] = val;
-    updateUI();
-  }));
-
-  // Sort buttons
-  topUI.appendChild(renderSortButtons(key => {
-    currentSort = key;
-    updateUI();
-  }));
-
-  app.appendChild(topUI);
-  app.appendChild(renderEventGroups(grouped));
-}
+const pageSize = 20;
 
 // --- Helpers
 function getUnique(list) {
@@ -85,9 +44,59 @@ function applySort(events, key) {
   });
 }
 
-// --- Infinite Scroll (optional improvement)
+// --- UI Update Render
+function updateUI() {
+  const filtered = filterEvents(allEvents, currentFilters);
+  const sorted = currentSort ? applySort(filtered, currentSort) : filtered;
+  const paginated = paginate(sorted, pageSize, currentPage);
+  const grouped = groupByExpansionAndSource(paginated);
+
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+
+  // Top sticky filter/search bar
+  const topUI = document.createElement('div');
+  topUI.className = 'top-ui-bar';
+
+  // Search Bar
+  topUI.appendChild(renderSearchBar(term => {
+    currentFilters.searchTerm = term;
+    updateUI();
+  }));
+
+  // Filter Bar (Expansion | Event | Rarity | Loot Type)
+  topUI.appendChild(renderFilterBar({
+    expansions: getUnique(allEvents.map(e => e.expansion)),
+    events: getUnique(allEvents.map(e => e.name)),
+    rarities: getUnique(allEvents.flatMap(e => (e.loot || []).map(l => l.rarity))),
+    current: currentFilters
+  }, (key, val) => {
+    currentFilters[key] = val;
+    updateUI();
+  }));
+
+  // Sort Buttons
+  topUI.appendChild(renderSortButtons(key => {
+    currentSort = key;
+    updateUI();
+  }));
+
+  app.appendChild(topUI);
+  app.appendChild(renderEventGroups(grouped));
+
+  // Add Infinite Scroll Sentinel
+  if (!document.getElementById('infinite-scroll-sentinel')) {
+    const sentinel = document.createElement('div');
+    sentinel.id = 'infinite-scroll-sentinel';
+    sentinel.style.height = '1px';
+    app.appendChild(sentinel);
+    setupInfiniteScroll();
+  }
+}
+
+// --- Infinite Scroll Logic
 function setupInfiniteScroll() {
-  const sentinel = document.querySelector('#infinite-scroll-sentinel');
+  const sentinel = document.getElementById('infinite-scroll-sentinel');
   if (!sentinel) return;
 
   if (window.infiniteScrollObserver) {
@@ -98,8 +107,8 @@ function setupInfiniteScroll() {
     if (entries[0].isIntersecting) {
       const filtered = filterEvents(allEvents, currentFilters);
       const sorted = currentSort ? applySort(filtered, currentSort) : filtered;
-
       const paginated = paginate(sorted, pageSize, currentPage);
+
       if (paginated.length < sorted.length) {
         currentPage++;
         updateUI();
@@ -110,37 +119,25 @@ function setupInfiniteScroll() {
   window.infiniteScrollObserver.observe(sentinel);
 }
 
-// --- Boot Logic
+// --- Boot Function
 async function boot() {
   startTerminal();
+
   try {
     appendTerminal('📦 Loading event data...', 'progress');
-    const events = await loadAndEnrichData(ev => {
-      appendTerminal(`✓ Loaded: ${ev.name} [${ev.map}]`, 'success');
+    const events = await loadAndEnrichData(event => {
+      appendTerminal(`✓ Loaded: ${event.name} [${event.map}]`, 'success');
     });
-    allEvents = events;
 
-    // Initial UI render
+    allEvents = events;
     currentPage = 1;
     updateUI();
 
-    // Setup infinite scroll sentinel, if present
-    setTimeout(() => {
-      let sentinel = document.getElementById('infinite-scroll-sentinel');
-      if (!sentinel) {
-        sentinel = document.createElement('div');
-        sentinel.id = 'infinite-scroll-sentinel';
-        sentinel.style.height = '1px';
-        document.getElementById('app').appendChild(sentinel);
-      }
-      setupInfiniteScroll();
-    }, 500);
-
-    appendTerminal(`✅ ${events.length} events loaded.`, 'success');
+    appendTerminal(`✅ ${events.length} events loaded`, 'success');
     endTerminal(true);
-  } catch (e) {
-    appendTerminal('🔥 Error loading data!', 'error');
-    console.error(e);
+  } catch (err) {
+    console.error(err);
+    appendTerminal('🔥 Error loading event data.', 'error');
     endTerminal(false);
   }
 }
