@@ -1,4 +1,4 @@
-// visual.js — Fully Updated + Event Dropdown + Terminal + Sticky UI + Scroll
+// visual.js — Step 7 Full Version (with Smart Cache)
 
 import { loadAndEnrichData } from './infoload.js';
 import { renderSearchBar, renderFilterBar, renderSortButtons, filterEvents } from './search.js';
@@ -6,8 +6,8 @@ import { renderEventGroups } from './card.js';
 import { groupByExpansionAndSource } from './event.js';
 import { paginate } from './pagination.js';
 import { appendTerminal, startTerminal, endTerminal } from './terminal.js';
+import { saveEventCache, loadEventCache, getCacheInfo, clearEventCache } from './cache.js';
 
-// --- State
 let allEvents = [];
 let currentFilters = {
   searchTerm: '',
@@ -44,7 +44,27 @@ function applySort(events, key) {
   });
 }
 
-// --- UI Update Render
+// --- Optional Cache Meta UI
+function renderCacheInfoBar() {
+  const info = getCacheInfo();
+  const bar = document.createElement('div');
+  bar.className = 'cache-info-bar';
+  bar.textContent = info
+    ? `🧠 Cache: ${new Date(info.timestamp).toLocaleString()} • Events: ${info.size} • Expired: ${info.expired ? 'Yes' : 'No'}`
+    : 'Cache: not set';
+
+  const clearBtn = document.createElement('button');
+  clearBtn.textContent = 'Clear Cache';
+  clearBtn.onclick = () => {
+    clearEventCache();
+    appendTerminal('🧹 Cache cleared.', 'info');
+    updateUI();
+  };
+  bar.appendChild(clearBtn);
+  return bar;
+}
+
+// --- Main UI Render
 function updateUI() {
   const filtered = filterEvents(allEvents, currentFilters);
   const sorted = currentSort ? applySort(filtered, currentSort) : filtered;
@@ -54,17 +74,14 @@ function updateUI() {
   const app = document.getElementById('app');
   app.innerHTML = '';
 
-  // Top sticky filter/search bar
   const topUI = document.createElement('div');
   topUI.className = 'top-ui-bar';
 
-  // Search Bar
   topUI.appendChild(renderSearchBar(term => {
     currentFilters.searchTerm = term;
     updateUI();
   }));
 
-  // Filter Bar (Expansion | Event | Rarity | Loot Type)
   topUI.appendChild(renderFilterBar({
     expansions: getUnique(allEvents.map(e => e.expansion)),
     events: getUnique(allEvents.map(e => e.name)),
@@ -75,16 +92,17 @@ function updateUI() {
     updateUI();
   }));
 
-  // Sort Buttons
   topUI.appendChild(renderSortButtons(key => {
     currentSort = key;
     updateUI();
   }));
 
+  // Add Cache Info Bar below filter/search
+  topUI.appendChild(renderCacheInfoBar());
+
   app.appendChild(topUI);
   app.appendChild(renderEventGroups(grouped));
 
-  // Add Infinite Scroll Sentinel
   if (!document.getElementById('infinite-scroll-sentinel')) {
     const sentinel = document.createElement('div');
     sentinel.id = 'infinite-scroll-sentinel';
@@ -94,7 +112,7 @@ function updateUI() {
   }
 }
 
-// --- Infinite Scroll Logic
+// --- Infinite Scroll
 function setupInfiniteScroll() {
   const sentinel = document.getElementById('infinite-scroll-sentinel');
   if (!sentinel) return;
@@ -119,27 +137,28 @@ function setupInfiniteScroll() {
   window.infiniteScrollObserver.observe(sentinel);
 }
 
-// --- Boot Function
+// --- Boot
 async function boot() {
   startTerminal();
 
-  try {
-    appendTerminal('📦 Loading event data...', 'progress');
-    const events = await loadAndEnrichData(event => {
-      appendTerminal(`✓ Loaded: ${event.name} [${event.map}]`, 'success');
+  let events = loadEventCache();
+  if (events) {
+    appendTerminal('⚡ Using cached event data.', 'success');
+  } else {
+    appendTerminal('🌐 Enriching event data...', 'progress');
+    events = await loadAndEnrichData(e => {
+      appendTerminal(`➕ ${e.name} loaded [${e.map}]`, 'info');
     });
-
-    allEvents = events;
-    currentPage = 1;
-    updateUI();
-
-    appendTerminal(`✅ ${events.length} events loaded`, 'success');
-    endTerminal(true);
-  } catch (err) {
-    console.error(err);
-    appendTerminal('🔥 Error loading event data.', 'error');
-    endTerminal(false);
+    saveEventCache(events);
+    appendTerminal('📦 Cached event data for future loads.', 'info');
   }
+
+  allEvents = events;
+  currentPage = 1;
+  updateUI();
+
+  appendTerminal(`✅ ${events.length} events ready.`, 'success');
+  endTerminal(true);
 }
 
 window.addEventListener('DOMContentLoaded', boot);
