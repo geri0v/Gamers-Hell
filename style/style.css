@@ -1,7 +1,8 @@
-/* Layout base */
+/* ==== Base === */
 body {
   font-family: Arial, sans-serif;
-  background: #f8f9fa;
+  background: #f4f5f7;
+  color: #222;
   margin: 0;
   padding: 0;
 }
@@ -9,10 +10,10 @@ body {
 #app {
   max-width: 1200px;
   margin: 2em auto;
-  padding: 0 1.5em;
+  padding: 1rem;
 }
 
-/* === Toolbar === */
+/* ==== Toolbar === */
 #main-controls-wrap {
   display: flex;
   flex-direction: column;
@@ -32,42 +33,39 @@ input[type="text"],
 input[type="number"],
 select {
   font-size: 1em;
-  padding: 0.45em 0.6em;
-  border-radius: 5px;
+  padding: 0.5em 0.65em;
+  border-radius: 6px;
   border: 1px solid #ccc;
-  background: #fff;
+  background: white;
 }
 
 #search-input {
   flex: 1;
-  min-width: 320px;
+  min-width: 280px;
   font-size: 1.1em;
   padding: 0.6em 0.8em;
 }
 
-/* === Buttons === */
+/* ==== Buttons === */
 .side-btn,
-.toggle-btn,
 .copy-btn {
   font-size: 1em;
   font-weight: bold;
+  color: #fff;
   background: #1976d2;
-  color: white;
+  padding: 0.45em 0.9em;
   border: none;
   border-radius: 6px;
-  padding: 0.45em 0.85em;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s;
 }
 
 .side-btn:hover,
-.toggle-btn:hover,
 .copy-btn:hover {
-  background: #0e5ca2;
+  background: #125a9c;
 }
 
 .side-btn:focus,
-.toggle-btn:focus,
 .copy-btn:focus,
 input:focus,
 select:focus {
@@ -75,33 +73,34 @@ select:focus {
   outline-offset: 2px;
 }
 
-/* === Event Tables === */
+/* ==== Event Table === */
 .event-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 2em 0;
   border-radius: 6px;
   overflow: hidden;
-  background-color: #e3f2fd;
+  background: #e3f2fd;
+  margin: 2em 0;
 }
 
 .event-table th,
 .event-table td {
-  padding: 0.6em 0.75em;
+  padding: 0.65em 0.9em;
   border-bottom: 1px solid #bbdefb;
   text-align: center;
 }
 
 .event-table th {
-  background-color: #bbdefb;
+  background: #bbdefb;
+  font-weight: bold;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   cursor: pointer;
   user-select: none;
 }
 
-/* === Copy Bar === */
+/* ==== Copy Bar === */
 .copy-bar {
   display: flex;
   flex-wrap: wrap;
@@ -110,41 +109,41 @@ select:focus {
   background: #fff;
   padding: 0.5em;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 6px;
 }
 
 .copy-input {
   flex: 1;
   font-size: 1em;
-  padding: 0.4em;
+  padding: 0.4em 0.6em;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
   background-color: #f5f5f5;
-  min-width: 300px;
+  min-width: 240px;
 }
 
-/* === Loot Cards === */
+/* ==== Loot Cards === */
 .subcards {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5em;
-  margin-top: 0.6em;
+  margin-top: 0.8em;
 }
 
 .subcard {
   background: #fffde7;
   border: 1px solid #ffe082;
   border-radius: 6px;
-  padding: 0.5em;
-  min-width: 140px;
+  padding: 0.6em;
+  min-width: 130px;
   max-width: 200px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 0.4em;
+  font-size: 0.95em;
 }
 
-/* Icons with natural size */
+/* Loot Icon Natural Size */
 .subcard img {
   height: auto;
   max-height: 32px;
@@ -153,7 +152,7 @@ select:focus {
   border-radius: 4px;
 }
 
-/* Guaranteed + most-valuable styling */
+/* === Loot Badges === */
 .subcard.guaranteed {
   border: 2px solid #43a047;
   background: #e8f5e9;
@@ -161,44 +160,45 @@ select:focus {
 
 .subcard.most-valuable {
   border: 2px solid #f9a825;
-  background: #fffbe6;
-  box-shadow: 0 0 10px #fbc02ddd;
+  background: #fff8e1;
+  box-shadow: 0 0 10px #fbc02d88;
 }
 
 .guaranteed-badge {
+  background: #43a047;
+  color: #fff;
+  padding: 0.2em 0.6em;
   font-size: 0.85em;
   font-weight: bold;
-  background: #43a047;
-  color: white;
   border-radius: 4px;
-  padding: 0.2em 0.6em;
-  margin-top: 0.2em;
+  text-align: center;
 }
 
 .most-valuable-badge {
-  font-size: 1.15em;
   background: #ffd700;
   color: #6c5700;
-  padding: 0.2em 0.4em;
+  padding: 0.2em 0.5em;
+  font-size: 1em;
+  font-weight: bold;
   border-radius: 4px;
 }
 
-/* === Descriptions === */
+/* ==== Descriptions === */
 .inline-desc {
   font-size: 0.95em;
-  color: #444;
-  padding: 0.6em;
+  color: #333;
   background: #f9f9f9;
+  padding: 0.6em;
   border-left: 4px solid #2196f3;
   border-radius: 5px;
   margin-top: 0.6em;
 }
 
-/* === Progress Bar === */
+/* ==== Progress Bar (during loading) === */
 .progress-bar-container {
   height: 1.2em;
   width: 100%;
-  max-width: 300px;
+  max-width: 320px;
   background: #dbefff;
   border-radius: 8px;
   margin: 1em auto;
@@ -208,14 +208,14 @@ select:focus {
   height: 100%;
   background: linear-gradient(90deg, #64b5f6, #2196f3, #ffd700);
   border-radius: 8px;
-  transition: width 0.3s;
+  transition: width 0.4s ease;
 }
 
-/* === Modal Help Overlay === */
+/* ==== Modal (Help/ARIA overlay) === */
 #modal-help {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -230,19 +230,15 @@ select:focus {
   box-shadow: 0 0 12px #3338;
 }
 
-/* === Hidden Utility */
-.hidden {
-  display: none !important;
-}
-
-/* === No results */
+/* ==== No Results === */
 .no-results {
-  font-size: 1.1em;
-  background: #fff3cd;
-  border-radius: 6px;
+  font-size: 1.15em;
   padding: 1em;
+  background: #fff3cd;
+  color: #444;
   text-align: center;
+  border-radius: 6px;
+  border: 1px solid #ffecb5;
   margin: 2em auto;
-  max-width: 400px;
-  border: 1px solid #ffeeba;
+  max-width: 560px;
 }
