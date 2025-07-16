@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Gamers-Hell GW2 Event Visualizer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Visualize Guild Wars 2 events, sources, and loot with live API enrichment.">
-  <link rel="icon" href="https://wiki.guildwars2.com/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://geri0v.github.io/Gamers-Hell/style/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GW2 Event Visualizer</title>
+
+  <!-- Optional: Favicon -->
+  <link rel="icon" href="https://wiki.guildwars2.com/favicon.ico" type="image/x-icon" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style/style.css" />
 </head>
 <body>
-  <div id="app">Loading...</div>
 
+  <!-- App Container -->
+  <div id="app">
+    <div class="progress-bar-container">
+      <div class="progress-bar" style="width: 10%;"></div>
+    </div>
+    <p style="text-align:center;">Loading event data...</p>
+  </div>
+
+  <!-- Fallback if JavaScript is disabled -->
   <noscript>
-    <div style="padding: 2em; text-align: center; background: #fff3cd; font-size: 1.2em;">
-      ⚠️ This tool requires JavaScript. Please enable JS in your browser to use it.
+    <div style="padding:2em;text-align:center;background:#ffeb3b;">
+      ⚠️ This application requires JavaScript to function. Please enable JavaScript in your browser.
     </div>
   </noscript>
 
-  <script type="module">
-    import { renderApp } from 'https://geri0v.github.io/Gamers-Hell/js/render.js';
-    renderApp('app');
-  </script>
+  <!-- Main App Script (modular ES6) -->
+  <script type="module" src="js/render.js"></script>
 </body>
 </html>
