@@ -1,20 +1,20 @@
-import { loadAndEnrichData } from 'https://geri0v.github.io/Gamers-Hell/js/infoload.js';
-import { groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
-import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/info.js';
+import { loadAndEnrichData } from './infoload.js';
+import { groupAndSort } from './data.js';
+import { formatPrice } from './info.js';
 import {
   createCopyBar,
   createMostValuableBadge,
   getMostValuableDrop
-} from 'https://geri0v.github.io/Gamers-Hell/js/copy.js';
-import { setupToggles } from 'https://geri0v.github.io/Gamers-Hell/js/toggle.js';
-import { filterEvents } from 'https://geri0v.github.io/Gamers-Hell/js/search.js';
-import { paginate } from 'https://geri0v.github.io/Gamers-Hell/js/pagination.js';
+} from './copy.js';
+import { filterEvents } from './search.js';
+import { paginate } from './pagination.js';
 
 let allData = [];
 let currentPage = 1;
 let isLoading = false;
 let columnSort = {};
 const PAGE_SIZE = 20;
+
 const renderedSet = new Set();
 
 function createCard(className, content) {
@@ -52,12 +52,8 @@ function renderToolbar() {
         <select id="expansion-filter"><option value="">All Expansions</option></select>
         <select id="rarity-filter">
           <option value="">All Rarities</option>
-          <option>Ascended</option>
-          <option>Exotic</option>
-          <option>Rare</option>
-          <option>Masterwork</option>
-          <option>Fine</option>
-          <option>Basic</option>
+          <option>Ascended</option><option>Exotic</option><option>Rare</option>
+          <option>Masterwork</option><option>Fine</option><option>Basic</option>
         </select>
         <label><input type="checkbox" id="guaranteedonly-filter" /> Guaranteed</label>
         <label><input type="checkbox" id="chanceonly-filter" /> Chance</label>
@@ -84,19 +80,14 @@ function getFiltersFromUI() {
   };
 }
 
-function maxPriceFromLoot(loot = []) {
-  return Math.max(...loot.map(l => l.price ?? 0));
-}
-
 function renderLootCards(loot, eventId) {
-  const lootId = `loot-${eventId}`;
+  if (!loot || !loot.length) return '';
   const mostVal = getMostValuableDrop(loot);
   return `
-    <button class="toggle-btn" data-target="${lootId}" aria-expanded="false">Show Loot</button>
-    <div class="subcards hidden" id="${lootId}">
+    <div class="subcards" id="loot-${eventId}">
       ${loot.map(l => `
         <div class="subcard${l.guaranteed ? ' guaranteed' : ''}${l === mostVal ? ' most-valuable' : ''}">
-          ${l.icon ? `<img src="${l.icon}" alt="" /> ` : ''}
+          ${l.icon ? `<img src="${l.icon}" alt="" />` : ''}
           ${l.wikiLink ? `<a href="${l.wikiLink}" target="_blank">${l.name}</a>` : l.name}
           ${l.price != null ? `<div><strong>Price:</strong> ${formatPrice(l.price)}</div>` : ''}
           ${l.vendorValue ? `<div><strong>Vendor:</strong> ${formatPrice(l.vendorValue)}</div>` : ''}
@@ -110,11 +101,6 @@ function renderLootCards(loot, eventId) {
   `;
 }
 
-function updateExpansionOptions(events) {
-  const exps = [...new Set(events.map(e => e.expansion))].sort();
-  const select = document.getElementById("expansion-filter");
-  select.innerHTML = `<option value="">All Expansions</option>` + exps.map(e => `<option>${e}</option>`).join('');
-}
 function renderEventTable(events, srcIdx, expIdx) {
   return `
     <table class="event-table">
@@ -128,41 +114,35 @@ function renderEventTable(events, srcIdx, expIdx) {
       </thead>
       <tbody>
         ${events.map((e, idx) => {
-          const eventId = `event-${expIdx}-${srcIdx}-${idx}`;
+          const eventId = `ev-${expIdx}-${srcIdx}-${idx}`;
           e.value = maxPriceFromLoot(e.loot);
-          const descId = `desc-${eventId}`;
           return `
             <tr id="${eventId}">
-              <td>
-                ${e.wikiLink ? `<a href="${e.wikiLink}" target="_blank">${e.name}</a>` : e.name}
-              </td>
-              <td>
-                ${e.mapWikiLink ? `<a href="${e.mapWikiLink}" target="_blank">${e.map}</a>` : e.map}
-              </td>
-              <td>${e.waypointName || '–'}</td>
+              <td><a href="${e.wikiLink}" target="_blank">${e.name}</a></td>
+              <td>${e.mapWikiLink ? `<a href="${e.mapWikiLink}" target="_blank">${e.map}</a>` : e.map}</td>
+              <td>${e.waypointName && e.waypointWikiLink ? `<a href="${e.waypointWikiLink}" target="_blank">${e.waypointName}</a>` : (e.waypointName || '–')}</td>
               <td>${e.code || '–'}</td>
             </tr>
-            <tr>
-              <td colspan="4">${createCopyBar(e)}</td>
-            </tr>
-            <tr>
-              <td colspan="4">
-                <button class="toggle-btn" data-target="${descId}" aria-expanded="false" style="margin-bottom:4px;">
-                  Show Description
-                </button>
-                <div class="inline-desc hidden" id="${descId}">
-                  ${e.description ? `<strong>Description:</strong> ${e.description}` : ''}
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="4">${renderLootCards(e.loot, eventId)}</td>
-            </tr>
+            <tr><td colspan="4">${createCopyBar(e)}</td></tr>
+            <tr><td colspan="4">
+              ${e.description ? `<div class="inline-desc"><strong>Description:</strong> ${e.description}</div>` : ''}
+            </td></tr>
+            <tr><td colspan="4">${renderLootCards(e.loot, eventId)}</td></tr>
           `;
         }).join('')}
       </tbody>
     </table>
   `;
+}
+
+function maxPriceFromLoot(loot = []) {
+  return Math.max(...loot.map(l => l.price ?? 0));
+}
+
+function updateExpansionOptions(events) {
+  const exps = [...new Set(events.map(e => e.expansion))].sort();
+  const select = document.getElementById("expansion-filter");
+  select.innerHTML = `<option value="">All Expansions</option>` + exps.map(e => `<option>${e}</option>`).join('');
 }
 
 function applyFiltersAndRender(container, data, page = 1, append = false) {
@@ -181,15 +161,8 @@ function applyFiltersAndRender(container, data, page = 1, append = false) {
   }
 
   if (filters.sortKey) {
-    filtered = filtered.slice().sort((a, b) => {
-      if (filters.sortKey === "value")
-        return (b.value || 0) - (a.value || 0);
-      if (filters.sortKey === "waypointName")
-        return (a.waypointName || '').localeCompare(b.waypointName || '');
-      if (filters.sortKey === "code")
-        return (a.code || '').localeCompare(b.code || '');
-      if (filters.sortKey === "map")
-        return (a.map || '').localeCompare(b.map || '');
+    filtered = filtered.sort((a, b) => {
+      if (filters.sortKey === 'value') return (b.value || 0) - (a.value || 0);
       return (a[filters.sortKey] || '').localeCompare(b[filters.sortKey] || '');
     });
   }
@@ -199,115 +172,84 @@ function applyFiltersAndRender(container, data, page = 1, append = false) {
 
   if (!append) container.innerHTML = '';
   if (!grouped.length) {
-    container.innerHTML = `<div class="no-results">No results found.</div>`;
+    container.innerHTML = '<div class="no-results">No matching events found.</div>';
     return;
   }
 
-  grouped.forEach((expansion, expIdx) => {
+  grouped.forEach((exp, expIdx) => {
     const expCard = createCard('expansion-card', `
-      <button class="toggle-btn" data-target="exp-${expIdx}">Toggle</button>
-      <h2>${expansion.expansion}</h2>
+      <h2>${exp.expansion}</h2>
       <div class="expansion-content" id="exp-${expIdx}"></div>
     `);
-
-    expansion.sources.forEach((src, srcIdx) => {
-      const srcContent = renderEventTable(src.items, srcIdx, expIdx);
+    exp.sources.forEach((src, srcIdx) => {
+      const srcTable = renderEventTable(src.items, srcIdx, expIdx);
       const srcCard = createCard('source-card', `
-        <button class="toggle-btn" data-target="src-${expIdx}-${srcIdx}">Toggle</button>
         <h3>${src.sourcename}</h3>
-        <div id="src-${expIdx}-${srcIdx}" class="source-content">${srcContent}</div>
+        <div>${srcTable}</div>
       `);
       expCard.querySelector('.expansion-content').appendChild(srcCard);
     });
-
     container.appendChild(expCard);
-  });
-
-  setupToggles();
-  container.querySelectorAll('th[data-sort-key]').forEach(th => {
-    th.onclick = () => {
-      const key = th.dataset.sortKey;
-      if (columnSort.key === key) {
-        columnSort.dir = columnSort.dir === 'asc' ? 'desc' : 'asc';
-      } else {
-        columnSort = { key, dir: 'asc' };
-      }
-      applyFiltersAndRender(container, allData, 1);
-    };
   });
 }
 
 export async function renderApp(containerId) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = renderToolbar() + `<div id="events-list"></div>`;
-  const list = document.getElementById("events-list");
+  const appEl = document.getElementById(containerId);
+  appEl.innerHTML = renderToolbar() + '<div id="events-list"></div>';
+  const list = document.getElementById('events-list');
 
   allData = await loadAndEnrichData(evt => {
     document.body.style.cursor = 'wait';
   });
+  document.body.style.cursor = 'default';
 
   updateExpansionOptions(allData);
-  applyFiltersAndRender(list, allData);
+  applyFiltersAndRender(list, allData, 1);
 
-  // Attach filter inputs
-  [
-    "search-input", "lootname-filter", "loottype-filter", "chatcode-filter",
-    "minprice-filter", "maxprice-filter", "vendormin-filter", "vendormax-filter",
-    "sort-filter", "expansion-filter", "rarity-filter", "guaranteedonly-filter", "chanceonly-filter"
-  ].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener("input", () => applyFiltersAndRender(list, allData, 1));
-  });
+  const inputs = [
+    'search-input', 'lootname-filter', 'loottype-filter',
+    'chatcode-filter', 'minprice-filter', 'maxprice-filter',
+    'vendormin-filter', 'vendormax-filter', 'sort-filter',
+    'expansion-filter', 'rarity-filter', 'guaranteedonly-filter', 'chanceonly-filter'
+  ];
+  inputs.forEach(id =>
+    document.getElementById(id)?.addEventListener('input', () =>
+      applyFiltersAndRender(list, allData, 1)
+    )
+  );
 
-  // Help modal (ARIA, focus, Esc support)
+  // Help Modal
   document.getElementById("side-help").addEventListener("click", () => {
     if (document.getElementById("modal-help")) return;
-    const overlay = document.createElement('div');
-    overlay.id = "modal-help";
-    overlay.setAttribute("role", "dialog");
-    overlay.setAttribute("aria-modal", "true");
-    overlay.style = `
-      position:fixed;inset:0;background:#0006;z-index:9999;
+    const modal = document.createElement('div');
+    modal.id = "modal-help";
+    modal.style = `
+      position:fixed;inset:0;background:#0006;
       display:flex;align-items:center;justify-content:center;
+      z-index:9999;
     `;
-    overlay.innerHTML = `
-      <div class="modal-content" tabindex="0" style="
-        outline: none; background:white; padding:2em; border-radius:10px; max-width:500px;">
-        <h2 id="help-title">How to Use</h2>
+    modal.innerHTML = `
+      <div class="modal-content" style="background:white;padding:2em;border-radius:8px;max-width:520px;">
+        <h2>How to Use</h2>
         <ul>
-          <li>Use search/filter rows to find events and loot.</li>
-          <li>Click event/map names for Wiki links.</li>
-          <li>Toggle loot/description to view or hide detail.</li>
-          <li>Copy event summaries with the copy button.</li>
+          <li>Use search and filters to find specific events</li>
+          <li>Click event names or waypoints to open them on the wiki</li>
+          <li>All loot and descriptions are now shown inline</li>
         </ul>
-        <button class="copy-btn" id="close-help" style="margin-top:1em;">Close</button>
+        <button class="copy-btn" onclick="this.closest('#modal-help').remove()">Close</button>
       </div>
     `;
-    document.body.appendChild(overlay);
-
-    // Close modal by overlay or by Close button/Esc
-    const cleanup = () => overlay.remove();
-    overlay.onclick = (e) => { if (e.target === overlay) cleanup(); };
-    overlay.querySelector("#close-help").onclick = cleanup;
-    overlay.querySelector(".modal-content").focus();
-    document.addEventListener('keydown', function handler(e) {
-      if (e.key === "Escape") {
-        cleanup();
-        document.removeEventListener('keydown', handler);
-      }
-    });
+    document.body.appendChild(modal);
   });
 
-  // Infinite Scroll, dedupe events
+  // Infinite scroll
   window.addEventListener("scroll", () => {
     if (isLoading) return;
     const filters = getFiltersFromUI();
     const filtered = filterEvents(allData, filters);
-    const prevPageCount = PAGE_SIZE * currentPage;
-    const nextPaged = paginate(filtered, PAGE_SIZE, currentPage + 1);
     if (
-      window.innerHeight + window.scrollY >= document.body.offsetHeight - 200
-      && nextPaged.length > prevPageCount
+      window.scrollY + window.innerHeight >= document.body.offsetHeight - 150 &&
+      filtered.length > PAGE_SIZE * currentPage
     ) {
       isLoading = true;
       currentPage++;
@@ -317,5 +259,5 @@ export async function renderApp(containerId) {
   });
 }
 
-// Init app
+// Init on page load
 renderApp('app');
