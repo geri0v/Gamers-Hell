@@ -4,7 +4,8 @@ import { fetchWaypoints } from './waypoint.js';  // Your waypoint fetching modul
 
 // URLs and constants (update as needed)
 const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQI6XWf68WL1QBPkqgaNoFvNS4yV47h1OZ_E8MEZQiVBSMYVKNpeMWR49rJgNDJATkswIZiqktmrcxx/pub?output=csv';
-const OTC_CSV_URL = 'https://your-csv-host/otc_itemlist.csv';  // Replace with your OTC CSV URL
+const OTC_CSV_URL = 'https://raw.githubusercontent.com/otc-cirdan/gw2-items/refs/heads/master/items.csv';
+ // Replace with your OTC CSV URL
 const GW2TREASURES_API = 'https://api.gw2treasures.com/item/prices?ids=';
 
 const GW2_API = {
