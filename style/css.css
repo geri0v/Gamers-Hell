@@ -1,396 +1,226 @@
-/* ========== TERMINAL ========== */
-
-#terminal {
-  background: #1a1e25;
-  color: #e6e8eb;
-  font-size: 1rem;
-  padding: 14px;
-  border-bottom: 2px solid #232831;
-  height: 160px;
-  overflow-y: auto;
-  font-family: monospace;
-}
-
-#terminal.matrix-mode {
-  background: #000;
-  color: #00ff00;
-}
-
-#terminal.hidden {
-  display: none;
-}
-
-.terminal-line { margin: 0; }
-.terminal-info { color: #85d6ff; }
-.terminal-success { color: #61bd4f; }
-.terminal-progress { color: #ffd452; }
-.terminal-error { color: #ff6666; }
-
-/* ========== LAYOUT / BASE ========== */
-
+/* ==== LAYOUT BASE ==== */
 body {
   margin: 0;
   padding: 0;
-  background: #151a22;
-  color: #f0f4f8;
-  font-family: 'Fira Code', monospace, monospace;
+  background-color: #12171e;
+  color: #e5f3ff;
+  font-family: 'Fira Code', monospace;
 }
 
+/* Containers */
 #app {
-  max-width: 1080px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 24px 16px 64px;
+  padding: 24px;
 }
-
-/* ========== STICKY TOP BAR ========== */
 
 .top-ui-bar {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: #151a22;
-  border-bottom: 1px solid #223;
-  padding: 12px 0 4px;
+  background: #12171e;
+  border-bottom: 1px solid #333;
+  padding-bottom: 12px;
 }
 
-/* ========== SEARCH BAR ========== */
-
-.search-bar {
-  display: flex;
-  justify-content: center;
-  margin: 0 auto 16px auto;
-  max-width: 900px;
-}
-
-.search-bar input {
-  width: 100%;
-  padding: 10px 14px;
-  font-size: 1em;
-  border: 1px solid #444;
-  border-radius: 6px;
-  background: #232831;
-  color: #e6e8eb;
-  font-family: inherit;
-}
-
-.search-bar input:focus {
-  outline: 2px solid #65bfff;
-}
-
-/* ========== FILTER BAR ========== */
-
-.filter-bar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 14px;
+/* ==== EVENT GROUPS ==== */
+.event-group h2 {
+  font-size: 1.6em;
+  margin-top: 30px;
   margin-bottom: 16px;
+  color: #6bb3ff;
+  border-bottom: 2px solid #2e3b4e;
+  padding-bottom: 6px;
 }
 
-.filter-item {
-  display: flex;
-  align-items: center;
-}
-
-.filter-item select {
-  background: #2e323d;
-  color: #f5faff;
-  padding: 6px 10px;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.95em;
-  font-family: inherit;
-}
-
-/* ========== SORT BUTTONS ========== */
-
-.sort-bar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.sort-btn {
-  background: #65bfff;
-  border: none;
-  font-weight: bold;
-  border-radius: 4px;
-  padding: 6px 14px;
-  color: #101115;
-  cursor: pointer;
-}
-
-.sort-btn:hover {
-  background: #40ba8e;
-}
-
-/* ========== CACHE INFO BAR ========== */
-
-.cache-info-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  background: #232a33;
-  color: #bde0ff;
-  font-size: 0.95em;
-  padding: 8px 12px;
-  border-bottom: 1px solid #314155;
-  margin: 10px auto 16px;
-}
-
-.cache-info-bar button {
-  background: #ff8592;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 4px 14px;
-  font-weight: bold;
-  font-size: 0.94em;
-  cursor: pointer;
-}
-.cache-info-bar button:hover {
-  background: #d93854;
-}
-
-/* ========== GROUP HEADERS ========== */
-
-.expansion-group h2 {
-  color: #659bec;
-  font-size: 1.8em;
-  margin-top: 32px;
-  padding-bottom: 4px;
-  border-bottom: 2px solid #3c475a;
-}
-
-.expansion-group h3 {
-  color: #93b0e9;
-  font-size: 1.25em;
-  margin-top: 18px;
-  margin-bottom: 10px;
-}
-
-/* ========== EVENT CARD BASE ========== */
-
+/* ==== EVENT CARD ==== */
 .event-card {
-  background: #222830;
+  background: #1e222c;
+  border: 1px solid #2a2f3a;
+  border-radius: 6px;
+  margin: 20px 0;
   padding: 16px 20px;
-  border-radius: 8px;
-  margin-bottom: 26px;
-  box-shadow: 0 0 12px #0006;
+  box-shadow: 0 0 8px #0006;
 }
-
-/* ========== EVENT INFO ========== */
 
 .event-info-bar {
-  display: flex;
-  flex-wrap: wrap;
   font-size: 0.95em;
   color: #b1e2fc;
-  gap: 18px;
-  margin-bottom: 10px;
-}
-
-.event-info-bar a {
-  color: #91c8ff;
-  text-decoration: underline;
-}
-
-.event-info-bar code {
-  background: #1b262b;
-  color: #abfca4;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.88em;
-}
-
-/* ========== DESCRIPTION ========== */
-
-.event-desc {
-  font-size: 1em;
-  color: #efffec;
-  line-height: 1.4;
   margin-bottom: 12px;
 }
 
-/* ========== COPY BAR ========== */
-
-.copy-bar {
-  display: flex;
-  align-items: center;
-  background: #2b313b;
-  border-radius: 6px;
-  padding: 6px 8px;
-  margin-top: 10px;
+.event-info-bar span {
+  margin-right: 14px;
 }
 
-.copy-input {
-  background: transparent;
-  color: #fafafa;
-  flex: 1;
-  border: none;
-  font-size: 1em;
-  padding: 4px 0;
-  font-family: inherit;
-}
-
-.copy-btn {
-  background: #65bfff;
-  color: #101115;
-  font-weight: 600;
-  margin-left: 10px;
-  padding: 6px 14px;
+.event-info-bar code {
+  display: inline-block;
+  background: #20242b;
+  color: #a1fca1;
+  padding: 2px 6px;
   border-radius: 4px;
-  border: none;
-  cursor: pointer;
-}
-.copy-btn:hover {
-  background: #40ba8e;
+  font-size: 0.85em;
+  font-family: monospace;
 }
 
-/* ========== EXPORT BUTTONS ========== */
-
-.export-bar {
+/* ==== COPY + EXPORT BARS ==== */
+.copy-bar, .export-bar {
   display: flex;
-  gap: 12px;
-  margin-top: 10px;
-  margin-bottom: 8px;
+  gap: 10px;
+  padding: 6px 0;
+  margin: 8px 0;
 }
 
-.export-btn {
-  background: #91d1ff;
-  color: #0a111b;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 12px;
-  font-size: 0.9em;
-  cursor: pointer;
-  font-weight: 600;
-}
-.export-btn:hover {
-  background: #58c8a2;
+.copy-bar input {
+  flex: 1;
+  font-size: 0.95em;
+  font-family: monospace;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background: #272e38;
   color: #fff;
 }
 
-/* ========== LOOT CARDS ========== */
+.copy-btn, .export-btn {
+  background: #65bfff;
+  color: #111;
+  border: none;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
 
+.export-btn:hover,
+.copy-btn:hover {
+  background: #40ba8e;
+  color: #fff;
+}
+
+/* ==== LOOT GRID ==== */
 .loot-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 12px;
+  gap: 12px;
+  margin-top: 10px;
 }
 
 .loot-card {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
-  background: #1c2129;
-  border: 1px solid #333c47;
-  border-radius: 6px;
+  flex-direction: column;
   min-width: 260px;
+  background: #1c1f27;
+  border: 1px solid #2b2e3a;
+  padding: 10px 12px;
+  border-radius: 6px;
+  box-shadow: 0 0 4px #0004;
 }
 
-.loot-card.most-valuable {
-  border-color: gold;
-  background: rgba(255, 217, 0, 0.08);
+/* ==== LOOT INFO ==== */
+.loot-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.loot-icon {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
-  border-radius: 4px;
-  background: #252a32;
-}
-
-.loot-info a {
-  color: #a8e8ff;
+.loot-title a {
+  color: #a8ddff;
   font-weight: bold;
   text-decoration: none;
 }
 
+.loot-title a:hover {
+  text-decoration: underline;
+}
+
+.rarity-ascended .loot-title,
+.rarity-Ascended .loot-title { color: #ff66cc; }
+
+.rarity-exotic .loot-title,
+.rarity-Exotic .loot-title { color: #ffb400; }
+
+.rarity-rare .loot-title,
+.rarity-Rare .loot-title { color: #f4d13d; }
+
+.rarity-masterwork .loot-title,
+.rarity-Masterwork .loot-title { color: #3bc778; }
+
+.rarity-fine .loot-title,
+.rarity-Fine .loot-title { color: #66baff; }
+
+.rarity-basic .loot-title,
+.rarity-Basic .loot-title { color: #cccccc; }
+
+/* ==== TP LINK ==== */
+.tp-link {
+  font-size: 0.85em;
+  font-weight: normal;
+  margin-left: 8px;
+  color: #9fcbff;
+}
+
+.tp-link:hover {
+  color: #e5e5e5;
+}
+
+/* ==== LOOT METADATA ===== */
 .loot-meta {
-  font-size: 0.86em;
-  color: #c8ecff;
-  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.85em;
+  gap: 8px;
 }
 
 .loot-meta span {
-  margin-right: 10px;
-  display: inline-block;
-}
-
-.loot-ab {
-  color: #ffd16f;
-  font-weight: 500;
-}
-.loot-guaranteed {
-  color: #6fed81;
-  font-weight: 500;
-}
-.loot-chatcode {
-  background: #293d29;
-  color: #affcaf;
   padding: 2px 6px;
+  border-radius: 3px;
+  background: #2c3140;
+  color: #fff;
   font-family: monospace;
-  border-radius: 4px;
-  font-size: 0.9em;
-}
-.loot-rarity {
-  font-size: 0.9em;
-  font-weight: bold;
-  margin-left: 6px;
 }
 
-.rarity-ascended { color: #ff81d6; }
-.rarity-exotic { color: #ffa800; }
-.rarity-rare { color: #f7df48; }
-.rarity-masterwork { color: #3bc778; }
-.rarity-fine { color: #62dbec; }
-.rarity-basic { color: #cccccc; }
-
-.most-valuable-badge {
-  font-size: 1.1em;
-  vertical-align: middle;
-  margin-left: 6px;
-  color: #ffe973;
-  cursor: help;
+.loot-guaranteed {
+  background: #2d4632;
+  color: #86fca9;
 }
 
-/* ========== TP MARKET LINK ========== */
-
-.tp-link {
-  margin-left: 8px;
-  font-size: 0.9em;
-  font-weight: bold;
-  background: #2c383f;
-  color: #76c9ff;
-  padding: 2px 6px;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-.tp-link:hover {
-  background: #3b4b58;
-  color: #ffffff;
+.loot-collectible {
+  background: #3a3525;
+  color: #e0d27d;
 }
 
-/* ========== EMPTY RESULTS ========== */
+.loot-achievement {
+  background: #3d2730;
+  color: #f9a1ba;
+}
 
+.loot-bound {
+  background: #4b2e2e;
+  color: #ffaaaa;
+}
+
+.loot-chatcode {
+  background: #2a2a2e;
+  color: #cfff9e;
+  font-family: monospace;
+}
+
+/* ==== No Results ==== */
 .no-results {
-  text-align: center;
-  color: #ff8888;
-  padding: 30px;
+  color: #ff9999;
   font-style: italic;
+  padding: 16px;
 }
 
-/* ========== INFINITE SCROLL MARKER ========== */
+/* ==== Responsive ==== */
+@media (max-width: 760px) {
+  .loot-grid {
+    flex-direction: column;
+  }
 
-#infinite-scroll-sentinel {
-  height: 1px;
-  width: 100%;
+  .loot-card {
+    width: 100%;
+  }
 }
