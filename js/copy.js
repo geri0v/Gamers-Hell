@@ -1,4 +1,5 @@
-import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/info.js';
+// copy.js
+import { formatPrice } from './info.js';
 
 /**
  * Gets the most valuable item by price, or best rarity if no pricing exists
@@ -20,7 +21,7 @@ export function getMostValuableDrop(loot) {
 /**
  * Clipboard logic with visual nudge: "Copied!" after copy
  */
-window.copyWithNudge = function(button) {
+export function copyWithNudge(button) {
   const input = button.previousElementSibling;
   if (!input) return;
   navigator.clipboard.writeText(input.value).then(() => {
@@ -31,8 +32,10 @@ window.copyWithNudge = function(button) {
       button.textContent = original;
       button.removeAttribute('aria-live');
     }, 1000);
+  }).catch(() => {
+    button.textContent = 'Failed';
   });
-};
+}
 
 /**
  * Copy bar component per event: shows a shortcut and copy button
@@ -50,6 +53,7 @@ export function createCopyBar(event) {
     : 'N/A';
 
   let text = `${event.name} | ${event.map} | WP: ${event.code} | Guaranteed: ${guaranteedText} | Chance of: ${chanceString}`;
+  
   if (text.length > 198) {
     text = text.slice(0, 195) + '...';
   }
@@ -67,5 +71,5 @@ export function createCopyBar(event) {
  */
 export function createMostValuableBadge(item) {
   if (!item) return '';
-  return `<span class="most-valuable-badge" title="Most valuable drop">💰</span>`;
+  return `<span class="most-valuable-badge" title="Most valuable drop for this event">💰</span>`;
 }
