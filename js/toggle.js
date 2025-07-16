@@ -1,41 +1,37 @@
 /**
- * Sets up all toggle buttons on the page.
- * Works on:
- * - loot cards
- * - event section tables
- * - description texts
+ * Attach toggle buttons for all expandable elements: loot cards, source groups, expansions, descriptions.
  */
 export function setupToggles() {
-  const buttons = document.querySelectorAll('.toggle-btn');
+  const toggles = document.querySelectorAll('.toggle-btn');
 
-  buttons.forEach(button => {
+  toggles.forEach(button => {
     const targetId = button.dataset.target;
     const target = document.getElementById(targetId);
-    
-    if (!target) return;
+    if (!button || !target) return;
 
-    const updateToggle = () => {
-      const expanded = button.getAttribute('aria-expanded') === 'true';
-      button.setAttribute('aria-expanded', !expanded);
-      button.textContent = expanded ? 'Show' : 'Hide';
-      target.classList.toggle('hidden', expanded);
+    const toggleContent = () => {
+      const isExpanded = !target.classList.contains('hidden');
+      target.classList.toggle('hidden', isExpanded);
+      button.setAttribute('aria-expanded', String(!isExpanded));
+      button.textContent = isExpanded ? 'Show' : 'Hide';
     };
 
-    // Activate on click
-    button.addEventListener('click', updateToggle);
-
-    // Keyboard: Enter/Space
-    button.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        updateToggle();
-      }
-    });
-
-    // Initial ARIA setup
     button.setAttribute('role', 'button');
     button.setAttribute('tabindex', '0');
     button.setAttribute('aria-expanded', 'false');
-    target.classList.add('hidden'); // Default closed
+    button.setAttribute('aria-controls', targetId);
+    target.classList.add('hidden');
+    button.textContent = 'Show';
+
+    // Click handler
+    button.addEventListener('click', toggleContent);
+
+    // Keyboard: Enter or Space
+    button.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleContent();
+      }
+    });
   });
 }
