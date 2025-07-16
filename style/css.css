@@ -1,145 +1,162 @@
-/* main.css */
-body {
-  background: #13161b;
-  color: #f7f7f9;
-  font-family: 'Fira Mono', 'Consolas', monospace, monospace;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-}
-
-#terminal {
-  background: #1a1e25;
-  color: #e6e8eb;
-  font-size: 1rem;
-  padding: 14px;
-  border-bottom: 2px solid #232831;
-  height: 160px;
-  overflow-y: auto;
-  font-family: inherit;
-}
-
-.terminal-line { margin: 0; }
+/* Terminal */
 .terminal-info { color: #85d6ff; }
-.terminal-success { color: #61bd4f; }
-.terminal-progress { color: #ffd452; }
-.terminal-error { color: #ff5555; }
+.terminal-error { color: #ff6666; }
+.terminal-warn { color: #ffb547; }
 
-#app {
-  padding: 24px max(2vw, 8px);
-}
-
-.search-bar {
+/* Filter bar under search - horizontal flex */
+.filter-bar {
   display: flex;
-  margin-bottom: 18px;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 0 4px;
+  font-size: 0.9em;
 }
 
-.search-bar input {
-  flex: 1;
+.filter-item select {
   background: #2e323d;
   color: #e6e8eb;
   border: none;
-  border-radius: 5px;
-  font-size: 1.05em;
-  padding: 8px 10px;
-  outline: none;
-  margin-right: 10px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  min-width: 120px;
+  font-family: inherit;
+  cursor: pointer;
 }
 
-.event-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 18px;
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  color: #aaccff;
+  cursor: pointer;
+  user-select: none;
 }
 
+.filter-checkbox input {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+/* Event Card Tweaks */
 .event-card {
-  background: #232831;
-  border-radius: 7px;
-  box-shadow: 0 2px 8px #0008;
-  padding: 16px 14px 18px 14px;
+  background: #222830;
+  padding: 14px 18px;
+  border-radius: 6px;
+  box-shadow: 0 0 8px #0009;
+  margin-bottom: 14px;
+  font-family: 'Fira Mono', monospace;
 }
 
-.event-card h3 {
-  font-size: 1.22em;
-  margin: 0 0 8px 0;
+.event-card h4 {
+  margin: 0 0 6px 0;
+  font-size: 1.4em;
 }
-.event-card h3 .desc {
-  display: block;
-  font-size: 0.98em;
-  font-weight: 400;
-  color: #ccc;
-  margin-top: 3px;
+
+.event-desc {
+  font-size: 0.92em;
+  margin: 0 0 8px 0;
+  color: #c4c8cc;
+  line-height: 1.3;
 }
 
 .event-meta {
-  font-size: 0.97em;
+  font-size: 0.95em;
+  color: #9cbddb;
+  margin-bottom: 10px;
+}
+
+.loot-list {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 4px;
+}
+
+.loot-item {
   margin-bottom: 6px;
-  color: #8eb5d2;
 }
-.event-meta span + span { margin-left: 18px; }
 
-.loot-list { list-style: disc inside; margin: 8px 0 0 0; padding: 0; }
-.loot-list li { margin-bottom: 3px; }
 .loot-icon {
-  height: 18px;
-  vertical-align: text-bottom;
-  margin-right: 3px;
+  vertical-align: middle;
+  height: 20px;
+  margin-right: 5px;
   border-radius: 3px;
-  background: #263447;
+  background: #1d2432;
+  border: 1px solid #000a;
 }
 
-.loot-gtd {
-  color: #6fefb2;
+.loot-guaranteed {
   font-weight: bold;
-  font-size: 0.94em;
-  margin-left: 8px;
-}
-.prices {
-  color: #ffe066;
+  color: #6fed81;
   margin-left: 6px;
-  font-weight: bold;
-}
-.most-valuable-badge {
-  margin-left: 7px;
-  font-size: 1.13em;
-  vertical-align: baseline;
 }
 
+.most-valuable {
+  font-weight: 700;
+  color: #ffd954;
+  background: rgba(255, 217, 0, 0.14);
+  border-radius: 4px;
+  padding: 0 6px;
+}
+
+/* Copy bar styling */
 .copy-bar {
+  margin-top: 9px;
   display: flex;
   align-items: center;
-  background: #22252f;
-  border-radius: 4px;
-  margin-top: 10px;
-  padding: 5px;
-}
-.copy-input {
-  flex: 1;
-  border: none;
-  background: transparent;
-  color: #fafafa;
-  font-size: 1em;
-  padding: 2px 6px;
-}
-.copy-btn {
-  background: #65bfff;
-  color: #101115;
-  border: none;
-  border-radius: 3px;
-  padding: 4px 16px;
-  margin-left: 7px;
-  font-size: 0.97em;
-  cursor: pointer;
-  transition: background 0.18s;
-}
-.copy-btn:active, .copy-btn[aria-live] {
-  background: #40ba8e;
-  color: #fff;
+  background: #333a42;
+  border-radius: 5px;
+  padding: 6px 10px;
 }
 
+.copy-input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: #fafafa;
+  outline: none;
+  font-family: monospace;
+  font-size: 0.9em;
+  padding: 2px 4px;
+  user-select: all;
+}
+
+.copy-btn {
+  cursor: pointer;
+  background: #65bfff;
+  border: none;
+  color: #101115;
+  padding: 5px 14px;
+  border-radius: 3px;
+  margin-left: 8px;
+  font-weight: 600;
+  transition: background-color 0.25s;
+}
+
+.copy-btn:hover {
+  background: #5596e6;
+}
+
+/* No results */
 .no-results {
-  color: #ff8888;
+  color: #ff7b7b;
+  font-style: italic;
   text-align: center;
   padding: 22px 0;
-  grid-column: 1/-1;
+  grid-column: 1 / -1;
+}
+
+/* Grouping headers */
+.expansion-group > h2 {
+  border-bottom: 2px solid #3c475a;
+  padding-bottom: 4px;
+  margin-top: 30px;
+  font-weight: 700;
+  font-size: 1.8em;
+  color: #659bec;
+}
+
+.expansion-group h3 {
+  font-size: 1.32em;
+  margin: 18px 0 8px 0;
+  color: #93b0e9;
 }
