@@ -1,7 +1,7 @@
 // search.js
 import { filterEventsExtended } from './data.js';
 
-// Search bar rendering (type="text", always usable)
+// === Render Search Bar ===
 export function renderSearchBar(onSearch) {
   const wrap = document.createElement('div');
   wrap.className = 'search-bar';
@@ -17,12 +17,12 @@ export function renderSearchBar(onSearch) {
   return wrap;
 }
 
-// Filter bar rendering with event dropdown
+// === Render Filter Bar ===
 export function renderFilterBar(options, onChange) {
   const container = document.createElement('div');
   container.className = 'filter-bar';
 
-  // Helper: dropdown select
+  // Helper for select box
   const select = (label, list, key, current) => {
     const wrap = document.createElement('label');
     wrap.className = 'filter-item';
@@ -41,12 +41,20 @@ export function renderFilterBar(options, onChange) {
     container.appendChild(wrap);
   };
 
+  // === ORDER: Expansion | Event | Rarity | Loot Type ===
   select('Expansion', options.expansions, 'expansion', options.current.expansion);
-  // Event selector (optional, place between expansion and rarity)
+
   if (options.events && options.events.length) {
-    select('Event', options.events, 'eventName', options.current.eventName);
+    select(
+      'Event',
+      [{ val: '', text: 'All Events' }, ...options.events],
+      'eventName',
+      options.current.eventName
+    );
   }
+
   select('Rarity', options.rarities, 'rarity', options.current.rarity);
+
   select('Loot Type', [
     { val: '', text: 'All Loot' },
     { val: 'guaranteed', text: 'Guaranteed Only' },
@@ -56,7 +64,7 @@ export function renderFilterBar(options, onChange) {
   return container;
 }
 
-// Sort buttons rendering
+// === Render Sort Buttons ===
 export function renderSortButtons(onSort) {
   const sortWrap = document.createElement('div');
   sortWrap.className = 'sort-bar';
@@ -72,7 +80,7 @@ export function renderSortButtons(onSort) {
   return sortWrap;
 }
 
-// Fuzzy matching utility
+// === Fuzzy Matching ===
 export function fuzzyMatch(str, pattern) {
   str = (str || '').toLowerCase();
   pattern = (pattern || '').toLowerCase();
@@ -86,12 +94,14 @@ export function fuzzyMatch(str, pattern) {
   return false;
 }
 
-// Main event filtering function
+// === Filter Events Main Logic ===
 export function filterEvents(events, filters) {
   let subset = events;
-  const { searchTerm, lootType, expansion, rarity, itemType, eventName, ...rest } = filters;
+  const {
+    searchTerm, lootType, expansion, rarity, itemType, eventName, ...rest
+  } = filters;
 
-  // Search term (fuzzy match on name or map)
+  // Fuzzy search on event name or map
   if (searchTerm && searchTerm.trim().length) {
     const term = searchTerm.trim();
     subset = subset.filter(e =>
@@ -100,19 +110,19 @@ export function filterEvents(events, filters) {
     );
   }
 
-  // Event dropdown filter (exact match)
-  if (eventName && eventName.trim().length) {
+  // Event name filter (dropdown selection)
+  if (eventName && eventName.trim()) {
     subset = subset.filter(e => (e.name || '') === eventName);
   }
 
-  // Loot type filter
+  // Loot type filtering
   if (lootType === 'guaranteed') {
     subset = subset.filter(e => (e.loot || []).some(i => i.guaranteed === true));
   } else if (lootType === 'chance') {
     subset = subset.filter(e => (e.loot || []).some(i => i.guaranteed !== true));
   }
 
-  // Pass remaining filters to data.js extended filter
+  // Pass remaining filters to extended logic
   return filterEventsExtended(subset, {
     expansion, rarity, itemType,
     ...rest
