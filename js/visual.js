@@ -2,7 +2,7 @@
 // Main app entry. Loads full map->event->loot dataset and renders it with filters/sorting.
 
 import { generateDeepEventDataset } from './eventdata.js';
-import { renderSearchBar, renderFilterBar, renderSortButtons, filterEvents } from './search.js';
+import { filterEvents, renderSortButtons, renderFilterBar, renderSearchBar } from './search.js';
 import { renderEventGroups } from './card.js';
 import { paginate } from './pagination.js';
 import { startTerminal, endTerminal, appendTerminal } from './terminal.js';
