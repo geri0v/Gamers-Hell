@@ -1,6 +1,4 @@
 // eventdata.js
-
-import Papa from 'papaparse';
 import { getTpUrl } from './tp.js';
 import { fetchWaypoints } from './waypoint.js';  // Your waypoint fetching module
 
