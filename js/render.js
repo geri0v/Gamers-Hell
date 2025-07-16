@@ -22,12 +22,18 @@ function createCard(className, content) {
   return div;
 }
 
+function trimTo2Sentences(text) {
+  const sentenceMatch = text.match(/^(.+?[.!?])\s+(.+?[.!?])/);
+  return sentenceMatch ? `${sentenceMatch[1]} ${sentenceMatch[2]}` : text;
+}
+
 function renderToolbar() {
   return `
     <div id="main-controls-wrap">
       <div class="toolbar-top">
-        <button class="side-btn" id="side-help" aria-label="Help">❓</button>
-        <input id="search-input" aria-label="Search" placeholder="Search event or map..." />
+        <button class="side-btn" id="side-help">❓</button>
+        <input id="search-input" placeholder="Search event or map..."/>
+        <button class="side-btn" id="readme-btn">📄 Readme</button>
       </div>
       <div class="filter-row">
         <input id="lootname-filter" placeholder="Loot name" />
@@ -76,7 +82,7 @@ function renderLootCards(loot, eventId) {
   return `
     <div class="subcards" id="loot-${eventId}">
       ${loot.map(l => `
-        <div class="subcard${l.guaranteed ? ' guaranteed' : ''}${l === mostVal ? ' most-valuable' : ''}">
+        <div class="subcard${l.guaranteed ? " guaranteed" : ""}${l === mostVal ? " most-valuable" : ""}">
           ${l.icon ? `<img src="${l.icon}" alt="">` : ''}
           ${l.wikiLink ? `<a href="${l.wikiLink}" target="_blank">${l.name}</a>` : l.name}
           ${l.price != null ? `<div><strong>Price:</strong> ${formatPrice(l.price)}</div>` : ''}
@@ -96,10 +102,10 @@ function renderEventTable(events, srcIdx, expIdx) {
     <table class="event-table">
       <thead>
         <tr>
-          <th data-sort-key="name">Name</th>
-          <th data-sort-key="map">Map</th>
-          <th data-sort-key="waypointName">Waypoint Name</th>
-          <th data-sort-key="code">Waypoint Code</th>
+          <th data-sort-key="name">Name <span class="sort-arrow"></span></th>
+          <th data-sort-key="map">Map <span class="sort-arrow"></span></th>
+          <th data-sort-key="waypointName">Waypoint Name <span class="sort-arrow"></span></th>
+          <th data-sort-key="code">Waypoint Code <span class="sort-arrow"></span></th>
         </tr>
       </thead>
       <tbody>
@@ -116,7 +122,7 @@ function renderEventTable(events, srcIdx, expIdx) {
               <td>${e.code || '–'}</td>
             </tr>
             <tr><td colspan="4">${createCopyBar(e)}</td></tr>
-            ${e.description ? `<tr><td colspan="4"><div class="inline-desc"><strong>Description:</strong> ${e.description}</div></td></tr>` : ''}
+            ${e.description ? `<tr><td colspan="4"><div class="inline-desc"><strong>Description:</strong> ${trimTo2Sentences(e.description)} <a href="${e.wikiLink}" target="_blank">(see wiki)</a></div></td></tr>` : ''}
             <tr><td colspan="4">${renderLootCards(e.loot, eventId)}</td></tr>
             <tr><td colspan="4"><hr class="event-separator"></td></tr>
           `;
@@ -137,9 +143,10 @@ function applyFiltersAndRender(container, data, page = 1, append = false) {
   let filtered = filterEvents(data, filters);
 
   if (filters.sortKey) {
+    const { key, dir } = columnSort = { key: filters.sortKey, dir: columnSort.dir === 'asc' ? 'desc' : 'asc' };
     filtered = filtered.sort((a, b) => {
-      if (filters.sortKey === 'value') return (b.value || 0) - (a.value || 0);
-      return (a[filters.sortKey] || '').localeCompare(b[filters.sortKey] || '');
+      if (key === 'value') return (dir === 'asc' ? 1 : -1) * ((a.value || 0) - (b.value || 0));
+      return (a[key] || '').localeCompare(b[key] || '') * (dir === 'asc' ? 1 : -1);
     });
   }
 
@@ -155,26 +162,23 @@ function applyFiltersAndRender(container, data, page = 1, append = false) {
   grouped.forEach((exp, expIdx) => {
     const expCard = createCard('expansion-card', `
       <h2 class="section-header">${exp.expansion}</h2>
-      <div class="expansion-content" id="exp-${expIdx}"></div>
+      <div class="expansion-content"></div>
     `);
     exp.sources.forEach((src, srcIdx) => {
-      const srcTable = renderEventTable(src.items, srcIdx, expIdx);
       const srcCard = createCard('source-card', `
         <h3 class="subsection-header">${src.sourcename}</h3>
-        <div>${srcTable}</div>
+        ${renderEventTable(src.items, srcIdx, expIdx)}
       `);
       expCard.querySelector('.expansion-content').appendChild(srcCard);
     });
     container.appendChild(expCard);
   });
 
-  // Enable sorting via table headers
+  // Update sort arrows
   container.querySelectorAll('th[data-sort-key]').forEach(th => {
-    th.onclick = () => {
-      const key = th.dataset.sortKey;
-      columnSort = { key, dir: columnSort.key === key && columnSort.dir === 'asc' ? 'desc' : 'asc' };
-      applyFiltersAndRender(container, allData, 1);
-    };
+    const arrow = th.querySelector('.sort-arrow');
+    const active = columnSort.key === th.dataset.sortKey;
+    arrow.textContent = active ? (columnSort.dir === 'asc' ? '▲' : '▼') : '';
   });
 }
 
@@ -192,10 +196,33 @@ export async function renderApp(containerId) {
     'chatcode-filter', 'sort-filter', 'expansion-filter',
     'rarity-filter', 'guaranteedonly-filter', 'chanceonly-filter'
   ].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('input', () => applyFiltersAndRender(list, allData, 1));
+    document.getElementById(id)?.addEventListener('input', () =>
+      applyFiltersAndRender(list, allData, 1)
+    );
   });
 
+  // README popup
+  document.getElementById("readme-btn").addEventListener("click", async () => {
+    if (document.getElementById('modal-readme')) return;
+    const modal = document.createElement('div');
+    modal.id = "modal-readme";
+    modal.setAttribute("role", "dialog");
+    modal.style = "position:fixed;inset:0;background:#0006;display:flex;justify-content:center;align-items:center;z-index:9999;";
+    let text = 'Loading...';
+    try {
+      text = await fetch('https://geri0v.github.io/Gamers-Hell/README.md').then(r => r.text());
+    } catch { text = 'Could not load README.'; }
+    modal.innerHTML = `
+      <div class="modal-content" style="max-height:80vh;overflow:auto; padding:2em;">
+        <button class="copy-btn" onclick="this.closest('#modal-readme').remove()" style="float:right">Close</button>
+        <h2>README</h2>
+        <pre style="white-space:pre-wrap;">${text}</pre>
+      </div>`;
+    modal.onclick = e => { if (e.target === modal) modal.remove(); };
+    document.body.appendChild(modal);
+  });
+
+  // Help modal
   document.getElementById("side-help").addEventListener("click", () => {
     if (document.getElementById("modal-help")) return;
     const modal = document.createElement('div');
@@ -209,9 +236,9 @@ export async function renderApp(containerId) {
       <div class="modal-content" style="background:white;padding:2em;border-radius:8px;max-width:520px;">
         <h2>How to Use</h2>
         <ul>
-          <li>Use search & filters above</li>
-          <li>Click names or maps to open the wiki</li>
-          <li>Loot and descriptions are shown inline</li>
+          <li>Use filters to explore loot events by name, map, or type.</li>
+          <li>Click event names/maps for links to the GW2 wiki.</li>
+          <li>All loot and descriptions are now always shown.</li>
         </ul>
         <button class="copy-btn" onclick="document.getElementById('modal-help').remove()">Close</button>
       </div>
@@ -219,22 +246,27 @@ export async function renderApp(containerId) {
     document.body.appendChild(modal);
   });
 
-  // 💡 Infinite scroll fix: do not re-render existing data
-  window.addEventListener('scroll', () => {
+  // Infinite scroll: stops at last page
+  window.addEventListener("scroll", () => {
     if (isLoading) return;
-    const bottom = window.scrollY + window.innerHeight >= document.body.offsetHeight - 200;
-    if (!bottom) return;
-
-    const filtered = filterEvents(allData, getFiltersFromUI());
-    const currentRendered = PAGE_SIZE * currentPage;
-    if (filtered.length > currentRendered) {
+    const filters = getFiltersFromUI();
+    const filtered = filterEvents(allData, filters);
+    const bottom = window.scrollY + window.innerHeight >= document.body.offsetHeight - 150;
+    if (bottom && filtered.length > PAGE_SIZE * currentPage) {
       isLoading = true;
       currentPage++;
       applyFiltersAndRender(list, allData, currentPage, true);
       isLoading = false;
     }
   });
-}
 
-// Init
-renderApp('app');
+  // Back to Top
+  const scrollBtn = document.createElement("button");
+  scrollBtn.className = "scroll-top-btn";
+  scrollBtn.textContent = "⬆";
+  scrollBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  document.body.appendChild(scrollBtn);
+  window.addEventListener("scroll", () => {
+    scrollBtn.style.display = window.scrollY > 500 ? "block" : "none";
+  });
+}
