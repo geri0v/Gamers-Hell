@@ -39,8 +39,9 @@ export async function loadAndEnrichData(onProgress = null) {
 
       // Wiki Link for Event
       event.wikiLink = event.name
-        ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.name.replace(/ /g, "_"))}}`
-        : null;
+      ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.name.replace(/ /g, "_"))}`
+     : null;
+
 
       // Wiki Link for Map
       event.mapWikiLink = event.map
