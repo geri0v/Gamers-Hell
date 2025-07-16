@@ -1,48 +1,67 @@
 // loot.js
 import { formatCopper } from './gold.js';
-import { createMostValuableBadge } from './copy.js';
-import { getTpAnchor } from './tp.js'; // ✅ New Import
-
-export function getMostValuableItem(loot) {
-  if (!Array.isArray(loot) || loot.length === 0) return null;
-  const byValue = [...loot].filter(i => i.price).sort((a, b) => b.price - a.price);
-  return byValue.length > 0 ? byValue[0] : loot[0];
-}
 
 export function renderLootCards(lootList) {
   const lootGrid = document.createElement('div');
   lootGrid.className = 'loot-grid';
 
-  const mostValuable = getMostValuableItem(lootList);
-
   lootList.forEach(item => {
-    const lootCard = document.createElement('div');
-    lootCard.className = 'loot-card';
-    if (item === mostValuable) lootCard.classList.add('most-valuable');
+    const card = document.createElement('div');
+    card.className = 'loot-card';
 
-    const raritySpan = item.rarity
-      ? `<span class="loot-rarity rarity-${item.rarity.toLowerCase()}" title="Rarity: ${item.rarity}">${item.rarity}</span>`
-      : '';
+    const info = document.createElement('div');
+    info.className = 'loot-info';
 
-    const tpLink = item.id ? getTpAnchor(item.id, 'gw2trader') : '';
+    // === Item Name + Rarity
+    const title = document.createElement('div');
+    title.className = 'loot-title';
 
-    lootCard.innerHTML = `
-      ${item.icon ? `<img src="${item.icon}" class="loot-icon" alt="${item.name} icon" />` : ''}
-      <div class="loot-info">
-        <a href="${item.wikiLink || '#'}" target="_blank">${item.name}</a>
-        ${tpLink}
-        ${raritySpan}
-        <div class="loot-meta">
-          <span>Price: ${formatCopper(item.price)}</span>
-          ${item.vendorValue ? `<span>Vendor: ${formatCopper(item.vendorValue)}</span>` : ''}
-          ${item.accountBound ? '<span class="loot-ab" title="Account Bound">Accountbound</span>' : ''}
-          ${item.guaranteed ? '<span class="loot-guaranteed" title="Always drops">Guaranteed</span>' : ''}
-          ${item.chatCode ? `<code class="loot-chatcode" title="Chat Code">${item.chatCode}</code>` : ''}
-          ${item === mostValuable ? createMostValuableBadge(item) : ''}
-        </div>
-      </div>
+    title.innerHTML = `
+      <a href="${item.wikiUrl}" target="_blank" rel="noopener">
+        ${item.name}
+      </a> 
+      ${item.tp ? `<a href="${item.tp}" class="tp-link" target="_blank" title="Trading Post">[TP]</a>` : ''}
     `;
-    lootGrid.appendChild(lootCard);
+
+    // === Rarity-colored Tag
+    if (item.rarity) {
+      const rarity = item.rarity.toLowerCase();
+      title.classList.add(`rarity-${rarity}`);
+    }
+
+    info.appendChild(title);
+
+    // === Badges Row
+    const meta = document.createElement('div');
+    meta.className = 'loot-meta';
+
+    const makeBadge = (label, title, className) => {
+      const span = document.createElement('span');
+      span.className = className;
+      span.title = title;
+      span.textContent = label;
+      return span;
+    };
+
+    if (item.guaranteed) {
+      meta.appendChild(makeBadge('💎 Guaranteed', 'Always drops', 'loot-guaranteed'));
+    }
+    if (item.collectible) {
+      meta.appendChild(makeBadge('📦 Collectible', 'Part of collection/skin/mini', 'loot-collectible'));
+    }
+    if (item.achievementLinked) {
+      meta.appendChild(makeBadge('🏆 Achievement', 'Linked to achievement', 'loot-achievement'));
+    }
+    if (item.accountBound) {
+      meta.appendChild(makeBadge('🔒 Bound', 'Account Bound', 'loot-bound'));
+    }
+    if (item.chatcode) {
+      meta.appendChild(makeBadge(item.chatcode, 'In-game item code', 'loot-chatcode'));
+    }
+
+    info.appendChild(meta);
+    card.appendChild(info);
+    lootGrid.appendChild(card);
   });
 
   return lootGrid;
