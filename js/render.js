@@ -1,3 +1,6 @@
+// render.js — Fully Featured, All Toggles, Filters, Descriptions, Scroll + Sort
+
+// (Import statements same as before, unchanged)
 import { loadAndEnrichData } from 'https://geri0v.github.io/Gamers-Hell/js/infoload.js';
 import { groupAndSort } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
 import { formatPrice } from 'https://geri0v.github.io/Gamers-Hell/js/info.js';
@@ -25,81 +28,81 @@ function createCard(className, content) {
   return div;
 }
 
-function renderProgressBar(percent) {
-  return `<div class="progress-bar-container"><div class="progress-bar" style="width:${percent}%;"></div></div>`;
-}
-
-function maxPriceFromLoot(loot = []) {
-  return Math.max(...loot.map(l => l.price ?? 0));
-}
-
-function getFiltersFromUI() {
-  return {
-    searchTerm: document.getElementById('search-input').value,
-    expansion: document.getElementById('expansion-filter').value,
-    rarity: document.getElementById('rarity-filter').value,
-    lootName: document.getElementById('lootname-filter').value,
-    itemType: document.getElementById('loottype-filter').value,
-    vendorValueMin: Number(document.getElementById('vendormin-filter').value) || undefined,
-    vendorValueMax: Number(document.getElementById('vendormax-filter').value) || undefined,
-    chatcode: document.getElementById('chatcode-filter').value,
-    guaranteedOnly: document.getElementById('guaranteedonly-filter').checked,
-    chanceOnly: document.getElementById('chanceonly-filter').checked,
-    sortKey: document.getElementById('sort-filter').value
-  };
-}
-
-function renderSearchUI() {
+function renderSearchAndFilters() {
   return `
     <div id="main-controls-wrap">
       <div class="toolbar-top">
         <button class="side-btn" id="side-help" aria-label="Help">❓</button>
-        <button class="side-btn" id="toggle-compact" aria-label="Toggle layout">🗂️</button>
-        <input id="search-input" aria-label="Search" placeholder="Search event or map..." style="flex: 1; min-width: 280px; padding: 0.5em 0.8em; font-size: 1em; border-radius: 5px; border: 1px solid #bbb;">
+        <button class="side-btn" id="toggle-compact" aria-label="Toggle loot layout">🗂️</button>
+        <input id="search-input" aria-label="Search" placeholder="Search event or map..." />
       </div>
-      <div class="search-grid">
+      <div class="filter-row">
         <input id="lootname-filter" placeholder="Loot name" />
         <input id="loottype-filter" placeholder="Type" />
         <input id="chatcode-filter" placeholder="Chatcode" />
+        <input id="minprice-filter" type="number" placeholder="Min price" />
+        <input id="maxprice-filter" type="number" placeholder="Max price" />
+        <input id="vendormin-filter" type="number" placeholder="Min vendor" />
+        <input id="vendormax-filter" type="number" placeholder="Max vendor" />
+      </div>
+      <div class="filter-row">
+        <select id="sort-filter">
+          <option value="">Sort By</option>
+          <option value="name">Name</option>
+          <option value="map">Map</option>
+          <option value="waypointName">WP Name</option>
+          <option value="code">WP Code</option>
+          <option value="value">Highest Value</option>
+        </select>
         <select id="expansion-filter"><option value="">All Expansions</option></select>
         <select id="rarity-filter">
           <option value="">All Rarities</option>
           <option>Ascended</option><option>Exotic</option><option>Rare</option>
           <option>Masterwork</option><option>Fine</option><option>Basic</option>
         </select>
-        <input id="vendormin-filter" type="number" placeholder="Min vendor" />
-        <input id="vendormax-filter" type="number" placeholder="Max vendor" />
         <label><input type="checkbox" id="guaranteedonly-filter" /> Guaranteed</label>
         <label><input type="checkbox" id="chanceonly-filter" /> Chance</label>
-        <select id="sort-filter">
-          <option value="">Sort By</option>
-          <option value="name">Name</option>
-          <option value="expansion">Expansion</option>
-          <option value="map">Map</option>
-          <option value="code">WP Code</option>
-          <option value="waypointName">WP Name</option>
-          <option value="value">Value</option>
-        </select>
       </div>
     </div>
   `;
 }
 
+function getFiltersFromUI() {
+  return {
+    searchTerm: document.getElementById('search-input').value,
+    rarity: document.getElementById('rarity-filter').value,
+    expansion: document.getElementById('expansion-filter').value,
+    lootName: document.getElementById('lootname-filter').value,
+    itemType: document.getElementById('loottype-filter').value,
+    chatcode: document.getElementById('chatcode-filter').value,
+    vendorValueMin: Number(document.getElementById('vendormin-filter').value) || undefined,
+    vendorValueMax: Number(document.getElementById('vendormax-filter').value) || undefined,
+    minprice: Number(document.getElementById('minprice-filter').value) || undefined,
+    maxprice: Number(document.getElementById('maxprice-filter').value) || undefined,
+    guaranteedOnly: document.getElementById('guaranteedonly-filter').checked,
+    chanceOnly: document.getElementById('chanceonly-filter').checked,
+    sortKey: document.getElementById('sort-filter').value
+  };
+}
+
+function maxPriceFromLoot(loot = []) {
+  return Math.max(...loot.map(l => l.price ?? 0));
+}
+
 function renderLootCards(loot, eventId) {
-  if (!Array.isArray(loot) || loot.length === 0) return '';
   const lootId = `loot-${eventId}`;
   const mostVal = getMostValuableDrop(loot);
   return `
     <button class="toggle-btn" data-target="${lootId}" aria-expanded="false">Show</button>
-    <div class="subcards${compactLootLayout ? ' compact' : ''} hidden" id="${lootId}">
+    <div class="subcards${compactLootLayout ? " compact" : ""} hidden" id="${lootId}">
       ${loot.map(l => `
-        <div class="subcard${l.guaranteed ? ' guaranteed' : ''}${l === mostVal ? ' most-valuable' : ''}">
-          ${l.icon ? `<img src="${l.icon}" alt="" style="height:1.2em;width:auto;vertical-align:middle;margin-right:0.3em;">` : ''}
+        <div class="subcard${l.guaranteed ? " guaranteed" : ""}${l === mostVal ? " most-valuable" : ""}">
+          ${l.icon ? `<img src="${l.icon}" alt="" />` : ''}
           ${l.wikiLink ? `<a href="${l.wikiLink}" target="_blank">${l.name}</a>` : l.name}
           ${l.price != null ? `<div><strong>Price:</strong> ${formatPrice(l.price)}</div>` : ''}
-          ${l.vendorValue != null ? `<div><strong>Vendor:</strong> ${formatPrice(l.vendorValue)}</div>` : ''}
+          ${l.vendorValue ? `<div><strong>Vendor:</strong> ${formatPrice(l.vendorValue)}</div>` : ''}
           ${l.chatCode ? `<div><strong>Chatcode:</strong> ${l.chatCode}</div>` : ''}
-          ${l.accountBound ? `<div><strong>Bound:</strong> Yes</div>` : ''}
+          ${l.accountBound ? '<div><strong>Bound:</strong> Yes</div>' : ''}
           ${l.guaranteed ? '<div class="guaranteed-badge">Guaranteed</div>' : ''}
           ${l === mostVal ? createMostValuableBadge(l) : ''}
         </div>
@@ -121,13 +124,12 @@ function renderEventTable(events, srcIdx, expIdx) {
       </thead>
       <tbody>
         ${events.map((e, idx) => {
-          const eventId = `ev${expIdx}-${srcIdx}-${idx}`;
+          const eventId = `event-${expIdx}-${srcIdx}-${idx}`;
           e.value = maxPriceFromLoot(e.loot);
-
-          // Info row: Name | Map (with wiki) | Waypoint Name | Waypoint Code
+          const descId = `desc-${eventId}`;
           return `
             <tr id="${eventId}">
-              <td><a href="#${eventId}">${e.name}</a></td>
+              <td>${e.name}</td>
               <td>${e.mapWikiLink ? `<a href="${e.mapWikiLink}" target="_blank">${e.map}</a>` : e.map}</td>
               <td>${e.waypointName || '–'}</td>
               <td>${e.code || '–'}</td>
@@ -137,7 +139,10 @@ function renderEventTable(events, srcIdx, expIdx) {
             </tr>
             <tr>
               <td colspan="4">
-                ${e.description ? `<div class="inline-desc"><strong>Description:</strong> ${e.description}</div>` : ''}
+                <button class="toggle-btn" data-target="${descId}" aria-expanded="false">Show Description</button>
+                <div class="inline-desc hidden" id="${descId}">
+                  ${e.description || ''}
+                </div>
               </td>
             </tr>
             <tr>
@@ -152,51 +157,38 @@ function renderEventTable(events, srcIdx, expIdx) {
 
 function updateExpansionOptions(events) {
   const exps = [...new Set(events.map(e => e.expansion))].sort();
-  const select = document.getElementById('expansion-filter');
+  const select = document.getElementById("expansion-filter");
   select.innerHTML = `<option value="">All Expansions</option>` + exps.map(e => `<option>${e}</option>`).join('');
 }
 
 function applyFiltersAndRender(container, data, page = 1, append = false) {
-  const filters = getFiltersFromUI();
-  let filtered = filterEvents(data, filters);
-
-  // Enhanced sorting
-  if (filters.sortKey) {
-    filtered = filtered.slice().sort((a, b) => {
-      if (filters.sortKey === "value")
-        return (b.value || 0) - (a.value || 0);
-      if (filters.sortKey === "waypointName")
-        return (a.waypointName || '').localeCompare(b.waypointName || '');
-      if (filters.sortKey === "code")
-        return (a.code || '').localeCompare(b.code || '');
-      return (a[filters.sortKey] || '').localeCompare(b[filters.sortKey] || '');
-    });
-  }
-
+  const filtered = filterEvents(data, getFiltersFromUI());
   const paged = paginate(filtered, PAGE_SIZE, page);
   const grouped = groupAndSort(paged);
 
   if (!append) container.innerHTML = '';
   if (!grouped.length) {
-    container.innerHTML = '<div class="no-results">No results found.</div>';
+    container.innerHTML = `<div class="no-results">No results found.</div>`;
     return;
   }
 
-  grouped.forEach((exp, expIdx) => {
+  grouped.forEach((expansion, expIdx) => {
     const expCard = createCard('expansion-card', `
       <button class="toggle-btn" data-target="exp-${expIdx}">Toggle</button>
-      <h2>${exp.expansion}</h2>
+      <h2>${expansion.expansion}</h2>
       <div class="expansion-content" id="exp-${expIdx}"></div>
     `);
-    exp.sources.forEach((src, srcIdx) => {
-      const srcTable = renderEventTable(src.items, srcIdx, expIdx);
+
+    expansion.sources.forEach((src, srcIdx) => {
+      const srcContent = renderEventTable(src.items, srcIdx, expIdx);
       const srcCard = createCard('source-card', `
         <button class="toggle-btn" data-target="src-${expIdx}-${srcIdx}">Toggle</button>
         <h3>${src.sourcename}</h3>
-        <div id="src-${expIdx}-${srcIdx}" class="source-content">${srcTable}</div>
+        <div id="src-${expIdx}-${srcIdx}" class="source-content">${srcContent}</div>
       `);
       expCard.querySelector('.expansion-content').appendChild(srcCard);
     });
+
     container.appendChild(expCard);
   });
 
@@ -204,87 +196,76 @@ function applyFiltersAndRender(container, data, page = 1, append = false) {
   container.querySelectorAll('th[data-sort-key]').forEach(th => {
     th.onclick = () => {
       const key = th.dataset.sortKey;
-      let dir = 'asc';
-      if (columnSort.key === key && columnSort.dir === 'asc') dir = 'desc';
-      columnSort = { key, dir };
+      if (columnSort.key === key) {
+        columnSort.dir = columnSort.dir === 'asc' ? 'desc' : 'asc';
+      } else {
+        columnSort = { key, dir: 'asc' };
+      }
       applyFiltersAndRender(container, allData, 1);
     };
   });
 }
 
 export async function renderApp(containerId) {
-  const el = document.getElementById(containerId);
-  el.innerHTML = renderProgressBar(10) + "<div>Loading...</div>";
+  const container = document.getElementById(containerId);
+  container.innerHTML = renderSearchAndFilters() + `<div id="events-list"></div>`;
+  const list = document.getElementById("events-list");
 
   allData = await loadAndEnrichData(evt => {
-    const bar = document.querySelector('.progress-bar');
-    if (bar) bar.style.width = '80%';
+    document.body.style.cursor = 'wait';
   });
 
-  el.innerHTML = renderSearchUI() + `<div id="events-list"></div>`;
-  const list = document.getElementById('events-list');
   updateExpansionOptions(allData);
-  applyFiltersAndRender(list, allData, 1);
+  applyFiltersAndRender(list, allData);
 
-  [
-    'search-input', 'expansion-filter', 'rarity-filter', 'lootname-filter',
-    'loottype-filter', 'vendormin-filter', 'vendormax-filter',
-    'chatcode-filter', 'guaranteedonly-filter', 'chanceonly-filter', 'sort-filter'
+  // Inputs
+  ["search-input", "lootname-filter", "loottype-filter", "chatcode-filter", "minprice-filter", "maxprice-filter",
+   "vendormin-filter", "vendormax-filter", "sort-filter", "expansion-filter", "rarity-filter",
+   "guaranteedonly-filter", "chanceonly-filter"
   ].forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.addEventListener('input', () => {
-      currentPage = 1;
-      renderedSet.clear();
-      applyFiltersAndRender(list, allData, 1);
-    });
+    if (el) el.addEventListener("input", () => applyFiltersAndRender(list, allData, 1));
   });
 
-  document.getElementById('toggle-compact').onclick = () => {
+  document.getElementById("toggle-compact").addEventListener("click", () => {
     compactLootLayout = !compactLootLayout;
     applyFiltersAndRender(list, allData, 1);
-  };
+  });
 
-  // Modal help
-  document.getElementById('side-help').onclick = () => {
-    if (document.getElementById('modal-help')) return;
-    const modal = document.createElement('div');
-    modal.id = 'modal-help';
-    modal.style = `
-      position:fixed;inset:0;background:#0006;display:flex;
-      align-items:center;justify-content:center;z-index:9999;
-    `;
-    modal.innerHTML = `
+  document.getElementById("side-help").addEventListener("click", () => {
+    if (document.getElementById("modal-help")) return;
+    const modal = createCard('modal-help', `
       <div class="modal-content">
-        <h2>How to Use</h2>
+        <h2>Help &amp; About</h2>
+        <p>Filter and search loot and events in dropdowns above.</p>
         <ul>
-          <li>Use filters and search bar to search &amp; sort</li>
-          <li>Click on loot name or code to visit wiki</li>
-          <li>Copy event data with the Copy button</li>
-          <li>Click 🗂️ to toggle loot layout</li>
+          <li>🔍 Search by name, type, waypoint</li>
+          <li>🗂️ Toggle loot size for compact view</li>
+          <li>🧾 Copy event summaries easily</li>
         </ul>
-      </div>`;
+      </div>
+    `);
     modal.onclick = () => modal.remove();
     document.body.appendChild(modal);
-    setTimeout(() => { modal.focus(); }, 250);
-  };
+  });
 
-  // Infinite scroll with anti-repeat check
-  window.addEventListener('scroll', () => {
-    if (isLoading) return;
-    const bottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 120;
+  // Infinite Scroll — with dedup check:
+  window.addEventListener("scroll", () => {
     const filters = getFiltersFromUI();
     const filtered = filterEvents(allData, filters);
-    const nextPageEvents = paginate(filtered, PAGE_SIZE, currentPage + 1);
-    const alreadyHasAll = nextPageEvents.every(ev => renderedSet.has(ev.name));
-    if (bottom && alreadyHasAll === false && nextPageEvents.length > PAGE_SIZE * currentPage) {
-      isLoading = true;
-      currentPage++;
-      nextPageEvents.forEach(ev => renderedSet.add(ev.name));
-      applyFiltersAndRender(list, allData, currentPage, true);
-      isLoading = false;
+    const visibleCount = paginate(filtered, PAGE_SIZE, currentPage).map(e => e.name);
+    const nextSet = paginate(filtered, PAGE_SIZE, currentPage + 1)
+      .filter(e => !renderedSet.has(e.name));
+
+    if (!isLoading && nextSet.length) {
+      const scrollBottom = window.scrollY + window.innerHeight >= document.body.offsetHeight - 200;
+      if (scrollBottom) {
+        isLoading = true;
+        nextSet.forEach(e => renderedSet.add(e.name));
+        currentPage++;
+        applyFiltersAndRender(document.getElementById("events-list"), allData, currentPage, true);
+        isLoading = false;
+      }
     }
   });
 }
-
-// Auto run
-renderApp('app');
