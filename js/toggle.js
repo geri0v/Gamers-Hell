@@ -1,38 +1,28 @@
-/**
- * Attach toggle logic to all .toggle-btn elements.
- * Handles click + keyboard (Enter/Space) toggles.
- */
 export function setupToggles() {
   const buttons = document.querySelectorAll('.toggle-btn');
 
-  buttons.forEach(btn => {
-    const targetId = btn.getAttribute('data-target');
+  buttons.forEach(button => {
+    const targetId = button.dataset.target;
     const target = document.getElementById(targetId);
 
-    if (!target) {
-      console.warn(`Toggle target not found: ${targetId}`);
-      return;
-    }
+    if (!target) return;
 
-    const toggle = () => {
-      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', !isExpanded);
-      target.classList.toggle('hidden', isExpanded);
-      btn.textContent = isExpanded ? 'Show' : 'Hide';
+    const toggleVisibility = () => {
+      const shown = !target.classList.contains('hidden');
+      target.classList.toggle('hidden', shown);
+      button.setAttribute('aria-expanded', !shown);
+      button.textContent = shown ? 'Show' : 'Hide';
     };
 
-    btn.addEventListener('click', toggle);
-    btn.addEventListener('keydown', e => {
+    button.addEventListener('click', toggleVisibility);
+    button.setAttribute('role', 'button');
+    button.setAttribute('tabindex', '0');
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        toggle();
+        toggleVisibility();
       }
     });
-
-    // Default state
-    btn.setAttribute('role', 'button');
-    btn.setAttribute('tabindex', '0');
-    btn.setAttribute('aria-expanded', 'false');
-    target.classList.add('hidden');
   });
 }
