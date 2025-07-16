@@ -1,7 +1,7 @@
 /* === BASE === */
 body {
-  font-family: Arial, sans-serif;
-  background: #f8f9fa;
+  font-family: 'Arial', sans-serif;
+  background: #f5f8fb;
   color: #222;
   margin: 0;
   padding: 0;
@@ -13,7 +13,7 @@ body {
   padding: 1rem;
 }
 
-/* === TOOLBAR === */
+/* === SEARCH + FILTER TOOLBAR === */
 #main-controls-wrap {
   display: flex;
   flex-direction: column;
@@ -27,6 +27,7 @@ body {
   flex-wrap: wrap;
   gap: 0.75em;
   align-items: center;
+  justify-content: center;
 }
 
 input[type="text"],
@@ -78,15 +79,15 @@ select:focus {
   text-align: center;
   font-size: 1.4em;
   font-weight: bold;
-  margin: 1.5em 0 1em;
+  margin: 2.5em 0 1em;
   color: #1976d2;
 }
 
 .subsection-header {
   text-align: center;
-  font-size: 1.15em;
+  font-size: 1.2em;
   font-weight: bold;
-  margin: 1.2em 0 0.6em;
+  margin: 1.6em 0 1em;
   color: #333;
 }
 
@@ -94,10 +95,11 @@ select:focus {
 .event-table {
   width: 100%;
   border-collapse: collapse;
-  background: #e3f2fd;
+  background: #fff;
   margin-top: 1rem;
   border-radius: 6px;
   overflow: hidden;
+  box-shadow: 0 2px 6px rgba(25, 118, 210, 0.1);
 }
 
 .event-table th,
@@ -108,7 +110,7 @@ select:focus {
 }
 
 .event-table th {
-  background-color: #bbdefb;
+  background-color: #e3f2fd;
   position: sticky;
   top: 0;
   z-index: 2;
@@ -117,13 +119,26 @@ select:focus {
   user-select: none;
 }
 
+.event-table th.sorted-asc {
+  background: #e3f2fd;
+}
+
+.event-table th.sorted-desc {
+  background: #cce2f5;
+}
+
+.sort-arrow {
+  font-size: 1em;
+  margin-left: 0.3em;
+}
+
 /* === COPY BAR === */
 .copy-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5em;
+  gap: 0.6em;
   align-items: center;
-  background: #fff;
+  background: #fefefe;
   padding: 0.5em;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -160,7 +175,7 @@ select:focus {
   font-size: 0.95em;
 }
 
-/* === LOOT ICON: Natural sizing === */
+/* === LOOT ICON ORIGINAL RATIO === */
 .subcard img {
   max-height: 32px;
   max-width: 32px;
@@ -170,7 +185,7 @@ select:focus {
   display: inline-block;
 }
 
-/* === LOOT STATUSES === */
+/* === LOOT STATUS === */
 .subcard.guaranteed {
   border: 2px solid #4caf50;
   background: #e8f5e9;
@@ -189,7 +204,6 @@ select:focus {
   font-size: 0.85em;
   font-weight: bold;
   border-radius: 4px;
-  margin-top: 0.2em;
   text-align: center;
 }
 
@@ -202,12 +216,14 @@ select:focus {
   border-radius: 4px;
 }
 
-/* === EVENT SEPARATOR === */
+/* === EVENTS PLACEMENT & SEPARATOR === */
 .event-separator {
   border: none;
-  border-top: 1px solid #ccc;
-  margin: 1.2em auto;
-  width: 95%;
+  border-top: 2px solid #1976d2;
+  margin: 2em auto 1em auto;
+  width: 85%;
+  opacity: 0.14;
+  border-radius: 99em;
 }
 
 /* === DESCRIPTION === */
@@ -221,8 +237,9 @@ select:focus {
   margin-top: 0.6em;
 }
 
-/* === MODAL === */
-#modal-help {
+/* === MODALS (HELP + README) === */
+#modal-help,
+#modal-readme {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -237,8 +254,10 @@ select:focus {
   padding: 2em;
   border-radius: 10px;
   width: 90%;
-  max-width: 540px;
-  box-shadow: 0 0 12px #3333;
+  max-width: 640px;
+  box-shadow: 0 0 12px #3335;
+  max-height: 80vh;
+  overflow: auto;
 }
 
 /* === PROGRESS === */
@@ -249,7 +268,6 @@ select:focus {
   margin: 2em auto;
   background: #dbefff;
   border-radius: 8px;
-  overflow: hidden;
 }
 
 .progress-bar {
@@ -259,7 +277,7 @@ select:focus {
   transition: width 0.4s;
 }
 
-/* === NO RESULTS === */
+/* === "NO RESULTS" === */
 .no-results {
   font-size: 1.15em;
   text-align: center;
@@ -269,4 +287,29 @@ select:focus {
   margin-top: 2em;
   border: 1px solid #ffeeba;
   border-radius: 6px;
+}
+
+/* === STICKY SCROLL-TOP BUTTON === */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 24px;
+  font-size: 1.4em;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #1976d250;
+  z-index: 1999;
+  opacity: 0.65;
+  transition: opacity 0.2s ease;
+  display: none; /* default hidden */
+}
+
+.scroll-top-btn:hover {
+  opacity: 1;
+  background: #0e5ea2;
 }
