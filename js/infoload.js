@@ -4,82 +4,93 @@ import { resolveWaypoints } from 'https://geri0v.github.io/Gamers-Hell/js/waypoi
 
 /**
  * Load and enrich all event data
- * @param {Function} onProgress optional callback
- * @returns {Promise<Array>} enriched metadata-ready event objects
+ * @param {Function|null} onProgress — Optional per-item callback
+ * @returns {Promise<Array>} Enriched event array
  */
 export async function loadAndEnrichData(onProgress = null) {
-  const rawEvents = await fetchAllData();
+  try {
+    const rawEvents = await fetchAllData();
 
-  // Step 1: Collect item IDs
-  const uniqueItemIds = new Set();
-  rawEvents.forEach(event => {
-    (event?.loot || []).forEach(item => item.id && uniqueItemIds.add(item.id));
-  });
+    if (!rawEvents?.length) {
+      console.warn("⚠️ No raw events loaded from manifest.");
+    }
 
-  // Step 2: Enrich items + prices (loot)
-  const enrichedItems = await enrichItemsAndPrices([...uniqueItemIds]);
-  const itemMap = new Map(enrichedItems.map(item => [item.id, item]));
+    // Step 1: Collect unique item IDs from loot
+    const uniqueItemIds = new Set();
+    rawEvents.forEach(event => {
+      (event?.loot || []).forEach(item => item.id && uniqueItemIds.add(item.id));
+    });
 
-  // Step 3: Resolve waypoint names for all chatcodes
-  const chatcodes = rawEvents
-    .map(e => (e.chatcode || e.code || '').trim())
-    .filter(code => code.length > 5);
+    const itemIds = [...uniqueItemIds];
+    const enrichedItems = await enrichItemsAndPrices(itemIds);
+    const itemMap = new Map(enrichedItems.map(item => [item.id, item]));
 
-  const waypointMap = await resolveWaypoints(chatcodes);
+    // Step 2: Collect chatcodes for waypoint resolution
+    const chatcodes = rawEvents
+      .map(e => (e.chatcode || e.code || '').trim())
+      .filter(code => code.length > 5);
 
-  // Step 4: Event-level enrichment
-  const enriched = await Promise.all(
-    rawEvents.map(async event => {
-      const code = (event.chatcode || event.code || '').trim();
-      const wp = waypointMap[code] || {};
+    const waypointMap = await resolveWaypoints(chatcodes);
 
-      event.code = code;
-      event.waypointName = wp.name || null;
-      event.waypointWikiLink = wp.wiki || null;
+    // Step 3: Enrich each event
+    const enriched = await Promise.all(
+      rawEvents.map(async event => {
+        const code = (event.chatcode || event.code || '').trim();
+        const wp = waypointMap[code] || {};
 
-      // Wiki Link for Event
-      event.wikiLink = event.name
-      ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.name.replace(/ /g, "_"))}`
-     : null;
+        // Waypoint
+        event.code = code;
+        event.waypointName = wp.name || null;
+        event.waypointWikiLink = wp.wiki || null;
 
-
-      // Wiki Link for Map
-      event.mapWikiLink = event.map
-        ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.map.replace(/ /g, "_"))}`
-        : null;
-
-      // Description: Generate only 2 first sentences w/ fallback
-      const desc = await fetchWikiDescription(event.name || wp.name || '');
-      const match = desc?.match(/^(.+?[.!?])\s*(.+?[.!?])/);
-      event.description = match ? `${match[1]} ${match[2]}` : desc;
-
-      // Step 5: Enrich Loot
-      event.loot = (event.loot || []).map(l => {
-        const enriched = l.id ? itemMap.get(l.id) || {} : {};
-        const name = enriched.name || l.name;
-        const wikiLink = name
-          ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(name.replace(/ /g, '_'))}`
+        // Event Wiki
+        event.wikiLink = event.name
+          ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.name.replace(/ /g, "_"))}`
           : null;
 
-        return {
-          ...l,
-          name,
-          icon: enriched.icon || null,
-          wikiLink,
-          accountBound: enriched.flags?.includes("AccountBound") || false,
-          chatCode: enriched.chat_link || null,
-          vendorValue: enriched.vendor_value ?? null,
-          price: enriched.price ?? null,
-          type: enriched.type ?? null,
-          rarity: enriched.rarity || l.rarity || null,
-          guaranteed: !!l.guaranteed
-        };
-      });
+        // Map Wiki
+        event.mapWikiLink = event.map
+          ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.map.replace(/ /g, "_"))}`
+          : null;
 
-      if (onProgress) onProgress(event);
-      return event;
-    })
-  );
+        // Get description (only first 2 full sentences)
+        const descRaw = await fetchWikiDescription(event.name || wp.name || '');
+        const match = descRaw?.match(/^(.+?[.!?])\s*(.+?[.!?])/);
+        event.description = match ? `${match[1]} ${match[2]}` : descRaw;
 
-  return enriched;
+        // Enrich loot
+        event.loot = (event.loot || []).map(l => {
+          const enriched = l.id ? itemMap.get(l.id) || {} : {};
+          const name = enriched.name || l.name;
+          const wikiLink = name
+            ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(name.replace(/ /g, '_'))}`
+            : null;
+
+          return {
+            ...l,
+            name,
+            icon: enriched.icon || null,
+            wikiLink,
+            accountBound: enriched.flags?.includes("AccountBound") || false,
+            chatCode: enriched.chat_link || null,
+            vendorValue: enriched.vendor_value ?? null,
+            price: enriched.price ?? null,
+            type: enriched.type ?? null,
+            rarity: enriched.rarity || l.rarity || null,
+            guaranteed: !!l.guaranteed
+          };
+        });
+
+        // Progress callback (e.g., for logging/debug)
+        if (onProgress) onProgress(event);
+        return event;
+      })
+    );
+
+    console.log(`✅ Enriched ${enriched.length} events`);
+    return enriched;
+  } catch (err) {
+    console.error("🔥 Error enriching event data:", err);
+    return [];
+  }
 }
