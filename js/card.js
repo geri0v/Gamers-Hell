@@ -1,106 +1,79 @@
 // card.js
 import { renderLootCards } from './loot.js';
-import { getChatCode } from './event.js';
 import { createCopyBar } from './copy.js';
 import { exportEventAsJSON, exportEventAsCSV } from './export.js';
+
+export function renderEventGroups(groups) {
+  const wrapper = document.createElement('div');
+  groups.forEach(({ map, items }) => {
+    const section = document.createElement('section');
+    section.className = 'event-group';
+
+    const h2 = document.createElement('h2');
+    h2.textContent = map;
+    section.appendChild(h2);
+
+    items.forEach(event => {
+      const card = renderEventCard(event);
+      section.appendChild(card);
+    });
+
+    wrapper.appendChild(section);
+  });
+
+  return wrapper;
+}
 
 export function renderEventCard(event) {
   const card = document.createElement('article');
   card.className = 'event-card';
 
-  /* -- Top Info Bar: Name | Map | Waypoint | Code -- */
-  const infoBar = document.createElement('div');
-  infoBar.className = 'event-info-bar';
-  infoBar.innerHTML = `
-    <span>
-      <strong>Name:</strong> 
-      <a href="${event.wikiLink}" target="_blank" rel="noopener">${event.name}</a>
-    </span> |
-    <span>
-      <strong>Map:</strong> 
-      <a href="${event.mapWikiLink}" target="_blank" rel="noopener">${event.map}</a>
-    </span> |
-    <span>
-      <strong>Waypoint:</strong> 
-      <a href="${event.waypointWikiLink}" target="_blank" rel="noopener">${event.waypointName || '???'}</a>
-      <code>${getChatCode(event)}</code>
-    </span>
+  // --- Event Info
+  const info = document.createElement('div');
+  info.className = 'event-info-bar';
+  info.innerHTML = `
+    <strong>${event.name}</strong> 
+    <span>| Map: ${event.map}</span> 
+    <span>| Expansion: ${event.expansion}</span> 
+    <span>| Level: ${event.level || 'Unknown'}</span> 
+    <span>| Region: ${event.region || 'Unknown'}</span>
+    <code>${event.waypoint || ''}</code>
   `;
-  card.appendChild(infoBar);
+  card.appendChild(info);
 
-  /* -- Description with wiki link -- */
-  if (event.description) {
-    const desc = document.createElement('p');
-    desc.className = 'event-desc';
-    desc.innerHTML = shortenDescription(event.description, event.wikiLink);
-    card.appendChild(desc);
-  }
+  // --- Copy Bar
+  const copyRow = document.createElement('div');
+  copyRow.innerHTML = createCopyBar(event);
+  card.appendChild(copyRow);
 
-  /* -- Copy Bar -- */
-  card.insertAdjacentHTML('beforeend', createCopyBar(event));
-
-  /* -- Export Buttons: JSON / CSV */
+  // --- Export Buttons (JSON & CSV)
   const exportBar = document.createElement('div');
   exportBar.className = 'export-bar';
 
   const jsonBtn = document.createElement('button');
-  jsonBtn.textContent = '🔽 Export JSON';
   jsonBtn.className = 'export-btn';
+  jsonBtn.textContent = '📄 Export JSON';
   jsonBtn.onclick = () => exportEventAsJSON(event);
 
   const csvBtn = document.createElement('button');
-  csvBtn.textContent = '📄 Export CSV';
   csvBtn.className = 'export-btn';
+  csvBtn.textContent = '📤 Export CSV';
   csvBtn.onclick = () => exportEventAsCSV(event);
 
   exportBar.appendChild(jsonBtn);
   exportBar.appendChild(csvBtn);
-
   card.appendChild(exportBar);
 
-  /* -- Loot Cards -- */
-  if (event.loot && event.loot.length) {
-    const lootCards = renderLootCards(event.loot);
-    card.appendChild(lootCards);
+  // --- Loot Cards (actual deep-dive drops only)
+  if (event.loot?.length) {
+    const loot = renderLootCards(event.loot);
+    card.appendChild(loot);
+  } else {
+    const empty = document.createElement('p');
+    empty.className = 'no-results';
+    empty.textContent = 'No loot data available.';
+    card.appendChild(empty);
   }
 
   return card;
-}
-
-function shortenDescription(text, wikiUrl) {
-  const match = text?.match(/[^.!?]+[.!?]+/g) || [];
-  let shortDesc = match.slice(0, 2).join(' ');
-  if (wikiUrl) {
-    shortDesc += ` <a href="${wikiUrl}" target="_blank">(see wiki)</a>`;
-  }
-  return shortDesc;
-}
-
-export function renderEventGroups(groups) {
-  const container = document.createElement('div');
-
-  groups.forEach(({ expansion, sources }) => {
-    const expSection = document.createElement('section');
-    expSection.className = 'expansion-group';
-    expSection.dataset.expansion = expansion;
-
-    const h2 = document.createElement('h2');
-    h2.textContent = expansion;
-    expSection.appendChild(h2);
-
-    sources.forEach(({ sourcename, items }) => {
-      const h3 = document.createElement('h3');
-      h3.textContent = sourcename;
-      expSection.appendChild(h3);
-
-      items.forEach(event => {
-        const card = renderEventCard(event);
-        expSection.appendChild(card);
-      });
-    });
-
-    container.appendChild(expSection);
-  });
-
-  return container;
 }
