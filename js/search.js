@@ -36,5 +36,4 @@ export function filterEvents(events, filters) {
   return filterEventsExtended(subset, rest);
 }
 
-// ✅ Add this to make `fuzzyMatch` importable
 export { fuzzyMatch };
