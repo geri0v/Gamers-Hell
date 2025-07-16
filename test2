@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GW2 Event Loot Browser</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style/css.css">
+</head>
+<body>
+  <!-- Terminal Loader Output -->
+  <div id="terminal" aria-live="polite" aria-atomic="false"></div>
+  <!-- App Content Placeholder -->
+  <div id="app" role="main"></div>
+
+  <script src="./js/console.js"></script>
+  <script type="module" src="./js/visual.js"></script>
+</body>
+</html>
