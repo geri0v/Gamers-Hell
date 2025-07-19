@@ -1,8 +1,9 @@
 // visual.js
-// Main app entry. Loads full map->event->loot dataset and renders it with filters/sorting.
-import { fetchAllData } from './data.js';
-// ... je enrichment pipeline volgt daarna, bijv. via enrichItemsAndPrices, resolveWaypoints, etc.
+// Main app entry. Loads dataset (manifest + main_loot sheet) and renders with enrichments.
 
+import { fetchAllData } from './data.js';
+import { enrichItemsAndPrices, fetchWikiDescription } from './info.js';
+import { resolveWaypoints } from './waypoint.js';
 import { filterEvents, renderSortButtons, renderFilterBar, renderSearchBar } from './search.js';
 import { renderEventGroups } from './card.js';
 import { paginate } from './pagination.js';
@@ -35,8 +36,9 @@ function applySort(events, sortKey) {
       case 'map':
         return a.map.localeCompare(b.map);
       case 'value': {
-        const aVal = Math.max(...(a.loot || []).map(i => i.value || 0));
-        const bVal = Math.max(...(b.loot || []).map(i => i.value || 0));
+        // Sorteer op hoogste prijs/vendowaarde loot per event
+        const aVal = Math.max(...(a.loot || []).map(i => i.price || i.vendorValue || 0));
+        const bVal = Math.max(...(b.loot || []).map(i => i.price || i.vendorValue || 0));
         return bVal - aVal;
       }
       default:
@@ -51,7 +53,7 @@ function updateUI() {
   const filtered = filterEvents(allEvents, currentFilters);
   const sorted = currentSort ? applySort(filtered, currentSort) : filtered;
   const paginated = paginate(sorted, pageSize, currentPage);
-  const grouped = groupByMap(sorted);
+  const grouped = groupByMap(paginated);
 
   const app = document.getElementById('app');
   app.innerHTML = '';
@@ -62,6 +64,7 @@ function updateUI() {
   topUI.appendChild(
     renderSearchBar(term => {
       currentFilters.searchTerm = term;
+      currentPage = 1;
       updateUI();
     })
   );
@@ -75,6 +78,7 @@ function updateUI() {
       current: currentFilters
     }, (filterKey, filterVal) => {
       currentFilters[filterKey] = filterVal;
+      currentPage = 1;
       updateUI();
     })
   );
@@ -82,6 +86,7 @@ function updateUI() {
   topUI.appendChild(
     renderSortButtons(key => {
       currentSort = key;
+      currentPage = 1;
       updateUI();
     })
   );
@@ -106,7 +111,6 @@ function groupByMap(events) {
     if (!grouped[ev.map]) grouped[ev.map] = [];
     grouped[ev.map].push(ev);
   }
-
   return Object.entries(grouped).map(([mapName, items]) => ({
     map: mapName,
     items
@@ -136,24 +140,105 @@ function setupInfiniteScroll() {
   window.infiniteScrollObserver.observe(sentinel);
 }
 
-// === Boot ===
+// === Data verrijking pipeline ===
+
+async function enrichEvents(rawEvents) {
+  // 1. Verzamel unieke itemIDs voor verdere verrijking
+  const uniqueItemIds = new Set();
+  rawEvents.forEach(event => {
+    (event.loot || []).forEach(item => item.id && uniqueItemIds.add(item.id));
+  });
+  const itemIds = [...uniqueItemIds];
+  const enrichedItems = await enrichItemsAndPrices(itemIds);
+  const itemMap = new Map(enrichedItems.map(item => [item.id, item]));
+
+  // 2. Verzamel chatcodes voor waypoint-resolutie
+  const chatcodes = rawEvents
+    .map(e => (e.chatcode || e.code || '').trim())
+    .filter(code => code.length > 5);
+
+  const waypointMap = await resolveWaypoints(chatcodes);
+
+  // 3. Enrich events
+  return await Promise.all(
+    rawEvents.map(async event => {
+      const code = (event.chatcode || event.code || '').trim();
+      const wp = waypointMap[code] || {};
+
+      event.code = code;
+      event.waypointName = wp.name || null;
+      event.waypointWikiLink = wp.wiki || null;
+      event.wikiLink = event.name
+        ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.name.replace(/ /g, "_"))}`
+        : null;
+      event.mapWikiLink = event.map
+        ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.map.replace(/ /g, "_"))}`
+        : null;
+
+      // Wiki description (optioneel, kan traag zijn bij veel events)
+      event.description = '';
+      // Uncomment als je per event description wilt, maar is traag bij grote data sets
+      // const descRaw = await fetchWikiDescription(event.name || wp.name || '');
+      // const match = descRaw?.match(/^(.+?[.!?])\s*(.+?[.!?])/);
+      // event.description = match ? `${match[1]} ${match[2]}` : descRaw;
+
+      // Enrich loot
+      event.loot = (event.loot || []).map(l => {
+        const enriched = l.id ? itemMap.get(l.id) || {} : {};
+        const name = enriched.name || l.name;
+        const wikiLink = name
+          ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(name.replace(/ /g, '_'))}`
+          : null;
+        return {
+          ...l,
+          name,
+          icon: enriched.icon || null,
+          wikiLink,
+          accountBound: enriched.flags?.includes("AccountBound") || false,
+          chatcode: enriched.chat_link || null,
+          vendorValue: enriched.vendor_value ?? null,
+          price: enriched.price ?? null,
+          type: enriched.type ?? null,
+          rarity: enriched.rarity || l.rarity || null,
+          guaranteed: !!l.guaranteed
+        };
+      });
+
+      return event;
+    })
+  );
+}
+
+// === Boot (main) ===
 
 async function boot() {
   startTerminal();
   appendTerminal('⚡ Loading event & loot database...', 'info');
-
   allEvents = [];
   currentPage = 1;
+  try {
+    // 1. Laden van events.json én sheet (zie nieuwe data.js)
+    const loadedEvents = await fetchAllData((data, url, err) => {
+      if (err) appendTerminal(`[DATA] Error at ${url}: ${err.message || err}`, 'error');
+    });
 
-  const groupedEvents = await generateDeepEventDataset();
+    if (!loadedEvents || !loadedEvents.length) {
+      appendTerminal('Geen events gevonden in data!', 'error');
+      return endTerminal(false);
+    }
 
-  // Flatten into array all events per map
-  allEvents = Object.values(groupedEvents).flat();
+    appendTerminal(`✓ Loaded ${loadedEvents.length} events (enhancing...)`, 'progress');
+    // 2. Enhancement pipeline (API, chatcodes, iteminfo, etc.)
+    allEvents = await enrichEvents(loadedEvents);
+    appendTerminal(`✓ Enriched ${allEvents.length} events.`, 'success');
+    updateUI();
+    endTerminal(true);
 
-  appendTerminal(`✓ Loaded ${allEvents.length} enriched events.`, 'success');
-
-  updateUI();
-  endTerminal(true);
+  } catch (err) {
+    appendTerminal('🔥 Fout bij laden data: ' + (err.message || err), 'error');
+    endTerminal(false);
+    console.error(err);
+  }
 }
 
 window.addEventListener('DOMContentLoaded', boot);
