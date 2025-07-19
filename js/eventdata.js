@@ -1,24 +1,38 @@
 import { getTpUrl } from './tp.js';
 import { fetchWaypoints } from './waypoint.js';
 
-// ONLY fetch the Main_Loot tab (gid=1436649532)
 const GOOGLE_SHEET_MAIN_LOOT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQI6XWf68WL1QBPkqgaNoFvNS4yV47h1OZ_E8MEZQiVBSMYVKNpeMWR49rJgNDJATkswIZiqktmrcxx/pub?gid=1436649532&single=true&output=csv';
 const OTC_CSV_URL = 'https://raw.githubusercontent.com/otc-cirdan/gw2-items/refs/heads/master/items.csv';
 const GW2TREASURES_API = 'https://api.gw2treasures.com/items?ids=';
 
-// Regex patterns for filtering generic container/junk items
+// <-- COLUMN REMAP: change these if your sheet ever changes -->
+const COLUMN_MAP = {
+  expansion: "Expansion",
+  mapName: "MapName",
+  location: "Location",
+  waypoint: "ClosestWaypoint",
+  eventName: "EventName",
+  lootBlock: "LootBlock",
+  item: "Item",
+  itemId: "ItemID",
+  rarity: "Rarity",
+  guaranteed: "Guaranteed",
+  dropRate: "DropRate",
+  collectible: "Collectible",
+  bound: "AccountBound",
+  achievementLinked: "AchievementLinked"
+};
+
 const FILTER_CONTAINERS = [
   /chest/i, /bag/i, /box/i, /bundle/i, /cache/i,
   /pouch/i, /sack/i, /^container$/i, /^trophy$/i, /^reward$/i,
 ];
 
-// Helper: checks if loot item is generic container/junk
 function isJunkOrContainer(name) {
   if (!name) return false;
   return FILTER_CONTAINERS.some(rx => rx.test(name));
 }
 
-// Helper: Robust fetch with retries
 async function fetchWithRetry(url, options = {}, retries = 3, delay = 500) {
   try {
     const response = await fetch(url, options);
@@ -31,8 +45,7 @@ async function fetchWithRetry(url, options = {}, retries = 3, delay = 500) {
   }
 }
 
-// Fetch loot/event/map data from Main_Loot tab
-async function fetchLootDataFromCsv() {
+async function fetchSheetRows() {
   const res = await fetchWithRetry(GOOGLE_SHEET_MAIN_LOOT_CSV_URL);
   const csvText = await res.text();
   return new Promise((resolve, reject) => {
@@ -45,7 +58,6 @@ async function fetchLootDataFromCsv() {
   });
 }
 
-// Fetch OTC CSV used for item ID and price mapping
 async function fetchOtcCsv() {
   try {
     const res = await fetchWithRetry(OTC_CSV_URL);
@@ -63,7 +75,6 @@ async function fetchOtcCsv() {
   }
 }
 
-// Fetch prices from Gw2Treasures by batched item ID list
 async function fetchGw2TreasuresPrices(itemIds = []) {
   if (!itemIds.length) return {};
   let prices = {};
@@ -76,48 +87,42 @@ async function fetchGw2TreasuresPrices(itemIds = []) {
         const json = await res.json();
         prices = { ...prices, ...json };
       }
-    } catch {
-      // Ignore fetch failures per batch
-    }
+    } catch {}
   }
   return prices;
 }
 
-// Organizes Sheet CSV rows into loot index keyed by source (event/chest/etc)
+// Group and index loot/items per event per map
 function buildLootIndex(sheetRows) {
   const lootIndex = {};
   for (const row of sheetRows) {
-    const source = row['Event/Chest'] || row.EventName || row['Event/Meta Name'] || '';
+    const source = row[COLUMN_MAP.eventName] || '';
     if (!lootIndex[source]) lootIndex[source] = [];
     lootIndex[source].push({
-      mapName: row.MapName,
-      mapId: row.MapID,
-      waypoint: row.Waypoint,
-      eventId: row.EventID,
-      sourceType: row.SourceType || source,
-      item: row.Item,
-      rarity: row.Rarity,
-      guaranteed: row.Guaranteed === 'Yes',
-      collectible: row.Collectible === 'Yes',
-      bound: row.Bound === 'Yes' || row['Account Bound'] === 'Yes',
-      achievementLinked: row.AchievementLinked === 'Yes',
-      tpLink: row.TPLink,
-      wikiLink: row.WikiLink,
-      timestamp: row.Timestamp,
-      coord: (row.EventCoordX && row.EventCoordY) ?
-              [parseFloat(row.EventCoordX), parseFloat(row.EventCoordY)] : null,
+      expansion: row[COLUMN_MAP.expansion],
+      mapName: row[COLUMN_MAP.mapName],
+      location: row[COLUMN_MAP.location],
+      waypoint: row[COLUMN_MAP.waypoint],
+      eventName: row[COLUMN_MAP.eventName],
+      lootBlock: row[COLUMN_MAP.lootBlock],
+      item: row[COLUMN_MAP.item],
+      itemId: row[COLUMN_MAP.itemId],
+      rarity: row[COLUMN_MAP.rarity],
+      guaranteed: row[COLUMN_MAP.guaranteed] === 'Yes',
+      dropRate: row[COLUMN_MAP.dropRate],
+      collectible: row[COLUMN_MAP.collectible] === 'Yes',
+      bound: row[COLUMN_MAP.bound] === 'Yes',
+      achievementLinked: row[COLUMN_MAP.achievementLinked] === 'Yes',
     });
   }
   return lootIndex;
 }
 
-// Filters loot to include unique, rare, guaranteed,
-// collectibles, minis, achievements; excludes generic champ bags unless only loot
+// Filtering logic
 function filterLootItems(items) {
   if (!items || items.length === 0) return [];
   const onlyGenericChampBags = items.every(i => /^Champion .* Bag$/i.test(i.item));
   if (onlyGenericChampBags) return items;
-
   return items.filter(i => {
     if (/^Champion .* Bag$/i.test(i.item)) return false;
     if (i.guaranteed) return true;
@@ -133,7 +138,7 @@ function filterLootItems(items) {
   });
 }
 
-// Calculate Euclidean distance for waypoint proximity
+// Waypoint proximity if row does not have waypoint
 function calculateDistance(a, b) {
   if (!a || !b) return Infinity;
   const dx = a[0] - b[0];
@@ -141,24 +146,22 @@ function calculateDistance(a, b) {
   return Math.sqrt(dx * dx + dy * dy);
 }
 
-// Main function: fetches all data, deeply merges, enriches, applies flags & filtering
 export async function generateDeepEventDataset() {
   const [waypoints, sheetRows, otcRows] = await Promise.all([
     fetchWaypoints(),
-    fetchLootDataFromCsv(),
+    fetchSheetRows(),
     fetchOtcCsv(),
   ]);
 
-  // Build loot index from sheet
   const lootIndex = buildLootIndex(sheetRows);
 
-  // OTC item name → ID map for price lookup
+  // OTC mapping
   const otcNameToId = {};
   otcRows.forEach(({ Name, ID }) => {
     if (Name && ID) otcNameToId[Name] = ID;
   });
 
-  // Collect all loot items names to fetch prices
+  // Collect all loot items names for price fetching
   const allLootItemNames = new Set();
   Object.values(lootIndex).forEach(arr => arr.forEach(i => {
     if (i.item && !isJunkOrContainer(i.item)) allLootItemNames.add(i.item);
@@ -166,75 +169,52 @@ export async function generateDeepEventDataset() {
   const uniqueItemIds = [...allLootItemNames].map(name => otcNameToId[name]).filter(Boolean);
   const pricesMap = await fetchGw2TreasuresPrices(uniqueItemIds);
 
-  // Organize by maps
-  const mapByName = {};
-  sheetRows.forEach(row => {
-    if (!mapByName[row.MapName]) mapByName[row.MapName] = {
-      name: row.MapName,
-      region: row.Region || row.Expansion || 'Unknown',
-      expansion: row.Expansion || 'Core',
-      id: row.MapID,
-      events: {},
-    };
-  });
-
-  // Organize events per map from the sheet data
+  // Group by map/event
+  const eventsByMap = {};
   for (const row of sheetRows) {
-    const map = mapByName[row.MapName];
-    if (!map) continue;
+    const mapName = row[COLUMN_MAP.mapName] || 'Unknown Map';
+    const eventName = row[COLUMN_MAP.eventName] || '';
+    if (!eventsByMap[mapName]) eventsByMap[mapName] = {};
+    if (!eventsByMap[mapName][eventName]) {
+      // If sheet does not have a waypoint but coords and waypoints exist, find the closest
+      let assignedWaypoint = row[COLUMN_MAP.waypoint] || '';
+      // If you had coordinates to use, add them here & do proximity
+      // Example:
+      // let eventCoord = row.EventCoordX && row.EventCoordY ? [parseFloat(row.EventCoordX), parseFloat(row.EventCoordY)] : null;
+      // if (!assignedWaypoint && eventCoord && waypoints) { ...proximity logic... }
 
-    const eventId = row.EventID || row['Event/Meta Name'] || row.EventName || row['Event/Chest'] || '';
-    if (!map.events[eventId]) {
-      // Find closest waypoint if only coordinates present, else use row.Waypoint
-      let eventWaypoint = row.Waypoint || '';
-      const eventCoord = (row.EventCoordX && row.EventCoordY)
-        ? [parseFloat(row.EventCoordX), parseFloat(row.EventCoordY)]
-        : null;
-      if (!eventWaypoint && eventCoord && waypoints && waypoints.length) {
-        let closest = null, minDist = Infinity;
-        for (const wp of waypoints) {
-          if (wp.type !== 'Waypoint' || wp.map_id !== row.MapID) continue;
-          const dist = calculateDistance(eventCoord, wp.coord);
-          if (dist < minDist) { minDist = dist; closest = wp; }
-        }
-        if (closest) eventWaypoint = closest.chat_code || closest.name;
-      }
-
-      map.events[eventId] = {
-        id: eventId,
-        name: row['Event/Meta Name'] || row.EventName || row['Event/Chest'] || '',
-        map: map.name,
-        region: map.region,
-        expansion: map.expansion,
-        level: row.Level || null,
-        waypoint: eventWaypoint,
+      eventsByMap[mapName][eventName] = {
+        name: eventName,
+        map: mapName,
+        region: row[COLUMN_MAP.expansion] || '',
+        expansion: row[COLUMN_MAP.expansion] || '',
+        location: row[COLUMN_MAP.location] || '',
+        waypoint: assignedWaypoint,
         loot: [],
       };
     }
-
-    // Push loot entries for this event
-    map.events[eventId].loot.push({
-      item: row.Item,
-      rarity: row.Rarity,
-      guaranteed: row.Guaranteed === 'Yes',
-      collectible: row.Collectible === 'Yes',
-      bound: row.Bound === 'Yes' || row['Account Bound'] === 'Yes',
-      achievementLinked: row.AchievementLinked === 'Yes',
-      tpLink: row.TPLink,
-      wikiLink: row.WikiLink,
-      timestamp: row.Timestamp,
+    // Add loot item:
+    eventsByMap[mapName][eventName].loot.push({
+      item: row[COLUMN_MAP.item],
+      itemId: row[COLUMN_MAP.itemId],
+      rarity: row[COLUMN_MAP.rarity],
+      guaranteed: row[COLUMN_MAP.guaranteed] === 'Yes',
+      dropRate: row[COLUMN_MAP.dropRate],
+      collectible: row[COLUMN_MAP.collectible] === 'Yes',
+      bound: row[COLUMN_MAP.bound] === 'Yes',
+      achievementLinked: row[COLUMN_MAP.achievementLinked] === 'Yes',
     });
   }
 
-  // Now, filter/enrich loot
-  for (const map of Object.values(mapByName)) {
-    for (const event of Object.values(map.events)) {
+  // Filter and enrich loot
+  for (const mapEvents of Object.values(eventsByMap)) {
+    for (const event of Object.values(mapEvents)) {
       event.loot = filterLootItems(event.loot).map(item => {
         const otcId = otcNameToId[item.item];
         const priceData = otcId && pricesMap[otcId] ? pricesMap[otcId] : {};
         return {
           ...item,
-          tp: item.tpLink || (otcId ? getTpUrl(otcId) : ''),
+          tp: otcId ? getTpUrl(otcId) : '',
           price: priceData.price || null,
           price_usd: priceData.price_usd || null,
           flags: {
@@ -252,18 +232,17 @@ export async function generateDeepEventDataset() {
     }
   }
 
-  // Organize eventsByMap: { mapName: [eventObject, ...], ... }
-  const eventsByMap = {};
-  for (const [mapName, map] of Object.entries(mapByName)) {
-    eventsByMap[mapName] = Object.values(map.events);
+  // Flatten structure for frontend, if needed
+  const flatEventsByMap = {};
+  for (const [mapName, eventMap] of Object.entries(eventsByMap)) {
+    flatEventsByMap[mapName] = Object.values(eventMap);
   }
 
   return {
-    maps: Object.values(mapByName),
-    waypoints,
     lootIndex,
+    eventsByMap: flatEventsByMap,
+    waypoints,
     otcItems: otcRows,
     pricesMap,
-    eventsByMap,
   };
 }
