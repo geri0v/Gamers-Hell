@@ -1,132 +1,109 @@
-const EXTRA_CSV_SOURCES = [
-  // Example: 'https://yourdomain.com/custom-prices.csv'
-];
+// js/data.js
 
-const MANIFEST_URL = 'https://geri0v.github.io/Gamers-Hell/json/manifest.json';
+const STATIC_JSON_URL = 'https://geri0v.github.io/Gamers-Hell/json/manifest.json'; // < Plaats je static JSON met events, structure: Array
+const GOOGLE_SHEET_MAIN_LOOT_CSV_URL = 
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vQI6XWf68WL1QBPkqgaNoFvNS4yV47h1OZ_E8MEZQiVBSMYVKNpeMWR49rJgNDJATkswIZiqktmrcxx/pub?gid=1436649532&single=true&output=csv';
 
 /**
- * Fetch and process all files listed in manifest.json + extra sources.
+ * Laadt data van statisch JSON én (optioneel) een Google Sheets CSV.
+ * @returns {Promise<Array>} events
  */
-export async function fetchAllData(onProgress = null, batchSize = 5) {
-  const manifest = await fetch(MANIFEST_URL).then(r => r.json());
-  const urls = manifest.files.map(f =>
-    f.startsWith('http') ? f : `https://geri0v.github.io/Gamers-Hell/json/${f}`
-  ).concat(EXTRA_CSV_SOURCES);
+export async function fetchAllData(onProgress = null) {
+  let allEvents = [];
+  let sheetRows = [];
 
-  let allData = [];
-
-  for (let i = 0; i < urls.length; i += batchSize) {
-    const batch = urls.slice(i, i + batchSize);
-    const results = await Promise.allSettled(batch.map(async url => {
-      try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const text = await res.text();
-        return url.endsWith('.csv') ? parseCSVToJSON(text) : JSON.parse(text);
-      } catch {
-        return [];
-      }
-    }));
-
-    results.forEach((result, idx) => {
-      const resultData = result.status === 'fulfilled' ? result.value : [];
-      const flat = flatten(resultData);
-      allData = allData.concat(flat);
-      if (onProgress) onProgress(flat, urls[idx], result.reason || null);
-    });
+  // 1. Laad statisch JSON (bv. events.json), bijvoorbeeld: [{...event...}, ...]
+  try {
+    const jsonRes = await fetch(STATIC_JSON_URL);
+    if (!jsonRes.ok) throw new Error('Events.json niet beschikbaar');
+    const jsonData = await jsonRes.json();
+    allEvents = Array.isArray(jsonData) ? jsonData : [];
+    if (onProgress) onProgress(allEvents, STATIC_JSON_URL, null);
+    console.log(`[DATA] Loaded ${allEvents.length} events from JSON`);
+  } catch (err) {
+    console.error('[DATA] Events.json load error:', err);
+    if (onProgress) onProgress([], STATIC_JSON_URL, err);
+    // AllEvents leeg laten maar niet stoppen: sheet kan fallback zijn
   }
 
-  return allData;
-}
-
-/**
- * Parse CSV as simple array of objects.
- */
-function parseCSVToJSON(csvText) {
-  const lines = csvText.split('\n').filter(line => line.trim());
-  const header = lines[0].split(',').map(h => h.trim());
-  return lines.slice(1).map(line => {
-    const cols = line.split(',');
-    const obj = {};
-    header.forEach((key, i) => {
-      obj[key] = cols[i] ? cols[i].trim() : '';
-    });
-    return obj;
-  });
-}
-
-/**
- * Flatten all: expansion → sources → events into event[].
- */
-function flatten(dataArr) {
-  if (Array.isArray(dataArr) && dataArr[0]?.sourcename) return dataArr;
-
-  const flat = [];
-  dataArr.forEach(expansionObj => {
-    const expansion = expansionObj.expansion || 'Unknown Expansion';
-    (expansionObj.sources || []).forEach(sourceObj => {
-      const sourcename = sourceObj.sourceName || sourceObj.sourcename || 'Unknown Source';
-      (sourceObj.events || []).forEach(event => {
-        flat.push({ expansion, sourcename, ...event });
+  // 2. Laad Google Sheets CSV (optioneel als extra/invulling)
+  try {
+    const res = await fetch(GOOGLE_SHEET_MAIN_LOOT_CSV_URL);
+    if (!res.ok) throw new Error('main_loot sheet foutmelding');
+    const csvText = await res.text();
+    sheetRows = await new Promise((resolve, reject) => {
+      Papa.parse(csvText, {
+        header: true, skipEmptyLines: true,
+        complete: results => resolve(results.data),
+        error: err => reject(err),
       });
     });
-  });
-  return flat;
-}
+    if (onProgress) onProgress(sheetRows, GOOGLE_SHEET_MAIN_LOOT_CSV_URL, null);
+    console.log(`[DATA] Loaded ${sheetRows.length} rows from Sheet`);
+  } catch (err) {
+    console.error('[DATA] main_loot sheet load error:', err);
+    if (onProgress) onProgress([], GOOGLE_SHEET_MAIN_LOOT_CSV_URL, err);
+    // SheetRows leeg laten maar niet stoppen: static kan fallback zijn
+  }
 
-/**
- * Re-group from flat → by expansion and source (for tables/layout).
- */
-export function groupAndSort(data) {
-  const grouped = {};
-  data.forEach(item => {
-    const exp = item.expansion || 'Unknown';
-    const src = item.sourcename || 'Unknown';
-    grouped[exp] = grouped[exp] || {};
-    grouped[exp][src] = grouped[exp][src] || [];
-    grouped[exp][src].push(item);
-  });
+  // 3. Je kunt nu samenvoegen of retourneren afhankelijk van je behoefte
+  //    Bijvoorbeeld: sheetRows toevoegen aan static events op een manier die bij je frontend past
 
-  return Object.entries(grouped).sort().map(([expansion, sources]) => ({
-    expansion,
-    sources: Object.entries(sources).sort().map(([sourcename, items]) => ({
-      sourcename,
-      items
-    }))
-  }));
-}
+  // Voorbeeld: SheetRow → Event parser/matcher toevoegen (per eigen format)
+  // Hier een simpele merge: static events krijgen loot uit sheetRows toegevoegd als naam/map matcht
+  if (allEvents.length && sheetRows.length) {
+    // Maak lookup op [eventname+map] of unieke sleutel
+    const eventsByKey = {};
+    allEvents.forEach(e => {
+      const key = `${(e.name || '').trim().toLowerCase()}|${(e.map || '').trim().toLowerCase()}`;
+      eventsByKey[key] = e;
+      if (!e.loot) e.loot = [];
+    });
 
-/**
- * Extended filter logic (shared between render + search)
- */
-export function filterEventsExtended(events, {
-  expansion, rarity, lootName, itemType,
-  vendorValueMin, vendorValueMax,
-  chatcode, guaranteedOnly, chanceOnly, sortKey
-}) {
-  return events.filter(e => {
-    if (expansion && e.expansion !== expansion) return false;
-    if (rarity && !(e.loot || []).some(l => l.rarity === rarity)) return false;
-    if (lootName) {
-      const val = lootName.toLowerCase();
-      if (!(e.loot || []).some(l => l.name?.toLowerCase().includes(val))) return false;
-    }
-    if (itemType) {
-      const val = itemType.toLowerCase();
-      if (!(e.loot || []).some(l => l.type?.toLowerCase() === val)) return false;
-    }
-    if (vendorValueMin !== undefined) {
-      if (!(e.loot || []).some(l => l.vendorValue >= vendorValueMin)) return false;
-    }
-    if (vendorValueMax !== undefined) {
-      if (!(e.loot || []).some(l => l.vendorValue <= vendorValueMax)) return false;
-    }
-    if (chatcode) {
-      const val = chatcode.toLowerCase();
-      if (!(e.loot || []).some(l => l.chatCode?.toLowerCase() === val)) return false;
-    }
-    if (guaranteedOnly && !(e.loot || []).some(l => l.guaranteed)) return false;
-    if (chanceOnly && !(e.loot || []).some(l => !l.guaranteed)) return false;
-    return true;
-  });
+    sheetRows.forEach(row => {
+      const k = `${(row.EventName || '').trim().toLowerCase()}|${(row.MapName || '').trim().toLowerCase()}`;
+      if (eventsByKey[k]) {
+        // Voeg loot toe aan bestaand event
+        eventsByKey[k].loot = eventsByKey[k].loot || [];
+        // Uniek per item
+        if (
+          !eventsByKey[k].loot.some(
+            l => l.name === row.Item && l.rarity === row.Rarity
+          )
+        ) {
+          eventsByKey[k].loot.push({
+            name: row.Item,
+            id: row.ItemID ? Number(row.ItemID) : undefined,
+            rarity: row.Rarity,
+            guaranteed: row.Guaranteed === 'Yes',
+            // Vul overige kolommen in desgewenst!
+          });
+        }
+      } else {
+        // Optioneel: onbekende loot/event? Voeg apart toe
+      }
+    });
+
+    // Output alle events uit lookup:
+    return Object.values(eventsByKey);
+  }
+  if (allEvents.length) return allEvents;
+  if (sheetRows.length) {
+    // Sheet-only modus: maak simpel event-achtige structuur van sheet als static data ontbreekt
+    return sheetRows.map(row => ({
+      name: row.EventName,
+      map: row.MapName,
+      expansion: row.Expansion,
+      loot: [{
+        name: row.Item,
+        id: row.ItemID ? Number(row.ItemID) : undefined,
+        rarity: row.Rarity,
+        guaranteed: row.Guaranteed === 'Yes',
+        // ...
+      }]
+      // Meer velden (bv. waypoints, code) kan je toevoegen
+    }));
+  }
+  // Beide leeg? Error
+  throw new Error('Geen eventdata geladen uit JSON of Sheet!');
 }
