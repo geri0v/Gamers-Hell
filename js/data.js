@@ -1,6 +1,6 @@
 // js/data.js
 
-const STATIC_JSON_URL = 'https://geri0v.github.io/Gamers-Hell/json/events.json';
+const STATIC_JSON_URL = 'https://geri0v.github.io/Gamers-Hell/json/manifest.json';
 const GOOGLE_SHEET_MAIN_LOOT_CSV_URL =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vQI6XWf68WL1QBPkqgaNoFvNS4yV47h1OZ_E8MEZQiVBSMYVKNpeMWR49rJgNDJATkswIZiqktmrcxx/pub?gid=1436649532&single=true&output=csv';
 
