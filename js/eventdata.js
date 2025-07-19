@@ -1,12 +1,15 @@
+// eventdata.js
+
 import { getTpUrl } from './tp.js';
 import { fetchWaypoints } from './waypoint.js';
 
+// Alleen het Main_Loot tabblad word geladen:
 const GOOGLE_SHEET_MAIN_LOOT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQI6XWf68WL1QBPkqgaNoFvNS4yV47h1OZ_E8MEZQiVBSMYVKNpeMWR49rJgNDJATkswIZiqktmrcxx/pub?gid=1436649532&single=true&output=csv';
 const OTC_CSV_URL = 'https://raw.githubusercontent.com/otc-cirdan/gw2-items/refs/heads/master/items.csv';
 const GW2TREASURES_API = 'https://api.gw2treasures.com/items?ids=';
 
-// <-- COLUMN REMAP: change these if your sheet ever changes -->
-const COLUMN_MAP = {
+// Sheet kolommen mapping — pas alleen aan als sheetschema wijzigt
+const COLUMNS = {
   expansion: "Expansion",
   mapName: "MapName",
   location: "Location",
@@ -58,6 +61,16 @@ async function fetchSheetRows() {
   });
 }
 
+// Extra filtering: alleen rijen waar minimaal één veld niet leeg is
+function filterNonEmptyRows(rows) {
+  return rows.filter(row =>
+    Object.values(row)
+      .map(v => (v ?? '').trim())
+      .some(v => v !== '')
+  );
+}
+
+// OTC CSV
 async function fetchOtcCsv() {
   try {
     const res = await fetchWithRetry(OTC_CSV_URL);
@@ -75,6 +88,7 @@ async function fetchOtcCsv() {
   }
 }
 
+// Gw2Treasures prijzen
 async function fetchGw2TreasuresPrices(itemIds = []) {
   if (!itemIds.length) return {};
   let prices = {};
@@ -92,33 +106,32 @@ async function fetchGw2TreasuresPrices(itemIds = []) {
   return prices;
 }
 
-// Group and index loot/items per event per map
+// Loot index bouwen per event
 function buildLootIndex(sheetRows) {
   const lootIndex = {};
   for (const row of sheetRows) {
-    const source = row[COLUMN_MAP.eventName] || '';
+    const source = row[COLUMNS.eventName] || '';
     if (!lootIndex[source]) lootIndex[source] = [];
     lootIndex[source].push({
-      expansion: row[COLUMN_MAP.expansion],
-      mapName: row[COLUMN_MAP.mapName],
-      location: row[COLUMN_MAP.location],
-      waypoint: row[COLUMN_MAP.waypoint],
-      eventName: row[COLUMN_MAP.eventName],
-      lootBlock: row[COLUMN_MAP.lootBlock],
-      item: row[COLUMN_MAP.item],
-      itemId: row[COLUMN_MAP.itemId],
-      rarity: row[COLUMN_MAP.rarity],
-      guaranteed: row[COLUMN_MAP.guaranteed] === 'Yes',
-      dropRate: row[COLUMN_MAP.dropRate],
-      collectible: row[COLUMN_MAP.collectible] === 'Yes',
-      bound: row[COLUMN_MAP.bound] === 'Yes',
-      achievementLinked: row[COLUMN_MAP.achievementLinked] === 'Yes',
+      expansion: row[COLUMNS.expansion],
+      mapName: row[COLUMNS.mapName],
+      location: row[COLUMNS.location],
+      waypoint: row[COLUMNS.waypoint],
+      eventName: row[COLUMNS.eventName],
+      lootBlock: row[COLUMNS.lootBlock],
+      item: row[COLUMNS.item],
+      itemId: row[COLUMNS.itemId],
+      rarity: row[COLUMNS.rarity],
+      guaranteed: row[COLUMNS.guaranteed] === 'Yes',
+      dropRate: row[COLUMNS.dropRate],
+      collectible: row[COLUMNS.collectible] === 'Yes',
+      bound: row[COLUMNS.bound] === 'Yes',
+      achievementLinked: row[COLUMNS.achievementLinked] === 'Yes',
     });
   }
   return lootIndex;
 }
 
-// Filtering logic
 function filterLootItems(items) {
   if (!items || items.length === 0) return [];
   const onlyGenericChampBags = items.every(i => /^Champion .* Bag$/i.test(i.item));
@@ -138,7 +151,6 @@ function filterLootItems(items) {
   });
 }
 
-// Waypoint proximity if row does not have waypoint
 function calculateDistance(a, b) {
   if (!a || !b) return Infinity;
   const dx = a[0] - b[0];
@@ -153,15 +165,18 @@ export async function generateDeepEventDataset() {
     fetchOtcCsv(),
   ]);
 
-  const lootIndex = buildLootIndex(sheetRows);
+  // Extra filtering: alleen rows met echte data
+  const cleanRows = filterNonEmptyRows(sheetRows);
 
-  // OTC mapping
+  const lootIndex = buildLootIndex(cleanRows);
+
+  // OTC koppeling (naam → id)
   const otcNameToId = {};
   otcRows.forEach(({ Name, ID }) => {
     if (Name && ID) otcNameToId[Name] = ID;
   });
 
-  // Collect all loot items names for price fetching
+  // Unieke itemnamen voor prijzen
   const allLootItemNames = new Set();
   Object.values(lootIndex).forEach(arr => arr.forEach(i => {
     if (i.item && !isJunkOrContainer(i.item)) allLootItemNames.add(i.item);
@@ -169,44 +184,39 @@ export async function generateDeepEventDataset() {
   const uniqueItemIds = [...allLootItemNames].map(name => otcNameToId[name]).filter(Boolean);
   const pricesMap = await fetchGw2TreasuresPrices(uniqueItemIds);
 
-  // Group by map/event
+  // eventsByMap vullen
   const eventsByMap = {};
-  for (const row of sheetRows) {
-    const mapName = row[COLUMN_MAP.mapName] || 'Unknown Map';
-    const eventName = row[COLUMN_MAP.eventName] || '';
+  for (const row of cleanRows) {
+    const mapName = row[COLUMNS.mapName] || 'Unknown Map';
+    const eventName = row[COLUMNS.eventName] || '';
     if (!eventsByMap[mapName]) eventsByMap[mapName] = {};
     if (!eventsByMap[mapName][eventName]) {
-      // If sheet does not have a waypoint but coords and waypoints exist, find the closest
-      let assignedWaypoint = row[COLUMN_MAP.waypoint] || '';
-      // If you had coordinates to use, add them here & do proximity
-      // Example:
-      // let eventCoord = row.EventCoordX && row.EventCoordY ? [parseFloat(row.EventCoordX), parseFloat(row.EventCoordY)] : null;
-      // if (!assignedWaypoint && eventCoord && waypoints) { ...proximity logic... }
-
+      // Waypoint: direct uit sheet. Eventueel locatie/coord logica kun je toevoegen)
+      let assignedWaypoint = row[COLUMNS.waypoint] || '';
       eventsByMap[mapName][eventName] = {
         name: eventName,
         map: mapName,
-        region: row[COLUMN_MAP.expansion] || '',
-        expansion: row[COLUMN_MAP.expansion] || '',
-        location: row[COLUMN_MAP.location] || '',
+        region: row[COLUMNS.expansion] || '',
+        expansion: row[COLUMNS.expansion] || '',
+        location: row[COLUMNS.location] || '',
         waypoint: assignedWaypoint,
         loot: [],
       };
     }
-    // Add loot item:
+    // Voeg loot toe
     eventsByMap[mapName][eventName].loot.push({
-      item: row[COLUMN_MAP.item],
-      itemId: row[COLUMN_MAP.itemId],
-      rarity: row[COLUMN_MAP.rarity],
-      guaranteed: row[COLUMN_MAP.guaranteed] === 'Yes',
-      dropRate: row[COLUMN_MAP.dropRate],
-      collectible: row[COLUMN_MAP.collectible] === 'Yes',
-      bound: row[COLUMN_MAP.bound] === 'Yes',
-      achievementLinked: row[COLUMN_MAP.achievementLinked] === 'Yes',
+      item: row[COLUMNS.item],
+      itemId: row[COLUMNS.itemId],
+      rarity: row[COLUMNS.rarity],
+      guaranteed: row[COLUMNS.guaranteed] === 'Yes',
+      dropRate: row[COLUMNS.dropRate],
+      collectible: row[COLUMNS.collectible] === 'Yes',
+      bound: row[COLUMNS.bound] === 'Yes',
+      achievementLinked: row[COLUMNS.achievementLinked] === 'Yes',
     });
   }
 
-  // Filter and enrich loot
+  // Verrijk loot
   for (const mapEvents of Object.values(eventsByMap)) {
     for (const event of Object.values(mapEvents)) {
       event.loot = filterLootItems(event.loot).map(item => {
@@ -232,7 +242,7 @@ export async function generateDeepEventDataset() {
     }
   }
 
-  // Flatten structure for frontend, if needed
+  // Flatten structuur ter output
   const flatEventsByMap = {};
   for (const [mapName, eventMap] of Object.entries(eventsByMap)) {
     flatEventsByMap[mapName] = Object.values(eventMap);
