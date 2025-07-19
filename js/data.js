@@ -1,6 +1,6 @@
 // js/data.js
 
-const STATIC_JSON_URL = 'https://geri0v.github.io/Gamers-Hell/json/manifest.json';
+const MANIFEST_URL = 'https://geri0v.github.io/Gamers-Hell/json/manifest.json';
 const GOOGLE_SHEET_MAIN_LOOT_CSV_URL =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vQI6XWf68WL1QBPkqgaNoFvNS4yV47h1OZ_E8MEZQiVBSMYVKNpeMWR49rJgNDJATkswIZiqktmrcxx/pub?gid=1436649532&single=true&output=csv';
 
@@ -8,17 +8,30 @@ export async function fetchAllData(onProgress = null) {
   let allEvents = [];
   let sheetRows = [];
 
-  // 1. Static JSON (optioneel)
+  // 1. MANIFEST LADEN EN JSONS MERGEN
   try {
-    const jsonRes = await fetch(STATIC_JSON_URL);
-    if (!jsonRes.ok) throw new Error('events.json niet beschikbaar');
-    const jsonData = await jsonRes.json();
-    allEvents = Array.isArray(jsonData) ? jsonData : [];
-    if (onProgress) onProgress(allEvents, STATIC_JSON_URL, null);
-    console.log(`[DATA] Loaded ${allEvents.length} events from JSON`);
+    const manifestRes = await fetch(MANIFEST_URL);
+    if (!manifestRes.ok) throw new Error('manifest.json niet beschikbaar');
+    const manifest = await manifestRes.json();
+    if (!Array.isArray(manifest.files)) throw new Error('manifest.json heeft geen files-lijst');
+
+    // Load alle files als promises
+    const jsonPromises = manifest.files.map(async file => {
+      const url = file.startsWith('http') ? file : MANIFEST_URL.replace('manifest.json', file);
+      const r = await fetch(url);
+      if (!r.ok) throw new Error(`Event JSON niet gevonden: ${url}`);
+      return r.json();
+    });
+
+    // Alle files resolven; flatteer waar nodig
+    const jsonFiles = await Promise.all(jsonPromises);
+    allEvents = jsonFiles.flat();
+
+    if (onProgress) onProgress(allEvents, MANIFEST_URL, null);
+    console.log(`[DATA] Loaded ${allEvents.length} events from manifest files`);
   } catch (err) {
-    console.error('[DATA] events.json load error:', err);
-    if (onProgress) onProgress([], STATIC_JSON_URL, err);
+    console.error('[DATA] master manifest load error:', err);
+    if (onProgress) onProgress([], MANIFEST_URL, err);
   }
 
   // 2. Sheet CSV (optioneel)
