@@ -1,33 +1,10 @@
-// eventdata.js
 import { getTpUrl } from './tp.js';
-import { fetchWaypoints } from './waypoint.js';  // Your waypoint fetching module
+import { fetchWaypoints } from './waypoint.js';
 
-// URLs and constants (update as needed)
-const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQI6XWf68WL1QBPkqgaNoFvNS4yV47h1OZ_E8MEZQiVBSMYVKNpeMWR49rJgNDJATkswIZiqktmrcxx/pub?output=csv';
+// ONLY fetch the Main_Loot tab (gid=1436649532)
+const GOOGLE_SHEET_MAIN_LOOT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQI6XWf68WL1QBPkqgaNoFvNS4yV47h1OZ_E8MEZQiVBSMYVKNpeMWR49rJgNDJATkswIZiqktmrcxx/pub?gid=1436649532&single=true&output=csv';
 const OTC_CSV_URL = 'https://raw.githubusercontent.com/otc-cirdan/gw2-items/refs/heads/master/items.csv';
- // Replace with your OTC CSV URL
-const GW2TREASURES_ITEM_URL = 'https://api.gw2treasures.com/items';
-
-async function fetchGw2TreasuresItems(itemIds = []) {
-  if (!itemIds.length) return {};
-  try {
-    const res = await fetch(GW2TREASURES_ITEM_URL + '?ids=' + itemIds.join(','), {
-      headers: {
-        Authorization: `Bearer e53da4d7-cb26-4225-b8fb-dfe4a81ad834`
-      }
-    });
-    if (!res.ok) throw new Error('GW2Treasures fetch failed');
-    return await res.json();
-  } catch (err) {
-    console.warn('GW2Treasures fetch error:', err);
-    return {};
-  }
-}
-
-const GW2_API = {
-  MAPS: 'https://api.guildwars2.com/v2/maps',
-  EVENTS: 'https://api.guildwars2.com/v1/event_details.json',
-};
+const GW2TREASURES_API = 'https://api.gw2treasures.com/items?ids=';
 
 // Regex patterns for filtering generic container/junk items
 const FILTER_CONTAINERS = [
@@ -54,28 +31,9 @@ async function fetchWithRetry(url, options = {}, retries = 3, delay = 500) {
   }
 }
 
-// Fetch all maps from GW2 API (batch requests)
-async function fetchAllApiMaps() {
-  const ids = await fetchWithRetry(GW2_API.MAPS).then(r => r.json());
-  const allMaps = [];
-  for (let i = 0; i < ids.length; i += 100) {
-    const chunk = ids.slice(i, i + 100).join(',');
-    const chunkMaps = await fetchWithRetry(`${GW2_API.MAPS}?ids=${chunk}`).then(r => r.json());
-    allMaps.push(...chunkMaps);
-  }
-  return allMaps;
-}
-
-// Fetch all events from GW2 API
-async function fetchAllApiEvents() {
-  const res = await fetchWithRetry(GW2_API.EVENTS);
-  const data = await res.json();
-  return Object.values(data.events);
-}
-
-// Fetch published loot data CSV from Google Sheets, parse with PapaParse
+// Fetch loot/event/map data from Main_Loot tab
 async function fetchLootDataFromCsv() {
-  const res = await fetchWithRetry(GOOGLE_SHEET_CSV_URL);
+  const res = await fetchWithRetry(GOOGLE_SHEET_MAIN_LOOT_CSV_URL);
   const csvText = await res.text();
   return new Promise((resolve, reject) => {
     Papa.parse(csvText, {
@@ -129,21 +87,25 @@ async function fetchGw2TreasuresPrices(itemIds = []) {
 function buildLootIndex(sheetRows) {
   const lootIndex = {};
   for (const row of sheetRows) {
-    const source = row['Event/Chest'] || '';
+    const source = row['Event/Chest'] || row.EventName || row['Event/Meta Name'] || '';
     if (!lootIndex[source]) lootIndex[source] = [];
     lootIndex[source].push({
       mapName: row.MapName,
+      mapId: row.MapID,
       waypoint: row.Waypoint,
+      eventId: row.EventID,
       sourceType: row.SourceType || source,
       item: row.Item,
       rarity: row.Rarity,
       guaranteed: row.Guaranteed === 'Yes',
       collectible: row.Collectible === 'Yes',
-      bound: row.Bound === 'Yes',
+      bound: row.Bound === 'Yes' || row['Account Bound'] === 'Yes',
       achievementLinked: row.AchievementLinked === 'Yes',
       tpLink: row.TPLink,
       wikiLink: row.WikiLink,
       timestamp: row.Timestamp,
+      coord: (row.EventCoordX && row.EventCoordY) ?
+              [parseFloat(row.EventCoordX), parseFloat(row.EventCoordY)] : null,
     });
   }
   return lootIndex;
@@ -181,9 +143,7 @@ function calculateDistance(a, b) {
 
 // Main function: fetches all data, deeply merges, enriches, applies flags & filtering
 export async function generateDeepEventDataset() {
-  const [apiMaps, apiEvents, waypoints, sheetRows, otcRows] = await Promise.all([
-    fetchAllApiMaps(),
-    fetchAllApiEvents(),
+  const [waypoints, sheetRows, otcRows] = await Promise.all([
     fetchWaypoints(),
     fetchLootDataFromCsv(),
     fetchOtcCsv(),
@@ -192,7 +152,7 @@ export async function generateDeepEventDataset() {
   // Build loot index from sheet
   const lootIndex = buildLootIndex(sheetRows);
 
-  // Build OTC item name → ID map for price lookup
+  // OTC item name → ID map for price lookup
   const otcNameToId = {};
   otcRows.forEach(({ Name, ID }) => {
     if (Name && ID) otcNameToId[Name] = ID;
@@ -204,79 +164,102 @@ export async function generateDeepEventDataset() {
     if (i.item && !isJunkOrContainer(i.item)) allLootItemNames.add(i.item);
   }));
   const uniqueItemIds = [...allLootItemNames].map(name => otcNameToId[name]).filter(Boolean);
-
   const pricesMap = await fetchGw2TreasuresPrices(uniqueItemIds);
 
-  // Map api maps for easy ID lookup
-  const mapById = new Map(apiMaps.map(m => [m.id, m]));
+  // Organize by maps
+  const mapByName = {};
+  sheetRows.forEach(row => {
+    if (!mapByName[row.MapName]) mapByName[row.MapName] = {
+      name: row.MapName,
+      region: row.Region || row.Expansion || 'Unknown',
+      expansion: row.Expansion || 'Core',
+      id: row.MapID,
+      events: {},
+    };
+  });
 
-  // Compose final dataset grouped by map
-  const eventsByMap = {};
-
-  for (const event of apiEvents) {
-    const map = mapById.get(event.map_id);
+  // Organize events per map from the sheet data
+  for (const row of sheetRows) {
+    const map = mapByName[row.MapName];
     if (!map) continue;
 
-    // Filter loot items with your itemfilter
-    const filteredLoot = filterLootItems(lootIndex[event.name] || []);
-
-    // Enrich loot items with prices, TP & wiki links, achievements/collectibles flags, icons can be added in UI
-    const enrichedLoot = filteredLoot.map(item => {
-      const otcId = otcNameToId[item.item];
-      const priceData = otcId && pricesMap[otcId] ? pricesMap[otcId] : {};
-      return {
-        ...item,
-        tp: item.tpLink || (otcId ? getTpUrl(otcId) : ''),
-        price: priceData.price || null,
-        price_usd: priceData.price_usd || null,
-        flags: {
-          legendary: /legendary/i.test(item.rarity),
-          ascended: /ascended/i.test(item.rarity),
-          unique: /unique/i.test(item.rarity),
-          rare: /rare/i.test(item.rarity),
-          collectible: item.collectible,
-          guaranteed: item.guaranteed,
-          miniature: /mini/i.test(item.item),
-          achievementLinked: item.achievementLinked,
+    const eventId = row.EventID || row['Event/Meta Name'] || row.EventName || row['Event/Chest'] || '';
+    if (!map.events[eventId]) {
+      // Find closest waypoint if only coordinates present, else use row.Waypoint
+      let eventWaypoint = row.Waypoint || '';
+      const eventCoord = (row.EventCoordX && row.EventCoordY)
+        ? [parseFloat(row.EventCoordX), parseFloat(row.EventCoordY)]
+        : null;
+      if (!eventWaypoint && eventCoord && waypoints && waypoints.length) {
+        let closest = null, minDist = Infinity;
+        for (const wp of waypoints) {
+          if (wp.type !== 'Waypoint' || wp.map_id !== row.MapID) continue;
+          const dist = calculateDistance(eventCoord, wp.coord);
+          if (dist < minDist) { minDist = dist; closest = wp; }
         }
-      };
-    });
-
-    // Find closest waypoint to event coordinates (if available)
-    let eventWaypoint = '';
-    if (event.coord && waypoints && waypoints.length) {
-      let closest = null;
-      let minDist = Infinity;
-      for (const wp of waypoints) {
-        if (wp.type !== 'Waypoint' || wp.map_id !== event.map_id) continue;
-        const dist = calculateDistance(event.coord, wp.coord);
-        if (dist < minDist) {
-          minDist = dist;
-          closest = wp;
-        }
+        if (closest) eventWaypoint = closest.chat_code || closest.name;
       }
-      if (closest) eventWaypoint = closest.name;
+
+      map.events[eventId] = {
+        id: eventId,
+        name: row['Event/Meta Name'] || row.EventName || row['Event/Chest'] || '',
+        map: map.name,
+        region: map.region,
+        expansion: map.expansion,
+        level: row.Level || null,
+        waypoint: eventWaypoint,
+        loot: [],
+      };
     }
 
-    // Compose enriched event object
-    const enrichedEvent = {
-      id: event.id,
-      name: event.name,
-      map: map.name,
-      region: map.region_name || 'Unknown',
-      expansion: map.continent_name || 'Core',
-      level: event.level || null,
-      waypoint: eventWaypoint,
-      loot: enrichedLoot,
-    };
+    // Push loot entries for this event
+    map.events[eventId].loot.push({
+      item: row.Item,
+      rarity: row.Rarity,
+      guaranteed: row.Guaranteed === 'Yes',
+      collectible: row.Collectible === 'Yes',
+      bound: row.Bound === 'Yes' || row['Account Bound'] === 'Yes',
+      achievementLinked: row.AchievementLinked === 'Yes',
+      tpLink: row.TPLink,
+      wikiLink: row.WikiLink,
+      timestamp: row.Timestamp,
+    });
+  }
 
-    if (!eventsByMap[map.name]) eventsByMap[map.name] = [];
-    eventsByMap[map.name].push(enrichedEvent);
+  // Now, filter/enrich loot
+  for (const map of Object.values(mapByName)) {
+    for (const event of Object.values(map.events)) {
+      event.loot = filterLootItems(event.loot).map(item => {
+        const otcId = otcNameToId[item.item];
+        const priceData = otcId && pricesMap[otcId] ? pricesMap[otcId] : {};
+        return {
+          ...item,
+          tp: item.tpLink || (otcId ? getTpUrl(otcId) : ''),
+          price: priceData.price || null,
+          price_usd: priceData.price_usd || null,
+          flags: {
+            legendary: /legendary/i.test(item.rarity),
+            ascended: /ascended/i.test(item.rarity),
+            unique: /unique/i.test(item.rarity),
+            rare: /rare/i.test(item.rarity),
+            collectible: item.collectible,
+            guaranteed: item.guaranteed,
+            miniature: /mini/i.test(item.item),
+            achievementLinked: item.achievementLinked,
+          }
+        };
+      });
+    }
+  }
+
+  // Organize eventsByMap: { mapName: [eventObject, ...], ... }
+  const eventsByMap = {};
+  for (const [mapName, map] of Object.entries(mapByName)) {
+    eventsByMap[mapName] = Object.values(map.events);
   }
 
   return {
-    maps: apiMaps,
-    events: apiEvents,
+    maps: Object.values(mapByName),
     waypoints,
     lootIndex,
     otcItems: otcRows,
