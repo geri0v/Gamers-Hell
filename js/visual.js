@@ -1,7 +1,8 @@
 // visual.js
 // Main app entry. Loads full map->event->loot dataset and renders it with filters/sorting.
+import { fetchAllData } from './data.js';
+// ... je enrichment pipeline volgt daarna, bijv. via enrichItemsAndPrices, resolveWaypoints, etc.
 
-import { generateDeepEventDataset } from './eventdata.js';
 import { filterEvents, renderSortButtons, renderFilterBar, renderSearchBar } from './search.js';
 import { renderEventGroups } from './card.js';
 import { paginate } from './pagination.js';
