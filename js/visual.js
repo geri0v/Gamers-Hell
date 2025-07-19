@@ -1,7 +1,5 @@
 // js/visual.js
-import { fetchAllData } from './data.js';
-import { enrichItemsAndPrices, fetchWikiDescription } from './info.js';
-import { resolveWaypoints } from './waypoint.js';
+import { loadAndEnrichData } from './infoload.js';
 import { filterEvents, renderSortButtons, renderFilterBar, renderSearchBar } from './search.js';
 import { renderEventGroups } from './card.js';
 import { paginate } from './pagination.js';
@@ -126,84 +124,20 @@ function setupInfiniteScroll() {
   window.infiniteScrollObserver.observe(sentinel);
 }
 
-async function enrichEvents(rawEvents) {
-  const uniqueItemIds = new Set();
-  rawEvents.forEach(event => {
-    (event.loot || []).forEach(item => item.id && uniqueItemIds.add(item.id));
-  });
-  const itemIds = [...uniqueItemIds];
-  const enrichedItems = await enrichItemsAndPrices(itemIds);
-  const itemMap = new Map(enrichedItems.map(item => [item.id, item]));
-
-  const chatcodes = rawEvents
-    .map(e => (e.chatcode || e.code || '').trim())
-    .filter(code => code.length > 5);
-
-  const waypointMap = await resolveWaypoints(chatcodes);
-
-  return await Promise.all(
-    rawEvents.map(async event => {
-      const code = (event.chatcode || event.code || '').trim();
-      const wp = waypointMap[code] || {};
-      event.code = code;
-      event.waypointName = wp.name || null;
-      event.waypointWikiLink = wp.wiki || null;
-      event.wikiLink = event.name
-        ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.name.replace(/ /g, "_"))}`
-        : null;
-      event.mapWikiLink = event.map
-        ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.map.replace(/ /g, "_"))}`
-        : null;
-      event.description = '';
-      // Optioneel: wiki description, kan traag zijn bij veel events
-      // const descRaw = await fetchWikiDescription(event.name || wp.name || '');
-      // const match = descRaw?.match(/^(.+?[.!?])\s*(.+?[.!?])/);
-      // event.description = match ? `${match[1]} ${match[2]}` : descRaw;
-      event.loot = (event.loot || []).map(l => {
-        const enriched = l.id ? itemMap.get(l.id) || {} : {};
-        const name = enriched.name || l.name;
-        const wikiLink = name
-          ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(name.replace(/ /g, '_'))}`
-          : null;
-        return {
-          ...l,
-          name,
-          icon: enriched.icon || null,
-          wikiLink,
-          accountBound: enriched.flags?.includes("AccountBound") || false,
-          chatcode: enriched.chat_link || null,
-          vendorValue: enriched.vendor_value ?? null,
-          price: enriched.price ?? null,
-          type: enriched.type ?? null,
-          rarity: enriched.rarity || l.rarity || null,
-          guaranteed: !!l.guaranteed
-        };
-      });
-      return event;
-    })
-  );
-}
-
 async function boot() {
   startTerminal();
-  appendTerminal('⚡ Loading event & loot database...', 'info');
+  appendTerminal('⚡ Data verrijken en laden...', 'info');
   allEvents = [];
   currentPage = 1;
   try {
-    const loadedEvents = await fetchAllData((data, url, err) => {
-      if (err) appendTerminal(`[DATA] Error at ${url}: ${err.message || err}`, 'error');
+    allEvents = await loadAndEnrichData((data) => {
+      // eventueel per progress event iets tonen/appen
     });
-    if (!loadedEvents || !loadedEvents.length) {
-      appendTerminal('Geen events gevonden in data!', 'error');
-      return endTerminal(false);
-    }
-    appendTerminal(`✓ Loaded ${loadedEvents.length} events (enhancing...)`, 'progress');
-    allEvents = await enrichEvents(loadedEvents);
-    appendTerminal(`✓ Enriched ${allEvents.length} events.`, 'success');
+    appendTerminal(`✓ Verrijkte events: ${allEvents.length}.`, 'success');
     updateUI();
     endTerminal(true);
   } catch (err) {
-    appendTerminal('🔥 Fout bij laden data: ' + (err.message || err), 'error');
+    appendTerminal('🔥 Fout bij laden/enrichen: ' + (err.message || err), 'error');
     endTerminal(false);
     console.error(err);
   }
