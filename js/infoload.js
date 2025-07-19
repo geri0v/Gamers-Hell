@@ -1,78 +1,60 @@
-import { fetchAllData } from 'https://geri0v.github.io/Gamers-Hell/js/data.js';
-import { enrichItemsAndPrices, fetchWikiDescription } from 'https://geri0v.github.io/Gamers-Hell/js/info.js';
-import { resolveWaypoints } from 'https://geri0v.github.io/Gamers-Hell/js/waypoint.js';
+// js/infoload.js
+import { fetchAllData } from './data.js';
+import { enrichItemsAndPrices, fetchWikiDescription } from './info.js';
+import { resolveWaypoints } from './waypoint.js';
 
 /**
- * Load and enrich all event data
- * @param {Function|null} onProgress — Optional per-item callback
- * @returns {Promise<Array>} Enriched event array
+ * Verrijkt ALLE events. Elke loot, elke waypoint, ongeacht bron.
  */
 export async function loadAndEnrichData(onProgress = null) {
   try {
-    const rawEvents = await fetchAllData();
+    const rawEvents = await fetchAllData(onProgress);
+    if (!rawEvents?.length) throw new Error("Geen events gevonden!");
 
-    if (!rawEvents?.length) {
-      console.warn("⚠️ No raw events loaded from manifest.");
-    }
-
-    // Step 1: Collect unique item IDs from loot
+    // 1: Verrijk loot-items met live info/prijzen/icons:
     const uniqueItemIds = new Set();
-    rawEvents.forEach(event => {
-      (event?.loot || []).forEach(item => item.id && uniqueItemIds.add(item.id));
-    });
-
+    rawEvents.forEach(event => (event.loot||[]).forEach(item => item.id && uniqueItemIds.add(item.id)));
     const itemIds = [...uniqueItemIds];
     const enrichedItems = await enrichItemsAndPrices(itemIds);
     const itemMap = new Map(enrichedItems.map(item => [item.id, item]));
 
-    // Step 2: Collect chatcodes for waypoint resolution
-    const chatcodes = rawEvents
-      .map(e => (e.chatcode || e.code || '').trim())
-      .filter(code => code.length > 5);
-
+    // 2: Chatcode → Waypoint
+    const chatcodes = rawEvents.map(e => e.chatcode || e.code || '').filter(x=>x && x.trim().length > 5);
     const waypointMap = await resolveWaypoints(chatcodes);
 
-    // Step 3: Enrich each event
-    const enriched = await Promise.all(
+    // 3: Per event alles enrichen:
+    const enrichedEvents = await Promise.all(
       rawEvents.map(async event => {
         const code = (event.chatcode || event.code || '').trim();
         const wp = waypointMap[code] || {};
 
-        // Waypoint
+        // Verrijk main
         event.code = code;
         event.waypointName = wp.name || null;
         event.waypointWikiLink = wp.wiki || null;
-
-        // Event Wiki
         event.wikiLink = event.name
           ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.name.replace(/ /g, "_"))}`
           : null;
-
-        // Map Wiki
         event.mapWikiLink = event.map
           ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.map.replace(/ /g, "_"))}`
           : null;
 
-        // Get description (only first 2 full sentences)
-        const descRaw = await fetchWikiDescription(event.name || wp.name || '');
-        const match = descRaw?.match(/^(.+?[.!?])\s*(.+?[.!?])/);
-        event.description = match ? `${match[1]} ${match[2]}` : descRaw;
+        // Verrijk beschrijving optioneel (langzaam):
+        // const descRaw = await fetchWikiDescription(event.name || wp.name || '');
+        // event.description = descRaw;
 
-        // Enrich loot
+        // Loot verrijken
         event.loot = (event.loot || []).map(l => {
           const enriched = l.id ? itemMap.get(l.id) || {} : {};
           const name = enriched.name || l.name;
-          const wikiLink = name
-            ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(name.replace(/ /g, '_'))}`
-            : null;
-
+          const wikiLink = name ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(name.replace(/ /g, '_'))}` : null;
           return {
             ...l,
             name,
             icon: enriched.icon || null,
             wikiLink,
             accountBound: enriched.flags?.includes("AccountBound") || false,
-            chatCode: enriched.chat_link || null,
+            chatcode: enriched.chat_link || null,
             vendorValue: enriched.vendor_value ?? null,
             price: enriched.price ?? null,
             type: enriched.type ?? null,
@@ -80,17 +62,13 @@ export async function loadAndEnrichData(onProgress = null) {
             guaranteed: !!l.guaranteed
           };
         });
-
-        // Progress callback (e.g., for logging/debug)
         if (onProgress) onProgress(event);
         return event;
       })
     );
-
-    console.log(`✅ Enriched ${enriched.length} events`);
-    return enriched;
+    return enrichedEvents;
   } catch (err) {
-    console.error("🔥 Error enriching event data:", err);
-    return [];
+    console.error('[ENRICH] Verrijken events faalde:', err);
+    throw err;
   }
 }
