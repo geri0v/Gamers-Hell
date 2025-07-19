@@ -1,6 +1,4 @@
-// visual.js
-// Main app entry. Loads dataset (manifest + main_loot sheet) and renders with enrichments.
-
+// js/visual.js
 import { fetchAllData } from './data.js';
 import { enrichItemsAndPrices, fetchWikiDescription } from './info.js';
 import { resolveWaypoints } from './waypoint.js';
@@ -22,8 +20,6 @@ let currentSort = '';
 let currentPage = 1;
 const pageSize = 25;
 
-// === UI Helpers ===
-
 function getUnique(list) {
   return [...new Set(list.filter(Boolean))].sort().map(v => ({ val: v, text: v }));
 }
@@ -36,7 +32,6 @@ function applySort(events, sortKey) {
       case 'map':
         return a.map.localeCompare(b.map);
       case 'value': {
-        // Sorteer op hoogste prijs/vendowaarde loot per event
         const aVal = Math.max(...(a.loot || []).map(i => i.price || i.vendorValue || 0));
         const bVal = Math.max(...(b.loot || []).map(i => i.price || i.vendorValue || 0));
         return bVal - aVal;
@@ -46,8 +41,6 @@ function applySort(events, sortKey) {
     }
   });
 }
-
-// === UI Renderer ===
 
 function updateUI() {
   const filtered = filterEvents(allEvents, currentFilters);
@@ -103,8 +96,6 @@ function updateUI() {
   }
 }
 
-// === Group Events by Map ===
-
 function groupByMap(events) {
   const grouped = {};
   for (const ev of events) {
@@ -117,16 +108,12 @@ function groupByMap(events) {
   }));
 }
 
-// === Infinite Scroll ===
-
 function setupInfiniteScroll() {
   const sentinel = document.getElementById('infinite-scroll-sentinel');
   if (!sentinel) return;
-
   if (window.infiniteScrollObserver) {
     window.infiniteScrollObserver.disconnect();
   }
-
   window.infiniteScrollObserver = new IntersectionObserver(entries => {
     if (entries[0].isIntersecting) {
       const filtered = filterEvents(allEvents, currentFilters);
@@ -136,14 +123,10 @@ function setupInfiniteScroll() {
       }
     }
   }, { root: null, threshold: 1 });
-
   window.infiniteScrollObserver.observe(sentinel);
 }
 
-// === Data verrijking pipeline ===
-
 async function enrichEvents(rawEvents) {
-  // 1. Verzamel unieke itemIDs voor verdere verrijking
   const uniqueItemIds = new Set();
   rawEvents.forEach(event => {
     (event.loot || []).forEach(item => item.id && uniqueItemIds.add(item.id));
@@ -152,19 +135,16 @@ async function enrichEvents(rawEvents) {
   const enrichedItems = await enrichItemsAndPrices(itemIds);
   const itemMap = new Map(enrichedItems.map(item => [item.id, item]));
 
-  // 2. Verzamel chatcodes voor waypoint-resolutie
   const chatcodes = rawEvents
     .map(e => (e.chatcode || e.code || '').trim())
     .filter(code => code.length > 5);
 
   const waypointMap = await resolveWaypoints(chatcodes);
 
-  // 3. Enrich events
   return await Promise.all(
     rawEvents.map(async event => {
       const code = (event.chatcode || event.code || '').trim();
       const wp = waypointMap[code] || {};
-
       event.code = code;
       event.waypointName = wp.name || null;
       event.waypointWikiLink = wp.wiki || null;
@@ -174,15 +154,11 @@ async function enrichEvents(rawEvents) {
       event.mapWikiLink = event.map
         ? `https://wiki.guildwars2.com/wiki/${encodeURIComponent(event.map.replace(/ /g, "_"))}`
         : null;
-
-      // Wiki description (optioneel, kan traag zijn bij veel events)
       event.description = '';
-      // Uncomment als je per event description wilt, maar is traag bij grote data sets
+      // Optioneel: wiki description, kan traag zijn bij veel events
       // const descRaw = await fetchWikiDescription(event.name || wp.name || '');
       // const match = descRaw?.match(/^(.+?[.!?])\s*(.+?[.!?])/);
       // event.description = match ? `${match[1]} ${match[2]}` : descRaw;
-
-      // Enrich loot
       event.loot = (event.loot || []).map(l => {
         const enriched = l.id ? itemMap.get(l.id) || {} : {};
         const name = enriched.name || l.name;
@@ -203,13 +179,10 @@ async function enrichEvents(rawEvents) {
           guaranteed: !!l.guaranteed
         };
       });
-
       return event;
     })
   );
 }
-
-// === Boot (main) ===
 
 async function boot() {
   startTerminal();
@@ -217,23 +190,18 @@ async function boot() {
   allEvents = [];
   currentPage = 1;
   try {
-    // 1. Laden van events.json én sheet (zie nieuwe data.js)
     const loadedEvents = await fetchAllData((data, url, err) => {
       if (err) appendTerminal(`[DATA] Error at ${url}: ${err.message || err}`, 'error');
     });
-
     if (!loadedEvents || !loadedEvents.length) {
       appendTerminal('Geen events gevonden in data!', 'error');
       return endTerminal(false);
     }
-
     appendTerminal(`✓ Loaded ${loadedEvents.length} events (enhancing...)`, 'progress');
-    // 2. Enhancement pipeline (API, chatcodes, iteminfo, etc.)
     allEvents = await enrichEvents(loadedEvents);
     appendTerminal(`✓ Enriched ${allEvents.length} events.`, 'success');
     updateUI();
     endTerminal(true);
-
   } catch (err) {
     appendTerminal('🔥 Fout bij laden data: ' + (err.message || err), 'error');
     endTerminal(false);
