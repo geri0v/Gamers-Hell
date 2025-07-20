@@ -1,6 +1,7 @@
 // js/infoload.js
 import { fetchAllData } from './data.js';
-import { fastEnrichEvents } from './info.js';
+import * as Info from './info.js';
+
 
 /**
  * Laad events en enrich (ALLEEN op basis van jouw eigen loot, met GW2Treasures bulk + GW2 API fallback).
