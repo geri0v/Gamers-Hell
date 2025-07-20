@@ -1,5 +1,7 @@
-// js/info.js — FAST PRODUCTION ENRICHMENT GUILD WARS 2
+// info.js — Alleen enrichment voor JOUW bestaande loot, BULK POST via GW2Treasures, fallback GW2 API
 
+export const GW2T_API = "https://api.gw2treasures.com/items";
+export const GW2T_KEY = "e53da4d7-cb26-4225-b8fb-dfe4a81ad834";
 export const GW2_API = "https://api.guildwars2.com/v2";
 
 export function getWikiLink(label) {
@@ -17,26 +19,21 @@ export function formatPrice(copper) {
   const c = copper % 100;
   return `${g}g ${s}s ${c}c`;
 }
-export async function safeFetchJson(url) {
-  const res = await fetch(url);
-  return res.ok ? await res.json() : null;
-}
-
-// Levenshtein & fuzzy99
 export function levenshtein(a, b) {
   if (a === b) return 0;
   if (!a || !b) return (a || b).length;
-  const v0 = Array(b.length + 1).fill(0).map((_, i) => i);
-  let v1 = new Array(b.length + 1);
+  let prev = Array(b.length + 1).fill(0).map((_, i) => i);
   for (let i = 0; i < a.length; ++i) {
-    v1[0] = i + 1;
-    for (let j = 0; j < b.length; ++j) {
-      const cost = a[i] === b[j] ? 0 : 1;
-      v1[j + 1] = Math.min(v1[j] + 1, v0[j + 1] + 1, v0[j] + cost);
-    }
-    for (let j = 0; j <= b.length; ++j) v0[j] = v1[j];
+    let curr = [i + 1];
+    for (let j = 0; j < b.length; ++j)
+      curr.push(Math.min(
+        prev[j + 1] + 1,
+        curr[j] + 1,
+        prev[j] + (a[i] === b[j] ? 0 : 1)
+      ));
+    prev = curr;
   }
-  return v1[b.length];
+  return prev[b.length];
 }
 function fuzzy99(a, b) {
   a = (a || '').toLowerCase();
@@ -49,85 +46,74 @@ function fuzzy99(a, b) {
   return d / l <= 0.12;
 }
 
-// ------- GW2 items ophalen: slechts 1x per paginaververs -------
-let gw2ItemsCache = null;
 /**
- * Haalt ALLE GW2 items op, 1 keer per sessie
- */
-export async function fetchAllGW2Items(forceReload = false) {
-  if (gw2ItemsCache && !forceReload) return gw2ItemsCache;
-  const ids = await safeFetchJson(`${GW2_API}/items`);
-  if (!ids) throw new Error("API call failed: items-ids");
-  const out = [];
-  for (let i = 0; i < ids.length; i += 200) {
-    const batch = await safeFetchJson(`${GW2_API}/items?ids=${ids.slice(i, i + 200).join(',')}`);
-    if (batch) out.push(...batch);
-  }
-  gw2ItemsCache = out;
-  return out;
-}
-
-/**
- * FAST ENRICHMENT:
- *  - Loot: alleen als GW2-item (exact/fuzzy99), with GW2-id, type, icon, etc
- *  - Events: altijd verrijkt met wiki, expansion, map, area, ... (ongeacht loot)
- *  - Geen CORS, geen externe droprate
+ * Enrich enkel loot uit JOUW EIGEN data met bulk POST Treasures + fallback GW2 API.
  */
 export async function fastEnrichEvents(events) {
-  const gw2Items = await fetchAllGW2Items();
+  // 1. Verzamel alleen unieke, geldige loot-IDs uit jouw loot
+  const lootIds = [...new Set(
+    events.flatMap(ev => (ev.loot||[]).map(l => l.id).filter(Boolean))
+  )];
 
-  // Verzamel alle unieke lootnamen
-  const lootNames = [...new Set(events.flatMap(ev => (ev.loot || []).map(l => l.name)).filter(Boolean))];
-
-  // Map lootnaam naar GW2 API item
-  const nameToApiItem = new Map();
-  for (const name of lootNames) {
-    let match = gw2Items.find(apiItem => apiItem.name && apiItem.name === name);
-    if (!match) {
-      const candidates = gw2Items.filter(apiItem =>
-        apiItem.name && apiItem.name[0].toLowerCase() === name[0].toLowerCase()
-      );
-      let minFuzz = 100, best = null;
-      for (const apiItem of candidates) {
-        const fuzz = levenshtein(name.toLowerCase(), apiItem.name.toLowerCase());
-        if (fuzzy99(name, apiItem.name) && fuzz < minFuzz) {
-          best = apiItem; minFuzz = fuzz;
-        }
-      }
-      if (best) match = best;
-    }
-    if (match) nameToApiItem.set(name, match);
+  let treasuresItems = [];
+  if (lootIds.length > 0) {
+    const treasuresResp = await fetch(GW2T_API, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${GW2T_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(lootIds)
+    });
+    treasuresItems = treasuresResp.ok ? await treasuresResp.json() : [];
   }
+  const idToGW2T = new Map(treasuresItems.map(it => [it.id, it]));
 
-  // Verrijk alles (event-info altijd, loot alleen op echte GW2 items)
+  // 2. IDs die niet enriched zijn in treasures alsnog ophalen via GW2 API
+  const missingIds = lootIds.filter(id => !idToGW2T.has(id));
+  let apiItems = [];
+  if (missingIds.length > 0) {
+    for (let i = 0; i < missingIds.length; i += 200) {
+      const batchIds = missingIds.slice(i, i+200);
+      const batchResp = await fetch(`${GW2_API}/items?ids=${batchIds.join(',')}`);
+      const batch = batchResp.ok ? await batchResp.json() : [];
+      apiItems.push(...batch);
+    }
+  }
+  const idToApi = new Map(apiItems.map(it => [it.id, it]));
+  const allItems = [...treasuresItems, ...apiItems];
+
+  // 3. Enrichment van event/meta (altijd, niet loot-afhankelijk)
   for (const ev of events) {
     ev.wikiLink = getWikiLink(ev.name);
-    if (ev.expansion)        ev.expansionWikiLink = getWikiLink(ev.expansion);
-    if (ev.map)              ev.mapWikiLink = getWikiLink(ev.map);
-    if (ev.location)         ev.locationWikiLink = getWikiLink(ev.location);
-    if (ev.area)             ev.areaWikiLink = getWikiLink(ev.area);
-    if (ev.sourcename)       ev.sourcenameWikiLink = getWikiLink(ev.sourcename);
-    if (ev.closestWaypoint)  ev.closestWaypointWikiLink = getWikiLink(ev.closestWaypoint);
+    if (ev.expansion)       ev.expansionWikiLink = getWikiLink(ev.expansion);
+    if (ev.map)             ev.mapWikiLink = getWikiLink(ev.map);
+    if (ev.location)        ev.locationWikiLink = getWikiLink(ev.location);
+    if (ev.area)            ev.areaWikiLink = getWikiLink(ev.area);
+    if (ev.sourcename)      ev.sourcenameWikiLink = getWikiLink(ev.sourcename);
+    if (ev.closestWaypoint) ev.closestWaypointWikiLink = getWikiLink(ev.closestWaypoint);
 
-    ev.loot = (ev.loot || []).map(l => {
-      const apiItem = nameToApiItem.get(l.name);
-      if (!apiItem) return null; // Niet officieel item
+    // 4. Enrichment van loot: alleen data die in jouw sheet/csv/json voorkomt
+    ev.loot = (ev.loot||[]).map(l => {
+      let item = (l.id && idToGW2T.get(l.id)) || (l.id && idToApi.get(l.id));
+      if (!item && l.name) {
+        item = allItems.find(it => fuzzy99(it.name, l.name));
+      }
+      if (!item) return null; // Geen match = verwijderen uit loot.
       return {
         ...l,
-        id: apiItem.id,
-        name: apiItem.name,
-        type: apiItem.type,
-        rarity: apiItem.rarity,
-        icon: apiItem.icon,
-        vendorValue: apiItem.vendor_value ?? null,
-        wikiLink: getWikiLink(apiItem.name),
-        tpLink: getTPLink(apiItem.name),
-        price: apiItem.price || null,
-        accountBound: apiItem.flags?.includes("AccountBound") || false,
-        collectible: apiItem.collectible || false,
-        achievementLinked: apiItem.achievementLinked || false,
+        id: item.id,
+        name: item.name,
+        type: item.type,
+        rarity: item.rarity,
+        icon: item.icon,
+        vendorValue: item.vendor_value ?? null,
+        wikiLink: getWikiLink(item.name),
+        tpLink: getTPLink(item.name),
+        accountBound: item.flags?.includes("AccountBound") || false,
+        collectible: item.collectible || false,
+        achievementLinked: item.achievementLinked || false,
         guaranteed: l.guaranteed === true || l.guaranteed === "Yes"
-        // ...je kunt alles toevoegen wat uit apiItem of loot komt
       }
     }).filter(Boolean);
   }
