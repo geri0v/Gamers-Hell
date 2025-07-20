@@ -1,7 +1,20 @@
 // js/infoload.js
+import {
+  fetchAllGW2Items,
+  fetchDropRateMap,
+  getWikiLink,
+  getTPLink,
+  formatPrice,
+  fastEnrichEvents
+} from './info.js';
 
 import { fetchAllData } from './data.js';
-import { fetchAllGW2Items, fetchDropRateMap, getWikiLink, getTPLink, formatPrice } from './info.js';
+
+export async function loadAndEnrichData(onProgress = null) {
+  const events = await fetchAllData(onProgress);
+  return await fastEnrichEvents(events);
+}
+
 
 
 // Simple levenshtein
