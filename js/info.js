@@ -242,3 +242,11 @@ function levenshtein(a, b) {
   }
   return matrix[b.length][a.length];
 }
+// js/info.js
+export function formatPrice(copper) {
+  if (copper == null) return 'N/A';
+  const g = Math.floor(copper / 10000);
+  const s = Math.floor((copper % 10000) / 100);
+  const c = copper % 100;
+  return `${g}g ${s}s ${c}c`;
+}
