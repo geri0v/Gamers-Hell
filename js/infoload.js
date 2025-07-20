@@ -1,11 +1,5 @@
 // js/infoload.js
-import {
-  fetchAllGW2Items,
-  getWikiLink,
-  getTPLink,
-  formatPrice,
-  fastEnrichEvents
-} from './info.js';
+import * as Info from './info.js';
 
 import { fetchAllData } from './data.js';
 
