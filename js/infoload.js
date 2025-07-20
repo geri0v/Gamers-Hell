@@ -1,13 +1,8 @@
 // js/infoload.js
 
 import { fetchAllData } from './data.js';
-import {
-  fetchAllGW2Items,
-  fetchDropRateMap,
-  getWikiLink,
-  getTPLink,
-  formatPrice
-} from './info.js';
+import { fetchAllGW2Items, fetchDropRateMap, getWikiLink, getTPLink, formatPrice } from './info.js';
+
 
 // Simple levenshtein
 function levenshtein(a, b) {
