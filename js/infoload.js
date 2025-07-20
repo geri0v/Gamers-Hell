@@ -1,7 +1,6 @@
 // js/infoload.js
 import {
   fetchAllGW2Items,
-  fetchDropRateMap,
   getWikiLink,
   getTPLink,
   formatPrice,
