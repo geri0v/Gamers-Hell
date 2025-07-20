@@ -1,6 +1,4 @@
 // js/infoload.js
-import { formatPrice } from './info.js';
-// ...gewoon te gebruiken als formatPrice(x)
 
 import { fetchAllData } from './data.js';
 import {
