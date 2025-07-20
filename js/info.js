@@ -1,8 +1,6 @@
-// js/info.js — STRICT [UNIEKE NAAM], FLEXIBLE EVENT-ENRICHMENT
+// js/info.js — STRICT ITEM, FLEXIBLE EVENT-ENRICHMENT ZONDER WIKI-DROPRATE
 
 export const GW2_API = "https://api.guildwars2.com/v2";
-export const DROPRATE_CSV_URL =
-  "https://wiki.guildwars2.com/wiki/Special:Ask/mainlabel%3D/limit%3D5000/format%3Dcsv/intro%3D-20-3Cdiv-20class%3D%22smw-2Dul-2Dcolumns%22-20style%3D%22column-2Dcount:3%22-3E/outro%3D-20-3C-2Fdiv-3E/order%3Dasc/sort%3D/-5B-5BCategory:Drop-20rates-5D-5D/prettyprint%3Dtrue/unescape%3Dtrue/searchlabel%3DCS";
 
 export function getWikiLink(label) {
   if (!label) return null;
@@ -24,7 +22,6 @@ export async function safeFetchJson(url) {
   return res.ok ? await res.json() : null;
 }
 
-// Efficient levenshtein + fuzzy99
 export function levenshtein(a, b) {
   if (a === b) return 0;
   if (!a || !b) return (a || b).length;
@@ -66,34 +63,14 @@ export async function fetchAllGW2Items() {
   return out;
 }
 
-// Drop Rate
-let droprateMap = null;
-export async function fetchDropRateMap() {
-  if (droprateMap) return droprateMap;
-  const text = await (await fetch(DROPRATE_CSV_URL)).text();
-  const rows = await new Promise((resolve, reject) => {
-    Papa.parse(text, {
-      header: true, skipEmptyLines: true,
-      complete: results => resolve(results.data),
-      error: err => reject(err),
-    });
-  });
-  droprateMap = {};
-  rows.forEach(row => {
-    if (row.Item) droprateMap[row.Item] = row['Drop rate'] || row.DropRate || row['Drop Rate'] || "";
-    if (row.ItemID) droprateMap[row.ItemID] = row['Drop rate'] || row.DropRate || row['Drop Rate'] || "";
-  });
-  return droprateMap;
-}
-
 /**
  * SNELLE, STRIKTE GW2-ENRICHMENT-PIPELINE
  * - Loot: één match/naam (99% fuzzy), alleen tonen als GW2 item bestaat
  * - Event/meta: altijd tonen, altijd wiki-link
+ * - Droprate: niet meer via wiki; haal zelf uit sheet indien aanwezig!
  */
 export async function fastEnrichEvents(events) {
   const gw2Items = await fetchAllGW2Items();
-  const dropRates = await fetchDropRateMap();
 
   // 1. Verzamel ALLE UNIEKE lootnamen
   const allLootNames = [...new Set(events.flatMap(ev => (ev.loot||[]).map(l => l.name)).filter(Boolean))];
@@ -128,7 +105,7 @@ export async function fastEnrichEvents(events) {
     if (ev.sourcename) ev.sourcenameWikiLink = getWikiLink(ev.sourcename);
     if (ev.closestWaypoint) ev.closestWaypointWikiLink = getWikiLink(ev.closestWaypoint);
 
-    // Verrijk alle loot-items per event
+    // Verrijk loot per GW2 API
     ev.loot = (ev.loot || []).map(l => {
       const apiItem = nameToApiItem.get(l.name);
       if (!apiItem) return null;
@@ -142,7 +119,7 @@ export async function fastEnrichEvents(events) {
         price: apiItem.price || null,
         wikiLink: getWikiLink(apiItem.name),
         tpLink: getTPLink(apiItem.name),
-        dropRate: dropRates[apiItem.name] || dropRates[apiItem.id] || '',
+        dropRate: l.dropRate || '', // <-- Sheet veld, niet wiki
         accountBound: apiItem.flags?.includes("AccountBound") || false,
         collectible: apiItem.collectible || false,
         achievementLinked: apiItem.achievementLinked || false,
