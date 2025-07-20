@@ -10,13 +10,6 @@ import {
 
 import { fetchAllData } from './data.js';
 
-export async function loadAndEnrichData(onProgress = null) {
-  const events = await fetchAllData(onProgress);
-  return await fastEnrichEvents(events);
-}
-
-
-
 // Simple levenshtein
 function levenshtein(a, b) {
   if (a === b) return 0;
