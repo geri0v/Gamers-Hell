@@ -2,15 +2,14 @@
 
 import { fetchAllData } from './data.js';
 import {
-  fetchOtcRows,
-  enrichItemsAndPrices,
-  fetchWikiDescription,
+  fetchAllGW2Items,
+  fetchDropRateMap,
   getWikiLink,
+  getTPLink,
   formatPrice
 } from './info.js';
-import { resolveWaypoints } from './waypoint.js';
 
-// Optioneel: voor fuzzy levenshtein (gebruik uit info.js of plak los)
+// Simple levenshtein
 function levenshtein(a, b) {
   if (a === b) return 0;
   if (!a || !b) return (a || b).length;
@@ -27,95 +26,81 @@ function levenshtein(a, b) {
   }
   return matrix[b.length][a.length];
 }
+function fuzzy99(a, b) {
+  const l = Math.max((a||"").length, (b||"").length);
+  if (l === 0) return true;
+  const d = levenshtein((a||"").toLowerCase(), (b||"").toLowerCase());
+  if (l <= 3) return d === 0;
+  if (l < 8)  return d <= 1;
+  return d / l <= 0.12; // ~99%
+}
 
 /**
- * Vol-ledige enrichment & filtering pipeline!
+ * Complete enrichment & filtering!
+ * Loot 99% fuzzy match verplicht op API, event-info altijd rijk verrijkt
  */
 export async function loadAndEnrichData(onProgress = null) {
-  // 1. Laad events/loot uit sheet & manifest
+  // 1. Laad events uit data.js
   const rawEvents = await fetchAllData(onProgress);
   if (!rawEvents?.length) throw new Error("Geen events gevonden!");
 
-  // 2. OTC rows cachen voor loot zonder ID
-  const otcRows = await fetchOtcRows();
-  const nameToOtc = new Map(otcRows.map(r => [r.Name, r]));
+  // 2. Haal ALLE GW2 API items (voor fuzzy matching)
+  const gw2Items = await fetchAllGW2Items();
+  const dropRates = await fetchDropRateMap();
+  // Snelheid: bouw naam → apiItem map voor snellere lookup (optioneel)
+  // const nameToGW2 = new Map(gw2Items.map(i => [i.name, i]));
 
-  // 3. Fuzzy naam→id & enrichment stap per loot zonder id (GW2/GW2Treasures hieruit)
-  // (optioneel: batch voor grote datasets, hier direct)
-  // Je kunt ook een fuzzy batch-lookup doen als je dat wilt. Hier alleen OTC als fallback.
-  for (const event of rawEvents) {
-    for (const loot of (event.loot || [])) {
-      if (!loot.id && loot.name && nameToOtc.has(loot.name)) {
-        loot.id = Number(nameToOtc.get(loot.name).ID);
-        loot.type = loot.type || nameToOtc.get(loot.name).Type;
-        loot.chat_link = loot.chat_link || nameToOtc.get(loot.name).chat_link;
-        loot.vendorValue = loot.vendorValue || Number(nameToOtc.get(loot.name).vendor_value || 0);
-      }
-      loot.wikiLink = getWikiLink(loot.name);
-      loot.tpLink   = `https://gw2trader.gg/search?q=${encodeURIComponent(loot.name)}`;
-    }
-  }
-
-  // 4. Verzamel alle unieke IDs (alleen loot met id)
-  const uniqueItemIds = Array.from(new Set(rawEvents.flatMap(ev => (ev.loot || []).map(l => l.id).filter(Boolean))));
-  // 5. Bulk enrichment items
-  const enrichedItems = await enrichItemsAndPrices(uniqueItemIds);
-  const itemMap = new Map(enrichedItems.map(item => [item.id, item]));
-
-  // 6. Waypoints/Chatcodes ophalen
-  const chatcodes = rawEvents.map(e => e.chatcode || e.code || '').filter(x => x && x.trim().length > 5);
-  const waypointMap = await resolveWaypoints(chatcodes);
-
-  // 7. Verrijk per event & loot
+  // 3. Enrich events en loot
   const enrichedEvents = [];
   for (const event of rawEvents) {
-    const code = (event.chatcode || event.code || '').trim();
-    const wp = waypointMap[code] || {};
-
-    event.code = code || null;
-    event.waypointName = wp.name || null;
-    event.waypointWikiLink = wp.wiki || null;
+    // Eventinfo: ALTIJD WIKI-links/context enriching
     event.wikiLink = getWikiLink(event.name);
-    event.mapWikiLink = getWikiLink(event.map);
+    if (event.expansion)      event.expansionWikiLink = getWikiLink(event.expansion);
+    if (event.map)            event.mapWikiLink = getWikiLink(event.map);
+    if (event.location)       event.locationWikiLink = getWikiLink(event.location);
+    if (event.area)           event.areaWikiLink = getWikiLink(event.area);
+    if (event.sourcename)     event.sourcenameWikiLink = getWikiLink(event.sourcename);
+    if (event.closestWaypoint)event.closestWaypointWikiLink = getWikiLink(event.closestWaypoint);
 
-    // Optional: beschrijving max 2 zinnen
-    // event.description = await fetchWikiDescription(event.name);
-
-    // Verrijk loot
-    event.loot = (event.loot || [])
-      .map(l => {
-        const enriched = l.id ? (itemMap.get(l.id) || {}) : {};
-        const pass = (enriched.name?.toLowerCase() === l.name?.toLowerCase()) ||
-                     (levenshtein(enriched.name || "", l.name || "") <= 1);
-        // STRIKTE FILTER: min. 99% match – als niet: sla loot-item (en evt hele event) over!
-        if (enriched.id && (enriched.name && pass)) {
-          return {
-            ...l,
-            name: enriched.name || l.name,
-            icon: enriched.icon || l.icon || null,
-            wikiLink: l.wikiLink || getWikiLink(l.name),
-            tpLink: l.tpLink || `https://gw2trader.gg/search?q=${encodeURIComponent(l.name)}`,
-            accountBound:
-              enriched.flags?.includes("AccountBound") ||
-              l.accountBound ||
-              false,
-            chatcode: enriched.chat_link || l.chat_link || null,
-            vendorValue: enriched.vendor_value ?? l.vendorValue ?? null,
-            price: enriched.price ?? null,
-            type: enriched.type ?? l.type ?? null,
-            rarity: enriched.rarity || l.rarity || null,
-            guaranteed: l.guaranteed === true || l.guaranteed === "Yes",
-            dropRate: l.dropRate || null,
-            collectible: enriched.collectible ?? l.collectible ?? false,
-            achievementLinked: enriched.achievementLinked ?? l.achievementLinked ?? false,
-          };
+    // Loot: STRIKT — alleen ECHTE GW2 items (≥99% naam match)
+    const enrichedLoot = [];
+    for (const l of (event.loot||[])) {
+      let match = null;
+      let minFuzzy = 100;
+      for(const apiItem of gw2Items) {
+        if (fuzzy99(l.name||"", apiItem.name||"")) {
+          const fuzz = levenshtein((l.name||"").toLowerCase(), (apiItem.name||"").toLowerCase());
+          if (fuzz < minFuzzy) { minFuzzy = fuzz; match = apiItem; }
         }
-        // NIET MATCHEND: dus deze loot sla je over (zie flatten step)
-        return null;
-      })
-      .filter(Boolean);
+      }
+      if (!match) continue; // Niet een echte item, skip
 
-    // Alleen events tonen met waardevolle loot (minimaal 1 loot met goede id+match)
+      // ID altijd uit API, ALLE enrichment
+      const finalId = match.id;
+      const dropRate = dropRates[match.name] || dropRates[match.id] || '';
+      enrichedLoot.push({
+        ...l,
+        id: finalId,
+        name: match.name,
+        type: match.type,
+        rarity: match.rarity,
+        icon: match.icon,
+        flags: match.flags,
+        chat_link: match.chat_link,
+        price: match.price || null,
+        vendorValue: match.vendor_value ?? null,
+        tpLink: getTPLink(match.name),
+        wikiLink: getWikiLink(match.name),
+        dropRate,
+        accountBound: match.flags?.includes("AccountBound") || false,
+        collectible: match.collectible || false,
+        achievementLinked: match.achievementLinked || false,
+        guaranteed: l.guaranteed === true || l.guaranteed === "Yes"
+      });
+    }
+    event.loot = enrichedLoot;
+
+    // Alleen events met loot weergeven
     if (event.loot && event.loot.length) {
       if (onProgress) onProgress(event);
       enrichedEvents.push(event);
@@ -124,4 +109,3 @@ export async function loadAndEnrichData(onProgress = null) {
 
   return enrichedEvents;
 }
-
