@@ -1,4 +1,4 @@
-// js/info.js — FULL MASTER DROP
+// js/info.js — FULL MASTER ENRICHED DROP MET ALLES
 
 export const GW2_API = "https://api.guildwars2.com/v2";
 export const GW2T_API = "https://api.gw2treasures.com";
@@ -9,7 +9,7 @@ export const DROPRATE_CSV_URL = "https://wiki.guildwars2.com/wiki/Special:Ask/ma
 let otcRowsCache = null, gw2ItemsCache = null, droprateMap = null;
 export const wikiDescCache = new Map();
 
-// === Utility: Wiki/TP Links ===
+// === Utility: Wiki/TP/price Links ===
 export function getWikiLink(label) {
   if (!label) return null;
   return `https://wiki.guildwars2.com/wiki/${encodeURIComponent(label.replace(/ /g, '_'))}`;
@@ -111,6 +111,32 @@ export async function fetchWikiDescription(name) {
   return desc;
 }
 
+// === FAST ENRICHMENT van array itemIds (compact GW2/GW2Treasures/TP) ===
+export async function enrichItemsAndPrices(itemIds) {
+  const items = await safeFetchJson(`${GW2_API}/items?ids=${itemIds.join(',')}`) || [];
+  const prices = await safeFetchJson(`${GW2_API}/commerce/prices?ids=${itemIds.join(',')}`) || [];
+  const treasures = await safeFetchJson(`${GW2T_API}/items?ids=${itemIds.join(',')}`, {
+    headers: { Authorization: `Bearer ${GW2T_BEARER}` }
+  }) || [];
+  const treasureMap = new Map(treasures.map(i => [i.id, i]));
+  const priceMap = new Map(prices.map(p => [p.id, p.sells?.unit_price || p.unit_price || 0]));
+  return items.map(item => {
+    const t = treasureMap.get(item.id) || {};
+    return {
+      ...item,
+      price: priceMap.get(item.id) || t.price || null,
+      icon: t.icon || item.icon || null,
+      type: t.type || item.type || null,
+      chat_link: t.chat_link || item.chat_link || null,
+      vendor_value: item.vendor_value ?? t.vendor_value ?? null,
+      flags: item.flags || t.flags || [],
+      collectible: item.collectible ?? t.collectible ?? false,
+      achievementLinked: item.achievementLinked ?? t.achievementLinked ?? false,
+      accountBound: (item.flags && item.flags.includes("AccountBound")) || (t.flags && t.flags.includes("AccountBound")) || false
+    };
+  });
+}
+
 // === HOOFD PIPELINE: Events/loot enrichment ===
 export async function fullEnrichDrop(events) {
   // Load all resources at once
@@ -121,21 +147,21 @@ export async function fullEnrichDrop(events) {
   const nameToGw2 = new Map(gw2Items.map(i => [i.name, i]));
   const idToGw2 = new Map(gw2Items.map(i => [i.id, i]));
 
-  // === ID/Name match & enrichment ===
   for (const ev of events) {
     if (!ev.expansion || ev.expansion === "" || ev.expansion === "Unknown") {
-      // Expansion fix: todo implement mapping (evt.)
+      // Expansion-fix, TODO: Map/auto-fix via mappingtable evt
     }
     ev.mapWikiLink = getWikiLink(ev.map);
     ev.wikiLink = getWikiLink(ev.name);
-    ev.description = await fetchWikiDescription(ev.name); // (async!)
+    ev.description = await fetchWikiDescription(ev.name);
 
     for (const loot of (ev.loot||[])) {
-      // PRIMARY: fuzzy match in API
+      // PRIMARY: fuzzy/exact match in GW2 items
       if (!loot.id) {
         let match = gw2Items.find(i => i.name && loot.name && i.name.toLowerCase() == loot.name.toLowerCase());
         if (!match) {
-          match = gw2Items.find(i => i.name && loot.name && levenshtein(i.name.toLowerCase(), loot.name.toLowerCase()) < 2);
+          match = gw2Items.find(i => i.name && loot.name &&
+            levenshtein(i.name.toLowerCase(), loot.name.toLowerCase()) < 2);
         }
         if (match) loot.id = match.id;
         // OTC fallback
@@ -147,9 +173,13 @@ export async function fullEnrichDrop(events) {
       if (!loot.accountBound && loot.flags && Array.isArray(loot.flags)) {
         loot.accountBound = loot.flags.includes('AccountBound');
       }
+      // Guaranteed, collectible, achievementlinked etc uit sheet/JSON overnemen indien aanwezig
+      loot.guaranteed = loot.guaranteed === true || loot.guaranteed === "Yes";
+      loot.collectible = loot.collectible ?? false;
+      loot.achievementLinked = loot.achievementLinked ?? false;
     }
   }
-  // == Verrijk loot met API/TP/OTC info (hier KAN je uitbreiden naar TP, GW2T etc) ==
+  // Verrijken loot-items
   const enrichIds = [...new Set(events.flatMap(ev => (ev.loot||[]).map(l => l.id).filter(Boolean)))];
   const [gw2ItemInfo, treasuresInfo, tpPrices] = await Promise.all([
     safeFetchJson(`${GW2_API}/items?ids=${enrichIds.join(',')}`),
@@ -165,17 +195,16 @@ export async function fullEnrichDrop(events) {
       if (!loot.id) continue;
       const gItem = idToItem.get(loot.id) || {};
       const tItem = idToTreasure.get(loot.id) || {};
-      loot.icon = tItem.icon || gItem.icon || null;
-      loot.type = tItem.type || gItem.type || null;
-      loot.chat_link = tItem.chat_link || gItem.chat_link || null;
-      loot.price = idToPrice.get(loot.id) || tItem.price || null;
-      loot.vendorValue = gItem.vendor_value ?? tItem.vendor_value ?? null;
+      loot.icon = tItem.icon || gItem.icon || loot.icon || null;
+      loot.type = tItem.type || gItem.type || loot.type || null;
+      loot.chat_link = tItem.chat_link || gItem.chat_link || loot.chat_link || null;
+      loot.price = idToPrice.get(loot.id) || tItem.price || loot.price || null;
+      loot.vendorValue = gItem.vendor_value ?? tItem.vendor_value ?? loot.vendorValue ?? null;
       loot.accountBound = gItem.flags?.includes("AccountBound") || tItem.flags?.includes("AccountBound") || loot.accountBound || false;
       loot.collectible = gItem.collectible || loot.collectible || false;
       loot.achievementLinked = gItem.achievementLinked || loot.achievementLinked || false;
-      // Hier kun je AL je extra enrichment toevoegen!
     }
-    // Filter alleen waardevolle loot:
+    // FILTER: alleen waardevolle loot
     ev.loot = (ev.loot||[]).filter(isValuableLoot);
   }
 
@@ -198,7 +227,7 @@ export function isValuableLoot(item) {
   return !FILTER_GENERIC.some(rx => rx.test(item.rarity)) && !FILTER_GENERIC.some(rx => rx.test(item.name));
 }
 
-// === SIMPLE LEVENSHTEIN FUZZY (optioneel, keep at bottom for async) ===
+// === SIMPLE LEVENSHTEIN FUZZY ===
 export function levenshtein(a, b) {
   if (a === b) return 0;
   if (!a || !b) return (a || b).length;
