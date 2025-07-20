@@ -46,7 +46,6 @@ export async function loadAndEnrichData(onProgress = null) {
 
   // 2. Haal ALLE GW2 API items (voor fuzzy matching)
   const gw2Items = await fetchAllGW2Items();
-  const dropRates = await fetchDropRateMap();
   // Snelheid: bouw naam → apiItem map voor snellere lookup (optioneel)
   // const nameToGW2 = new Map(gw2Items.map(i => [i.name, i]));
 
@@ -77,7 +76,6 @@ export async function loadAndEnrichData(onProgress = null) {
 
       // ID altijd uit API, ALLE enrichment
       const finalId = match.id;
-      const dropRate = dropRates[match.name] || dropRates[match.id] || '';
       enrichedLoot.push({
         ...l,
         id: finalId,
@@ -91,7 +89,6 @@ export async function loadAndEnrichData(onProgress = null) {
         vendorValue: match.vendor_value ?? null,
         tpLink: getTPLink(match.name),
         wikiLink: getWikiLink(match.name),
-        dropRate,
         accountBound: match.flags?.includes("AccountBound") || false,
         collectible: match.collectible || false,
         achievementLinked: match.achievementLinked || false,
