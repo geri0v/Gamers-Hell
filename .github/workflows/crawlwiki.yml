@@ -2,7 +2,7 @@ name: Crawl GW2 Wiki Events & Loot
 
 on:
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '0 3 * * *'   # Elke dag om 03:00 UTC
   workflow_dispatch:
 
 jobs:
@@ -10,24 +10,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Python Setup
+      
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: 3.11
-          cache: 'pip'
 
-      - name: Install dependencies
+      - name: Installeer dependencies
         run: pip install requests beautifulsoup4 rapidfuzz
 
-      - name: Crawl Guild Wars 2 Wiki loot
+      - name: Run GW2 Wiki Loot Crawler
         run: python py/wiki_loot_crawler.py
 
-      - name: Commit updates
+      - name: Commit en push gegenereerde JSON
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull origin main || true
           git add data/maps/*.json data/manifest.json
           git commit -m "Auto-update GW2 Wiki loot [skip ci]" || echo "No changes to commit"
           git push
