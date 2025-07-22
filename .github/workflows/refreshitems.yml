@@ -1,33 +1,38 @@
-name: Refresh Items CSV
+name: Refresh GW2 Items CSV
 
 on:
   schedule:
-    - cron: '0 3 * * *'  # elke dag om 03:00 UTC
-  workflow_dispatch:      # handmatig starten mogelijk
+    - cron: '0 3 * * *'  # ▶️ Dagelijks om 03:00 UTC
+  workflow_dispatch:      # ▶️ Handmatig uitvoerbaar via GitHub
 
 jobs:
-  build:
+  run:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: 📥 Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: 💿 Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      - name: 📦 Installeer dependencies
         run: pip install requests
 
-      - name: Run refreshitems.py
+      - name: 🚀 Run het script
         run: python py/refreshitems.py
 
-      - name: Commit CSV changes
+      - name: 🔁 Pull voordat we pushen
+        run: |
+          git config pull.rebase false
+          git pull origin main || echo "Geen remote changes"
+
+      - name: 💾 Commit en push CSV
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add items.csv
-          git commit -m "Automatische item dump update [skip ci]" || echo "Geen wijzigingen om te committen"
+          git commit -m "Automatische item dump update [skip ci]" || echo "Geen commit nodig"
           git push
