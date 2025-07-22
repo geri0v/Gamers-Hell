@@ -1,0 +1,5157 @@
+[
+  {
+    "expansion": "",
+    "map": "Queensdale",
+    "slug": "queensdale"
+  },
+  {
+    "expansion": "",
+    "map": "Harathi Hinterlands",
+    "slug": "harathi_hinterlands"
+  },
+  {
+    "expansion": "",
+    "map": "Divinity's Reach",
+    "slug": "divinitys_reach"
+  },
+  {
+    "expansion": "",
+    "map": "Plains of Ashford",
+    "slug": "plains_of_ashford"
+  },
+  {
+    "expansion": "",
+    "map": "Blazeridge Steppes",
+    "slug": "blazeridge_steppes"
+  },
+  {
+    "expansion": "",
+    "map": "Fields of Ruin",
+    "slug": "fields_of_ruin"
+  },
+  {
+    "expansion": "",
+    "map": "Fireheart Rise",
+    "slug": "fireheart_rise"
+  },
+  {
+    "expansion": "",
+    "map": "Kessex Hills",
+    "slug": "kessex_hills"
+  },
+  {
+    "expansion": "",
+    "map": "Gendarran Fields",
+    "slug": "gendarran_fields"
+  },
+  {
+    "expansion": "",
+    "map": "Iron Marches",
+    "slug": "iron_marches"
+  },
+  {
+    "expansion": "",
+    "map": "Dredgehaunt Cliffs",
+    "slug": "dredgehaunt_cliffs"
+  },
+  {
+    "expansion": "",
+    "map": "Lornar's Pass",
+    "slug": "lornars_pass"
+  },
+  {
+    "expansion": "",
+    "map": "Wayfarer Foothills",
+    "slug": "wayfarer_foothills"
+  },
+  {
+    "expansion": "",
+    "map": "Timberline Falls",
+    "slug": "timberline_falls"
+  },
+  {
+    "expansion": "",
+    "map": "Frostgorge Sound",
+    "slug": "frostgorge_sound"
+  },
+  {
+    "expansion": "",
+    "map": "Snowden Drifts",
+    "slug": "snowden_drifts"
+  },
+  {
+    "expansion": "",
+    "map": "Diessa Plateau",
+    "slug": "diessa_plateau"
+  },
+  {
+    "expansion": "",
+    "map": "Ascalonian Catacombs",
+    "slug": "ascalonian_catacombs"
+  },
+  {
+    "expansion": "",
+    "map": "Caledon Forest",
+    "slug": "caledon_forest"
+  },
+  {
+    "expansion": "",
+    "map": "Metrica Province",
+    "slug": "metrica_province"
+  },
+  {
+    "expansion": "",
+    "map": "Ascalonian Catacombs",
+    "slug": "ascalonian_catacombs"
+  },
+  {
+    "expansion": "",
+    "map": "Arson at the Orphanage",
+    "slug": "arson_at_the_orphanage"
+  },
+  {
+    "expansion": "",
+    "map": "Eternal Battlegrounds",
+    "slug": "eternal_battlegrounds"
+  },
+  {
+    "expansion": "",
+    "map": "Mount Maelstrom",
+    "slug": "mount_maelstrom"
+  },
+  {
+    "expansion": "",
+    "map": "Lion's Arch",
+    "slug": "lions_arch"
+  },
+  {
+    "expansion": "",
+    "map": "Straits of Devastation",
+    "slug": "straits_of_devastation"
+  },
+  {
+    "expansion": "",
+    "map": "Sparkfly Fen",
+    "slug": "sparkfly_fen"
+  },
+  {
+    "expansion": "",
+    "map": "Brisban Wildlands",
+    "slug": "brisban_wildlands"
+  },
+  {
+    "expansion": "",
+    "map": "The Hospital in Jeopardy",
+    "slug": "the_hospital_in_jeopardy"
+  },
+  {
+    "expansion": "",
+    "map": "Infiltration",
+    "slug": "infiltration"
+  },
+  {
+    "expansion": "",
+    "map": "Cursed Shore",
+    "slug": "cursed_shore"
+  },
+  {
+    "expansion": "",
+    "map": "Sorrow's Embrace",
+    "slug": "sorrows_embrace"
+  },
+  {
+    "expansion": "",
+    "map": "Sorrow's Embrace",
+    "slug": "sorrows_embrace"
+  },
+  {
+    "expansion": "",
+    "map": "Malchor's Leap",
+    "slug": "malchors_leap"
+  },
+  {
+    "expansion": "",
+    "map": "Citadel of Flame",
+    "slug": "citadel_of_flame"
+  },
+  {
+    "expansion": "",
+    "map": "Twilight Arbor",
+    "slug": "twilight_arbor"
+  },
+  {
+    "expansion": "",
+    "map": "Twilight Arbor",
+    "slug": "twilight_arbor"
+  },
+  {
+    "expansion": "",
+    "map": "Citadel of Flame",
+    "slug": "citadel_of_flame"
+  },
+  {
+    "expansion": "",
+    "map": "Honor of the Waves",
+    "slug": "honor_of_the_waves"
+  },
+  {
+    "expansion": "",
+    "map": "Honor of the Waves",
+    "slug": "honor_of_the_waves"
+  },
+  {
+    "expansion": "",
+    "map": "Bloodtide Coast",
+    "slug": "bloodtide_coast"
+  },
+  {
+    "expansion": "",
+    "map": "Caudecus's Manor",
+    "slug": "caudecuss_manor"
+  },
+  {
+    "expansion": "",
+    "map": "Caudecus's Manor",
+    "slug": "caudecuss_manor"
+  },
+  {
+    "expansion": "",
+    "map": "Search the Premises",
+    "slug": "search_the_premises"
+  },
+  {
+    "expansion": "",
+    "map": "The Informant",
+    "slug": "the_informant"
+  },
+  {
+    "expansion": "",
+    "map": "A Society Function",
+    "slug": "a_society_function"
+  },
+  {
+    "expansion": "",
+    "map": "Crucible of Eternity",
+    "slug": "crucible_of_eternity"
+  },
+  {
+    "expansion": "",
+    "map": "Crucible of Eternity",
+    "slug": "crucible_of_eternity"
+  },
+  {
+    "expansion": "",
+    "map": "Chasing the Culprits",
+    "slug": "chasing_the_culprits"
+  },
+  {
+    "expansion": "",
+    "map": "The Grove",
+    "slug": "the_grove"
+  },
+  {
+    "expansion": "",
+    "map": "The Trial of Julius Zamon",
+    "slug": "the_trial_of_julius_zamon"
+  },
+  {
+    "expansion": "",
+    "map": " Alpine Borderlands",
+    "slug": "_alpine_borderlands"
+  },
+  {
+    "expansion": "",
+    "map": " Alpine Borderlands",
+    "slug": "_alpine_borderlands"
+  },
+  {
+    "expansion": "",
+    "map": "Infiltration",
+    "slug": "infiltration"
+  },
+  {
+    "expansion": "",
+    "map": "The Perils of Friendship",
+    "slug": "the_perils_of_friendship"
+  },
+  {
+    "expansion": "",
+    "map": "Victory or Death",
+    "slug": "victory_or_death"
+  },
+  {
+    "expansion": "",
+    "map": "The Ruined City of Arah",
+    "slug": "the_ruined_city_of_arah"
+  },
+  {
+    "expansion": "",
+    "map": "Desperate Medicine",
+    "slug": "desperate_medicine"
+  },
+  {
+    "expansion": "",
+    "map": "The Commander",
+    "slug": "the_commander"
+  },
+  {
+    "expansion": "",
+    "map": "Defense of Shaemoor",
+    "slug": "defense_of_shaemoor"
+  },
+  {
+    "expansion": "",
+    "map": "Rata Sum",
+    "slug": "rata_sum"
+  },
+  {
+    "expansion": "",
+    "map": "The Apothecary",
+    "slug": "the_apothecary"
+  },
+  {
+    "expansion": "",
+    "map": "Going Undercover",
+    "slug": "going_undercover"
+  },
+  {
+    "expansion": "",
+    "map": "Going Undercover",
+    "slug": "going_undercover"
+  },
+  {
+    "expansion": "",
+    "map": "The Greater Good",
+    "slug": "the_greater_good"
+  },
+  {
+    "expansion": "",
+    "map": "The Rescue",
+    "slug": "the_rescue"
+  },
+  {
+    "expansion": "",
+    "map": "Breaking the Blade",
+    "slug": "breaking_the_blade"
+  },
+  {
+    "expansion": "",
+    "map": "The Fall of Falcon Company",
+    "slug": "the_fall_of_falcon_company"
+  },
+  {
+    "expansion": "",
+    "map": "The Fall of Falcon Company",
+    "slug": "the_fall_of_falcon_company"
+  },
+  {
+    "expansion": "",
+    "map": "Confronting Captain Tervelan",
+    "slug": "confronting_captain_tervelan"
+  },
+  {
+    "expansion": "",
+    "map": "Seek Logan's Aid",
+    "slug": "seek_logans_aid"
+  },
+  {
+    "expansion": "",
+    "map": "Seek Logan's Aid",
+    "slug": "seek_logans_aid"
+  },
+  {
+    "expansion": "",
+    "map": "Accusation",
+    "slug": "accusation"
+  },
+  {
+    "expansion": "",
+    "map": "Accusation",
+    "slug": "accusation"
+  },
+  {
+    "expansion": "",
+    "map": "Liberation",
+    "slug": "liberation"
+  },
+  {
+    "expansion": "",
+    "map": "Voices From the Past",
+    "slug": "voices_from_the_past"
+  },
+  {
+    "expansion": "",
+    "map": "Voices From the Past",
+    "slug": "voices_from_the_past"
+  },
+  {
+    "expansion": "",
+    "map": "Rending the Mantle",
+    "slug": "rending_the_mantle"
+  },
+  {
+    "expansion": "",
+    "map": "Rending the Mantle",
+    "slug": "rending_the_mantle"
+  },
+  {
+    "expansion": "",
+    "map": "The Floating Grizwhirl",
+    "slug": "the_floating_grizwhirl"
+  },
+  {
+    "expansion": "",
+    "map": "The Floating Grizwhirl",
+    "slug": "the_floating_grizwhirl"
+  },
+  {
+    "expansion": "",
+    "map": "The Floating Grizwhirl",
+    "slug": "the_floating_grizwhirl"
+  },
+  {
+    "expansion": "",
+    "map": "Clown College",
+    "slug": "clown_college"
+  },
+  {
+    "expansion": "",
+    "map": "The Artist's Workshop",
+    "slug": "the_artists_workshop"
+  },
+  {
+    "expansion": "",
+    "map": "Into the Woods",
+    "slug": "into_the_woods"
+  },
+  {
+    "expansion": "",
+    "map": "The Ringmaster",
+    "slug": "the_ringmaster"
+  },
+  {
+    "expansion": "",
+    "map": "The Orders of Tyria",
+    "slug": "the_orders_of_tyria"
+  },
+  {
+    "expansion": "",
+    "map": "The Orders of Tyria",
+    "slug": "the_orders_of_tyria"
+  },
+  {
+    "expansion": "",
+    "map": "Brute Force",
+    "slug": "brute_force"
+  },
+  {
+    "expansion": "",
+    "map": "Mortus Virge",
+    "slug": "mortus_virge"
+  },
+  {
+    "expansion": "",
+    "map": "Triskell Quay",
+    "slug": "triskell_quay"
+  },
+  {
+    "expansion": "",
+    "map": "Track the Seraph",
+    "slug": "track_the_seraph"
+  },
+  {
+    "expansion": "",
+    "map": "Speaker of the Dead",
+    "slug": "speaker_of_the_dead"
+  },
+  {
+    "expansion": "",
+    "map": "The Sad Tale of the \"Ravenous\"",
+    "slug": "the_sad_tale_of_the_\"ravenous\""
+  },
+  {
+    "expansion": "",
+    "map": "Kellach's Attack",
+    "slug": "kellachs_attack"
+  },
+  {
+    "expansion": "",
+    "map": "The Queen's Justice",
+    "slug": "the_queens_justice"
+  },
+  {
+    "expansion": "",
+    "map": "The Trap",
+    "slug": "the_trap"
+  },
+  {
+    "expansion": "",
+    "map": "Best Laid Plans",
+    "slug": "best_laid_plans"
+  },
+  {
+    "expansion": "",
+    "map": "Welcome Home",
+    "slug": "welcome_home"
+  },
+  {
+    "expansion": "",
+    "map": "The Tribune's Call",
+    "slug": "the_tribunes_call"
+  },
+  {
+    "expansion": "",
+    "map": "The Tribune's Call",
+    "slug": "the_tribunes_call"
+  },
+  {
+    "expansion": "",
+    "map": "The Tribune's Call",
+    "slug": "the_tribunes_call"
+  },
+  {
+    "expansion": "",
+    "map": "Black Citadel",
+    "slug": "black_citadel"
+  },
+  {
+    "expansion": "",
+    "map": "A Spy for a Spy",
+    "slug": "a_spy_for_a_spy"
+  },
+  {
+    "expansion": "",
+    "map": "Scrapyard Dogs",
+    "slug": "scrapyard_dogs"
+  },
+  {
+    "expansion": "",
+    "map": "A Spy for a Spy",
+    "slug": "a_spy_for_a_spy"
+  },
+  {
+    "expansion": "",
+    "map": "On the Mend",
+    "slug": "on_the_mend"
+  },
+  {
+    "expansion": "",
+    "map": "Spilled Blood",
+    "slug": "spilled_blood"
+  },
+  {
+    "expansion": "",
+    "map": "Ghostbore Musket",
+    "slug": "ghostbore_musket"
+  },
+  {
+    "expansion": "",
+    "map": "Iron Grip of the Legion",
+    "slug": "iron_grip_of_the_legion"
+  },
+  {
+    "expansion": "",
+    "map": "The Flame Advances",
+    "slug": "the_flame_advances"
+  },
+  {
+    "expansion": "",
+    "map": "The Flame Advances",
+    "slug": "the_flame_advances"
+  },
+  {
+    "expansion": "",
+    "map": "Test Your Metal",
+    "slug": "test_your_metal"
+  },
+  {
+    "expansion": "",
+    "map": "Quick and Quiet",
+    "slug": "quick_and_quiet"
+  },
+  {
+    "expansion": "",
+    "map": "Salma District (Home)",
+    "slug": "salma_district_(home)"
+  },
+  {
+    "expansion": "",
+    "map": "An Unusual Inheritance",
+    "slug": "an_unusual_inheritance"
+  },
+  {
+    "expansion": "",
+    "map": "Windrock Maze",
+    "slug": "windrock_maze"
+  },
+  {
+    "expansion": "",
+    "map": "Mired Deep",
+    "slug": "mired_deep"
+  },
+  {
+    "expansion": "",
+    "map": "Mired Deep",
+    "slug": "mired_deep"
+  },
+  {
+    "expansion": "",
+    "map": "Deadly Force",
+    "slug": "deadly_force"
+  },
+  {
+    "expansion": "",
+    "map": "Ghostbore Artillery",
+    "slug": "ghostbore_artillery"
+  },
+  {
+    "expansion": "",
+    "map": "No Negotiations",
+    "slug": "no_negotiations"
+  },
+  {
+    "expansion": "",
+    "map": "Salvaging Scrap",
+    "slug": "salvaging_scrap"
+  },
+  {
+    "expansion": "",
+    "map": "Salvaging Scrap",
+    "slug": "salvaging_scrap"
+  },
+  {
+    "expansion": "",
+    "map": "In the Ruins",
+    "slug": "in_the_ruins"
+  },
+  {
+    "expansion": "",
+    "map": "In the Ruins",
+    "slug": "in_the_ruins"
+  },
+  {
+    "expansion": "",
+    "map": "Busted Flagon Public House",
+    "slug": "busted_flagon_public_house"
+  },
+  {
+    "expansion": "",
+    "map": "Chain of Command",
+    "slug": "chain_of_command"
+  },
+  {
+    "expansion": "",
+    "map": "Chain of Command",
+    "slug": "chain_of_command"
+  },
+  {
+    "expansion": "",
+    "map": "Time for a Promotion",
+    "slug": "time_for_a_promotion"
+  },
+  {
+    "expansion": "",
+    "map": "The End of the Line",
+    "slug": "the_end_of_the_line"
+  },
+  {
+    "expansion": "",
+    "map": "Magic Users",
+    "slug": "magic_users"
+  },
+  {
+    "expansion": "",
+    "map": "Rage Suppression",
+    "slug": "rage_suppression"
+  },
+  {
+    "expansion": "",
+    "map": "Rage Suppression",
+    "slug": "rage_suppression"
+  },
+  {
+    "expansion": "",
+    "map": "Operation: Bulwark",
+    "slug": "operation:_bulwark"
+  },
+  {
+    "expansion": "",
+    "map": "AWOL",
+    "slug": "awol"
+  },
+  {
+    "expansion": "",
+    "map": "Human's Lament",
+    "slug": "humans_lament"
+  },
+  {
+    "expansion": "",
+    "map": "Misplaced Faith",
+    "slug": "misplaced_faith"
+  },
+  {
+    "expansion": "",
+    "map": "Thicker Than Water",
+    "slug": "thicker_than_water"
+  },
+  {
+    "expansion": "",
+    "map": "Dishonorable Discharge",
+    "slug": "dishonorable_discharge"
+  },
+  {
+    "expansion": "",
+    "map": "Searching for the Truth",
+    "slug": "searching_for_the_truth"
+  },
+  {
+    "expansion": "",
+    "map": "Lighting the Beacons",
+    "slug": "lighting_the_beacons"
+  },
+  {
+    "expansion": "",
+    "map": "Stoking the Flame",
+    "slug": "stoking_the_flame"
+  },
+  {
+    "expansion": "",
+    "map": "A Fork in the Road",
+    "slug": "a_fork_in_the_road"
+  },
+  {
+    "expansion": "",
+    "map": "Sins of the Father",
+    "slug": "sins_of_the_father"
+  },
+  {
+    "expansion": "",
+    "map": "Graveyard Ornaments",
+    "slug": "graveyard_ornaments"
+  },
+  {
+    "expansion": "",
+    "map": "Hoelbrak",
+    "slug": "hoelbrak"
+  },
+  {
+    "expansion": "",
+    "map": "Desperate Medicine",
+    "slug": "desperate_medicine"
+  },
+  {
+    "expansion": "",
+    "map": "Seraph Headquarters",
+    "slug": "seraph_headquarters"
+  },
+  {
+    "expansion": "",
+    "map": "Keg Brawl",
+    "slug": "keg_brawl"
+  },
+  {
+    "expansion": "",
+    "map": "Claw Island",
+    "slug": "claw_island"
+  },
+  {
+    "expansion": "",
+    "map": "Chantry of Secrets",
+    "slug": "chantry_of_secrets"
+  },
+  {
+    "expansion": "",
+    "map": "Heart of the Mists",
+    "slug": "heart_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "The Sting",
+    "slug": "the_sting"
+  },
+  {
+    "expansion": "",
+    "map": "Drawing Out the Cult",
+    "slug": "drawing_out_the_cult"
+  },
+  {
+    "expansion": "",
+    "map": "Ashes of the Past",
+    "slug": "ashes_of_the_past"
+  },
+  {
+    "expansion": "",
+    "map": "Hero's Canton (Home)",
+    "slug": "heros_canton_(home)"
+  },
+  {
+    "expansion": "",
+    "map": "Blood Tribune Quarters",
+    "slug": "blood_tribune_quarters"
+  },
+  {
+    "expansion": "",
+    "map": "The Command Core",
+    "slug": "the_command_core"
+  },
+  {
+    "expansion": "",
+    "map": "Knut Whitebear's Loft",
+    "slug": "knut_whitebears_loft"
+  },
+  {
+    "expansion": "",
+    "map": "Hunter's Hearth (Home)",
+    "slug": "hunters_hearth_(home)"
+  },
+  {
+    "expansion": "",
+    "map": "Stonewright's Steading",
+    "slug": "stonewrights_steading"
+  },
+  {
+    "expansion": "",
+    "map": "Queen's Throne Room",
+    "slug": "queens_throne_room"
+  },
+  {
+    "expansion": "",
+    "map": "The Great Hunt",
+    "slug": "the_great_hunt"
+  },
+  {
+    "expansion": "",
+    "map": "A Weapon of Legend",
+    "slug": "a_weapon_of_legend"
+  },
+  {
+    "expansion": "",
+    "map": "The Last of the Giant-Kings",
+    "slug": "the_last_of_the_giant_kings"
+  },
+  {
+    "expansion": "",
+    "map": "Disciples of the Dragon",
+    "slug": "disciples_of_the_dragon"
+  },
+  {
+    "expansion": "",
+    "map": "A Weapon of Legend",
+    "slug": "a_weapon_of_legend"
+  },
+  {
+    "expansion": "",
+    "map": "Echoes of Ages Past",
+    "slug": "echoes_of_ages_past"
+  },
+  {
+    "expansion": "",
+    "map": "Wild Spirits",
+    "slug": "wild_spirits"
+  },
+  {
+    "expansion": "",
+    "map": "Out of the Skies",
+    "slug": "out_of_the_skies"
+  },
+  {
+    "expansion": "",
+    "map": "Echoes of Ages Past",
+    "slug": "echoes_of_ages_past"
+  },
+  {
+    "expansion": "",
+    "map": "Twilight of the Wolf",
+    "slug": "twilight_of_the_wolf"
+  },
+  {
+    "expansion": "",
+    "map": "Rage of the Minotaurs",
+    "slug": "rage_of_the_minotaurs"
+  },
+  {
+    "expansion": "",
+    "map": "A Pup's Illness",
+    "slug": "a_pups_illness"
+  },
+  {
+    "expansion": "",
+    "map": "Through the Veil",
+    "slug": "through_the_veil"
+  },
+  {
+    "expansion": "",
+    "map": "A Trap Foiled",
+    "slug": "a_trap_foiled"
+  },
+  {
+    "expansion": "",
+    "map": "Raven's Revered",
+    "slug": "ravens_revered"
+  },
+  {
+    "expansion": "",
+    "map": "One Good Drink Deserves Another",
+    "slug": "one_good_drink_deserves_another"
+  },
+  {
+    "expansion": "",
+    "map": "Shape of the Spirit",
+    "slug": "shape_of_the_spirit"
+  },
+  {
+    "expansion": "",
+    "map": "Into the Mists",
+    "slug": "into_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Through the Veil",
+    "slug": "through_the_veil"
+  },
+  {
+    "expansion": "",
+    "map": "Blessed of Bear",
+    "slug": "blessed_of_bear"
+  },
+  {
+    "expansion": "",
+    "map": "The Wolf Havroun",
+    "slug": "the_wolf_havroun"
+  },
+  {
+    "expansion": "",
+    "map": "Minotaur Rampant",
+    "slug": "minotaur_rampant"
+  },
+  {
+    "expansion": "",
+    "map": "Minotaur Rampant",
+    "slug": "minotaur_rampant"
+  },
+  {
+    "expansion": "",
+    "map": "Unexpected Visitors",
+    "slug": "unexpected_visitors"
+  },
+  {
+    "expansion": "",
+    "map": "Rumors of Trouble",
+    "slug": "rumors_of_trouble"
+  },
+  {
+    "expansion": "",
+    "map": "A New Challenger",
+    "slug": "a_new_challenger"
+  },
+  {
+    "expansion": "",
+    "map": "Unexpected Visitors",
+    "slug": "unexpected_visitors"
+  },
+  {
+    "expansion": "",
+    "map": "Roadblock",
+    "slug": "roadblock"
+  },
+  {
+    "expansion": "",
+    "map": "Assault on Moledavia",
+    "slug": "assault_on_moledavia"
+  },
+  {
+    "expansion": "",
+    "map": "Don't Leave Your Toys Out",
+    "slug": "dont_leave_your_toys_out"
+  },
+  {
+    "expansion": "",
+    "map": "A New Challenger",
+    "slug": "a_new_challenger"
+  },
+  {
+    "expansion": "",
+    "map": "First Attack",
+    "slug": "first_attack"
+  },
+  {
+    "expansion": "",
+    "map": "The Finishing Blow",
+    "slug": "the_finishing_blow"
+  },
+  {
+    "expansion": "",
+    "map": "The Semifinals",
+    "slug": "the_semifinals"
+  },
+  {
+    "expansion": "",
+    "map": "The Championship Fight",
+    "slug": "the_championship_fight"
+  },
+  {
+    "expansion": "",
+    "map": "The Championship Fight",
+    "slug": "the_championship_fight"
+  },
+  {
+    "expansion": "",
+    "map": "The Machine in Action",
+    "slug": "the_machine_in_action"
+  },
+  {
+    "expansion": "",
+    "map": "Among the Kodan",
+    "slug": "among_the_kodan"
+  },
+  {
+    "expansion": "",
+    "map": "Rumors of Trouble",
+    "slug": "rumors_of_trouble"
+  },
+  {
+    "expansion": "",
+    "map": "Rage of the Minotaurs",
+    "slug": "rage_of_the_minotaurs"
+  },
+  {
+    "expansion": "",
+    "map": "Darkness at Drakentelt",
+    "slug": "darkness_at_drakentelt"
+  },
+  {
+    "expansion": "",
+    "map": "Fighting the Nightmare",
+    "slug": "fighting_the_nightmare"
+  },
+  {
+    "expansion": "",
+    "map": "Preserving the Balance",
+    "slug": "preserving_the_balance"
+  },
+  {
+    "expansion": "",
+    "map": "Means to an End",
+    "slug": "means_to_an_end"
+  },
+  {
+    "expansion": "",
+    "map": "Dredge Technology",
+    "slug": "dredge_technology"
+  },
+  {
+    "expansion": "",
+    "map": "Underground Scholar",
+    "slug": "underground_scholar"
+  },
+  {
+    "expansion": "",
+    "map": "Dredge Assault",
+    "slug": "dredge_assault"
+  },
+  {
+    "expansion": "",
+    "map": "The Dredge Hideout",
+    "slug": "the_dredge_hideout"
+  },
+  {
+    "expansion": "",
+    "map": "Sabotage",
+    "slug": "sabotage"
+  },
+  {
+    "expansion": "",
+    "map": "Codebreaker",
+    "slug": "codebreaker"
+  },
+  {
+    "expansion": "",
+    "map": "Armaments",
+    "slug": "armaments"
+  },
+  {
+    "expansion": "",
+    "map": "Assault the Hill",
+    "slug": "assault_the_hill"
+  },
+  {
+    "expansion": "",
+    "map": "Silent Warfare",
+    "slug": "silent_warfare"
+  },
+  {
+    "expansion": "",
+    "map": "Sever the Head",
+    "slug": "sever_the_head"
+  },
+  {
+    "expansion": "",
+    "map": "Fury of the Dead",
+    "slug": "fury_of_the_dead"
+  },
+  {
+    "expansion": "",
+    "map": "A Fork in the Road",
+    "slug": "a_fork_in_the_road"
+  },
+  {
+    "expansion": "",
+    "map": "Citadel Stockade",
+    "slug": "citadel_stockade"
+  },
+  {
+    "expansion": "",
+    "map": "Tribunes in Effigy",
+    "slug": "tribunes_in_effigy"
+  },
+  {
+    "expansion": "",
+    "map": "Sins of the Father",
+    "slug": "sins_of_the_father"
+  },
+  {
+    "expansion": "",
+    "map": "Misplaced Faith",
+    "slug": "misplaced_faith"
+  },
+  {
+    "expansion": "",
+    "map": "Gladiator",
+    "slug": "gladiator"
+  },
+  {
+    "expansion": "",
+    "map": "Graveyard Ornaments",
+    "slug": "graveyard_ornaments"
+  },
+  {
+    "expansion": "",
+    "map": "Undead Infestation",
+    "slug": "undead_infestation"
+  },
+  {
+    "expansion": "",
+    "map": "Whispers in the Dark",
+    "slug": "whispers_in_the_dark"
+  },
+  {
+    "expansion": "",
+    "map": "Dangerous Research",
+    "slug": "dangerous_research"
+  },
+  {
+    "expansion": "",
+    "map": "Digging Up Answers",
+    "slug": "digging_up_answers"
+  },
+  {
+    "expansion": "",
+    "map": "Defending the Keep",
+    "slug": "defending_the_keep"
+  },
+  {
+    "expansion": "",
+    "map": "Undead Detection",
+    "slug": "undead_detection"
+  },
+  {
+    "expansion": "",
+    "map": "Ever Vigilant",
+    "slug": "ever_vigilant"
+  },
+  {
+    "expansion": "",
+    "map": "Research and Destroy",
+    "slug": "research_and_destroy"
+  },
+  {
+    "expansion": "",
+    "map": "Whispers of Vengeance",
+    "slug": "whispers_of_vengeance"
+  },
+  {
+    "expansion": "",
+    "map": "Killer Instinct",
+    "slug": "killer_instinct"
+  },
+  {
+    "expansion": "",
+    "map": "Meeting my Mentor",
+    "slug": "meeting_my_mentor"
+  },
+  {
+    "expansion": "",
+    "map": "A Fragile Peace",
+    "slug": "a_fragile_peace"
+  },
+  {
+    "expansion": "",
+    "map": "Don't Shoot the Messenger",
+    "slug": "dont_shoot_the_messenger"
+  },
+  {
+    "expansion": "",
+    "map": "Meeting my Mentor",
+    "slug": "meeting_my_mentor"
+  },
+  {
+    "expansion": "",
+    "map": "Dredging Up the Past",
+    "slug": "dredging_up_the_past"
+  },
+  {
+    "expansion": "",
+    "map": "Dredging Up the Past",
+    "slug": "dredging_up_the_past"
+  },
+  {
+    "expansion": "",
+    "map": "Scrapyard Dogs",
+    "slug": "scrapyard_dogs"
+  },
+  {
+    "expansion": "",
+    "map": "Quaestor's Siege",
+    "slug": "quaestors_siege"
+  },
+  {
+    "expansion": "",
+    "map": "Minister's Defense",
+    "slug": "ministers_defense"
+  },
+  {
+    "expansion": "",
+    "map": "Called to Service",
+    "slug": "called_to_service"
+  },
+  {
+    "expansion": "",
+    "map": "Called to Service",
+    "slug": "called_to_service"
+  },
+  {
+    "expansion": "",
+    "map": "Mockery of Death",
+    "slug": "mockery_of_death"
+  },
+  {
+    "expansion": "",
+    "map": "Discovering Darkness",
+    "slug": "discovering_darkness"
+  },
+  {
+    "expansion": "",
+    "map": "Hounds and the Hunted",
+    "slug": "hounds_and_the_hunted"
+  },
+  {
+    "expansion": "",
+    "map": "Hounds and the Hunted",
+    "slug": "hounds_and_the_hunted"
+  },
+  {
+    "expansion": "",
+    "map": "Loved and Lost",
+    "slug": "loved_and_lost"
+  },
+  {
+    "expansion": "",
+    "map": "Saving the Stag",
+    "slug": "saving_the_stag"
+  },
+  {
+    "expansion": "",
+    "map": "Hidden in Darkness",
+    "slug": "hidden_in_darkness"
+  },
+  {
+    "expansion": "",
+    "map": "Good Work Spoiled",
+    "slug": "good_work_spoiled"
+  },
+  {
+    "expansion": "",
+    "map": "Black Night, White Stag",
+    "slug": "black_night,_white_stag"
+  },
+  {
+    "expansion": "",
+    "map": "The Omphalos Chamber",
+    "slug": "the_omphalos_chamber"
+  },
+  {
+    "expansion": "",
+    "map": "Weakness of the Heart",
+    "slug": "weakness_of_the_heart"
+  },
+  {
+    "expansion": "",
+    "map": "Awakening",
+    "slug": "awakening"
+  },
+  {
+    "expansion": "",
+    "map": "Holding Back the Darkness",
+    "slug": "holding_back_the_darkness"
+  },
+  {
+    "expansion": "",
+    "map": "A Sly Trick",
+    "slug": "a_sly_trick"
+  },
+  {
+    "expansion": "",
+    "map": "Deep Tangled Roots",
+    "slug": "deep_tangled_roots"
+  },
+  {
+    "expansion": "",
+    "map": "The Heart of Nightmare",
+    "slug": "the_heart_of_nightmare"
+  },
+  {
+    "expansion": "",
+    "map": "Beneath a Cold Moon",
+    "slug": "beneath_a_cold_moon"
+  },
+  {
+    "expansion": "",
+    "map": "The Knight's Duel",
+    "slug": "the_knights_duel"
+  },
+  {
+    "expansion": "",
+    "map": "Hammer and Steel",
+    "slug": "hammer_and_steel"
+  },
+  {
+    "expansion": "",
+    "map": "Where Life Goes",
+    "slug": "where_life_goes"
+  },
+  {
+    "expansion": "",
+    "map": "After the Storm",
+    "slug": "after_the_storm"
+  },
+  {
+    "expansion": "",
+    "map": "After the Storm",
+    "slug": "after_the_storm"
+  },
+  {
+    "expansion": "",
+    "map": "Beneath the Waves",
+    "slug": "beneath_the_waves"
+  },
+  {
+    "expansion": "",
+    "map": "Mirror, Mirror",
+    "slug": "mirror,_mirror"
+  },
+  {
+    "expansion": "",
+    "map": "A Vision of Darkness",
+    "slug": "a_vision_of_darkness"
+  },
+  {
+    "expansion": "",
+    "map": "Shattered Light",
+    "slug": "shattered_light"
+  },
+  {
+    "expansion": "",
+    "map": "An Unknown Soul",
+    "slug": "an_unknown_soul"
+  },
+  {
+    "expansion": "",
+    "map": "An Unknown Soul",
+    "slug": "an_unknown_soul"
+  },
+  {
+    "expansion": "",
+    "map": "Where Life Goes",
+    "slug": "where_life_goes"
+  },
+  {
+    "expansion": "",
+    "map": "Source of the Issue",
+    "slug": "source_of_the_issue"
+  },
+  {
+    "expansion": "",
+    "map": "Wild Growth",
+    "slug": "wild_growth"
+  },
+  {
+    "expansion": "",
+    "map": "Wild Growth",
+    "slug": "wild_growth"
+  },
+  {
+    "expansion": "",
+    "map": "Seeking the Zalisco",
+    "slug": "seeking_the_zalisco"
+  },
+  {
+    "expansion": "",
+    "map": "The Direct Approach",
+    "slug": "the_direct_approach"
+  },
+  {
+    "expansion": "",
+    "map": "Trading Trickery",
+    "slug": "trading_trickery"
+  },
+  {
+    "expansion": "",
+    "map": "Eye of the Sun",
+    "slug": "eye_of_the_sun"
+  },
+  {
+    "expansion": "",
+    "map": "Battle of Kyhlo",
+    "slug": "battle_of_kyhlo"
+  },
+  {
+    "expansion": "",
+    "map": "Seeking the Zalisco",
+    "slug": "seeking_the_zalisco"
+  },
+  {
+    "expansion": "",
+    "map": "Forest of Niflhel",
+    "slug": "forest_of_niflhel"
+  },
+  {
+    "expansion": "",
+    "map": "A Different Dream",
+    "slug": "a_different_dream"
+  },
+  {
+    "expansion": "",
+    "map": "A Splinter in the Flesh",
+    "slug": "a_splinter_in_the_flesh"
+  },
+  {
+    "expansion": "",
+    "map": "Shadow of the Tree",
+    "slug": "shadow_of_the_tree"
+  },
+  {
+    "expansion": "",
+    "map": "Eye of the Sun",
+    "slug": "eye_of_the_sun"
+  },
+  {
+    "expansion": "",
+    "map": "Sharpened Thorns",
+    "slug": "sharpened_thorns"
+  },
+  {
+    "expansion": "",
+    "map": "Bramble Walls",
+    "slug": "bramble_walls"
+  },
+  {
+    "expansion": "",
+    "map": "Secrets in the Earth",
+    "slug": "secrets_in_the_earth"
+  },
+  {
+    "expansion": "",
+    "map": "The Blossom of Youth",
+    "slug": "the_blossom_of_youth"
+  },
+  {
+    "expansion": "",
+    "map": "The Bad Apple",
+    "slug": "the_bad_apple"
+  },
+  {
+    "expansion": "",
+    "map": "Trouble at the Roots",
+    "slug": "trouble_at_the_roots"
+  },
+  {
+    "expansion": "",
+    "map": "Flower of Death",
+    "slug": "flower_of_death"
+  },
+  {
+    "expansion": "",
+    "map": "Dead of Winter",
+    "slug": "dead_of_winter"
+  },
+  {
+    "expansion": "",
+    "map": "A Tangle of Weeds",
+    "slug": "a_tangle_of_weeds"
+  },
+  {
+    "expansion": "",
+    "map": "Explosive Intellect",
+    "slug": "explosive_intellect"
+  },
+  {
+    "expansion": "",
+    "map": "In Snaff's Footsteps",
+    "slug": "in_snaffs_footsteps"
+  },
+  {
+    "expansion": "",
+    "map": "Golem Positioning System",
+    "slug": "golem_positioning_system"
+  },
+  {
+    "expansion": "",
+    "map": "Monkey Wrench",
+    "slug": "monkey_wrench"
+  },
+  {
+    "expansion": "",
+    "map": "Defusing the Problem",
+    "slug": "defusing_the_problem"
+  },
+  {
+    "expansion": "",
+    "map": "The Things We Do For Love",
+    "slug": "the_things_we_do_for_love"
+  },
+  {
+    "expansion": "",
+    "map": "The Snaff Prize",
+    "slug": "the_snaff_prize"
+  },
+  {
+    "expansion": "",
+    "map": "A Sparkling Rescue",
+    "slug": "a_sparkling_rescue"
+  },
+  {
+    "expansion": "",
+    "map": "High Maintenance",
+    "slug": "high_maintenance"
+  },
+  {
+    "expansion": "",
+    "map": "Snaff Would Be Proud",
+    "slug": "snaff_would_be_proud"
+  },
+  {
+    "expansion": "",
+    "map": "Taking Credit Back",
+    "slug": "taking_credit_back"
+  },
+  {
+    "expansion": "",
+    "map": "Political Homicide",
+    "slug": "political_homicide"
+  },
+  {
+    "expansion": "",
+    "map": "Here, There, Everywhere",
+    "slug": "here,_there,_everywhere"
+  },
+  {
+    "expansion": "",
+    "map": "Piece Negotiations",
+    "slug": "piece_negotiations"
+  },
+  {
+    "expansion": "",
+    "map": "Readings On the Rise",
+    "slug": "readings_on_the_rise"
+  },
+  {
+    "expansion": "",
+    "map": "Snaff Would Be Proud",
+    "slug": "snaff_would_be_proud"
+  },
+  {
+    "expansion": "",
+    "map": "Readings On the Rise",
+    "slug": "readings_on_the_rise"
+  },
+  {
+    "expansion": "",
+    "map": "Unscheduled Delay",
+    "slug": "unscheduled_delay"
+  },
+  {
+    "expansion": "",
+    "map": "Stand By Your Krewe",
+    "slug": "stand_by_your_krewe"
+  },
+  {
+    "expansion": "",
+    "map": "Unwelcome Visitors",
+    "slug": "unwelcome_visitors"
+  },
+  {
+    "expansion": "",
+    "map": "Where Credit Is Due",
+    "slug": "where_credit_is_due"
+  },
+  {
+    "expansion": "",
+    "map": "Where Credit Is Due",
+    "slug": "where_credit_is_due"
+  },
+  {
+    "expansion": "",
+    "map": "Short Fuse",
+    "slug": "short_fuse"
+  },
+  {
+    "expansion": "",
+    "map": "Short Fuse",
+    "slug": "short_fuse"
+  },
+  {
+    "expansion": "",
+    "map": "Salt in the Wound",
+    "slug": "salt_in_the_wound"
+  },
+  {
+    "expansion": "",
+    "map": "Free Rein",
+    "slug": "free_rein"
+  },
+  {
+    "expansion": "",
+    "map": "Serving Up Trouble",
+    "slug": "serving_up_trouble"
+  },
+  {
+    "expansion": "",
+    "map": "Serving Up Trouble",
+    "slug": "serving_up_trouble"
+  },
+  {
+    "expansion": "",
+    "map": "Flash Flood",
+    "slug": "flash_flood"
+  },
+  {
+    "expansion": "",
+    "map": "I Smell a Rat",
+    "slug": "i_smell_a_rat"
+  },
+  {
+    "expansion": "",
+    "map": "Magnum Opus",
+    "slug": "magnum_opus"
+  },
+  {
+    "expansion": "",
+    "map": "Magnum Opus",
+    "slug": "magnum_opus"
+  },
+  {
+    "expansion": "",
+    "map": "Bad Business",
+    "slug": "bad_business"
+  },
+  {
+    "expansion": "",
+    "map": "Beta Test",
+    "slug": "beta_test"
+  },
+  {
+    "expansion": "",
+    "map": "Beta Test",
+    "slug": "beta_test"
+  },
+  {
+    "expansion": "",
+    "map": "Any Sufficiently Advanced Science",
+    "slug": "any_sufficiently_advanced_science"
+  },
+  {
+    "expansion": "",
+    "map": "Any Sufficiently Advanced Science",
+    "slug": "any_sufficiently_advanced_science"
+  },
+  {
+    "expansion": "",
+    "map": "Bad Forecast",
+    "slug": "bad_forecast"
+  },
+  {
+    "expansion": "",
+    "map": "Industrial Espionage",
+    "slug": "industrial_espionage"
+  },
+  {
+    "expansion": "",
+    "map": "Split Second",
+    "slug": "split_second"
+  },
+  {
+    "expansion": "",
+    "map": "Carry a Big Stick",
+    "slug": "carry_a_big_stick"
+  },
+  {
+    "expansion": "",
+    "map": "Meeting my Mentor",
+    "slug": "meeting_my_mentor"
+  },
+  {
+    "expansion": "",
+    "map": "Stealing Secrets",
+    "slug": "stealing_secrets"
+  },
+  {
+    "expansion": "",
+    "map": "A Bold New Theory",
+    "slug": "a_bold_new_theory"
+  },
+  {
+    "expansion": "",
+    "map": "Forging Permission",
+    "slug": "forging_permission"
+  },
+  {
+    "expansion": "",
+    "map": "Forging Permission",
+    "slug": "forging_permission"
+  },
+  {
+    "expansion": "",
+    "map": "Setting the Stage",
+    "slug": "setting_the_stage"
+  },
+  {
+    "expansion": "",
+    "map": "Containment",
+    "slug": "containment"
+  },
+  {
+    "expansion": "",
+    "map": "Containment",
+    "slug": "containment"
+  },
+  {
+    "expansion": "",
+    "map": "Hazardous Environment",
+    "slug": "hazardous_environment"
+  },
+  {
+    "expansion": "",
+    "map": "Down the Hatch",
+    "slug": "down_the_hatch"
+  },
+  {
+    "expansion": "",
+    "map": "Down the Hatch",
+    "slug": "down_the_hatch"
+  },
+  {
+    "expansion": "",
+    "map": "The Stone Sheath",
+    "slug": "the_stone_sheath"
+  },
+  {
+    "expansion": "",
+    "map": "Bad Blood",
+    "slug": "bad_blood"
+  },
+  {
+    "expansion": "",
+    "map": "Test Subject",
+    "slug": "test_subject"
+  },
+  {
+    "expansion": "",
+    "map": "Field Test",
+    "slug": "field_test"
+  },
+  {
+    "expansion": "",
+    "map": "The House of Caithe",
+    "slug": "the_house_of_caithe"
+  },
+  {
+    "expansion": "",
+    "map": "Dreamer's Terrace (Home)",
+    "slug": "dreamers_terrace_(home)"
+  },
+  {
+    "expansion": "",
+    "map": "The Omphalos Chamber",
+    "slug": "the_omphalos_chamber"
+  },
+  {
+    "expansion": "",
+    "map": "Snaff Memorial Lab",
+    "slug": "snaff_memorial_lab"
+  },
+  {
+    "expansion": "",
+    "map": "Applied Development Lab (Home)",
+    "slug": "applied_development_lab_(home)"
+  },
+  {
+    "expansion": "",
+    "map": "Council Level",
+    "slug": "council_level"
+  },
+  {
+    "expansion": "",
+    "map": "A Meeting of the Minds",
+    "slug": "a_meeting_of_the_minds"
+  },
+  {
+    "expansion": "",
+    "map": "Mightier than the Sword",
+    "slug": "mightier_than_the_sword"
+  },
+  {
+    "expansion": "",
+    "map": "They Went Thataway",
+    "slug": "they_went_thataway"
+  },
+  {
+    "expansion": "",
+    "map": "Lines of Communication",
+    "slug": "lines_of_communication"
+  },
+  {
+    "expansion": "",
+    "map": "Untamed Wilds",
+    "slug": "untamed_wilds"
+  },
+  {
+    "expansion": "",
+    "map": "An Apple a Day",
+    "slug": "an_apple_a_day"
+  },
+  {
+    "expansion": "",
+    "map": "Base of Operations",
+    "slug": "base_of_operations"
+  },
+  {
+    "expansion": "",
+    "map": "The Lost Chieftain's Return",
+    "slug": "the_lost_chieftains_return"
+  },
+  {
+    "expansion": "",
+    "map": "Thrown Off Guard",
+    "slug": "thrown_off_guard"
+  },
+  {
+    "expansion": "",
+    "map": "Pets and Walls Make Stronger Kraals",
+    "slug": "pets_and_walls_make_stronger_kraals"
+  },
+  {
+    "expansion": "",
+    "map": "Doubt",
+    "slug": "doubt"
+  },
+  {
+    "expansion": "",
+    "map": "The False God's Lair",
+    "slug": "the_false_gods_lair"
+  },
+  {
+    "expansion": "",
+    "map": "Bad Ice",
+    "slug": "bad_ice"
+  },
+  {
+    "expansion": "",
+    "map": "Bad Ice",
+    "slug": "bad_ice"
+  },
+  {
+    "expansion": "",
+    "map": "Pets and Walls Make Stronger Kraals",
+    "slug": "pets_and_walls_make_stronger_kraals"
+  },
+  {
+    "expansion": "",
+    "map": "Attempted Deicide",
+    "slug": "attempted_deicide"
+  },
+  {
+    "expansion": "",
+    "map": "Doubt",
+    "slug": "doubt"
+  },
+  {
+    "expansion": "",
+    "map": "Rat-Tastrophe",
+    "slug": "rat_tastrophe"
+  },
+  {
+    "expansion": "",
+    "map": "Salvation Through Heresy",
+    "slug": "salvation_through_heresy"
+  },
+  {
+    "expansion": "",
+    "map": "Enraged and Unashamed",
+    "slug": "enraged_and_unashamed"
+  },
+  {
+    "expansion": "",
+    "map": "Pastkeeper",
+    "slug": "pastkeeper"
+  },
+  {
+    "expansion": "",
+    "map": "Protest Too Much",
+    "slug": "protest_too_much"
+  },
+  {
+    "expansion": "",
+    "map": "Prying the Eye Open",
+    "slug": "prying_the_eye_open"
+  },
+  {
+    "expansion": "",
+    "map": "The Hatchery",
+    "slug": "the_hatchery"
+  },
+  {
+    "expansion": "",
+    "map": "Convincing the Faithful",
+    "slug": "convincing_the_faithful"
+  },
+  {
+    "expansion": "",
+    "map": "Evacuation",
+    "slug": "evacuation"
+  },
+  {
+    "expansion": "",
+    "map": "Untamed Wilds",
+    "slug": "untamed_wilds"
+  },
+  {
+    "expansion": "",
+    "map": "Champion's Sacrifice",
+    "slug": "champions_sacrifice"
+  },
+  {
+    "expansion": "",
+    "map": "Thieving from Thieves",
+    "slug": "thieving_from_thieves"
+  },
+  {
+    "expansion": "",
+    "map": "Crusader's Return",
+    "slug": "crusaders_return"
+  },
+  {
+    "expansion": "",
+    "map": "Unholy Grounds",
+    "slug": "unholy_grounds"
+  },
+  {
+    "expansion": "",
+    "map": "Chosen of the Sun",
+    "slug": "chosen_of_the_sun"
+  },
+  {
+    "expansion": "",
+    "map": "Set to Blow",
+    "slug": "set_to_blow"
+  },
+  {
+    "expansion": "",
+    "map": "Gadd's Last Gizmo",
+    "slug": "gadds_last_gizmo"
+  },
+  {
+    "expansion": "",
+    "map": "Library Science",
+    "slug": "library_science"
+  },
+  {
+    "expansion": "",
+    "map": "Rakt and Ruin",
+    "slug": "rakt_and_ruin"
+  },
+  {
+    "expansion": "",
+    "map": "Suspicious Activity",
+    "slug": "suspicious_activity"
+  },
+  {
+    "expansion": "",
+    "map": "Reconnaissance",
+    "slug": "reconnaissance"
+  },
+  {
+    "expansion": "",
+    "map": "Critical Blowback",
+    "slug": "critical_blowback"
+  },
+  {
+    "expansion": "",
+    "map": "The Battle of Claw Island",
+    "slug": "the_battle_of_claw_island"
+  },
+  {
+    "expansion": "",
+    "map": "Suspicious Activity",
+    "slug": "suspicious_activity"
+  },
+  {
+    "expansion": "",
+    "map": "Priory Library",
+    "slug": "priory_library"
+  },
+  {
+    "expansion": "",
+    "map": "On Red Alert",
+    "slug": "on_red_alert"
+  },
+  {
+    "expansion": "",
+    "map": "Forearmed Is Forewarned",
+    "slug": "forearmed_is_forewarned"
+  },
+  {
+    "expansion": "",
+    "map": "The Oratory",
+    "slug": "the_oratory"
+  },
+  {
+    "expansion": "",
+    "map": "Killing Fields",
+    "slug": "killing_fields"
+  },
+  {
+    "expansion": "",
+    "map": "The Ghost Rite",
+    "slug": "the_ghost_rite"
+  },
+  {
+    "expansion": "",
+    "map": "The Good Fight",
+    "slug": "the_good_fight"
+  },
+  {
+    "expansion": "",
+    "map": "Defense Contract",
+    "slug": "defense_contract"
+  },
+  {
+    "expansion": "",
+    "map": "Shards of Orr",
+    "slug": "shards_of_orr"
+  },
+  {
+    "expansion": "",
+    "map": "The Sound of Psi-Lance",
+    "slug": "the_sound_of_psi_lance"
+  },
+  {
+    "expansion": "",
+    "map": "Early Parole",
+    "slug": "early_parole"
+  },
+  {
+    "expansion": "",
+    "map": "Magic Sucks",
+    "slug": "magic_sucks"
+  },
+  {
+    "expansion": "",
+    "map": "A Light in the Darkness",
+    "slug": "a_light_in_the_darkness"
+  },
+  {
+    "expansion": "",
+    "map": "The Priory Assailed",
+    "slug": "the_priory_assailed"
+  },
+  {
+    "expansion": "",
+    "map": "Under Siege",
+    "slug": "under_siege"
+  },
+  {
+    "expansion": "",
+    "map": "Retribution",
+    "slug": "retribution"
+  },
+  {
+    "expansion": "",
+    "map": "Retribution",
+    "slug": "retribution"
+  },
+  {
+    "expansion": "",
+    "map": "The Sound of Psi-Lance",
+    "slug": "the_sound_of_psi_lance"
+  },
+  {
+    "expansion": "",
+    "map": "Wet Work",
+    "slug": "wet_work"
+  },
+  {
+    "expansion": "",
+    "map": "Shell Shock",
+    "slug": "shell_shock"
+  },
+  {
+    "expansion": "",
+    "map": "Volcanic Extraction",
+    "slug": "volcanic_extraction"
+  },
+  {
+    "expansion": "",
+    "map": "Munition Acquisition",
+    "slug": "munition_acquisition"
+  },
+  {
+    "expansion": "",
+    "map": "To the Core",
+    "slug": "to_the_core"
+  },
+  {
+    "expansion": "",
+    "map": "The Battle of Fort Trinity",
+    "slug": "the_battle_of_fort_trinity"
+  },
+  {
+    "expansion": "",
+    "map": "Tower Down",
+    "slug": "tower_down"
+  },
+  {
+    "expansion": "",
+    "map": "Forging the Pact",
+    "slug": "forging_the_pact"
+  },
+  {
+    "expansion": "",
+    "map": "Willing Captives",
+    "slug": "willing_captives"
+  },
+  {
+    "expansion": "",
+    "map": "Marshaling the Truth",
+    "slug": "marshaling_the_truth"
+  },
+  {
+    "expansion": "",
+    "map": "Breaking the Bone Ship",
+    "slug": "breaking_the_bone_ship"
+  },
+  {
+    "expansion": "",
+    "map": "Liberating Apatia",
+    "slug": "liberating_apatia"
+  },
+  {
+    "expansion": "",
+    "map": "Liberating Apatia",
+    "slug": "liberating_apatia"
+  },
+  {
+    "expansion": "",
+    "map": "Fixing the Blame",
+    "slug": "fixing_the_blame"
+  },
+  {
+    "expansion": "",
+    "map": "A Sad Duty",
+    "slug": "a_sad_duty"
+  },
+  {
+    "expansion": "",
+    "map": "Striking off the Chains",
+    "slug": "striking_off_the_chains"
+  },
+  {
+    "expansion": "",
+    "map": "Delivering Justice",
+    "slug": "delivering_justice"
+  },
+  {
+    "expansion": "",
+    "map": "Intercepting the Orb",
+    "slug": "intercepting_the_orb"
+  },
+  {
+    "expansion": "",
+    "map": "Close the Eye",
+    "slug": "close_the_eye"
+  },
+  {
+    "expansion": "",
+    "map": "Through the Looking Glass",
+    "slug": "through_the_looking_glass"
+  },
+  {
+    "expansion": "",
+    "map": "The Cathedral of Silence",
+    "slug": "the_cathedral_of_silence"
+  },
+  {
+    "expansion": "",
+    "map": "Starving the Beast",
+    "slug": "starving_the_beast"
+  },
+  {
+    "expansion": "",
+    "map": "Stealing Light",
+    "slug": "stealing_light"
+  },
+  {
+    "expansion": "",
+    "map": "Hunters and Prey",
+    "slug": "hunters_and_prey"
+  },
+  {
+    "expansion": "",
+    "map": "Romke's Final Voyage",
+    "slug": "romkes_final_voyage"
+  },
+  {
+    "expansion": "",
+    "map": "Marching Orders",
+    "slug": "marching_orders"
+  },
+  {
+    "expansion": "",
+    "map": "Air Drop",
+    "slug": "air_drop"
+  },
+  {
+    "expansion": "",
+    "map": "Estate of Decay",
+    "slug": "estate_of_decay"
+  },
+  {
+    "expansion": "",
+    "map": "What the Eye Beholds",
+    "slug": "what_the_eye_beholds"
+  },
+  {
+    "expansion": "",
+    "map": "Conscript the Dead Ships",
+    "slug": "conscript_the_dead_ships"
+  },
+  {
+    "expansion": "",
+    "map": "Ossuary of Unquiet Dead",
+    "slug": "ossuary_of_unquiet_dead"
+  },
+  {
+    "expansion": "",
+    "map": "Temple of the Forgotten God",
+    "slug": "temple_of_the_forgotten_god"
+  },
+  {
+    "expansion": "",
+    "map": "Temple of the Forgotten God",
+    "slug": "temple_of_the_forgotten_god"
+  },
+  {
+    "expansion": "",
+    "map": "Temple of the Forgotten God",
+    "slug": "temple_of_the_forgotten_god"
+  },
+  {
+    "expansion": "",
+    "map": "Through the Looking Glass",
+    "slug": "through_the_looking_glass"
+  },
+  {
+    "expansion": "",
+    "map": "Starving the Beast",
+    "slug": "starving_the_beast"
+  },
+  {
+    "expansion": "",
+    "map": "Against the Corruption",
+    "slug": "against_the_corruption"
+  },
+  {
+    "expansion": "",
+    "map": "The Source of Orr",
+    "slug": "the_source_of_orr"
+  },
+  {
+    "expansion": "",
+    "map": "Armor Guard",
+    "slug": "armor_guard"
+  },
+  {
+    "expansion": "",
+    "map": "Blast from the Past",
+    "slug": "blast_from_the_past"
+  },
+  {
+    "expansion": "",
+    "map": "The Steel Tide",
+    "slug": "the_steel_tide"
+  },
+  {
+    "expansion": "",
+    "map": "Further Into Orr",
+    "slug": "further_into_orr"
+  },
+  {
+    "expansion": "",
+    "map": "Ships of the Line",
+    "slug": "ships_of_the_line"
+  },
+  {
+    "expansion": "",
+    "map": "Source of Orr",
+    "slug": "source_of_orr"
+  },
+  {
+    "expansion": "",
+    "map": "Victory or Death",
+    "slug": "victory_or_death"
+  },
+  {
+    "expansion": "",
+    "map": "A Grisly Shipment",
+    "slug": "a_grisly_shipment"
+  },
+  {
+    "expansion": "",
+    "map": "Blast from the Past",
+    "slug": "blast_from_the_past"
+  },
+  {
+    "expansion": "",
+    "map": "A Pup's Illness",
+    "slug": "a_pups_illness"
+  },
+  {
+    "expansion": "",
+    "map": "Hunters and Prey",
+    "slug": "hunters_and_prey"
+  },
+  {
+    "expansion": "",
+    "map": "Legacy of the Foefire",
+    "slug": "legacy_of_the_foefire"
+  },
+  {
+    "expansion": "",
+    "map": "The Informant",
+    "slug": "the_informant"
+  },
+  {
+    "expansion": "",
+    "map": "A Traitor's Testimony",
+    "slug": "a_traitors_testimony"
+  },
+  {
+    "expansion": "",
+    "map": "Follow the Trail",
+    "slug": "follow_the_trail"
+  },
+  {
+    "expansion": "",
+    "map": "Awakening",
+    "slug": "awakening"
+  },
+  {
+    "expansion": "",
+    "map": "Eye of the North",
+    "slug": "eye_of_the_north"
+  },
+  {
+    "expansion": "",
+    "map": "The Omphalos Chamber",
+    "slug": "the_omphalos_chamber"
+  },
+  {
+    "expansion": "",
+    "map": "The Omphalos Chamber",
+    "slug": "the_omphalos_chamber"
+  },
+  {
+    "expansion": "",
+    "map": "Codebreaker",
+    "slug": "codebreaker"
+  },
+  {
+    "expansion": "",
+    "map": "Caer Aval",
+    "slug": "caer_aval"
+  },
+  {
+    "expansion": "",
+    "map": "The Durmand Priory",
+    "slug": "the_durmand_priory"
+  },
+  {
+    "expansion": "",
+    "map": "Vigil Headquarters",
+    "slug": "vigil_headquarters"
+  },
+  {
+    "expansion": "",
+    "map": "Ash Tribune Quarters",
+    "slug": "ash_tribune_quarters"
+  },
+  {
+    "expansion": "",
+    "map": "Shattered Light",
+    "slug": "shattered_light"
+  },
+  {
+    "expansion": "",
+    "map": "Reaper's Rumble",
+    "slug": "reapers_rumble"
+  },
+  {
+    "expansion": "",
+    "map": "Ascent to Madness",
+    "slug": "ascent_to_madness"
+  },
+  {
+    "expansion": "",
+    "map": "Lunatic Inquisition",
+    "slug": "lunatic_inquisition"
+  },
+  {
+    "expansion": "",
+    "map": "Mad King's Clock Tower",
+    "slug": "mad_kings_clock_tower"
+  },
+  {
+    "expansion": "",
+    "map": "Mad King's Labyrinth",
+    "slug": "mad_kings_labyrinth"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Southsun Cove",
+    "slug": "southsun_cove"
+  },
+  {
+    "expansion": "",
+    "map": "Temple of the Silent Storm",
+    "slug": "temple_of_the_silent_storm"
+  },
+  {
+    "expansion": "",
+    "map": "Snowball Mayhem",
+    "slug": "snowball_mayhem"
+  },
+  {
+    "expansion": "",
+    "map": "Tixx's Infinirarium",
+    "slug": "tixxs_infinirarium"
+  },
+  {
+    "expansion": "",
+    "map": "Toypocalypse",
+    "slug": "toypocalypse"
+  },
+  {
+    "expansion": "",
+    "map": "Bell Choir Ensemble",
+    "slug": "bell_choir_ensemble"
+  },
+  {
+    "expansion": "",
+    "map": "Winter Wonderland",
+    "slug": "winter_wonderland"
+  },
+  {
+    "expansion": "",
+    "map": "Spirit Watch",
+    "slug": "spirit_watch"
+  },
+  {
+    "expansion": "",
+    "map": "Super Adventure Box",
+    "slug": "super_adventure_box"
+  },
+  {
+    "expansion": "",
+    "map": "North Nolan Hatchery",
+    "slug": "north_nolan_hatchery"
+  },
+  {
+    "expansion": "",
+    "map": "Cragstead",
+    "slug": "cragstead"
+  },
+  {
+    "expansion": "",
+    "map": "Obsidian Sanctum",
+    "slug": "obsidian_sanctum"
+  },
+  {
+    "expansion": "",
+    "map": "Skyhammer",
+    "slug": "skyhammer"
+  },
+  {
+    "expansion": "",
+    "map": "Molten Furnace",
+    "slug": "molten_furnace"
+  },
+  {
+    "expansion": "",
+    "map": "Crab Toss",
+    "slug": "crab_toss"
+  },
+  {
+    "expansion": "",
+    "map": "Dragon Ball Arena",
+    "slug": "dragon_ball_arena"
+  },
+  {
+    "expansion": "",
+    "map": "Ceremony and Acrimony—Memorials on the Pyre",
+    "slug": "ceremony_and_acrimony—memorials_on_the_pyre"
+  },
+  {
+    "expansion": "",
+    "map": "Hard Boiled—The Scene of the Crime",
+    "slug": "hard_boiled—the_scene_of_the_crime"
+  },
+  {
+    "expansion": "",
+    "map": "The Dead End",
+    "slug": "the_dead_end"
+  },
+  {
+    "expansion": "",
+    "map": "Aetherblade Retreat",
+    "slug": "aetherblade_retreat"
+  },
+  {
+    "expansion": "",
+    "map": "No More Secrets—The Scene of the Crime",
+    "slug": "no_more_secrets—the_scene_of_the_crime"
+  },
+  {
+    "expansion": "",
+    "map": "Aspect Arena",
+    "slug": "aspect_arena"
+  },
+  {
+    "expansion": "",
+    "map": "Sanctum Sprint",
+    "slug": "sanctum_sprint"
+  },
+  {
+    "expansion": "",
+    "map": "Southsun Survival",
+    "slug": "southsun_survival"
+  },
+  {
+    "expansion": "",
+    "map": "Labyrinthine Cliffs",
+    "slug": "labyrinthine_cliffs"
+  },
+  {
+    "expansion": "",
+    "map": "Grandmaster of Om",
+    "slug": "grandmaster_of_om"
+  },
+  {
+    "expansion": "",
+    "map": "The Crown Pavilion",
+    "slug": "the_crown_pavilion"
+  },
+  {
+    "expansion": "",
+    "map": "Opening Ceremony",
+    "slug": "opening_ceremony"
+  },
+  {
+    "expansion": "",
+    "map": "Scarlet's Playhouse",
+    "slug": "scarlets_playhouse"
+  },
+  {
+    "expansion": "",
+    "map": "Closing Ceremony",
+    "slug": "closing_ceremony"
+  },
+  {
+    "expansion": "",
+    "map": "Super Adventure Box",
+    "slug": "super_adventure_box"
+  },
+  {
+    "expansion": "",
+    "map": "Super Adventure Box",
+    "slug": "super_adventure_box"
+  },
+  {
+    "expansion": "",
+    "map": "Scarlet's End",
+    "slug": "scarlets_end"
+  },
+  {
+    "expansion": "",
+    "map": "The Tower of Nightmares (Public)",
+    "slug": "the_tower_of_nightmares_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "The Nightmare Ends",
+    "slug": "the_nightmare_ends"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Scarlet's Secret Lair",
+    "slug": "scarlets_secret_lair"
+  },
+  {
+    "expansion": "",
+    "map": "The Origins of Madness: A Moment's Peace",
+    "slug": "the_origins_of_madness:_a_moments_peace"
+  },
+  {
+    "expansion": "",
+    "map": "Edge of the Mists",
+    "slug": "edge_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "The Dead End: A Study in Scarlet",
+    "slug": "the_dead_end:_a_study_in_scarlet"
+  },
+  {
+    "expansion": "",
+    "map": "The Evacuation of Lion's Arch",
+    "slug": "the_evacuation_of_lions_arch"
+  },
+  {
+    "expansion": "",
+    "map": "The Dead End: Celebration",
+    "slug": "the_dead_end:_celebration"
+  },
+  {
+    "expansion": "",
+    "map": "Courtyard",
+    "slug": "courtyard"
+  },
+  {
+    "expansion": "",
+    "map": "Lion's Arch: Honored Guests",
+    "slug": "lions_arch:_honored_guests"
+  },
+  {
+    "expansion": "",
+    "map": "Dry Top",
+    "slug": "dry_top"
+  },
+  {
+    "expansion": "",
+    "map": "Prosperity's Mystery",
+    "slug": "prosperitys_mystery"
+  },
+  {
+    "expansion": "",
+    "map": "Cornered",
+    "slug": "cornered"
+  },
+  {
+    "expansion": "",
+    "map": "Disturbance in Brisban Wildlands",
+    "slug": "disturbance_in_brisban_wildlands"
+  },
+  {
+    "expansion": "",
+    "map": "Fallen Hopes",
+    "slug": "fallen_hopes"
+  },
+  {
+    "expansion": "",
+    "map": "Scarlet's Secret Room",
+    "slug": "scarlets_secret_room"
+  },
+  {
+    "expansion": "",
+    "map": "The Concordia Incident",
+    "slug": "the_concordia_incident"
+  },
+  {
+    "expansion": "",
+    "map": "Discovering Scarlet's Breakthrough",
+    "slug": "discovering_scarlets_breakthrough"
+  },
+  {
+    "expansion": "",
+    "map": "The Machine",
+    "slug": "the_machine"
+  },
+  {
+    "expansion": "",
+    "map": "Trouble at Fort Salma",
+    "slug": "trouble_at_fort_salma"
+  },
+  {
+    "expansion": "",
+    "map": "The Waypoint Conundrum",
+    "slug": "the_waypoint_conundrum"
+  },
+  {
+    "expansion": "",
+    "map": "Summit Invitations",
+    "slug": "summit_invitations"
+  },
+  {
+    "expansion": "",
+    "map": "Mission Accomplished",
+    "slug": "mission_accomplished"
+  },
+  {
+    "expansion": "",
+    "map": "Rallying Call",
+    "slug": "rallying_call"
+  },
+  {
+    "expansion": "",
+    "map": "Plan of Attack",
+    "slug": "plan_of_attack"
+  },
+  {
+    "expansion": "",
+    "map": "Party Politics",
+    "slug": "party_politics"
+  },
+  {
+    "expansion": "",
+    "map": "Foefire Cleansing",
+    "slug": "foefire_cleansing"
+  },
+  {
+    "expansion": "",
+    "map": "Recalibrating the Waypoints",
+    "slug": "recalibrating_the_waypoints"
+  },
+  {
+    "expansion": "",
+    "map": "The Ghosts of Fort Salma",
+    "slug": "the_ghosts_of_fort_salma"
+  },
+  {
+    "expansion": "",
+    "map": "Taimi's Device",
+    "slug": "taimis_device"
+  },
+  {
+    "expansion": "",
+    "map": "The World Summit",
+    "slug": "the_world_summit"
+  },
+  {
+    "expansion": "",
+    "map": "Battle of Champion's Dusk",
+    "slug": "battle_of_champions_dusk"
+  },
+  {
+    "expansion": "",
+    "map": "The Silverwastes",
+    "slug": "the_silverwastes"
+  },
+  {
+    "expansion": "",
+    "map": "Hidden Arcana",
+    "slug": "hidden_arcana"
+  },
+  {
+    "expansion": "",
+    "map": "Reunion with the Pact",
+    "slug": "reunion_with_the_pact"
+  },
+  {
+    "expansion": "",
+    "map": "Caithe's Reconnaissance Squad",
+    "slug": "caithes_reconnaissance_squad"
+  },
+  {
+    "expansion": "",
+    "map": "Fort Trinity",
+    "slug": "fort_trinity"
+  },
+  {
+    "expansion": "",
+    "map": "Into the Labyrinth",
+    "slug": "into_the_labyrinth"
+  },
+  {
+    "expansion": "",
+    "map": "Return to Camp Resolve",
+    "slug": "return_to_camp_resolve"
+  },
+  {
+    "expansion": "",
+    "map": "Tracking the Aspect Masters",
+    "slug": "tracking_the_aspect_masters"
+  },
+  {
+    "expansion": "",
+    "map": "No Refuge",
+    "slug": "no_refuge"
+  },
+  {
+    "expansion": "",
+    "map": "The Newly Awakened",
+    "slug": "the_newly_awakened"
+  },
+  {
+    "expansion": "",
+    "map": "Meeting the Asura",
+    "slug": "meeting_the_asura"
+  },
+  {
+    "expansion": "",
+    "map": "Pact Assaulted",
+    "slug": "pact_assaulted"
+  },
+  {
+    "expansion": "",
+    "map": "The Mystery Cave",
+    "slug": "the_mystery_cave"
+  },
+  {
+    "expansion": "",
+    "map": "Arcana Obscura",
+    "slug": "arcana_obscura"
+  },
+  {
+    "expansion": "",
+    "map": "Prized Possessions",
+    "slug": "prized_possessions"
+  },
+  {
+    "expansion": "",
+    "map": "Buried Insight",
+    "slug": "buried_insight"
+  },
+  {
+    "expansion": "",
+    "map": "The Jungle Provides",
+    "slug": "the_jungle_provides"
+  },
+  {
+    "expansion": "",
+    "map": "Hearts and Minds",
+    "slug": "hearts_and_minds"
+  },
+  {
+    "expansion": "",
+    "map": "Dragon's Stand",
+    "slug": "dragons_stand"
+  },
+  {
+    "expansion": "",
+    "map": "Verdant Brink",
+    "slug": "verdant_brink"
+  },
+  {
+    "expansion": "",
+    "map": "Auric Basin",
+    "slug": "auric_basin"
+  },
+  {
+    "expansion": "",
+    "map": "Tangled Depths",
+    "slug": "tangled_depths"
+  },
+  {
+    "expansion": "",
+    "map": "Roots of Terror",
+    "slug": "roots_of_terror"
+  },
+  {
+    "expansion": "",
+    "map": "City of Hope",
+    "slug": "city_of_hope"
+  },
+  {
+    "expansion": "",
+    "map": "Torn from the Sky",
+    "slug": "torn_from_the_sky"
+  },
+  {
+    "expansion": "",
+    "map": "Prisoners of the Dragon",
+    "slug": "prisoners_of_the_dragon"
+  },
+  {
+    "expansion": "",
+    "map": "Verdant Brink",
+    "slug": "verdant_brink"
+  },
+  {
+    "expansion": "",
+    "map": "Bitter Harvest",
+    "slug": "bitter_harvest"
+  },
+  {
+    "expansion": "",
+    "map": "Strange Observations",
+    "slug": "strange_observations"
+  },
+  {
+    "expansion": "",
+    "map": "Prologue: Rally to Maguuma",
+    "slug": "prologue:_rally_to_maguuma"
+  },
+  {
+    "expansion": "",
+    "map": "Spirit Vale",
+    "slug": "spirit_vale"
+  },
+  {
+    "expansion": "",
+    "map": "Southsun Crab Toss",
+    "slug": "southsun_crab_toss"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Lost Precipice",
+    "slug": "claiming_the_lost_precipice"
+  },
+  {
+    "expansion": "",
+    "map": "Angvar's Trove",
+    "slug": "angvars_trove"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Gilded Hollow",
+    "slug": "claiming_the_gilded_hollow"
+  },
+  {
+    "expansion": "",
+    "map": "Angvar's Trove",
+    "slug": "angvars_trove"
+  },
+  {
+    "expansion": "",
+    "map": "Gilded Hollow",
+    "slug": "gilded_hollow"
+  },
+  {
+    "expansion": "",
+    "map": "Lost Precipice",
+    "slug": "lost_precipice"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Lost Precipice",
+    "slug": "claiming_the_lost_precipice"
+  },
+  {
+    "expansion": "",
+    "map": "Lost Precipice",
+    "slug": "lost_precipice"
+  },
+  {
+    "expansion": "",
+    "map": "Southsun Crab Toss",
+    "slug": "southsun_crab_toss"
+  },
+  {
+    "expansion": "",
+    "map": "Guild Initiative Office",
+    "slug": "guild_initiative_office"
+  },
+  {
+    "expansion": "",
+    "map": "Blightwater Shatterstrike",
+    "slug": "blightwater_shatterstrike"
+  },
+  {
+    "expansion": "",
+    "map": "Proxemics Lab",
+    "slug": "proxemics_lab"
+  },
+  {
+    "expansion": "",
+    "map": "Lost Precipice",
+    "slug": "lost_precipice"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Gilded Hollow",
+    "slug": "claiming_the_gilded_hollow"
+  },
+  {
+    "expansion": "",
+    "map": "Deep Trouble",
+    "slug": "deep_trouble"
+  },
+  {
+    "expansion": "",
+    "map": "Branded for Termination",
+    "slug": "branded_for_termination"
+  },
+  {
+    "expansion": "",
+    "map": "Langmar Estate",
+    "slug": "langmar_estate"
+  },
+  {
+    "expansion": "",
+    "map": "Langmar Estate",
+    "slug": "langmar_estate"
+  },
+  {
+    "expansion": "",
+    "map": "Deep Trouble",
+    "slug": "deep_trouble"
+  },
+  {
+    "expansion": "",
+    "map": "Southsun Crab Toss",
+    "slug": "southsun_crab_toss"
+  },
+  {
+    "expansion": "",
+    "map": "Save Our Supplies",
+    "slug": "save_our_supplies"
+  },
+  {
+    "expansion": "",
+    "map": "Proxemics Lab",
+    "slug": "proxemics_lab"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Gilded Hollow",
+    "slug": "claiming_the_gilded_hollow"
+  },
+  {
+    "expansion": "",
+    "map": "Angvar's Trove",
+    "slug": "angvars_trove"
+  },
+  {
+    "expansion": "",
+    "map": "Langmar Estate",
+    "slug": "langmar_estate"
+  },
+  {
+    "expansion": "",
+    "map": "Save Our Supplies",
+    "slug": "save_our_supplies"
+  },
+  {
+    "expansion": "",
+    "map": "Scratch Sentry Defense",
+    "slug": "scratch_sentry_defense"
+  },
+  {
+    "expansion": "",
+    "map": "Angvar's Trove",
+    "slug": "angvars_trove"
+  },
+  {
+    "expansion": "",
+    "map": "Save Our Supplies",
+    "slug": "save_our_supplies"
+  },
+  {
+    "expansion": "",
+    "map": "Dragon's Stand (Heart of Thorns)",
+    "slug": "dragons_stand_(heart_of_thorns)"
+  },
+  {
+    "expansion": "",
+    "map": "Proxemics Lab",
+    "slug": "proxemics_lab"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Gilded Hollow",
+    "slug": "claiming_the_gilded_hollow"
+  },
+  {
+    "expansion": "",
+    "map": " Desert Borderlands",
+    "slug": "_desert_borderlands"
+  },
+  {
+    "expansion": "",
+    "map": "Scratch Sentry Defense",
+    "slug": "scratch_sentry_defense"
+  },
+  {
+    "expansion": "",
+    "map": "Gilded Hollow",
+    "slug": "gilded_hollow"
+  },
+  {
+    "expansion": "",
+    "map": "Lost Precipice",
+    "slug": "lost_precipice"
+  },
+  {
+    "expansion": "",
+    "map": "Langmar Estate",
+    "slug": "langmar_estate"
+  },
+  {
+    "expansion": "",
+    "map": "Deep Trouble",
+    "slug": "deep_trouble"
+  },
+  {
+    "expansion": "",
+    "map": "Gilded Hollow",
+    "slug": "gilded_hollow"
+  },
+  {
+    "expansion": "",
+    "map": "Gilded Hollow",
+    "slug": "gilded_hollow"
+  },
+  {
+    "expansion": "",
+    "map": "Angvar's Trove",
+    "slug": "angvars_trove"
+  },
+  {
+    "expansion": "",
+    "map": "Scrap Rifle Field Test",
+    "slug": "scrap_rifle_field_test"
+  },
+  {
+    "expansion": "",
+    "map": "Scratch Sentry Defense",
+    "slug": "scratch_sentry_defense"
+  },
+  {
+    "expansion": "",
+    "map": "Branded for Termination",
+    "slug": "branded_for_termination"
+  },
+  {
+    "expansion": "",
+    "map": "Scratch Sentry Defense",
+    "slug": "scratch_sentry_defense"
+  },
+  {
+    "expansion": "",
+    "map": "Haywire Punch-o-Matic Battle",
+    "slug": "haywire_punch_o_matic_battle"
+  },
+  {
+    "expansion": "",
+    "map": "Deep Trouble",
+    "slug": "deep_trouble"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Lost Precipice",
+    "slug": "claiming_the_lost_precipice"
+  },
+  {
+    "expansion": "",
+    "map": "Save Our Supplies",
+    "slug": "save_our_supplies"
+  },
+  {
+    "expansion": "",
+    "map": "Gilded Hollow",
+    "slug": "gilded_hollow"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Gilded Hollow",
+    "slug": "claiming_the_gilded_hollow"
+  },
+  {
+    "expansion": "",
+    "map": "Blightwater Shatterstrike",
+    "slug": "blightwater_shatterstrike"
+  },
+  {
+    "expansion": "",
+    "map": "Lost Precipice",
+    "slug": "lost_precipice"
+  },
+  {
+    "expansion": "",
+    "map": "Southsun Crab Toss",
+    "slug": "southsun_crab_toss"
+  },
+  {
+    "expansion": "",
+    "map": "Scratch Sentry Defense",
+    "slug": "scratch_sentry_defense"
+  },
+  {
+    "expansion": "",
+    "map": "Langmar Estate",
+    "slug": "langmar_estate"
+  },
+  {
+    "expansion": "",
+    "map": "Deep Trouble",
+    "slug": "deep_trouble"
+  },
+  {
+    "expansion": "",
+    "map": "Blightwater Shatterstrike",
+    "slug": "blightwater_shatterstrike"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Lost Precipice",
+    "slug": "claiming_the_lost_precipice"
+  },
+  {
+    "expansion": "",
+    "map": "Branded for Termination",
+    "slug": "branded_for_termination"
+  },
+  {
+    "expansion": "",
+    "map": "Blightwater Shatterstrike",
+    "slug": "blightwater_shatterstrike"
+  },
+  {
+    "expansion": "",
+    "map": "Branded for Termination",
+    "slug": "branded_for_termination"
+  },
+  {
+    "expansion": "",
+    "map": "Proxemics Lab",
+    "slug": "proxemics_lab"
+  },
+  {
+    "expansion": "",
+    "map": "Proxemics Lab",
+    "slug": "proxemics_lab"
+  },
+  {
+    "expansion": "",
+    "map": "Save Our Supplies",
+    "slug": "save_our_supplies"
+  },
+  {
+    "expansion": "",
+    "map": "Southsun Crab Toss",
+    "slug": "southsun_crab_toss"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Lost Precipice",
+    "slug": "claiming_the_lost_precipice"
+  },
+  {
+    "expansion": "",
+    "map": "Blightwater Shatterstrike",
+    "slug": "blightwater_shatterstrike"
+  },
+  {
+    "expansion": "",
+    "map": "Branded for Termination",
+    "slug": "branded_for_termination"
+  },
+  {
+    "expansion": "",
+    "map": "Spirit Vale",
+    "slug": "spirit_vale"
+  },
+  {
+    "expansion": "",
+    "map": "Salvation Pass",
+    "slug": "salvation_pass"
+  },
+  {
+    "expansion": "",
+    "map": "",
+    "slug": ""
+  },
+  {
+    "expansion": "",
+    "map": "Tiger Den",
+    "slug": "tiger_den"
+  },
+  {
+    "expansion": "",
+    "map": "Special Forces Training Area",
+    "slug": "special_forces_training_area"
+  },
+  {
+    "expansion": "",
+    "map": "Lion's Arch Aerodrome",
+    "slug": "lions_arch_aerodrome"
+  },
+  {
+    "expansion": "",
+    "map": "Stronghold of the Faithful",
+    "slug": "stronghold_of_the_faithful"
+  },
+  {
+    "expansion": "",
+    "map": "Noble's Folly",
+    "slug": "nobles_folly"
+  },
+  {
+    "expansion": "",
+    "map": "Research in Rata Novus",
+    "slug": "research_in_rata_novus"
+  },
+  {
+    "expansion": "",
+    "map": "Eir's Homestead",
+    "slug": "eirs_homestead"
+  },
+  {
+    "expansion": "",
+    "map": "Revenge of the Capricorn",
+    "slug": "revenge_of_the_capricorn"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Bloodstone Fen",
+    "slug": "bloodstone_fen"
+  },
+  {
+    "expansion": "",
+    "map": "Confessor's Stronghold",
+    "slug": "confessors_stronghold"
+  },
+  {
+    "expansion": "",
+    "map": "A Shadow's Deeds",
+    "slug": "a_shadows_deeds"
+  },
+  {
+    "expansion": "",
+    "map": "Rata Novus",
+    "slug": "rata_novus"
+  },
+  {
+    "expansion": "",
+    "map": "Taimi's Game",
+    "slug": "taimis_game"
+  },
+  {
+    "expansion": "",
+    "map": "Eternal Coliseum",
+    "slug": "eternal_coliseum"
+  },
+  {
+    "expansion": "",
+    "map": "Dragon Vigil",
+    "slug": "dragon_vigil"
+  },
+  {
+    "expansion": "",
+    "map": "Taimi's Game",
+    "slug": "taimis_game"
+  },
+  {
+    "expansion": "",
+    "map": "Ember Bay",
+    "slug": "ember_bay"
+  },
+  {
+    "expansion": "",
+    "map": "Taimi's Game",
+    "slug": "taimis_game"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Bitterfrost Frontier",
+    "slug": "bitterfrost_frontier"
+  },
+  {
+    "expansion": "",
+    "map": "The Bitter Cold",
+    "slug": "the_bitter_cold"
+  },
+  {
+    "expansion": "",
+    "map": "Frozen Out",
+    "slug": "frozen_out"
+  },
+  {
+    "expansion": "",
+    "map": "Precocious Aurene",
+    "slug": "precocious_aurene"
+  },
+  {
+    "expansion": "",
+    "map": "Lake Doric",
+    "slug": "lake_doric"
+  },
+  {
+    "expansion": "",
+    "map": "Bastion of the Penitent",
+    "slug": "bastion_of_the_penitent"
+  },
+  {
+    "expansion": "",
+    "map": "Regrouping with the Queen",
+    "slug": "regrouping_with_the_queen"
+  },
+  {
+    "expansion": "",
+    "map": "A Meeting of Ministers",
+    "slug": "a_meeting_of_ministers"
+  },
+  {
+    "expansion": "",
+    "map": "Confessor's End",
+    "slug": "confessors_end"
+  },
+  {
+    "expansion": "",
+    "map": "The Second Vision",
+    "slug": "the_second_vision"
+  },
+  {
+    "expansion": "",
+    "map": "The First Vision",
+    "slug": "the_first_vision"
+  },
+  {
+    "expansion": "",
+    "map": "The Sword Regrown",
+    "slug": "the_sword_regrown"
+  },
+  {
+    "expansion": "",
+    "map": "Draconis Mons",
+    "slug": "draconis_mons"
+  },
+  {
+    "expansion": "",
+    "map": "Heart of the Volcano",
+    "slug": "heart_of_the_volcano"
+  },
+  {
+    "expansion": "",
+    "map": "Taimi's Pet Project",
+    "slug": "taimis_pet_project"
+  },
+  {
+    "expansion": "",
+    "map": "Hall of the Mists",
+    "slug": "hall_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Asura Arena",
+    "slug": "asura_arena"
+  },
+  {
+    "expansion": "",
+    "map": "White Mantle Hideout",
+    "slug": "white_mantle_hideout"
+  },
+  {
+    "expansion": "",
+    "map": "Siren's Landing",
+    "slug": "sirens_landing"
+  },
+  {
+    "expansion": "",
+    "map": "Palace Temple",
+    "slug": "palace_temple"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Mistlock Sanctuary",
+    "slug": "mistlock_sanctuary"
+  },
+  {
+    "expansion": "",
+    "map": "The Last Chance",
+    "slug": "the_last_chance"
+  },
+  {
+    "expansion": "",
+    "map": "Shining Blade Headquarters",
+    "slug": "shining_blade_headquarters"
+  },
+  {
+    "expansion": "",
+    "map": "The Sacrifice",
+    "slug": "the_sacrifice"
+  },
+  {
+    "expansion": "",
+    "map": "Crystal Oasis",
+    "slug": "crystal_oasis"
+  },
+  {
+    "expansion": "",
+    "map": "Desert Highlands",
+    "slug": "desert_highlands"
+  },
+  {
+    "expansion": "",
+    "map": "Office of the Chief Councilor",
+    "slug": "office_of_the_chief_councilor"
+  },
+  {
+    "expansion": "",
+    "map": "Windswept Haven",
+    "slug": "windswept_haven"
+  },
+  {
+    "expansion": "",
+    "map": "Windswept Haven",
+    "slug": "windswept_haven"
+  },
+  {
+    "expansion": "",
+    "map": "Sparking the Flame",
+    "slug": "sparking_the_flame"
+  },
+  {
+    "expansion": "",
+    "map": "Enemy of My Enemy: The Beastmarshal",
+    "slug": "enemy_of_my_enemy:_the_beastmarshal"
+  },
+  {
+    "expansion": "",
+    "map": "Sparking the Flame (Prologue)",
+    "slug": "sparking_the_flame_(prologue)"
+  },
+  {
+    "expansion": "",
+    "map": "The Way Forward",
+    "slug": "the_way_forward"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming Windswept Haven",
+    "slug": "claiming_windswept_haven"
+  },
+  {
+    "expansion": "",
+    "map": "Small Victory (Epilogue)",
+    "slug": "small_victory_(epilogue)"
+  },
+  {
+    "expansion": "",
+    "map": "Windswept Haven",
+    "slug": "windswept_haven"
+  },
+  {
+    "expansion": "",
+    "map": "The Desolation",
+    "slug": "the_desolation"
+  },
+  {
+    "expansion": "",
+    "map": "Hallowed Ground: Tomb of Primeval Kings",
+    "slug": "hallowed_ground:_tomb_of_primeval_kings"
+  },
+  {
+    "expansion": "",
+    "map": "Elon Riverlands",
+    "slug": "elon_riverlands"
+  },
+  {
+    "expansion": "",
+    "map": "Facing the Truth: The Sanctum",
+    "slug": "facing_the_truth:_the_sanctum"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming Windswept Haven",
+    "slug": "claiming_windswept_haven"
+  },
+  {
+    "expansion": "",
+    "map": "Windswept Haven",
+    "slug": "windswept_haven"
+  },
+  {
+    "expansion": "",
+    "map": "To Kill a God",
+    "slug": "to_kill_a_god"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming Windswept Haven",
+    "slug": "claiming_windswept_haven"
+  },
+  {
+    "expansion": "",
+    "map": "Blazing a Trail",
+    "slug": "blazing_a_trail"
+  },
+  {
+    "expansion": "",
+    "map": "Night of Fires",
+    "slug": "night_of_fires"
+  },
+  {
+    "expansion": "",
+    "map": "Zalambur's Office",
+    "slug": "zalamburs_office"
+  },
+  {
+    "expansion": "",
+    "map": "Windswept Haven",
+    "slug": "windswept_haven"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming Windswept Haven",
+    "slug": "claiming_windswept_haven"
+  },
+  {
+    "expansion": "",
+    "map": "The Departing",
+    "slug": "the_departing"
+  },
+  {
+    "expansion": "",
+    "map": "Captain Kiel's Office",
+    "slug": "captain_kiels_office"
+  },
+  {
+    "expansion": "",
+    "map": "Enemy of My Enemy",
+    "slug": "enemy_of_my_enemy"
+  },
+  {
+    "expansion": "",
+    "map": "Domain of Vabbi",
+    "slug": "domain_of_vabbi"
+  },
+  {
+    "expansion": "",
+    "map": "Windswept Haven",
+    "slug": "windswept_haven"
+  },
+  {
+    "expansion": "",
+    "map": "Crystalline Memories",
+    "slug": "crystalline_memories"
+  },
+  {
+    "expansion": "",
+    "map": "Beast of War",
+    "slug": "beast_of_war"
+  },
+  {
+    "expansion": "",
+    "map": "Enemy of My Enemy: The Troopmarshal",
+    "slug": "enemy_of_my_enemy:_the_troopmarshal"
+  },
+  {
+    "expansion": "",
+    "map": "The Dark Library",
+    "slug": "the_dark_library"
+  },
+  {
+    "expansion": "",
+    "map": "Spearmarshal's Lament",
+    "slug": "spearmarshals_lament"
+  },
+  {
+    "expansion": "",
+    "map": "Eye of the Brandstorm",
+    "slug": "eye_of_the_brandstorm"
+  },
+  {
+    "expansion": "",
+    "map": "Domain of Istan",
+    "slug": "domain_of_istan"
+  },
+  {
+    "expansion": "",
+    "map": "Hall of Chains",
+    "slug": "hall_of_chains"
+  },
+  {
+    "expansion": "",
+    "map": "The Hero of Istan",
+    "slug": "the_hero_of_istan"
+  },
+  {
+    "expansion": "",
+    "map": "Cave of the Sunspear Champion",
+    "slug": "cave_of_the_sunspear_champion"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Fahranur, the First City",
+    "slug": "fahranur,_the_first_city"
+  },
+  {
+    "expansion": "",
+    "map": "Toypocalypse",
+    "slug": "toypocalypse"
+  },
+  {
+    "expansion": "",
+    "map": "Sandswept Isles",
+    "slug": "sandswept_isles"
+  },
+  {
+    "expansion": "",
+    "map": "The Charge",
+    "slug": "the_charge"
+  },
+  {
+    "expansion": "",
+    "map": "Courtyard",
+    "slug": "courtyard"
+  },
+  {
+    "expansion": "",
+    "map": "The Test Subject",
+    "slug": "the_test_subject"
+  },
+  {
+    "expansion": "",
+    "map": "The Charge",
+    "slug": "the_charge"
+  },
+  {
+    "expansion": "",
+    "map": "???",
+    "slug": "???"
+  },
+  {
+    "expansion": "",
+    "map": "ERROR: SIGNAL LOST",
+    "slug": "error:_signal_lost"
+  },
+  {
+    "expansion": "",
+    "map": "A Kindness Repaid",
+    "slug": "a_kindness_repaid"
+  },
+  {
+    "expansion": "",
+    "map": "Tracking the Scientist",
+    "slug": "tracking_the_scientist"
+  },
+  {
+    "expansion": "",
+    "map": "???",
+    "slug": "???"
+  },
+  {
+    "expansion": "",
+    "map": "???",
+    "slug": "???"
+  },
+  {
+    "expansion": "",
+    "map": "Domain of Kourna",
+    "slug": "domain_of_kourna"
+  },
+  {
+    "expansion": "",
+    "map": "Seized",
+    "slug": "seized"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Forearmed Is Forewarned",
+    "slug": "forearmed_is_forewarned"
+  },
+  {
+    "expansion": "",
+    "map": "Be My Guest",
+    "slug": "be_my_guest"
+  },
+  {
+    "expansion": "",
+    "map": "Sun's Refuge",
+    "slug": "suns_refuge"
+  },
+  {
+    "expansion": "",
+    "map": "Legacy",
+    "slug": "legacy"
+  },
+  {
+    "expansion": "",
+    "map": "Storm Tracking",
+    "slug": "storm_tracking"
+  },
+  {
+    "expansion": "",
+    "map": "A Shattered Nation",
+    "slug": "a_shattered_nation"
+  },
+  {
+    "expansion": "",
+    "map": "Storm Tracking",
+    "slug": "storm_tracking"
+  },
+  {
+    "expansion": "",
+    "map": "From the Ashes—The Deadeye",
+    "slug": "from_the_ashes—the_deadeye"
+  },
+  {
+    "expansion": "",
+    "map": "Jahai Bluffs",
+    "slug": "jahai_bluffs"
+  },
+  {
+    "expansion": "",
+    "map": "Storm Tracking",
+    "slug": "storm_tracking"
+  },
+  {
+    "expansion": "",
+    "map": "Mythwright Gambit",
+    "slug": "mythwright_gambit"
+  },
+  {
+    "expansion": "",
+    "map": "Mad King's Raceway",
+    "slug": "mad_kings_raceway"
+  },
+  {
+    "expansion": "",
+    "map": "Djinn's Dominion",
+    "slug": "djinns_dominion"
+  },
+  {
+    "expansion": "",
+    "map": "Secret Lair of the Snowmen (Squad)",
+    "slug": "secret_lair_of_the_snowmen_(squad)"
+  },
+  {
+    "expansion": "",
+    "map": "Scion & Champion",
+    "slug": "scion_&_champion"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Thunderhead Peaks",
+    "slug": "thunderhead_peaks"
+  },
+  {
+    "expansion": "",
+    "map": "The Crystal Dragon",
+    "slug": "the_crystal_dragon"
+  },
+  {
+    "expansion": "",
+    "map": "The Crystal Blooms",
+    "slug": "the_crystal_blooms"
+  },
+  {
+    "expansion": "",
+    "map": "Armistice Bastion",
+    "slug": "armistice_bastion"
+  },
+  {
+    "expansion": "",
+    "map": "Mists Rift",
+    "slug": "mists_rift"
+  },
+  {
+    "expansion": "",
+    "map": "Dragonfall",
+    "slug": "dragonfall"
+  },
+  {
+    "expansion": "",
+    "map": "Dragonfall",
+    "slug": "dragonfall"
+  },
+  {
+    "expansion": "",
+    "map": "Descent",
+    "slug": "descent"
+  },
+  {
+    "expansion": "",
+    "map": "The End",
+    "slug": "the_end"
+  },
+  {
+    "expansion": "",
+    "map": "Dragonflight",
+    "slug": "dragonflight"
+  },
+  {
+    "expansion": "",
+    "map": "Epilogue",
+    "slug": "epilogue"
+  },
+  {
+    "expansion": "",
+    "map": "The Key of Ahdashim",
+    "slug": "the_key_of_ahdashim"
+  },
+  {
+    "expansion": "",
+    "map": "Dragon Arena (Public)",
+    "slug": "dragon_arena_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Dragon Arena (Private)",
+    "slug": "dragon_arena_(private)"
+  },
+  {
+    "expansion": "",
+    "map": "Auric Span",
+    "slug": "auric_span"
+  },
+  {
+    "expansion": "",
+    "map": "Coming Home",
+    "slug": "coming_home"
+  },
+  {
+    "expansion": "",
+    "map": "Grothmar Valley",
+    "slug": "grothmar_valley"
+  },
+  {
+    "expansion": "",
+    "map": "Strike Mission: Shiverpeaks Pass (Public)",
+    "slug": "strike_mission:_shiverpeaks_pass_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Strike Mission: Shiverpeaks Pass (Squad)",
+    "slug": "strike_mission:_shiverpeaks_pass_(squad)"
+  },
+  {
+    "expansion": "",
+    "map": "Deeper and Deeper",
+    "slug": "deeper_and_deeper"
+  },
+  {
+    "expansion": "",
+    "map": "A Race to Arms",
+    "slug": "a_race_to_arms"
+  },
+  {
+    "expansion": "",
+    "map": "Bad Blood",
+    "slug": "bad_blood"
+  },
+  {
+    "expansion": "",
+    "map": "Weekly Strike Mission: Boneskinner (Squad)",
+    "slug": "weekly_strike_mission:_boneskinner_(squad)"
+  },
+  {
+    "expansion": "",
+    "map": "Weekly Strike Mission: Voice of the Fallen and Claw of the Fallen (Public)",
+    "slug": "weekly_strike_mission:_voice_of_the_fallen_and_claw_of_the_fallen_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Weekly Strike Mission: Fraenir of Jormag (Squad)",
+    "slug": "weekly_strike_mission:_fraenir_of_jormag_(squad)"
+  },
+  {
+    "expansion": "",
+    "map": "The Invitation",
+    "slug": "the_invitation"
+  },
+  {
+    "expansion": "",
+    "map": "Bjora Marches",
+    "slug": "bjora_marches"
+  },
+  {
+    "expansion": "",
+    "map": "Weekly Strike Mission: Fraenir of Jormag (Public)",
+    "slug": "weekly_strike_mission:_fraenir_of_jormag_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "What's Left Behind",
+    "slug": "whats_left_behind"
+  },
+  {
+    "expansion": "",
+    "map": "Weekly Strike Mission: Voice of the Fallen and Claw of the Fallen (Squad)",
+    "slug": "weekly_strike_mission:_voice_of_the_fallen_and_claw_of_the_fallen_(squad)"
+  },
+  {
+    "expansion": "",
+    "map": "Silence",
+    "slug": "silence"
+  },
+  {
+    "expansion": "",
+    "map": "Weekly Strike Mission: Boneskinner (Public)",
+    "slug": "weekly_strike_mission:_boneskinner_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Secret Lair of the Snowmen (Public)",
+    "slug": "secret_lair_of_the_snowmen_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Celestial Challenge",
+    "slug": "celestial_challenge"
+  },
+  {
+    "expansion": "",
+    "map": "Voice in the Deep",
+    "slug": "voice_in_the_deep"
+  },
+  {
+    "expansion": "",
+    "map": "Chasing Ghosts",
+    "slug": "chasing_ghosts"
+  },
+  {
+    "expansion": "",
+    "map": "Strike Mission: Whisper of Jormag (Public)",
+    "slug": "strike_mission:_whisper_of_jormag_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Eye of the North",
+    "slug": "eye_of_the_north"
+  },
+  {
+    "expansion": "",
+    "map": "Strike Mission: Whisper of Jormag (Squad)",
+    "slug": "strike_mission:_whisper_of_jormag_(squad)"
+  },
+  {
+    "expansion": "",
+    "map": "The Nightmare Incarnate",
+    "slug": "the_nightmare_incarnate"
+  },
+  {
+    "expansion": "",
+    "map": "Forging Steel (Public)",
+    "slug": "forging_steel_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "New Friends, New Enemies—North Nolan Hatchery",
+    "slug": "new_friends,_new_enemies—north_nolan_hatchery"
+  },
+  {
+    "expansion": "",
+    "map": "The Battle for Cragstead",
+    "slug": "the_battle_for_cragstead"
+  },
+  {
+    "expansion": "",
+    "map": "Darkrime Delves",
+    "slug": "darkrime_delves"
+  },
+  {
+    "expansion": "",
+    "map": "Forging Steel (Squad)",
+    "slug": "forging_steel_(squad)"
+  },
+  {
+    "expansion": "",
+    "map": "Canach's Lair",
+    "slug": "canachs_lair"
+  },
+  {
+    "expansion": "",
+    "map": "Eye of the North",
+    "slug": "eye_of_the_north"
+  },
+  {
+    "expansion": "",
+    "map": "Drizzlewood Coast",
+    "slug": "drizzlewood_coast"
+  },
+  {
+    "expansion": "",
+    "map": "Turnabout",
+    "slug": "turnabout"
+  },
+  {
+    "expansion": "",
+    "map": "Pointed Parley",
+    "slug": "pointed_parley"
+  },
+  {
+    "expansion": "",
+    "map": "Strike Mission: Cold War (Squad)",
+    "slug": "strike_mission:_cold_war_(squad)"
+  },
+  {
+    "expansion": "",
+    "map": "Snapping Steel",
+    "slug": "snapping_steel"
+  },
+  {
+    "expansion": "",
+    "map": "Strike Mission: Cold War (Public)",
+    "slug": "strike_mission:_cold_war_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Behind Enemy Lines",
+    "slug": "behind_enemy_lines"
+  },
+  {
+    "expansion": "",
+    "map": "One Charr, One Dragon, One Champion",
+    "slug": "one_charr,_one_dragon,_one_champion"
+  },
+  {
+    "expansion": "",
+    "map": "Epilogue",
+    "slug": "epilogue"
+  },
+  {
+    "expansion": "",
+    "map": "Arena of the Wolverine",
+    "slug": "arena_of_the_wolverine"
+  },
+  {
+    "expansion": "",
+    "map": "A Simple Negotiation",
+    "slug": "a_simple_negotiation"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Caledon Forest (Private)",
+    "slug": "caledon_forest_(private)"
+  },
+  {
+    "expansion": "",
+    "map": "Thunderhead Peaks (Private)",
+    "slug": "thunderhead_peaks_(private)"
+  },
+  {
+    "expansion": "",
+    "map": "Bloodtide Coast (Public)",
+    "slug": "bloodtide_coast_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Snowden Drifts (Private)",
+    "slug": "snowden_drifts_(private)"
+  },
+  {
+    "expansion": "",
+    "map": "Snowden Drifts (Public)",
+    "slug": "snowden_drifts_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Fireheart Rise (Public)",
+    "slug": "fireheart_rise_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Brisban Wildlands (Private)",
+    "slug": "brisban_wildlands_(private)"
+  },
+  {
+    "expansion": "",
+    "map": "Primordus Rising",
+    "slug": "primordus_rising"
+  },
+  {
+    "expansion": "",
+    "map": "Lake Doric (Public)",
+    "slug": "lake_doric_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Bloodtide Coast (Private)",
+    "slug": "bloodtide_coast_(private)"
+  },
+  {
+    "expansion": "",
+    "map": "Thunderhead Peaks (Public)",
+    "slug": "thunderhead_peaks_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Gendarran Fields (Public)",
+    "slug": "gendarran_fields_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Metrica Province (Public)",
+    "slug": "metrica_province_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Fields of Ruin (Public)",
+    "slug": "fields_of_ruin_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Brisban Wildlands (Public)",
+    "slug": "brisban_wildlands_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Fields of Ruin (Private)",
+    "slug": "fields_of_ruin_(private)"
+  },
+  {
+    "expansion": "",
+    "map": "Metrica Province (Private)",
+    "slug": "metrica_province_(private)"
+  },
+  {
+    "expansion": "",
+    "map": "Lake Doric (Private)",
+    "slug": "lake_doric_(private)"
+  },
+  {
+    "expansion": "",
+    "map": "Caledon Forest (Public)",
+    "slug": "caledon_forest_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Fireheart Rise (Private)",
+    "slug": "fireheart_rise_(private)"
+  },
+  {
+    "expansion": "",
+    "map": "Gendarran Fields (Private)",
+    "slug": "gendarran_fields_(private)"
+  },
+  {
+    "expansion": "",
+    "map": "Council Level",
+    "slug": "council_level"
+  },
+  {
+    "expansion": "",
+    "map": "Wildfire",
+    "slug": "wildfire"
+  },
+  {
+    "expansion": "",
+    "map": "Dragonstorm (Private Squad)",
+    "slug": "dragonstorm_(private_squad)"
+  },
+  {
+    "expansion": "",
+    "map": "Champion's End",
+    "slug": "champions_end"
+  },
+  {
+    "expansion": "",
+    "map": "Dragonstorm (Public)",
+    "slug": "dragonstorm_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Dragonstorm",
+    "slug": "dragonstorm"
+  },
+  {
+    "expansion": "",
+    "map": "The Twisted Marionette (Public)",
+    "slug": "the_twisted_marionette_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "The Twisted Marionette (Private Squad)",
+    "slug": "the_twisted_marionette_(private_squad)"
+  },
+  {
+    "expansion": "",
+    "map": "The Future in Jade: Power Plant",
+    "slug": "the_future_in_jade:_power_plant"
+  },
+  {
+    "expansion": "",
+    "map": "Deepest Secrets: Yong Reactor",
+    "slug": "deepest_secrets:_yong_reactor"
+  },
+  {
+    "expansion": "",
+    "map": "Isle of Reflection",
+    "slug": "isle_of_reflection"
+  },
+  {
+    "expansion": "",
+    "map": "Fallout: Nika's Blade",
+    "slug": "fallout:_nikas_blade"
+  },
+  {
+    "expansion": "",
+    "map": "???",
+    "slug": "???"
+  },
+  {
+    "expansion": "",
+    "map": "Dragon's End",
+    "slug": "dragons_end"
+  },
+  {
+    "expansion": "",
+    "map": "Isle of Reflection",
+    "slug": "isle_of_reflection"
+  },
+  {
+    "expansion": "",
+    "map": "Weight of the World: Lady Joon's Estate",
+    "slug": "weight_of_the_world:_lady_joons_estate"
+  },
+  {
+    "expansion": "",
+    "map": "Arborstone",
+    "slug": "arborstone"
+  },
+  {
+    "expansion": "",
+    "map": "The Cycle, Reborn: Arborstone",
+    "slug": "the_cycle,_reborn:_arborstone"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Isle of Reflection",
+    "slug": "claiming_the_isle_of_reflection"
+  },
+  {
+    "expansion": "",
+    "map": "Strike Mission: Aetherblade Hideout",
+    "slug": "strike_mission:_aetherblade_hideout"
+  },
+  {
+    "expansion": "",
+    "map": "Old Friends",
+    "slug": "old_friends"
+  },
+  {
+    "expansion": "",
+    "map": "Empty",
+    "slug": "empty"
+  },
+  {
+    "expansion": "",
+    "map": "Isle of Reflection",
+    "slug": "isle_of_reflection"
+  },
+  {
+    "expansion": "",
+    "map": "Extraction Point: Command Quarters",
+    "slug": "extraction_point:_command_quarters"
+  },
+  {
+    "expansion": "",
+    "map": "Strike Mission: Harvest Temple",
+    "slug": "strike_mission:_harvest_temple"
+  },
+  {
+    "expansion": "",
+    "map": "New Kaineng City",
+    "slug": "new_kaineng_city"
+  },
+  {
+    "expansion": "",
+    "map": "The Only One",
+    "slug": "the_only_one"
+  },
+  {
+    "expansion": "",
+    "map": "Laying to Rest",
+    "slug": "laying_to_rest"
+  },
+  {
+    "expansion": "",
+    "map": "Seitung Province",
+    "slug": "seitung_province"
+  },
+  {
+    "expansion": "",
+    "map": "Isle of Reflection",
+    "slug": "isle_of_reflection"
+  },
+  {
+    "expansion": "",
+    "map": "The Future in Jade: Nahpui Lab",
+    "slug": "the_future_in_jade:_nahpui_lab"
+  },
+  {
+    "expansion": "",
+    "map": "Aetherblade Armada",
+    "slug": "aetherblade_armada"
+  },
+  {
+    "expansion": "",
+    "map": "The Cycle, Reborn: The Dead End Bar",
+    "slug": "the_cycle,_reborn:_the_dead_end_bar"
+  },
+  {
+    "expansion": "",
+    "map": "Aurene's Sanctuary",
+    "slug": "aurenes_sanctuary"
+  },
+  {
+    "expansion": "",
+    "map": "Strike Mission: Xunlai Jade Junkyard",
+    "slug": "strike_mission:_xunlai_jade_junkyard"
+  },
+  {
+    "expansion": "",
+    "map": "Strike Mission: Kaineng Overlook",
+    "slug": "strike_mission:_kaineng_overlook"
+  },
+  {
+    "expansion": "",
+    "map": "The Echovald Wilds",
+    "slug": "the_echovald_wilds"
+  },
+  {
+    "expansion": "",
+    "map": "Ministry of Security: Main Office",
+    "slug": "ministry_of_security:_main_office"
+  },
+  {
+    "expansion": "",
+    "map": "The Scenic Route: Kaineng Docks",
+    "slug": "the_scenic_route:_kaineng_docks"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Isle of Reflection",
+    "slug": "claiming_the_isle_of_reflection"
+  },
+  {
+    "expansion": "",
+    "map": "Detention Facility",
+    "slug": "detention_facility"
+  },
+  {
+    "expansion": "",
+    "map": "Aurene's Sanctuary",
+    "slug": "aurenes_sanctuary"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Isle of Reflection",
+    "slug": "claiming_the_isle_of_reflection"
+  },
+  {
+    "expansion": "",
+    "map": "Empress Ihn's Court",
+    "slug": "empress_ihns_court"
+  },
+  {
+    "expansion": "",
+    "map": "Zen Daijun Hideaway",
+    "slug": "zen_daijun_hideaway"
+  },
+  {
+    "expansion": "",
+    "map": "Isle of Reflection",
+    "slug": "isle_of_reflection"
+  },
+  {
+    "expansion": "",
+    "map": "Claiming the Isle of Reflection",
+    "slug": "claiming_the_isle_of_reflection"
+  },
+  {
+    "expansion": "",
+    "map": "Fallout: Arborstone",
+    "slug": "fallout:_arborstone"
+  },
+  {
+    "expansion": "",
+    "map": "Thousand Seas Pavilion",
+    "slug": "thousand_seas_pavilion"
+  },
+  {
+    "expansion": "",
+    "map": "A Quiet Celebration—Knut Whitebear's Loft",
+    "slug": "a_quiet_celebration—knut_whitebears_loft"
+  },
+  {
+    "expansion": "",
+    "map": "New Friends, New Enemies—The Command Core",
+    "slug": "new_friends,_new_enemies—the_command_core"
+  },
+  {
+    "expansion": "",
+    "map": "The Battle for Cragstead—Knut Whitebear's Loft",
+    "slug": "the_battle_for_cragstead—knut_whitebears_loft"
+  },
+  {
+    "expansion": "",
+    "map": "New Friends, New Enemies—Blood Tribune Quarters",
+    "slug": "new_friends,_new_enemies—blood_tribune_quarters"
+  },
+  {
+    "expansion": "",
+    "map": "A Quiet Celebration—Citadel Stockade",
+    "slug": "a_quiet_celebration—citadel_stockade"
+  },
+  {
+    "expansion": "",
+    "map": "Case Closed—The Dead End",
+    "slug": "case_closed—the_dead_end"
+  },
+  {
+    "expansion": "",
+    "map": "Hard Boiled—The Dead End",
+    "slug": "hard_boiled—the_dead_end"
+  },
+  {
+    "expansion": "",
+    "map": "Picking Up the Pieces",
+    "slug": "picking_up_the_pieces"
+  },
+  {
+    "expansion": "",
+    "map": "The Tower of Nightmares (Private Squad)",
+    "slug": "the_tower_of_nightmares_(private_squad)"
+  },
+  {
+    "expansion": "",
+    "map": "The Battle for Lion's Arch (Private Squad)",
+    "slug": "the_battle_for_lions_arch_(private_squad)"
+  },
+  {
+    "expansion": "",
+    "map": "The Twisted Marionette",
+    "slug": "the_twisted_marionette"
+  },
+  {
+    "expansion": "",
+    "map": "Battle on the Breachmaker",
+    "slug": "battle_on_the_breachmaker"
+  },
+  {
+    "expansion": "",
+    "map": "The Battle For Lion's Arch (Public)",
+    "slug": "the_battle_for_lions_arch_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Memory of Old Lion's Arch",
+    "slug": "memory_of_old_lions_arch"
+  },
+  {
+    "expansion": "",
+    "map": "North Evacuation Camp",
+    "slug": "north_evacuation_camp"
+  },
+  {
+    "expansion": "",
+    "map": "Strike Mission: Old Lion's Court",
+    "slug": "strike_mission:_old_lions_court"
+  },
+  {
+    "expansion": "",
+    "map": "The Aether Escape",
+    "slug": "the_aether_escape"
+  },
+  {
+    "expansion": "",
+    "map": "On the Case: Excavation Yard",
+    "slug": "on_the_case:_excavation_yard"
+  },
+  {
+    "expansion": "",
+    "map": "A Raw Deal: Red Duck Teahouse",
+    "slug": "a_raw_deal:_red_duck_teahouse"
+  },
+  {
+    "expansion": "",
+    "map": "Gyala Delve",
+    "slug": "gyala_delve"
+  },
+  {
+    "expansion": "",
+    "map": "Deep Trouble: Excavation Yard",
+    "slug": "deep_trouble:_excavation_yard"
+  },
+  {
+    "expansion": "",
+    "map": "Deep Trouble: The Deep",
+    "slug": "deep_trouble:_the_deep"
+  },
+  {
+    "expansion": "",
+    "map": "Entrapment: The Deep",
+    "slug": "entrapment:_the_deep"
+  },
+  {
+    "expansion": "",
+    "map": "A Plan Emerges: Power Plant",
+    "slug": "a_plan_emerges:_power_plant"
+  },
+  {
+    "expansion": "",
+    "map": "Emotional Release: Jade Pools",
+    "slug": "emotional_release:_jade_pools"
+  },
+  {
+    "expansion": "",
+    "map": "Emotional Release: Command Quarters",
+    "slug": "emotional_release:_command_quarters"
+  },
+  {
+    "expansion": "",
+    "map": "Full Circle: Red Duck Teahouse",
+    "slug": "full_circle:_red_duck_teahouse"
+  },
+  {
+    "expansion": "",
+    "map": "Forward",
+    "slug": "forward"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Hell Breaks Loose: ???",
+    "slug": "hell_breaks_loose:_???"
+  },
+  {
+    "expansion": "",
+    "map": "The Missing Facet: Southern Wizard's Tower",
+    "slug": "the_missing_facet:_southern_wizards_tower"
+  },
+  {
+    "expansion": "",
+    "map": "Mother of Stars: Stargaze Ridge",
+    "slug": "mother_of_stars:_stargaze_ridge"
+  },
+  {
+    "expansion": "",
+    "map": "Into the Obscure: Bastion of the Obscure",
+    "slug": "into_the_obscure:_bastion_of_the_obscure"
+  },
+  {
+    "expansion": "",
+    "map": "Tower of Secrets: Southern Wizard's Tower",
+    "slug": "tower_of_secrets:_southern_wizards_tower"
+  },
+  {
+    "expansion": "",
+    "map": "Mabon's Fate: Bastion of Strength",
+    "slug": "mabons_fate:_bastion_of_strength"
+  },
+  {
+    "expansion": "",
+    "map": "Astral Ward Infirmary",
+    "slug": "astral_ward_infirmary"
+  },
+  {
+    "expansion": "",
+    "map": "The Wizard's Tower",
+    "slug": "the_wizards_tower"
+  },
+  {
+    "expansion": "",
+    "map": "Skywatch Archipelago",
+    "slug": "skywatch_archipelago"
+  },
+  {
+    "expansion": "",
+    "map": "Commander without a Cause: Gendarran Fields",
+    "slug": "commander_without_a_cause:_gendarran_fields"
+  },
+  {
+    "expansion": "",
+    "map": "The World Spire: Bastion of the Celestial",
+    "slug": "the_world_spire:_bastion_of_the_celestial"
+  },
+  {
+    "expansion": "",
+    "map": "Mother of Stars: Cosmic Observatory",
+    "slug": "mother_of_stars:_cosmic_observatory"
+  },
+  {
+    "expansion": "",
+    "map": "Epilogue: The Wizard's Tower",
+    "slug": "epilogue:_the_wizards_tower"
+  },
+  {
+    "expansion": "",
+    "map": "Strike Mission: Cosmic Observatory",
+    "slug": "strike_mission:_cosmic_observatory"
+  },
+  {
+    "expansion": "",
+    "map": "Into the Obscure: The Wizard's Tower",
+    "slug": "into_the_obscure:_the_wizards_tower"
+  },
+  {
+    "expansion": "",
+    "map": "Amnytas",
+    "slug": "amnytas"
+  },
+  {
+    "expansion": "",
+    "map": "Treachery: Nayos",
+    "slug": "treachery:_nayos"
+  },
+  {
+    "expansion": "",
+    "map": "Hell Breaks Loose: ???",
+    "slug": "hell_breaks_loose:_???"
+  },
+  {
+    "expansion": "",
+    "map": "Strike Mission: Temple of Febe",
+    "slug": "strike_mission:_temple_of_febe"
+  },
+  {
+    "expansion": "",
+    "map": "The Missing Facet: Droknar's Light",
+    "slug": "the_missing_facet:_droknars_light"
+  },
+  {
+    "expansion": "",
+    "map": "Stopped Clock Tower",
+    "slug": "stopped_clock_tower"
+  },
+  {
+    "expansion": "",
+    "map": "Convergence: Outer Nayos (Public)",
+    "slug": "convergence:_outer_nayos_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Duress: Heitor's Territory",
+    "slug": "duress:_heitors_territory"
+  },
+  {
+    "expansion": "",
+    "map": "Heitor's Gate: Heitor's Territory",
+    "slug": "heitors_gate:_heitors_territory"
+  },
+  {
+    "expansion": "",
+    "map": "Inner Nayos",
+    "slug": "inner_nayos"
+  },
+  {
+    "expansion": "",
+    "map": "Convergence: Outer Nayos (Private Squad)",
+    "slug": "convergence:_outer_nayos_(private_squad)"
+  },
+  {
+    "expansion": "",
+    "map": "The Survivors: Heitor's Gate",
+    "slug": "the_survivors:_heitors_gate"
+  },
+  {
+    "expansion": "",
+    "map": "The Survivors: Astral Ward Camp",
+    "slug": "the_survivors:_astral_ward_camp"
+  },
+  {
+    "expansion": "",
+    "map": "Duress: The Wizard's Tower",
+    "slug": "duress:_the_wizards_tower"
+  },
+  {
+    "expansion": "",
+    "map": "Duress: Nayos",
+    "slug": "duress:_nayos"
+  },
+  {
+    "expansion": "",
+    "map": "Forced Hand: Nyedra",
+    "slug": "forced_hand:_nyedra"
+  },
+  {
+    "expansion": "",
+    "map": "Eventide's March: Coliseum of the Midnight King",
+    "slug": "eventides_march:_coliseum_of_the_midnight_king"
+  },
+  {
+    "expansion": "",
+    "map": "The War Council: Astral Ward Camp",
+    "slug": "the_war_council:_astral_ward_camp"
+  },
+  {
+    "expansion": "",
+    "map": "Eventide's March: Nyedra Surrounds",
+    "slug": "eventides_march:_nyedra_surrounds"
+  },
+  {
+    "expansion": "",
+    "map": "Desperate Measures: Forward Bivouac",
+    "slug": "desperate_measures:_forward_bivouac"
+  },
+  {
+    "expansion": "",
+    "map": "Sovereign of Nayos: The Wizard's Tower",
+    "slug": "sovereign_of_nayos:_the_wizards_tower"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "The Eleventh Hour: Citadel of Zakiros",
+    "slug": "the_eleventh_hour:_citadel_of_zakiros"
+  },
+  {
+    "expansion": "",
+    "map": "Desperate Measures: Forward Bivouac",
+    "slug": "desperate_measures:_forward_bivouac"
+  },
+  {
+    "expansion": "",
+    "map": "Twice Stricken: Landfall",
+    "slug": "twice_stricken:_landfall"
+  },
+  {
+    "expansion": "",
+    "map": "Finding Balance: Hearth's Glow",
+    "slug": "finding_balance:_hearths_glow"
+  },
+  {
+    "expansion": "",
+    "map": "Titan Research",
+    "slug": "titan_research"
+  },
+  {
+    "expansion": "",
+    "map": "Twice Stricken: Hearth's Glow",
+    "slug": "twice_stricken:_hearths_glow"
+  },
+  {
+    "expansion": "",
+    "map": "Finding Balance: Sanguine Crater",
+    "slug": "finding_balance:_sanguine_crater"
+  },
+  {
+    "expansion": "",
+    "map": "Home Sweet Home: Hearth's Glow",
+    "slug": "home_sweet_home:_hearths_glow"
+  },
+  {
+    "expansion": "",
+    "map": "Sorrow in These Halls: Harvest Den",
+    "slug": "sorrow_in_these_halls:_harvest_den"
+  },
+  {
+    "expansion": "",
+    "map": "Missing in Action: Haar Mire",
+    "slug": "missing_in_action:_haar_mire"
+  },
+  {
+    "expansion": "",
+    "map": "Lowland Shore",
+    "slug": "lowland_shore"
+  },
+  {
+    "expansion": "",
+    "map": "The Tyrian Alliance: Guild Initiative Headquarters",
+    "slug": "the_tyrian_alliance:_guild_initiative_headquarters"
+  },
+  {
+    "expansion": "",
+    "map": "Against the Wall: Sulfurous Springs",
+    "slug": "against_the_wall:_sulfurous_springs"
+  },
+  {
+    "expansion": "",
+    "map": "Sorrow in These Halls: The Wizard's Tower",
+    "slug": "sorrow_in_these_halls:_the_wizards_tower"
+  },
+  {
+    "expansion": "",
+    "map": "Janthir Syntri",
+    "slug": "janthir_syntri"
+  },
+  {
+    "expansion": "",
+    "map": "Strangers among Lands: Festering Basin",
+    "slug": "strangers_among_lands:_festering_basin"
+  },
+  {
+    "expansion": "",
+    "map": "Unknown Territory: Moon Camp",
+    "slug": "unknown_territory:_moon_camp"
+  },
+  {
+    "expansion": "",
+    "map": "Home Sweet Home: Abandoned Homestead",
+    "slug": "home_sweet_home:_abandoned_homestead"
+  },
+  {
+    "expansion": "",
+    "map": "Hearth's Glow",
+    "slug": "hearths_glow"
+  },
+  {
+    "expansion": "",
+    "map": "Against the Wall: Hearth's Glow",
+    "slug": "against_the_wall:_hearths_glow"
+  },
+  {
+    "expansion": "",
+    "map": "Strangers among Lands: Guild Initiative Headquarters",
+    "slug": "strangers_among_lands:_guild_initiative_headquarters"
+  },
+  {
+    "expansion": "",
+    "map": "Push Prototype—BETA",
+    "slug": "push_prototype—beta"
+  },
+  {
+    "expansion": "",
+    "map": "Convergence: Mount Balrior (Private Squad)",
+    "slug": "convergence:_mount_balrior_(private_squad)"
+  },
+  {
+    "expansion": "",
+    "map": "Trial and Error: The Wizard's Tower",
+    "slug": "trial_and_error:_the_wizards_tower"
+  },
+  {
+    "expansion": "",
+    "map": "Mount Balrior",
+    "slug": "mount_balrior"
+  },
+  {
+    "expansion": "",
+    "map": "Battle's Eve: Harvest Den",
+    "slug": "battles_eve:_harvest_den"
+  },
+  {
+    "expansion": "",
+    "map": "Balrior Peak: Harvest Den",
+    "slug": "balrior_peak:_harvest_den"
+  },
+  {
+    "expansion": "",
+    "map": "Trial and Error: Janthir Syntri",
+    "slug": "trial_and_error:_janthir_syntri"
+  },
+  {
+    "expansion": "",
+    "map": "Trial and Error: Durmand Priory",
+    "slug": "trial_and_error:_durmand_priory"
+  },
+  {
+    "expansion": "",
+    "map": "Mists Vault",
+    "slug": "mists_vault"
+  },
+  {
+    "expansion": "",
+    "map": "Convergence: Mount Balrior (Public)",
+    "slug": "convergence:_mount_balrior_(public)"
+  },
+  {
+    "expansion": "",
+    "map": "Balrior Peak: Mount Balrior",
+    "slug": "balrior_peak:_mount_balrior"
+  },
+  {
+    "expansion": "",
+    "map": "Mabon's Grief: Bava Nisos Outskirts",
+    "slug": "mabons_grief:_bava_nisos_outskirts"
+  },
+  {
+    "expansion": "",
+    "map": "Bava Nisos",
+    "slug": "bava_nisos"
+  },
+  {
+    "expansion": "",
+    "map": "Mistburned Barrens",
+    "slug": "mistburned_barrens"
+  },
+  {
+    "expansion": "",
+    "map": "A Legacy Damned: The Golden Lake",
+    "slug": "a_legacy_damned:_the_golden_lake"
+  },
+  {
+    "expansion": "",
+    "map": "A Legacy Damned: Alliance Staging Ground",
+    "slug": "a_legacy_damned:_alliance_staging_ground"
+  },
+  {
+    "expansion": "",
+    "map": "Into the Valley of Shadow: Valley of Agony",
+    "slug": "into_the_valley_of_shadow:_valley_of_agony"
+  },
+  {
+    "expansion": "",
+    "map": "Into the Valley of Shadow: Alliance Staging Ground",
+    "slug": "into_the_valley_of_shadow:_alliance_staging_ground"
+  },
+  {
+    "expansion": "",
+    "map": "A Titanic Undertaking: Saevus's Heart",
+    "slug": "a_titanic_undertaking:_saevuss_heart"
+  },
+  {
+    "expansion": "",
+    "map": "Salvation's Cost: Foundry of Failed Creations",
+    "slug": "salvations_cost:_foundry_of_failed_creations"
+  },
+  {
+    "expansion": "",
+    "map": "Fractals of the Mists",
+    "slug": "fractals_of_the_mists"
+  },
+  {
+    "expansion": "",
+    "map": "Salvation's Cost: Saevus's Heart",
+    "slug": "salvations_cost:_saevuss_heart"
+  },
+  {
+    "expansion": "",
+    "map": "Forced Entry: Bava Nisos Outskirts",
+    "slug": "forced_entry:_bava_nisos_outskirts"
+  },
+  {
+    "expansion": "",
+    "map": "Forced Entry: Bava Nisos",
+    "slug": "forced_entry:_bava_nisos"
+  },
+  {
+    "expansion": "",
+    "map": "Salvation's Cost: Guild Initiative Headquarters",
+    "slug": "salvations_cost:_guild_initiative_headquarters"
+  },
+  {
+    "expansion": "",
+    "map": "A Titanic Undertaking: Bava Nisos",
+    "slug": "a_titanic_undertaking:_bava_nisos"
+  }
+]
