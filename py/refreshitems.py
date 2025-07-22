@@ -27,32 +27,35 @@ def write_to_csv(data):
             writer.writerow(row)
 
 def main():
-    print("🌐 Pak alle item-ID's uit de API...")
+    start_time = time.time()
+
+    print("🌐 Ophalen van item-ID's uit API...")
     try:
         res = requests.get(API_URL)
         res.raise_for_status()
         item_ids = res.json()
         print(f"📦 Totaal items gevonden: {len(item_ids)}")
     except Exception as e:
-        print(f"❌ Kan item-IDs niet ophalen: {e}")
+        print(f"❌ Fout bij ophalen van item IDs: {e}")
         return
 
     items = []
     for i in range(0, len(item_ids), BATCH_SIZE):
         batch_ids = item_ids[i:i+BATCH_SIZE]
-        print(f"🔁 Ophalen batch {i} tot {i+len(batch_ids)}...")
+        print(f"🔁 Batch {i}–{i+len(batch_ids)}")
         batch_data = get_item_data(batch_ids)
         if batch_data:
             items.extend(batch_data)
         else:
-            print(f"⚠️ Batch {i}–{i+len(batch_ids)} is leeg.")
-        time.sleep(0.2)  # Respecteer API-ratelimits
+            print("⚠️ Lege batch ontvangen.")
+        time.sleep(0.2)  # respecteer API rate-limiet
 
-    # Filter items die GEEN naam hebben
-    items_filtered = [item for item in items if item.get("name")]
-    print(f"📝 Schrijven van {len(items_filtered)} items naar {OUTFILE}...")
-    write_to_csv(items_filtered)
-    print("✅ Klaar!")
+    # Alleen items met naam
+    valid_items = [item for item in items if item.get("name")]
+    print(f"📝 Schrijven van {len(valid_items)} geldige items naar CSV...")
+    write_to_csv(valid_items)
+
+    print(f"✅ Klaar in {round(time.time() - start_time, 2)} seconden.")
 
 if __name__ == "__main__":
     main()
