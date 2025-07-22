@@ -1,1 +1,474 @@
-[]
+[
+  {
+    "map": "Queensdale",
+    "slug": "queensdale"
+  },
+  {
+    "map": "Harathi Hinterlands",
+    "slug": "harathi_hinterlands"
+  },
+  {
+    "map": "Divinity's Reach",
+    "slug": "divinitys_reach"
+  },
+  {
+    "map": "Plains of Ashford",
+    "slug": "plains_of_ashford"
+  },
+  {
+    "map": "Blazeridge Steppes",
+    "slug": "blazeridge_steppes"
+  },
+  {
+    "map": "Fields of Ruin",
+    "slug": "fields_of_ruin"
+  },
+  {
+    "map": "Fireheart Rise",
+    "slug": "fireheart_rise"
+  },
+  {
+    "map": "Kessex Hills",
+    "slug": "kessex_hills"
+  },
+  {
+    "map": "Gendarran Fields",
+    "slug": "gendarran_fields"
+  },
+  {
+    "map": "Iron Marches",
+    "slug": "iron_marches"
+  },
+  {
+    "map": "Dredgehaunt Cliffs",
+    "slug": "dredgehaunt_cliffs"
+  },
+  {
+    "map": "Lornar's Pass",
+    "slug": "lornars_pass"
+  },
+  {
+    "map": "Wayfarer Foothills",
+    "slug": "wayfarer_foothills"
+  },
+  {
+    "map": "Timberline Falls",
+    "slug": "timberline_falls"
+  },
+  {
+    "map": "Frostgorge Sound",
+    "slug": "frostgorge_sound"
+  },
+  {
+    "map": "Snowden Drifts",
+    "slug": "snowden_drifts"
+  },
+  {
+    "map": "Diessa Plateau",
+    "slug": "diessa_plateau"
+  },
+  {
+    "map": "Caledon Forest",
+    "slug": "caledon_forest"
+  },
+  {
+    "map": "Metrica Province",
+    "slug": "metrica_province"
+  },
+  {
+    "map": "Mount Maelstrom",
+    "slug": "mount_maelstrom"
+  },
+  {
+    "map": "Lion's Arch",
+    "slug": "lions_arch"
+  },
+  {
+    "map": "Straits of Devastation",
+    "slug": "straits_of_devastation"
+  },
+  {
+    "map": "Sparkfly Fen",
+    "slug": "sparkfly_fen"
+  },
+  {
+    "map": "Brisban Wildlands",
+    "slug": "brisban_wildlands"
+  },
+  {
+    "map": "Cursed Shore",
+    "slug": "cursed_shore"
+  },
+  {
+    "map": "Malchor's Leap",
+    "slug": "malchors_leap"
+  },
+  {
+    "map": "Bloodtide Coast",
+    "slug": "bloodtide_coast"
+  },
+  {
+    "map": "The Grove",
+    "slug": "the_grove"
+  },
+  {
+    "map": "Rata Sum",
+    "slug": "rata_sum"
+  },
+  {
+    "map": "Black Citadel",
+    "slug": "black_citadel"
+  },
+  {
+    "map": "Hoelbrak",
+    "slug": "hoelbrak"
+  },
+  {
+    "map": "Claw Island",
+    "slug": "claw_island"
+  },
+  {
+    "map": "Heart of the Mists",
+    "slug": "heart_of_the_mists"
+  },
+  {
+    "map": "Mad King's Labyrinth",
+    "slug": "mad_kings_labyrinth"
+  },
+  {
+    "map": "Southsun Cove",
+    "slug": "southsun_cove"
+  },
+  {
+    "map": "Labyrinthine Cliffs",
+    "slug": "labyrinthine_cliffs"
+  },
+  {
+    "map": "The Crown Pavilion",
+    "slug": "the_crown_pavilion"
+  },
+  {
+    "map": "Super Adventure Box",
+    "slug": "super_adventure_box"
+  },
+  {
+    "map": "The Tower of Nightmares (Public)",
+    "slug": "the_tower_of_nightmares_(public)"
+  },
+  {
+    "map": "Dry Top",
+    "slug": "dry_top"
+  },
+  {
+    "map": "The Silverwastes",
+    "slug": "the_silverwastes"
+  },
+  {
+    "map": "Dragon's Stand",
+    "slug": "dragons_stand"
+  },
+  {
+    "map": "Verdant Brink",
+    "slug": "verdant_brink"
+  },
+  {
+    "map": "Auric Basin",
+    "slug": "auric_basin"
+  },
+  {
+    "map": "Tangled Depths",
+    "slug": "tangled_depths"
+  },
+  {
+    "map": "Verdant Brink",
+    "slug": "verdant_brink"
+  },
+  {
+    "map": "Dragon's Stand (Heart of Thorns)",
+    "slug": "dragons_stand_(heart_of_thorns)"
+  },
+  {
+    "map": "Spirit Vale",
+    "slug": "spirit_vale"
+  },
+  {
+    "map": "",
+    "slug": ""
+  },
+  {
+    "map": "Lion's Arch Aerodrome",
+    "slug": "lions_arch_aerodrome"
+  },
+  {
+    "map": "Noble's Folly",
+    "slug": "nobles_folly"
+  },
+  {
+    "map": "Bloodstone Fen",
+    "slug": "bloodstone_fen"
+  },
+  {
+    "map": "Ember Bay",
+    "slug": "ember_bay"
+  },
+  {
+    "map": "Bitterfrost Frontier",
+    "slug": "bitterfrost_frontier"
+  },
+  {
+    "map": "Lake Doric",
+    "slug": "lake_doric"
+  },
+  {
+    "map": "Draconis Mons",
+    "slug": "draconis_mons"
+  },
+  {
+    "map": "Siren's Landing",
+    "slug": "sirens_landing"
+  },
+  {
+    "map": "Mistlock Sanctuary",
+    "slug": "mistlock_sanctuary"
+  },
+  {
+    "map": "Crystal Oasis",
+    "slug": "crystal_oasis"
+  },
+  {
+    "map": "Desert Highlands",
+    "slug": "desert_highlands"
+  },
+  {
+    "map": "Windswept Haven",
+    "slug": "windswept_haven"
+  },
+  {
+    "map": "The Desolation",
+    "slug": "the_desolation"
+  },
+  {
+    "map": "Elon Riverlands",
+    "slug": "elon_riverlands"
+  },
+  {
+    "map": "Domain of Vabbi",
+    "slug": "domain_of_vabbi"
+  },
+  {
+    "map": "Domain of Istan",
+    "slug": "domain_of_istan"
+  },
+  {
+    "map": "Sandswept Isles",
+    "slug": "sandswept_isles"
+  },
+  {
+    "map": "Domain of Kourna",
+    "slug": "domain_of_kourna"
+  },
+  {
+    "map": "Jahai Bluffs",
+    "slug": "jahai_bluffs"
+  },
+  {
+    "map": "Mad King's Raceway",
+    "slug": "mad_kings_raceway"
+  },
+  {
+    "map": "Thunderhead Peaks",
+    "slug": "thunderhead_peaks"
+  },
+  {
+    "map": "Mists Rift",
+    "slug": "mists_rift"
+  },
+  {
+    "map": "Dragonfall",
+    "slug": "dragonfall"
+  },
+  {
+    "map": "Dragon Arena (Public)",
+    "slug": "dragon_arena_(public)"
+  },
+  {
+    "map": "Grothmar Valley",
+    "slug": "grothmar_valley"
+  },
+  {
+    "map": "Strike Mission: Shiverpeaks Pass (Public)",
+    "slug": "strike_mission_shiverpeaks_pass_(public)"
+  },
+  {
+    "map": "Weekly Strike Mission: Voice of the Fallen and Claw of the Fallen (Public)",
+    "slug": "weekly_strike_mission_voice_of_the_fallen_and_claw_of_the_fallen_(public)"
+  },
+  {
+    "map": "Bjora Marches",
+    "slug": "bjora_marches"
+  },
+  {
+    "map": "Weekly Strike Mission: Fraenir of Jormag (Public)",
+    "slug": "weekly_strike_mission_fraenir_of_jormag_(public)"
+  },
+  {
+    "map": "Weekly Strike Mission: Boneskinner (Public)",
+    "slug": "weekly_strike_mission_boneskinner_(public)"
+  },
+  {
+    "map": "Secret Lair of the Snowmen (Public)",
+    "slug": "secret_lair_of_the_snowmen_(public)"
+  },
+  {
+    "map": "Celestial Challenge",
+    "slug": "celestial_challenge"
+  },
+  {
+    "map": "Strike Mission: Whisper of Jormag (Public)",
+    "slug": "strike_mission_whisper_of_jormag_(public)"
+  },
+  {
+    "map": "Forging Steel (Public)",
+    "slug": "forging_steel_(public)"
+  },
+  {
+    "map": "Eye of the North",
+    "slug": "eye_of_the_north"
+  },
+  {
+    "map": "Drizzlewood Coast",
+    "slug": "drizzlewood_coast"
+  },
+  {
+    "map": "Strike Mission: Cold War (Public)",
+    "slug": "strike_mission_cold_war_(public)"
+  },
+  {
+    "map": "Bloodtide Coast (Public)",
+    "slug": "bloodtide_coast_(public)"
+  },
+  {
+    "map": "Snowden Drifts (Public)",
+    "slug": "snowden_drifts_(public)"
+  },
+  {
+    "map": "Fireheart Rise (Public)",
+    "slug": "fireheart_rise_(public)"
+  },
+  {
+    "map": "Lake Doric (Public)",
+    "slug": "lake_doric_(public)"
+  },
+  {
+    "map": "Thunderhead Peaks (Public)",
+    "slug": "thunderhead_peaks_(public)"
+  },
+  {
+    "map": "Gendarran Fields (Public)",
+    "slug": "gendarran_fields_(public)"
+  },
+  {
+    "map": "Metrica Province (Public)",
+    "slug": "metrica_province_(public)"
+  },
+  {
+    "map": "Fields of Ruin (Public)",
+    "slug": "fields_of_ruin_(public)"
+  },
+  {
+    "map": "Brisban Wildlands (Public)",
+    "slug": "brisban_wildlands_(public)"
+  },
+  {
+    "map": "Caledon Forest (Public)",
+    "slug": "caledon_forest_(public)"
+  },
+  {
+    "map": "Dragonstorm (Public)",
+    "slug": "dragonstorm_(public)"
+  },
+  {
+    "map": "The Twisted Marionette (Public)",
+    "slug": "the_twisted_marionette_(public)"
+  },
+  {
+    "map": "Dragon's End",
+    "slug": "dragons_end"
+  },
+  {
+    "map": "Arborstone",
+    "slug": "arborstone"
+  },
+  {
+    "map": "New Kaineng City",
+    "slug": "new_kaineng_city"
+  },
+  {
+    "map": "Seitung Province",
+    "slug": "seitung_province"
+  },
+  {
+    "map": "The Echovald Wilds",
+    "slug": "the_echovald_wilds"
+  },
+  {
+    "map": "Thousand Seas Pavilion",
+    "slug": "thousand_seas_pavilion"
+  },
+  {
+    "map": "The Battle For Lion's Arch (Public)",
+    "slug": "the_battle_for_lions_arch_(public)"
+  },
+  {
+    "map": "Memory of Old Lion's Arch",
+    "slug": "memory_of_old_lions_arch"
+  },
+  {
+    "map": "Gyala Delve",
+    "slug": "gyala_delve"
+  },
+  {
+    "map": "The Wizard's Tower",
+    "slug": "the_wizards_tower"
+  },
+  {
+    "map": "Skywatch Archipelago",
+    "slug": "skywatch_archipelago"
+  },
+  {
+    "map": "Amnytas",
+    "slug": "amnytas"
+  },
+  {
+    "map": "Stopped Clock Tower",
+    "slug": "stopped_clock_tower"
+  },
+  {
+    "map": "Convergence: Outer Nayos (Public)",
+    "slug": "convergence_outer_nayos_(public)"
+  },
+  {
+    "map": "Inner Nayos",
+    "slug": "inner_nayos"
+  },
+  {
+    "map": "Lowland Shore",
+    "slug": "lowland_shore"
+  },
+  {
+    "map": "Janthir Syntri",
+    "slug": "janthir_syntri"
+  },
+  {
+    "map": "Convergence: Mount Balrior (Public)",
+    "slug": "convergence_mount_balrior_(public)"
+  },
+  {
+    "map": "Bava Nisos",
+    "slug": "bava_nisos"
+  },
+  {
+    "map": "Mistburned Barrens",
+    "slug": "mistburned_barrens"
+  }
+]
