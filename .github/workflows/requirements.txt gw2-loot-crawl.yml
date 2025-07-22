@@ -1,0 +1,35 @@
+name: GW2 Event Loot Crawler
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'gw2_event_loot_crawler.py'
+      - 'requirements.txt'
+      - 'data/**'
+  schedule:
+    - cron: '0 5 * * 1'  # elke maandag om 05:00
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python + pip-cache
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies (from requirements.txt)
+        run: pip install -r requirements.txt
+
+      - name: Run GW2 Event Loot Crawler
+        run: python gw2_event_loot_crawler.py
+
+      - name: Toon outputbestanden (voor log)
+        run: |
+          ls -lh data/maps
+          cat data/manifest.json | head -40
