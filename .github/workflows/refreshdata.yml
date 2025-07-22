@@ -30,9 +30,6 @@ jobs:
       - name: Refresh maps.csv
         run: python py/refreshmaps.py
 
-      - name: Refresh prices.csv
-        run: python py/refreshprices.py
-
       - name: Pull remote changes
         run: |
           git config pull.rebase false
