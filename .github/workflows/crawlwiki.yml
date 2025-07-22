@@ -1,4 +1,4 @@
-name: Crawl GW2 Wiki Loot
+name: Crawl GW2 Wiki Events & Loot
 
 on:
   schedule:
@@ -6,25 +6,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  crawl:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Python
+      - uses: actions/checkout@v4
+
+      - name: Python Setup
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: 3.11
+          cache: 'pip'
+
       - name: Install dependencies
         run: pip install requests beautifulsoup4 rapidfuzz
-      - name: Run crawler
+
+      - name: Crawl Guild Wars 2 Wiki loot
         run: python py/wiki_loot_crawler.py
-      - name: Git Sync
+
+      - name: Commit updates
         run: |
-          git config pull.rebase false
-          git pull origin main || echo "No remote changes"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull origin main || true
           git add data/maps/*.json data/manifest.json
-          git commit -m "Wiki loot dump per map (auto-crawl) [skip ci]" || echo "No changes"
+          git commit -m "Auto-update GW2 Wiki loot [skip ci]" || echo "No changes to commit"
           git push
