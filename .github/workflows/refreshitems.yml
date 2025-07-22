@@ -1,0 +1,32 @@
+name: Refresh Items CSV
+
+on:
+  schedule:
+    - cron: '0 3 * * *'   # Elke dag om 03:00 UTC
+  workflow_dispatch:      # Zorg dat je het ook handmatig kunt starten
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run item refresher
+        run: |
+          pip install requests
+          python py/refreshitems.py
+
+      - name: Commit CSV
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/items.csv
+          git commit -m "Auto-update items.csv [skip ci]" || echo "No changes"
+          git push
