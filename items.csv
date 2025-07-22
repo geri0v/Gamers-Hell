@@ -36057,10 +36057,12 @@ id,name,type,level,rarity,vendor_value
 48988,Dreamthistle Shield Skin,Consumable,0,Rare,0
 48991,Dreamthistle Short Bow Skin,Consumable,0,Rare,0
 48994,Dreamthistle Staff Skin,Consumable,0,Rare,0
+48997,Dreamthistle Sword Skin,Consumable,0,Rare,0
 49000,Dreamthistle Torch Skin,Consumable,0,Rare,0
 49003,Dreamthistle Warhorn Skin,Consumable,0,Rare,0
 49004,Dreamthistle Trident,Weapon,0,Rare,0
 49005,Dreamthistle Trident,Weapon,0,Exotic,0
+49006,Dreamthistle Trident Skin,Consumable,0,Rare,0
 49009,Dreamthistle Harpoon Gun Skin,Consumable,0,Rare,0
 49012,Dreamthistle Spear Skin,Consumable,0,Rare,0
 49013,Marjory's Axe,Weapon,0,Rare,0
@@ -36093,6 +36095,7 @@ id,name,type,level,rarity,vendor_value
 49138,Dried Toxic Spore,Trophy,0,Basic,0
 49139,Sturdy Stick,Trophy,0,Basic,0
 49140,Dry Roots,Trophy,0,Basic,0
+49141,Makeshift Torch Handle,Trophy,0,Basic,0
 49143,Makeshift Torch,Trophy,0,Basic,0
 49145,Unopened Endless Mystery Tonic,Container,0,Exotic,0
 49146,Unopened Endless Mystery Tonic,Container,0,Exotic,0
@@ -36148,6 +36151,7 @@ id,name,type,level,rarity,vendor_value
 49314,Tormented Axe Skin,Consumable,0,Rare,0
 49317,Tormented Dagger Skin,Consumable,0,Rare,0
 49320,Tormented Focus Skin,Consumable,0,Rare,0
+49321,Tormented Greatsword,Weapon,0,Rare,0
 49323,Tormented Greatsword Skin,Consumable,0,Rare,0
 49326,Tormented Hammer Skin,Consumable,0,Rare,0
 49329,Tormented Longbow Skin,Consumable,0,Rare,0
@@ -36160,6 +36164,7 @@ id,name,type,level,rarity,vendor_value
 49350,Tormented Staff Skin,Consumable,0,Rare,0
 49353,Tormented Sword Skin,Consumable,0,Rare,0
 49356,Tormented Torch Skin,Consumable,0,Rare,0
+49359,Tormented Warhorn Skin,Consumable,0,Rare,0
 49361,Black Lion Trading Satchel,Bag,0,Rare,60
 49362,Koss on Koss (Infused),Back,80,Ascended,330
 49363,Bowyer's Delight (Infused),Back,80,Ascended,330
@@ -36182,6 +36187,7 @@ id,name,type,level,rarity,vendor_value
 49380,Beta Fractal Capacitor (Infused),Back,80,Ascended,330
 49381,Beta Fractal Capacitor (Infused),Back,80,Ascended,330
 49382,Fractal Capacitor (Infused),Back,80,Ascended,330
+49383,Fractal Capacitor (Infused),Back,80,Ascended,330
 49384,Fractal Capacitor (Infused),Back,80,Ascended,330
 49385,Fractal Capacitor (Infused),Back,80,Ascended,330
 49386,Fractal Capacitor (Infused),Back,80,Ascended,330
