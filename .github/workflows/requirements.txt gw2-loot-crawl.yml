@@ -4,32 +4,35 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'gw2_event_loot_crawler.py'
+      - 'py/gw2_event_loot_crawler.py'
       - 'requirements.txt'
       - 'data/**'
   schedule:
-    - cron: '0 5 * * 1'  # elke maandag om 05:00
+    - cron: '0 5 * * 1'  # elke maandag om 05:00 UTC
 
 jobs:
   crawl:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+    - name: 📥 Checkout repository code
+      uses: actions/checkout@v4
 
-      - name: Setup Python + pip-cache
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-          cache: 'pip'
+    - name: 🐍 Setup Python and pip caching
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
 
-      - name: Install dependencies (from requirements.txt)
-        run: pip install -r requirements.txt
+    - name: 📦 Install dependencies
+      run: pip install -r requirements.txt
 
-      - name: Run GW2 Event Loot Crawler
-        run: python gw2_event_loot_crawler.py
+    - name: 🚀 Run event loot crawler
+      run: python py/gw2_event_loot_crawler.py
 
-      - name: Toon outputbestanden (voor log)
-        run: |
-          ls -lh data/maps
-          cat data/manifest.json | head -40
+    - name: 🗂️ Toon inhoud outputmap
+      run: |
+        ls -lh data/maps
+        echo ""
+        echo "— manifest.json preview —"
+        head -n 30 data/manifest.json || echo "(geen manifest?)"
