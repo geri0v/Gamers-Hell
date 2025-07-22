@@ -123,3 +123,118 @@ def get_loot_data(loot_html, event_page_text) -> List[dict]:
         })
 
     return loot_list
+# --- Deel 2 van gw2_event_loot_crawler.py ---
+
+def find_events_by_spans(soup):
+    events = []
+    for span in soup.select('span[id^="Events"], span[id^="Dynamic_events"], span[id^="Meta_events"]'):
+        ul = span.find_next("ul")
+        if not ul:
+            continue
+        for li in ul.find_all("li"):
+            a = li.find("a")
+            if a and '/wiki/Event:' in a.get("href", ""):
+                events.append({
+                    "title": a.text.strip(),
+                    "url": "https://wiki.guildwars2.com" + a["href"],
+                    "area": span.text.strip()
+                })
+    return events
+
+def find_events_by_category(map_name):
+    url = f"https://wiki.guildwars2.com/wiki/Category:{map_name.replace(' ', '_')}_events"
+    html = fetch_html(url)
+    soup = BeautifulSoup(html, "html.parser")
+    events = []
+    for a in soup.select(".mw-category li a"):
+        href = a.get("href", "")
+        title = a.get("title", "")
+        if "/wiki/Event:" in href:
+            events.append({
+                "title": title.strip(),
+                "url": "https://wiki.guildwars2.com" + href,
+                "area": "Category"
+            })
+    return events
+
+def find_events_fallback(html):
+    soup = BeautifulSoup(html, "html.parser")
+    events = []
+    for a in soup.select("a[href^='/wiki/Event:']"):
+        href = a.get("href", "")
+        title = a.get("title", "")
+        if title:
+            events.append({
+                "title": title.strip(),
+                "url": "https://wiki.guildwars2.com" + href,
+                "area": "Fallback"
+            })
+    return events
+
+def parse_location_from_html(soup):
+    location = ""
+    for dt in soup.find_all("dt"):
+        if "Location" in dt.text:
+            dd = dt.find_next("dd")
+            if dd:
+                location = dd.text.strip()
+            break
+    return location
+
+def parse_closest_waypoint_from_html(soup):
+    wp = soup.find("a", href=lambda h: h and "Waypoint" in h)
+    return wp.text.strip() if wp else ""
+
+def crawl_events_for_map(mp):
+    url = mp.get("mapUrl") or mp.get("wiki") or f"https://wiki.guildwars2.com/wiki/{mp['name'].replace(' ', '_')}"
+    print(f"🌍 Crawling map: {mp['name']} ({mp.get('region_name','')} / {mp.get('continent_name','')})")
+    html = fetch_html(url)
+    soup = BeautifulSoup(html, "html.parser")
+    events = find_events_by_spans(soup) or find_events_by_category(mp["name"]) or find_events_fallback(html)
+
+    crawled_events = []
+    for ev in events:
+        ev_html = fetch_html(ev["url"])
+        ev_soup = BeautifulSoup(ev_html, "html.parser")
+        desc_p = ev_soup.find("p")
+        desc = first_sentences(desc_p.text if desc_p else "")
+        location = parse_location_from_html(ev_soup)
+        waypoint = parse_closest_waypoint_from_html(ev_soup)
+
+        loot_block = ev_soup.find("span", id=lambda x: x and "Reward" in x)
+        loot_ul = loot_block.find_next("ul") if loot_block else None
+        loot = get_loot_data(loot_ul, ev_html)
+
+        for item in loot:
+            crawled_events.append({
+                "Expansion": mp.get("expansion", ""),
+                "Region": mp.get("region_name", ""),
+                "Continent": mp.get("continent_name", ""),
+                "Map": mp["name"],
+                "Eventname": ev["title"],
+                "Event description": desc,
+                "Area": ev["area"],
+                "Location": location,
+                "Closest Waypoint": waypoint,
+                **item
+            })
+    return crawled_events
+
+def main():
+    manifest = []
+    for mp in maps:
+        map_slug = to_slug(mp["name"])
+        map_events_loot = crawl_events_for_map(mp)
+        if map_events_loot:
+            with open(f"{DATA_DIR}/{map_slug}.json", "w", encoding="utf-8") as f:
+                json.dump(map_events_loot, f, ensure_ascii=False, indent=2)
+            print(f"🚀 Saved data/maps/{map_slug}.json with {len(map_events_loot)} loot entries")
+        else:
+            print(f"⚠️ No loot found for map: {mp['name']}")
+        manifest.append({"map": mp["name"], "slug": map_slug})
+    with open("data/manifest.json", "w", encoding="utf-8") as f:
+        json.dump(manifest, f, ensure_ascii=False, indent=2)
+    print(f"✅ Manifest saved with {len(manifest)} maps")
+
+if __name__ == "__main__":
+    main()
