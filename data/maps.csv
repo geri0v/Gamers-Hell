@@ -1,0 +1,1032 @@
+id,name,min_level,max_level,type,region_name,continent_name
+15,Queensdale,1,15,Public,Kryta,Tyria
+17,Harathi Hinterlands,35,45,Public,Kryta,Tyria
+18,Divinity's Reach,0,80,Public,Kryta,Tyria
+19,Plains of Ashford,1,15,Public,Ascalon,Tyria
+20,Blazeridge Steppes,40,50,Public,Ascalon,Tyria
+21,Fields of Ruin,30,40,Public,Ascalon,Tyria
+22,Fireheart Rise,60,70,Public,Ascalon,Tyria
+23,Kessex Hills,15,25,Public,Kryta,Tyria
+24,Gendarran Fields,25,35,Public,Kryta,Tyria
+25,Iron Marches,50,60,Public,Ascalon,Tyria
+26,Dredgehaunt Cliffs,40,50,Public,Shiverpeak Mountains,Tyria
+27,Lornar's Pass,25,40,Public,Shiverpeak Mountains,Tyria
+28,Wayfarer Foothills,1,15,Public,Shiverpeak Mountains,Tyria
+29,Timberline Falls,50,60,Public,Shiverpeak Mountains,Tyria
+30,Frostgorge Sound,70,80,Public,Shiverpeak Mountains,Tyria
+31,Snowden Drifts,15,25,Public,Shiverpeak Mountains,Tyria
+32,Diessa Plateau,15,25,Public,Ascalon,Tyria
+33,Ascalonian Catacombs,30,32,Instance,Ascalon,Tyria
+34,Caledon Forest,1,15,Public,Tarnished Coast,Tyria
+35,Metrica Province,1,15,Public,Tarnished Coast,Tyria
+36,Ascalonian Catacombs,35,35,Instance,Ascalon,Tyria
+37,Arson at the Orphanage,10,10,Instance,Kryta,Tyria
+38,Eternal Battlegrounds,80,80,Center,World vs. World,Mists
+39,Mount Maelstrom,60,70,Public,Tarnished Coast,Tyria
+50,Lion's Arch,0,80,Public,Kryta,Tyria
+51,Straits of Devastation,70,75,Public,Ruins of Orr,Tyria
+53,Sparkfly Fen,55,65,Public,Tarnished Coast,Tyria
+54,Brisban Wildlands,15,25,Public,Tarnished Coast,Tyria
+55,The Hospital in Jeopardy,10,10,Instance,Kryta,Tyria
+61,Infiltration,10,10,Instance,Kryta,Tyria
+62,Cursed Shore,80,80,Public,Ruins of Orr,Tyria
+63,Sorrow's Embrace,60,62,Instance,Shiverpeak Mountains,Tyria
+64,Sorrow's Embrace,65,65,Instance,Shiverpeak Mountains,Tyria
+65,Malchor's Leap,75,80,Public,Ruins of Orr,Tyria
+66,Citadel of Flame,70,72,Instance,Ascalon,Tyria
+67,Twilight Arbor,55,80,Instance,Tarnished Coast,Tyria
+68,Twilight Arbor,50,52,Instance,Tarnished Coast,Tyria
+69,Citadel of Flame,75,75,Instance,Ascalon,Tyria
+70,Honor of the Waves,76,78,Instance,Shiverpeak Mountains,Tyria
+71,Honor of the Waves,80,80,Instance,Shiverpeak Mountains,Tyria
+73,Bloodtide Coast,45,55,Public,Kryta,Tyria
+75,Caudecus's Manor,40,42,Instance,Kryta,Tyria
+76,Caudecus's Manor,45,45,Instance,Kryta,Tyria
+77,Search the Premises,10,10,Instance,Kryta,Tyria
+79,The Informant,10,10,Instance,Kryta,Tyria
+80,A Society Function,10,10,Instance,Kryta,Tyria
+81,Crucible of Eternity,78,80,Instance,Tarnished Coast,Tyria
+82,Crucible of Eternity,80,80,Instance,Tarnished Coast,Tyria
+89,Chasing the Culprits,10,10,Instance,Kryta,Tyria
+91,The Grove,0,80,Public,Tarnished Coast,Tyria
+92,The Trial of Julius Zamon,10,10,Instance,Kryta,Tyria
+95, Alpine Borderlands,80,80,GreenHome,World vs. World,Mists
+96, Alpine Borderlands,80,80,BlueHome,World vs. World,Mists
+97,Infiltration,10,10,Instance,Kryta,Tyria
+110,The Perils of Friendship,10,10,Instance,Kryta,Tyria
+111,Victory or Death,80,80,Instance,Ruins of Orr,Tyria
+112,The Ruined City of Arah,80,80,Instance,Ruins of Orr,Tyria
+113,Desperate Medicine,10,10,Instance,Kryta,Tyria
+120,The Commander,10,10,Instance,Kryta,Tyria
+138,Defense of Shaemoor,1,1,Tutorial,Kryta,Tyria
+139,Rata Sum,0,80,Public,Tarnished Coast,Tyria
+140,The Apothecary,10,10,Instance,Kryta,Tyria
+142,Going Undercover,10,10,Instance,Kryta,Tyria
+143,Going Undercover,10,10,Instance,Kryta,Tyria
+144,The Greater Good,10,10,Instance,Kryta,Tyria
+145,The Rescue,10,10,Instance,Kryta,Tyria
+147,Breaking the Blade,10,10,Instance,Kryta,Tyria
+148,The Fall of Falcon Company,20,20,Instance,Kryta,Tyria
+149,The Fall of Falcon Company,20,20,Instance,Kryta,Tyria
+152,Confronting Captain Tervelan,20,20,Instance,Kryta,Tyria
+153,Seek Logan's Aid,20,20,Instance,Kryta,Tyria
+154,Seek Logan's Aid,20,20,Instance,Kryta,Tyria
+157,Accusation,20,20,Instance,Kryta,Tyria
+159,Accusation,20,20,Instance,Kryta,Tyria
+161,Liberation,20,20,Instance,Kryta,Tyria
+162,Voices From the Past,20,20,Instance,Kryta,Tyria
+163,Voices From the Past,20,20,Instance,Kryta,Tyria
+171,Rending the Mantle,20,20,Instance,Kryta,Tyria
+172,Rending the Mantle,20,20,Instance,Kryta,Tyria
+178,The Floating Grizwhirl,20,20,Instance,Kryta,Tyria
+179,The Floating Grizwhirl,20,20,Instance,Kryta,Tyria
+180,The Floating Grizwhirl,20,20,Instance,Kryta,Tyria
+182,Clown College,20,20,Instance,Kryta,Tyria
+184,The Artist's Workshop,20,20,Instance,Kryta,Tyria
+185,Into the Woods,20,20,Instance,Kryta,Tyria
+186,The Ringmaster,20,20,Instance,Kryta,Tyria
+190,The Orders of Tyria,30,30,Instance,Kryta,Tyria
+191,The Orders of Tyria,30,30,Instance,Kryta,Tyria
+192,Brute Force,30,30,Instance,Kryta,Tyria
+193,Mortus Virge,30,30,Instance,Kryta,Tyria
+195,Triskell Quay,30,30,Instance,Kryta,Tyria
+196,Track the Seraph,30,30,Instance,Kryta,Tyria
+198,Speaker of the Dead,30,30,Instance,Kryta,Tyria
+199,"The Sad Tale of the ""Ravenous""",30,30,Instance,Kryta,Tyria
+201,Kellach's Attack,30,30,Instance,Kryta,Tyria
+202,The Queen's Justice,30,30,Instance,Kryta,Tyria
+203,The Trap,30,30,Instance,Kryta,Tyria
+211,Best Laid Plans,10,10,Instance,Ascalon,Tyria
+212,Welcome Home,10,10,Instance,Kryta,Tyria
+215,The Tribune's Call,10,10,Instance,Ascalon,Tyria
+216,The Tribune's Call,10,10,Instance,Ascalon,Tyria
+217,The Tribune's Call,10,10,Instance,Ascalon,Tyria
+218,Black Citadel,0,80,Public,Ascalon,Tyria
+222,A Spy for a Spy,10,10,Instance,Ascalon,Tyria
+224,Scrapyard Dogs,10,10,Instance,Ascalon,Tyria
+225,A Spy for a Spy,10,10,Instance,Ascalon,Tyria
+226,On the Mend,10,10,Instance,Kryta,Tyria
+232,Spilled Blood,10,10,Instance,Ascalon,Tyria
+234,Ghostbore Musket,10,10,Instance,Ascalon,Tyria
+237,Iron Grip of the Legion,10,10,Instance,Ascalon,Tyria
+238,The Flame Advances,10,10,Instance,Ascalon,Tyria
+239,The Flame Advances,10,10,Instance,Ascalon,Tyria
+242,Test Your Metal,10,10,Instance,Ascalon,Tyria
+244,Quick and Quiet,10,10,Instance,Ascalon,Tyria
+248,Salma District (Home),0,80,Instance,Kryta,Tyria
+249,An Unusual Inheritance,20,20,Instance,Ascalon,Tyria
+250,Windrock Maze,20,20,Instance,Ascalon,Tyria
+251,Mired Deep,20,20,Instance,Ascalon,Tyria
+252,Mired Deep,20,20,Instance,Ascalon,Tyria
+254,Deadly Force,10,10,Instance,Ascalon,Tyria
+255,Ghostbore Artillery,10,10,Instance,Ascalon,Tyria
+256,No Negotiations,20,20,Instance,Ascalon,Tyria
+257,Salvaging Scrap,20,20,Instance,Ascalon,Tyria
+258,Salvaging Scrap,20,20,Instance,Ascalon,Tyria
+259,In the Ruins,20,20,Instance,Ascalon,Tyria
+260,In the Ruins,20,20,Instance,Ascalon,Tyria
+261,Busted Flagon Public House,0,0,Pvp,Kryta,Tyria
+262,Chain of Command,10,10,Instance,Ascalon,Tyria
+263,Chain of Command,10,10,Instance,Ascalon,Tyria
+264,Time for a Promotion,10,10,Instance,Ascalon,Tyria
+267,The End of the Line,10,10,Instance,Ascalon,Tyria
+269,Magic Users,10,10,Instance,Ascalon,Tyria
+271,Rage Suppression,10,10,Instance,Ascalon,Tyria
+272,Rage Suppression,10,10,Instance,Ascalon,Tyria
+274,Operation: Bulwark,10,10,Instance,Ascalon,Tyria
+275,AWOL,20,20,Instance,Ascalon,Tyria
+276,Human's Lament,20,20,Instance,Ascalon,Tyria
+282,Misplaced Faith,20,20,Instance,Ascalon,Tyria
+283,Thicker Than Water,20,20,Instance,Ascalon,Tyria
+284,Dishonorable Discharge,20,20,Instance,Ascalon,Tyria
+287,Searching for the Truth,20,20,Instance,Ascalon,Tyria
+288,Lighting the Beacons,20,20,Instance,Ascalon,Tyria
+290,Stoking the Flame,20,20,Instance,Ascalon,Tyria
+294,A Fork in the Road,20,20,Instance,Ascalon,Tyria
+295,Sins of the Father,20,20,Instance,Ascalon,Tyria
+297,Graveyard Ornaments,30,30,Instance,Ascalon,Tyria
+326,Hoelbrak,0,80,Public,Shiverpeak Mountains,Tyria
+327,Desperate Medicine,10,10,Instance,Kryta,Tyria
+330,Seraph Headquarters,0,15,Instance,Kryta,Tyria
+334,Keg Brawl,0,0,Pvp,Shiverpeak Mountains,Tyria
+335,Claw Island,60,60,Public,Kryta,Tyria
+336,Chantry of Secrets,45,55,Instance,Kryta,Tyria
+350,Heart of the Mists,0,80,Public,Player vs. Player,Mists
+363,The Sting,20,20,Instance,Kryta,Tyria
+364,Drawing Out the Cult,20,20,Instance,Kryta,Tyria
+365,Ashes of the Past,20,20,Instance,Kryta,Tyria
+371,Hero's Canton (Home),0,0,Instance,Ascalon,Tyria
+372,Blood Tribune Quarters,0,0,Instance,Ascalon,Tyria
+373,The Command Core,0,0,Instance,Ascalon,Tyria
+374,Knut Whitebear's Loft,0,0,Instance,Shiverpeak Mountains,Tyria
+375,Hunter's Hearth (Home),0,0,Instance,Shiverpeak Mountains,Tyria
+376,Stonewright's Steading,0,0,Instance,Shiverpeak Mountains,Tyria
+378,Queen's Throne Room,0,15,Instance,Kryta,Tyria
+379,The Great Hunt,1,1,Tutorial,Shiverpeak Mountains,Tyria
+380,A Weapon of Legend,10,10,Instance,Shiverpeak Mountains,Tyria
+381,The Last of the Giant-Kings,10,10,Instance,Shiverpeak Mountains,Tyria
+382,Disciples of the Dragon,10,10,Instance,Shiverpeak Mountains,Tyria
+385,A Weapon of Legend,10,10,Instance,Shiverpeak Mountains,Tyria
+386,Echoes of Ages Past,10,10,Instance,Shiverpeak Mountains,Tyria
+387,Wild Spirits,10,10,Instance,Shiverpeak Mountains,Tyria
+388,Out of the Skies,10,10,Instance,Shiverpeak Mountains,Tyria
+389,Echoes of Ages Past,10,10,Instance,Shiverpeak Mountains,Tyria
+390,Twilight of the Wolf,10,10,Instance,Shiverpeak Mountains,Tyria
+391,Rage of the Minotaurs,10,10,Instance,Shiverpeak Mountains,Tyria
+392,A Pup's Illness,10,10,Instance,Shiverpeak Mountains,Tyria
+393,Through the Veil,10,10,Instance,Shiverpeak Mountains,Tyria
+394,A Trap Foiled,10,10,Instance,Shiverpeak Mountains,Tyria
+396,Raven's Revered,10,10,Instance,Shiverpeak Mountains,Tyria
+397,One Good Drink Deserves Another,10,10,Instance,Shiverpeak Mountains,Tyria
+399,Shape of the Spirit,10,10,Instance,Shiverpeak Mountains,Tyria
+400,Into the Mists,10,10,Instance,Shiverpeak Mountains,Tyria
+401,Through the Veil,10,10,Instance,Shiverpeak Mountains,Tyria
+405,Blessed of Bear,10,10,Instance,,
+407,The Wolf Havroun,10,10,Instance,Shiverpeak Mountains,Tyria
+410,Minotaur Rampant,10,10,Instance,Shiverpeak Mountains,Tyria
+411,Minotaur Rampant,10,10,Instance,Shiverpeak Mountains,Tyria
+412,Unexpected Visitors,20,20,Instance,Shiverpeak Mountains,Tyria
+413,Rumors of Trouble,20,20,Instance,Shiverpeak Mountains,Tyria
+414,A New Challenger,20,20,Instance,Shiverpeak Mountains,Tyria
+415,Unexpected Visitors,20,20,Instance,Shiverpeak Mountains,Tyria
+416,Roadblock,20,20,Instance,Ascalon,Tyria
+417,Assault on Moledavia,20,20,Instance,Ascalon,Tyria
+418,Don't Leave Your Toys Out,20,20,Instance,Shiverpeak Mountains,Tyria
+419,A New Challenger,20,20,Instance,Shiverpeak Mountains,Tyria
+420,First Attack,20,20,Instance,Shiverpeak Mountains,Tyria
+421,The Finishing Blow,20,20,Instance,Shiverpeak Mountains,Tyria
+422,The Semifinals,20,20,Instance,Ascalon,Tyria
+423,The Championship Fight,20,20,Instance,Shiverpeak Mountains,Tyria
+424,The Championship Fight,20,20,Instance,Shiverpeak Mountains,Tyria
+425,The Machine in Action,20,20,Instance,Ascalon,Tyria
+427,Among the Kodan,20,20,Instance,Shiverpeak Mountains,Tyria
+428,Rumors of Trouble,20,20,Instance,Shiverpeak Mountains,Tyria
+429,Rage of the Minotaurs,10,10,Instance,Shiverpeak Mountains,Tyria
+430,Darkness at Drakentelt,20,20,Instance,Shiverpeak Mountains,Tyria
+432,Fighting the Nightmare,1,1,Tutorial,Tarnished Coast,Tyria
+434,Preserving the Balance,20,20,Instance,Shiverpeak Mountains,Tyria
+435,Means to an End,20,20,Instance,Shiverpeak Mountains,Tyria
+436,Dredge Technology,30,30,Instance,Shiverpeak Mountains,Tyria
+439,Underground Scholar,30,30,Instance,Shiverpeak Mountains,Tyria
+440,Dredge Assault,30,30,Instance,Shiverpeak Mountains,Tyria
+441,The Dredge Hideout,30,30,Instance,Shiverpeak Mountains,Tyria
+444,Sabotage,30,30,Instance,Shiverpeak Mountains,Tyria
+447,Codebreaker,30,30,Instance,Shiverpeak Mountains,Tyria
+449,Armaments,30,30,Instance,Shiverpeak Mountains,Tyria
+453,Assault the Hill,30,30,Instance,Shiverpeak Mountains,Tyria
+454,Silent Warfare,30,30,Instance,Shiverpeak Mountains,Tyria
+455,Sever the Head,30,30,Instance,Shiverpeak Mountains,Tyria
+458,Fury of the Dead,1,1,Tutorial,Ascalon,Tyria
+459,A Fork in the Road,20,20,Instance,Ascalon,Tyria
+460,Citadel Stockade,0,0,Instance,Ascalon,Tyria
+464,Tribunes in Effigy,20,20,Instance,Ascalon,Tyria
+465,Sins of the Father,20,20,Instance,Ascalon,Tyria
+466,Misplaced Faith,20,20,Instance,Ascalon,Tyria
+469,Gladiator,0,0,Pvp,Ascalon,Tyria
+470,Graveyard Ornaments,30,30,Instance,Ascalon,Tyria
+471,Undead Infestation,30,30,Instance,Shiverpeak Mountains,Tyria
+474,Whispers in the Dark,30,30,Instance,Shiverpeak Mountains,Tyria
+476,Dangerous Research,30,30,Instance,Shiverpeak Mountains,Tyria
+477,Digging Up Answers,30,30,Instance,Shiverpeak Mountains,Tyria
+480,Defending the Keep,30,30,Instance,Kryta,Tyria
+481,Undead Detection,30,30,Instance,Kryta,Tyria
+483,Ever Vigilant,30,30,Instance,Kryta,Tyria
+485,Research and Destroy,30,30,Instance,Kryta,Tyria
+487,Whispers of Vengeance,30,30,Instance,Ascalon,Tyria
+488,Killer Instinct,40,40,Instance,Ascalon,Tyria
+489,Meeting my Mentor,40,40,Instance,,
+490,A Fragile Peace,40,40,Instance,Ascalon,Tyria
+492,Don't Shoot the Messenger,40,40,Instance,Ascalon,Tyria
+496,Meeting my Mentor,40,40,Instance,Kryta,Tyria
+497,Dredging Up the Past,40,40,Instance,Shiverpeak Mountains,Tyria
+498,Dredging Up the Past,40,40,Instance,Shiverpeak Mountains,Tyria
+499,Scrapyard Dogs,10,10,Instance,Ascalon,Tyria
+502,Quaestor's Siege,40,40,Instance,Ascalon,Tyria
+503,Minister's Defense,40,40,Instance,Ascalon,Tyria
+504,Called to Service,10,10,Instance,Tarnished Coast,Tyria
+505,Called to Service,10,10,Instance,Tarnished Coast,Tyria
+507,Mockery of Death,10,10,Instance,Tarnished Coast,Tyria
+509,Discovering Darkness,10,10,Instance,Tarnished Coast,Tyria
+511,Hounds and the Hunted,10,10,Instance,Ascalon,Tyria
+512,Hounds and the Hunted,10,10,Instance,Ascalon,Tyria
+513,Loved and Lost,10,10,Instance,Tarnished Coast,Tyria
+514,Saving the Stag,10,10,Instance,Tarnished Coast,Tyria
+515,Hidden in Darkness,10,10,Instance,Tarnished Coast,Tyria
+516,Good Work Spoiled,10,10,Instance,Tarnished Coast,Tyria
+517,"Black Night, White Stag",10,10,Instance,Tarnished Coast,Tyria
+518,The Omphalos Chamber,10,10,Instance,Tarnished Coast,Tyria
+519,Weakness of the Heart,10,10,Instance,Tarnished Coast,Tyria
+520,Awakening,10,10,Instance,Tarnished Coast,Tyria
+521,Holding Back the Darkness,10,10,Instance,Tarnished Coast,Tyria
+522,A Sly Trick,10,10,Instance,Tarnished Coast,Tyria
+523,Deep Tangled Roots,10,10,Instance,Tarnished Coast,Tyria
+524,The Heart of Nightmare,10,10,Instance,Tarnished Coast,Tyria
+525,Beneath a Cold Moon,10,10,Instance,Tarnished Coast,Tyria
+527,The Knight's Duel,10,10,Instance,Tarnished Coast,Tyria
+528,Hammer and Steel,10,10,Instance,Tarnished Coast,Tyria
+529,Where Life Goes,20,20,Instance,Tarnished Coast,Tyria
+532,After the Storm,20,20,Instance,Tarnished Coast,Tyria
+533,After the Storm,20,20,Instance,Tarnished Coast,Tyria
+534,Beneath the Waves,20,20,Instance,Tarnished Coast,Tyria
+535,"Mirror, Mirror",20,20,Instance,Tarnished Coast,Tyria
+536,A Vision of Darkness,20,20,Instance,Tarnished Coast,Tyria
+537,Shattered Light,20,20,Instance,Tarnished Coast,Tyria
+538,An Unknown Soul,20,20,Instance,Tarnished Coast,Tyria
+539,An Unknown Soul,20,20,Instance,Tarnished Coast,Tyria
+540,Where Life Goes,20,20,Instance,Tarnished Coast,Tyria
+542,Source of the Issue,20,20,Instance,,
+543,Wild Growth,20,20,Instance,Tarnished Coast,Tyria
+544,Wild Growth,20,20,Instance,Tarnished Coast,Tyria
+545,Seeking the Zalisco,20,20,Instance,Tarnished Coast,Tyria
+546,The Direct Approach,20,20,Instance,Tarnished Coast,Tyria
+547,Trading Trickery,20,20,Instance,Tarnished Coast,Tyria
+548,Eye of the Sun,20,20,Instance,Tarnished Coast,Tyria
+549,Battle of Kyhlo,0,0,Pvp,Player vs. Player,Mists
+552,Seeking the Zalisco,20,20,Instance,Tarnished Coast,Tyria
+554,Forest of Niflhel,0,0,Pvp,Player vs. Player,Mists
+556,A Different Dream,20,20,Instance,Tarnished Coast,Tyria
+557,A Splinter in the Flesh,30,30,Instance,Tarnished Coast,Tyria
+558,Shadow of the Tree,20,20,Instance,Tarnished Coast,Tyria
+559,Eye of the Sun,20,20,Instance,Tarnished Coast,Tyria
+560,Sharpened Thorns,30,30,Instance,Kryta,Tyria
+561,Bramble Walls,30,30,Instance,Kryta,Tyria
+563,Secrets in the Earth,30,30,Instance,Kryta,Tyria
+564,The Blossom of Youth,30,30,Instance,Kryta,Tyria
+566,The Bad Apple,30,30,Instance,Kryta,Tyria
+567,Trouble at the Roots,30,30,Instance,Kryta,Tyria
+569,Flower of Death,30,30,Instance,Kryta,Tyria
+570,Dead of Winter,30,30,Instance,Kryta,Tyria
+571,A Tangle of Weeds,30,30,Instance,Kryta,Tyria
+573,Explosive Intellect,1,1,Tutorial,Tarnished Coast,Tyria
+574,In Snaff's Footsteps,10,10,Instance,Tarnished Coast,Tyria
+575,Golem Positioning System,10,10,Instance,Tarnished Coast,Tyria
+576,Monkey Wrench,10,10,Instance,Tarnished Coast,Tyria
+577,Defusing the Problem,10,10,Instance,Tarnished Coast,Tyria
+578,The Things We Do For Love,10,10,Instance,Tarnished Coast,Tyria
+579,The Snaff Prize,10,10,Instance,Tarnished Coast,Tyria
+581,A Sparkling Rescue,10,10,Instance,Tarnished Coast,Tyria
+582,High Maintenance,10,10,Instance,Tarnished Coast,Tyria
+583,Snaff Would Be Proud,10,10,Instance,Tarnished Coast,Tyria
+584,Taking Credit Back,10,10,Instance,Tarnished Coast,Tyria
+586,Political Homicide,10,10,Instance,Tarnished Coast,Tyria
+587,"Here, There, Everywhere",10,10,Instance,Tarnished Coast,Tyria
+588,Piece Negotiations,10,10,Instance,Tarnished Coast,Tyria
+589,Readings On the Rise,10,10,Instance,Tarnished Coast,Tyria
+590,Snaff Would Be Proud,10,10,Instance,Tarnished Coast,Tyria
+591,Readings On the Rise,10,10,Instance,Tarnished Coast,Tyria
+592,Unscheduled Delay,10,10,Instance,Tarnished Coast,Tyria
+594,Stand By Your Krewe,10,10,Instance,Tarnished Coast,Tyria
+595,Unwelcome Visitors,10,10,Instance,Tarnished Coast,Tyria
+596,Where Credit Is Due,20,25,Instance,Tarnished Coast,Tyria
+597,Where Credit Is Due,20,25,Instance,Tarnished Coast,Tyria
+598,Short Fuse,20,25,Instance,Tarnished Coast,Tyria
+599,Short Fuse,20,25,Instance,Tarnished Coast,Tyria
+606,Salt in the Wound,20,25,Instance,Tarnished Coast,Tyria
+607,Free Rein,20,25,Instance,Tarnished Coast,Tyria
+608,Serving Up Trouble,20,25,Instance,Tarnished Coast,Tyria
+609,Serving Up Trouble,20,25,Instance,Tarnished Coast,Tyria
+610,Flash Flood,20,25,Instance,Tarnished Coast,Tyria
+611,I Smell a Rat,20,25,Instance,Tarnished Coast,Tyria
+613,Magnum Opus,20,25,Instance,Tarnished Coast,Tyria
+614,Magnum Opus,20,25,Instance,Tarnished Coast,Tyria
+617,Bad Business,20,25,Instance,Tarnished Coast,Tyria
+618,Beta Test,20,25,Instance,Tarnished Coast,Tyria
+619,Beta Test,20,25,Instance,Tarnished Coast,Tyria
+620,Any Sufficiently Advanced Science,20,25,Instance,Tarnished Coast,Tyria
+621,Any Sufficiently Advanced Science,20,25,Instance,Tarnished Coast,Tyria
+622,Bad Forecast,20,25,Instance,Tarnished Coast,Tyria
+623,Industrial Espionage,20,25,Instance,Tarnished Coast,Tyria
+624,Split Second,20,25,Instance,Tarnished Coast,Tyria
+625,Carry a Big Stick,20,25,Instance,Tarnished Coast,Tyria
+627,Meeting my Mentor,40,40,Instance,Kryta,Tyria
+628,Stealing Secrets,40,40,Instance,Kryta,Tyria
+629,A Bold New Theory,30,35,Instance,Tarnished Coast,Tyria
+630,Forging Permission,30,35,Instance,Tarnished Coast,Tyria
+631,Forging Permission,30,35,Instance,Tarnished Coast,Tyria
+633,Setting the Stage,40,40,Instance,Kryta,Tyria
+634,Containment,40,40,Instance,Shiverpeak Mountains,Tyria
+635,Containment,40,40,Instance,Shiverpeak Mountains,Tyria
+636,Hazardous Environment,30,35,Instance,Tarnished Coast,Tyria
+638,Down the Hatch,40,40,Instance,Kryta,Tyria
+639,Down the Hatch,40,40,Instance,Kryta,Tyria
+642,The Stone Sheath,40,40,Instance,Shiverpeak Mountains,Tyria
+643,Bad Blood,40,40,Instance,Shiverpeak Mountains,Tyria
+644,Test Subject,30,35,Instance,Tarnished Coast,Tyria
+645,Field Test,30,35,Instance,Tarnished Coast,Tyria
+646,The House of Caithe,0,0,Instance,Tarnished Coast,Tyria
+647,Dreamer's Terrace (Home),0,0,Instance,Tarnished Coast,Tyria
+648,The Omphalos Chamber,0,0,Instance,Tarnished Coast,Tyria
+649,Snaff Memorial Lab,0,0,Instance,Tarnished Coast,Tyria
+650,Applied Development Lab (Home),0,0,Instance,Tarnished Coast,Tyria
+651,Council Level,0,0,Instance,Tarnished Coast,Tyria
+652,A Meeting of the Minds,30,35,Instance,Tarnished Coast,Tyria
+653,Mightier than the Sword,40,40,Instance,Shiverpeak Mountains,Tyria
+654,They Went Thataway,40,40,Instance,Kryta,Tyria
+655,Lines of Communication,30,35,Instance,Tarnished Coast,Tyria
+656,Untamed Wilds,50,50,Instance,Ascalon,Tyria
+657,An Apple a Day,40,40,Instance,Kryta,Tyria
+658,Base of Operations,40,40,Instance,Kryta,Tyria
+659,The Lost Chieftain's Return,50,50,Instance,Ascalon,Tyria
+660,Thrown Off Guard,40,40,Instance,Kryta,Tyria
+662,Pets and Walls Make Stronger Kraals,50,50,Instance,Ascalon,Tyria
+663,Doubt,50,50,Instance,Shiverpeak Mountains,Tyria
+664,The False God's Lair,50,50,Instance,Shiverpeak Mountains,Tyria
+666,Bad Ice,50,50,Instance,Shiverpeak Mountains,Tyria
+667,Bad Ice,50,50,Instance,Shiverpeak Mountains,Tyria
+668,Pets and Walls Make Stronger Kraals,50,50,Instance,Ascalon,Tyria
+669,Attempted Deicide,50,50,Instance,Shiverpeak Mountains,Tyria
+670,Doubt,50,50,Instance,Shiverpeak Mountains,Tyria
+672,Rat-Tastrophe,50,50,Instance,Kryta,Tyria
+673,Salvation Through Heresy,50,50,Instance,Shiverpeak Mountains,Tyria
+674,Enraged and Unashamed,50,50,Instance,Shiverpeak Mountains,Tyria
+675,Pastkeeper,50,50,Instance,Shiverpeak Mountains,Tyria
+676,Protest Too Much,30,35,Instance,Kryta,Tyria
+677,Prying the Eye Open,30,35,Instance,Kryta,Tyria
+678,The Hatchery,50,50,Instance,Shiverpeak Mountains,Tyria
+680,Convincing the Faithful,50,50,Instance,Kryta,Tyria
+681,Evacuation,50,50,Instance,Shiverpeak Mountains,Tyria
+682,Untamed Wilds,50,50,Instance,Ascalon,Tyria
+683,Champion's Sacrifice,50,50,Instance,Kryta,Tyria
+684,Thieving from Thieves,50,50,Instance,Kryta,Tyria
+685,Crusader's Return,40,40,Instance,Kryta,Tyria
+686,Unholy Grounds,50,50,Instance,Kryta,Tyria
+687,Chosen of the Sun,50,50,Instance,Kryta,Tyria
+691,Set to Blow,50,50,Instance,Kryta,Tyria
+692,Gadd's Last Gizmo,10,10,Instance,Tarnished Coast,Tyria
+693,Library Science,40,40,Instance,Shiverpeak Mountains,Tyria
+694,Rakt and Ruin,30,35,Instance,Kryta,Tyria
+695,Suspicious Activity,60,60,Instance,Kryta,Tyria
+696,Reconnaissance,60,60,Instance,Kryta,Tyria
+697,Critical Blowback,60,60,Instance,Kryta,Tyria
+698,The Battle of Claw Island,60,60,Instance,Kryta,Tyria
+699,Suspicious Activity,60,60,Instance,Kryta,Tyria
+700,Priory Library,60,60,Instance,Shiverpeak Mountains,Tyria
+701,On Red Alert,60,60,Instance,Kryta,Tyria
+702,Forearmed Is Forewarned,60,60,Instance,Kryta,Tyria
+703,The Oratory,60,60,Instance,Kryta,Tyria
+704,Killing Fields,60,60,Instance,Kryta,Tyria
+705,The Ghost Rite,60,60,Instance,Kryta,Tyria
+706,The Good Fight,60,60,Instance,Shiverpeak Mountains,Tyria
+707,Defense Contract,60,60,Instance,Ascalon,Tyria
+708,Shards of Orr,60,60,Instance,Kryta,Tyria
+709,The Sound of Psi-Lance,60,60,Instance,Shiverpeak Mountains,Tyria
+710,Early Parole,60,60,Instance,Kryta,Tyria
+711,Magic Sucks,60,60,Instance,Tarnished Coast,Tyria
+712,A Light in the Darkness,60,60,Instance,Tarnished Coast,Tyria
+713,The Priory Assailed,60,60,Instance,Shiverpeak Mountains,Tyria
+714,Under Siege,60,60,Instance,Kryta,Tyria
+715,Retribution,60,60,Instance,Kryta,Tyria
+716,Retribution,60,60,Instance,Kryta,Tyria
+719,The Sound of Psi-Lance,60,60,Instance,Shiverpeak Mountains,Tyria
+726,Wet Work,70,70,Instance,Tarnished Coast,Tyria
+727,Shell Shock,70,70,Instance,Tarnished Coast,Tyria
+728,Volcanic Extraction,70,70,Instance,Tarnished Coast,Tyria
+729,Munition Acquisition,70,70,Instance,Tarnished Coast,Tyria
+730,To the Core,70,70,Instance,Tarnished Coast,Tyria
+731,The Battle of Fort Trinity,70,70,Instance,Ruins of Orr,Tyria
+732,Tower Down,70,70,Instance,Tarnished Coast,Tyria
+733,Forging the Pact,70,70,Instance,Shiverpeak Mountains,Tyria
+735,Willing Captives,70,70,Instance,Tarnished Coast,Tyria
+736,Marshaling the Truth,70,70,Instance,Tarnished Coast,Tyria
+737,Breaking the Bone Ship,70,70,Instance,Tarnished Coast,Tyria
+738,Liberating Apatia,70,70,Instance,Tarnished Coast,Tyria
+739,Liberating Apatia,70,70,Instance,Shiverpeak Mountains,Tyria
+743,Fixing the Blame,70,70,Instance,Ascalon,Tyria
+744,A Sad Duty,70,70,Instance,Ruins of Orr,Tyria
+745,Striking off the Chains,70,70,Instance,Shiverpeak Mountains,Tyria
+746,Delivering Justice,70,70,Instance,Ruins of Orr,Tyria
+747,Intercepting the Orb,70,70,Instance,Tarnished Coast,Tyria
+750,Close the Eye,80,80,Instance,Ruins of Orr,Tyria
+751,Through the Looking Glass,80,80,Instance,Ruins of Orr,Tyria
+758,The Cathedral of Silence,70,70,Instance,Ruins of Orr,Tyria
+760,Starving the Beast,80,80,Instance,Ruins of Orr,Tyria
+761,Stealing Light,80,80,Instance,Ruins of Orr,Tyria
+762,Hunters and Prey,80,80,Instance,Ruins of Orr,Tyria
+763,Romke's Final Voyage,70,70,Instance,Ruins of Orr,Tyria
+764,Marching Orders,80,80,Instance,Ruins of Orr,Tyria
+766,Air Drop,80,80,Instance,Ruins of Orr,Tyria
+767,Estate of Decay,80,80,Instance,Ruins of Orr,Tyria
+768,What the Eye Beholds,80,80,Instance,Ruins of Orr,Tyria
+769,Conscript the Dead Ships,80,80,Instance,Ruins of Orr,Tyria
+772,Ossuary of Unquiet Dead,80,80,Instance,Ruins of Orr,Tyria
+775,Temple of the Forgotten God,80,80,Instance,Ruins of Orr,Tyria
+776,Temple of the Forgotten God,80,80,Instance,Ruins of Orr,Tyria
+777,Temple of the Forgotten God,80,80,Instance,Ruins of Orr,Tyria
+778,Through the Looking Glass,80,80,Instance,Ruins of Orr,Tyria
+779,Starving the Beast,80,80,Instance,Ruins of Orr,Tyria
+780,Against the Corruption,70,70,Instance,Ruins of Orr,Tyria
+781,The Source of Orr,70,70,Instance,Ruins of Orr,Tyria
+782,Armor Guard,80,80,Instance,Ruins of Orr,Tyria
+783,Blast from the Past,80,80,Instance,Ruins of Orr,Tyria
+784,The Steel Tide,80,80,Instance,Ruins of Orr,Tyria
+785,Further Into Orr,80,80,Instance,Ruins of Orr,Tyria
+786,Ships of the Line,80,80,Instance,Ruins of Orr,Tyria
+787,Source of Orr,70,70,Instance,Ruins of Orr,Tyria
+788,Victory or Death,80,80,Instance,Ruins of Orr,Tyria
+789,A Grisly Shipment,80,80,Instance,Ruins of Orr,Tyria
+790,Blast from the Past,80,80,Instance,Ruins of Orr,Tyria
+792,A Pup's Illness,10,10,Instance,Shiverpeak Mountains,Tyria
+793,Hunters and Prey,80,80,Instance,Ruins of Orr,Tyria
+795,Legacy of the Foefire,0,0,Pvp,Player vs. Player,Mists
+796,The Informant,10,10,Instance,Kryta,Tyria
+797,A Traitor's Testimony,20,20,Instance,Ascalon,Tyria
+799,Follow the Trail,20,20,Instance,Ascalon,Tyria
+806,Awakening,10,10,Instance,Tarnished Coast,Tyria
+807,Eye of the North,0,0,Instance,Shiverpeak Mountains,Tyria
+820,The Omphalos Chamber,10,10,Instance,Tarnished Coast,Tyria
+821,The Omphalos Chamber,10,10,Instance,Tarnished Coast,Tyria
+825,Codebreaker,30,30,Instance,Kryta,Tyria
+827,Caer Aval,70,70,Instance,Ruins of Orr,Tyria
+828,The Durmand Priory,0,0,Instance,Shiverpeak Mountains,Tyria
+830,Vigil Headquarters,0,0,Instance,Kryta,Tyria
+833,Ash Tribune Quarters,0,0,Instance,Ascalon,Tyria
+845,Shattered Light,20,20,Instance,Tarnished Coast,Tyria
+862,Reaper's Rumble,0,0,Pvp,Mad King's Realm,Mists
+863,Ascent to Madness,2,80,Instance,Mad King's Realm,Mists
+864,Lunatic Inquisition,0,0,Pvp,Mad King's Realm,Mists
+865,Mad King's Clock Tower,0,80,Pvp,Mad King's Realm,Mists
+866,Mad King's Labyrinth,80,80,Public,Mad King's Realm,Mists
+872,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+873,Southsun Cove,80,80,Public,Kryta,Tyria
+875,Temple of the Silent Storm,0,0,Pvp,Player vs. Player,Mists
+877,Snowball Mayhem,0,0,Pvp,Wintersday Celebration,Tyria
+878,Tixx's Infinirarium,2,80,Instance,Wintersday Celebration,Tyria
+880,Toypocalypse,0,80,Pvp,Wintersday Celebration,Tyria
+881,Bell Choir Ensemble,0,0,Pvp,Wintersday Celebration,Tyria
+882,Winter Wonderland,0,80,Pvp,Wintersday Celebration,Tyria
+894,Spirit Watch,0,0,Pvp,Player vs. Player,Mists
+895,Super Adventure Box,1,80,Instance,Super Adventure Box,Mists
+896,North Nolan Hatchery,0,80,Instance,Ascalon,Tyria
+897,Cragstead,0,80,Instance,Shiverpeak Mountains,Tyria
+899,Obsidian Sanctum,80,80,JumpPuzzle,World vs. World,Mists
+900,Skyhammer,0,0,Pvp,Player vs. Player,Mists
+901,Molten Furnace,80,80,Instance,Molten Furnace,Tyria
+905,Crab Toss,0,0,Pvp,Kryta,Tyria
+911,Dragon Ball Arena,0,0,Pvp,Kryta,Tyria
+912,Ceremony and Acrimony—Memorials on the Pyre,1,80,Instance,Kryta,Tyria
+913,Hard Boiled—The Scene of the Crime,1,80,Instance,Kryta,Tyria
+914,The Dead End,1,80,Instance,Kryta,Tyria
+915,Aetherblade Retreat,80,80,Instance,Kryta,Tyria
+917,No More Secrets—The Scene of the Crime,1,80,Instance,Kryta,Tyria
+918,Aspect Arena,0,80,Pvp,Tarnished Coast,Tyria
+919,Sanctum Sprint,0,0,Pvp,Tarnished Coast,Tyria
+920,Southsun Survival,0,0,Pvp,Sea of Sorrows,Tyria
+922,Labyrinthine Cliffs,1,80,Public,Tarnished Coast,Tyria
+924,Grandmaster of Om,1,80,Instance,Kryta,Tyria
+929,The Crown Pavilion,80,80,Public,Kryta,Tyria
+930,Opening Ceremony,80,80,Instance,Kryta,Tyria
+931,Scarlet's Playhouse,80,80,Instance,Kryta,Tyria
+932,Closing Ceremony,80,80,Instance,Kryta,Tyria
+934,Super Adventure Box,1,80,Instance,Super Adventure Box,Mists
+935,Super Adventure Box,1,80,Public,Super Adventure Box,Mists
+937,Scarlet's End,80,80,Instance,Tarnished Coast,Tyria
+943,The Tower of Nightmares (Public),80,80,Public,Kryta,Tyria
+945,The Nightmare Ends,1,80,Instance,Kryta,Tyria
+947,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+948,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+949,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+950,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+951,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+952,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+953,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+954,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+955,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+956,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+957,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+958,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+959,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+960,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+964,Scarlet's Secret Lair,80,80,Instance,Shiverpeak Mountains,Tyria
+965,The Origins of Madness: A Moment's Peace,80,80,Instance,Kryta,Tyria
+968,Edge of the Mists,80,80,EdgeOfTheMists,World vs. World,Mists
+971,The Dead End: A Study in Scarlet,80,80,Instance,Kryta,Tyria
+973,The Evacuation of Lion's Arch,80,80,Instance,Kryta,Tyria
+980,The Dead End: Celebration,80,80,Instance,Kryta,Tyria
+984,Courtyard,0,0,Pvp,Player vs. Player,Mists
+987,Lion's Arch: Honored Guests,80,80,Instance,Kryta,Tyria
+988,Dry Top,80,80,Public,Maguuma Wastes,Tyria
+989,Prosperity's Mystery,80,80,Instance,Maguuma Wastes,Tyria
+990,Cornered,80,80,Instance,Maguuma Wastes,Tyria
+991,Disturbance in Brisban Wildlands,80,80,Instance,Tarnished Coast,Tyria
+992,Fallen Hopes,80,80,Instance,Maguuma Wastes,Tyria
+993,Scarlet's Secret Room,80,80,Instance,Maguuma Wastes,Tyria
+994,The Concordia Incident,80,80,Instance,Shiverpeak Mountains,Tyria
+997,Discovering Scarlet's Breakthrough,80,80,Instance,,
+998,The Machine,80,80,Instance,,
+999,Trouble at Fort Salma,80,80,Instance,,
+1000,The Waypoint Conundrum,80,80,Instance,Maguuma Wastes,Tyria
+1001,Summit Invitations,80,80,Instance,Shiverpeak Mountains,Tyria
+1002,Mission Accomplished,80,80,Instance,Shiverpeak Mountains,Tyria
+1003,Rallying Call,80,80,Instance,Tarnished Coast,Tyria
+1004,Plan of Attack,80,80,Instance,Ascalon,Tyria
+1005,Party Politics,80,80,Instance,Kryta,Tyria
+1006,Foefire Cleansing,80,80,Instance,Ascalon,Tyria
+1007,Recalibrating the Waypoints,80,80,Instance,Maguuma Wastes,Tyria
+1008,The Ghosts of Fort Salma,80,80,Instance,Kryta,Tyria
+1009,Taimi's Device,80,80,Instance,Maguuma Wastes,Tyria
+1010,The World Summit,80,80,Instance,Tarnished Coast,Tyria
+1011,Battle of Champion's Dusk,0,0,Pvp,Player vs. Player,Mists
+1015,The Silverwastes,80,80,Public,Maguuma Wastes,Tyria
+1016,Hidden Arcana,80,80,Instance,Shiverpeak Mountains,Tyria
+1017,Reunion with the Pact,80,80,Instance,Maguuma Wastes,Tyria
+1018,Caithe's Reconnaissance Squad,80,80,Instance,Maguuma Wastes,Tyria
+1019,Fort Trinity,80,80,Instance,Ruins of Orr,Tyria
+1021,Into the Labyrinth,80,80,Instance,,
+1022,Return to Camp Resolve,80,80,Instance,Maguuma Wastes,Tyria
+1023,Tracking the Aspect Masters,80,80,Instance,,
+1024,No Refuge,80,80,Instance,Maguuma Wastes,Tyria
+1025,The Newly Awakened,80,80,Instance,Tarnished Coast,Tyria
+1026,Meeting the Asura,80,80,Instance,Tarnished Coast,Tyria
+1027,Pact Assaulted,80,80,Instance,Maguuma Wastes,Tyria
+1028,The Mystery Cave,80,80,Instance,Tarnished Coast,Tyria
+1029,Arcana Obscura,80,80,Instance,Shiverpeak Mountains,Tyria
+1032,Prized Possessions,80,80,Instance,Heart of Maguuma,Tyria
+1033,Buried Insight,80,80,Instance,Heart of Maguuma,Tyria
+1037,The Jungle Provides,80,80,Instance,Heart of Maguuma,Tyria
+1040,Hearts and Minds,80,80,Instance,Heart of Maguuma,Tyria
+1041,Dragon's Stand,80,80,Public,Heart of Maguuma,Tyria
+1042,Verdant Brink,80,80,Public,Heart of Maguuma,Tyria
+1043,Auric Basin,80,80,Public,Heart of Maguuma,Tyria
+1045,Tangled Depths,80,80,Public,Heart of Maguuma,Tyria
+1046,Roots of Terror,80,80,Instance,Heart of Maguuma,Tyria
+1048,City of Hope,80,80,Instance,Heart of Maguuma,Tyria
+1050,Torn from the Sky,80,80,Instance,Heart of Maguuma,Tyria
+1051,Prisoners of the Dragon,80,80,Instance,Heart of Maguuma,Tyria
+1052,Verdant Brink,80,80,Public,Heart of Maguuma,Tyria
+1054,Bitter Harvest,80,80,Instance,Heart of Maguuma,Tyria
+1057,Strange Observations,80,80,Instance,Heart of Maguuma,Tyria
+1058,Prologue: Rally to Maguuma,80,80,Tutorial,Maguuma Wastes,Tyria
+1062,Spirit Vale,80,80,Instance,Heart of Maguuma,Tyria
+1063,Southsun Crab Toss,80,80,Instance,Kryta,Tyria
+1064,Claiming the Lost Precipice,80,80,Instance,Heart of Maguuma,Tyria
+1065,Angvar's Trove,15,25,Instance,Shiverpeak Mountains,Tyria
+1066,Claiming the Gilded Hollow,80,80,Instance,Heart of Maguuma,Tyria
+1067,Angvar's Trove,15,25,Instance,Shiverpeak Mountains,Tyria
+1068,Gilded Hollow,80,80,Instance,Heart of Maguuma,Tyria
+1069,Lost Precipice,80,80,Instance,Heart of Maguuma,Tyria
+1070,Claiming the Lost Precipice,80,80,Instance,Heart of Maguuma,Tyria
+1071,Lost Precipice,80,80,Instance,Heart of Maguuma,Tyria
+1072,Southsun Crab Toss,80,80,Instance,Kryta,Tyria
+1073,Guild Initiative Office,80,80,Instance,Kryta,Tyria
+1074,Blightwater Shatterstrike,40,50,Instance,Ascalon,Tyria
+1075,Proxemics Lab,15,25,Instance,Tarnished Coast,Tyria
+1076,Lost Precipice,80,80,Instance,Heart of Maguuma,Tyria
+1078,Claiming the Gilded Hollow,80,80,Instance,Heart of Maguuma,Tyria
+1079,Deep Trouble,60,70,Instance,Tarnished Coast,Tyria
+1080,Branded for Termination,30,40,Instance,Ascalon,Tyria
+1081,Langmar Estate,1,15,Instance,Ascalon,Tyria
+1082,Langmar Estate,1,15,Instance,Ascalon,Tyria
+1083,Deep Trouble,60,70,Instance,Tarnished Coast,Tyria
+1084,Southsun Crab Toss,80,80,Instance,Kryta,Tyria
+1086,Save Our Supplies,50,60,Instance,Ascalon,Tyria
+1087,Proxemics Lab,15,25,Instance,Tarnished Coast,Tyria
+1088,Claiming the Gilded Hollow,80,80,Instance,Heart of Maguuma,Tyria
+1089,Angvar's Trove,15,25,Instance,Shiverpeak Mountains,Tyria
+1090,Langmar Estate,1,15,Instance,Ascalon,Tyria
+1091,Save Our Supplies,50,60,Instance,Ascalon,Tyria
+1092,Scratch Sentry Defense,50,60,Instance,Shiverpeak Mountains,Tyria
+1093,Angvar's Trove,15,25,Instance,Shiverpeak Mountains,Tyria
+1094,Save Our Supplies,50,60,Instance,Ascalon,Tyria
+1095,Dragon's Stand (Heart of Thorns),80,80,Public,Heart of Maguuma,Tyria
+1097,Proxemics Lab,15,25,Instance,Tarnished Coast,Tyria
+1098,Claiming the Gilded Hollow,80,80,Instance,Heart of Maguuma,Tyria
+1099, Desert Borderlands,80,80,RedHome,World vs. World,Mists
+1100,Scratch Sentry Defense,50,60,Instance,Shiverpeak Mountains,Tyria
+1101,Gilded Hollow,80,80,Instance,Heart of Maguuma,Tyria
+1104,Lost Precipice,80,80,Instance,Heart of Maguuma,Tyria
+1105,Langmar Estate,1,15,Instance,Ascalon,Tyria
+1106,Deep Trouble,60,70,Instance,Tarnished Coast,Tyria
+1107,Gilded Hollow,80,80,Instance,Heart of Maguuma,Tyria
+1108,Gilded Hollow,80,80,Instance,Heart of Maguuma,Tyria
+1109,Angvar's Trove,15,25,Instance,Shiverpeak Mountains,Tyria
+1110,Scrap Rifle Field Test,80,80,Instance,Heart of Maguuma,Tyria
+1111,Scratch Sentry Defense,50,60,Instance,Shiverpeak Mountains,Tyria
+1112,Branded for Termination,30,40,Instance,Ascalon,Tyria
+1113,Scratch Sentry Defense,50,60,Instance,Shiverpeak Mountains,Tyria
+1115,Haywire Punch-o-Matic Battle,80,80,Instance,Heart of Maguuma,Tyria
+1116,Deep Trouble,60,70,Instance,Tarnished Coast,Tyria
+1117,Claiming the Lost Precipice,80,80,Instance,Heart of Maguuma,Tyria
+1118,Save Our Supplies,50,60,Instance,Ascalon,Tyria
+1121,Gilded Hollow,80,80,Instance,Heart of Maguuma,Tyria
+1122,Claiming the Gilded Hollow,80,80,Instance,Heart of Maguuma,Tyria
+1123,Blightwater Shatterstrike,40,50,Instance,Ascalon,Tyria
+1124,Lost Precipice,80,80,Instance,Heart of Maguuma,Tyria
+1126,Southsun Crab Toss,80,80,Instance,Kryta,Tyria
+1128,Scratch Sentry Defense,50,60,Instance,Shiverpeak Mountains,Tyria
+1129,Langmar Estate,1,15,Instance,Ascalon,Tyria
+1130,Deep Trouble,60,70,Instance,Tarnished Coast,Tyria
+1131,Blightwater Shatterstrike,40,50,Instance,Ascalon,Tyria
+1132,Claiming the Lost Precipice,80,80,Instance,Heart of Maguuma,Tyria
+1133,Branded for Termination,30,40,Instance,Ascalon,Tyria
+1134,Blightwater Shatterstrike,40,50,Instance,Ascalon,Tyria
+1135,Branded for Termination,30,40,Instance,Ascalon,Tyria
+1136,Proxemics Lab,15,25,Instance,Tarnished Coast,Tyria
+1137,Proxemics Lab,15,25,Instance,Tarnished Coast,Tyria
+1138,Save Our Supplies,50,60,Instance,Ascalon,Tyria
+1139,Southsun Crab Toss,80,80,Instance,Kryta,Tyria
+1140,Claiming the Lost Precipice,80,80,Instance,Heart of Maguuma,Tyria
+1142,Blightwater Shatterstrike,40,50,Instance,Ascalon,Tyria
+1146,Branded for Termination,30,40,Instance,Ascalon,Tyria
+1147,Spirit Vale,80,80,Public,Heart of Maguuma,Tyria
+1149,Salvation Pass,80,80,Instance,Heart of Maguuma,Tyria
+1150,,80,80,Public,Heart of Maguuma,Tyria
+1153,Tiger Den,80,80,Instance,,
+1154,Special Forces Training Area,80,80,Instance,Kryta,Tyria
+1155,Lion's Arch Aerodrome,80,80,Public,Kryta,Tyria
+1156,Stronghold of the Faithful,80,80,Instance,Heart of Maguuma,Tyria
+1158,Noble's Folly,80,80,Public,Heart of Maguuma,Tyria
+1159,Research in Rata Novus,80,80,Instance,Heart of Maguuma,Tyria
+1161,Eir's Homestead,80,80,Instance,Shiverpeak Mountains,Tyria
+1163,Revenge of the Capricorn,0,0,Pvp,Player vs. Player,Mists
+1164,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+1165,Bloodstone Fen,80,80,Public,Heart of Maguuma,Tyria
+1166,Confessor's Stronghold,80,80,Instance,Heart of Maguuma,Tyria
+1167,A Shadow's Deeds,80,80,Instance,Heart of Maguuma,Tyria
+1169,Rata Novus,80,80,Instance,Heart of Maguuma,Tyria
+1170,Taimi's Game,80,80,Instance,Heart of Maguuma,Tyria
+1171,Eternal Coliseum,0,0,Pvp,Player vs. Player,Mists
+1172,Dragon Vigil,80,80,Instance,Heart of Maguuma,Tyria
+1173,Taimi's Game,80,80,Instance,Heart of Maguuma,Tyria
+1175,Ember Bay,80,80,Public,Heart of Maguuma,Tyria
+1176,Taimi's Game,80,80,Instance,Heart of Maguuma,Tyria
+1177,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+1178,Bitterfrost Frontier,80,80,Public,Shiverpeak Mountains,Tyria
+1180,The Bitter Cold,80,80,Instance,Shiverpeak Mountains,Tyria
+1181,Frozen Out,80,80,Instance,Shiverpeak Mountains,Tyria
+1182,Precocious Aurene,80,80,Instance,Heart of Maguuma,Tyria
+1185,Lake Doric,80,80,Public,Kryta,Tyria
+1188,Bastion of the Penitent,80,80,Instance,Heart of Maguuma,Tyria
+1189,Regrouping with the Queen,80,80,Instance,Kryta,Tyria
+1190,A Meeting of Ministers,80,80,Instance,Kryta,Tyria
+1191,Confessor's End,80,80,Instance,Kryta,Tyria
+1192,The Second Vision,80,80,Instance,Heart of Maguuma,Tyria
+1193,The First Vision,80,80,Instance,Kryta,Tyria
+1194,The Sword Regrown,80,80,Instance,Ruins of Orr,Tyria
+1195,Draconis Mons,80,80,Public,Ring of Fire,Tyria
+1196,Heart of the Volcano,80,80,Instance,Ring of Fire,Tyria
+1198,Taimi's Pet Project,80,80,Instance,Heart of Maguuma,Tyria
+1200,Hall of the Mists,80,80,Pvp,Player vs. Player,Mists
+1201,Asura Arena,80,80,Pvp,Player vs. Player,Mists
+1202,White Mantle Hideout,80,80,Instance,Tarnished Coast,Tyria
+1203,Siren's Landing,80,80,Public,Ruins of Orr,Tyria
+1204,Palace Temple,0,80,Instance,Kryta,Tyria
+1205,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+1206,Mistlock Sanctuary,80,80,Public,Fractals of the Mists,Mists
+1207,The Last Chance,80,80,Instance,Ruins of Orr,Tyria
+1208,Shining Blade Headquarters,0,80,Instance,Kryta,Tyria
+1209,The Sacrifice,80,80,Instance,Crystal Desert,Tyria
+1210,Crystal Oasis,80,80,Public,Crystal Desert,Tyria
+1211,Desert Highlands,80,80,Public,Crystal Desert,Tyria
+1212,Office of the Chief Councilor,80,80,Instance,Crystal Desert,Tyria
+1214,Windswept Haven,80,80,Instance,Crystal Desert,Tyria
+1215,Windswept Haven,80,80,Public,Crystal Desert,Tyria
+1217,Sparking the Flame,80,80,Instance,Crystal Desert,Tyria
+1219,Enemy of My Enemy: The Beastmarshal,80,80,Instance,,
+1220,Sparking the Flame (Prologue),80,80,Instance,Crystal Desert,Tyria
+1221,The Way Forward,80,80,Instance,Crystal Desert,Tyria
+1222,Claiming Windswept Haven,80,80,Instance,Crystal Desert,Tyria
+1223,Small Victory (Epilogue),80,80,Instance,Crystal Desert,Tyria
+1224,Windswept Haven,80,80,Instance,Crystal Desert,Tyria
+1226,The Desolation,80,80,Public,Crystal Desert,Tyria
+1227,Hallowed Ground: Tomb of Primeval Kings,80,80,Instance,Crystal Desert,Tyria
+1228,Elon Riverlands,80,80,Public,Crystal Desert,Tyria
+1230,Facing the Truth: The Sanctum,80,80,Instance,Crystal Desert,Tyria
+1231,Claiming Windswept Haven,80,80,Instance,Crystal Desert,Tyria
+1232,Windswept Haven,80,80,Instance,Crystal Desert,Tyria
+1234,To Kill a God,80,80,Instance,Crystal Desert,Tyria
+1236,Claiming Windswept Haven,80,80,Instance,Crystal Desert,Tyria
+1240,Blazing a Trail,80,80,Instance,Crystal Desert,Tyria
+1241,Night of Fires,80,80,Instance,Crystal Desert,Tyria
+1242,Zalambur's Office,80,80,Instance,Crystal Desert,Tyria
+1243,Windswept Haven,80,80,Instance,Crystal Desert,Tyria
+1244,Claiming Windswept Haven,80,80,Instance,Crystal Desert,Tyria
+1245,The Departing,80,80,Instance,Crystal Desert,Tyria
+1246,Captain Kiel's Office,0,80,Instance,Kryta,Tyria
+1247,Enemy of My Enemy,80,80,Instance,,
+1248,Domain of Vabbi,80,80,Public,Crystal Desert,Tyria
+1250,Windswept Haven,80,80,Instance,Crystal Desert,Tyria
+1252,Crystalline Memories,80,80,Instance,Crystal Desert,Tyria
+1253,Beast of War,80,80,Instance,Crystal Desert,Tyria
+1255,Enemy of My Enemy: The Troopmarshal,80,80,Instance,,
+1256,The Dark Library,80,80,Instance,Crystal Desert,Tyria
+1257,Spearmarshal's Lament,80,80,Instance,Crystal Desert,Tyria
+1260,Eye of the Brandstorm,80,80,Instance,Crystal Desert,Tyria
+1263,Domain of Istan,80,80,Public,Crystal Desert,Tyria
+1264,Hall of Chains,80,80,Instance,Crystal Desert,Tyria
+1265,The Hero of Istan,80,80,Instance,Crystal Desert,Tyria
+1266,Cave of the Sunspear Champion,80,80,Instance,Crystal Desert,Tyria
+1267,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+1268,"Fahranur, the First City",80,80,Instance,Crystal Desert,Tyria
+1270,Toypocalypse,0,80,Instance,Wintersday Celebration,Tyria
+1271,Sandswept Isles,80,80,Public,Crystal Desert,Tyria
+1274,The Charge,80,80,Instance,Crystal Desert,Tyria
+1275,Courtyard,0,0,Pvp,Player vs. Player,Mists
+1276,The Test Subject,80,80,Instance,Crystal Desert,Tyria
+1277,The Charge,80,80,Instance,Crystal Desert,Tyria
+1278,???,80,80,Instance,Kryta,Tyria
+1279,ERROR: SIGNAL LOST,80,80,Instance,Crystal Desert,Tyria
+1281,A Kindness Repaid,80,80,Instance,Crystal Desert,Tyria
+1282,Tracking the Scientist,80,80,Instance,Crystal Desert,Tyria
+1283,???,80,80,Instance,Tarnished Coast,Tyria
+1285,???,80,80,Instance,Kryta,Tyria
+1288,Domain of Kourna,80,80,Public,Crystal Desert,Tyria
+1289,Seized,80,80,Instance,Crystal Desert,Tyria
+1290,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+1291,Forearmed Is Forewarned,80,80,Instance,Crystal Desert,Tyria
+1292,Be My Guest,80,80,Instance,Crystal Desert,Tyria
+1294,Sun's Refuge,80,80,Instance,Crystal Desert,Tyria
+1295,Legacy,80,80,Instance,Crystal Desert,Tyria
+1296,Storm Tracking,80,80,Instance,Fractals of the Mists,Mists
+1297,A Shattered Nation,80,80,Instance,Crystal Desert,Tyria
+1299,Storm Tracking,80,80,Instance,Crystal Desert,Tyria
+1300,From the Ashes—The Deadeye,0,80,Instance,Crystal Desert,Tyria
+1301,Jahai Bluffs,80,80,Public,Crystal Desert,Tyria
+1302,Storm Tracking,80,80,Instance,Crystal Desert,Tyria
+1303,Mythwright Gambit,80,80,Instance,Crystal Desert,Tyria
+1304,Mad King's Raceway,80,80,Public,Mad King's Realm,Mists
+1305,Djinn's Dominion,0,0,Pvp,Player vs. Player,Mists
+1306,Secret Lair of the Snowmen (Squad),80,80,Instance,,
+1308,Scion & Champion,80,80,Instance,Shiverpeak Mountains,Tyria
+1309,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+1310,Thunderhead Peaks,80,80,Public,Shiverpeak Mountains,Tyria
+1313,The Crystal Dragon,80,80,Instance,Shiverpeak Mountains,Tyria
+1314,The Crystal Blooms,80,80,Instance,Shiverpeak Mountains,Tyria
+1315,Armistice Bastion,80,80,Unknown,World vs. World,Mists
+1316,Mists Rift,80,80,Public,Mad King's Realm,Mists
+1317,Dragonfall,80,80,Public,Crystal Desert,Tyria
+1318,Dragonfall,80,80,Instance,Crystal Desert,Tyria
+1319,Descent,80,80,Instance,Crystal Desert,Tyria
+1320,The End,80,80,Instance,Crystal Desert,Tyria
+1321,Dragonflight,80,80,Instance,Crystal Desert,Tyria
+1322,Epilogue,80,80,Instance,Crystal Desert,Tyria
+1323,The Key of Ahdashim,80,80,Instance,Crystal Desert,Tyria
+1326,Dragon Arena (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1327,Dragon Arena (Private),80,80,Instance,Shiverpeak Mountains,Tyria
+1328,Auric Span,80,80,Pvp,Player vs. Player,Mists
+1329,Coming Home,80,80,Instance,Ascalon,Tyria
+1330,Grothmar Valley,80,80,Public,Ascalon,Tyria
+1331,Strike Mission: Shiverpeaks Pass (Public),80,80,Public,Ascalon,Tyria
+1332,Strike Mission: Shiverpeaks Pass (Squad),80,80,Instance,Ascalon,Tyria
+1334,Deeper and Deeper,80,80,Instance,Ascalon,Tyria
+1336,A Race to Arms,80,80,Instance,Ascalon,Tyria
+1338,Bad Blood,80,80,Instance,Ascalon,Tyria
+1339,Weekly Strike Mission: Boneskinner (Squad),80,80,Instance,Shiverpeak Mountains,Tyria
+1340,Weekly Strike Mission: Voice of the Fallen and Claw of the Fallen (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1341,Weekly Strike Mission: Fraenir of Jormag (Squad),80,80,Instance,Shiverpeak Mountains,Tyria
+1342,The Invitation,80,80,Instance,Shiverpeak Mountains,Tyria
+1343,Bjora Marches,80,80,Public,Shiverpeak Mountains,Tyria
+1344,Weekly Strike Mission: Fraenir of Jormag (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1345,What's Left Behind,80,80,Instance,Shiverpeak Mountains,Tyria
+1346,Weekly Strike Mission: Voice of the Fallen and Claw of the Fallen (Squad),80,80,Instance,Shiverpeak Mountains,Tyria
+1349,Silence,80,80,Instance,Shiverpeak Mountains,Tyria
+1351,Weekly Strike Mission: Boneskinner (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1352,Secret Lair of the Snowmen (Public),80,80,Public,,
+1353,Celestial Challenge,0,80,Public,Kryta,Tyria
+1355,Voice in the Deep,80,80,Instance,Shiverpeak Mountains,Tyria
+1356,Chasing Ghosts,80,80,Instance,Shiverpeak Mountains,Tyria
+1357,Strike Mission: Whisper of Jormag (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1358,Eye of the North,0,0,Instance,Shiverpeak Mountains,Tyria
+1359,Strike Mission: Whisper of Jormag (Squad),80,80,Instance,Shiverpeak Mountains,Tyria
+1361,The Nightmare Incarnate,80,80,Instance,Kryta,Tyria
+1362,Forging Steel (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1363,"New Friends, New Enemies—North Nolan Hatchery",0,80,Instance,Ascalon,Tyria
+1364,The Battle for Cragstead,0,80,Instance,Shiverpeak Mountains,Tyria
+1366,Darkrime Delves,80,80,Instance,Shiverpeak Mountains,Tyria
+1368,Forging Steel (Squad),80,80,Instance,Shiverpeak Mountains,Tyria
+1369,Canach's Lair,80,80,Instance,Kryta,Tyria
+1370,Eye of the North,0,0,Public,Shiverpeak Mountains,Tyria
+1371,Drizzlewood Coast,80,80,Public,Shiverpeak Mountains,Tyria
+1372,Turnabout,80,80,Instance,Shiverpeak Mountains,Tyria
+1373,Pointed Parley,80,80,Instance,Shiverpeak Mountains,Tyria
+1374,Strike Mission: Cold War (Squad),80,80,Instance,Shiverpeak Mountains,Tyria
+1375,Snapping Steel,80,80,Instance,Shiverpeak Mountains,Tyria
+1376,Strike Mission: Cold War (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1378,Behind Enemy Lines,80,80,Instance,Shiverpeak Mountains,Tyria
+1379,"One Charr, One Dragon, One Champion",80,80,Instance,Shiverpeak Mountains,Tyria
+1380,Epilogue,0,0,Instance,Shiverpeak Mountains,Tyria
+1382,Arena of the Wolverine,80,80,Instance,Shiverpeak Mountains,Tyria
+1383,A Simple Negotiation,80,80,Instance,Shiverpeak Mountains,Tyria
+1384,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+1385,Caledon Forest (Private),80,80,Instance,Tarnished Coast,Tyria
+1386,Thunderhead Peaks (Private),80,80,Instance,Shiverpeak Mountains,Tyria
+1387,Bloodtide Coast (Public),80,80,Public,Kryta,Tyria
+1388,Snowden Drifts (Private),80,80,Instance,Shiverpeak Mountains,Tyria
+1389,Snowden Drifts (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1390,Fireheart Rise (Public),80,80,Public,Ascalon,Tyria
+1391,Brisban Wildlands (Private),80,80,Instance,Tarnished Coast,Tyria
+1392,Primordus Rising,80,80,Instance,Tarnished Coast,Tyria
+1393,Lake Doric (Public),80,80,Public,Kryta,Tyria
+1394,Bloodtide Coast (Private),80,80,Instance,Kryta,Tyria
+1395,Thunderhead Peaks (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1396,Gendarran Fields (Public),80,80,Public,Kryta,Tyria
+1397,Metrica Province (Public),80,80,Public,Tarnished Coast,Tyria
+1398,Fields of Ruin (Public),80,80,Public,Ascalon,Tyria
+1399,Brisban Wildlands (Public),80,80,Public,Tarnished Coast,Tyria
+1400,Fields of Ruin (Private),80,80,Instance,Ascalon,Tyria
+1401,Metrica Province (Private),80,80,Instance,Tarnished Coast,Tyria
+1402,Lake Doric (Private),80,80,Instance,Kryta,Tyria
+1403,Caledon Forest (Public),80,80,Public,Tarnished Coast,Tyria
+1404,Fireheart Rise (Private),80,80,Instance,Ascalon,Tyria
+1405,Gendarran Fields (Private),80,80,Instance,Kryta,Tyria
+1407,Council Level,80,80,Instance,Tarnished Coast,Tyria
+1408,Wildfire,80,80,Instance,Ring of Fire,Tyria
+1409,Dragonstorm (Private Squad),80,80,Instance,Shiverpeak Mountains,Tyria
+1410,Champion's End,80,80,Instance,Shiverpeak Mountains,Tyria
+1411,Dragonstorm (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1412,Dragonstorm,80,80,Instance,Shiverpeak Mountains,Tyria
+1413,The Twisted Marionette (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1414,The Twisted Marionette (Private Squad),80,80,Instance,Shiverpeak Mountains,Tyria
+1415,The Future in Jade: Power Plant,80,80,Instance,Cantha,Tyria
+1416,Deepest Secrets: Yong Reactor,80,80,Instance,Cantha,Tyria
+1419,Isle of Reflection,80,80,Instance,Cantha,Tyria
+1420,Fallout: Nika's Blade,80,80,Instance,Cantha,Tyria
+1421,???,80,80,Instance,Cantha,Tyria
+1422,Dragon's End,80,80,Public,Cantha,Tyria
+1426,Isle of Reflection,80,80,Instance,Cantha,Tyria
+1427,Weight of the World: Lady Joon's Estate,80,80,Instance,Cantha,Tyria
+1428,Arborstone,80,80,Public,Cantha,Tyria
+1429,"The Cycle, Reborn: Arborstone",80,80,Instance,Cantha,Tyria
+1430,Claiming the Isle of Reflection,80,80,Instance,Cantha,Tyria
+1432,Strike Mission: Aetherblade Hideout,80,80,Instance,Cantha,Tyria
+1433,Old Friends,80,80,Instance,Shiverpeak Mountains,Tyria
+1434,Empty,80,80,Instance,Cantha,Tyria
+1435,Isle of Reflection,80,80,Instance,Cantha,Tyria
+1436,Extraction Point: Command Quarters,80,80,Instance,Cantha,Tyria
+1437,Strike Mission: Harvest Temple,80,80,Instance,Cantha,Tyria
+1438,New Kaineng City,80,80,Public,Cantha,Tyria
+1439,The Only One,80,80,Instance,Cantha,Tyria
+1440,Laying to Rest,80,80,Instance,Cantha,Tyria
+1442,Seitung Province,80,80,Public,Cantha,Tyria
+1444,Isle of Reflection,80,80,Instance,Cantha,Tyria
+1445,The Future in Jade: Nahpui Lab,80,80,Instance,Cantha,Tyria
+1446,Aetherblade Armada,0,80,Instance,Cantha,Tyria
+1448,"The Cycle, Reborn: The Dead End Bar",80,80,Instance,Cantha,Tyria
+1449,Aurene's Sanctuary,80,80,Instance,Cantha,Tyria
+1450,Strike Mission: Xunlai Jade Junkyard,80,80,Instance,Cantha,Tyria
+1451,Strike Mission: Kaineng Overlook,80,80,Instance,Cantha,Tyria
+1452,The Echovald Wilds,80,80,Public,Cantha,Tyria
+1453,Ministry of Security: Main Office,80,80,Instance,Cantha,Tyria
+1454,The Scenic Route: Kaineng Docks,80,80,Instance,Cantha,Tyria
+1456,Claiming the Isle of Reflection,80,80,Instance,Cantha,Tyria
+1457,Detention Facility,80,80,Instance,Cantha,Tyria
+1458,Aurene's Sanctuary,80,80,Instance,Cantha,Tyria
+1459,Claiming the Isle of Reflection,80,80,Instance,Cantha,Tyria
+1460,Empress Ihn's Court,80,80,Instance,Cantha,Tyria
+1461,Zen Daijun Hideaway,80,80,Instance,Cantha,Tyria
+1462,Isle of Reflection,80,80,Instance,Cantha,Tyria
+1463,Claiming the Isle of Reflection,80,80,Instance,Cantha,Tyria
+1464,Fallout: Arborstone,80,80,Instance,Cantha,Tyria
+1465,Thousand Seas Pavilion,80,80,Public,Cantha,Tyria
+1466,A Quiet Celebration—Knut Whitebear's Loft,0,0,Instance,Shiverpeak Mountains,Tyria
+1467,"New Friends, New Enemies—The Command Core",0,0,Instance,Ascalon,Tyria
+1468,The Battle for Cragstead—Knut Whitebear's Loft,0,0,Instance,Shiverpeak Mountains,Tyria
+1469,"New Friends, New Enemies—Blood Tribune Quarters",0,0,Instance,Ascalon,Tyria
+1470,A Quiet Celebration—Citadel Stockade,0,0,Instance,Ascalon,Tyria
+1471,Case Closed—The Dead End,1,80,Instance,Kryta,Tyria
+1472,Hard Boiled—The Dead End,1,80,Instance,Kryta,Tyria
+1474,Picking Up the Pieces,0,80,Instance,Kryta,Tyria
+1477,The Tower of Nightmares (Private Squad),80,80,Instance,Kryta,Tyria
+1478,The Battle for Lion's Arch (Private Squad),80,80,Instance,Kryta,Tyria
+1480,The Twisted Marionette,80,80,Instance,Shiverpeak Mountains,Tyria
+1481,Battle on the Breachmaker,80,80,Instance,Kryta,Tyria
+1482,The Battle For Lion's Arch (Public),80,80,Public,Kryta,Tyria
+1483,Memory of Old Lion's Arch,0,80,Public,Kryta,Tyria
+1484,North Evacuation Camp,80,80,Instance,Kryta,Tyria
+1485,Strike Mission: Old Lion's Court,80,80,Instance,Kryta,Tyria
+1487,The Aether Escape,80,80,Instance,Kryta,Tyria
+1488,On the Case: Excavation Yard,80,80,Instance,Cantha,Tyria
+1489,A Raw Deal: Red Duck Teahouse,80,80,Instance,Cantha,Tyria
+1490,Gyala Delve,80,80,Public,Cantha,Tyria
+1491,Deep Trouble: Excavation Yard,80,80,Instance,,
+1492,Deep Trouble: The Deep,80,80,Instance,,
+1494,Entrapment: The Deep,80,80,Instance,,
+1495,A Plan Emerges: Power Plant,80,80,Instance,Cantha,Tyria
+1496,Emotional Release: Jade Pools,80,80,Instance,,
+1497,Emotional Release: Command Quarters,80,80,Instance,Cantha,Tyria
+1498,Full Circle: Red Duck Teahouse,80,80,Instance,Cantha,Tyria
+1499,Forward,80,80,Instance,,
+1500,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+1501,Hell Breaks Loose: ???,80,80,Instance,Horn of Maguuma,Tyria
+1502,The Missing Facet: Southern Wizard's Tower,80,80,Instance,Horn of Maguuma,Tyria
+1503,Mother of Stars: Stargaze Ridge,80,80,Instance,Horn of Maguuma,Tyria
+1504,Into the Obscure: Bastion of the Obscure,80,80,Instance,Horn of Maguuma,Tyria
+1506,Tower of Secrets: Southern Wizard's Tower,80,80,Instance,Horn of Maguuma,Tyria
+1507,Mabon's Fate: Bastion of Strength,80,80,Instance,Horn of Maguuma,Tyria
+1508,Astral Ward Infirmary,80,80,Instance,Horn of Maguuma,Tyria
+1509,The Wizard's Tower,80,80,Public,Horn of Maguuma,Tyria
+1510,Skywatch Archipelago,80,80,Public,Horn of Maguuma,Tyria
+1511,Commander without a Cause: Gendarran Fields,80,80,Instance,Kryta,Tyria
+1512,The World Spire: Bastion of the Celestial,80,80,Instance,Horn of Maguuma,Tyria
+1513,Mother of Stars: Cosmic Observatory,80,80,Instance,Horn of Maguuma,Tyria
+1514,Epilogue: The Wizard's Tower,80,80,Instance,Horn of Maguuma,Tyria
+1515,Strike Mission: Cosmic Observatory,80,80,Instance,Horn of Maguuma,Tyria
+1516,Into the Obscure: The Wizard's Tower,80,80,Instance,Horn of Maguuma,Tyria
+1517,Amnytas,80,80,Public,Horn of Maguuma,Tyria
+1518,Treachery: Nayos,80,80,Instance,Horn of Maguuma,Tyria
+1519,Hell Breaks Loose: ???,80,80,Instance,Horn of Maguuma,Tyria
+1520,Strike Mission: Temple of Febe,80,80,Instance,Horn of Maguuma,Tyria
+1521,The Missing Facet: Droknar's Light,80,80,Instance,Horn of Maguuma,Tyria
+1522,Stopped Clock Tower,80,80,Public,Mad King's Realm,Mists
+1523,Convergence: Outer Nayos (Public),80,80,Public,,Mists
+1524,Duress: Heitor's Territory,80,80,Instance,Horn of Maguuma,Tyria
+1525,Heitor's Gate: Heitor's Territory,80,80,Instance,Horn of Maguuma,Tyria
+1526,Inner Nayos,80,80,Public,Horn of Maguuma,Tyria
+1527,Convergence: Outer Nayos (Private Squad),80,80,Instance,,Mists
+1528,The Survivors: Heitor's Gate,80,80,Instance,Horn of Maguuma,Tyria
+1529,The Survivors: Astral Ward Camp,80,80,Instance,Horn of Maguuma,Tyria
+1530,Duress: The Wizard's Tower,80,80,Instance,Horn of Maguuma,Tyria
+1531,Duress: Nayos,80,80,Instance,,Mists
+1532,Forced Hand: Nyedra,80,80,Instance,Horn of Maguuma,Tyria
+1533,Eventide's March: Coliseum of the Midnight King,80,80,Instance,Horn of Maguuma,Tyria
+1534,The War Council: Astral Ward Camp,80,80,Instance,Horn of Maguuma,Tyria
+1535,Eventide's March: Nyedra Surrounds,80,80,Instance,Horn of Maguuma,Tyria
+1536,Desperate Measures: Forward Bivouac,80,80,Instance,Horn of Maguuma,Tyria
+1537,Sovereign of Nayos: The Wizard's Tower,80,80,Instance,Horn of Maguuma,Tyria
+1538,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+1539,The Eleventh Hour: Citadel of Zakiros,80,80,Instance,Horn of Maguuma,Tyria
+1540,Desperate Measures: Forward Bivouac,80,80,Instance,Horn of Maguuma,Tyria
+1541,Twice Stricken: Landfall,80,80,Instance,Janthir,Tyria
+1542,Finding Balance: Hearth's Glow,80,80,Instance,Janthir,Tyria
+1543,Titan Research,80,80,Instance,Shiverpeak Mountains,Tyria
+1544,Twice Stricken: Hearth's Glow,80,80,Instance,Janthir,Tyria
+1545,Finding Balance: Sanguine Crater,80,80,Instance,Janthir,Tyria
+1546,Home Sweet Home: Hearth's Glow,80,80,Instance,Janthir,Tyria
+1547,Sorrow in These Halls: Harvest Den,80,80,Instance,Janthir,Tyria
+1549,Missing in Action: Haar Mire,80,80,Instance,Janthir,Tyria
+1550,Lowland Shore,80,80,Public,Janthir,Tyria
+1551,The Tyrian Alliance: Guild Initiative Headquarters,80,80,Instance,Kryta,Tyria
+1552,Against the Wall: Sulfurous Springs,80,80,Instance,Janthir,Tyria
+1553,Sorrow in These Halls: The Wizard's Tower,80,80,Instance,Horn of Maguuma,Tyria
+1554,Janthir Syntri,80,80,Public,Janthir,Tyria
+1555,Strangers among Lands: Festering Basin,80,80,Instance,Janthir,Tyria
+1556,Unknown Territory: Moon Camp,80,80,Instance,Janthir,Tyria
+1557,Home Sweet Home: Abandoned Homestead,80,80,Instance,Janthir,Tyria
+1558,Hearth's Glow,0,80,Instance,Janthir,Tyria
+1559,Against the Wall: Hearth's Glow,80,80,Instance,Janthir,Tyria
+1560,Strangers among Lands: Guild Initiative Headquarters,80,80,Instance,Kryta,Tyria
+1561,Push Prototype—BETA,80,80,Pvp,Player vs. Player,Mists
+1562,Convergence: Mount Balrior (Private Squad),80,80,Instance,Janthir,Tyria
+1563,Trial and Error: The Wizard's Tower,80,80,Instance,Janthir,Tyria
+1564,Mount Balrior,80,80,Instance,Janthir,Tyria
+1565,Battle's Eve: Harvest Den,80,80,Instance,Janthir,Tyria
+1567,Balrior Peak: Harvest Den,80,80,Instance,Janthir,Tyria
+1568,Trial and Error: Janthir Syntri,80,80,Instance,Janthir,Tyria
+1569,Trial and Error: Durmand Priory,80,80,Instance,Shiverpeak Mountains,Tyria
+1570,Mists Vault,80,80,Instance,,Mists
+1571,Convergence: Mount Balrior (Public),80,80,Public,Janthir,Tyria
+1572,Balrior Peak: Mount Balrior,80,80,Instance,Janthir,Tyria
+1573,Mabon's Grief: Bava Nisos Outskirts,80,80,Instance,Janthir,Tyria
+1574,Bava Nisos,80,80,Public,Janthir,Tyria
+1575,Mistburned Barrens,80,80,Public,Janthir,Tyria
+1577,A Legacy Damned: The Golden Lake,80,80,Instance,Janthir,Tyria
+1578,A Legacy Damned: Alliance Staging Ground,80,80,Instance,Janthir,Tyria
+1579,Into the Valley of Shadow: Valley of Agony,80,80,Instance,Janthir,Tyria
+1580,Into the Valley of Shadow: Alliance Staging Ground,80,80,Instance,Janthir,Tyria
+1582,A Titanic Undertaking: Saevus's Heart,80,80,Instance,Janthir,Tyria
+1583,Salvation's Cost: Foundry of Failed Creations,80,80,Instance,Janthir,Tyria
+1584,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
+1585,Salvation's Cost: Saevus's Heart,80,80,Instance,Janthir,Tyria
+1586,Forced Entry: Bava Nisos Outskirts,80,80,Instance,Janthir,Tyria
+1587,Forced Entry: Bava Nisos,80,80,Instance,Janthir,Tyria
+1588,Salvation's Cost: Guild Initiative Headquarters,80,80,Instance,Kryta,Tyria
+1589,A Titanic Undertaking: Bava Nisos,80,80,Instance,Janthir,Tyria
