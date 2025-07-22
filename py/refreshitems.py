@@ -15,44 +15,44 @@ def get_item_data(item_ids):
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
-        print(f"⚠️ Batch failed: {e}")
+        print(f"⚠️ Batch ophalen mislukt: {e}")
         return []
 
 def write_to_csv(data):
     with open(OUTFILE, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=FIELDS)
         writer.writeheader()
-
         for item in data:
             row = {field: item.get(field, "") for field in FIELDS}
             writer.writerow(row)
 
-### START SCRIPT ###
-print("🌐 Ophalen van alle item-ID's...")
-try:
-    res = requests.get(API_URL)
-    res.raise_for_status()
-    item_ids = res.json()
-    print(f"📦 Totaal items gevonden: {len(item_ids)}")
-except Exception as e:
-    print(f"❌ Kan item IDs niet ophalen: {e}")
-    item_ids = []
+def main():
+    print("🌐 Pak alle item-ID's uit de API...")
+    try:
+        res = requests.get(API_URL)
+        res.raise_for_status()
+        item_ids = res.json()
+        print(f"📦 Totaal items gevonden: {len(item_ids)}")
+    except Exception as e:
+        print(f"❌ Kan item-IDs niet ophalen: {e}")
+        return
 
-items = []
+    items = []
+    for i in range(0, len(item_ids), BATCH_SIZE):
+        batch_ids = item_ids[i:i+BATCH_SIZE]
+        print(f"🔁 Ophalen batch {i} tot {i+len(batch_ids)}...")
+        batch_data = get_item_data(batch_ids)
+        if batch_data:
+            items.extend(batch_data)
+        else:
+            print(f"⚠️ Batch {i}–{i+len(batch_ids)} is leeg.")
+        time.sleep(0.2)  # Respecteer API-ratelimits
 
-for i in range(0, len(item_ids), BATCH_SIZE):
-    batch_ids = item_ids[i:i+BATCH_SIZE]
-    print(f"🔁 Batch {i}–{i+BATCH_SIZE}")
-    batch_data = get_item_data(batch_ids)
-    if batch_data:
-        items.extend(batch_data)
-    else:
-        print("⚠️ Deze batch is leeg.")
-    time.sleep(0.2)  # Respecteer API limits (300ms aanbevolen)
+    # Filter items die GEEN naam hebben
+    items_filtered = [item for item in items if item.get("name")]
+    print(f"📝 Schrijven van {len(items_filtered)} items naar {OUTFILE}...")
+    write_to_csv(items_filtered)
+    print("✅ Klaar!")
 
-# Filter echt bestaande items
-items_filtered = [item for item in items if item.get("name")]
-
-print(f"📝 Totaal geldige items: {len(items_filtered)} → schrijven naar CSV...")
-write_to_csv(items_filtered)
-print(f"✅ Items succesvol weggeschreven naar {OUTFILE}")
+if __name__ == "__main__":
+    main()
