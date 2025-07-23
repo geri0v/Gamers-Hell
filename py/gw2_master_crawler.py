@@ -103,32 +103,34 @@ def enrich_maps_with_csv(maps):
     return enriched
 
 # === EVENT DISCOVERY ===
-
 def find_events_from_map_page(html):
     soup = BeautifulSoup(html, "html.parser")
-    sections = ["Events", "Dynamic_events", "Meta_events", "Objectives", "Hearts"]
-    found = []
+    results = []
 
-    for sec in sections:
-        span = soup.find("span", id=sec)
-        if not span:
-            continue
-        ul = span.find_next("ul")
-        if not ul:
-            continue
-
-        for li in ul.find_all("li", recursive=False):
-            a = li.find("a", href=True)
-            if a and a["href"].startswith("/wiki/Event:"):
-                title = a.get("title") or a.text.strip()
-                found.append({
-                    "title": title,
-                    "url": "https://wiki.guildwars2.com" + a["href"],
-                    "area": sec
-                })
-
+    # Vind alle event-achtige titelsecties
+    for headline in soup.select("span.mw-headline"):
+        if headline.get("id") in ["Events", "Dynamic_events", "Meta_events", "Objectives", "Hearts"]:
+            # Zoek volgende <ul> sectie binnen max 5 siblings
+            parent = headline.find_parent(["h2", "h3", "h4"])
+            next_tag = parent.find_next_sibling()
+            for _ in range(5):
+                if not next_tag: break
+                if next_tag.name == "ul":
+                    for li in next_tag.find_all("li", recursive=False):
+                        a = li.find("a", href=True)
+                        if a and a["href"].startswith("/wiki/Event:"):
+                            entry = {
+                                "title": a.get("title") or a.text.strip(),
+                                "url": "https://wiki.guildwars2.com" + a["href"],
+                                "area": headline.get("id", "Unknown")
+                            }
+                            results.append(entry)
+                    break  # stop at first valid <ul>
+                next_tag = next_tag.find_next_sibling()
+    # dedupe
     seen = set()
-    return [e for e in found if not (e["title"].lower() in seen or seen.add(e["title"].lower()))]
+    return [e for e in results if not (e["title"].lower() in seen or seen.add(e["title"].lower()))]
+
 
 # === STATIC DATA ===
 
