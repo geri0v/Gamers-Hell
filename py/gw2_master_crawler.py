@@ -101,7 +101,7 @@ def enrich_maps_with_csv(maps):
                 "continent": csvrow.get("continent_name", ""),
                 "mapUrl": m["url"]
             })
-    print(f"✅ Kept {len(enriched)}/{} maps after filtering on type=public from maps.csv")
+    print(f"✅ Kept {len(enriched)}/{len(maps)} maps after filtering on type=public from maps.csv")
     return enriched
 
 # === STEP 3 — Event discover via SPAN or CATEGORY fallback ===
