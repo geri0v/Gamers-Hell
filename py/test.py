@@ -2,55 +2,66 @@ import requests
 from bs4 import BeautifulSoup
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (GuildWars2-LootCrawler-Test/1.0 github.com/your-repo)"
+    "User-Agent": "Mozilla/5.0 (GW2-Wiki-EventTester/1.0)"
 }
 
 def fetch_html(url):
     try:
-        r = requests.get(url, headers=HEADERS, timeout=15)
+        r = requests.get(url, headers=HEADERS, timeout=20)
         if r.status_code == 200:
             return r.text
-        print(f"❌ Failed to fetch {url} (status {r.status_code})")
+        print(f"❌ Request failed [{r.status_code}] for {url}")
     except requests.RequestException as e:
-        print(f"❌ Exception during fetch: {e}")
+        print(f"❌ Network error: {e}")
     return ""
 
 def find_events_from_category(map_name):
     events = []
-    slug = map_name.replace(" ", "_")
-    url = f"https://wiki.guildwars2.com/wiki/Category:{slug}_events"
-
-    html = fetch_html(url)
-    if not html:
-        print("⚠️ Empty HTML response.")
-        return events
-
-    soup = BeautifulSoup(html, "html.parser")
-
-    # Zoek alle .mw-category groepen (event blokken)
-    for block in soup.select("div.mw-category div.mw-category-group"):
-        for li in block.find_all("li"):
-            a = li.find("a", href=True)
-            if not a or not a["href"].startswith("/wiki/Event:"):
-                continue
-            events.append({
-                "title": a.get("title") or a.text.strip(),
-                "url": "https://wiki.guildwars2.com" + a["href"]
-            })
-
-    # Dubbele events vermijden
     seen = set()
-    final = [e for e in events if not (e["title"].lower() in seen or seen.add(e["title"].lower()))]
+    page = 1
+    base_slug = map_name.replace(" ", "_")
+    base_url = f"https://wiki.guildwars2.com/wiki/Category:{base_slug}_events"
 
-    return final
+    while True:
+        url = base_url + f"?pagefrom={page}" if page > 1 else base_url
+        print(f"🔄 Fetching: {url}")
+        html = fetch_html(url)
+        if not html:
+            break
+
+        soup = BeautifulSoup(html, "html.parser")
+        blocks = soup.select("div.mw-category-group")
+
+        found_on_page = 0
+        for block in blocks:
+            for li in block.select("li"):
+                a = li.find("a", href=True)
+                if not a or not a["href"].startswith("/wiki/Event:"):
+                    continue
+                title = a.get("title") or a.text.strip()
+                if title.lower() in seen:
+                    continue
+                events.append({
+                    "title": title,
+                    "url": "https://wiki.guildwars2.com" + a["href"]
+                })
+                seen.add(title.lower())
+                found_on_page += 1
+
+        if found_on_page == 0:
+            break  # no more entries; end
+
+        # Note: true MediaWiki paginering is via 'next page' links, kan dynamisch zijn
+        # dus we stoppen als er niks nieuws is opgehaald
+        page += 1
+
+    return events
 
 if __name__ == "__main__":
-    # 📍 Map instellen die je wilt testen
     map_name = "Caledon Forest"
-    print(f"🔍 Fetching events for: {map_name}")
-    result = find_events_from_category(map_name)
+    print(f"🔎 Testing category events for: {map_name}")
+    events = find_events_from_category(map_name)
+    print(f"\n✅ Total events found: {len(events)}")
 
-    print(f"\n✅ Found {len(result)} events in category for '{map_name}'")
-    print("📋 First 10 events:")
-    for ev in result[:10]:
-        print(f"— {ev['title']}")
+    for ev in events[:10]:
+        print("•", ev['title'])
