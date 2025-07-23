@@ -1,0 +1,27 @@
+name: Test Event Fetcher
+
+on:
+  workflow_dispatch:   # Manueel uitvoerbaar via GitHub UI
+  push:
+    paths:
+      - 'test.py'
+
+jobs:
+  test-event-crawler:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛎️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 🚀 Install dependencies
+        run: pip install beautifulsoup4 requests
+
+      - name: 🔍 Run test.py
+        run: python test.py
