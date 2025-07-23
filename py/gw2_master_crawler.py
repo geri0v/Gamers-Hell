@@ -4,15 +4,14 @@ import json
 import re
 import time
 import requests
-from collections import defaultdict
 from bs4 import BeautifulSoup
 from rapidfuzz import fuzz, process
 from tqdm import tqdm
 
+# === CONFIG ===
 DATA_DIR = "data/maps"
 os.makedirs(DATA_DIR, exist_ok=True)
 
-# === CONFIG ===
 SLEEP = 0.15
 GW2T_TOKEN = "df70c529-b684-4d81-b882-7e2665de3afe"
 
@@ -23,12 +22,12 @@ def sleep(): time.sleep(SLEEP)
 def fetch_html(url):
     sleep()
     try:
-        r = requests.get(url, timeout=20)
+        r = requests.get(url, timeout=15)
         if r.status_code == 200:
             return r.text
         print(f"❌ [{r.status_code}] Failed to fetch {url}")
     except Exception as e:
-        print(f"❌ EXCEPTION on {url}: {e}")
+        print(f"❌ Exception fetching {url}: {e}")
     return ""
 
 def load_csv(path):
@@ -38,19 +37,26 @@ def load_csv(path):
 def to_slug(name):
     return name.lower().replace(" ", "_").replace(":", "").replace("'", "").replace("-", "_")
 
-# === STEP 1 — Load base maps from wiki via ZONE + CATEGORIE ===
+def strip_html(text):
+    return re.sub(r"<[^>]+>", "", text or "").strip()
+
+def first_sentences(text, n=2):
+    s = text.strip().split('. ')
+    return '. '.join(s[:n]) + ('. (see wiki)' if len(s) > n else '')
+
+def is_container(name):
+    return re.search(r'chest|bag|cache|container|satchel|box|reward|sack', name, re.I)
+
+# === MAP DISCOVERY ===
 
 def discover_maps_from_wiki():
     ZONE_URL = "https://wiki.guildwars2.com/wiki/Zone"
-    CAT_URL  = "https://wiki.guildwars2.com/wiki/Category:Zones"
+    CAT_URL = "https://wiki.guildwars2.com/wiki/Category:Zones"
 
     html_main = fetch_html(ZONE_URL)
     html_cat  = fetch_html(CAT_URL)
 
-    playable_names = set()
-    cat_titles = re.findall(r'<li>\s*<a [^>]*title="([^"]+)"', html_cat)
-    for title in cat_titles:
-        playable_names.add(title.strip())
+    playable_names = set(re.findall(r'<li>\s*<a [^>]*title="([^"]+)"', html_cat))
 
     expansion_blocks = []
     for match in re.finditer(r'<h3>([^<]+)</h3>', html_main):
@@ -60,15 +66,13 @@ def discover_maps_from_wiki():
     for match in re.finditer(r'<tr class="line-bottom">([\s\S]*?)</tr>', html_main):
         block = match.group(1)
         m = re.search(r'<a href="(\/wiki\/[^"]+)" title="([^"]+)"', block)
-        if not m:
-            continue
+        if not m: continue
+
         map_link = "https://wiki.guildwars2.com" + m.group(1)
         map_name = m.group(2).strip()
-
         if map_name not in playable_names:
             continue
 
-        # Vind expansion
         exp = "Core"
         for eb in reversed(expansion_blocks):
             if match.start() > eb["start"]:
@@ -76,14 +80,8 @@ def discover_maps_from_wiki():
                 break
 
         maps.append({ "expansion": exp, "name": map_name, "url": map_link })
-
-    print(f"🗺️  Found {len(maps)} maps from Zone page (filtered via Category:Zones)")
+    print(f"🗺️ Found {len(maps)} maps from Zone page")
     return maps
-
-def strip_html(text):
-    return re.sub(r"<[^>]+>", "", text or "").strip()
-
-# === STEP 2 — Merge with your own DATA/maps.csv (region, continent, type) ===
 
 def enrich_maps_with_csv(maps):
     maps_csv = load_csv("data/maps.csv")
@@ -101,38 +99,38 @@ def enrich_maps_with_csv(maps):
                 "continent": csvrow.get("continent_name", ""),
                 "mapUrl": m["url"]
             })
-    print(f"✅ Kept {len(enriched)}/{len(maps)} maps after filtering on type=public from maps.csv")
+    print(f"✅ Filtered down to {len(enriched)} playable maps (type=public)")
     return enriched
 
-# === STEP 3 — Event discover via SPAN or CATEGORY fallback ===
+# === EVENT DISCOVERY ===
 
 def find_events_from_map_page(html):
-    events = []
-    heads = ["Events", "Dynamic_events", "Meta_events", "Objectives", "Hearts"]
-    for h in heads:
-        m = re.search(r'<span[^>]*id="' + re.escape(h) + r'"[^>]*>.*?</span>\s*<ul>([\s\S]+?)</ul>', html, re.I)
-        if not m:
+    soup = BeautifulSoup(html, "html.parser")
+    sections = ["Events", "Dynamic_events", "Meta_events", "Objectives", "Hearts"]
+    found = []
+
+    for sec in sections:
+        span = soup.find("span", id=sec)
+        if not span:
             continue
-        section = m.group(1)
-        for a in re.findall(r'<a href="(/wiki/Event:[^"]+)" title="([^"]+)"', section):
-            events.append({ "title": a[1], "url": "https://wiki.guildwars2.com" + a[0], "area": h })
+        ul = span.find_next("ul")
+        if not ul:
+            continue
+
+        for li in ul.find_all("li", recursive=False):
+            a = li.find("a", href=True)
+            if a and a["href"].startswith("/wiki/Event:"):
+                title = a.get("title") or a.text.strip()
+                found.append({
+                    "title": title,
+                    "url": "https://wiki.guildwars2.com" + a["href"],
+                    "area": sec
+                })
+
     seen = set()
-    clean = [ev for ev in events if not (ev["title"].lower() in seen or seen.add(ev["title"].lower()))]
-    return clean
+    return [e for e in found if not (e["title"].lower() in seen or seen.add(e["title"].lower()))]
 
-def find_events_from_category(map_name):
-    url = "https://wiki.guildwars2.com/wiki/Category:" + map_name.replace(" ", "_") + "_events"
-    html = fetch_html(url)
-    events = []
-    for m in re.findall(r'<a href="(/wiki/Event:[^"]+)" title="([^"]+)"', html):
-        events.append({
-            "url": "https://wiki.guildwars2.com" + m[0],
-            "title": m[1].strip(),
-            "area": "Category"
-        })
-    return events
-
-# === STEP 4 — Load all static data ===
+# === STATIC DATA ===
 
 items = load_csv("data/items.csv")
 items_index = {i["name"].lower(): i for i in items}
@@ -141,7 +139,6 @@ item_names = list(items_index.keys())
 achievements = load_csv("data/achievements.csv")
 achievement_ids = set(str(a["id"]) for a in achievements)
 
-# LIVE drop rate
 drop_rates = {}
 print("📥 Loading drop rates from wiki...")
 r = requests.get("https://wiki.guildwars2.com/wiki/Special:Ask/mainlabel%3D/limit%3D5000/format%3Dcsv/prettyprint%3Dtrue/unescape%3Dtrue/searchlabel%3DCSV")
@@ -152,21 +149,7 @@ if r.ok:
         if iid:
             drop_rates[iid] = row.get("rate", "")
 
-# === STEP 5 — Extract drop/loot from event wiki ===
-
-def first_sentences(text, n=2):
-    sentences = text.strip().split('. ')
-    return '. '.join(sentences[:n]) + ('. (see wiki)' if len(sentences) > n else '')
-
-def parse_location_from_html(html):
-    m = re.search(r'<dt[^>]*>Location<\/dt>\s*<dd>(.*?)<\/dd>', html, re.I | re.S)
-    return strip_html(m.group(1)) if m else ""
-
-def parse_waypoint_from_html(html):
-    m = re.search(r'<a href="\/wiki\/[^"]+Waypoint[^"]*"[^>]*>([^<]*Waypoint)<\/a>', html)
-    return m.group(1).strip() if m else ""
-
-# === Matching ===
+# === ITEM MATCHING + ENRICHING ===
 
 def match_item_to_csv(name):
     clean = name.lower()
@@ -178,71 +161,16 @@ def match_item_to_csv(name):
     return None
 
 def enrich_item_from_api(item_id):
-    # Trading Post price
-    tp_url = f"https://api.guildwars2.com/v2/commerce/prices/{item_id}"
-    price = 0
     try:
-        r = requests.get(tp_url)
+        r = requests.get(f"https://api.guildwars2.com/v2/commerce/prices/{item_id}")
         if r.ok:
-            js = r.json()
-            price = js.get("sells", {}).get("unit_price", 0)
+            return r.json().get("sells", {}).get("unit_price", 0)
     except: pass
-    return price
+    return 0
 
-def enrich_item_from_gw2treasures(name):
-    try:
-        url = f"https://api.gw2treasures.com/items?name={name}"
-        headers = {"Authorization": f"Bearer {GW2T_TOKEN}"}
-        r = requests.get(url, headers=headers)
-        res = r.json()
-        return res[0] if res else None
-    except:
-        return None
+# === LOOT PARSING ===
 
-def is_container(name):
-    return re.search(r'chest|bag|cache|container|satchel|box|reward|sack', name, re.I)
-
-# === RECURSIVE LOOT CRASHER ===
-
-def crawl_container_loot(item_page_url, ctx, depth=0):
-    if depth > 2:
-        return []
-    html = fetch_html(item_page_url)
-    uls = re.findall(r'<ul>([\s\S]*?)</ul>', html)
-    items = []
-    for ul in uls:
-        for m in re.findall(r'<a href="(/wiki/[^"]+)" title="([^"]+)"', ul):
-            href, name = m
-            items.append({ "name": name, "url": "https://wiki.guildwars2.com" + href })
-            # nested container? Recursief
-            if is_container(name):
-                items += crawl_container_loot("https://wiki.guildwars2.com" + href, ctx, depth+1)
-    return items
-
-def parse_loot_from_event_page(html, ctx):
-    soup = BeautifulSoup(html, "html.parser")
-    span = soup.find("span", id=lambda x: x and "Reward" in x)
-    ul = span.find_next("ul") if span else None
-    if not ul:
-        return []
-
-    loot_items = []
-    li_tags = ul.find_all("li") if ul else []
-
-    for li in li_tags:
-        name = li.text.split(" (")[0].strip()
-        if is_container(name):
-            match = re.search(r'<a href="(/wiki/[^"]+)"', str(li), re.I)
-            url = "https://wiki.guildwars2.com" + match.group(1) if match else ""
-            nested = crawl_container_loot(url, ctx)
-            for sub in nested:
-                loot_items.append(enrich_loot_item(sub["name"], ctx))
-        else:
-            loot_items.append(enrich_loot_item(name, ctx))
-
-    return [i for i in loot_items if i]
-
-def enrich_loot_item(name, ctx):
+def enrich_loot_item(name, ctx, guaranteed="no"):
     match = match_item_to_csv(name)
     if not match:
         return None
@@ -250,12 +178,10 @@ def enrich_loot_item(name, ctx):
     item_id = str(match["id"])
     rarity = match.get("rarity", "")
     flags  = match.get("flags", "")
-    price = enrich_item_from_api(item_id)
 
-    # Filtering rarity only AFTER container parsed
+    price = enrich_item_from_api(item_id)
     if rarity.lower() in ("junk", "basic"):
         return None
-
     if price < 3000 and "Collectible" not in (flags or "") and item_id not in achievement_ids:
         return None
 
@@ -263,14 +189,80 @@ def enrich_loot_item(name, ctx):
         "Loot": name,
         "Loot ID": item_id,
         "Rarity": rarity,
-        "Guaranteed": "yes" if "guaranteed" in name.lower() else "no",
+        "Guaranteed": guaranteed,
         "Collectible": "yes" if "Collectible" in (flags or "") else "no",
         "Accountbound": "yes" if "AccountBound" in (flags or "") else "no",
         "Achievement": "yes" if item_id in achievement_ids else "no",
         "Droprate": drop_rates.get(item_id, "")
     }
 
-# === STEP 6 — MAIN EXECUTION ===
+def crawl_container_loot(item_url, ctx, depth=0):
+    if depth > 2: return []
+
+    html = fetch_html(item_url)
+    soup = BeautifulSoup(html, "html.parser")
+    results = []
+
+    for ul in soup.find_all("ul"):
+        for li in ul.find_all("li", recursive=False):
+            a = li.find("a", href=True)
+            if not a or not a['href'].startswith("/wiki/"):
+                continue
+            name = a.get("title") or a.text.strip()
+            if not name or "List of" in name:
+                continue
+
+            li_text = li.get_text(strip=True).lower()
+            guaranteed = "yes" if "guaranteed" in li_text else "no"
+
+            if is_container(name):
+                nested_url = "https://wiki.guildwars2.com" + a["href"]
+                results += crawl_container_loot(nested_url, ctx, depth + 1)
+            else:
+                results.append({
+                    "name": name,
+                    "url": "https://wiki.guildwars2.com" + a["href"],
+                    "guaranteed": guaranteed
+                })
+    return results
+
+def find_reward_list_from_event_page(soup):
+    reward_span = soup.find("span", id=lambda x: x and x.lower().startswith("reward"))
+    if not reward_span:
+        return []
+    next_tag = reward_span.parent
+    while next_tag:
+        next_tag = next_tag.find_next_sibling()
+        if not next_tag:
+            break
+        if next_tag.name == "ul":
+            return next_tag.find_all("li")
+    return []
+
+def parse_loot_from_event_page(html, ctx):
+    soup = BeautifulSoup(html, "html.parser")
+    li_tags = find_reward_list_from_event_page(soup)
+    loot_items = []
+
+    for li in li_tags:
+        name = li.text.split(" (")[0].strip()
+        if is_container(name):
+            href = li.find("a", href=True)
+            url = "https://wiki.guildwars2.com" + href["href"] if href else None
+            nested_items = crawl_container_loot(url, ctx)
+            for nested in nested_items:
+                enriched = enrich_loot_item(nested["name"], ctx, guaranteed=nested.get("guaranteed", "no"))
+                if enriched:
+                    loot_items.append(enriched)
+        else:
+            li_text = li.get_text(strip=True).lower()
+            guaranteed = "yes" if "guaranteed" in li_text else "no"
+            enriched = enrich_loot_item(name, ctx, guaranteed=guaranteed)
+            if enriched:
+                loot_items.append(enriched)
+    return loot_items
+
+# === MAIN ===
 
 def main():
     maps_raw = discover_maps_from_wiki()
@@ -281,10 +273,9 @@ def main():
         print(f"🌍 {mp['name']}")
         html = fetch_html(mp["mapUrl"])
         events = find_events_from_map_page(html)
+        print(f"🔎 Found {len(events)} events")
         if not events:
-            events = find_events_from_category(mp["name"])
-        if not events:
-            print(f"⚠️  No events found for {mp['name']}")
+            print(f"⚠️ No events found for {mp['name']}")
             continue
 
         event_rows = []
@@ -292,13 +283,14 @@ def main():
             ev_html = fetch_html(ev["url"])
             soup = BeautifulSoup(ev_html, "html.parser")
             desc = first_sentences(soup.find("p").text if soup.find("p") else "")
-            location = parse_location_from_html(ev_html)
-            waypoint = parse_waypoint_from_html(ev_html)
+            location = re.search(r'<dt[^>]*>Location<\/dt>\s*<dd>(.*?)<\/dd>', ev_html, re.I | re.S)
+            location = strip_html(location.group(1)) if location else ""
+            waypoint = re.search(r'<a href="\/wiki\/[^"]+Waypoint[^"]*"[^>]*>([^<]*Waypoint)<\/a>', ev_html)
+            waypoint = waypoint.group(1).strip() if waypoint else ""
 
             loot = parse_loot_from_event_page(ev_html, mp)
-
-            for l in loot:
-                row = {
+            for item in loot:
+                event_rows.append({
                     "Expansion": mp["expansion"],
                     "Region": mp["region"],
                     "Continent": mp["continent"],
@@ -308,11 +300,9 @@ def main():
                     "Area": ev["area"],
                     "Location": location,
                     "Closest Waypoint": waypoint,
-                    **l
-                }
-                event_rows.append(row)
+                    **item
+                })
 
-        # Write to file
         slug = to_slug(mp["name"])
         with open(f"{DATA_DIR}/{slug}.json", "w", encoding="utf-8") as f:
             json.dump(event_rows, f, indent=2, ensure_ascii=False)
@@ -320,7 +310,6 @@ def main():
         manifest.append({ "map": mp["name"], "slug": slug })
         print(f"✅ {mp['name']}: {len(event_rows)} loot lines written")
 
-    # Save manifest
     with open("data/manifest.json", "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2, ensure_ascii=False)
 
