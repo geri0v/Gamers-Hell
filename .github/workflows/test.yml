@@ -4,7 +4,7 @@ on:
   workflow_dispatch:   # Manueel uitvoerbaar via GitHub UI
   push:
     paths:
-      - 'test.py'
+      - '/py/test.py'
 
 jobs:
   test-event-crawler:
@@ -23,5 +23,5 @@ jobs:
       - name: 🚀 Install dependencies
         run: pip install beautifulsoup4 requests
 
-      - name: 🔍 Run test.py
-        run: python test.py
+      - name: 🔍 Run /py/test.py
+        run: python /py/test.py
