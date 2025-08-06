@@ -116,7 +116,7 @@ Story Instance: Legacy"
 919,What Does She Know?,Default,['Permanent'],"So close, yet so far."
 4193,For Petey's Sake,Default,"['Pvp', 'RepairOnLogin', 'Permanent']",Find the collections requested by Gorrik to nurse Petey back to health.
 1060,Trick-or-Treater V,Default,"['Pvp', 'Daily']",
-1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
+8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
 4171,Master Diver: Kessex Hills,Default,['Permanent'],This chest can be reopened once per week or per completion of the Master Diver achievement.
 1712,Fractal Master,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>WARNING: some fractals may cause injury, psychic trauma, blindness, or death.</c>"
 3475,Siren's Landing Insight: Lava Leap,Default,['Permanent'],
@@ -130,7 +130,7 @@ Surely it must be an official title if a self-proclaimed skritt king gives it to
 
 Surely it must be an official title if a self-proclaimed skritt king gives it to you, right?"
 3489,Aurora II: Empowering,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
-8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
+1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
 4167,Survey on Subjects of Importance,Default,['Permanent'],
 6159,An Impostor Walks among Us,Default,['Permanent'],You'll have to take off your shoes.
 6934,Peace and Quiet,Default,['Permanent'],
@@ -1959,13 +1959,13 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3672,To Kill a God,Default,"['Hidden', 'Permanent']",Journal: To Kill a God Completed
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
+6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
 4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
 8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
+6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
 6618,Completing Events III,Default,['Permanent'],
 2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
-6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
-6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 5551,League Participator—Conquest Season Twenty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
 4495,Chasing Tales: Direct Approach,Default,"['Hidden', 'Permanent']",Mouglon never turned his back on a fight.
@@ -3246,6 +3246,7 @@ This is but the first step on a long road."
 4619,Chasing Tales: Asaliea the Channeler,Default,"['Pvp', 'Hidden', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 7149,Legendary Weapon: Kamohoali'i Kotaki,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
 6488,Antique Canthan Armor Collector,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
+8787,(Annual) Skiff Sailor,Default,['Permanent'],
 2992,Hold the Line,Default,['Permanent'],
 1704,Sneaky Sleuth,Default,['Permanent'],Story Instance: Party Politics
 2817,Daily Top Stats,Default,"['Pvp', 'Daily']",There's more than one way to contribute. You find the one that works.
