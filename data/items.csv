@@ -17619,6 +17619,7 @@ id,name,type,level,rarity,vendor_value
 24962,Healing Shiverpeak Hatchet,Weapon,11,Fine,16
 24963,Healing Shiverpeak Hatchet,Weapon,16,Fine,20
 24964,Mending Shiverpeak Hatchet,Weapon,21,Fine,24
+24965,Mending Shiverpeak Hatchet,Weapon,26,Fine,28
 24966,Mending Shiverpeak Hatchet,Weapon,31,Fine,31
 24967,Mending Shiverpeak Hatchet,Weapon,36,Fine,35
 24968,Mending Shiverpeak Hatchet,Weapon,41,Fine,38
@@ -17657,6 +17658,7 @@ id,name,type,level,rarity,vendor_value
 25001,Healing Shiverpeak Dirk,Weapon,6,Fine,11
 25002,Healing Shiverpeak Dirk,Weapon,11,Fine,16
 25003,Healing Shiverpeak Dirk,Weapon,16,Fine,20
+25004,Mending Shiverpeak Dirk,Weapon,21,Fine,24
 25005,Mending Shiverpeak Dirk,Weapon,26,Fine,28
 25006,Mending Shiverpeak Dirk,Weapon,31,Fine,31
 25007,Mending Shiverpeak Dirk,Weapon,36,Fine,35
@@ -17669,6 +17671,7 @@ id,name,type,level,rarity,vendor_value
 25014,Shaman's Shiverpeak Dirk,Weapon,71,Fine,59
 25015,Shaman's Shiverpeak Dirk,Weapon,76,Fine,63
 25016,Shaman's Shiverpeak Dirk,Weapon,80,Fine,66
+25017,Healing Shiverpeak Dirk of Agony,Weapon,14,Masterwork,38
 25018,Healing Shiverpeak Dirk of Force,Weapon,20,Masterwork,48
 25019,Mending Shiverpeak Dirk of Accuracy,Weapon,26,Masterwork,56
 25020,Mending Shiverpeak Dirk of Grawl Slaying,Weapon,32,Masterwork,64
@@ -17676,6 +17679,7 @@ id,name,type,level,rarity,vendor_value
 25022,Mending Shiverpeak Dirk of Smoldering,Weapon,44,Masterwork,80
 25023,Mending Shiverpeak Dirk of Debility,Weapon,50,Masterwork,90
 25024,Mending Shiverpeak Dirk of the Hydromancer,Weapon,56,Masterwork,98
+25025,Shaman's Shiverpeak Dirk of Agony,Weapon,62,Masterwork,106
 25026,Shaman's Shiverpeak Dirk of the Geomancer,Weapon,68,Masterwork,114
 25027,Shaman's Shiverpeak Dirk of Bloodlust,Weapon,74,Masterwork,122
 25028,Shaman's Shiverpeak Dirk of Earth,Weapon,80,Masterwork,132
@@ -17718,6 +17722,7 @@ id,name,type,level,rarity,vendor_value
 25065,Shaman's Shiverpeak Talisman of Agony,Weapon,62,Masterwork,106
 25066,Shaman's Shiverpeak Talisman of the Geomancer,Weapon,68,Masterwork,114
 25067,Shaman's Shiverpeak Talisman of Bloodlust,Weapon,74,Masterwork,122
+25068,Shaman's Shiverpeak Talisman of Earth,Weapon,80,Masterwork,132
 25069,Mending Norn Focus of Battle,Weapon,39,Rare,111
 25070,Mending Norn Focus of Ogre Slaying,Weapon,46,Rare,126
 25071,Mending Norn Focus of Earth,Weapon,53,Rare,141
@@ -30803,7 +30808,6 @@ id,name,type,level,rarity,vendor_value
 42095,Cleric's Bandit Mallet,Weapon,80,Exotic,264
 42096,Cleric's Bandit Revolver,Weapon,80,Exotic,264
 42097,Cleric's Bandit Musket,Weapon,80,Exotic,396
-42098,Cleric's Bandit Baton,Weapon,80,Exotic,264
 42099,Cleric's Bandit Ward,Weapon,80,Exotic,264
 42100,Cleric's Steam Speargun,Weapon,80,Exotic,396
 42101,Cleric's Bandit Spire,Weapon,80,Exotic,396
@@ -30821,7 +30825,6 @@ id,name,type,level,rarity,vendor_value
 42113,Rabid Iron Polearm,Weapon,80,Exotic,396
 42114,Rabid Bandit Mallet,Weapon,80,Exotic,264
 42115,Rabid Bandit Revolver,Weapon,80,Exotic,264
-42116,Rabid Bandit Musket,Weapon,80,Exotic,396
 42117,Rabid Bandit Baton,Weapon,80,Exotic,264
 42118,Rabid Bandit Ward,Weapon,80,Exotic,264
 42119,Rabid Steam Speargun,Weapon,80,Exotic,396
@@ -30957,7 +30960,6 @@ id,name,type,level,rarity,vendor_value
 42457,Settler's Soft Wood Scepter of Perception,Weapon,80,Exotic,264
 42458,Settler's Iron Shield of Ogre Slaying,Weapon,80,Exotic,264
 42459,Settler's Soft Wood Short Bow of Peril,Weapon,80,Exotic,396
-42460,Settler's Steam Speargun of Agony,Weapon,80,Exotic,396
 42461,Settler's Soft Wood Staff of Accuracy,Weapon,80,Exotic,396
 42462,Settler's Iron Sword of the Hydromancer,Weapon,80,Exotic,264
 42463,Settler's Soft Wood Torch of Restoration,Weapon,80,Exotic,264

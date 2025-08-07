@@ -116,7 +116,7 @@ Story Instance: Legacy"
 919,What Does She Know?,Default,['Permanent'],"So close, yet so far."
 4193,For Petey's Sake,Default,"['Pvp', 'RepairOnLogin', 'Permanent']",Find the collections requested by Gorrik to nurse Petey back to health.
 1060,Trick-or-Treater V,Default,"['Pvp', 'Daily']",
-8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
+1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
 4171,Master Diver: Kessex Hills,Default,['Permanent'],This chest can be reopened once per week or per completion of the Master Diver achievement.
 1712,Fractal Master,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>WARNING: some fractals may cause injury, psychic trauma, blindness, or death.</c>"
 3475,Siren's Landing Insight: Lava Leap,Default,['Permanent'],
@@ -130,7 +130,7 @@ Surely it must be an official title if a self-proclaimed skritt king gives it to
 
 Surely it must be an official title if a self-proclaimed skritt king gives it to you, right?"
 3489,Aurora II: Empowering,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
-1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
+8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
 4167,Survey on Subjects of Importance,Default,['Permanent'],
 6159,An Impostor Walks among Us,Default,['Permanent'],You'll have to take off your shoes.
 6934,Peace and Quiet,Default,['Permanent'],
@@ -408,7 +408,6 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 2919,Daily Adventure: Salvage Pit,Default,"['Pvp', 'Daily']",
 4338,Mad Realm Weapon Collection,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 3684,Master Firebrand,Default,"['Pvp', 'Permanent']",
-8739,Daily Tier 4 Kinfall,Default,['Daily'],
 6731,Viewing Vistas II,Default,['Permanent'],
 684,Aether Apprehender: Kryta,Default,['Permanent'],
 1095,Toxic Siege Gardener,Default,['Permanent'],
@@ -438,7 +437,6 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 8143,Second Dive: Bloodstone Fen (Weekly),Default,['Permanent'],
 7147,Skywatch Archipelago Explorer,Default,['Permanent'],You've explored the fractal islands of Skywatch Archipelago.
 2883,Interior Design 101,Default,['Daily'],
-8784,Daily Tier 1 Kinfall,Default,['Daily'],
 3453,Llama Roundup,Default,"['Pvp', 'Permanent']",Looking for llamas in all the wrong places.
 2365,"""Cryptonym"" Strongbox",Default,['Permanent'],
 2598,Daily Recommended Fractal—Scale 41,Default,['Daily'],
@@ -1959,13 +1957,13 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3672,To Kill a God,Default,"['Hidden', 'Permanent']",Journal: To Kill a God Completed
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
-6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
-4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
-8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
-6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
 6618,Completing Events III,Default,['Permanent'],
 2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
+6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
+4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
+8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
+6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 5551,League Participator—Conquest Season Twenty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
 4495,Chasing Tales: Direct Approach,Default,"['Hidden', 'Permanent']",Mouglon never turned his back on a fight.
@@ -2021,7 +2019,6 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3262,Ringing the Right Notes,Default,"['Pvp', 'Permanent']",Part of the symphony.
 6358,Raptor Runner: New Kaineng City,Default,['Permanent'],
 598,Southsun Pool Sample Collection,Default,['Permanent'],Collect a sample from the geothermal pools at Driftglass Springs.
-8729,Daily Tier 3 Kinfall,Default,['Daily'],
 3569,Crystal Cracker,Default,['Permanent'],Purple is not your color.
 4018,God of the Mists,Default,"['Hidden', 'Permanent']",
 8488,Trebuchet Expertise,Default,['Permanent'],
@@ -2674,7 +2671,6 @@ This is but the first step on a long road."
 4078,Light Up the Sky,Default,"['Pvp', 'Permanent']",
 7642,PvP Rush Fighter,Default,"['Pvp', 'Permanent']",Champion Points: 20
 1358,Boss Thumper XXI,Default,['Daily'],
-8799,Local Response: Outer Nayos,Default,['Permanent'],
 7704,Jahai Bluffs Incursions,Default,['Weekly'],
 8747,Spirit Nutritionist,Default,['Permanent'],
 7162,Mother of Stars,Default,['Permanent'],Journal: Mother of Stars
@@ -3246,7 +3242,6 @@ This is but the first step on a long road."
 4619,Chasing Tales: Asaliea the Channeler,Default,"['Pvp', 'Hidden', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 7149,Legendary Weapon: Kamohoali'i Kotaki,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
 6488,Antique Canthan Armor Collector,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
-8787,(Annual) Skiff Sailor,Default,['Permanent'],
 2992,Hold the Line,Default,['Permanent'],
 1704,Sneaky Sleuth,Default,['Permanent'],Story Instance: Party Politics
 2817,Daily Top Stats,Default,"['Pvp', 'Daily']",There's more than one way to contribute. You find the one that works.
@@ -3581,7 +3576,6 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 7922,Reconquer the Crash Site Climb (Weekly),Default,['Permanent'],
 8445,(Repeatable) Mount Balrior: Titan Tracker,Default,"['IgnoreNearlyComplete', 'Repeatable', 'Permanent']","""My maw's journeykin has an extra-good nose. It found my favorite toy when I lost it on the beach!"""
 23,Bat Slayer,Default,['Permanent'],Consider these winged rats cut down.
-8806,Eternal Alchemist,Default,"['Hidden', 'MoveToTop', 'Permanent']",Thank you for your purchase.
 2547,Adept Tempest,Default,"['Pvp', 'Permanent']",
 78,Branching Out,Default,['Permanent'],You made sure the dead stayed dead.
 6379,New Kaineng Insight: South Old Kaineng Ruins,Default,['Permanent'],
@@ -3763,7 +3757,6 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 7927,Legendary Illusionist,Default,"['Pvp', 'Permanent']",Your dominance is no illusion.
 6212,Daily Echovald Wilds Event Completer,Default,['Daily'],Honor the empress.
 486,Shiverpeaks Veteran Killer,Default,['Daily'],Smite them on the mountainside.
-8804,Revenge of Nourys,Default,['Permanent'],
 1152,Fractal Fortnight: Swampland,Default,['Permanent'],Shifting trees won't stop you. The Mossman will.
 7840,Clear Skies,Default,['Permanent'],Journal: Eventide's March
 1827,"""Seeds of Truth"" Mastery",Default,"['RepairOnLogin', 'CategoryDisplay', 'Permanent']",
@@ -3877,7 +3870,6 @@ Story Instance: Legacy"
 8598,Magister,Default,"['Pvp', 'Permanent']","This title can be purchased from Shiny King M'takk in Hooligan's Route in Lion's Arch if you meet the requirements. 
 
 Surely it must be an official title if a self-proclaimed skritt king gives it to you, right?"
-8776,(Weekly) Challenge Mode Convergences: Mount Balrior,Default,['Weekly'],
 6580,Dodging Attacks III,Default,['Permanent'],
 5675,Choya Response Mission,Default,['Permanent'],Note: This achievement functions on the honor system.
 3568,Damage Control,Default,['Permanent'],"Story Instance: ""The Sacrifice"""
@@ -3994,7 +3986,6 @@ It was shattered and discarded when someone asked the inventor, ""Why don't you 
 7285,Dungeon Delver: The Ruined City of Arah,Default,['Permanent'],
 2097,Daily Warrior or Necromancer Winner,Default,"['Pvp', 'Daily']",
 6111,Cod Swimming Amongst Mere Minnows,Default,"['RepairOnLogin', 'MoveToTop', 'Permanent']",You can fish your whole life without understanding it was never the fish you were truly after.
-8798,Daily Skywatch Archipelago,Default,['Daily'],
 4255,Domain of Kourna Insight: Bokoss Prison Ruins,Default,['Permanent'],
 6053,League Conqueror—3v3 Season Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
 8394,Reliving Path of Fire,Default,['Permanent'],
@@ -5599,7 +5590,6 @@ Story Instance: Legacy"
 889,Here Be Dragons!,Default,['Daily'],
 2756,Merciless Weapon Collection,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 2592,Daily Recommended Fractal—Scale 34,Default,['Daily'],
-8801,Daily Inner Nayos,Default,['Daily'],
 8384,Local Response: The Desolation,Default,['Permanent'],
 2597,Daily Recommended Fractal—Scale 12,Default,['Daily'],
 4285,Bandits' Bane,Default,"['Pvp', 'Permanent']",
@@ -5868,7 +5858,6 @@ Story Instance: Legacy"
 5326,Drizzlewood Coast Insight: Meditative Falls,Default,['Permanent'],
 2370,Auric Basin Explorer,Default,['Permanent'],
 7056,Legendary Weapon: Incinerator,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
-8736,Daily Tier 2 Kinfall,Default,['Daily'],
 6879,Sleuthing a Solution,Default,['Permanent'],
 4110,Light Speed,Default,['Permanent'],Engage in a test of intellect developed by the Inquest.
 8125,Sunken Treasure Week: Aquatic Ruins,Default,['Permanent'],
