@@ -30808,6 +30808,7 @@ id,name,type,level,rarity,vendor_value
 42095,Cleric's Bandit Mallet,Weapon,80,Exotic,264
 42096,Cleric's Bandit Revolver,Weapon,80,Exotic,264
 42097,Cleric's Bandit Musket,Weapon,80,Exotic,396
+42098,Cleric's Bandit Baton,Weapon,80,Exotic,264
 42099,Cleric's Bandit Ward,Weapon,80,Exotic,264
 42100,Cleric's Steam Speargun,Weapon,80,Exotic,396
 42101,Cleric's Bandit Spire,Weapon,80,Exotic,396
@@ -30825,6 +30826,7 @@ id,name,type,level,rarity,vendor_value
 42113,Rabid Iron Polearm,Weapon,80,Exotic,396
 42114,Rabid Bandit Mallet,Weapon,80,Exotic,264
 42115,Rabid Bandit Revolver,Weapon,80,Exotic,264
+42116,Rabid Bandit Musket,Weapon,80,Exotic,396
 42117,Rabid Bandit Baton,Weapon,80,Exotic,264
 42118,Rabid Bandit Ward,Weapon,80,Exotic,264
 42119,Rabid Steam Speargun,Weapon,80,Exotic,396
@@ -30960,6 +30962,7 @@ id,name,type,level,rarity,vendor_value
 42457,Settler's Soft Wood Scepter of Perception,Weapon,80,Exotic,264
 42458,Settler's Iron Shield of Ogre Slaying,Weapon,80,Exotic,264
 42459,Settler's Soft Wood Short Bow of Peril,Weapon,80,Exotic,396
+42460,Settler's Steam Speargun of Agony,Weapon,80,Exotic,396
 42461,Settler's Soft Wood Staff of Accuracy,Weapon,80,Exotic,396
 42462,Settler's Iron Sword of the Hydromancer,Weapon,80,Exotic,264
 42463,Settler's Soft Wood Torch of Restoration,Weapon,80,Exotic,264
