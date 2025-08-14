@@ -2696,6 +2696,7 @@ This is but the first step on a long road."
 6018,Crop Harvester: Jahai Bluffs,Default,['Permanent'],
 5235,Visions of the Past: Lair Light-Foot,Default,['Permanent'],Defeat Canach's Lair without getting caught in any traps. [Living World Season 1: Canach's Lair vision. Accessed via the Scrying Pool in Eye of the North.]
 6920,Special Ops Advanced Course 1,ItemSet,"['Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
+8774,Home Sweet Homestead: Janthir Wilds Lore Collector,Default,"['RepairOnLogin', 'Permanent']",You learned all the lore; now flaunt it!
 4622,Chasing Tales: Shooting Star,Default,"['Hidden', 'Permanent']",Mirren's ambitions fueled his ascent—and his fall.
 373,Chicken Scramble,Default,['Permanent'],Experience a real bird's-eye view.
 6673,Using Food Consumables,Default,['Daily'],
@@ -3242,6 +3243,7 @@ This is but the first step on a long road."
 4619,Chasing Tales: Asaliea the Channeler,Default,"['Pvp', 'Hidden', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 7149,Legendary Weapon: Kamohoali'i Kotaki,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
 6488,Antique Canthan Armor Collector,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
+8787,(Annual) Skiff Sailor,Default,['Permanent'],
 2992,Hold the Line,Default,['Permanent'],
 1704,Sneaky Sleuth,Default,['Permanent'],Story Instance: Party Politics
 2817,Daily Top Stats,Default,"['Pvp', 'Daily']",There's more than one way to contribute. You find the one that works.
@@ -3870,6 +3872,7 @@ Story Instance: Legacy"
 8598,Magister,Default,"['Pvp', 'Permanent']","This title can be purchased from Shiny King M'takk in Hooligan's Route in Lion's Arch if you meet the requirements. 
 
 Surely it must be an official title if a self-proclaimed skritt king gives it to you, right?"
+8776,(Weekly) Challenge Mode Convergences: Mount Balrior,Default,['Weekly'],
 6580,Dodging Attacks III,Default,['Permanent'],
 5675,Choya Response Mission,Default,['Permanent'],Note: This achievement functions on the honor system.
 3568,Damage Control,Default,['Permanent'],"Story Instance: ""The Sacrifice"""

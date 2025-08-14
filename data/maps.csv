@@ -520,6 +520,7 @@ id,name,min_level,max_level,type,region_name,continent_name
 934,Super Adventure Box,1,80,Instance,Super Adventure Box,Mists
 935,Super Adventure Box,1,80,Public,Super Adventure Box,Mists
 937,Scarlet's End,80,80,Instance,Tarnished Coast,Tyria
+941,The Nightmare Unveiled,1,80,Instance,Kryta,Tyria
 943,The Tower of Nightmares (Public),80,80,Public,Kryta,Tyria
 945,The Nightmare Ends,1,80,Instance,Kryta,Tyria
 947,Fractals of the Mists,80,80,Instance,Fractals of the Mists,Mists
