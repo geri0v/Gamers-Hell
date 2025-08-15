@@ -3578,6 +3578,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 7922,Reconquer the Crash Site Climb (Weekly),Default,['Permanent'],
 8445,(Repeatable) Mount Balrior: Titan Tracker,Default,"['IgnoreNearlyComplete', 'Repeatable', 'Permanent']","""My maw's journeykin has an extra-good nose. It found my favorite toy when I lost it on the beach!"""
 23,Bat Slayer,Default,['Permanent'],Consider these winged rats cut down.
+8806,Eternal Alchemist,Default,"['Hidden', 'MoveToTop', 'Permanent']",Thank you for your purchase.
 2547,Adept Tempest,Default,"['Pvp', 'Permanent']",
 78,Branching Out,Default,['Permanent'],You made sure the dead stayed dead.
 6379,New Kaineng Insight: South Old Kaineng Ruins,Default,['Permanent'],
