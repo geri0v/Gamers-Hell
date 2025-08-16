@@ -24200,100 +24200,200 @@ id,name,type,level,rarity,vendor_value
 32380,Malign Steam Shield,Weapon,6,Fine,11
 32381,Malign Steam Shield,Weapon,11,Fine,16
 32382,Malign Steam Shield,Weapon,16,Fine,20
+32383,Malign Steam Short Bow,Weapon,1,Fine,9
 32384,Malign Steam Short Bow,Weapon,6,Fine,17
+32385,Malign Steam Short Bow,Weapon,11,Fine,24
+32386,Malign Steam Short Bow,Weapon,16,Fine,30
 32387,Malign Steam Speargun,Weapon,1,Fine,9
 32388,Malign Steam Speargun,Weapon,6,Fine,17
+32389,Malign Steam Speargun,Weapon,11,Fine,24
+32390,Malign Steam Speargun,Weapon,16,Fine,30
+32391,Malign Steam Staff,Weapon,1,Fine,9
 32392,Malign Steam Staff,Weapon,6,Fine,17
+32393,Malign Steam Staff,Weapon,11,Fine,24
+32394,Malign Steam Staff,Weapon,16,Fine,30
 32395,Malign Steamblade,Weapon,1,Fine,6
+32396,Malign Steamblade,Weapon,6,Fine,11
 32397,Malign Steamblade,Weapon,11,Fine,16
 32398,Malign Steamblade,Weapon,16,Fine,20
+32399,Malign Steam Brand,Weapon,1,Fine,6
+32400,Malign Steam Brand,Weapon,6,Fine,11
+32401,Malign Steam Brand,Weapon,11,Fine,16
 32402,Malign Steam Brand,Weapon,16,Fine,20
+32403,Malign Steam Trident,Weapon,1,Fine,9
 32404,Malign Steam Trident,Weapon,6,Fine,17
+32405,Malign Steam Trident,Weapon,11,Fine,24
+32406,Malign Steam Trident,Weapon,16,Fine,30
 32407,Malign Steamcaller,Weapon,1,Fine,6
+32408,Malign Steamcaller,Weapon,6,Fine,11
 32409,Malign Steamcaller,Weapon,11,Fine,16
 32410,Malign Steamcaller,Weapon,16,Fine,20
 32411,Ravaging Steam Axe,Weapon,21,Fine,24
+32412,Ravaging Steam Axe,Weapon,26,Fine,28
 32413,Ravaging Steam Axe,Weapon,31,Fine,31
+32414,Ravaging Steam Axe,Weapon,36,Fine,35
 32415,Ravaging Steam Dagger,Weapon,21,Fine,24
 32416,Ravaging Steam Dagger,Weapon,26,Fine,28
 32417,Ravaging Steam Dagger,Weapon,31,Fine,31
 32418,Ravaging Steam Dagger,Weapon,36,Fine,35
+32419,Ravaging Steam Gizmo,Weapon,21,Fine,24
 32420,Ravaging Steam Gizmo,Weapon,26,Fine,28
+32421,Ravaging Steam Gizmo,Weapon,31,Fine,31
+32422,Ravaging Steam Gizmo,Weapon,36,Fine,35
 32423,Ravaging Great Steamblade,Weapon,21,Fine,36
 32424,Ravaging Great Steamblade,Weapon,26,Fine,42
+32425,Ravaging Great Steamblade,Weapon,31,Fine,47
+32426,Ravaging Great Steamblade,Weapon,36,Fine,53
 32427,Ravaging Steam Hammer,Weapon,21,Fine,36
 32428,Ravaging Steam Hammer,Weapon,26,Fine,42
 32429,Ravaging Steam Hammer,Weapon,31,Fine,47
+32430,Ravaging Steam Hammer,Weapon,36,Fine,53
 32431,Ravaging Steam Spear,Weapon,21,Fine,36
 32432,Ravaging Steam Spear,Weapon,26,Fine,42
+32433,Ravaging Steam Spear,Weapon,31,Fine,47
+32434,Ravaging Steam Spear,Weapon,36,Fine,53
 32435,Ravaging Steam Bow,Weapon,21,Fine,36
+32436,Ravaging Steam Bow,Weapon,26,Fine,42
+32437,Ravaging Steam Bow,Weapon,31,Fine,47
 32438,Ravaging Steam Bow,Weapon,36,Fine,53
+32439,Ravaging Steam Mace,Weapon,21,Fine,24
 32440,Ravaging Steam Mace,Weapon,26,Fine,28
+32441,Ravaging Steam Mace,Weapon,31,Fine,31
+32442,Ravaging Steam Mace,Weapon,36,Fine,35
+32443,Ravaging Steam Pistol,Weapon,21,Fine,24
 32444,Ravaging Steam Pistol,Weapon,26,Fine,28
 32445,Ravaging Steam Pistol,Weapon,31,Fine,31
+32446,Ravaging Steam Pistol,Weapon,36,Fine,35
+32447,Ravaging Steam Rifle,Weapon,21,Fine,36
+32448,Ravaging Steam Rifle,Weapon,26,Fine,42
 32449,Ravaging Steam Rifle,Weapon,31,Fine,47
+32450,Ravaging Steam Rifle,Weapon,36,Fine,53
 32451,Ravaging Steam Scepter,Weapon,21,Fine,24
 32452,Ravaging Steam Scepter,Weapon,26,Fine,28
 32453,Ravaging Steam Scepter,Weapon,31,Fine,31
 32454,Ravaging Steam Scepter,Weapon,36,Fine,35
+32455,Ravaging Steam Shield,Weapon,21,Fine,24
 32456,Ravaging Steam Shield,Weapon,26,Fine,28
+32457,Ravaging Steam Shield,Weapon,31,Fine,31
 32458,Ravaging Steam Shield,Weapon,36,Fine,35
+32459,Ravaging Steam Short Bow,Weapon,21,Fine,36
 32460,Ravaging Steam Short Bow,Weapon,26,Fine,42
+32461,Ravaging Steam Short Bow,Weapon,31,Fine,47
 32462,Ravaging Steam Short Bow,Weapon,36,Fine,53
+32463,Ravaging Steam Speargun,Weapon,21,Fine,36
 32464,Ravaging Steam Speargun,Weapon,26,Fine,42
+32465,Ravaging Steam Speargun,Weapon,31,Fine,47
 32466,Ravaging Steam Speargun,Weapon,36,Fine,53
+32467,Ravaging Steam Staff,Weapon,21,Fine,36
 32468,Ravaging Steam Staff,Weapon,26,Fine,42
 32469,Ravaging Steam Staff,Weapon,31,Fine,47
+32470,Ravaging Steam Staff,Weapon,36,Fine,53
 32471,Ravaging Steamblade,Weapon,21,Fine,24
 32472,Ravaging Steamblade,Weapon,26,Fine,28
+32473,Ravaging Steamblade,Weapon,31,Fine,31
+32474,Ravaging Steamblade,Weapon,36,Fine,35
 32475,Ravaging Steam Brand,Weapon,21,Fine,24
+32476,Ravaging Steam Brand,Weapon,26,Fine,28
 32477,Ravaging Steam Brand,Weapon,31,Fine,31
 32478,Ravaging Steam Brand,Weapon,36,Fine,35
 32479,Ravaging Steam Trident,Weapon,21,Fine,36
 32480,Ravaging Steam Trident,Weapon,26,Fine,42
+32481,Ravaging Steam Trident,Weapon,31,Fine,47
 32482,Ravaging Steam Trident,Weapon,36,Fine,53
+32483,Ravaging Steamcaller,Weapon,21,Fine,24
 32484,Ravaging Steamcaller,Weapon,26,Fine,28
 32485,Ravaging Steamcaller,Weapon,31,Fine,31
+32486,Ravaging Steamcaller,Weapon,36,Fine,35
+32487,Ravaging Steam Axe,Weapon,41,Fine,38
+32488,Ravaging Steam Axe,Weapon,46,Fine,42
 32489,Ravaging Steam Axe,Weapon,51,Fine,45
 32490,Ravaging Steam Axe,Weapon,56,Fine,49
 32491,Ravaging Steam Dagger,Weapon,41,Fine,38
+32492,Ravaging Steam Dagger,Weapon,46,Fine,42
+32493,Ravaging Steam Dagger,Weapon,51,Fine,45
+32494,Ravaging Steam Dagger,Weapon,56,Fine,49
 32495,Ravaging Steam Gizmo,Weapon,41,Fine,38
 32496,Ravaging Steam Gizmo,Weapon,46,Fine,42
+32497,Ravaging Steam Gizmo,Weapon,51,Fine,45
 32498,Ravaging Steam Gizmo,Weapon,56,Fine,49
+32499,Ravaging Great Steamblade,Weapon,41,Fine,57
 32500,Ravaging Great Steamblade,Weapon,46,Fine,63
+32501,Ravaging Great Steamblade,Weapon,51,Fine,68
+32502,Ravaging Great Steamblade,Weapon,56,Fine,74
 32503,Ravaging Steam Hammer,Weapon,41,Fine,57
+32504,Ravaging Steam Hammer,Weapon,46,Fine,63
 32505,Ravaging Steam Hammer,Weapon,51,Fine,68
 32506,Ravaging Steam Hammer,Weapon,56,Fine,74
+32507,Ravaging Steam Spear,Weapon,41,Fine,57
 32508,Ravaging Steam Spear,Weapon,46,Fine,63
 32509,Ravaging Steam Spear,Weapon,51,Fine,68
 32510,Ravaging Steam Spear,Weapon,56,Fine,74
+32511,Ravaging Steam Bow,Weapon,41,Fine,57
 32512,Ravaging Steam Bow,Weapon,46,Fine,63
 32513,Ravaging Steam Bow,Weapon,51,Fine,68
+32514,Ravaging Steam Bow,Weapon,56,Fine,74
+32515,Ravaging Steam Mace,Weapon,41,Fine,38
 32516,Ravaging Steam Mace,Weapon,46,Fine,42
 32517,Ravaging Steam Mace,Weapon,51,Fine,45
+32518,Ravaging Steam Mace,Weapon,56,Fine,49
+32519,Ravaging Steam Pistol,Weapon,41,Fine,38
 32520,Ravaging Steam Pistol,Weapon,46,Fine,42
+32521,Ravaging Steam Pistol,Weapon,51,Fine,45
 32522,Ravaging Steam Pistol,Weapon,56,Fine,49
 32523,Ravaging Steam Rifle,Weapon,41,Fine,57
 32524,Ravaging Steam Rifle,Weapon,46,Fine,63
 32525,Ravaging Steam Rifle,Weapon,51,Fine,68
+32526,Ravaging Steam Rifle,Weapon,56,Fine,74
 32527,Ravaging Steam Scepter,Weapon,41,Fine,38
 32528,Ravaging Steam Scepter,Weapon,46,Fine,42
+32529,Ravaging Steam Scepter,Weapon,51,Fine,45
+32530,Ravaging Steam Scepter,Weapon,56,Fine,49
 32531,Ravaging Steam Shield,Weapon,41,Fine,38
 32532,Ravaging Steam Shield,Weapon,46,Fine,42
+32533,Ravaging Steam Shield,Weapon,51,Fine,45
+32534,Ravaging Steam Shield,Weapon,56,Fine,49
 32535,Ravaging Steam Short Bow,Weapon,41,Fine,57
+32536,Ravaging Steam Short Bow,Weapon,46,Fine,63
+32537,Ravaging Steam Short Bow,Weapon,51,Fine,68
+32538,Ravaging Steam Short Bow,Weapon,56,Fine,74
 32539,Ravaging Steam Speargun,Weapon,41,Fine,57
+32540,Ravaging Steam Speargun,Weapon,46,Fine,63
 32541,Ravaging Steam Speargun,Weapon,51,Fine,68
 32542,Ravaging Steam Speargun,Weapon,56,Fine,74
 32543,Ravaging Steam Staff,Weapon,41,Fine,57
+32544,Ravaging Steam Staff,Weapon,46,Fine,63
 32545,Ravaging Steam Staff,Weapon,51,Fine,68
+32546,Ravaging Steam Staff,Weapon,56,Fine,74
+32547,Ravaging Steamblade,Weapon,41,Fine,38
 32548,Ravaging Steamblade,Weapon,46,Fine,42
 32549,Ravaging Steamblade,Weapon,51,Fine,45
+32550,Ravaging Steamblade,Weapon,56,Fine,49
+32551,Ravaging Steam Brand,Weapon,41,Fine,38
+32552,Ravaging Steam Brand,Weapon,46,Fine,42
 32553,Ravaging Steam Brand,Weapon,51,Fine,45
+32554,Ravaging Steam Brand,Weapon,56,Fine,49
 32555,Ravaging Steam Trident,Weapon,41,Fine,57
+32556,Ravaging Steam Trident,Weapon,46,Fine,63
 32557,Ravaging Steam Trident,Weapon,51,Fine,68
+32558,Ravaging Steam Trident,Weapon,56,Fine,74
+32559,Ravaging Steamcaller,Weapon,41,Fine,38
+32560,Ravaging Steamcaller,Weapon,46,Fine,42
+32561,Ravaging Steamcaller,Weapon,51,Fine,45
+32562,Ravaging Steamcaller,Weapon,56,Fine,49
+32563,Carrion Steam Axe,Weapon,61,Fine,52
+32564,Carrion Steam Axe,Weapon,66,Fine,56
 32565,Carrion Steam Axe,Weapon,71,Fine,59
+32566,Carrion Steam Axe,Weapon,76,Fine,63
+32567,Carrion Steam Axe,Weapon,80,Fine,66
+32568,Carrion Steam Dagger,Weapon,61,Fine,52
 32569,Carrion Steam Dagger,Weapon,66,Fine,56
+32570,Carrion Steam Dagger,Weapon,71,Fine,59
+32571,Carrion Steam Dagger,Weapon,76,Fine,63
 32572,Carrion Steam Dagger,Weapon,80,Fine,66
+32573,Carrion Steam Gizmo,Weapon,61,Fine,52
+32574,Carrion Steam Gizmo,Weapon,66,Fine,56
+32575,Carrion Steam Gizmo,Weapon,71,Fine,59
+32576,Carrion Steam Gizmo,Weapon,76,Fine,63
 32577,Carrion Steam Gizmo,Weapon,80,Fine,66
 32578,Carrion Great Steamblade,Weapon,61,Fine,78
 32579,Carrion Great Steamblade,Weapon,66,Fine,84
@@ -53702,7 +53802,6 @@ id,name,type,level,rarity,vendor_value
 82743,Delusion Loop,Trinket,80,Exotic,396
 82744,Warbeast Hardened Shoulderguard Panel,CraftingMaterial,0,Basic,7
 82746,Gift of War Prosperity,CraftingMaterial,0,Legendary,165
-82747,Rabid Bronze Pistol of Smoldering,Weapon,80,Exotic,0
 82748,Skritt Springer Treat,Consumable,0,Rare,1000
 82749,Warbeast Orichalcum Gauntlet Lining,CraftingMaterial,0,Basic,8
 82750,Recipe: Red Lentil Saobosa,Consumable,0,Exotic,0
