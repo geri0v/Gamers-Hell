@@ -2095,6 +2095,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 5678,Ooze Transportation 201,Default,['Daily'],Deliver an ooze from the rapids cabin to the hilltop tree.
 8228,Wildfarer,Default,"['RepairOnLogin', 'Permanent']","The wilds called, and you have answered."
 904,Above the Waves,Default,['Permanent'],
+6499,Daily Orr Fisher,Default,['Daily'],Fueling the engines of the economy.
 5745,Return to Heart of the Volcano,Default,['Permanent'],
 2524,Quip III: Chaos Gun,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']","Confetti bombs. Sigils of Mischief. Laughter. Pies. These are the weapons of a master prankster, used to embarrass the mighty and the might-be alike. Master these malicious matters of mischief in your efforts to craft the legendary precursor known as the Chaos Gun."
 7748,Local Response: Gendarran Fields (Weekly),Default,['Permanent'],
