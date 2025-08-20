@@ -1605,6 +1605,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 1825,Luminescent Leggings,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']",
 1309,Vigil Field Supporter,Default,['Permanent'],
 8378,Adventurous Spirit: Domain of Istan (Weekly),Default,['Permanent'],
+8808,Janthir Wilds: Absolution—Audio Cover,Default,['Permanent'],
 8331,Titanplate Armor Collector,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",Now with 100% less desire to consume bloodstones.
 1175,Toxic Spore Cleanser,Default,['Daily'],
 4575,Daily Thunderhead Peaks Tomb Raider,Default,['Daily'],
@@ -1957,12 +1958,12 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3672,To Kill a God,Default,"['Hidden', 'Permanent']",Journal: To Kill a God Completed
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
-6618,Completing Events III,Default,['Permanent'],
-2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
 4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
+6618,Completing Events III,Default,['Permanent'],
 8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
+2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 5551,League Participator—Conquest Season Twenty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
@@ -4880,6 +4881,7 @@ Story Instance: Legacy"
 5234,Fallen from the Summit,Default,['Permanent'],
 962,Daily Aetherblade Ender,Default,['Daily'],
 4855,Boss Rush Community Goal: Tier 2,Default,['Permanent'],
+8809,An Audible Voyage,Default,['Permanent'],
 1621,Twice-Told Legend,Default,['Permanent'],"Some legends are so great, they must be experienced twice."
 2535,Kamohoali'i Kotaki III: Carcharias,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']","The sea is wide and mighty, and conceals both great dangers and wondrous prizes. Dive into it, explore its depths, and swim deep beneath its ever-shifting surface in your journey to create the legendary precursor known as Carcharias."
 4326,Master of Markets,Default,"['Pvp', 'Repeatable', 'Permanent']",
@@ -6983,6 +6985,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 6347,The Old City of Decay,Default,['Permanent'],
 7611,Absolute Focus,Default,['Permanent'],Indoctrination will influence us no more.
 8694,Roller Beetle Racing Participant,Default,['Permanent'],
+8807,Janthir Wilds: Repentance—Audio Cover,Default,['Permanent'],
 3076,Jade Carving,Default,['Permanent'],
 4696,Daily Dragonfall Cocoon Crystallizer,Default,['Daily'],
 3274,Dragon's Breath,Default,"['Pvp', 'Permanent']",

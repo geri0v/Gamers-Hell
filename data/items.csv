@@ -2261,11 +2261,13 @@ id,name,type,level,rarity,vendor_value
 2322,Cleric's Cabalist Gloves of Mercy,Armor,66,Masterwork,101
 2323,Cleric's Reinforced Scale Pauldrons of the Eagle,Armor,78,Masterwork,141
 2324,Cleric's Cabalist Gloves of the Lich,Armor,72,Masterwork,108
+2325,Cleric's Reinforced Scale Pauldrons of Grenth,Armor,80,Masterwork,146
 2326,Cleric's Cabalist Gloves of the Afflicted,Armor,78,Masterwork,116
 2327,Strong Reinforced Scale Pauldrons of Scavenging,Armor,39,Rare,123
 2328,Cleric's Cabalist Gloves of Balthazar,Armor,80,Masterwork,119
 2329,Strong Reinforced Scale Pauldrons of Melandru,Armor,46,Rare,139
 2330,Strong Reinforced Scale Pauldrons of Divinity,Armor,53,Rare,156
+2331,Ravaging Reinforced Scale Pauldrons of Balthazar,Armor,40,Rare,126
 2332,Ravaging Reinforced Scale Pauldrons of Infiltration,Armor,47,Rare,139
 2333,Strong Banded Pauldrons of Grenth,Armor,60,Rare,172
 2334,Strong Cabalist Gloves of Lyssa,Armor,39,Rare,100
@@ -2284,6 +2286,7 @@ id,name,type,level,rarity,vendor_value
 2347,Strong Conjurer Gloves of the Grove,Armor,60,Rare,141
 2348,Honed Banded Pauldrons of the Citadel,Armor,55,Rare,159
 2349,Berserker's Conjurer Gloves of the Dolyak,Armor,67,Rare,152
+2350,Rampager's Banded Pauldrons of the Lich,Armor,62,Rare,175
 2351,Rampager's Banded Pauldrons of the Eagle,Armor,69,Rare,192
 2352,Berserker's Conjurer Gloves of Hoelbrak,Armor,74,Rare,165
 2353,Berserker's Conjurer Gloves of the Centaur,Armor,80,Rare,179
@@ -2303,6 +2306,7 @@ id,name,type,level,rarity,vendor_value
 2367,Carrion Conjurer Gloves of the Lich,Armor,80,Rare,179
 2368,Honed Conjurer Gloves of the Lich,Armor,55,Rare,130
 2369,Banded Pauldrons of the Citadel,Armor,79,Rare,215
+2370,Banded Pauldrons of the Dolyak,Armor,80,Rare,218
 2371,Rampager's Conjurer Gloves of the Dolyak,Armor,62,Rare,144
 2372,Rampager's Conjurer Gloves of Melandru,Armor,69,Rare,157
 2373,Rampager's Conjurer Gloves of the Afflicted,Armor,76,Rare,171
@@ -2316,6 +2320,7 @@ id,name,type,level,rarity,vendor_value
 2381,Conjurer Gloves of Dwayna,Armor,72,Rare,162
 2382,Conjurer Gloves of Grenth,Armor,79,Rare,176
 2383,Conjurer Gloves of the Grove,Armor,80,Rare,179
+2384,Berserker's Seer Mask of Grenth,Armor,62,Exotic,265
 2385,Berserker's Seer Mask of the Pack,Armor,70,Exotic,295
 2386,Berserker's Seer Mask of Divinity,Armor,78,Exotic,320
 2387,Zhed's Mask,Armor,80,Exotic,330
@@ -2348,6 +2353,7 @@ id,name,type,level,rarity,vendor_value
 2414,Strong Country Mask,Armor,26,Fine,35
 2415,Strong Magician Mask,Armor,31,Fine,39
 2416,Strong Magician Mask,Armor,36,Fine,44
+2417,Ravaging Country Mask,Armor,22,Fine,32
 2418,Ravaging Country Mask,Armor,27,Fine,35
 2419,Ravaging Magician Mask,Armor,32,Fine,40
 2420,Ravaging Magician Mask,Armor,37,Fine,44
@@ -2376,6 +2382,7 @@ id,name,type,level,rarity,vendor_value
 2443,Ravaging Magician Mask,Armor,54,Fine,59
 2444,Ravaging Magician Mask,Armor,59,Fine,64
 2445,Berserker's Cabalist Hood,Armor,61,Fine,65
+2446,Berserker's Cabalist Hood,Armor,66,Fine,70
 2447,Berserker's Cabalist Hood,Armor,71,Fine,74
 2448,Berserker's Cabalist Hood,Armor,76,Fine,79
 2449,Berserker's Cabalist Hood,Armor,80,Fine,83
@@ -53086,6 +53093,7 @@ id,name,type,level,rarity,vendor_value
 81600,Black Lion Delivery Box,Container,0,Rare,0
 81601,Black Lion Delivery Box,Container,0,Rare,0
 81602,Testimony of Heroics,Consumable,0,Fine,0
+81603,Badge of Honor,Consumable,0,Basic,0
 81604,Champion's Crown,Gizmo,0,Legendary,0
 81605,Black Lion Delivery Box,Container,0,Rare,0
 81606,Token of Northwest Attunement,Consumable,0,Basic,0
@@ -68857,6 +68865,7 @@ Balance",Gizmo,0,Basic,0
 103657,Sanguine Focus,Weapon,80,Exotic,264
 103658,Mystical Beast Axe Skin,Consumable,0,Rare,0
 103659,Portable Hot Springs Chair,Gizmo,0,Rare,0
+103660,Flowing Silk Backpack and Glider Combo,Consumable,0,Masterwork,0
 103661,Candy Core Sword,Weapon,80,Exotic,264
 103662,Antique Bell,Consumable,0,Basic,0
 103663,Mystical Beast Longbow Skin,Consumable,0,Rare,0
@@ -69071,6 +69080,7 @@ Balance",Gizmo,0,Basic,0
 103908,Sea-Glass Wave Axe,Weapon,80,Ascended,330
 103909,Blood Moon Dagger of Blood,Weapon,80,Exotic,264
 103911,Infinite Siege Golem Blueprint,Gizmo,0,Ascended,1
+103912,Naga Spirit Backpack and Glider Combo,Consumable,0,Masterwork,0
 103913,Pile of Recycled Siege Equipment,Trophy,0,Basic,0
 103914,Gold Ura Trophy,Consumable,0,Basic,0
 103915,Infinite Shield Generator Blueprint,Gizmo,0,Ascended,1
@@ -69324,6 +69334,7 @@ Balance",Gizmo,0,Basic,0
 104203,Black Lion Twisted Imaginarium Mushroom Recipe,Consumable,0,Basic,0
 104204,Vinelord Edgebloom Spear Skin,Consumable,0,Rare,0
 104205,Dainty Bee Wings Glider,Consumable,0,Masterwork,0
+104206,Dainty Bee Wings Backpack and Glider Combo,Consumable,0,Masterwork,0
 104207,Imperial Everbloom Mace Skin,Consumable,0,Rare,0
 104208,Black Lion Twisted Imaginarium Entryway Recipe,Consumable,0,Basic,0
 104209,Imperial Everbloom Greatsword Skin,Consumable,0,Rare,0
@@ -70036,3 +70047,7 @@ Balance",Gizmo,0,Basic,0
 105138,Flat Boatsman Hat Skin,Consumable,0,Masterwork,0
 105139,Chromatic Resin Scepter Skin,Consumable,0,Rare,0
 105141,Title Scroll: Eternal Alchemist,Consumable,0,Rare,0
+105153,Testimony of Desert Heroics,Consumable,0,Fine,0
+105154,Peaceful Rainbows Homestead Sky,Consumable,0,Exotic,0
+105160,Testimony of Jade Heroics,Consumable,0,Fine,0
+105161,Haunted Anchor Axe Skin,Consumable,0,Rare,0
