@@ -607,6 +607,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 2733,League Necromancer—Recruit,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement advances the League Professional—Recruit achievement.
 3045,Daily Tier 3 Chaos,Default,['Daily'],
 891,Boss Week: Here Be Dragons!,Default,['Daily'],
+6707,Birthday—Year 13,Default,"['Pvp', 'Hidden', 'Permanent']",You have a character that is more than 13 years old.
 6554,Guiding Sign,Default,['Permanent'],A much longer journey begins with the smallest step.
 6506,Dragon's End Fisher,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>The charm of fishing is in pursuing something elusive, though attainable. It is a simple yet profound practice of hope.</c>"
 8157,Fight Another Day,Default,['Permanent'],We'll get through this.
@@ -4459,6 +4460,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 5933,Reconquer the Displaced Tower,Default,['Permanent'],
 8179,Harvest Den Renown Mastery,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",Diplomacy isn't always about paperwork or negotiations. Sometimes you gotta get your paws a little dirty.
 8327,Chasing Waterfalls: Lowland Shore,Default,['Permanent'],What's behind this curtain?
+6384,Daily Seitung Province Purist Slayer,Default,['Daily'],
 7747,Fractal Recursion: Molten Furnace (Weekly),Default,['Permanent'],
 5095,Hold onto the Light,Default,['Permanent'],
 1784,"""The Dragon's Reach, Part 1"" Mastery",Default,"['Pvp', 'RepairOnLogin', 'CategoryDisplay', 'Permanent']",
