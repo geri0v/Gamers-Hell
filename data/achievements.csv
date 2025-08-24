@@ -607,7 +607,6 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 2733,League Necromancer—Recruit,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement advances the League Professional—Recruit achievement.
 3045,Daily Tier 3 Chaos,Default,['Daily'],
 891,Boss Week: Here Be Dragons!,Default,['Daily'],
-6707,Birthday—Year 13,Default,"['Pvp', 'Hidden', 'Permanent']",You have a character that is more than 13 years old.
 6554,Guiding Sign,Default,['Permanent'],A much longer journey begins with the smallest step.
 6506,Dragon's End Fisher,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>The charm of fishing is in pursuing something elusive, though attainable. It is a simple yet profound practice of hope.</c>"
 8157,Fight Another Day,Default,['Permanent'],We'll get through this.
@@ -1959,12 +1958,12 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3672,To Kill a God,Default,"['Hidden', 'Permanent']",Journal: To Kill a God Completed
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
-6618,Completing Events III,Default,['Permanent'],
-8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
 2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
 4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
+6618,Completing Events III,Default,['Permanent'],
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
+8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
 6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 5551,League Participator—Conquest Season Twenty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
@@ -4460,7 +4459,6 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 5933,Reconquer the Displaced Tower,Default,['Permanent'],
 8179,Harvest Den Renown Mastery,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",Diplomacy isn't always about paperwork or negotiations. Sometimes you gotta get your paws a little dirty.
 8327,Chasing Waterfalls: Lowland Shore,Default,['Permanent'],What's behind this curtain?
-6384,Daily Seitung Province Purist Slayer,Default,['Daily'],
 7747,Fractal Recursion: Molten Furnace (Weekly),Default,['Permanent'],
 5095,Hold onto the Light,Default,['Permanent'],
 1784,"""The Dragon's Reach, Part 1"" Mastery",Default,"['Pvp', 'RepairOnLogin', 'CategoryDisplay', 'Permanent']",
@@ -7136,6 +7134,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 6404,Dragon's End Insight: Brotherhood Rooftop,Default,['Permanent'],
 7234,Skyscale Weapon Collector,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']",
 729,Kiel Supporter,Default,"['Pvp', 'CategoryDisplay', 'Permanent']",We love Ellen Kiel!
+6440,Daily New Kaineng Naga Slayer,Default,['Daily'],
 5708,Tide Turner: Snowden Drifts,Default,"['RepairOnLogin', 'Permanent']",
 5830,Studying Scarlet,Default,['Permanent'],
 4352,Jahai Bluffs Griffon Expert: Silver,Default,['Permanent'],

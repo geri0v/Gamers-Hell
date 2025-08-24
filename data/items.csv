@@ -37802,7 +37802,6 @@ id,name,type,level,rarity,vendor_value
 52396,Resilient Moa Carver,Weapon,13,Fine,20
 52397,Resilient Processional Flame,Weapon,13,Fine,20
 52398,Resilient Ram's Sigh,Weapon,13,Fine,20
-52399,Healing Handspar,Weapon,18,Fine,24
 52400,Healing Blind Ed's Longbow,Weapon,18,Fine,36
 52401,Healing Sparrowcatcher,Weapon,18,Fine,36
 52402,Healing Li'l Letter Opener,Weapon,18,Fine,24
@@ -37823,7 +37822,6 @@ id,name,type,level,rarity,vendor_value
 52417,Resilient Sparrowcatcher,Weapon,18,Fine,36
 52418,Resilient Li'l Letter Opener,Weapon,18,Fine,24
 52419,Resilient Tally Reckoner,Weapon,18,Fine,24
-52420,Resilient Great Fullsword,Weapon,18,Fine,36
 52421,Resilient Seeger's Union,Weapon,18,Fine,36
 52422,Resilient Waring's Regulator,Weapon,18,Fine,24
 52423,Resilient Rhedo's Revenge,Weapon,18,Fine,24
@@ -37863,7 +37861,6 @@ id,name,type,level,rarity,vendor_value
 52457,Malign Waring's Regulator,Weapon,8,Fine,16
 52458,Malign Poacher's Shot,Weapon,8,Fine,24
 52459,Malign Improvised Bulwark,Weapon,8,Fine,16
-52460,Malign Supplejack,Weapon,8,Fine,24
 52461,Malign Moa Carver,Weapon,8,Fine,16
 52462,Malign Ram's Sigh,Weapon,8,Fine,16
 52463,Mighty Rhedo's Revenge,Weapon,13,Fine,20
@@ -37987,7 +37984,6 @@ id,name,type,level,rarity,vendor_value
 52581,Deserter's Legion's Light,Weapon,23,Masterwork,56
 52582,Survivor's Disputation,Weapon,23,Masterwork,56
 52583,Survivor's Queen's Retort,Weapon,23,Masterwork,84
-52584,Survivor's Prince's Praise,Weapon,23,Masterwork,84
 52585,Survivor's Discretion,Weapon,23,Masterwork,56
 52586,Survivor's Kessene Wreath,Weapon,23,Masterwork,56
 52587,Survivor's Royal Barber,Weapon,23,Masterwork,84
