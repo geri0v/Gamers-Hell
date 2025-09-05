@@ -30433,6 +30433,7 @@ id,name,type,level,rarity,vendor_value
 41515,Sentinel's Krait Brazier,Weapon,80,Rare,198
 41516,Sentinel's Pearl Brazier,Weapon,80,Exotic,264
 41517,Sentinel's Elder Wood Warhorn,Weapon,75,Fine,62
+41518,Sentinel's Elder Wood Warhorn,Weapon,80,Masterwork,132
 41519,Sentinel's Krait Whelk,Weapon,80,Rare,198
 41520,Sentinel's Pearl Siren,Weapon,80,Exotic,264
 41521,Sentinel's Mithril Axe,Weapon,75,Fine,62
@@ -30516,6 +30517,7 @@ id,name,type,level,rarity,vendor_value
 41602,Sentinel's Privateer Shoulders of Mercy,Armor,80,Masterwork,146
 41603,Sentinel's Reinforced Scale Boots,Armor,80,Fine,66
 41604,Sentinel's Reinforced Scale Coat,Armor,80,Fine,99
+41605,Sentinel's Reinforced Scale Gauntlets,Armor,80,Fine,60
 41606,Sentinel's Reinforced Scale Helm,Armor,80,Fine,83
 41607,Sentinel's Reinforced Scale Legs,Armor,80,Fine,93
 41608,Sentinel's Reinforced Scale Pauldrons,Armor,80,Fine,73
@@ -30532,6 +30534,7 @@ id,name,type,level,rarity,vendor_value
 41619,Sentinel's Privateer Pants,Armor,80,Fine,93
 41620,Sentinel's Privateer Shoulders,Armor,80,Fine,73
 41621,Sentinel's Banded Greaves of the Eagle,Armor,80,Rare,198
+41622,Sentinel's Banded Coat of Lyssa,Armor,80,Rare,297
 41623,Sentinel's Banded Gauntlets of the Flock,Armor,80,Rare,179
 41624,Sentinel's Banded Helm of the Grove,Armor,80,Rare,248
 41625,Sentinel's Banded Legs of Strength,Armor,80,Rare,278
@@ -30540,6 +30543,7 @@ id,name,type,level,rarity,vendor_value
 41628,Sentinel's Conjurer Chest of Divinity,Armor,80,Rare,297
 41629,Sentinel's Conjurer Gloves of the Eagle,Armor,80,Rare,179
 41630,Sentinel's Conjurer Mask of the Lich,Armor,80,Rare,248
+41631,Sentinel's Conjurer Pants of Grenth,Armor,80,Rare,278
 41632,Sentinel's Conjurer Mantle of Balthazar,Armor,80,Rare,218
 41633,Sentinel's Privateer Boots of Lyssa,Armor,80,Rare,198
 41634,Sentinel's Rogue Coat of the Grove,Armor,80,Rare,297
@@ -39806,193 +39810,85 @@ id,name,type,level,rarity,vendor_value
 54402,Deserter's Spitespewer,Weapon,36,Rare,167
 54403,Deserter's Darkdevoted Kris,Weapon,36,Rare,111
 54404,Deserter's Rota Misfortuna,Weapon,36,Rare,111
-54405,Deserter's Architeuthis,Weapon,36,Rare,167
-54406,Deserter's Sorrowmaker,Weapon,36,Rare,167
 54407,Deserter's Crowncrusher,Weapon,36,Rare,111
-54408,Deserter's Weatherwrack,Weapon,36,Rare,111
-54409,Deserter's Crack o' Red Dawn,Weapon,36,Rare,167
-54410,Deserter's Ominous Egg,Weapon,36,Rare,111
 54411,Deserter's Shell of Secrets,Weapon,36,Rare,111
 54412,Deserter's Returner's Gaff,Weapon,36,Rare,167
 54413,Deserter's Mournsword,Weapon,36,Rare,111
 54414,Deserter's Lantern of the Lost,Weapon,36,Rare,111
 54415,Deserter's Eerie Conch,Weapon,36,Rare,111
-54416,Deserter's Barnacle Scraper,Weapon,39,Rare,117
 54417,Deserter's Short-Tailed Shot,Weapon,39,Rare,176
-54418,Deserter's Spitespewer,Weapon,39,Rare,176
-54419,Deserter's Darkdevoted Kris,Weapon,39,Rare,117
-54420,Deserter's Rota Misfortuna,Weapon,39,Rare,117
 54421,Deserter's Architeuthis,Weapon,39,Rare,176
 54422,Deserter's Sorrowmaker,Weapon,39,Rare,176
 54423,Deserter's Crowncrusher,Weapon,39,Rare,117
-54424,Deserter's Weatherwrack,Weapon,39,Rare,117
-54425,Deserter's Crack o' Red Dawn,Weapon,39,Rare,176
 54426,Deserter's Ominous Egg,Weapon,39,Rare,117
-54427,Deserter's Shell of Secrets,Weapon,39,Rare,117
 54428,Deserter's Returner's Gaff,Weapon,39,Rare,176
 54429,Deserter's Mournsword,Weapon,39,Rare,117
 54430,Deserter's Lantern of the Lost,Weapon,39,Rare,117
 54431,Deserter's Eerie Conch,Weapon,39,Rare,117
 54432,Deserter's Barnacle Scraper,Weapon,44,Rare,126
 54433,Deserter's Short-Tailed Shot,Weapon,44,Rare,189
-54434,Deserter's Spitespewer,Weapon,44,Rare,189
 54435,Deserter's Darkdevoted Kris,Weapon,44,Rare,126
 54436,Deserter's Rota Misfortuna,Weapon,44,Rare,126
 54437,Deserter's Architeuthis,Weapon,44,Rare,189
-54438,Deserter's Sorrowmaker,Weapon,44,Rare,189
-54439,Deserter's Crowncrusher,Weapon,44,Rare,126
 54440,Deserter's Weatherwrack,Weapon,44,Rare,126
-54441,Deserter's Crack o' Red Dawn,Weapon,44,Rare,189
-54442,Deserter's Ominous Egg,Weapon,44,Rare,126
-54443,Deserter's Shell of Secrets,Weapon,44,Rare,126
 54444,Deserter's Returner's Gaff,Weapon,44,Rare,189
 54445,Deserter's Mournsword,Weapon,44,Rare,126
-54446,Deserter's Lantern of the Lost,Weapon,44,Rare,126
-54447,Deserter's Eerie Conch,Weapon,44,Rare,126
-54448,Deserter's Barnacle Scraper,Weapon,51,Rare,141
 54449,Deserter's Short-Tailed Shot,Weapon,51,Rare,212
-54450,Deserter's Spitespewer,Weapon,51,Rare,212
-54451,Deserter's Darkdevoted Kris,Weapon,51,Rare,141
-54452,Deserter's Rota Misfortuna,Weapon,51,Rare,141
-54453,Deserter's Architeuthis,Weapon,51,Rare,212
 54454,Deserter's Sorrowmaker,Weapon,51,Rare,212
-54455,Deserter's Crowncrusher,Weapon,51,Rare,141
-54456,Deserter's Weatherwrack,Weapon,51,Rare,141
 54457,Deserter's Crack o' Red Dawn,Weapon,51,Rare,212
 54458,Deserter's Ominous Egg,Weapon,51,Rare,141
-54459,Deserter's Shell of Secrets,Weapon,51,Rare,141
 54460,Deserter's Returner's Gaff,Weapon,51,Rare,212
-54461,Deserter's Mournsword,Weapon,51,Rare,141
 54462,Deserter's Lantern of the Lost,Weapon,51,Rare,141
 54463,Deserter's Eerie Conch,Weapon,51,Rare,141
-54464,Deserter's Barnacle Scraper,Weapon,55,Rare,150
-54465,Deserter's Short-Tailed Shot,Weapon,55,Rare,225
 54466,Deserter's Spitespewer,Weapon,55,Rare,225
-54467,Deserter's Darkdevoted Kris,Weapon,55,Rare,150
 54468,Deserter's Rota Misfortuna,Weapon,55,Rare,150
-54469,Deserter's Architeuthis,Weapon,55,Rare,225
 54470,Deserter's Sorrowmaker,Weapon,55,Rare,225
-54471,Deserter's Crowncrusher,Weapon,55,Rare,150
 54472,Deserter's Weatherwrack,Weapon,55,Rare,150
 54473,Deserter's Crack o' Red Dawn,Weapon,55,Rare,225
-54474,Deserter's Ominous Egg,Weapon,55,Rare,150
-54475,Deserter's Shell of Secrets,Weapon,55,Rare,150
-54476,Deserter's Returner's Gaff,Weapon,55,Rare,225
-54477,Deserter's Mournsword,Weapon,55,Rare,150
 54478,Deserter's Lantern of the Lost,Weapon,55,Rare,150
-54479,Deserter's Eerie Conch,Weapon,55,Rare,150
-54480,Deserter's Barnacle Scraper,Weapon,60,Rare,162
-54481,Deserter's Short-Tailed Shot,Weapon,60,Rare,243
-54482,Deserter's Spitespewer,Weapon,60,Rare,243
-54483,Deserter's Darkdevoted Kris,Weapon,60,Rare,162
-54484,Deserter's Rota Misfortuna,Weapon,60,Rare,162
-54485,Deserter's Architeuthis,Weapon,60,Rare,243
 54486,Deserter's Sorrowmaker,Weapon,60,Rare,243
 54487,Deserter's Crowncrusher,Weapon,60,Rare,162
-54488,Deserter's Weatherwrack,Weapon,60,Rare,162
-54489,Deserter's Crack o' Red Dawn,Weapon,60,Rare,243
 54490,Deserter's Ominous Egg,Weapon,60,Rare,162
-54491,Deserter's Shell of Secrets,Weapon,60,Rare,162
 54492,Deserter's Returner's Gaff,Weapon,60,Rare,243
-54493,Deserter's Mournsword,Weapon,60,Rare,162
-54494,Deserter's Lantern of the Lost,Weapon,60,Rare,162
-54495,Deserter's Eerie Conch,Weapon,60,Rare,162
 54496,Survivor's Barnacle Scraper,Weapon,36,Rare,111
 54497,Survivor's Short-Tailed Shot,Weapon,36,Rare,167
 54498,Survivor's Spitespewer,Weapon,36,Rare,167
-54499,Survivor's Darkdevoted Kris,Weapon,36,Rare,111
 54500,Survivor's Rota Misfortuna,Weapon,36,Rare,111
 54501,Survivor's Architeuthis,Weapon,36,Rare,167
-54502,Survivor's Sorrowmaker,Weapon,36,Rare,167
-54503,Survivor's Crowncrusher,Weapon,36,Rare,111
 54504,Survivor's Weatherwrack,Weapon,36,Rare,111
 54505,Survivor's Crack o' Red Dawn,Weapon,36,Rare,167
 54506,Survivor's Ominous Egg,Weapon,36,Rare,111
 54507,Survivor's Shell of Secrets,Weapon,36,Rare,111
-54508,Survivor's Returner's Gaff,Weapon,36,Rare,167
 54509,Survivor's Mournsword,Weapon,36,Rare,111
 54510,Survivor's Lantern of the Lost,Weapon,36,Rare,111
-54511,Survivor's Eerie Conch,Weapon,36,Rare,111
 54512,Survivor's Barnacle Scraper,Weapon,39,Rare,117
 54513,Survivor's Short-Tailed Shot,Weapon,39,Rare,176
-54514,Survivor's Spitespewer,Weapon,39,Rare,176
-54515,Survivor's Darkdevoted Kris,Weapon,39,Rare,117
-54516,Survivor's Rota Misfortuna,Weapon,39,Rare,117
-54517,Survivor's Architeuthis,Weapon,39,Rare,176
-54518,Survivor's Sorrowmaker,Weapon,39,Rare,176
-54519,Survivor's Crowncrusher,Weapon,39,Rare,117
-54520,Survivor's Weatherwrack,Weapon,39,Rare,117
-54521,Survivor's Crack o' Red Dawn,Weapon,39,Rare,176
-54522,Survivor's Ominous Egg,Weapon,39,Rare,117
-54523,Survivor's Shell of Secrets,Weapon,39,Rare,117
-54524,Survivor's Returner's Gaff,Weapon,39,Rare,176
 54525,Survivor's Mournsword,Weapon,39,Rare,117
 54526,Survivor's Lantern of the Lost,Weapon,39,Rare,117
 54527,Survivor's Eerie Conch,Weapon,39,Rare,117
-54528,Survivor's Barnacle Scraper,Weapon,44,Rare,126
-54529,Survivor's Short-Tailed Shot,Weapon,44,Rare,189
-54530,Survivor's Spitespewer,Weapon,44,Rare,189
 54531,Survivor's Darkdevoted Kris,Weapon,44,Rare,126
-54532,Survivor's Rota Misfortuna,Weapon,44,Rare,126
-54533,Survivor's Architeuthis,Weapon,44,Rare,189
-54534,Survivor's Sorrowmaker,Weapon,44,Rare,189
-54535,Survivor's Crowncrusher,Weapon,44,Rare,126
-54536,Survivor's Weatherwrack,Weapon,44,Rare,126
 54537,Survivor's Crack o' Red Dawn,Weapon,44,Rare,189
-54538,Survivor's Ominous Egg,Weapon,44,Rare,126
 54539,Survivor's Shell of Secrets,Weapon,44,Rare,126
-54540,Survivor's Returner's Gaff,Weapon,44,Rare,189
-54541,Survivor's Mournsword,Weapon,44,Rare,126
-54542,Survivor's Lantern of the Lost,Weapon,44,Rare,126
 54543,Survivor's Eerie Conch,Weapon,44,Rare,126
 54544,Survivor's Barnacle Scraper,Weapon,51,Rare,141
 54545,Survivor's Short-Tailed Shot,Weapon,51,Rare,212
 54546,Survivor's Spitespewer,Weapon,51,Rare,212
-54547,Survivor's Darkdevoted Kris,Weapon,51,Rare,141
 54548,Survivor's Rota Misfortuna,Weapon,51,Rare,141
-54549,Survivor's Architeuthis,Weapon,51,Rare,212
-54550,Survivor's Sorrowmaker,Weapon,51,Rare,212
-54551,Survivor's Crowncrusher,Weapon,51,Rare,141
-54552,Survivor's Weatherwrack,Weapon,51,Rare,141
-54553,Survivor's Crack o' Red Dawn,Weapon,51,Rare,212
 54554,Survivor's Ominous Egg,Weapon,51,Rare,141
-54555,Survivor's Shell of Secrets,Weapon,51,Rare,141
-54556,Survivor's Returner's Gaff,Weapon,51,Rare,212
-54557,Survivor's Mournsword,Weapon,51,Rare,141
-54558,Survivor's Lantern of the Lost,Weapon,51,Rare,141
-54559,Survivor's Eerie Conch,Weapon,51,Rare,141
-54560,Survivor's Barnacle Scraper,Weapon,55,Rare,150
-54561,Survivor's Short-Tailed Shot,Weapon,55,Rare,225
-54562,Survivor's Spitespewer,Weapon,55,Rare,225
-54563,Survivor's Darkdevoted Kris,Weapon,55,Rare,150
-54564,Survivor's Rota Misfortuna,Weapon,55,Rare,150
 54565,Survivor's Architeuthis,Weapon,55,Rare,225
 54566,Survivor's Sorrowmaker,Weapon,55,Rare,225
-54567,Survivor's Crowncrusher,Weapon,55,Rare,150
 54568,Survivor's Weatherwrack,Weapon,55,Rare,150
 54569,Survivor's Crack o' Red Dawn,Weapon,55,Rare,225
-54570,Survivor's Ominous Egg,Weapon,55,Rare,150
 54571,Survivor's Shell of Secrets,Weapon,55,Rare,150
 54572,Survivor's Returner's Gaff,Weapon,55,Rare,225
 54573,Survivor's Mournsword,Weapon,55,Rare,150
-54574,Survivor's Lantern of the Lost,Weapon,55,Rare,150
-54575,Survivor's Eerie Conch,Weapon,55,Rare,150
 54576,Survivor's Barnacle Scraper,Weapon,60,Rare,162
-54577,Survivor's Short-Tailed Shot,Weapon,60,Rare,243
-54578,Survivor's Spitespewer,Weapon,60,Rare,243
 54579,Survivor's Darkdevoted Kris,Weapon,60,Rare,162
-54580,Survivor's Rota Misfortuna,Weapon,60,Rare,162
-54581,Survivor's Architeuthis,Weapon,60,Rare,243
 54582,Survivor's Sorrowmaker,Weapon,60,Rare,243
 54583,Survivor's Crowncrusher,Weapon,60,Rare,162
-54584,Survivor's Weatherwrack,Weapon,60,Rare,162
-54585,Survivor's Crack o' Red Dawn,Weapon,60,Rare,243
-54586,Survivor's Ominous Egg,Weapon,60,Rare,162
 54587,Survivor's Shell of Secrets,Weapon,60,Rare,162
 54588,Survivor's Returner's Gaff,Weapon,60,Rare,243
 54589,Survivor's Mournsword,Weapon,60,Rare,162
-54590,Survivor's Lantern of the Lost,Weapon,60,Rare,162
-54591,Survivor's Eerie Conch,Weapon,60,Rare,162
 54592,Blessed Steps,Armor,60,Rare,162
 54593,Duty-Bound Duffers,Armor,20,Masterwork,52
 54594,Swelter's Gait,Armor,30,Rare,99
