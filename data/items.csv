@@ -19199,205 +19199,84 @@ id,name,type,level,rarity,vendor_value
 26636,Honed Soft Wood Scepter of Peril,Weapon,40,Rare,114
 26637,Honed Iron Shield,Weapon,42,Fine,39
 26638,Honed Soft Wood Scepter of Smoldering,Weapon,47,Rare,126
-26639,Honed Iron Shield,Weapon,47,Fine,42
-26640,Honed Soft Wood Scepter of Venom,Weapon,54,Rare,141
-26641,Honed Iron Shield,Weapon,52,Fine,46
-26642,Hearty Soft Wood Scepter of Accuracy,Weapon,55,Rare,144
-26643,Honed Iron Shield,Weapon,57,Fine,49
-26644,Berserker's Soft Wood Scepter of Earth,Weapon,60,Rare,156
-26645,Hearty Iron Shield,Weapon,48,Fine,43
-26646,Hearty Iron Shield,Weapon,53,Fine,47
-26647,Berserker's Soft Wood Scepter of Agony,Weapon,67,Rare,168
-26648,Berserker's Soft Wood Scepter of Ogre Slaying,Weapon,74,Rare,183
 26649,Berserker's Soft Wood Scepter of Perception,Weapon,80,Rare,198
-26650,Hearty Iron Shield,Weapon,63,Fine,54
-26651,Strong Iron Shield,Weapon,49,Fine,44
 26652,Rampager's Soft Wood Scepter of Bloodlust,Weapon,61,Rare,156
-26653,Rampager's Soft Wood Scepter of Agony,Weapon,68,Rare,171
-26654,Strong Iron Shield,Weapon,54,Fine,47
-26655,Strong Iron Shield,Weapon,59,Fine,51
-26656,Rampager's Soft Wood Scepter of Earth,Weapon,75,Rare,186
 26657,Rampager's Soft Wood Scepter of Fire,Weapon,80,Rare,198
-26658,Strong Iron Shield,Weapon,64,Fine,54
-26659,Cleric's Soft Wood Scepter of Bloodlust,Weapon,62,Rare,159
-26660,Berserker's Iron Shield,Weapon,61,Fine,52
 26661,Cleric's Soft Wood Scepter of Hobbling,Weapon,69,Rare,174
-26662,Berserker's Iron Shield,Weapon,66,Fine,56
-26663,Berserker's Iron Shield,Weapon,71,Fine,59
 26664,Cleric's Soft Wood Scepter of Force,Weapon,76,Rare,189
 26665,Cleric's Soft Wood Scepter of Serpent Slaying,Weapon,80,Rare,198
 26666,Berserker's Iron Shield,Weapon,76,Fine,63
-26667,Berserker's Soft Wood Scepter of Accuracy,Weapon,70,Rare,177
 26668,Berserker's Iron Shield,Weapon,80,Fine,66
-26669,Rampager's Iron Shield,Weapon,62,Fine,53
-26670,Berserker's Soft Wood Scepter of Force,Weapon,77,Rare,189
 26671,Rampager's Iron Shield,Weapon,67,Fine,56
-26672,Berserker's Soft Wood Scepter of Earth,Weapon,80,Rare,198
-26673,Rampager's Soft Wood Scepter of Hobbling,Weapon,71,Rare,177
-26674,Rampager's Iron Shield,Weapon,72,Fine,60
 26675,Rampager's Iron Shield,Weapon,77,Fine,63
 26676,Rampager's Soft Wood Scepter of Life,Weapon,78,Rare,192
-26677,Rampager's Soft Wood Scepter of Energy,Weapon,80,Rare,198
 26678,Rampager's Iron Shield,Weapon,80,Fine,66
 26679,Cleric's Soft Wood Scepter of Corruption,Weapon,72,Rare,180
-26680,Cleric's Iron Shield,Weapon,68,Fine,57
-26681,Cleric's Soft Wood Scepter of Agony,Weapon,79,Rare,195
-26682,Cleric's Iron Shield,Weapon,73,Fine,61
-26683,Cleric's Iron Shield,Weapon,78,Fine,64
 26684,Cleric's Soft Wood Scepter of Force,Weapon,80,Rare,198
 26685,Cleric's Iron Shield,Weapon,80,Fine,66
-26686,Berserker's Iron Shield,Weapon,69,Fine,58
 26687,Berserker's Iron Shield,Weapon,74,Fine,61
-26688,Berserker's Iron Shield,Weapon,79,Fine,65
 26689,Berserker's Iron Shield,Weapon,80,Fine,66
-26690,Berserker's Iron Pistol of Blood,Weapon,62,Exotic,212
-26691,Berserker's Iron Pistol of Hobbling,Weapon,70,Exotic,236
 26692,Berserker's Iron Pistol of Air,Weapon,78,Exotic,256
 26693,Ruinmaker,Weapon,80,Exotic,264
 26694,Rampager's Iron Pistol of Battle,Weapon,63,Exotic,216
-26695,Rampager's Iron Pistol of Hobbling,Weapon,71,Exotic,236
 26696,Rampager's Iron Pistol of Ogre Slaying,Weapon,79,Exotic,260
 26697,Master Blaster,Weapon,80,Exotic,264
-26698,Cleric's Iron Pistol of Venom,Weapon,64,Exotic,216
-26699,Cleric's Iron Pistol of Accuracy,Weapon,72,Exotic,240
 26700,Venomstriker,Weapon,80,Exotic,264
-26701,Berserker's Iron Pistol of the Hydromancer,Weapon,65,Exotic,220
-26702,Berserker's Iron Pistol of the Geomancer,Weapon,73,Exotic,244
 26703,Brandt,Weapon,80,Exotic,264
-26704,Rampager's Iron Pistol of Energy,Weapon,66,Exotic,224
-26705,Rampager's Iron Pistol of Vision,Weapon,74,Exotic,244
 26706,Dragonshot,Weapon,80,Exotic,264
 26707,Cleric's Iron Pistol of Chilling,Weapon,75,Exotic,248
 26708,Gearbore,Weapon,80,Exotic,264
 26709,Rampager's Iron Pistol of Grawl Slaying,Weapon,76,Exotic,252
 26710,Handheld Disaster,Weapon,80,Exotic,264
 26711,Mighty Iron Pistol,Weapon,1,Fine,6
-26712,Mighty Iron Pistol,Weapon,6,Fine,11
-26713,Mighty Iron Pistol,Weapon,11,Fine,16
 26714,Mighty Iron Pistol,Weapon,16,Fine,20
 26715,Precise Iron Pistol,Weapon,0,Fine,7
 26716,Mighty Iron Shield of Chilling,Weapon,14,Masterwork,38
 26717,Mighty Iron Shield of Chilling,Weapon,20,Masterwork,48
-26718,Precise Iron Pistol,Weapon,7,Fine,12
 26719,Strong Iron Shield of Chilling,Weapon,26,Masterwork,56
-26720,Precise Iron Pistol,Weapon,12,Fine,17
-26721,Precise Iron Pistol,Weapon,17,Fine,21
-26722,Strong Iron Shield of Fire,Weapon,32,Masterwork,64
 26723,Vital Iron Pistol,Weapon,0,Fine,8
 26724,Honed Iron Shield of Accuracy,Weapon,27,Masterwork,56
 26725,Honed Iron Shield of Force,Weapon,33,Masterwork,66
 26726,Vital Iron Pistol,Weapon,8,Fine,13
-26727,Vital Iron Pistol,Weapon,13,Fine,18
-26728,Hearty Iron Shield of Bloodlust,Weapon,40,Masterwork,76
-26729,Vital Iron Pistol,Weapon,18,Fine,22
-26730,Strong Iron Shield of Smoldering,Weapon,38,Masterwork,72
-26731,Strong Iron Shield of Bloodlust,Weapon,44,Masterwork,80
 26732,Mighty Iron Pistol,Weapon,0,Fine,9
-26733,Mighty Iron Pistol,Weapon,9,Fine,14
 26734,Strong Iron Shield of Agony,Weapon,50,Masterwork,90
 26735,Strong Iron Shield of the Hydromancer,Weapon,56,Masterwork,98
-26736,Mighty Iron Pistol,Weapon,14,Fine,19
 26737,Mighty Iron Pistol,Weapon,19,Fine,23
-26738,Honed Iron Shield of Hobbling,Weapon,39,Masterwork,74
-26739,Honed Iron Shield of Bloodlust,Weapon,45,Masterwork,82
-26740,Strong Iron Pistol,Weapon,21,Fine,24
-26741,Strong Iron Pistol,Weapon,26,Fine,28
-26742,Honed Iron Shield of Venom,Weapon,51,Masterwork,90
 26743,Strong Iron Pistol,Weapon,31,Fine,31
-26744,Honed Iron Shield of Ogre Slaying,Weapon,57,Masterwork,98
 26745,Hearty Iron Shield of Venom,Weapon,46,Masterwork,84
-26746,Strong Iron Pistol,Weapon,36,Fine,35
 26747,Honed Iron Pistol,Weapon,22,Fine,25
 26748,Hearty Iron Shield of Ogre Slaying,Weapon,52,Masterwork,92
-26749,Honed Iron Pistol,Weapon,27,Fine,28
-26750,Hearty Iron Shield of Force,Weapon,58,Masterwork,100
-26751,Strong Iron Shield of Blood,Weapon,53,Masterwork,94
-26752,Honed Iron Pistol,Weapon,32,Fine,32
-26753,Strong Iron Shield of Bloodlust,Weapon,59,Masterwork,102
 26754,Honed Iron Pistol,Weapon,37,Fine,35
 26755,Hearty Iron Pistol,Weapon,23,Fine,26
-26756,Berserker's Iron Shield of Ice,Weapon,62,Masterwork,106
-26757,Berserker's Iron Shield of Air,Weapon,68,Masterwork,114
-26758,Hearty Iron Pistol,Weapon,28,Fine,29
-26759,Berserker's Iron Shield of Fire,Weapon,74,Masterwork,122
-26760,Hearty Iron Pistol,Weapon,33,Fine,33
-26761,Hearty Iron Pistol,Weapon,38,Fine,36
 26762,Berserker's Iron Shield of Agony,Weapon,80,Masterwork,132
-26763,Hearty Iron Pistol,Weapon,43,Fine,40
-26764,Rampager's Iron Shield of Grawl Slaying,Weapon,63,Masterwork,108
 26765,Strong Iron Pistol,Weapon,24,Fine,26
-26766,Rampager's Iron Shield of Agony,Weapon,69,Masterwork,116
 26767,Vigorous Iron Pistol,Weapon,29,Fine,30
-26768,Rampager's Iron Shield of Ogre Slaying,Weapon,75,Masterwork,124
-26769,Strong Iron Pistol,Weapon,34,Fine,33
 26770,Rampager's Iron Shield of the Geomancer,Weapon,80,Masterwork,132
-26771,Strong Iron Pistol,Weapon,39,Fine,37
 26772,Cleric's Iron Shield of Smoldering,Weapon,64,Masterwork,108
-26773,Strong Iron Pistol,Weapon,44,Fine,40
-26774,Cleric's Iron Shield of Earth,Weapon,70,Masterwork,118
 26775,Strong Iron Pistol,Weapon,41,Fine,38
 26776,Cleric's Iron Shield of Chilling,Weapon,76,Masterwork,126
 26777,Cleric's Iron Shield of Ice,Weapon,80,Masterwork,132
 26778,Strong Iron Pistol,Weapon,46,Fine,42
-26779,Berserker's Iron Shield of Ice,Weapon,65,Masterwork,110
-26780,Strong Iron Pistol,Weapon,51,Fine,45
-26781,Strong Iron Pistol,Weapon,56,Fine,49
-26782,Berserker's Iron Shield of Corruption,Weapon,71,Masterwork,118
-26783,Honed Iron Pistol,Weapon,42,Fine,39
 26784,Berserker's Iron Shield of Smoldering,Weapon,77,Masterwork,126
-26785,Honed Iron Pistol,Weapon,47,Fine,42
 26786,Berserker's Iron Shield of Chilling,Weapon,80,Masterwork,132
 26787,Honed Iron Pistol,Weapon,52,Fine,46
-26788,Rampager's Iron Shield of Air,Weapon,66,Masterwork,112
-26789,Honed Iron Pistol,Weapon,57,Fine,49
 26790,Rampager's Iron Shield of Debility,Weapon,72,Masterwork,120
-26791,Hearty Iron Pistol,Weapon,48,Fine,43
 26792,Rampager's Iron Shield of Blood,Weapon,78,Masterwork,128
-26793,Hearty Iron Pistol,Weapon,53,Fine,47
 26794,Rampager's Iron Shield of Debility,Weapon,80,Masterwork,132
-26795,Hearty Iron Pistol,Weapon,58,Fine,50
-26796,Hearty Iron Pistol,Weapon,63,Fine,54
-26797,Strong Iron Pistol,Weapon,49,Fine,44
-26798,Strong Iron Shield of Serpent Slaying,Weapon,39,Rare,111
-26799,Strong Iron Pistol,Weapon,54,Fine,47
-26800,Strong Iron Shield of Accuracy,Weapon,46,Rare,126
-26801,Strong Iron Pistol,Weapon,59,Fine,51
-26802,Strong Iron Shield of Ice,Weapon,53,Rare,141
-26803,Strong Iron Pistol,Weapon,64,Fine,54
-26804,Honed Iron Shield of Energy,Weapon,40,Rare,114
-26805,Berserker's Iron Pistol,Weapon,61,Fine,52
-26806,Honed Iron Shield of Force,Weapon,47,Rare,126
-26807,Berserker's Iron Pistol,Weapon,66,Fine,56
-26808,Honed Iron Shield of Corruption,Weapon,54,Rare,141
 26809,Berserker's Iron Pistol,Weapon,71,Fine,59
-26810,Hearty Iron Shield of the Geomancer,Weapon,55,Rare,144
 26811,Berserker's Iron Pistol,Weapon,76,Fine,63
-26812,Berserker's Iron Shield of Venom,Weapon,60,Rare,156
 26813,Berserker's Iron Pistol,Weapon,80,Fine,66
 26814,Berserker's Iron Shield of Force,Weapon,67,Rare,168
-26815,Rampager's Iron Pistol,Weapon,62,Fine,53
-26816,Berserker's Iron Shield of Venom,Weapon,74,Rare,183
-26817,Rampager's Iron Pistol,Weapon,67,Fine,56
 26818,Berserker's Iron Shield of Ogre Slaying,Weapon,80,Rare,198
 26819,Rampager's Iron Pistol,Weapon,72,Fine,60
-26820,Rampager's Iron Shield of Air,Weapon,61,Rare,156
 26821,Rampager's Iron Pistol,Weapon,77,Fine,63
-26822,Rampager's Iron Shield of Energy,Weapon,68,Rare,171
 26823,Rampager's Iron Pistol,Weapon,80,Fine,66
-26824,Rampager's Iron Shield of Ice,Weapon,75,Rare,186
 26825,Cleric's Iron Pistol,Weapon,68,Fine,57
-26826,Rampager's Iron Shield of Water,Weapon,80,Rare,198
 26827,Cleric's Iron Pistol,Weapon,73,Fine,61
 26828,Cleric's Iron Shield of Serpent Slaying,Weapon,62,Rare,159
-26829,Cleric's Iron Pistol,Weapon,78,Fine,64
-26830,Cleric's Iron Shield of Force,Weapon,69,Rare,174
 26831,Cleric's Iron Pistol,Weapon,80,Fine,66
 26832,Cleric's Iron Shield of Water,Weapon,76,Rare,189
-26833,Berserker's Iron Pistol,Weapon,69,Fine,58
 26834,Cleric's Iron Shield of Grawl Slaying,Weapon,80,Rare,198
-26835,Berserker's Iron Pistol,Weapon,74,Fine,61
-26836,Berserker's Iron Shield of Battle,Weapon,70,Rare,177
-26837,Berserker's Iron Shield of Corruption,Weapon,77,Rare,189
 26838,Berserker's Iron Pistol,Weapon,79,Fine,65
 26839,Berserker's Iron Shield of Bloodlust,Weapon,80,Rare,198
 26840,Berserker's Iron Pistol,Weapon,80,Fine,66
