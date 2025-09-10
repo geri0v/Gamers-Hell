@@ -256,6 +256,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 5630,Daily Caledon Forest Dragon Response Mission,Default,['Daily'],
 8092,Seafarer's Rest Veteran,Default,"['Pvp', 'Hidden', 'Permanent']",Days gone by...
 6155,Daily Echovald Wilds Jade Brotherhood Slayer,Default,['Daily'],
+8818,Sunjiang Slayer,Default,"['Pvp', 'Permanent']",Vanquish your foes.
 3027,Keadin's Study,Default,['Permanent'],"<c=@flavor>""Such things we could learn!""
 —Keadin</c>"
 7032,A Chapter Closed,Default,['Permanent'],Journal: Treachery
@@ -298,6 +299,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 4160,(Annual) World 2 Challenge,Default,['Permanent'],"If you never climb, you'll never see the view from the top."
 3182,Elixir Recipe,Default,['Permanent'],Journal: Elixir Recipe Completed
 4045,(Annual) Festival Automaton,Default,['Permanent'],
+8834,Weekly Fractal Incursion,Default,['Weekly'],
 5402,Special Mission: Blast Them All,Default,"['RequiresUnlock', 'Permanent']",
 4121,Race to the Finish: Olmakhan Docks,Default,['Permanent'],
 2745,League Revenant—Elite,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement advances the League Profession—Elite achievement.
@@ -408,6 +410,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 2919,Daily Adventure: Salvage Pit,Default,"['Pvp', 'Daily']",
 4338,Mad Realm Weapon Collection,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 3684,Master Firebrand,Default,"['Pvp', 'Permanent']",
+8739,Daily Tier 4 Kinfall,Default,['Daily'],
 6731,Viewing Vistas II,Default,['Permanent'],
 684,Aether Apprehender: Kryta,Default,['Permanent'],
 1095,Toxic Siege Gardener,Default,['Permanent'],
@@ -608,6 +611,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 2733,League Necromancer—Recruit,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement advances the League Professional—Recruit achievement.
 3045,Daily Tier 3 Chaos,Default,['Daily'],
 891,Boss Week: Here Be Dragons!,Default,['Daily'],
+6707,Birthday—Year 13,Default,"['Pvp', 'Hidden', 'Permanent']",You have a character that is more than 13 years old.
 6554,Guiding Sign,Default,['Permanent'],A much longer journey begins with the smallest step.
 6506,Dragon's End Fisher,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>The charm of fishing is in pursuing something elusive, though attainable. It is a simple yet profound practice of hope.</c>"
 8157,Fight Another Day,Default,['Permanent'],We'll get through this.
@@ -621,6 +625,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 421,Gift Bringer,Default,"['Pvp', 'Permanent']",One for me...
 6415,Taxi!,Default,['Permanent'],Raptor Taxi: Making boring commutes terrifying and unnecessarily dangerous.
 6375,Pocket Maw Crystals,Default,['Permanent'],
+8812,Messenger from the Mists,Default,['Permanent'],
 4293,The Rise and Fall of Kookoochoo,Default,"['Hidden', 'Permanent']",Piece together the fate of Kookoochoo the Incredulous.
 5379,A Simple Negotiation,Default,['Permanent'],Journal: A Simple Negotiation Completed
 7168,Cursed Shore Incursions,Default,['Weekly'],
@@ -639,6 +644,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 620,Southsun Skinny Dipper,Default,['Permanent'],Swim off the coast of the Pearl Island resort beach on Southsun Cove without your armor.
 3581,Beast of War,Default,['Permanent'],Journal: Beast of War Completed
 8769,Bava Nisos Mastery,Default,"['CategoryDisplay', 'MoveToTop', 'Permanent']",
+8811,Incursive Investigation: Stabilizing the Core,Default,['Permanent'],All of the target fractals appear in quickplay mode!
 3575,Justice of the Blade,Default,"['RepairOnLogin', 'CategoryDisplay', 'Permanent']",
 8057,Convergence Challenge Mode—Dreadwing: Silver,Default,['Permanent'],The dreaded Dreadwing dreads you!
 6914,New Kaineng Skiff Racer: Silver,Default,['Permanent'],
@@ -869,6 +875,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 6314,Spiritual Childcare,Default,['Permanent'],
 1038,Grim Reaper of Grunts II,Default,['Daily'],
 8664,League Participator—Conquest,Default,"['IgnoreNearlyComplete', 'Pvp']",
+8836,Mini Turtle Hatchling Collection,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 996,WvW Premier Season: 6th Place,Default,"['Pvp', 'Hidden', 'MoveToTop', 'Permanent']",
 2682,League Professional—Champion,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement awards an item for Path of the Ascension III: Monument of Legends.
 205,Chaos Crystal Cavern,Default,['Permanent'],"Find your way in. Then, find your way out."
@@ -914,6 +921,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 424,Become the Bells,Default,"['Pvp', 'Permanent']",Now you're the maestro.
 539,Rox: Critical Mission,Default,['Permanent'],"Rytlock Brimstone meets Rox in the Imperator's Core, where the defense quorum is debating. He assigns her a mission for which she will need support."
 3032,Anomaly Sighted,Default,['Permanent'],
+8840,Incursive Investigation: First Recursion,Default,['Permanent'],
 1666,Dropping like Flies,Default,['Permanent'],Story Instance: The Concordia Incident
 5377,Special Mission: Break Their Toys,Default,"['RequiresUnlock', 'Permanent']",
 1173,Toxic Alliance Slayer,Default,['Daily'],
@@ -1959,16 +1967,17 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3672,To Kill a God,Default,"['Hidden', 'Permanent']",Journal: To Kill a God Completed
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
-4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
-6618,Completing Events III,Default,['Permanent'],
 2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
 6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
+4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
+6618,Completing Events III,Default,['Permanent'],
 6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 5551,League Participator—Conquest Season Twenty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
 4495,Chasing Tales: Direct Approach,Default,"['Hidden', 'Permanent']",Mouglon never turned his back on a fight.
+8849,Shade-Touched Weapon Collection,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 4442,(Annual) Ascent to Madness,Default,['Permanent'],
 1195,Aetherblade Retreat Stabilizer,Default,['Permanent'],They're in full retreat now.
 1912,Daily Spekks's Lab Jumping Puzzle,Default,"['Pvp', 'Daily']",
@@ -2021,6 +2030,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3262,Ringing the Right Notes,Default,"['Pvp', 'Permanent']",Part of the symphony.
 6358,Raptor Runner: New Kaineng City,Default,['Permanent'],
 598,Southsun Pool Sample Collection,Default,['Permanent'],Collect a sample from the geothermal pools at Driftglass Springs.
+8729,Daily Tier 3 Kinfall,Default,['Daily'],
 3569,Crystal Cracker,Default,['Permanent'],Purple is not your color.
 4018,God of the Mists,Default,"['Hidden', 'Permanent']",
 8488,Trebuchet Expertise,Default,['Permanent'],
@@ -2674,8 +2684,10 @@ This is but the first step on a long road."
 4078,Light Up the Sky,Default,"['Pvp', 'Permanent']",
 7642,PvP Rush Fighter,Default,"['Pvp', 'Permanent']",Champion Points: 20
 1358,Boss Thumper XXI,Default,['Daily'],
+8799,Local Response: Outer Nayos,Default,['Permanent'],
 7704,Jahai Bluffs Incursions,Default,['Weekly'],
 8747,Spirit Nutritionist,Default,['Permanent'],
+8815,Weekly Fractal Quickplay,Default,['Weekly'],Steady effort will get you to your goals.
 7162,Mother of Stars,Default,['Permanent'],Journal: Mother of Stars
 7313,Manifestation Mayhem,Default,['Permanent'],Journal: The World Spire
 351,The Long Way Around,Default,['Permanent'],Fryxx will know if you take the short way around.
@@ -3763,6 +3775,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 7927,Legendary Illusionist,Default,"['Pvp', 'Permanent']",Your dominance is no illusion.
 6212,Daily Echovald Wilds Event Completer,Default,['Daily'],Honor the empress.
 486,Shiverpeaks Veteran Killer,Default,['Daily'],Smite them on the mountainside.
+8804,Revenge of Nourys,Default,['Permanent'],
 1152,Fractal Fortnight: Swampland,Default,['Permanent'],Shifting trees won't stop you. The Mossman will.
 7840,Clear Skies,Default,['Permanent'],Journal: Eventide's March
 1827,"""Seeds of Truth"" Mastery",Default,"['RepairOnLogin', 'CategoryDisplay', 'Permanent']",
@@ -3825,6 +3838,7 @@ Story Instance: Legacy"
 4607,Chasing Tales: Belitrea the Blade of Want,Default,"['Pvp', 'Hidden', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 5230,Mission Challenge: Powerful Foes,Default,['Permanent'],
 839,Daily Portal Closer,Default,['Daily'],
+8837,Point Specialist,Default,"['Pvp', 'Permanent']",Stay on point.
 6165,A Blooming Errand,Default,"['RepairOnLogin', 'RequiresUnlock', 'Permanent']","""My flowers are like children. They need love...coddling. Like all good things, they take time and attention.""—Ju"
 8374,Revenge of Kuda (Weekly),Default,['Permanent'],
 918,Fire and Oil,Default,['Permanent'],Smells like something's burning.
@@ -3960,6 +3974,7 @@ It was shattered and discarded when someone asked the inventor, ""Why don't you 
 1556,Supplies Severed,Default,['Permanent'],
 3612,Desolation Explorer,Default,['Permanent'],You've explored the treacherous and bleak landscape known as the Desolation.
 4288,Boss Blitz: Beat Boom-Boom,Default,"['Pvp', 'Permanent']",
+8816,Fractal Incursion Champion,Default,"['CategoryDisplay', 'MoveToTop', 'Permanent']",
 4009,Convincing the Corsair,Default,['Permanent'],Journal: Convincing the Corsair Completed
 8568,Hazardous Research: Bronze,Default,['Permanent'],
 3137,Cami's Final Voyage,Default,['Permanent'],I wouldn't want to be in her shoes.
@@ -3993,6 +4008,7 @@ It was shattered and discarded when someone asked the inventor, ""Why don't you 
 7285,Dungeon Delver: The Ruined City of Arah,Default,['Permanent'],
 2097,Daily Warrior or Necromancer Winner,Default,"['Pvp', 'Daily']",
 6111,Cod Swimming Amongst Mere Minnows,Default,"['RepairOnLogin', 'MoveToTop', 'Permanent']",You can fish your whole life without understanding it was never the fish you were truly after.
+8798,Daily Skywatch Archipelago,Default,['Daily'],
 4255,Domain of Kourna Insight: Bokoss Prison Ruins,Default,['Permanent'],
 6053,League Conqueror—3v3 Season Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
 8394,Reliving Path of Fire,Default,['Permanent'],
@@ -4258,6 +4274,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 1805,Mercantile Mercenary,Default,['Permanent'],
 5722,Return to The Bitter Cold,Default,['Permanent'],
 5000,Extra Life Donor,Default,"['Pvp', 'Hidden', 'Permanent']",
+8829,Console Technician,Default,"['Pvp', 'Permanent']",Power up your team!
 4865,(Annual) Four Winds Customs,Default,"['Pvp', 'RepairOnLogin', 'CategoryDisplay', 'Permanent']",
 6348,Master Mechanist,Default,"['Pvp', 'Permanent']",
 2184,Twilight II: The Perfected Nightsword,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']","Your first attempt at crafting the legendary precursor Dusk has been modestly successful but has not yet yielded the weapon you ultimately desire. This journey has only just begun. Find a teacher, research your procedures, and hone your skills before you try a second time."
@@ -4286,6 +4303,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 391,The Floor Is Lava. Don't Step In It.,Default,['Permanent'],All those childhood games finally paid off.
 6058,Abyss Stalker Weapon Collection,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 1083,Toxic Krait Historian,Default,['Daily'],
+8833,Scaling Up,Default,"['Hidden', 'Permanent']",You can be the next team ace.
 613,Contractually Obligated,Default,['Permanent'],Helped load Southsun contracts onto the transport ship for safekeeping.
 8282,Friend of the Trolls,Default,['Permanent'],They just want to have a good time!
 7610,WvW Rush Guard Killer 2,Default,"['Pvp', 'Permanent']",Champion points: 12
@@ -4460,6 +4478,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 5933,Reconquer the Displaced Tower,Default,['Permanent'],
 8179,Harvest Den Renown Mastery,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",Diplomacy isn't always about paperwork or negotiations. Sometimes you gotta get your paws a little dirty.
 8327,Chasing Waterfalls: Lowland Shore,Default,['Permanent'],What's behind this curtain?
+6384,Daily Seitung Province Purist Slayer,Default,['Daily'],
 7747,Fractal Recursion: Molten Furnace (Weekly),Default,['Permanent'],
 5095,Hold onto the Light,Default,['Permanent'],
 1784,"""The Dragon's Reach, Part 1"" Mastery",Default,"['Pvp', 'RepairOnLogin', 'CategoryDisplay', 'Permanent']",
@@ -4526,6 +4545,7 @@ Story Instance: Legacy"
 1182,Toxic Pollen Survival,Default,['Daily'],
 4545,Crystal Circuit Racer,Default,['Permanent'],Story Instance: The Crystal Dragon
 4149,Three Golem Monte,Default,['Permanent'],Err...can I see that one more time?
+8841,Incursive Investigation: Second Recursion,Default,['Permanent'],
 4638,Smodur's Blessing,Default,['Permanent'],
 4892,Bonus Event: Daily Champion Rush—Kryta,Default,['Daily'],
 1395,Extraction Complete,Default,"['Pvp', 'RepairOnLogin', 'CategoryDisplay', 'Permanent']",
@@ -4572,6 +4592,7 @@ Story Instance: Legacy"
 349,Windy Cave Treasure,Default,['Permanent'],Bring a jacket. It's breezy.
 7874,Foes Reborn: Saurians,Default,['Permanent'],
 3884,Springer Backpacking,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']",
+8835,Incursive Investigation: Third Recursion,Default,['Permanent'],
 2230,Scrap Rifle Field Test: Silver,Default,"['Pvp', 'Permanent']",
 3364,Free at Last,Default,['Permanent'],"""I'd rather die than remain here any longer."""
 8303,Harvest Shore Salmon Run: Silver,Default,['Permanent'],
@@ -5035,6 +5056,7 @@ Story Instance: Legacy"
 8696,Rolling Ace: Shoreside Sprint,Default,['Permanent'],
 6445,The Haunted Court,Default,['Permanent'],"Spirits of fallen members of the Ministry of Purity haunt the Court of Song, so consumed by hatred that they continue to terrorize even after their own deaths. Send them to whatever gods might still have them."
 944,Grandmaster Chef,Default,['Permanent'],Now with 100% more tasty things.
+8839,Sunjiang Champion,Default,"['Pvp', 'Permanent']",Conquer your enemies.
 81,"This Far, No Further",Default,['Permanent'],You liberated Claw Island from the undead and swore to strike back at the heart of Orr.
 5719,Return to The World Summit,Default,['Permanent'],
 1837,Daily Ascalon Lumberer,Default,['Daily'],Fueling the engines of the economy.
@@ -5598,6 +5620,7 @@ Story Instance: Legacy"
 889,Here Be Dragons!,Default,['Daily'],
 2756,Merciless Weapon Collection,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 2592,Daily Recommended Fractal—Scale 34,Default,['Daily'],
+8801,Daily Inner Nayos,Default,['Daily'],
 8384,Local Response: The Desolation,Default,['Permanent'],
 2597,Daily Recommended Fractal—Scale 12,Default,['Daily'],
 4285,Bandits' Bane,Default,"['Pvp', 'Permanent']",
@@ -6191,6 +6214,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 2027,Wintersday Weapon Collection,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 6520,Fetch Quest,Default,['Permanent'],
 8033,Vizunah Square Veteran,Default,"['Pvp', 'Hidden', 'Permanent']",Days gone by...
+8817,Incursive Investigation: Lone Wolf,Default,['Permanent'],
 2866,Study Aids,Default,['Daily'],
 2302,Mistward Warboots,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 5844,Wrath of the Twisted Marionette Global Victory,Default,['Permanent'],
@@ -6350,6 +6374,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 6922,Seitung Province Siege Turtle Ace: Silver,Default,['Permanent'],
 2713,League Warrior—Elite,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement advances the League Profession—Elite achievement.
 8038,Squad Interceptor,Default,['Permanent'],Fancy meeting you here.
+8848,Incursive Investigation: Chasing Shadows 1,Default,['Permanent'],Fractal incursion events occur at the top of the hour. Check the suggested locations for details.
 5090,Bjora Marches Insight: The Lost Kodan Ship,Default,['Permanent'],
 1080,Toxic Hallucination Slayer,Default,['Daily'],
 1172,Daily Fractal Runner,Default,['Daily'],A fractal a day...
@@ -6588,6 +6613,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 4783,Goddess of the Arena,Default,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 7829,Legendary Relics: Components,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",This collection can be a useful reference to what's needed for each gift. You may need multiples of some of these items.
 1965,Daily Kessex Hills Event Completer,Default,['Daily'],Scour the mountains.
+8846,Incursive Investigation: Threats to Tyria 1,Default,['Permanent'],World boss events occur on a global timer. Be careful to hunt at the right time!
 6355,Objection!,Default,['Permanent'],
 7895,League Slayer—Conquest Season Forty-One,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
 3294,A Meeting of Ministers,Default,['Permanent'],Journal: A Meeting of Ministers Completed
@@ -6607,6 +6633,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 6738,Decade of Battle: World vs. World,Default,"['Pvp', 'Permanent']",
 8263,Savant of Dance,Default,['Permanent'],Can you keep up with the lowlander's footwork?
 2571,Astralaria I: The Device,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']","The saying goes—the history of Tyria is written in the stars, and indeed the tales of the past and hints of the future are inscribed in the heavens. Help Ogden Stonehealer in revealing and gathering ancient knowledge in your quest to create the Device, the first of the precursors to the legendary axe Astralaria."
+8823,Incursive Investigation: Relic in the Mists,Default,['Permanent'],
 1040,Grim Reaper of Grunts IV,Default,['Daily'],
 6687,Spoils of Chaos,Default,['Permanent'],Story Instance: Scarlet's Playhouse
 6502,Echovald Wilds Diver,Default,['Permanent'],Don't forget to equalize.
@@ -6794,7 +6821,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 5086,Bjora Marches Errant,Default,"['IgnoreNearlyComplete', 'RepairOnLogin', 'Permanent']",
 8062,Tower Bibliophile,Default,['Permanent'],Journal: Sovereign of Nayos
 3999,Bookworm,Default,['Permanent'],Or at least read the back cover.
-8427,Push Contender,Default,"['Pvp', 'Permanent']",
+8427,Push Beta Tester,Default,"['Pvp', 'Permanent']",
 4693,Raising Skyscales,ItemSet,"['Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 5610,League Slayer—3v3 Season Three,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
 6657,Applying Dye,Default,['Permanent'],
@@ -6966,6 +6993,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 984,Sapphire Leaper in the Mists,Default,['Permanent'],
 6336,Seitung Province Fisher,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>The charm of fishing is in pursuing something elusive, though attainable. It is a simple yet profound practice of hope.</c>"
 5575,Stretch Goals,Default,"['RepairOnLogin', 'Permanent']",
+8824,Six Iterations of Fractalization,Default,"['Hidden', 'Permanent']",You can be the next game developer.
 3677,Shadow Patroller,Default,['Permanent'],"Redeemer Kossan—a descendant of Sunspears Koss and Melonni—launches patrols from Torment's Watch, the Order of Shadows camp."
 3869,Walk a Fine Line,Default,"['RequiresUnlock', 'Permanent']","Story Instance: ""The Way Forward"""
 165,Keg Brawl Wins,Default,"['Pvp', 'Permanent']",Serious keg brawling skills.
@@ -7013,6 +7041,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 5538,Rallying the Deldrimor Dwarves,Default,['Permanent'],
 5873,Revenge of Sulypix,Default,['Permanent'],
 3831,Speak in Riddles,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']",
+8843,Daily Fractal Incursion,Default,['Daily'],
 6425,Industrial Espionage,Default,['Permanent'],"Thought is merciless to privilege, established institutions, and comfortable habit."
 5370,Daily Drizzlewood Coast: The Ox's Yoke,Default,['Daily'],
 2609,Machined Sword,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
@@ -7088,6 +7117,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 7086,Skywatch Archipelago Insight: Rata Novus Outcrop,Default,['Permanent'],
 6818,League Participator—Conquest Season Thirty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
 2,Teamwork Gets It Done,Default,['Permanent'],Kills that involved at least one profession combo with another player.
+8822,Incursive Investigation: Troubleshooting 1,Default,['Permanent'],The target badges can be found in quickplay fractals or in regular fractals.
 2666,Anger Management,Default,['Permanent'],
 5958,Return to Bad Blood,Default,['Permanent'],
 1238,Aftermath Toxic Offshoot Finisher III,Default,"['Pvp', 'Daily']",
@@ -7424,6 +7454,7 @@ This is but the second step on a long road."
 6033,League Slayer—2v2 Season Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
 1372,"The Bells, the Bells!",Default,['Permanent'],
 154,Crimson Plateau,Default,['Permanent'],On the plateau.
+8813,Cannon Controller,Default,"['Pvp', 'Permanent']",Activate the cannon.
 38,Insect Slayer,Default,['Permanent'],Squish these creepy crawlies.
 2930,Daily Tier 4 Cliffside,Default,['Daily'],
 2459,Elusive Elemental Eliminator,Default,"['Hidden', 'Permanent']",Secret elemental destroyed!
@@ -7658,6 +7689,7 @@ Bash the demon! Smash the demon! May it never rise up again!"
 4144,Lasting Bonds: Where We Come From,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
 2425,Ley Line Glider,Default,['Permanent'],
 3492,Daily Siren's Landing: Oyster Farmer,Default,['Daily'],Surprisingly fresh.
+8851,Incursive Investigation: Threat Preparation 1,Default,['Permanent'],
 8185,Journeykin Outpost Renown Mastery,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",Diplomacy isn't always about paperwork or negotiations. Sometimes you gotta get your paws a little dirty.
 4026,Istan Insight: The Wobbling Skies,Default,['Permanent'],
 809,Blood Sport Connoisseur,Default,['Permanent'],

@@ -1004,7 +1004,7 @@ id,name,min_level,max_level,type,region_name,continent_name
 1558,Hearth's Glow,0,80,Instance,Janthir,Tyria
 1559,Against the Wall: Hearth's Glow,80,80,Instance,Janthir,Tyria
 1560,Strangers among Lands: Guild Initiative Headquarters,80,80,Instance,Kryta,Tyria
-1561,Push Prototype—BETA,80,80,Pvp,Player vs. Player,Mists
+1561,Sunjiang Backstreets,80,80,Pvp,Player vs. Player,Mists
 1562,Convergence: Mount Balrior (Private Squad),80,80,Instance,Janthir,Tyria
 1563,Trial and Error: The Wizard's Tower,80,80,Instance,Janthir,Tyria
 1564,Mount Balrior,80,80,Instance,Janthir,Tyria
@@ -1030,3 +1030,4 @@ id,name,min_level,max_level,type,region_name,continent_name
 1587,Forced Entry: Bava Nisos,80,80,Instance,Janthir,Tyria
 1588,Salvation's Cost: Guild Initiative Headquarters,80,80,Instance,Kryta,Tyria
 1589,A Titanic Undertaking: Bava Nisos,80,80,Instance,Janthir,Tyria
+1590,Fractal Incursion Conference,0,80,Instance,Kryta,Tyria
