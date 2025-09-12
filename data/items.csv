@@ -3047,6 +3047,7 @@ id,name,type,level,rarity,vendor_value
 3111,Strong Rawhide Shoulders,Armor,60,Basic,29
 3112,Berserker's Rawhide Shoulders,Armor,64,Basic,30
 3113,Berserker's Chainmail Footgear,Armor,72,Basic,30
+3114,Berserker's Chainmail Chestpiece,Armor,72,Basic,45
 3115,Berserker's Chainmail Gauntlets,Armor,72,Basic,27
 3116,Berserker's Chainmail Helm,Armor,72,Basic,38
 3117,Berserker's Chainmail Leggings,Armor,72,Basic,42
@@ -3082,6 +3083,7 @@ id,name,type,level,rarity,vendor_value
 3147,Berserker's Rawhide Leggings,Armor,76,Basic,45
 3148,Berserker's Rawhide Shoulders,Armor,76,Basic,35
 3149,Berserker's Chainmail Footgear,Armor,68,Basic,29
+3150,Berserker's Chainmail Chestpiece,Armor,68,Basic,43
 3151,Berserker's Chainmail Gauntlets,Armor,68,Basic,26
 3152,Berserker's Chainmail Helm,Armor,68,Basic,36
 3153,Berserker's Chainmail Leggings,Armor,68,Basic,40
@@ -3099,6 +3101,7 @@ id,name,type,level,rarity,vendor_value
 3165,Berserker's Rawhide Leggings,Armor,68,Basic,40
 3166,Berserker's Rawhide Shoulders,Armor,68,Basic,32
 3167,Berserker's Chainmail Footgear,Armor,80,Basic,33
+3168,Berserker's Chainmail Chestpiece,Armor,80,Basic,50
 3169,Berserker's Chainmail Gauntlets,Armor,80,Basic,30
 3170,Berserker's Chainmail Helm,Armor,80,Basic,42
 3171,Berserker's Chainmail Leggings,Armor,80,Basic,47
@@ -3135,10 +3138,26 @@ id,name,type,level,rarity,vendor_value
 3202,Berserker's Chainmail Footgear,Armor,70,Basic,30
 3203,Berserker's Chainmail Footgear,Armor,74,Basic,31
 3204,Berserker's Chainmail Footgear,Armor,78,Basic,32
+3205,Mighty Chainmail Chestpiece,Armor,2,Basic,6
 3206,Mighty Chainmail Chestpiece,Armor,6,Basic,9
 3207,Mighty Chainmail Chestpiece,Armor,10,Basic,12
 3208,Mighty Chainmail Chestpiece,Armor,14,Basic,15
+3209,Mighty Chainmail Chestpiece,Armor,18,Basic,17
+3210,Strong Chainmail Chestpiece,Armor,22,Basic,19
+3211,Strong Chainmail Chestpiece,Armor,26,Basic,21
+3212,Strong Chainmail Chestpiece,Armor,30,Basic,24
+3213,Strong Chainmail Chestpiece,Armor,34,Basic,25
+3214,Strong Chainmail Chestpiece,Armor,38,Basic,27
+3215,Strong Chainmail Chestpiece,Armor,42,Basic,30
+3216,Strong Chainmail Chestpiece,Armor,46,Basic,32
+3217,Strong Chainmail Chestpiece,Armor,50,Basic,34
+3218,Strong Chainmail Chestpiece,Armor,54,Basic,36
+3219,Strong Chainmail Chestpiece,Armor,58,Basic,38
+3220,Berserker's Chainmail Chestpiece,Armor,62,Basic,40
 3221,Berserker's Chainmail Chestpiece,Armor,66,Basic,42
+3222,Berserker's Chainmail Chestpiece,Armor,70,Basic,45
+3223,Berserker's Chainmail Chestpiece,Armor,74,Basic,46
+3224,Berserker's Chainmail Chestpiece,Armor,78,Basic,48
 3225,Mighty Chainmail Gauntlets,Armor,2,Basic,4
 3226,Mighty Chainmail Gauntlets,Armor,6,Basic,5
 3227,Mighty Chainmail Gauntlets,Armor,10,Basic,7
@@ -23184,34 +23203,70 @@ id,name,type,level,rarity,vendor_value
 30964,Berserker's Warhorn,Weapon,80,Basic,33
 30965,Berserker's Warhorn,Weapon,80,Basic,35
 30966,Mighty Shield,Weapon,0,Basic,5
+30967,Mighty Shield,Weapon,10,Basic,8
+30968,Mighty Shield,Weapon,15,Basic,10
 30969,Mighty Shield,Weapon,20,Basic,12
 30970,Strong Shield,Weapon,25,Basic,14
 30971,Strong Shield,Weapon,30,Basic,16
 30972,Strong Shield,Weapon,35,Basic,17
 30973,Strong Shield,Weapon,40,Basic,19
+30974,Strong Shield,Weapon,45,Basic,21
 30975,Strong Shield,Weapon,50,Basic,23
+30976,Strong Shield,Weapon,55,Basic,24
 30977,Strong Shield,Weapon,60,Basic,26
+30978,Berserker's Shield,Weapon,65,Basic,28
+30979,Berserker's Shield,Weapon,70,Basic,30
+30980,Berserker's Shield,Weapon,75,Basic,31
 30981,Berserker's Shield,Weapon,80,Basic,33
+30982,Berserker's Shield,Weapon,80,Basic,35
 30983,Mighty Speargun,Weapon,0,Basic,8
 30984,Mighty Harpoon,Weapon,0,Basic,8
+30985,Mighty Trident,Weapon,0,Basic,8
+30986,Mighty Speargun,Weapon,10,Basic,12
 30987,Mighty Harpoon,Weapon,10,Basic,12
+30988,Mighty Trident,Weapon,10,Basic,12
+30989,Mighty Speargun,Weapon,15,Basic,15
 30990,Mighty Harpoon,Weapon,15,Basic,15
+30991,Mighty Trident,Weapon,15,Basic,15
 30992,Mighty Harpoon,Weapon,20,Basic,18
+30993,Mighty Speargun,Weapon,20,Basic,18
 30994,Mighty Trident,Weapon,20,Basic,18
+30995,Strong Speargun,Weapon,25,Basic,21
 30996,Strong Harpoon,Weapon,25,Basic,21
+30997,Strong Trident,Weapon,25,Basic,21
 30998,Strong Harpoon,Weapon,30,Basic,24
 30999,Strong Speargun,Weapon,30,Basic,24
 31000,Strong Trident,Weapon,30,Basic,24
 31001,Strong Harpoon,Weapon,35,Basic,26
+31002,Strong Harpoon,Weapon,40,Basic,29
+31003,Strong Speargun,Weapon,35,Basic,26
+31004,Strong Speargun,Weapon,40,Basic,29
+31005,Strong Trident,Weapon,35,Basic,26
 31006,Strong Trident,Weapon,40,Basic,29
+31007,Strong Harpoon,Weapon,45,Basic,31
 31008,Strong Harpoon,Weapon,50,Basic,34
 31009,Strong Harpoon,Weapon,55,Basic,36
+31010,Strong Harpoon,Weapon,60,Basic,39
+31011,Strong Speargun,Weapon,45,Basic,31
+31012,Strong Speargun,Weapon,50,Basic,34
 31013,Strong Speargun,Weapon,55,Basic,36
+31014,Strong Speargun,Weapon,60,Basic,39
 31015,Strong Trident,Weapon,45,Basic,31
+31016,Strong Trident,Weapon,50,Basic,34
+31017,Strong Trident,Weapon,55,Basic,36
+31018,Strong Trident,Weapon,60,Basic,39
+31019,Berserker's Harpoon,Weapon,65,Basic,42
 31020,Berserker's Harpoon,Weapon,70,Basic,45
+31021,Berserker's Harpoon,Weapon,75,Basic,47
 31022,Berserker's Harpoon,Weapon,80,Basic,50
+31023,Berserker's Speargun,Weapon,65,Basic,42
+31024,Berserker's Speargun,Weapon,70,Basic,45
+31025,Berserker's Speargun,Weapon,75,Basic,47
 31026,Berserker's Speargun,Weapon,80,Basic,50
+31027,Berserker's Trident,Weapon,65,Basic,42
 31028,Berserker's Trident,Weapon,70,Basic,45
+31029,Berserker's Trident,Weapon,75,Basic,47
+31030,Berserker's Trident,Weapon,80,Basic,50
 31031,Mighty Steam Speargun,Weapon,6,Fine,17
 31032,Mighty Black Earth Trident,Weapon,6,Fine,17
 31033,Mighty Iron Polearm,Weapon,6,Fine,17
@@ -66010,6 +66065,7 @@ id,name,type,level,rarity,vendor_value
 99546,Chest of the Gyala Delve Hero,Container,0,Exotic,0
 99547,Soo-Won's Tail Skin,Consumable,0,Legendary,0
 99549,Specter's Cache,Container,0,Rare,192
+99550,Starter Kit: The Flameseeker Prophecies,Container,80,Exotic,264
 99551,Mote of Delight,Trophy,0,Exotic,256
 99552,Special Ops Requisition: Chestpiece,Consumable,0,Exotic,128
 99553,Medium Special Ops Harness,Armor,80,Ascended,495
@@ -70031,6 +70087,7 @@ Balance",Gizmo,0,Basic,0
 105193,Commander's Heavy Plate Pauldrons of Divinity,Armor,80,Rare,1
 105194,Commander's Tormented Shield of Force,Weapon,80,Exotic,264
 105195,Shade-Touched Axe Skin,Consumable,0,Rare,0
+105196,Fractalline Spark,Trophy,0,Exotic,0
 105197,Celestial Phalanx Warhelm of Divinity,Armor,80,Exotic,1
 105198,Shade-Touched Longbow Skin,Consumable,0,Rare,0
 105199,Commander's Duelist Coat of Divinity,Armor,80,Rare,1

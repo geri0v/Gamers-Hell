@@ -1967,12 +1967,12 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3672,To Kill a God,Default,"['Hidden', 'Permanent']",Journal: To Kill a God Completed
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
-2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
-8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
 6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
 4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
 6618,Completing Events III,Default,['Permanent'],
+2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
+8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
 6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 5551,League Participator—Conquest Season Twenty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
@@ -6228,6 +6228,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3554,Daily Vabbi Event Completer,Default,['Daily'],May Joko guide your sword!
 4874,(Annual) Boss Blitz: Wallop Wiggin,Default,"['Pvp', 'Permanent']",
 3866,Daily Desolation Event Completer,Default,['Daily'],What a waste...
+8814,Incursive Investigation: Infinite Recursion,Default,"['Repeatable', 'Permanent']",
 2848,Interior Design 201,Default,['Daily'],
 5247,Morale Breaker,Default,['Permanent'],
 7605,WvW Rush Camp Capturer 2,Default,"['Pvp', 'Permanent']",Champion points: 15
