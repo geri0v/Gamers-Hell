@@ -334,85 +334,6 @@ class OllamaAIOUltimateMultiAPITranslatedImage:
         results = [r for r in results if r and isinstance(r, str)]
         return results
     # -------------------------
-    # Blok 3/16 — Live search
-    # -------------------------
-
-    def _live_search_duckduckgo(self, query: str, max_results: int = 5):
-        """Zoek via DuckDuckGo Instant Answer API."""
-        if not requests:
-            return ["[LiveSearch] requests module ontbreekt."]
-        try:
-            r = requests.get(
-                "https://api.duckduckgo.com/",
-                params={
-                    "q": query,
-                    "format": "json",
-                    "no_redirect": "1",
-                    "no_html": "1"
-                },
-                timeout=8
-            )
-            r.raise_for_status()
-            data = r.json()
-            snippets = []
-            if data.get("AbstractText"):
-                snippets.append(data["AbstractText"])
-            for rt in data.get("RelatedTopics", []):
-                if isinstance(rt, dict) and rt.get("Text"):
-                    snippets.append(rt["Text"])
-                if len(snippets) >= max_results:
-                    break
-            return snippets or ["[LiveSearch] Geen resultaten."]
-        except Exception as e:
-            return [f"[LiveSearch] Fout DuckDuckGo: {e}"]
-
-    def _live_search_wikipedia(self, query: str, max_results: int = 5, lang: str = "en"):
-        """Zoek via Wikipedia API."""
-        if not requests:
-            return ["[LiveSearch] requests module ontbreekt."]
-        try:
-            search_url = f"https://{lang}.wikipedia.org/w/api.php"
-            r = requests.get(
-                search_url,
-                params={
-                    "action": "query",
-                    "list": "search",
-                    "srsearch": query,
-                    "format": "json"
-                },
-                timeout=8
-            )
-            r.raise_for_status()
-            data = r.json()
-            snippets = []
-            for item in data.get("query", {}).get("search", []):
-                snippet = re.sub(r"<.*?>", "", item.get("snippet", ""))
-                snippets.append(snippet)
-                if len(snippets) >= max_results:
-                    break
-            return snippets or ["[LiveSearch] Geen resultaten."]
-        except Exception as e:
-            return [f"[LiveSearch] Fout Wikipedia: {e}"]
-
-    def _perform_live_search(self, query: str, provider: str = "mixed", max_results: int = 5):
-        """Kies de juiste provider en voer de zoekopdracht uit."""
-        provider = provider.lower()
-        results = []
-        if provider == "duckduckgo":
-            results = self._live_search_duckduckgo(query, max_results)
-        elif provider == "wikipedia":
-            results = self._live_search_wikipedia(query, max_results)
-        elif provider == "mixed":
-            ddg = self._live_search_duckduckgo(query, max_results // 2)
-            wiki = self._live_search_wikipedia(query, max_results // 2)
-            results = (ddg or []) + (wiki or [])
-        else:
-            results = [f"[LiveSearch] Onbekende provider: {provider}"]
-
-        # Filter lege of None waarden
-        results = [r for r in results if r and isinstance(r, str)]
-        return results
-    # -------------------------
     # Blok 4/16 — Search-injectie
     # -------------------------
 
@@ -998,7 +919,7 @@ class OllamaAIOUltimateMultiAPITranslatedImage:
         if len(combined) > max_turns * 2:
             combined = combined[-(max_turns * 2):]
         return combined
-    # -------------------------
+        # -------------------------
     # Blok 14/16 — Extra vertaal-fallbacks
     # -------------------------
 
@@ -1061,10 +982,65 @@ class OllamaAIOUltimateMultiAPITranslatedImage:
 
     def _translate_if_needed(self, text: str, target_lang: str, auto_translate: bool):
         """
-        Overschreven versie met extra fallback-volgorde:
-        DeepL -> Libre -> Lingva -> MyMemory -> origineel.
+        Vertaal tekst naar target_lang als auto_translate aanstaat.
+        Fallback-volgorde: DeepL -> Libre -> Lingva -> MyMemory -> origineel.
         """
         if not auto_translate or not text:
+            return text
+
+        # 1. DeepL
+        translated = self._translate_deepl(text, target_lang)
+        if translated != text:
+            return translated
+
+        # 2. LibreTranslate
+        translated = self._translate_libre(text, target_lang)
+        if translated != text:
+            return translated
+
+        # 3. Lingva
+        translated = self._translate_lingva(text, target_lang)
+        if translated != text:
+            return translated
+
+        # 4. MyMemory
+        translated = self._translate_mymemory(text, target_lang)
+        if translated != text:
+            return translated
+
+        # 5. Origineel teruggeven
+        return text
+
+    def _translate_back_if_needed(self, text: str, original_lang: str, auto_translate: bool):
+        """
+        Vertaal tekst terug naar de oorspronkelijke taal als auto_translate aanstaat.
+        Zelfde fallback-volgorde als heenvertaling.
+        """
+        if not auto_translate or not text:
+            return text
+
+        # 1. DeepL
+        translated = self._translate_deepl(text, original_lang)
+        if translated != text:
+            return translated
+
+        # 2. LibreTranslate
+        translated = self._translate_libre(text, original_lang)
+        if translated != text:
+            return translated
+
+        # 3. Lingva
+        translated = self._translate_lingva(text, original_lang)
+        if translated != text:
+            return translated
+
+        # 4. MyMemory
+        translated = self._translate_mymemory(text, original_lang)
+        if translated != text:
+            return translated
+
+        return text
+
     # -------------------------
     # Blok 15/16 — Debug & logging
     # -------------------------
