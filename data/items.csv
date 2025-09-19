@@ -24629,6 +24629,7 @@ id,name,type,level,rarity,vendor_value
 32803,Ravaging Steam Trident of Smoldering,Weapon,44,Masterwork,120
 32804,Ravaging Steam Trident of Debility,Weapon,50,Masterwork,135
 32805,Ravaging Steam Trident of the Hydromancer,Weapon,56,Masterwork,147
+32806,Ravaging Steamcaller of Serpent Slaying,Weapon,38,Masterwork,72
 32807,Ravaging Steamcaller of Smoldering,Weapon,44,Masterwork,80
 32808,Ravaging Steamcaller of Debility,Weapon,50,Masterwork,90
 32809,Ravaging Steamcaller of the Hydromancer,Weapon,56,Masterwork,98
@@ -38837,7 +38838,6 @@ id,name,type,level,rarity,vendor_value
 53424,Survivor's Francisca,Weapon,20,Masterwork,52
 53425,Survivor's Elkslayer,Weapon,20,Masterwork,78
 53426,Survivor's Deerchaser,Weapon,20,Masterwork,78
-53427,Survivor's Scramasax,Weapon,20,Masterwork,52
 53428,Survivor's Stagsign,Weapon,20,Masterwork,52
 53429,Survivor's Oxenblade,Weapon,20,Masterwork,78
 53430,Survivor's Great Sledge,Weapon,20,Masterwork,78
@@ -38869,9 +38869,7 @@ id,name,type,level,rarity,vendor_value
 53456,Survivor's Francisca,Weapon,26,Masterwork,60
 53457,Survivor's Elkslayer,Weapon,26,Masterwork,90
 53458,Survivor's Deerchaser,Weapon,26,Masterwork,90
-53459,Survivor's Scramasax,Weapon,26,Masterwork,60
 53460,Survivor's Stagsign,Weapon,26,Masterwork,60
-53461,Survivor's Oxenblade,Weapon,26,Masterwork,90
 53462,Survivor's Great Sledge,Weapon,26,Masterwork,90
 53463,Survivor's Eye of Astrix,Weapon,26,Masterwork,60
 53464,Survivor's Griffoncrack,Weapon,26,Masterwork,60
@@ -38919,9 +38917,7 @@ id,name,type,level,rarity,vendor_value
 53506,Survivor's Deerchaser,Weapon,34,Masterwork,105
 53507,Survivor's Scramasax,Weapon,34,Masterwork,70
 53508,Survivor's Stagsign,Weapon,34,Masterwork,70
-53509,Survivor's Oxenblade,Weapon,34,Masterwork,105
 53510,Survivor's Great Sledge,Weapon,34,Masterwork,105
-53511,Survivor's Eye of Astrix,Weapon,34,Masterwork,70
 53512,Survivor's Griffoncrack,Weapon,34,Masterwork,70
 53513,Survivor's Thunderbluss,Weapon,34,Masterwork,105
 53514,Survivor's Yew Rod,Weapon,34,Masterwork,70
@@ -38981,12 +38977,9 @@ id,name,type,level,rarity,vendor_value
 53568,Vagabond's Francisca,Weapon,39,Rare,117
 53569,Vagabond's Elkslayer,Weapon,39,Rare,176
 53570,Vagabond's Deerchaser,Weapon,39,Rare,176
-53571,Vagabond's Scramasax,Weapon,39,Rare,117
 53572,Vagabond's Stagsign,Weapon,39,Rare,117
 53573,Vagabond's Oxenblade,Weapon,39,Rare,176
 53574,Vagabond's Great Sledge,Weapon,39,Rare,176
-53575,Vagabond's Eye of Astrix,Weapon,39,Rare,117
-53576,Vagabond's Griffoncrack,Weapon,39,Rare,117
 53577,Vagabond's Thunderbluss,Weapon,39,Rare,176
 53578,Vagabond's Yew Rod,Weapon,39,Rare,117
 53579,Vagabond's Dun Targe,Weapon,39,Rare,117
