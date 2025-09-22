@@ -36673,7 +36673,6 @@ id,name,type,level,rarity,vendor_value
 50166,Brightcarved Breastplate,Armor,44,Exotic,270
 50167,Groaning Gloves,Armor,44,Exotic,162
 50168,Pike's Ambition,Armor,44,Exotic,225
-50169,Sepulchre Greaves,Armor,44,Exotic,252
 50170,Dual Peaks,Armor,44,Exotic,198
 50171,Bella's Crown,Armor,68,Exotic,305
 50172,Mail of Mac Quen,Armor,65,Exotic,331
@@ -36699,11 +36698,9 @@ id,name,type,level,rarity,vendor_value
 50192,Ostholz's Duster,Armor,37,Exotic,240
 50193,Amnemoi's Robe,Armor,60,Exotic,336
 50194,Ostholz's Work Gloves,Armor,37,Exotic,144
-50195,Inconnu's Paw,Armor,60,Exotic,202
 50196,Ostholz's Rag,Armor,37,Exotic,200
 50197,"Mask of 1,000 Faces",Armor,60,Exotic,280
 50198,Ostholz's Britches,Armor,37,Exotic,224
-50199,Inconspicuous Dungarees,Armor,60,Exotic,314
 50200,Highsteppers,Armor,65,Exotic,236
 50201,Ostholz's Brace,Armor,37,Exotic,176
 50202,Obfuscation Ward,Armor,60,Exotic,247
@@ -36760,7 +36757,6 @@ id,name,type,level,rarity,vendor_value
 50371,Cloven Hooves,Armor,37,Exotic,160
 50372,Blessed Steps,Armor,60,Exotic,224
 50373,Rattling Cage,Armor,37,Exotic,240
-50374,Vesper Vest,Armor,60,Exotic,336
 50375,Imuthi's Thorax,Armor,68,Exotic,366
 50376,Kid Gloves,Armor,37,Exotic,144
 50377,Clarion Clasps,Armor,60,Exotic,202
@@ -36776,7 +36772,6 @@ id,name,type,level,rarity,vendor_value
 50387,Imuthi's Phalanges,Armor,68,Exotic,220
 50388,Blessed Steps,Armor,44,Exotic,180
 50389,Vesper Vest,Armor,44,Exotic,270
-50390,Clarion Clasps,Armor,44,Exotic,162
 50391,Anointed Diadem,Armor,44,Exotic,225
 50392,Cumulus Habit,Armor,44,Exotic,252
 50393,Pious Pinion,Armor,44,Exotic,198
