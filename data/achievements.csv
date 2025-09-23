@@ -116,7 +116,7 @@ Story Instance: Legacy"
 919,What Does She Know?,Default,['Permanent'],"So close, yet so far."
 4193,For Petey's Sake,Default,"['Pvp', 'RepairOnLogin', 'Permanent']",Find the collections requested by Gorrik to nurse Petey back to health.
 1060,Trick-or-Treater V,Default,"['Pvp', 'Daily']",
-8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
+1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
 4171,Master Diver: Kessex Hills,Default,['Permanent'],This chest can be reopened once per week or per completion of the Master Diver achievement.
 1712,Fractal Master,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>WARNING: some fractals may cause injury, psychic trauma, blindness, or death.</c>"
 3475,Siren's Landing Insight: Lava Leap,Default,['Permanent'],
@@ -130,7 +130,7 @@ Surely it must be an official title if a self-proclaimed skritt king gives it to
 
 Surely it must be an official title if a self-proclaimed skritt king gives it to you, right?"
 3489,Aurora II: Empowering,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
-1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
+8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
 4167,Survey on Subjects of Importance,Default,['Permanent'],
 6159,An Impostor Walks among Us,Default,['Permanent'],You'll have to take off your shoes.
 6934,Peace and Quiet,Default,['Permanent'],
@@ -1969,13 +1969,13 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3672,To Kill a God,Default,"['Hidden', 'Permanent']",Journal: To Kill a God Completed
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
-6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
-8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
-4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
-6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
 6618,Completing Events III,Default,['Permanent'],
 2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
+6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
+8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
+4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
+6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 5551,League Participator—Conquest Season Twenty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
 4495,Chasing Tales: Direct Approach,Default,"['Hidden', 'Permanent']",Mouglon never turned his back on a fight.
@@ -2122,6 +2122,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 8363,Relics—Janthir Wilds Set 1,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
 843,Daily Scarlet Scrambler,Default,['Daily'],
 2616,The Best Defense,Default,['Permanent'],"Story Instance: ""The Jungle Provides"""
+8826,Incursive Investigation,Default,"['Pvp', 'RepairOnLogin', 'CategoryDisplay', 'Permanent']",
 2951,Chuka and Champawat III: Tigris,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']","What set the tigers on their mysterious rampage? Were they simply crazed beasts, or is there a deeper story? Seek out the naturalist Cymbel for answers."
 383,Underground Facility Fractal Stabilizer,Default,['Permanent'],Rabsovich's worst nightmare.
 6533,"New Friends, New Enemies",Default,['Permanent'],
@@ -7465,6 +7466,7 @@ This is but the second step on a long road."
 5332,Special Mission: Feed the Troops,Default,"['RequiresUnlock', 'Permanent']",
 7997,Convergence Challenge Mode—Dreadwing: Gold,Default,['Permanent'],The dreaded Dreadwing dreads you!
 8105,Daily Siren's Landing,Default,['Daily'],
+8819,Incursive Investigation: Threat Preparation 3,Default,"['RequiresUnlock', 'Permanent']",
 8048,Mini Collection—Secrets of the Obscure,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']","I went to the Horn of Maguuma, and all I got were these minis."
 1671,Nary a Pitfall,Default,['Permanent'],Story Instance: The Waypoint Conundrum
 707,Pickup Completionist,Default,"['Pvp', 'Permanent']",

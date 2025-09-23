@@ -36673,6 +36673,7 @@ id,name,type,level,rarity,vendor_value
 50166,Brightcarved Breastplate,Armor,44,Exotic,270
 50167,Groaning Gloves,Armor,44,Exotic,162
 50168,Pike's Ambition,Armor,44,Exotic,225
+50169,Sepulchre Greaves,Armor,44,Exotic,252
 50170,Dual Peaks,Armor,44,Exotic,198
 50171,Bella's Crown,Armor,68,Exotic,305
 50172,Mail of Mac Quen,Armor,65,Exotic,331
@@ -36698,9 +36699,11 @@ id,name,type,level,rarity,vendor_value
 50192,Ostholz's Duster,Armor,37,Exotic,240
 50193,Amnemoi's Robe,Armor,60,Exotic,336
 50194,Ostholz's Work Gloves,Armor,37,Exotic,144
+50195,Inconnu's Paw,Armor,60,Exotic,202
 50196,Ostholz's Rag,Armor,37,Exotic,200
 50197,"Mask of 1,000 Faces",Armor,60,Exotic,280
 50198,Ostholz's Britches,Armor,37,Exotic,224
+50199,Inconspicuous Dungarees,Armor,60,Exotic,314
 50200,Highsteppers,Armor,65,Exotic,236
 50201,Ostholz's Brace,Armor,37,Exotic,176
 50202,Obfuscation Ward,Armor,60,Exotic,247
@@ -36757,6 +36760,7 @@ id,name,type,level,rarity,vendor_value
 50371,Cloven Hooves,Armor,37,Exotic,160
 50372,Blessed Steps,Armor,60,Exotic,224
 50373,Rattling Cage,Armor,37,Exotic,240
+50374,Vesper Vest,Armor,60,Exotic,336
 50375,Imuthi's Thorax,Armor,68,Exotic,366
 50376,Kid Gloves,Armor,37,Exotic,144
 50377,Clarion Clasps,Armor,60,Exotic,202
@@ -36772,6 +36776,7 @@ id,name,type,level,rarity,vendor_value
 50387,Imuthi's Phalanges,Armor,68,Exotic,220
 50388,Blessed Steps,Armor,44,Exotic,180
 50389,Vesper Vest,Armor,44,Exotic,270
+50390,Clarion Clasps,Armor,44,Exotic,162
 50391,Anointed Diadem,Armor,44,Exotic,225
 50392,Cumulus Habit,Armor,44,Exotic,252
 50393,Pious Pinion,Armor,44,Exotic,198
@@ -70066,8 +70071,10 @@ Balance",Gizmo,0,Basic,0
 105165,Commander's Duelist Gloves of Divinity,Armor,80,Rare,1
 105166,Celestial Viper's Jerkin of Divinity,Armor,80,Exotic,1
 105167,Commander's Tormented Longbow of Force,Weapon,80,Exotic,396
+105168,Vanishing Agony Lens (Right),UpgradeComponent,0,Ascended,40
 105169,Shade-Touched Warhorn Skin,Consumable,0,Rare,0
 105170,Emerald Orichalcum Amulet,Trinket,80,Exotic,528
+105171,"Eikasia, Mists-Grasper",Armor,80,Legendary,594
 105172,Commander's Duelist Pauldrons of Divinity,Armor,80,Rare,1
 105173,Pact Herald,Weapon,80,Rare,198
 105174,Commander's Tormented Spear of Force,Weapon,80,Exotic,396
@@ -70093,14 +70100,20 @@ Balance",Gizmo,0,Basic,0
 105198,Shade-Touched Longbow Skin,Consumable,0,Rare,0
 105199,Commander's Duelist Coat of Divinity,Armor,80,Rare,1
 105200,20-Slot Fractally Stitched Pouch,Bag,0,Exotic,256
+105201,Amber Agony Lens (Left),UpgradeComponent,0,Ascended,40
+105202,Aureate Agony Lens (Right),UpgradeComponent,0,Ascended,40
 105203,Austral Mantle Skin,Consumable,0,Masterwork,0
 105204,Mini White and Purple Turtle Hatchling,MiniPet,0,Rare,50
 105205,Mini Yellow Turtle Hatchling,MiniPet,0,Rare,50
 105206,Celestial Viper's Monocle of Divinity,Armor,80,Exotic,1
+105207,Vanishing Agony Lens (Left),UpgradeComponent,0,Ascended,40
+105208,Crimson Agony Lens (Left),UpgradeComponent,0,Ascended,40
 105209,Commander's Stately Epaulets of Divinity,Armor,80,Rare,1
 105210,Mini Celestial Turtle Hatchling,MiniPet,0,Rare,50
+105211,Crimson Agony Lens (Right),UpgradeComponent,0,Ascended,40
 105212,Celestial Trickster's Leggings of Divinity,Armor,80,Exotic,1
 105213,Celestial Phalanx Gauntlets of Divinity,Armor,80,Exotic,1
+105214,Rose Agony Lens (Left),UpgradeComponent,0,Ascended,40
 105215,Celestial Viper's Boots of Divinity,Armor,80,Exotic,1
 105216,Commander's Heavy Plate Legguards of Divinity,Armor,80,Rare,1
 105218,Mists-Grasper Gloves Box,Container,0,Exotic,0
@@ -70110,6 +70123,7 @@ Balance",Gizmo,0,Basic,0
 105225,Commander's Heavy Plate Helm of Divinity,Armor,80,Rare,1
 105226,Commander's Heavy Plate Chestguard of Divinity,Armor,80,Rare,1
 105227,Commander's Metal Aquabreather of Divinity,Armor,80,Rare,248
+105228,Azure Agony Lens (Right),UpgradeComponent,0,Ascended,40
 105229,Commander's Stately Leggings of Divinity,Armor,80,Rare,1
 105230,Pact Handgun,Weapon,80,Rare,198
 105231,Pact Shotgun,Weapon,80,Rare,297
@@ -70145,9 +70159,11 @@ Balance",Gizmo,0,Basic,0
 105263,Celestial Trickster's Gloves of Divinity,Armor,80,Exotic,1
 105264,"""/Barbecue"" Emote Tome",Consumable,0,Exotic,0
 105265,Shade-Touched Greatsword Skin,Consumable,0,Rare,0
+105266,Amber Agony Lens (Right),UpgradeComponent,0,Ascended,40
 105267,Commander's Tormented Hammer of Force,Weapon,80,Exotic,396
 105268,Pact Brazier,Weapon,80,Rare,198
 105269,Commander's Stately Garb of Divinity,Armor,80,Rare,1
+105270,Aureate Agony Lens (Left),UpgradeComponent,0,Ascended,40
 105272,Heavy Starter Gear Chest,Container,0,Rare,192
 105273,Commander's Tormented Mace of Force,Weapon,80,Exotic,264
 105274,Mystic Coin Vault Bag,Container,0,Fine,64
@@ -70164,7 +70180,10 @@ Balance",Gizmo,0,Basic,0
 105289,Light Starter Gear Chest,Container,0,Rare,192
 105290,Mini Albino Turtle Hatchling,MiniPet,0,Rare,50
 105292,Mini Gold Turtle Hatchling,MiniPet,0,Rare,50
+105293,"Eikasia, Mists-Grasper",Armor,80,Legendary,594
+105294,Viridian Agony Lens (Right),UpgradeComponent,0,Ascended,40
 105295,Celestial Metal Aquabreather of Divinity,Armor,80,Exotic,330
+105296,Rose Agony Lens (Right),UpgradeComponent,0,Ascended,40
 105297,Shade-Touched Focus Skin,Consumable,0,Rare,0
 105298,Mini Blazing Turtle Hatchling,MiniPet,0,Rare,50
 105299,Celestial Mists-Grasper Gloves,Armor,80,Exotic,238
@@ -70180,8 +70199,10 @@ Balance",Gizmo,0,Basic,0
 105311,"Eikasia, Mists-Grasper Choice",Container,0,Legendary,0
 105312,Commander's Tormented Warhorn of Force,Weapon,80,Exotic,264
 105313,Celestial Viper's Armguards of Divinity,Armor,80,Exotic,1
+105314,Viridian Agony Lens (Left),UpgradeComponent,0,Ascended,40
 105315,Commander's Tormented Greatsword of Force,Weapon,80,Exotic,396
 105316,Mini Silver Turtle Hatchling,MiniPet,0,Rare,50
+105317,"Eikasia, Mists-Grasper",Armor,80,Legendary,594
 105318,Pact Needler,Weapon,80,Rare,297
 105319,Commander's Tormented Staff of Force,Weapon,80,Exotic,396
 105320,Black Diamond Orichalcum Earring,Trinket,80,Exotic,330
@@ -70189,6 +70210,7 @@ Balance",Gizmo,0,Basic,0
 105323,Shade-Touched Dagger Skin,Consumable,0,Rare,0
 105324,Celestial Phalanx Warboots of Divinity,Armor,80,Exotic,1
 105325,Commander's Tormented Short Bow of Force,Weapon,80,Exotic,396
+105326,Azure Agony Lens (Left),UpgradeComponent,0,Ascended,40
 105327,Shade-Touched Staff Skin,Consumable,0,Rare,0
 105328,Shade-Touched Spear Skin,Consumable,0,Rare,0
 105329,Commander's Tormented Torch of Force,Weapon,80,Exotic,264
