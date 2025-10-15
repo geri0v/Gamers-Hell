@@ -208,6 +208,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 6575,Weekly Jade Vault,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
 7768,Local Response: Battle for Lion's Arch (Weekly),Default,['Permanent'],
 7148,Hide-and-Seek in the Wizard's Tower: Master,Default,['Permanent'],
+8810,Incursive Investigation: Troubleshooting 3,Default,"['RequiresUnlock', 'Permanent']",The target badges can be found in quickplay fractals or in regular fractals.
 1560,WvW Spring Tournament 2014: 4th Place,Default,"['Pvp', 'Hidden', 'MoveToTop', 'Permanent']",
 8189,Scouting for Scouts,Default,['Permanent'],Journal: Missing in Action
 4978,Light it up!,Default,['Permanent'],
@@ -564,6 +565,7 @@ During the Fractal Incursion event, some steps of this achievement will be unloc
 7836,Inner Nayos Insight: High-Elevation Skyscale Nest,Default,['Permanent'],
 5400,Daily Drizzlewood Coast Corrupted Hunter,Default,['Daily'],
 6793,Dawn of the Next Journey,Default,['Permanent'],
+8853,Black Lion Gobblers Collector,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']",
 3286,Moonlighting,Default,['Permanent'],
 4463,Rolling Racer: Tropic Valley Raceway,Default,['Permanent'],
 2432,Wild Abandon,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
@@ -657,6 +659,7 @@ During the Fractal Incursion event, some steps of this achievement will be unloc
 6901,What Lies Within,Default,"['CategoryDisplay', 'MoveToTop', 'Permanent']",
 5189,Heavy Rival,Default,['Permanent'],
 5536,Champions Insight: Fields of Ruin,Default,['Permanent'],
+8844,Incursive Investigation: Pack of Wolves,Default,"['RequiresUnlock', 'Permanent']",
 5959,Renowned Hero: Thunderhead Peaks,Default,['Permanent'],
 7092,There and...,Default,['Permanent'],Enjoy the scenery at all costs.
 502,Leveler,Default,"['Pvp', 'Daily']",Level 80? No problem.
@@ -709,6 +712,7 @@ During the Fractal Incursion event, some steps of this achievement will be unloc
 2734,Mystic Essence Collector—Elite,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement awards an item for Path of the Ascension IV: Hymn of Glory.
 5921,Crop Harvester: Dragonfall,Default,['Permanent'],
 3760,Daily Desert Forager,Default,['Daily'],Fueling the engines of the economy.
+8820,Incursive Investigation: Chasing Shadows 3,Default,"['RequiresUnlock', 'Permanent']",Fractal incursion events occur at the top of the hour. Check the suggested locations for details.
 5537,Dragon Slayer Arms Master,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
 8651,(Daily) Heights of Glory,Default,['Daily'],
 3368,Saboteur,Default,"['Pvp', 'Permanent']",An engine of destruction.
@@ -1278,6 +1282,7 @@ Surely it must be an official title if a self-proclaimed skritt king gives it to
 3201,Daily Recommended Fractal—Scale 67,Default,['Daily'],
 7007,Southsun Cove Rift Hunting,Default,['Permanent'],
 732,Kiel: Dungeon Runner,Default,['Permanent'],"""Do the ghosts of Ascalon really care if you're running for council?"""
+8828,Incursive Investigation: Guild of Wolves,Default,"['RequiresUnlock', 'Permanent']",
 500,Daily Mystic Forger,Default,"['Pvp', 'Daily']",Zommoros is pleased.
 5164,Tutorial Mastery,Default,"['RepairOnLogin', 'CategoryDisplay', 'Permanent']",
 6923,New Kaineng Skiff Racer: Gold,Default,['Permanent'],
@@ -1650,6 +1655,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 8633,Home Sweet Homestead: The Desolation,Default,"['RepairOnLogin', 'Permanent']",Look at that—it's a homestead party!
 597,Southsun Camp Sample Collection,Default,['Permanent'],Collect a sample near Levvi's research camp at Canach's Folly.
 885,Here Be Dragons!,Default,['Daily'],
+8827,Incursive Investigation: Stabilizing the Classics,Default,"['RequiresUnlock', 'Permanent']",
 5116,"Drakkar, the Ice Dragon's Champion",Default,"['Pvp', 'RepairOnLogin', 'CategoryDisplay', 'Permanent']",
 1256,Snowball Mayhem Participant,Default,"['Pvp', 'Hidden', 'Repeatable', 'Permanent']",Your hands must be freezing by now.
 3283,Skyhammer Defender,Default,"['Pvp', 'Permanent']",The line is drawn here!
@@ -2050,6 +2056,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 8514,Dragon Essence Weapon Collection,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 4431,Daily Jahai Bluffs Bounty Hunter,Default,['Daily'],
 2719,League Engineer—Veteran,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement advances the League Profession—Veteran achievement.
+8831,Incursive Investigation: Troubleshooting 2,Default,"['RequiresUnlock', 'Permanent']",The target badges can be found in quickplay fractals or in regular fractals.
 1571,Boss Blitz: Put Out Pyroxis,Default,"['Pvp', 'Permanent']",
 1248,Journeyman Toymaker,Default,"['Pvp', 'Hidden', 'CategoryDisplay', 'Permanent']",Getting into the spirit of the season.
 6894,Seitung Province Skiff Racer: Gold,Default,['Permanent'],
@@ -3137,6 +3144,7 @@ This is but the first step on a long road."
 1029,Shut and Locked II,Default,['Daily'],
 7412,A Shadow in the Night,Default,['Permanent'],Journal: Commander Without a Cause
 3154,Candy Corn Crusher,Default,['Permanent'],
+8850,Bulldozer,Default,"['Pvp', 'CategoryDisplay', 'Permanent']",Keep pushing.
 8706,Case 382: Titan Organ Smuggling,Default,['Permanent'],One person's opportunist is another's entrepreneur.
 6009,Return to Primordus Rising,Default,['Permanent'],
 5023,Legendary Voice of the Fallen and Claw of the Fallen,Default,['Permanent'],
@@ -3337,6 +3345,7 @@ What would Aurene think?"
 8465,Infinite Arrow Cart,Default,['Permanent'],
 1877,Daily Windy Cave Treasure Minidungeon,Default,['Daily'],
 1583,Gauntlet Contender,Default,"['Pvp', 'Permanent']",
+8842,Incursive Investigation: Stabilizing Outside the Lines,Default,"['RequiresUnlock', 'Permanent']",
 2959,Daily Twilight Arbor,Default,['Daily'],
 5131,Mystery of Drakkar's Lair,Default,['Permanent'],
 5261,Special Mission: Bolster the Overlook,Default,"['RequiresUnlock', 'Permanent']",
@@ -4149,6 +4158,7 @@ It was shattered and discarded when someone asked the inventor, ""Why don't you 
 4902,Merchandise Collector,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>""My commander visited Bangar's rally and all I got was...""</c>"
 4472,Rolling Racer,Default,"['CategoryDisplay', 'Permanent']","To finish first, you first have to finish."
 1121,Tower of Nightmares Survivor,Default,['Daily'],
+8847,Incursive Investigation: Threats to Tyria 2,Default,"['RequiresUnlock', 'Permanent']",World boss events occur on a global timer. Be careful to hunt at the right time!
 7985,Blacktide Veteran,Default,"['Pvp', 'Hidden', 'Permanent']",Days gone by...
 8174,Penned by Poky,Default,['Permanent'],Journal: Home Sweet Home
 4837,(Annual) Winner's Circle,Default,['Permanent'],
@@ -4159,6 +4169,7 @@ It was shattered and discarded when someone asked the inventor, ""Why don't you 
 1203,Aftermath Cobweb Cleaner,Default,['Permanent'],
 3226,Daily Bitterfrost Frontier Magic Gatherer,Default,['Daily'],Binding magic daily!
 5059,Daily Aberrant Hunter,Default,"['MoveToTop', 'Daily']",
+8821,Incursive Investigation: Chasing Shadows 2,Default,"['RequiresUnlock', 'Permanent']",Fractal incursion events occur at the top of the hour. Check the suggested locations for details.
 7000,Tower Insight: The Apex,Default,['Permanent'],
 6214,New Kaineng Insight: Petrified Shipping Docks,Default,['Permanent'],
 6298,Honorary Kestrel,Default,['Permanent'],
@@ -6634,6 +6645,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 7915,Legendary Legionnaire,Default,"['Pvp', 'Permanent']",Getting the job done.
 1005,"You, Back in the Box",Default,"['Hidden', 'Permanent']",
 6164,Simpleminded,Default,['Permanent'],
+8832,Incursive Investigation: Threats to Tyria 3,Default,"['RequiresUnlock', 'Permanent']",World boss events occur on a global timer. Be careful to hunt at the right time!
 6257,Derelict Temple Raptor Ride,Default,['Permanent'],"If your raptor isn't a strong swimmer, try navigating some low, mountainous terrain."
 6738,Decade of Battle: World vs. World,Default,"['Pvp', 'Permanent']",
 8263,Savant of Dance,Default,['Permanent'],Can you keep up with the lowlander's footwork?
