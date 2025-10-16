@@ -33808,7 +33808,6 @@ id,name,type,level,rarity,vendor_value
 46333,Assassin's Krait Slayer,Weapon,80,Rare,297
 46334,Assassin's Pearl Broadsword,Weapon,80,Exotic,396
 46335,Hunter's Iron Hammer,Weapon,25,Fine,41
-46336,Hunter's Iron Hammer,Weapon,35,Masterwork,102
 46337,Hunter's Bandit Demolisher,Weapon,35,Rare,153
 46338,Hunter's Steel Hammer,Weapon,40,Fine,57
 46339,Hunter's Steel Hammer,Weapon,50,Masterwork,135
@@ -33823,7 +33822,6 @@ id,name,type,level,rarity,vendor_value
 46348,Hunter's Iron Spear,Weapon,25,Fine,41
 46349,Hunter's Iron Spear,Weapon,35,Masterwork,102
 46350,Hunter's Bandit Spear,Weapon,35,Rare,153
-46351,Hunter's Steel Spear,Weapon,40,Fine,57
 46352,Hunter's Steel Spear,Weapon,50,Masterwork,135
 46353,Hunter's Dredge Spear,Weapon,50,Rare,203
 46354,Assassin's Darksteel Spear,Weapon,60,Fine,78
@@ -33889,7 +33887,6 @@ id,name,type,level,rarity,vendor_value
 46433,Inquest Legguards,Armor,80,Exotic,370
 46434,Inquest Pauldrons,Armor,80,Exotic,291
 46435,Ghostly Spineguard,Back,35,Masterwork,68
-46436,Ghostly Spineguard,Back,45,Masterwork,82
 46437,Ghostly Spineguard,Back,55,Masterwork,96
 46438,Ghostly Spineguard,Back,45,Rare,123
 46439,Ghostly Spineguard,Back,55,Rare,144
@@ -33897,10 +33894,7 @@ id,name,type,level,rarity,vendor_value
 46442,Caudecus's Journal,Trinket,45,Rare,154
 46444,Ghost Eater's Hide,Back,80,Exotic,264
 46445,Ghostly Spineguard,Back,65,Masterwork,110
-46446,Ghostly Spineguard,Back,75,Masterwork,124
 46447,Ghostly Spineguard,Back,80,Masterwork,132
-46448,Ghostly Spineguard,Back,65,Rare,165
-46449,Ghostly Spineguard,Back,75,Rare,186
 46450,Ghostly Spineguard,Back,80,Rare,198
 46451,Stargazer Pendant,Trinket,80,Exotic,528
 46452,Coral Pendant,Trinket,80,Masterwork,264
