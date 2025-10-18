@@ -16,7 +16,6 @@ id,name,type,level,rarity,vendor_value
 62,Shirt,Armor,0,Basic,0
 63,Leggings,Armor,0,Basic,0
 64,Boots,Armor,0,Basic,0
-65,Shirt,Armor,0,Basic,0
 68,Mighty Country Coat,Armor,0,Basic,6
 69,Mighty Country Coat,Armor,0,Basic,7
 70,Mighty Studded Coat,Armor,0,Basic,6
@@ -42,7 +41,6 @@ id,name,type,level,rarity,vendor_value
 90,Berserker's Reinforced Scale Boots,Armor,61,Fine,52
 91,Carrion Seer Coat of the Afflicted,Armor,79,Exotic,390
 92,Carrion Sneakthief Mask of the Flame Legion,Armor,79,Exotic,325
-93,Shiro's Mask,Armor,80,Exotic,330
 94,Ogden's Coat,Armor,80,Exotic,396
 95,Berserker's Reinforced Scale Boots,Armor,66,Fine,56
 96,Rampager's Sneakthief Mask of the Citadel,Armor,64,Exotic,270
@@ -183,7 +181,6 @@ id,name,type,level,rarity,vendor_value
 232,Ravaging Swindler Mask,Armor,42,Fine,49
 233,Ravaging Magician Coat,Armor,57,Fine,74
 234,Honed Magician Coat,Armor,43,Fine,60
-235,Sneakthief Coat of Balthazar,Armor,75,Exotic,372
 236,Ravaging Swindler Mask,Armor,47,Fine,53
 237,Carrion Reinforced Scale Boots,Armor,77,Fine,63
 238,Errol's Coat,Armor,80,Exotic,396
