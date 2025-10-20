@@ -13814,6 +13814,7 @@ id,name,type,level,rarity,vendor_value
 17942,Accursed Guise,Armor,80,Exotic,396
 17943,Accursed Vambraces,Armor,80,Exotic,238
 17944,Accursed Visage,Armor,80,Exotic,330
+17945,Accursed Leggings,Armor,80,Exotic,370
 17946,Accursed Shoulders,Armor,80,Exotic,291
 17947,Walkers of the Lich,Armor,80,Exotic,264
 17948,Vestments of the Lich,Armor,80,Exotic,396
@@ -13822,13 +13823,16 @@ id,name,type,level,rarity,vendor_value
 17951,Trappings of the Lich,Armor,80,Exotic,370
 17952,Mantle of the Lich,Armor,80,Exotic,291
 17953,Walkers of the Lich,Armor,80,Exotic,264
+17954,Vestments of the Lich,Armor,80,Exotic,396
 17955,Wrappings of the Lich,Armor,80,Exotic,238
+17956,Gaze of the Lich,Armor,80,Exotic,330
 17957,Trappings of the Lich,Armor,80,Exotic,370
 17958,Mantle of the Lich,Armor,80,Exotic,291
 17959,Walkers of the Lich,Armor,80,Exotic,264
 17960,Vestments of the Lich,Armor,80,Exotic,396
 17961,Wrappings of the Lich,Armor,80,Exotic,238
 17962,Gaze of the Lich,Armor,80,Exotic,330
+17963,Trappings of the Lich,Armor,80,Exotic,370
 17964,Mantle of the Lich,Armor,80,Exotic,291
 17965,Grasping Dead Greaves,Armor,80,Exotic,264
 17966,Grasping Dead Breastplate,Armor,80,Exotic,396
@@ -13870,6 +13874,7 @@ id,name,type,level,rarity,vendor_value
 18040,Soldier's Cabalist Coat,Armor,80,Rare,297
 18041,Soldier's Cabalist Gloves,Armor,80,Rare,179
 18042,Soldier's Cabalist Hood,Armor,80,Rare,248
+18043,Soldier's Cabalist Legs,Armor,80,Rare,278
 18044,Soldier's Cabalist Shoulders,Armor,80,Rare,218
 18045,Magi's Reinforced Scale Boots,Armor,80,Rare,198
 18046,Magi's Reinforced Scale Coat,Armor,80,Rare,297
@@ -13880,9 +13885,11 @@ id,name,type,level,rarity,vendor_value
 18051,Soldier's Reinforced Scale Boots,Armor,80,Rare,198
 18052,Soldier's Reinforced Scale Coat,Armor,80,Rare,297
 18053,Soldier's Reinforced Scale Gauntlets,Armor,80,Rare,179
+18054,Soldier's Reinforced Scale Helm,Armor,80,Rare,248
 18055,Soldier's Reinforced Scale Legs,Armor,80,Rare,278
 18056,Soldier's Reinforced Scale Pauldrons,Armor,80,Rare,218
 18057,Kodan Axe,Weapon,80,Exotic,264
+18058,Kodan Longbow,Weapon,80,Exotic,396
 18059,Kodan Short Bow,Weapon,80,Exotic,396
 18060,Kodan Dagger,Weapon,80,Exotic,264
 18061,Kodan Focus,Weapon,80,Exotic,264
@@ -13890,6 +13897,7 @@ id,name,type,level,rarity,vendor_value
 18063,Kodan Hammer,Weapon,80,Exotic,396
 18064,Kodan Harpoon,Weapon,80,Exotic,396
 18065,Kodan Mace,Weapon,80,Exotic,264
+18066,Kodan Pistol,Weapon,80,Exotic,264
 18067,Kodan Rifle,Weapon,80,Exotic,396
 18068,Kodan Scepter,Weapon,80,Exotic,264
 18069,Kodan Shield,Weapon,80,Exotic,264
@@ -13898,15 +13906,19 @@ id,name,type,level,rarity,vendor_value
 18072,Kodan Sword,Weapon,80,Exotic,264
 18073,Kodan Torch,Weapon,80,Exotic,264
 18074,Kodan Trident,Weapon,80,Exotic,396
+18075,Kodan Warhorn,Weapon,80,Exotic,264
 18076,Kodan Axe,Weapon,80,Exotic,264
 18077,Kodan Longbow,Weapon,80,Exotic,396
 18078,Kodan Short Bow,Weapon,80,Exotic,396
 18079,Kodan Dagger,Weapon,80,Exotic,264
 18080,Kodan Focus,Weapon,80,Exotic,264
 18081,Kodan Greatsword,Weapon,80,Exotic,396
+18082,Kodan Hammer,Weapon,80,Exotic,396
 18083,Kodan Harpoon,Weapon,80,Exotic,396
 18084,Kodan Mace,Weapon,80,Exotic,264
 18085,Kodan Pistol,Weapon,80,Exotic,264
+18086,Kodan Rifle,Weapon,80,Exotic,396
+18087,Kodan Scepter,Weapon,80,Exotic,264
 18088,Kodan Shield,Weapon,80,Exotic,264
 18089,Kodan Speargun,Weapon,80,Exotic,396
 18090,Kodan Staff,Weapon,80,Exotic,396
@@ -13917,6 +13929,7 @@ id,name,type,level,rarity,vendor_value
 18095,Kodan Axe,Weapon,80,Exotic,264
 18096,Kodan Longbow,Weapon,80,Exotic,396
 18097,Kodan Short Bow,Weapon,80,Exotic,396
+18098,Kodan Dagger,Weapon,80,Exotic,264
 18099,Kodan Focus,Weapon,80,Exotic,264
 18100,Kodan Greatsword,Weapon,80,Exotic,396
 18101,Kodan Hammer,Weapon,80,Exotic,396
@@ -13946,6 +13959,8 @@ id,name,type,level,rarity,vendor_value
 18125,Duty of Koda,Armor,80,Exotic,291
 18126,Tracks of Koda,Armor,80,Exotic,264
 18127,Heart of Koda,Armor,80,Exotic,396
+18128,Force of Koda,Armor,80,Exotic,238
+18129,Visage of Koda,Armor,80,Exotic,330
 18130,Stride of Koda,Armor,80,Exotic,370
 18131,Duty of Koda,Armor,80,Exotic,291
 18132,Path of Koda,Armor,80,Exotic,264
@@ -13955,6 +13970,7 @@ id,name,type,level,rarity,vendor_value
 18136,Way of Koda,Armor,80,Exotic,370
 18137,Mantle of Koda,Armor,80,Exotic,291
 18138,Path of Koda,Armor,80,Exotic,264
+18139,Soul of Koda,Armor,80,Exotic,396
 18140,Arms of Koda,Armor,80,Exotic,238
 18141,Mind of Koda,Armor,80,Exotic,330
 18142,Way of Koda,Armor,80,Exotic,370
@@ -13970,10 +13986,12 @@ id,name,type,level,rarity,vendor_value
 18152,Claws of Koda,Armor,80,Exotic,238
 18153,Head of Koda,Armor,80,Exotic,330
 18154,Body of Koda,Armor,80,Exotic,370
+18155,Burden of Koda,Armor,80,Exotic,291
 18156,Paws of Koda,Armor,80,Exotic,264
 18157,Brawn of Koda,Armor,80,Exotic,396
 18158,Claws of Koda,Armor,80,Exotic,238
 18159,Head of Koda,Armor,80,Exotic,330
+18160,Body of Koda,Armor,80,Exotic,370
 18161,Burden of Koda,Armor,80,Exotic,291
 18162,Paws of Koda,Armor,80,Exotic,264
 18163,Brawn of Koda,Armor,80,Exotic,396
