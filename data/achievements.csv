@@ -119,7 +119,7 @@ Story Instance: Legacy"
 919,What Does She Know?,Default,['Permanent'],"So close, yet so far."
 4193,For Petey's Sake,Default,"['Pvp', 'RepairOnLogin', 'Permanent']",Find the collections requested by Gorrik to nurse Petey back to health.
 1060,Trick-or-Treater V,Default,"['Pvp', 'Daily']",
-1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
+8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
 4171,Master Diver: Kessex Hills,Default,['Permanent'],This chest can be reopened once per week or per completion of the Master Diver achievement.
 1712,Fractal Master,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>WARNING: some fractals may cause injury, psychic trauma, blindness, or death.</c>"
 3475,Siren's Landing Insight: Lava Leap,Default,['Permanent'],
@@ -133,7 +133,7 @@ Surely it must be an official title if a self-proclaimed skritt king gives it to
 
 Surely it must be an official title if a self-proclaimed skritt king gives it to you, right?"
 3489,Aurora II: Empowering,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
-8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
+1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
 4167,Survey on Subjects of Importance,Default,['Permanent'],
 6159,An Impostor Walks among Us,Default,['Permanent'],You'll have to take off your shoes.
 6934,Peace and Quiet,Default,['Permanent'],
@@ -697,6 +697,7 @@ During the Fractal Incursion event, some steps of this achievement will be unloc
 6247,Working as Intended,Default,"['IgnoreNearlyComplete', 'Repeatable', 'Permanent']",
 7944,Gunnar's Hold Veteran,Default,"['Pvp', 'Hidden', 'Permanent']",Days gone by...
 8235,Lowland Shore Insight: Ruminant Fields,Default,['Permanent'],
+8929,Bee's-Eye View of Paradise,Default,['Permanent'],Your homestead in paradise will have everyone abuzz with excitement.
 8585,Scan and Soothe,Default,['Permanent'],
 2796,Branded Bane,Default,['Permanent'],Crystallized corpses as far as the eye can see!
 5968,Revenge of the Metal Legion,Default,['Permanent'],
@@ -2026,13 +2027,13 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3672,To Kill a God,Default,"['Hidden', 'Permanent']",Journal: To Kill a God Completed
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
+6618,Completing Events III,Default,['Permanent'],
 2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
+6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
 4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
 8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
-6618,Completing Events III,Default,['Permanent'],
-6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 8909,Sylvan Shapeshifter,Default,['Permanent'],They'd prefer you to be anything but yourself.
 5551,League Participator—Conquest Season Twenty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
@@ -2264,6 +2265,7 @@ Ward Crafter Lucirae in Moon Camp Covert can offer assisted crafting if you do n
 4483,Survey on Subjects of Importance 2,Default,['Permanent'],
 8071,Inner Nayos Skirmish Squasher,Default,['Permanent'],
 3112,Maintain Aurene's Shield,Default,['Permanent'],Story Instance: Dragon Vigil
+8916,A Season for Work in Paradise,Default,['Permanent'],Hopefully the season for rest in paradise starts soon.
 3993,Exile Executioner,Default,['Permanent'],"Follow where I lead, come whence I call, and the rotted corpses of the dead will be yours to control."
 3005,Tip of the Blade,Default,['Permanent'],
 1975,Daily Kryta Forager,Default,['Daily'],Fueling the engines of the economy.

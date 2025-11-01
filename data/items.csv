@@ -13206,6 +13206,7 @@ id,name,type,level,rarity,vendor_value
 15647,Honed Bandit Mallet,Weapon,35,Rare,102
 15649,Strong Bandit Mallet,Weapon,35,Rare,102
 15650,Vigorous Bandit Mallet,Weapon,35,Rare,102
+15651,Hearty Bandit Mallet,Weapon,35,Rare,102
 15652,Ravaging Dredge Flanged Mace,Weapon,50,Rare,135
 15653,Rejuvenating Dredge Flanged Mace,Weapon,50,Rare,135
 15654,Honed Dredge Flanged Mace,Weapon,50,Rare,135
@@ -13218,8 +13219,12 @@ id,name,type,level,rarity,vendor_value
 15663,Valkyrie Ogre Bludgeoner,Weapon,65,Rare,165
 15664,Rampager's Ogre Bludgeoner,Weapon,65,Rare,165
 15665,Knight's Ogre Bludgeoner,Weapon,65,Rare,165
+15666,Ravaging Bandit Ward,Weapon,35,Rare,102
+15667,Rejuvenating Bandit Ward,Weapon,35,Rare,102
 15668,Honed Bandit Ward,Weapon,35,Rare,102
 15670,Strong Bandit Ward,Weapon,35,Rare,102
+15671,Vigorous Bandit Ward,Weapon,35,Rare,102
+15672,Hearty Bandit Ward,Weapon,35,Rare,102
 15673,Ravaging Dredge Barricade,Weapon,50,Rare,135
 15674,Rejuvenating Dredge Barricade,Weapon,50,Rare,135
 15675,Honed Dredge Barricade,Weapon,50,Rare,135
@@ -13229,8 +13234,10 @@ id,name,type,level,rarity,vendor_value
 15680,Carrion Ogre Bulwark,Weapon,65,Rare,165
 15681,Cleric's Ogre Bulwark,Weapon,65,Rare,165
 15682,Ogre Bulwark,Weapon,65,Rare,165
+15683,Berserker's Ogre Bulwark,Weapon,65,Rare,165
 15684,Valkyrie Ogre Bulwark,Weapon,65,Rare,165
 15685,Rampager's Ogre Bulwark,Weapon,65,Rare,165
+15686,Knight's Ogre Bulwark,Weapon,65,Rare,165
 15687,Ravaging Bandit Cleaver,Weapon,35,Rare,102
 15688,Rejuvenating Bandit Cleaver,Weapon,35,Rare,102
 15689,Honed Bandit Cleaver,Weapon,35,Rare,102
@@ -13238,11 +13245,17 @@ id,name,type,level,rarity,vendor_value
 15691,Strong Bandit Cleaver,Weapon,35,Rare,102
 15692,Vigorous Bandit Cleaver,Weapon,35,Rare,102
 15693,Hearty Bandit Cleaver,Weapon,35,Rare,102
+15694,Ravaging Dredge Bonehewer,Weapon,50,Rare,135
 15695,Rejuvenating Dredge Bonehewer,Weapon,50,Rare,135
 15696,Honed Dredge Bonehewer,Weapon,50,Rare,135
+15697,Dredge Bonehewer,Weapon,50,Rare,135
 15698,Strong Dredge Bonehewer,Weapon,50,Rare,135
+15699,Vigorous Dredge Bonehewer,Weapon,50,Rare,135
 15700,Hearty Dredge Bonehewer,Weapon,50,Rare,135
+15701,Carrion Ogre Cleaver,Weapon,65,Rare,165
+15702,Cleric's Ogre Cleaver,Weapon,65,Rare,165
 15704,Berserker's Ogre Cleaver,Weapon,65,Rare,165
+15705,Valkyrie Ogre Cleaver,Weapon,65,Rare,165
 15706,Rampager's Ogre Cleaver,Weapon,65,Rare,165
 15707,Knight's Ogre Cleaver,Weapon,65,Rare,165
 15708,Ravaging Bandit Sunderer,Weapon,35,Rare,153
@@ -13251,6 +13264,8 @@ id,name,type,level,rarity,vendor_value
 15711,Bandit Sunderer,Weapon,35,Rare,153
 15712,Strong Bandit Sunderer,Weapon,35,Rare,153
 15713,Vigorous Bandit Sunderer,Weapon,35,Rare,153
+15714,Hearty Bandit Sunderer,Weapon,35,Rare,153
+15715,Ravaging Dredge Sunderer,Weapon,50,Rare,203
 15716,Rejuvenating Dredge Sunderer,Weapon,50,Rare,203
 15717,Honed Dredge Sunderer,Weapon,50,Rare,203
 15719,Strong Dredge Sunderer,Weapon,50,Rare,203
@@ -13258,6 +13273,8 @@ id,name,type,level,rarity,vendor_value
 15721,Hearty Dredge Sunderer,Weapon,50,Rare,203
 15722,Carrion Ogre Longsword,Weapon,65,Rare,248
 15723,Cleric's Ogre Longsword,Weapon,65,Rare,248
+15724,Ogre Longsword,Weapon,65,Rare,248
+15725,Berserker's Ogre Longsword,Weapon,65,Rare,248
 15726,Valkyrie Ogre Longsword,Weapon,65,Rare,248
 15727,Rampager's Ogre Longsword,Weapon,65,Rare,248
 15728,Knight's Ogre Longsword,Weapon,65,Rare,248
@@ -13269,11 +13286,15 @@ id,name,type,level,rarity,vendor_value
 15734,Vigorous Bandit Demolisher,Weapon,35,Rare,153
 15735,Hearty Bandit Demolisher,Weapon,35,Rare,153
 15736,Ravaging Dredge Pulverizer,Weapon,50,Rare,203
+15737,Rejuvenating Dredge Pulverizer,Weapon,50,Rare,203
 15738,Honed Dredge Pulverizer,Weapon,50,Rare,203
+15740,Strong Dredge Pulverizer,Weapon,50,Rare,203
+15741,Vigorous Dredge Pulverizer,Weapon,50,Rare,203
 15742,Hearty Dredge Pulverizer,Weapon,50,Rare,203
 15743,Carrion Ogre Breaker,Weapon,65,Rare,248
 15744,Cleric's Ogre Breaker,Weapon,65,Rare,248
 15746,Berserker's Ogre Breaker,Weapon,65,Rare,248
+15747,Valkyrie Ogre Breaker,Weapon,65,Rare,248
 15748,Rampager's Ogre Breaker,Weapon,65,Rare,248
 15749,Knight's Ogre Breaker,Weapon,65,Rare,248
 15750,Ravaging Bandit Spear,Weapon,35,Rare,153
@@ -13287,32 +13308,44 @@ id,name,type,level,rarity,vendor_value
 15759,Honed Dredge Spear,Weapon,50,Rare,203
 15761,Strong Dredge Spear,Weapon,50,Rare,203
 15762,Vigorous Dredge Spear,Weapon,50,Rare,203
+15763,Hearty Dredge Spear,Weapon,50,Rare,203
 15764,Carrion Ogre Javelin,Weapon,65,Rare,248
 15765,Cleric's Ogre Javelin,Weapon,65,Rare,248
 15767,Berserker's Ogre Javelin,Weapon,65,Rare,248
+15768,Valkyrie Ogre Javelin,Weapon,65,Rare,248
 15769,Rampager's Ogre Javelin,Weapon,65,Rare,248
 15770,Knight's Ogre Javelin,Weapon,65,Rare,248
+16976,Rabid Reinforced Scale Boots,Armor,80,Rare,198
 16978,Berserker's Reinforced Scale Boots,Armor,80,Rare,198
 16979,Carrion Cabalist Boots,Armor,65,Rare,165
 16980,Carrion Cabalist Coat,Armor,65,Rare,248
+16981,Berserker's Reinforced Scale Coat,Armor,80,Rare,297
 16982,Ascalonian Tear,Consumable,0,Rare,0
 16984,Berserker's Reinforced Scale Gauntlets,Armor,80,Rare,179
+16985,Carrion Cabalist Gloves,Armor,65,Rare,149
+16986,Penetrating Privateer Boots,Armor,45,Rare,123
 16987,Carrion Cabalist Hood,Armor,65,Rare,207
 16989,Rabid Reinforced Scale Boots,Armor,55,Rare,144
 16990,Berserker's Reinforced Scale Helm,Armor,80,Rare,248
 16991,Rabid Reinforced Scale Coat,Armor,80,Rare,297
 16992,Berserker's Privateer Boots,Armor,70,Rare,177
+16993,Berserker's Privateer Boots,Armor,80,Rare,198
 16994,Carrion Cabalist Legs,Armor,65,Rare,231
 16995,Berserker's Privateer Coat,Armor,70,Rare,266
 16996,Rabid Reinforced Scale Coat,Armor,55,Rare,216
 16998,Berserker's Privateer Coat,Armor,80,Rare,297
 16999,Penetrating Privateer Coat,Armor,45,Rare,185
+17000,Berserker's Reinforced Scale Legs,Armor,80,Rare,278
 17001,Rabid Reinforced Scale Gauntlets,Armor,80,Rare,179
 17002,Berserker's Privateer Gloves,Armor,80,Rare,179
 17004,Berserker's Reinforced Scale Pauldrons,Armor,80,Rare,218
+17005,Berserker's Privateer Gloves,Armor,70,Rare,160
 17006,Penetrating Privateer Gloves,Armor,45,Rare,111
 17007,Rabid Reinforced Scale Gauntlets,Armor,55,Rare,130
+17008,Berserker's Cabalist Boots,Armor,80,Rare,198
+17009,Penetrating Privateer Hat,Armor,45,Rare,154
 17011,Berserker's Privateer Hat,Armor,78,Rare,240
+17012,Rabid Reinforced Scale Helm,Armor,80,Rare,248
 17013,Berserker's Privateer Hat,Armor,70,Rare,222
 17014,Rabid Reinforced Scale Helm,Armor,55,Rare,180
 17015,Berserker's Privateer Pants,Armor,80,Rare,278
@@ -13321,32 +13354,51 @@ id,name,type,level,rarity,vendor_value
 17019,Berserker's Cabalist Coat,Armor,80,Rare,297
 17020,Berserker's Privateer Pants,Armor,70,Rare,248
 17021,Rabid Reinforced Scale Legs,Armor,80,Rare,278
+17022,Penetrating Privateer Shoulders,Armor,45,Rare,136
 17023,Berserker's Cabalist Gloves,Armor,80,Rare,179
 17024,Rabid Reinforced Scale Pauldrons,Armor,80,Rare,218
+17025,Berserker's Privateer Shoulders,Armor,80,Rare,218
 17026,Rabid Reinforced Scale Pauldrons,Armor,55,Rare,159
+17027,Carrion Privateer Boots,Armor,65,Rare,165
+17028,Berserker's Privateer Shoulders,Armor,70,Rare,195
+17030,Rabid Privateer Boots,Armor,55,Rare,144
 17031,Penetrating Reinforced Scale Boots,Armor,45,Rare,123
 17032,Berserker's Reinforced Scale Boots,Armor,70,Rare,177
 17033,Carrion Privateer Coat,Armor,65,Rare,248
 17034,Berserker's Reinforced Scale Boots,Armor,80,Rare,198
 17036,Rabid Privateer Boots,Armor,80,Rare,198
 17037,Berserker's Cabalist Hood,Armor,80,Rare,248
+17038,Rabid Privateer Coat,Armor,80,Rare,297
 17039,Rabid Privateer Coat,Armor,55,Rare,216
+17040,Berserker's Reinforced Scale Coat,Armor,70,Rare,266
 17041,Berserker's Reinforced Scale Coat,Armor,80,Rare,297
+17042,Carrion Privateer Gloves,Armor,65,Rare,149
+17044,Penetrating Reinforced Scale Coat,Armor,45,Rare,185
 17045,Berserker's Cabalist Legs,Armor,80,Rare,278
 17046,Berserker's Cabalist Shoulders,Armor,80,Rare,218
+17047,Berserker's Reinforced Scale Gauntlets,Armor,80,Rare,179
 17048,Carrion Privateer Hat,Armor,65,Rare,207
 17049,Rabid Privateer Gloves,Armor,55,Rare,130
 17050,Rabid Privateer Gloves,Armor,80,Rare,179
+17051,Penetrating Reinforced Scale Gauntlets,Armor,45,Rare,111
 17052,Berserker's Reinforced Scale Gauntlets,Armor,70,Rare,160
 17054,Rabid Privateer Hat,Armor,80,Rare,248
+17055,Berserker's Privateer Boots,Armor,80,Rare,198
+17056,Berserker's Reinforced Scale Helm,Armor,70,Rare,222
 17057,Penetrating Reinforced Scale Helm,Armor,45,Rare,154
 17058,Rabid Privateer Hat,Armor,55,Rare,180
 17060,Carrion Privateer Pants,Armor,65,Rare,231
+17061,Berserker's Reinforced Scale Helm,Armor,78,Rare,240
 17062,Rabid Privateer Pants,Armor,55,Rare,202
 17063,Berserker's Privateer Coat,Armor,80,Rare,297
 17064,Berserker's Reinforced Scale Legs,Armor,70,Rare,248
 17065,Penetrating Reinforced Scale Legs,Armor,45,Rare,173
+17066,Berserker's Reinforced Scale Legs,Armor,80,Rare,278
 17068,Carrion Privateer Shoulders,Armor,65,Rare,182
+17069,Rabid Privateer Pants,Armor,80,Rare,278
+17070,Berserker's Reinforced Scale Pauldrons,Armor,80,Rare,218
+17071,Carrion Reinforced Scale Boots,Armor,65,Rare,165
+17073,Penetrating Reinforced Scale Pauldrons,Armor,45,Rare,136
 17074,Berserker's Reinforced Scale Pauldrons,Armor,70,Rare,195
 17075,Rabid Privateer Shoulders,Armor,80,Rare,218
 17076,Rabid Privateer Shoulders,Armor,55,Rare,159
@@ -70246,6 +70298,8 @@ Balance",Gizmo,0,Basic,0
 105411,Unchained Spear,Weapon,80,Exotic,396
 105412,Blazing Cape and Glider Combo,Consumable,0,Masterwork,0
 105413,Track 13: Winds of Change,Consumable,0,Exotic,0
+105414,Track 8: Flesh and Fever,Consumable,0,Exotic,0
+105417,Track 8: Oath to the Ancients,Consumable,0,Exotic,0
 105418,Track 6: Destiny's Gorge,Consumable,0,Exotic,0
 105419,Wall Bracket Half (960),Consumable,0,Basic,0
 105422,Mini Captain's Council Sayida,MiniPet,0,Exotic,50
@@ -70255,6 +70309,7 @@ Balance",Gizmo,0,Basic,0
 105429,Pearlshell Pistol Skin,Consumable,0,Rare,0
 105430,Track 18: Might of the Cosmos,Consumable,0,Exotic,0
 105431,Scrap of Castora Mastery,Consumable,0,Masterwork,0
+105432,Track 3: Isgarren the Curator,Consumable,0,Exotic,0
 105434,Track 8: Beginning of a Warrior's Journey,Consumable,0,Exotic,0
 105437,Pearlshell Focus Skin,Consumable,0,Rare,0
 105438,Agaleus,Armor,0,Exotic,330
@@ -70272,6 +70327,7 @@ Balance",Gizmo,0,Basic,0
 105454,Track 39: Into the Wilds,Consumable,0,Exotic,0
 105455,Restless Captain Token: Coat,Trophy,0,Exotic,30000
 105456,Track 48: Remnants of the Betrayer,Consumable,0,Exotic,0
+105457,Track 21: Thick Dark Water,Consumable,0,Exotic,0
 105459,Island Shrub (Bunch),Consumable,0,Basic,0
 105460,Restless Captain's Heavy Mantle,Armor,80,Exotic,291
 105461,Soundtrack Single—Secrets of the Obscure,Container,0,Exotic,0
@@ -70292,6 +70348,7 @@ Balance",Gizmo,0,Basic,0
 105490,Track 38: Fortune's Favor,Consumable,0,Exotic,0
 105492,Track 18: Minions of Kralkatorrik,Consumable,0,Exotic,0
 105493,Track 28: Ishan's Wish,Consumable,0,Exotic,0
+105496,Track 17: Eparch's Finest,Consumable,0,Exotic,0
 105497,Aetheric Anchor,Container,0,Legendary,0
 105498,Track 2: Mist Connections,Consumable,0,Exotic,0
 105499,Visions of Eternity Launch Supply Drop Requisition,Consumable,0,Rare,0
@@ -70328,11 +70385,15 @@ Balance",Gizmo,0,Basic,0
 105557,Track 7: Strangely Familiar Place,Consumable,0,Exotic,0
 105558,Alliance Field Operative's Medium Helmet,Armor,80,Exotic,330
 105559,Track 14: Canthan Justice,Consumable,0,Exotic,0
+105561,Track 12: These Ancient Halls,Consumable,0,Exotic,0
 105562,Round String Lights,Consumable,0,Basic,0
 105564,Pearlshell Warhorn Skin,Consumable,0,Rare,0
+105565,Track 22: Courage and Regret,Consumable,0,Exotic,0
 105566,Fanned Island Fern Patch,Consumable,0,Basic,0
 105567,Track 1: End of Dragons,Consumable,0,Exotic,0
 105569,Blazing Glider,Consumable,0,Masterwork,0
+105570,Track 27: Left to Fester,Consumable,0,Exotic,0
+105571,Track 6: The Beast Emerges,Consumable,0,Exotic,0
 105575,Wooden Beam (16 x 240 x 30),Consumable,0,Basic,0
 105580,Restless Captain Token: Helmet,Trophy,0,Exotic,5000
 105581,Boardwalk (480 x 960),Consumable,0,Basic,0
@@ -70342,6 +70403,7 @@ Balance",Gizmo,0,Basic,0
 105588,Restless Captain Token: Shoulders,Trophy,0,Exotic,10000
 105589,Wall (240 x 240),Consumable,0,Basic,0
 105590,Track 1: Janthir Wilds,Consumable,0,Exotic,0
+105591,Track 13: Otherworldly Threats,Consumable,0,Exotic,0
 105592,Doorway Wall,Consumable,0,Basic,0
 105596,Track 2: A New Journey,Consumable,0,Exotic,0
 105597,Krait Spear,Weapon,80,Exotic,396
@@ -70354,6 +70416,7 @@ Balance",Gizmo,0,Basic,0
 105607,Tall Ship Stairs,Consumable,0,Basic,0
 105608,Extremis Heavy Hood,Armor,80,Exotic,330
 105610,Track 31: Sands of the Djinn,Consumable,0,Exotic,0
+105611,Track 28: Rage and Regret,Consumable,0,Exotic,0
 105612,Burlap Sack Pile,Consumable,0,Basic,0
 105614,Tropical Forest Gear Bag,Container,0,Exotic,264
 105615,Track 30: Maws of the Ruptured Heart,Consumable,0,Exotic,0
@@ -70395,6 +70458,7 @@ Balance",Gizmo,0,Basic,0
 105678,Illustrious Opah,Container,0,Exotic,256
 105680,Pearlshell Shield Skin,Consumable,0,Rare,0
 105681,Branchless Bush,Consumable,0,Basic,0
+105682,Ethereal Sea-Life Infusion,UpgradeComponent,80,Exotic,10000
 105685,Flying Fireworks: Bronze,Container,0,Fine,0
 105686,Raw Enchanting Stone,Consumable,0,Basic,0
 105687,Galleon Door,Consumable,0,Basic,0
@@ -70456,14 +70520,17 @@ Balance",Gizmo,0,Basic,0
 105794,Arms of the People,Gizmo,0,Exotic,0
 105795,Alliance Field Operative's Light Boots,Armor,80,Exotic,264
 105796,Track 17: Leaving Tarir,Consumable,0,Exotic,0
+105797,Track 3: Harr Mire,Consumable,0,Exotic,0
 105798,Track 16: Storm Rising,Consumable,0,Exotic,0
 105799,Upgraded Hologram Emitter,Consumable,0,Basic,16
 105802,Track 20: Taming the Jungle,Consumable,0,Exotic,0
 105803,Track 3: Captain of the Aetherblades,Consumable,0,Exotic,0
 105804,Gift of the People,CraftingMaterial,0,Legendary,0
 105805,Simple Door,Consumable,0,Basic,0
+105809,Track 23: Mount Balrior,Consumable,0,Exotic,0
 105811,Track 27: Mordremoth,Consumable,0,Exotic,0
 105813,Castoran Wavehawk Skin,Consumable,0,Rare,0
+105816,Track 15: Peitha's Flame,Consumable,0,Exotic,0
 105817,Island Tree (Short),Consumable,0,Basic,0
 105818,Extremis Token: Gloves,Trophy,0,Exotic,5000
 105820,Track 49: Truly Awake,Consumable,0,Exotic,0
@@ -70474,6 +70541,7 @@ Balance",Gizmo,0,Basic,0
 105825,Track 3: Welcome to the Desert,Consumable,0,Exotic,0
 105827,Track 21: Alone in This Metropolis,Consumable,0,Exotic,0
 105828,Wall (120 x 240),Consumable,0,Basic,0
+105832,Track 17: Eparch's Finest,Consumable,0,Exotic,0
 105835,Track 18: Minions of Kralkatorrik,Consumable,0,Exotic,0
 105836,Whisper's Secret Spear,Weapon,80,Rare,4500
 105838,Track 24: For the Ward!,Consumable,0,Exotic,0
@@ -70584,6 +70652,7 @@ Balance",Gizmo,0,Basic,0
 106044,Entryway Wall (Single),Consumable,0,Basic,0
 106047,Strelitzia Crystallinum Longbow,Weapon,80,Exotic,396
 106048,Track 21: Marked Target,Consumable,0,Exotic,0
+106050,Track 26: What Remains of the Tyrants,Consumable,0,Exotic,0
 106052,Great Bearded Goatfish,Container,0,Fine,64
 106057,Track 31: The Slums,Consumable,0,Exotic,0
 106058,Bamboo Awning,Consumable,0,Basic,0
@@ -70620,6 +70689,7 @@ Balance",Gizmo,0,Basic,0
 106118,Track 7: Elona Reach,Consumable,0,Exotic,0
 106119,Track 12: Daigo Ward,Consumable,0,Exotic,0
 106121,Pearlshell Axe Skin,Consumable,0,Rare,0
+106125,Track 23: Mount Balrior,Consumable,0,Exotic,0
 106127,"Track 15: Tarir, the Forgotten City",Consumable,0,Exotic,0
 106128,Chromatic Bubbles,UpgradeComponent,80,Exotic,10000
 106131,Track 11: Auric Wilds,Consumable,0,Exotic,0
@@ -70666,6 +70736,7 @@ Balance",Gizmo,0,Basic,0
 106190,Track 5: Memories Forgotten,Consumable,0,Exotic,0
 106192,Bamboo Wall (240 x 240),Consumable,0,Basic,0
 106194,Track 39: Forsaken Nobility,Consumable,0,Exotic,0
+106196,Track 19: An Army of Avarice,Consumable,0,Exotic,0
 106197,Track 16: Attack on Tarir,Consumable,0,Exotic,0
 106199,Hammerheart's Sword,Weapon,80,Ascended,330
 106204,Restless Captain Token: Boots,Trophy,0,Exotic,5000
@@ -70691,6 +70762,7 @@ Balance",Gizmo,0,Basic,0
 106241,Wall (960 x 240),Consumable,0,Basic,0
 106244,Spindrift Spear,Weapon,80,Exotic,0
 106246,Wooden Beam Corner (30 x 120 x 30),Consumable,0,Basic,0
+106247,Track 14: On the Hunt,Consumable,0,Exotic,0
 106248,Seer-Enchanted Torch,Weapon,80,Exotic,264
 106251,Track 49: Truly Awake,Consumable,0,Exotic,0
 106252,Soundtrack Single—End of Dragons,Container,0,Exotic,0
@@ -70709,6 +70781,7 @@ Balance",Gizmo,0,Basic,0
 106277,Track 12: Daigo Ward,Consumable,0,Exotic,0
 106280,Track 7: Amnytas in Peril,Consumable,0,Exotic,0
 106281,Track 3: Captain of the Aetherblades,Consumable,0,Exotic,0
+106282,Track 10: Sunless Isle,Consumable,0,Exotic,0
 106283,Restless Captain's Medium Gloves,Armor,80,Exotic,238
 106285,Chromatic Bubble Wand,Container,0,Exotic,0
 106286,Stairs (120 x 60),Consumable,0,Basic,0
@@ -70727,6 +70800,7 @@ Balance",Gizmo,0,Basic,0
 106307,Track 4: Army of the War God,Consumable,0,Exotic,0
 106310,Vigil's Honor Spear,Weapon,80,Rare,4500
 106311,Track 13: Highland Hares,Consumable,0,Exotic,0
+106316,Track 14: Malaise,Consumable,0,Exotic,0
 106317,Galleon Hull (Stern),Consumable,0,Basic,0
 106323,Wiley's Note,Gizmo,0,Exotic,0
 106325,Glimmering Arches Grand Prix: Bronze,Container,0,Fine,0
@@ -70736,11 +70810,13 @@ Balance",Gizmo,0,Basic,0
 106334,Soundtrack Single—Path of Fire,Container,0,Exotic,0
 106335,Alliance Field Operative's Boots Box,Container,0,Exotic,0
 106336,Wide Entryway Wall (Single),Consumable,0,Basic,0
+106337,Ethereal Sea-Life Infusion,UpgradeComponent,80,Exotic,10000
 106338,Castoran Choya Treasure Box,Container,0,Basic,0
 106340,Track 50: Harvest Ceremony,Consumable,0,Exotic,0
 106341,Castoran King Crab: Bronze,Container,0,Fine,0
 106343,Bonus Cache,Container,0,Exotic,264
 106346,Glimmering Arches Grand Prix: Silver,Container,0,Fine,0
+106352,Track 12: These Ancient Halls,Consumable,0,Exotic,0
 106355,Relic of the Scoundrel,Relic,60,Exotic,200
 106357,Endless Tropical Crab Tonic,Gizmo,0,Exotic,104
 106358,Strelitzia Crystallinum Warhorn,Weapon,80,Exotic,264
@@ -70748,6 +70824,7 @@ Balance",Gizmo,0,Basic,0
 106362,Track 42: Lament of the Lutgardises,Consumable,0,Exotic,0
 106363,Seer-Enchanted Greatsword,Weapon,80,Exotic,396
 106364,Relic of the Biomancer,Relic,60,Exotic,200
+106366,Track 2: This Unknown Hemisphere,Consumable,0,Exotic,0
 106367,Curved Roof (600),Consumable,0,Basic,0
 106368,Seer-Enchanted Mace,Weapon,80,Exotic,264
 106370,Survivor's Enchanted Compass,CraftingMaterial,0,Exotic,0
@@ -70764,6 +70841,7 @@ Balance",Gizmo,0,Basic,0
 106396,Track 23: A Promise,Consumable,0,Exotic,0
 106398,Track 6: Stroll in the Night Market,Consumable,0,Exotic,0
 106400,Agaleus,Armor,0,Exotic,330
+106403,Track 22: Boiling Point,Consumable,0,Exotic,0
 106404,Track 25: Yagon's Choir,Consumable,0,Exotic,0
 106405,Track 44: Edge of Annihilation,Consumable,0,Exotic,0
 106406,Fast Constructor's Mace,Weapon,80,Exotic,264
@@ -70833,6 +70911,7 @@ Balance",Gizmo,0,Basic,0
 106512,Track 8: Faren's Flier,Consumable,0,Exotic,0
 106514,Track 23: Ravaged Ascension,Consumable,0,Exotic,0
 106515,Track 9: Hero from Faraway,Consumable,0,Exotic,0
+106516,Track 10: The Kryptis,Consumable,0,Exotic,0
 106518,Mini Augmented Swiftwing,MiniPet,0,Exotic,50
 106519,Track 27: March of the Awakened,Consumable,0,Exotic,0
 106521,Pearlshell Scepter Skin,Consumable,0,Rare,0
@@ -70840,6 +70919,7 @@ Balance",Gizmo,0,Basic,0
 106523,Track 2: A Fractured Horizon,Consumable,0,Exotic,0
 106525,Tropical Beach Gear Bag,Container,0,Exotic,264
 106526,Canthan Glass Bottle,Consumable,0,Basic,0
+106527,Ethereal Sea-Life Infusion,UpgradeComponent,80,Exotic,10000
 106529,Track 28: Ishan's Wish,Consumable,0,Exotic,0
 106531,Fast Constructor's Pistol,Weapon,80,Exotic,264
 106532,Skirmish Chest,Gizmo,0,Exotic,0
@@ -70907,6 +70987,7 @@ Balance",Gizmo,0,Basic,0
 106660,Mastery Point,Consumable,0,Basic,0
 106663,Track 13: Winds of Change,Consumable,0,Exotic,0
 106664,Skimmer-Net Scramble: Silver,Container,0,Fine,0
+106665,Track 22: Courage and Regret,Consumable,0,Exotic,0
 106668,Track 14: Glint's Legacy,Consumable,0,Exotic,0
 106669,Elusive Boxcrab,Container,0,Exotic,256
 106670,Pearlshell Longbow Skin,Consumable,0,Rare,0
@@ -70915,6 +70996,7 @@ Balance",Gizmo,0,Basic,0
 106676,Agaleus Container,Container,0,Exotic,0
 106679,Track 22: On the Banks of the Elon,Consumable,0,Exotic,0
 106681,Fast Constructor's Hammer,Weapon,80,Exotic,396
+106685,Track 8: Oath to the Ancients,Consumable,0,Exotic,0
 106686,Extremis Medium Coat,Armor,80,Exotic,396
 106687,Track 32: Veterans of the Desolation,Consumable,0,Exotic,0
 106688,Track 27: Soojung Heights,Consumable,0,Exotic,0
