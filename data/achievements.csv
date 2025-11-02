@@ -4869,6 +4869,7 @@ How long will this go on?"
 7010,Tower of Secrets,Default,['Permanent'],Journal: Tower of Secrets
 8559,Penance for the Past,Default,['Permanent'],Journal: Penance for the Past
 8293,Hunting in the Wetlands,Default,['Permanent'],Big game is lurking in these waters. Ready your spear paw!
+8973,Avid Castora Fisher,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']","<c=@flavor>The charm of fishing is in pursuing something elusive, though attainable. It is a simple yet profound practice of hope.</c>"
 757,Crab Toss Regular,Default,"['Pvp', 'Repeatable', 'Permanent']",
 4950,Well Watcher,Default,['Permanent'],
 1820,Light 'Em Up,Default,['Permanent'],Story Instance: Tracking the Aspect Masters
