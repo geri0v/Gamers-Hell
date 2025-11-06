@@ -697,6 +697,7 @@ During the Fractal Incursion event, some steps of this achievement will be unloc
 6247,Working as Intended,Default,"['IgnoreNearlyComplete', 'Repeatable', 'Permanent']",
 7944,Gunnar's Hold Veteran,Default,"['Pvp', 'Hidden', 'Permanent']",Days gone by...
 8235,Lowland Shore Insight: Ruminant Fields,Default,['Permanent'],
+8929,Bee's-Eye View of Paradise,Default,['Permanent'],Your homestead in paradise will have everyone abuzz with excitement.
 8585,Scan and Soothe,Default,['Permanent'],
 2796,Branded Bane,Default,['Permanent'],Crystallized corpses as far as the eye can see!
 5968,Revenge of the Metal Legion,Default,['Permanent'],
@@ -2026,12 +2027,12 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3672,To Kill a God,Default,"['Hidden', 'Permanent']",Journal: To Kill a God Completed
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
-4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
-8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
 6618,Completing Events III,Default,['Permanent'],
 2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
 6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
+4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
+8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
 6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 8909,Sylvan Shapeshifter,Default,['Permanent'],They'd prefer you to be anything but yourself.
@@ -2264,6 +2265,7 @@ Ward Crafter Lucirae in Moon Camp Covert can offer assisted crafting if you do n
 4483,Survey on Subjects of Importance 2,Default,['Permanent'],
 8071,Inner Nayos Skirmish Squasher,Default,['Permanent'],
 3112,Maintain Aurene's Shield,Default,['Permanent'],Story Instance: Dragon Vigil
+8916,A Season for Work in Paradise,Default,['Permanent'],Hopefully the season for rest in paradise starts soon.
 3993,Exile Executioner,Default,['Permanent'],"Follow where I lead, come whence I call, and the rotted corpses of the dead will be yours to control."
 3005,Tip of the Blade,Default,['Permanent'],
 1975,Daily Kryta Forager,Default,['Daily'],Fueling the engines of the economy.
@@ -3111,6 +3113,7 @@ This is but the first step on a long road."
 3065,Confessor's Stronghold,Default,['Permanent'],Journal: Confessor's Stronghold Completed
 5283,Daily Drizzlewood Coast AA Soldier,Default,['Daily'],
 6596,Using the Mystic Forge,Default,['Permanent'],
+8894,Tropical Tomes,Default,['Permanent'],"There's much to be said about the deserted-island life, it seems."
 96,Norn Specialty Armors,Default,['Permanent'],Legendary vestments befitting your saga.
 781,Hot-Air Balloonist,Default,['Daily'],
 3503,Not on My Watch,Default,['Permanent'],"Story Instance: ""Where's Balthazar?""<br><br>""Your friends aren't coming."""
@@ -4867,6 +4870,7 @@ How long will this go on?"
 7010,Tower of Secrets,Default,['Permanent'],Journal: Tower of Secrets
 8559,Penance for the Past,Default,['Permanent'],Journal: Penance for the Past
 8293,Hunting in the Wetlands,Default,['Permanent'],Big game is lurking in these waters. Ready your spear paw!
+8973,Avid Castora Fisher,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']","<c=@flavor>The charm of fishing is in pursuing something elusive, though attainable. It is a simple yet profound practice of hope.</c>"
 757,Crab Toss Regular,Default,"['Pvp', 'Repeatable', 'Permanent']",
 4950,Well Watcher,Default,['Permanent'],
 1820,Light 'Em Up,Default,['Permanent'],Story Instance: Tracking the Aspect Masters

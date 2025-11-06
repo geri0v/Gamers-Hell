@@ -26802,9 +26802,7 @@ id,name,type,level,rarity,vendor_value
 35261,Soldier's Bandit Focus,Weapon,80,Rare,2649
 35262,Vigorous Bandit Sunderer,Weapon,30,Rare,1993
 35263,Vigorous Bandit Sunderer,Weapon,40,Rare,2578
-35264,Vigorous Bandit Sunderer,Weapon,50,Rare,3163
 35265,Vigorous Bandit Sunderer,Weapon,60,Rare,3748
-35266,Soldier's Bandit Sunderer,Weapon,70,Rare,4334
 35267,Soldier's Bandit Sunderer,Weapon,80,Rare,4919
 35268,Vigorous Bandit Demolisher,Weapon,30,Rare,1993
 35269,Vigorous Bandit Demolisher,Weapon,40,Rare,2578
@@ -26827,7 +26825,6 @@ id,name,type,level,rarity,vendor_value
 35286,Vigorous Bandit Mallet,Weapon,30,Rare,1536
 35287,Vigorous Bandit Mallet,Weapon,40,Rare,1987
 35288,Vigorous Bandit Mallet,Weapon,50,Rare,2438
-35289,Vigorous Bandit Mallet,Weapon,60,Rare,2889
 35290,Soldier's Bandit Mallet,Weapon,70,Rare,3340
 35291,Soldier's Bandit Mallet,Weapon,80,Rare,3790
 35292,Vigorous Bandit Revolver,Weapon,30,Rare,1536
@@ -26836,7 +26833,6 @@ id,name,type,level,rarity,vendor_value
 35295,Vigorous Bandit Revolver,Weapon,60,Rare,2889
 35296,Soldier's Bandit Revolver,Weapon,70,Rare,3340
 35297,Soldier's Bandit Revolver,Weapon,80,Rare,3790
-35298,Vigorous Bandit Musket,Weapon,30,Rare,1993
 35299,Vigorous Bandit Musket,Weapon,40,Rare,2578
 35300,Vigorous Bandit Musket,Weapon,50,Rare,3163
 35301,Vigorous Bandit Musket,Weapon,60,Rare,3748
@@ -26879,11 +26875,9 @@ id,name,type,level,rarity,vendor_value
 35338,Soldier's Bandit Slicer,Weapon,70,Rare,3340
 35339,Soldier's Bandit Slicer,Weapon,80,Rare,3790
 35340,Vigorous Bandit Torch,Weapon,30,Rare,1073
-35341,Vigorous Bandit Torch,Weapon,40,Rare,1388
 35342,Vigorous Bandit Torch,Weapon,50,Rare,1703
 35343,Vigorous Bandit Torch,Weapon,60,Rare,2018
 35344,Soldier's Bandit Torch,Weapon,70,Rare,2334
-35345,Soldier's Bandit Torch,Weapon,80,Rare,2649
 35346,Vigorous Black Earth Trident,Weapon,30,Rare,1993
 35347,Vigorous Black Earth Trident,Weapon,40,Rare,2578
 35348,Vigorous Black Earth Trident,Weapon,50,Rare,3163
@@ -26907,8 +26901,6 @@ id,name,type,level,rarity,vendor_value
 35366,Mighty Bandit Shiv,Weapon,15,Masterwork,250
 35367,Vigorous Bandit Shiv,Weapon,25,Masterwork,367
 35368,Vigorous Bandit Shiv,Weapon,35,Masterwork,501
-35369,Vigorous Bandit Shiv,Weapon,45,Masterwork,617
-35370,Vigorous Bandit Shiv,Weapon,55,Masterwork,751
 35371,Soldier's Bandit Shiv,Weapon,65,Masterwork,885
 35372,Soldier's Bandit Shiv,Weapon,75,Masterwork,1002
 35373,Soldier's Bandit Shiv,Weapon,80,Masterwork,1068
@@ -26952,7 +26944,6 @@ id,name,type,level,rarity,vendor_value
 35411,Soldier's Bandit Longbow,Weapon,65,Masterwork,1148
 35412,Soldier's Bandit Longbow,Weapon,75,Masterwork,1300
 35413,Soldier's Bandit Longbow,Weapon,80,Masterwork,1386
-35414,Mighty Bandit Mallet,Weapon,15,Masterwork,250
 35415,Vigorous Bandit Mallet,Weapon,25,Masterwork,367
 35416,Vigorous Bandit Mallet,Weapon,35,Masterwork,501
 35417,Vigorous Bandit Mallet,Weapon,45,Masterwork,617
@@ -26967,7 +26958,6 @@ id,name,type,level,rarity,vendor_value
 35426,Vigorous Bandit Revolver,Weapon,55,Masterwork,751
 35427,Soldier's Bandit Revolver,Weapon,65,Masterwork,885
 35428,Soldier's Bandit Revolver,Weapon,75,Masterwork,1002
-35429,Soldier's Bandit Revolver,Weapon,80,Masterwork,1068
 35430,Mighty Bandit Musket,Weapon,15,Masterwork,325
 35431,Vigorous Bandit Musket,Weapon,25,Masterwork,476
 35432,Vigorous Bandit Musket,Weapon,35,Masterwork,650
@@ -26996,8 +26986,6 @@ id,name,type,level,rarity,vendor_value
 35455,Vigorous Bandit Short Bow,Weapon,25,Masterwork,476
 35456,Vigorous Bandit Short Bow,Weapon,35,Masterwork,650
 35457,Vigorous Bandit Short Bow,Weapon,45,Masterwork,801
-35458,Vigorous Bandit Short Bow,Weapon,55,Masterwork,975
-35459,Soldier's Bandit Short Bow,Weapon,65,Masterwork,1148
 35460,Soldier's Bandit Short Bow,Weapon,75,Masterwork,1300
 35461,Soldier's Bandit Short Bow,Weapon,80,Masterwork,1386
 35462,Mighty Steam Speargun,Weapon,15,Masterwork,325
@@ -70400,6 +70388,7 @@ Balance",Gizmo,0,Basic,0
 105570,Track 27: Left to Fester,Consumable,0,Exotic,0
 105571,Track 6: The Beast Emerges,Consumable,0,Exotic,0
 105575,Wooden Beam (16 x 240 x 30),Consumable,0,Basic,0
+105576,Extra Life Donor Listing,Consumable,0,Ascended,160
 105580,Restless Captain Token: Helmet,Trophy,0,Exotic,5000
 105581,Boardwalk (480 x 960),Consumable,0,Basic,0
 105582,Track 36: Once There Was Laughter,Consumable,0,Exotic,0
@@ -70437,6 +70426,7 @@ Balance",Gizmo,0,Basic,0
 105633,Column (30 x 480 x 30),Consumable,0,Basic,0
 105634,Track 30: The View from Above,Consumable,0,Exotic,0
 105636,Stairs (120 x 120),Consumable,0,Basic,0
+105638,Painter's Brilliance Glider,Consumable,0,Masterwork,0
 105639,Extremis Heavy Mantle,Armor,80,Exotic,291
 105640,Fast Constructor's Staff,Weapon,80,Exotic,396
 105641,Track 10: A Spirit's Final Wish,Consumable,0,Exotic,0
@@ -70496,6 +70486,7 @@ Balance",Gizmo,0,Basic,0
 105728,Track 31: Sands of the Djinn,Consumable,0,Exotic,0
 105730,Secret Squid,Container,0,Ascended,320
 105733,Track 25: Mouth of Mordremoth,Consumable,0,Exotic,0
+105736,Chromatic Bubbles,UpgradeComponent,80,Exotic,10000
 105737,Track 14: Enter the Fire God,Consumable,0,Exotic,0
 105738,Agaleus,Armor,80,Exotic,330
 105739,Seer-Enchanted Pistol,Weapon,80,Exotic,264
@@ -70504,6 +70495,7 @@ Balance",Gizmo,0,Basic,0
 105742,Track 24: Ruins of Reflection,Consumable,0,Exotic,0
 105743,Selachimorpha Container,Container,0,Legendary,0
 105745,Island Tree (Curved),Consumable,0,Basic,0
+105746,Painter's Brilliance Backpack and Glider Combo,Consumable,0,Masterwork,0
 105747,Track 9: Hero from Faraway,Consumable,0,Exotic,0
 105751,Track 4: The Jungle Provides,Consumable,0,Exotic,0
 105752,Track 3: The Pact Laid Waste,Consumable,0,Exotic,0
@@ -70522,6 +70514,7 @@ Balance",Gizmo,0,Basic,0
 105774,Track 34: Dirge of the Father King,Consumable,0,Exotic,0
 105777,Track 7: Elona Reach,Consumable,0,Exotic,0
 105779,Track 5: The Empire of Dragons,Consumable,0,Exotic,0
+105783,Painter's Brilliance Backpack,Consumable,0,Masterwork,0
 105784,Cleric's Stormcaller Spear,Weapon,80,Exotic,396
 105786,Track 8: Forged in Fire,Consumable,0,Exotic,0
 105787,Strelitzia Crystallinum Rifle,Weapon,80,Exotic,396
@@ -70537,6 +70530,7 @@ Balance",Gizmo,0,Basic,0
 105803,Track 3: Captain of the Aetherblades,Consumable,0,Exotic,0
 105804,Gift of the People,CraftingMaterial,0,Legendary,0
 105805,Simple Door,Consumable,0,Basic,0
+105807,Extra Life Karma Booster,Container,0,Ascended,320
 105809,Track 23: Mount Balrior,Consumable,0,Exotic,0
 105811,Track 27: Mordremoth,Consumable,0,Exotic,0
 105813,Castoran Wavehawk Skin,Consumable,0,Rare,0
@@ -70644,6 +70638,7 @@ Balance",Gizmo,0,Basic,0
 105998,Track 47: Junkyard Strife,Consumable,0,Exotic,0
 106001,Cabana Roof Long (A),Consumable,0,Basic,0
 106003,Track 54: The Cycle Ends,Consumable,0,Exotic,0
+106007,Track 11: The Wizards,Consumable,0,Exotic,0
 106008,Canthan Glass Bottle (Full),Consumable,0,Basic,0
 106010,Track 5: Dangerous Beauty,Consumable,0,Exotic,0
 106011,Castoran Gear Box,Container,0,Basic,0
@@ -70800,6 +70795,7 @@ Balance",Gizmo,0,Basic,0
 106275,Gift of the Tides,CraftingMaterial,0,Exotic,0
 106276,Alliance Field Operative's Leggings Box,Container,0,Exotic,0
 106277,Track 12: Daigo Ward,Consumable,0,Exotic,0
+106278,Chromatic Bubbles,UpgradeComponent,80,Exotic,10000
 106280,Track 7: Amnytas in Peril,Consumable,0,Exotic,0
 106281,Track 3: Captain of the Aetherblades,Consumable,0,Exotic,0
 106282,Track 10: Sunless Isle,Consumable,0,Exotic,0
@@ -70833,6 +70829,7 @@ Balance",Gizmo,0,Basic,0
 106336,Wide Entryway Wall (Single),Consumable,0,Basic,0
 106337,Ethereal Sea-Life Infusion,UpgradeComponent,80,Exotic,10000
 106338,Castoran Choya Treasure Box,Container,0,Basic,0
+106339,Visions of Eternity Launch Supply Drop: Week Two,Container,0,Rare,0
 106340,Track 50: Harvest Ceremony,Consumable,0,Exotic,0
 106341,Castoran King Crab: Bronze,Container,0,Fine,0
 106343,Bonus Cache,Container,0,Exotic,264
@@ -70988,6 +70985,7 @@ Balance",Gizmo,0,Basic,0
 106605,Track 46: Parabellum,Consumable,0,Exotic,0
 106606,Great Choya Race: Gold,Container,0,Fine,0
 106607,Berserker's Mithril Javelin,Weapon,80,Rare,297
+106608,Mini Guardian Angel Blish,MiniPet,0,Masterwork,50
 106609,Jukebox,Consumable,0,Basic,0
 106610,Track 2: A New Journey,Consumable,0,Exotic,0
 106611,Strelitzia Crystallinum Mace,Weapon,80,Exotic,264
