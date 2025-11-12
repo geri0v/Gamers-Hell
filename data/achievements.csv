@@ -4667,6 +4667,7 @@ Story Instance: Legacy"
 1576,Ogre Obliterator,Default,"['Pvp', 'Permanent']",
 5378,Drizzlewood Coast Insight: The Frostveins,Default,['Permanent'],
 1182,Toxic Pollen Survival,Default,['Daily'],
+8947,(Repeatable) Shipwreck Strand: Hullgarden Renown Heart,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']",
 4545,Crystal Circuit Racer,Default,['Permanent'],Story Instance: The Crystal Dragon
 4149,Three Golem Monte,Default,['Permanent'],Err...can I see that one more time?
 8841,Incursive Investigation: Second Recursion,Default,['Permanent'],
@@ -5357,6 +5358,7 @@ Story Instance: Legacy"
 8626,Janthir Wilds: Repentance Mastery,Default,"['RepairOnLogin', 'CategoryDisplay', 'MoveToTop', 'Permanent']",
 4363,If I May Interrupt,Default,['Permanent'],"More like Palaver Joko, am I right?"
 8740,Assorted Chaos,Default,['Permanent'],
+9067,(Repeatable) Starlit Weald: Untamed Crags Renown Heart,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']",
 1319,Boss Thumper III,Default,['Daily'],
 589,Southsun Volunteer Fieldwork,Default,['Permanent'],Assist Researcher Levvi by collecting samples around Southsun Cove.
 6780,Against the Alliance 2,Default,['Permanent'],
@@ -6609,6 +6611,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 5048,Friendly Breakups,Default,['Permanent'],
 3715,Disrespect Your Elders,Default,['Permanent'],
 796,Light Snuffer,Default,['Permanent'],
+8939,(Repeatable) Starlit Weald: Priory Expedition Renown Heart,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']",
 6659,Completing Renown Hearts I,Default,['Permanent'],
 4146,Tracking the Scientist,Default,['Permanent'],Journal: Tracking the Scientist
 6019,Local Response: Domain of Istan,Default,['Permanent'],
