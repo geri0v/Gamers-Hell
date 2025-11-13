@@ -4362,6 +4362,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 5196,Nicabar Steelweaver's Footsteps,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
 2494,Salvage Pit: Silver,Default,"['Pvp', 'Permanent']",
 1664,Sheltered from the Rain,Default,['Permanent'],Story Instance: Trouble at Fort Salma
+9024,(Repeatable) Shipwreck Strand: Glimmering Arches Renown Heart,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']",
 2674,League Elementalist—Elite,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement advances the League Profession—Elite achievement.
 3206,Codex: Kodan,Default,['Permanent'],
 1377,Intruder Alert,Default,['Permanent'],
@@ -4610,6 +4611,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 9058,Soaring Sands Fireworks: Gold,Default,['Permanent'],"""Ooh! Ah!"" —Illuminate Lightburn"
 911,"Stay Dry, Stay Alive",Default,"['Hidden', 'Permanent']",
 665,Every Piece Matters (2013),Default,['Permanent'],
+8994,(Repeatable) Shipwreck Strand: Breezy Cay Renown Heart,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']",
 2692,League Professional—Veteran,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement awards an item for Path of the Ascension II: Tapestry of Sacrifice.
 1414,Morale Booster,Default,['Daily'],
 1763,Pumpkin Carving,Default,"['Hidden', 'Permanent']",Made in the Mad King's own image.
@@ -7573,6 +7575,7 @@ This is but the second step on a long road."
 2455,Master Herald,Default,"['Pvp', 'Permanent']",
 5910,Revenge of Zohaqan,Default,['Permanent'],
 7626,PvP Rush Contender,Default,"['Pvp', 'Permanent']",Champion Points: 20
+8883,(Repeatable) Starlit Weald: Foothold Bivouac Renown Heart,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']",
 6798,Aether Aversion,Default,['Permanent'],
 7954,Elona Reach Veteran,Default,"['Pvp', 'Hidden', 'Permanent']",Days gone by...
 2788,Toypocalypse Survivor,Default,"['Pvp', 'Hidden', 'Repeatable', 'Permanent']",Toypocalypse Cancelled...again!
