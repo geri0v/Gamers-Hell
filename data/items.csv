@@ -39821,7 +39821,9 @@ id,name,type,level,rarity,vendor_value
 54406,Deserter's Sorrowmaker,Weapon,36,Rare,167
 54407,Deserter's Crowncrusher,Weapon,36,Rare,111
 54408,Deserter's Weatherwrack,Weapon,36,Rare,111
+54409,Deserter's Crack o' Red Dawn,Weapon,36,Rare,167
 54410,Deserter's Ominous Egg,Weapon,36,Rare,111
+54411,Deserter's Shell of Secrets,Weapon,36,Rare,111
 54412,Deserter's Returner's Gaff,Weapon,36,Rare,167
 54413,Deserter's Mournsword,Weapon,36,Rare,111
 54414,Deserter's Lantern of the Lost,Weapon,36,Rare,111
@@ -39841,6 +39843,7 @@ id,name,type,level,rarity,vendor_value
 54428,Deserter's Returner's Gaff,Weapon,39,Rare,176
 54429,Deserter's Mournsword,Weapon,39,Rare,117
 54430,Deserter's Lantern of the Lost,Weapon,39,Rare,117
+54431,Deserter's Eerie Conch,Weapon,39,Rare,117
 54432,Deserter's Barnacle Scraper,Weapon,44,Rare,126
 54433,Deserter's Short-Tailed Shot,Weapon,44,Rare,189
 54434,Deserter's Spitespewer,Weapon,44,Rare,189
@@ -39857,6 +39860,7 @@ id,name,type,level,rarity,vendor_value
 54445,Deserter's Mournsword,Weapon,44,Rare,126
 54446,Deserter's Lantern of the Lost,Weapon,44,Rare,126
 54447,Deserter's Eerie Conch,Weapon,44,Rare,126
+54448,Deserter's Barnacle Scraper,Weapon,51,Rare,141
 54449,Deserter's Short-Tailed Shot,Weapon,51,Rare,212
 54450,Deserter's Spitespewer,Weapon,51,Rare,212
 54451,Deserter's Darkdevoted Kris,Weapon,51,Rare,141
@@ -39873,6 +39877,7 @@ id,name,type,level,rarity,vendor_value
 54462,Deserter's Lantern of the Lost,Weapon,51,Rare,141
 54463,Deserter's Eerie Conch,Weapon,51,Rare,141
 54464,Deserter's Barnacle Scraper,Weapon,55,Rare,150
+54465,Deserter's Short-Tailed Shot,Weapon,55,Rare,225
 54466,Deserter's Spitespewer,Weapon,55,Rare,225
 54467,Deserter's Darkdevoted Kris,Weapon,55,Rare,150
 54468,Deserter's Rota Misfortuna,Weapon,55,Rare,150
@@ -39900,12 +39905,14 @@ id,name,type,level,rarity,vendor_value
 54490,Deserter's Ominous Egg,Weapon,60,Rare,162
 54491,Deserter's Shell of Secrets,Weapon,60,Rare,162
 54492,Deserter's Returner's Gaff,Weapon,60,Rare,243
+54493,Deserter's Mournsword,Weapon,60,Rare,162
 54494,Deserter's Lantern of the Lost,Weapon,60,Rare,162
 54495,Deserter's Eerie Conch,Weapon,60,Rare,162
 54496,Survivor's Barnacle Scraper,Weapon,36,Rare,111
 54497,Survivor's Short-Tailed Shot,Weapon,36,Rare,167
 54498,Survivor's Spitespewer,Weapon,36,Rare,167
 54499,Survivor's Darkdevoted Kris,Weapon,36,Rare,111
+54500,Survivor's Rota Misfortuna,Weapon,36,Rare,111
 54501,Survivor's Architeuthis,Weapon,36,Rare,167
 54502,Survivor's Sorrowmaker,Weapon,36,Rare,167
 54503,Survivor's Crowncrusher,Weapon,36,Rare,111
@@ -39913,6 +39920,7 @@ id,name,type,level,rarity,vendor_value
 54505,Survivor's Crack o' Red Dawn,Weapon,36,Rare,167
 54506,Survivor's Ominous Egg,Weapon,36,Rare,111
 54507,Survivor's Shell of Secrets,Weapon,36,Rare,111
+54508,Survivor's Returner's Gaff,Weapon,36,Rare,167
 54509,Survivor's Mournsword,Weapon,36,Rare,111
 54510,Survivor's Lantern of the Lost,Weapon,36,Rare,111
 54511,Survivor's Eerie Conch,Weapon,36,Rare,111
@@ -39936,15 +39944,19 @@ id,name,type,level,rarity,vendor_value
 54529,Survivor's Short-Tailed Shot,Weapon,44,Rare,189
 54530,Survivor's Spitespewer,Weapon,44,Rare,189
 54531,Survivor's Darkdevoted Kris,Weapon,44,Rare,126
+54532,Survivor's Rota Misfortuna,Weapon,44,Rare,126
 54533,Survivor's Architeuthis,Weapon,44,Rare,189
 54534,Survivor's Sorrowmaker,Weapon,44,Rare,189
+54535,Survivor's Crowncrusher,Weapon,44,Rare,126
 54536,Survivor's Weatherwrack,Weapon,44,Rare,126
 54537,Survivor's Crack o' Red Dawn,Weapon,44,Rare,189
 54538,Survivor's Ominous Egg,Weapon,44,Rare,126
+54539,Survivor's Shell of Secrets,Weapon,44,Rare,126
 54540,Survivor's Returner's Gaff,Weapon,44,Rare,189
 54541,Survivor's Mournsword,Weapon,44,Rare,126
 54542,Survivor's Lantern of the Lost,Weapon,44,Rare,126
 54543,Survivor's Eerie Conch,Weapon,44,Rare,126
+54544,Survivor's Barnacle Scraper,Weapon,51,Rare,141
 54545,Survivor's Short-Tailed Shot,Weapon,51,Rare,212
 54546,Survivor's Spitespewer,Weapon,51,Rare,212
 54547,Survivor's Darkdevoted Kris,Weapon,51,Rare,141
@@ -39958,6 +39970,7 @@ id,name,type,level,rarity,vendor_value
 54555,Survivor's Shell of Secrets,Weapon,51,Rare,141
 54556,Survivor's Returner's Gaff,Weapon,51,Rare,212
 54557,Survivor's Mournsword,Weapon,51,Rare,141
+54558,Survivor's Lantern of the Lost,Weapon,51,Rare,141
 54559,Survivor's Eerie Conch,Weapon,51,Rare,141
 54560,Survivor's Barnacle Scraper,Weapon,55,Rare,150
 54561,Survivor's Short-Tailed Shot,Weapon,55,Rare,225
@@ -39966,13 +39979,17 @@ id,name,type,level,rarity,vendor_value
 54564,Survivor's Rota Misfortuna,Weapon,55,Rare,150
 54565,Survivor's Architeuthis,Weapon,55,Rare,225
 54566,Survivor's Sorrowmaker,Weapon,55,Rare,225
+54567,Survivor's Crowncrusher,Weapon,55,Rare,150
 54568,Survivor's Weatherwrack,Weapon,55,Rare,150
 54569,Survivor's Crack o' Red Dawn,Weapon,55,Rare,225
+54570,Survivor's Ominous Egg,Weapon,55,Rare,150
 54571,Survivor's Shell of Secrets,Weapon,55,Rare,150
 54572,Survivor's Returner's Gaff,Weapon,55,Rare,225
 54573,Survivor's Mournsword,Weapon,55,Rare,150
 54574,Survivor's Lantern of the Lost,Weapon,55,Rare,150
 54575,Survivor's Eerie Conch,Weapon,55,Rare,150
+54576,Survivor's Barnacle Scraper,Weapon,60,Rare,162
+54577,Survivor's Short-Tailed Shot,Weapon,60,Rare,243
 54578,Survivor's Spitespewer,Weapon,60,Rare,243
 54579,Survivor's Darkdevoted Kris,Weapon,60,Rare,162
 54580,Survivor's Rota Misfortuna,Weapon,60,Rare,162
@@ -70594,6 +70611,7 @@ Balance",Gizmo,0,Basic,0
 105906,Track 24: For the Ward!,Consumable,0,Exotic,0
 105908,Emerald-Scaled Grouper,Container,0,Rare,192
 105913,Visions of Eternity Expedition Contract,Consumable,0,Rare,0
+105916,Extra Life Community Pack,Container,0,Exotic,0
 105918,Wall (600 x 240),Consumable,0,Basic,0
 105921,Selachimorpha,Armor,80,Legendary,240
 105922,Track 14: On the Hunt,Consumable,0,Exotic,0
@@ -71069,6 +71087,7 @@ Balance",Gizmo,0,Basic,0
 106720,Castoran Freebooter Treasure Box,Container,0,Basic,0
 106724,Track 2: Mist Connections,Consumable,0,Exotic,0
 106725,Hanging Brazier,Consumable,0,Basic,0
+106727,Ethereal Sea-Life Infusion,UpgradeComponent,80,Exotic,10000
 106729,Rare Aetherlocation Treasure,Container,0,Exotic,0
 106731,Track 51: Where Calamity Began,Consumable,0,Exotic,0
 106732,Chromatic Resin Box,Gizmo,0,Exotic,0
