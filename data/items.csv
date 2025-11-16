@@ -28241,7 +28241,6 @@ id,name,type,level,rarity,vendor_value
 37241,Karka Sample,Trophy,0,Basic,0
 37242,Golem Parts,Trophy,0,Basic,0
 37243,Cavalier's Iron Dagger,Weapon,80,Masterwork,132
-37245,Cavalier's Iron Dagger,Weapon,80,Rare,198
 37249,Soldier's Iron Dagger,Weapon,80,Masterwork,132
 37251,Soldier's Iron Dagger,Weapon,80,Rare,198
 37252,Magi's Iron Dagger,Weapon,80,Masterwork,132
@@ -28275,7 +28274,6 @@ id,name,type,level,rarity,vendor_value
 37296,Cabalist Coat,Armor,80,Masterwork,198
 37297,Cavalier's Iron Greatsword,Weapon,80,Rare,297
 37298,Cabalist Gloves,Armor,80,Masterwork,119
-37301,Iron Greatsword,Weapon,80,Masterwork,198
 37303,Cabalist Legs,Armor,80,Masterwork,185
 37307,Soldier's Cabalist Boots,Armor,80,Masterwork,132
 37308,Soldier's Cabalist Coat,Armor,80,Masterwork,198
@@ -28342,14 +28340,12 @@ id,name,type,level,rarity,vendor_value
 37395,Conjurer Gloves,Armor,80,Rare,179
 37398,Conjurer Pants,Armor,80,Rare,278
 37399,Soldier's Soft Wood Longbow,Weapon,80,Masterwork,198
-37400,Conjurer Mantle,Armor,80,Rare,218
 37401,Soldier's Soft Wood Longbow,Weapon,80,Rare,297
 37403,Cavalier's Aurora Shoes,Armor,80,Exotic,264
 37404,Cavalier's Aurora Garb,Armor,80,Exotic,396
 37405,Rabid Soft Wood Longbow,Weapon,80,Masterwork,198
 37406,Rabid Soft Wood Longbow,Weapon,80,Rare,297
 37407,Cavalier's Aurora Gloves,Armor,80,Exotic,238
-37409,Cavalier's Aurora Helm,Armor,80,Exotic,330
 37410,Magi's Soft Wood Longbow,Weapon,80,Masterwork,198
 37411,Cavalier's Aurora Leggings,Armor,80,Exotic,370
 37412,Cavalier's Aurora Mantle,Armor,80,Exotic,291
@@ -28363,7 +28359,6 @@ id,name,type,level,rarity,vendor_value
 37421,Iron Mace,Weapon,80,Masterwork,132
 37423,Magi's Aurora Leggings,Armor,80,Exotic,370
 37424,Magi's Aurora Mantle,Armor,80,Exotic,291
-37426,Rabid Aurora Shoes,Armor,80,Exotic,264
 37428,Soldier's Iron Mace,Weapon,80,Rare,198
 37429,Rabid Aurora Garb,Armor,80,Exotic,396
 37430,Rabid Aurora Gloves,Armor,80,Exotic,238
@@ -28373,18 +28368,14 @@ id,name,type,level,rarity,vendor_value
 37435,Rabid Iron Mace,Weapon,80,Rare,198
 37437,Rabid Aurora Mantle,Armor,80,Exotic,291
 37438,Magi's Iron Mace,Weapon,80,Masterwork,132
-37439,Soldier's Aurora Shoes,Armor,80,Exotic,264
 37440,Soldier's Aurora Garb,Armor,80,Exotic,396
 37441,Magi's Iron Mace,Weapon,80,Rare,198
 37443,Soldier's Aurora Gloves,Armor,80,Exotic,238
-37444,Soldier's Aurora Helm,Armor,80,Exotic,330
 37446,Soldier's Aurora Leggings,Armor,80,Exotic,370
 37447,Cavalier's Iron Pistol,Weapon,80,Rare,198
-37448,Soldier's Aurora Mantle,Armor,80,Exotic,291
 37451,Magi's Iron Pistol,Weapon,80,Masterwork,132
 37453,Magi's Iron Pistol,Weapon,80,Rare,198
 37455,Magi's Wolfborn Pistol,Weapon,80,Exotic,264
-37462,Cavalier's Privateer Boots,Armor,80,Masterwork,132
 37463,Soldier's Iron Pistol,Weapon,80,Masterwork,132
 37465,Cavalier's Privateer Coat,Armor,80,Masterwork,198
 37466,Cavalier's Privateer Gloves,Armor,80,Masterwork,119
@@ -45326,7 +45317,6 @@ id,name,type,level,rarity,vendor_value
 70696,Power of the Ley Lines,Gizmo,0,Exotic,264
 70698,Gift of the Jungle,Trophy,0,Legendary,640
 70699,Ruka's Wristguards,Armor,80,Ascended,240
-70700,Rampager's Auric Mace,Weapon,80,Exotic,264
 70701,Guild Favor,Trophy,0,Basic,0
 70702,Commander's Draconic Helm,Armor,80,Exotic,240
 70703,Mini Castor,MiniPet,0,Exotic,50
