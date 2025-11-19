@@ -2026,13 +2026,13 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3672,To Kill a God,Default,"['Hidden', 'Permanent']",Journal: To Kill a God Completed
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
-6618,Completing Events III,Default,['Permanent'],
-8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
 2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
-6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
 6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
 4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
+6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
+6618,Completing Events III,Default,['Permanent'],
+8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 8909,Sylvan Shapeshifter,Default,['Permanent'],They'd prefer you to be anything but yourself.
 5551,League Participator—Conquest Season Twenty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
@@ -4362,7 +4362,6 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 5196,Nicabar Steelweaver's Footsteps,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
 2494,Salvage Pit: Silver,Default,"['Pvp', 'Permanent']",
 1664,Sheltered from the Rain,Default,['Permanent'],Story Instance: Trouble at Fort Salma
-9024,(Repeatable) Shipwreck Strand: Glimmering Arches Renown Heart,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']",
 2674,League Elementalist—Elite,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement advances the League Profession—Elite achievement.
 3206,Codex: Kodan,Default,['Permanent'],
 1377,Intruder Alert,Default,['Permanent'],
@@ -4611,7 +4610,6 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 9058,Soaring Sands Fireworks: Gold,Default,['Permanent'],"""Ooh! Ah!"" —Illuminate Lightburn"
 911,"Stay Dry, Stay Alive",Default,"['Hidden', 'Permanent']",
 665,Every Piece Matters (2013),Default,['Permanent'],
-8994,(Repeatable) Shipwreck Strand: Breezy Cay Renown Heart,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']",
 2692,League Professional—Veteran,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement awards an item for Path of the Ascension II: Tapestry of Sacrifice.
 1414,Morale Booster,Default,['Daily'],
 1763,Pumpkin Carving,Default,"['Hidden', 'Permanent']",Made in the Mad King's own image.
@@ -4669,7 +4667,6 @@ Story Instance: Legacy"
 1576,Ogre Obliterator,Default,"['Pvp', 'Permanent']",
 5378,Drizzlewood Coast Insight: The Frostveins,Default,['Permanent'],
 1182,Toxic Pollen Survival,Default,['Daily'],
-8947,(Repeatable) Shipwreck Strand: Hullgarden Renown Heart,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']",
 4545,Crystal Circuit Racer,Default,['Permanent'],Story Instance: The Crystal Dragon
 4149,Three Golem Monte,Default,['Permanent'],Err...can I see that one more time?
 8841,Incursive Investigation: Second Recursion,Default,['Permanent'],
@@ -5360,7 +5357,6 @@ Story Instance: Legacy"
 8626,Janthir Wilds: Repentance Mastery,Default,"['RepairOnLogin', 'CategoryDisplay', 'MoveToTop', 'Permanent']",
 4363,If I May Interrupt,Default,['Permanent'],"More like Palaver Joko, am I right?"
 8740,Assorted Chaos,Default,['Permanent'],
-9067,(Repeatable) Starlit Weald: Untamed Crags Renown Heart,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']",
 1319,Boss Thumper III,Default,['Daily'],
 589,Southsun Volunteer Fieldwork,Default,['Permanent'],Assist Researcher Levvi by collecting samples around Southsun Cove.
 6780,Against the Alliance 2,Default,['Permanent'],
@@ -6613,7 +6609,6 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 5048,Friendly Breakups,Default,['Permanent'],
 3715,Disrespect Your Elders,Default,['Permanent'],
 796,Light Snuffer,Default,['Permanent'],
-8939,(Repeatable) Starlit Weald: Priory Expedition Renown Heart,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']",
 6659,Completing Renown Hearts I,Default,['Permanent'],
 4146,Tracking the Scientist,Default,['Permanent'],Journal: Tracking the Scientist
 6019,Local Response: Domain of Istan,Default,['Permanent'],
@@ -7187,6 +7182,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 —Loonaloo</c>"
 2962,Daily Tier 3 Captain Mai Trin Boss,Default,['Daily'],
 7908,Fabled Paragon,Default,"['Pvp', 'Permanent']",Your virtues are your strength.
+9095,Calligrapher's Weapon Collection,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5006,(Annual) Raceway Regular,Default,['Permanent'],
 3007,"Ley-Line ""Research""",Default,['Permanent'],
 3849,Equipment Tracker,Default,"['Hidden', 'Permanent']",
@@ -7502,6 +7498,7 @@ This is but the second step on a long road."
 1897,Daily Scavenger's Chasm Jumping Puzzle,Default,"['Pvp', 'Daily']",
 3610,Desert Highlands Insight: The Tombs,Default,['Permanent'],
 905,Burning Light,Default,['Permanent'],
+9091,Trebuchet Tactician,Default,"['Hidden', 'Permanent']",
 712,Kites over Caledon,Default,['Permanent'],
 7232,Strength of the Unseen,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']",
 545,Spy on This!,Default,['Monthly'],"The Flame Legion and dredge will regret trying to eavesdrop on you! Recover and turn in audio logs from sonic periscopes in Wayfarer Foothills, Snowden Drifts, Plains of Ashford, Diessa Plateau, and Iron Marches."
@@ -7575,7 +7572,6 @@ This is but the second step on a long road."
 2455,Master Herald,Default,"['Pvp', 'Permanent']",
 5910,Revenge of Zohaqan,Default,['Permanent'],
 7626,PvP Rush Contender,Default,"['Pvp', 'Permanent']",Champion Points: 20
-8883,(Repeatable) Starlit Weald: Foothold Bivouac Renown Heart,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Repeatable', 'Permanent']",
 6798,Aether Aversion,Default,['Permanent'],
 7954,Elona Reach Veteran,Default,"['Pvp', 'Hidden', 'Permanent']",Days gone by...
 2788,Toypocalypse Survivor,Default,"['Pvp', 'Hidden', 'Repeatable', 'Permanent']",Toypocalypse Cancelled...again!

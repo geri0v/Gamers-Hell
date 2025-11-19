@@ -1319,7 +1319,6 @@ id,name,type,level,rarity,vendor_value
 1374,Mighty Worn Chain Gauntlets,Armor,16,Fine,18
 1375,Shaman's Privateer Pants,Armor,69,Fine,82
 1376,Precise Worn Chain Gauntlets,Armor,7,Fine,11
-1377,Ravaging Privateer Boots of the Afflicted,Armor,57,Masterwork,98
 1378,Precise Worn Chain Gauntlets,Armor,12,Fine,16
 1379,Shaman's Privateer Pants,Armor,74,Fine,86
 1380,Precise Worn Chain Gauntlets,Armor,17,Fine,19
@@ -18107,7 +18106,6 @@ id,name,type,level,rarity,vendor_value
 25442,Healing Shiverpeak Short Bow,Weapon,11,Fine,24
 25443,Healing Shiverpeak Short Bow,Weapon,16,Fine,30
 25444,Mending Shiverpeak Short Bow,Weapon,21,Fine,36
-25445,Mending Shiverpeak Short Bow,Weapon,26,Fine,42
 25446,Mending Shiverpeak Short Bow,Weapon,31,Fine,47
 25447,Mending Shiverpeak Short Bow,Weapon,36,Fine,53
 25448,Mending Shiverpeak Short Bow,Weapon,41,Fine,57
@@ -18119,10 +18117,8 @@ id,name,type,level,rarity,vendor_value
 25454,Shaman's Shiverpeak Short Bow,Weapon,71,Fine,89
 25455,Shaman's Shiverpeak Short Bow,Weapon,76,Fine,95
 25456,Shaman's Shiverpeak Short Bow,Weapon,80,Fine,99
-25457,Healing Shiverpeak Short Bow of Agony,Weapon,14,Masterwork,57
 25458,Healing Shiverpeak Short Bow of Force,Weapon,20,Masterwork,72
 25459,Mending Shiverpeak Short Bow of Accuracy,Weapon,26,Masterwork,84
-25460,Mending Shiverpeak Short Bow of Grawl Slaying,Weapon,32,Masterwork,96
 25461,Mending Shiverpeak Short Bow of Serpent Slaying,Weapon,38,Masterwork,108
 25462,Mending Shiverpeak Short Bow of Smoldering,Weapon,44,Masterwork,120
 25463,Mending Shiverpeak Short Bow of Debility,Weapon,50,Masterwork,135
@@ -28241,6 +28237,7 @@ id,name,type,level,rarity,vendor_value
 37241,Karka Sample,Trophy,0,Basic,0
 37242,Golem Parts,Trophy,0,Basic,0
 37243,Cavalier's Iron Dagger,Weapon,80,Masterwork,132
+37245,Cavalier's Iron Dagger,Weapon,80,Rare,198
 37249,Soldier's Iron Dagger,Weapon,80,Masterwork,132
 37251,Soldier's Iron Dagger,Weapon,80,Rare,198
 37252,Magi's Iron Dagger,Weapon,80,Masterwork,132
@@ -28274,6 +28271,7 @@ id,name,type,level,rarity,vendor_value
 37296,Cabalist Coat,Armor,80,Masterwork,198
 37297,Cavalier's Iron Greatsword,Weapon,80,Rare,297
 37298,Cabalist Gloves,Armor,80,Masterwork,119
+37301,Iron Greatsword,Weapon,80,Masterwork,198
 37303,Cabalist Legs,Armor,80,Masterwork,185
 37307,Soldier's Cabalist Boots,Armor,80,Masterwork,132
 37308,Soldier's Cabalist Coat,Armor,80,Masterwork,198
@@ -28340,12 +28338,14 @@ id,name,type,level,rarity,vendor_value
 37395,Conjurer Gloves,Armor,80,Rare,179
 37398,Conjurer Pants,Armor,80,Rare,278
 37399,Soldier's Soft Wood Longbow,Weapon,80,Masterwork,198
+37400,Conjurer Mantle,Armor,80,Rare,218
 37401,Soldier's Soft Wood Longbow,Weapon,80,Rare,297
 37403,Cavalier's Aurora Shoes,Armor,80,Exotic,264
 37404,Cavalier's Aurora Garb,Armor,80,Exotic,396
 37405,Rabid Soft Wood Longbow,Weapon,80,Masterwork,198
 37406,Rabid Soft Wood Longbow,Weapon,80,Rare,297
 37407,Cavalier's Aurora Gloves,Armor,80,Exotic,238
+37409,Cavalier's Aurora Helm,Armor,80,Exotic,330
 37410,Magi's Soft Wood Longbow,Weapon,80,Masterwork,198
 37411,Cavalier's Aurora Leggings,Armor,80,Exotic,370
 37412,Cavalier's Aurora Mantle,Armor,80,Exotic,291
@@ -28359,6 +28359,7 @@ id,name,type,level,rarity,vendor_value
 37421,Iron Mace,Weapon,80,Masterwork,132
 37423,Magi's Aurora Leggings,Armor,80,Exotic,370
 37424,Magi's Aurora Mantle,Armor,80,Exotic,291
+37426,Rabid Aurora Shoes,Armor,80,Exotic,264
 37428,Soldier's Iron Mace,Weapon,80,Rare,198
 37429,Rabid Aurora Garb,Armor,80,Exotic,396
 37430,Rabid Aurora Gloves,Armor,80,Exotic,238
@@ -28368,14 +28369,18 @@ id,name,type,level,rarity,vendor_value
 37435,Rabid Iron Mace,Weapon,80,Rare,198
 37437,Rabid Aurora Mantle,Armor,80,Exotic,291
 37438,Magi's Iron Mace,Weapon,80,Masterwork,132
+37439,Soldier's Aurora Shoes,Armor,80,Exotic,264
 37440,Soldier's Aurora Garb,Armor,80,Exotic,396
 37441,Magi's Iron Mace,Weapon,80,Rare,198
 37443,Soldier's Aurora Gloves,Armor,80,Exotic,238
+37444,Soldier's Aurora Helm,Armor,80,Exotic,330
 37446,Soldier's Aurora Leggings,Armor,80,Exotic,370
 37447,Cavalier's Iron Pistol,Weapon,80,Rare,198
+37448,Soldier's Aurora Mantle,Armor,80,Exotic,291
 37451,Magi's Iron Pistol,Weapon,80,Masterwork,132
 37453,Magi's Iron Pistol,Weapon,80,Rare,198
 37455,Magi's Wolfborn Pistol,Weapon,80,Exotic,264
+37462,Cavalier's Privateer Boots,Armor,80,Masterwork,132
 37463,Soldier's Iron Pistol,Weapon,80,Masterwork,132
 37465,Cavalier's Privateer Coat,Armor,80,Masterwork,198
 37466,Cavalier's Privateer Gloves,Armor,80,Masterwork,119
@@ -37579,6 +37584,7 @@ id,name,type,level,rarity,vendor_value
 52145,Apostate's Little Smirk,Weapon,68,Exotic,354
 52146,Apostate's Razor Shard,Weapon,68,Exotic,236
 52147,Apostate's Hand Furnace,Weapon,68,Exotic,236
+52148,Apostate's Fury Unleashed,Weapon,68,Exotic,354
 52149,Apostate's Thermaul,Weapon,68,Exotic,354
 52151,Apostate's Glaukon's Greeting,Weapon,68,Exotic,236
 52155,Apostate's Radiance,Weapon,68,Exotic,354
@@ -45317,6 +45323,7 @@ id,name,type,level,rarity,vendor_value
 70696,Power of the Ley Lines,Gizmo,0,Exotic,264
 70698,Gift of the Jungle,Trophy,0,Legendary,640
 70699,Ruka's Wristguards,Armor,80,Ascended,240
+70700,Rampager's Auric Mace,Weapon,80,Exotic,264
 70701,Guild Favor,Trophy,0,Basic,0
 70702,Commander's Draconic Helm,Armor,80,Exotic,240
 70703,Mini Castor,MiniPet,0,Exotic,50
@@ -60527,7 +60534,7 @@ id,name,type,level,rarity,vendor_value
 92010,The Chilly Chaise,Gizmo,0,Exotic,0
 92011,Grothmar Crater Circuit: Silver,Container,0,Masterwork,0
 92013,Charr Heliplatform Token,Gizmo,0,Basic,0
-92014,Listening Device Sweeper,Gizmo,0,Basic,0
+92014,Listening-Device Sweeper,Gizmo,0,Basic,0
 92016,Grothmar Skyscale Challenge: Bronze,Container,0,Fine,0
 92018,Heart of the Khan-Ur,UpgradeComponent,80,Exotic,10000
 92020,Citadel Assault Pack,Consumable,0,Masterwork,0
@@ -70303,7 +70310,7 @@ Balance",Gizmo,0,Basic,0
 105434,Track 8: Beginning of a Warrior's Journey,Consumable,0,Exotic,0
 105435,Track 15: Nightfall Vigilance,Consumable,0,Exotic,0
 105437,Pearlshell Focus Skin,Consumable,0,Rare,0
-105438,Agaleus,Armor,0,Exotic,330
+105438,Agaleus,Armor,80,Exotic,330
 105440,Track 23: A Promise,Consumable,0,Exotic,0
 105442,Small Seer Cache,Container,0,Exotic,264
 105443,Seaside Scholar's Hat Skin,Consumable,0,Masterwork,0
@@ -70418,9 +70425,11 @@ Balance",Gizmo,0,Basic,0
 105614,Tropical Forest Gear Bag,Container,0,Exotic,264
 105615,Track 30: Maws of the Ruptured Heart,Consumable,0,Exotic,0
 105616,Expanded Power Source,Consumable,0,Basic,16
+105618,Calligrapher's Spear Skin,Consumable,0,Rare,0
 105620,Castoran Gear Box,Container,0,Basic,0
 105621,Track 18: Tangled Depths,Consumable,0,Exotic,0
 105624,Cabana Wall (960),Consumable,0,Basic,0
+105626,Calligrapher's Sword Skin,Consumable,0,Rare,0
 105627,Castoran Bicorn,Container,0,Exotic,256
 105628,Track 28: Sulfurous Wastes,Consumable,0,Exotic,0
 105629,Strelitzia Crystallinum Pistol,Weapon,80,Exotic,264
@@ -70429,6 +70438,7 @@ Balance",Gizmo,0,Basic,0
 105633,Column (30 x 480 x 30),Consumable,0,Basic,0
 105634,Track 30: The View from Above,Consumable,0,Exotic,0
 105636,Stairs (120 x 120),Consumable,0,Basic,0
+105637,Calligrapher's Dagger Skin,Consumable,0,Rare,0
 105638,Painter's Brilliance Glider,Consumable,0,Masterwork,0
 105639,Extremis Heavy Mantle,Armor,80,Exotic,291
 105640,Fast Constructor's Staff,Weapon,80,Exotic,396
@@ -70471,7 +70481,7 @@ Balance",Gizmo,0,Basic,0
 105704,Track 29: Bava Nisos,Consumable,0,Exotic,0
 105705,Hardy Island Fern,Consumable,0,Basic,0
 105706,Restless Captain's Heavy Veil,Armor,80,Exotic,330
-105708,Track 17: Blood and Vengeance,Consumable,0,Exotic,0
+105708,Track 17: Blood and Stone,Consumable,0,Exotic,0
 105710,Common Aetherlocation Treasure,Container,0,Fine,0
 105711,Curved Roof Corner,Consumable,0,Basic,0
 105713,Spire of the Forgotten,Weapon,80,Exotic,0
@@ -70501,6 +70511,7 @@ Balance",Gizmo,0,Basic,0
 105745,Island Tree (Curved),Consumable,0,Basic,0
 105746,Painter's Brilliance Backpack and Glider Combo,Consumable,0,Masterwork,0
 105747,Track 9: Hero from Faraway,Consumable,0,Exotic,0
+105749,Calligrapher's Warhorn Skin,Consumable,0,Rare,0
 105751,Track 4: The Jungle Provides,Consumable,0,Exotic,0
 105752,Track 3: The Pact Laid Waste,Consumable,0,Exotic,0
 105753,Windowed Wall (600 x 240),Consumable,0,Basic,0
@@ -70517,6 +70528,7 @@ Balance",Gizmo,0,Basic,0
 105770,Track 21: Thick Dark Water,Consumable,0,Exotic,0
 105774,Track 34: Dirge of the Father King,Consumable,0,Exotic,0
 105777,Track 7: Elona Reach,Consumable,0,Exotic,0
+105778,Calligrapher's Torch Skin,Consumable,0,Rare,0
 105779,Track 5: The Empire of Dragons,Consumable,0,Exotic,0
 105782,Track 11: Rhythms of War,Consumable,0,Exotic,0
 105783,Painter's Brilliance Backpack,Consumable,0,Masterwork,0
@@ -70545,7 +70557,7 @@ Balance",Gizmo,0,Basic,0
 105818,Extremis Token: Gloves,Trophy,0,Exotic,5000
 105820,Track 49: Truly Awake,Consumable,0,Exotic,0
 105821,Strelitzia Crystallinum Scepter,Weapon,80,Exotic,264
-105822,Castora: Hero's Choice Chest,Gizmo,0,Rare,0
+105822,Castora: Hero's Choice Chest,Gizmo,0,Exotic,0
 105823,Seer-Enchanted Longbow,Weapon,80,Exotic,396
 105824,Bottle of Choyan Fruit Punch,Trophy,0,Junk,1000
 105825,Track 3: Welcome to the Desert,Consumable,0,Exotic,0
@@ -70588,6 +70600,7 @@ Balance",Gizmo,0,Basic,0
 105885,Track 4: Army of the War God,Consumable,0,Exotic,0
 105886,Restless Captain's Medium Veil,Armor,80,Exotic,330
 105887,Track 18: Tangled Depths,Consumable,0,Exotic,0
+105889,Visions of Eternity Launch Supply Drop: Week Four,Container,0,Rare,0
 105890,Strelitzia Crystallinum Focus,Weapon,80,Exotic,264
 105891,Track 47: Junkyard Strife,Consumable,0,Exotic,0
 105895,Track 57: A New Era of Heroes,Consumable,0,Exotic,0
@@ -70679,6 +70692,7 @@ Balance",Gizmo,0,Basic,0
 106048,Track 21: Marked Target,Consumable,0,Exotic,0
 106050,Track 26: What Remains of the Tyrants,Consumable,0,Exotic,0
 106052,Great Bearded Goatfish,Container,0,Fine,64
+106055,Track 15: Nightfall Vigilance,Consumable,0,Exotic,0
 106057,Track 31: The Slums,Consumable,0,Exotic,0
 106058,Bamboo Awning,Consumable,0,Basic,0
 106060,Track 26: Arid Dawn,Consumable,0,Exotic,0
@@ -70730,6 +70744,7 @@ Balance",Gizmo,0,Basic,0
 106141,Vibrant Companions Mount Adoption License,Consumable,0,Rare,999
 106142,Track 32: Veterans of the Desolation,Consumable,0,Exotic,0
 106143,Track 42: Lament of the Lutgardises,Consumable,0,Exotic,0
+106144,Calligrapher's Shield Skin,Consumable,0,Rare,0
 106146,Dragonsblood Impaler,Weapon,80,Exotic,396
 106147,Track 39: Forsaken Nobility,Consumable,0,Exotic,0
 106148,Track 3: The Pact Laid Waste,Consumable,0,Exotic,0
@@ -70756,6 +70771,7 @@ Balance",Gizmo,0,Basic,0
 106178,Selachimorpha,Armor,80,Legendary,240
 106179,Track 12: Golden Heights,Consumable,0,Exotic,0
 106181,Tropical Shrub,Consumable,0,Basic,0
+106182,Calligrapher's Short Bow Skin,Consumable,0,Rare,0
 106183,Strelitzia Crystallinum Torch,Weapon,80,Exotic,264
 106184,Track 19: The Queen of Murk,Consumable,0,Exotic,0
 106186,Stairs (Clockwise Corner),Consumable,0,Basic,0
@@ -70764,6 +70780,7 @@ Balance",Gizmo,0,Basic,0
 106190,Track 5: Memories Forgotten,Consumable,0,Exotic,0
 106192,Bamboo Wall (240 x 240),Consumable,0,Basic,0
 106194,Track 39: Forsaken Nobility,Consumable,0,Exotic,0
+106195,Calligrapher's Focus Skin,Consumable,0,Rare,0
 106196,Track 19: An Army of Avarice,Consumable,0,Exotic,0
 106197,Track 16: Attack on Tarir,Consumable,0,Exotic,0
 106199,Hammerheart's Sword,Weapon,80,Ascended,330
@@ -70814,6 +70831,7 @@ Balance",Gizmo,0,Basic,0
 106281,Track 3: Captain of the Aetherblades,Consumable,0,Exotic,0
 106282,Track 10: Sunless Isle,Consumable,0,Exotic,0
 106283,Restless Captain's Medium Gloves,Armor,80,Exotic,238
+106284,Calligrapher's Greatsword Skin,Consumable,0,Rare,0
 106285,Chromatic Bubble Wand,Container,0,Exotic,0
 106286,Stairs (120 x 60),Consumable,0,Basic,0
 106289,Mini Shadowstone Pet Rock,MiniPet,0,Exotic,50
@@ -70821,6 +70839,7 @@ Balance",Gizmo,0,Basic,0
 106291,Track 17: Leaving Tarir,Consumable,0,Exotic,0
 106292,Great Choya Race: Bronze,Container,0,Fine,0
 106293,Alliance Field Operative's Gloves Box,Container,0,Exotic,0
+106297,Calligrapher's Rifle Skin,Consumable,0,Rare,0
 106298,Extremis Medium Leggings,Armor,80,Exotic,370
 106300,Castoran Aquatic Treasure Box,Container,0,Basic,0
 106301,Track 19: The Prophet's Shadow,Consumable,0,Exotic,0
@@ -70840,6 +70859,7 @@ Balance",Gizmo,0,Basic,0
 106327,Track 12: Golden Heights,Consumable,0,Exotic,0
 106330,Restless Captain's Heavy Leggings,Armor,80,Exotic,370
 106332,Track 41: Kestrel's Watch,Consumable,0,Exotic,0
+106333,Expanded Power Source,Consumable,0,Basic,16
 106334,Soundtrack Single—Path of Fire,Container,0,Exotic,0
 106335,Alliance Field Operative's Boots Box,Container,0,Exotic,0
 106336,Wide Entryway Wall (Single),Consumable,0,Basic,0
@@ -70863,6 +70883,7 @@ Balance",Gizmo,0,Basic,0
 106366,Track 2: This Unknown Hemisphere,Consumable,0,Exotic,0
 106367,Curved Roof (600),Consumable,0,Basic,0
 106368,Seer-Enchanted Mace,Weapon,80,Exotic,264
+106369,Calligrapher's Scepter Skin,Consumable,0,Rare,0
 106370,Survivor's Enchanted Compass,CraftingMaterial,0,Exotic,0
 106371,Track 11: The Wizards,Consumable,0,Exotic,0
 106375,Alliance Field Operative's Heavy Gloves,Armor,80,Exotic,238
@@ -70880,12 +70901,13 @@ Balance",Gizmo,0,Basic,0
 106396,Track 23: A Promise,Consumable,0,Exotic,0
 106398,Track 6: Stroll in the Night Market,Consumable,0,Exotic,0
 106399,Chromatic Bubbles,UpgradeComponent,80,Exotic,10000
-106400,Agaleus,Armor,0,Exotic,330
+106400,Agaleus,Armor,80,Exotic,330
 106403,Track 22: Boiling Point,Consumable,0,Exotic,0
 106404,Track 25: Yagon's Choir,Consumable,0,Exotic,0
 106405,Track 44: Edge of Annihilation,Consumable,0,Exotic,0
 106406,Fast Constructor's Mace,Weapon,80,Exotic,264
 106408,Track 38: The Opulence of Vabbi,Consumable,0,Exotic,0
+106414,Calligrapher's Axe Skin,Consumable,0,Rare,0
 106415,Track 9: Quaggan Command,Consumable,0,Exotic,0
 106417,Bonus Cache,Container,0,Exotic,264
 106418,Alliance Field Operative's Medium Mantle,Armor,80,Exotic,291
@@ -70897,6 +70919,7 @@ Balance",Gizmo,0,Basic,0
 106425,Track 20: The Bloodied Lord,Consumable,0,Exotic,0
 106426,Track 13: Highland Hares,Consumable,0,Exotic,0
 106427,Track 12: Sands of Time,Consumable,0,Exotic,0
+106428,Calligrapher's Weapon Choice,Container,0,Rare,0
 106429,Track 58: A World Without You,Consumable,0,Exotic,0
 106432,Track 26: What Remains of the Tyrants,Consumable,0,Exotic,0
 106433,Track 15: Highlands Kraal,Consumable,0,Exotic,0
@@ -70927,6 +70950,7 @@ Balance",Gizmo,0,Basic,0
 106470,Extremis Heavy Gloves,Armor,80,Exotic,238
 106471,Chromatic Bubbles,UpgradeComponent,80,Exotic,10000
 106472,Fast Constructor's Warhorn,Weapon,80,Exotic,264
+106474,Calligrapher's Mace Skin,Consumable,0,Rare,0
 106475,Track 7: Strangely Familiar Place,Consumable,0,Exotic,0
 106481,Shipwreck Strand Renown Token,Trophy,0,Rare,0
 106482,Entryway Wall (Double),Consumable,0,Basic,0
@@ -70943,7 +70967,7 @@ Balance",Gizmo,0,Basic,0
 106495,Track 9: This Mountain Before Us,Consumable,0,Exotic,0
 106497,Ship Mast,Consumable,0,Basic,0
 106498,Skimmer-Net Scramble: Bronze,Container,0,Fine,0
-106501,Track 17: Blood and Vengeance,Consumable,0,Exotic,0
+106501,Track 17: Blood and Stone,Consumable,0,Exotic,0
 106502,Skimmer Ley-Line Adventure: Gold,Container,0,Fine,0
 106503,Track 40: The End of War,Consumable,0,Exotic,0
 106504,Pearlshell Mace Skin,Consumable,0,Rare,0
@@ -70978,6 +71002,7 @@ Balance",Gizmo,0,Basic,0
 106547,Wall Bracket Corner,Consumable,0,Basic,0
 106548,Captain Leo the Relentless and the Kitty Crew,Gizmo,0,Exotic,256
 106554,Endless Castoran Choya Tonic,Gizmo,0,Exotic,104
+106555,Calligrapher's Hammer Skin,Consumable,0,Rare,0
 106557,Track 7: Amnytas in Peril,Consumable,0,Exotic,0
 106560,"""/ThumbsDown"" Emote Tome",Consumable,0,Exotic,0
 106561,Track 22: On the Banks of the Elon,Consumable,0,Exotic,0
@@ -70989,6 +71014,7 @@ Balance",Gizmo,0,Basic,0
 106572,Track 5: Dangerous Beauty,Consumable,0,Exotic,0
 106574,Nautical String Lights,Consumable,0,Basic,0
 106575,Track 14: Malaise,Consumable,0,Exotic,0
+106577,Calligrapher's Pistol Skin,Consumable,0,Rare,0
 106578,Starlit Weald Cache,Container,0,Basic,0
 106579,Fast Constructor's Shield,Weapon,80,Exotic,264
 106582,Track 1: Secrets of the Obscure,Consumable,0,Exotic,0
@@ -71049,6 +71075,7 @@ Balance",Gizmo,0,Basic,0
 106676,Agaleus Container,Container,0,Exotic,0
 106679,Track 22: On the Banks of the Elon,Consumable,0,Exotic,0
 106681,Fast Constructor's Hammer,Weapon,80,Exotic,396
+106684,Calligrapher's Staff Skin,Consumable,0,Rare,0
 106685,Track 8: Oath to the Ancients,Consumable,0,Exotic,0
 106686,Extremis Medium Coat,Armor,80,Exotic,396
 106687,Track 32: Veterans of the Desolation,Consumable,0,Exotic,0
@@ -71062,6 +71089,7 @@ Balance",Gizmo,0,Basic,0
 106699,Track 28: Rage and Regret,Consumable,0,Exotic,0
 106701,Track 29: A Future Carved in Jade,Consumable,0,Exotic,0
 106702,Track 18: City Tensions,Consumable,0,Exotic,0
+106703,Calligrapher's Longbow Skin,Consumable,0,Rare,0
 106706,Seer-Enchanted Short Bow,Weapon,80,Exotic,396
 106707,Track 1: Path of Fire,Consumable,0,Exotic,0
 106708,Extremis Light Gloves,Armor,80,Exotic,238
@@ -71097,3 +71125,18 @@ Balance",Gizmo,0,Basic,0
 106755,Track 26: Whose Side Are You On,Consumable,0,Exotic,0
 106758,Track 35: Halls of the Undead,Consumable,0,Exotic,0
 106760,Ethereal Aquarium,Container,0,Exotic,0
+106762,Black Lion Underwater Kelp Grove Recipe,Consumable,0,Basic,0
+106767,Black Lion Underwater Frenzied Fish Recipe,Consumable,0,Basic,0
+106774,Black Lion Material Bag: Visions of Eternity,Container,0,Masterwork,0
+106781,Black Lion Underwater Geothermal Vent Recipe,Consumable,0,Basic,0
+106786,Black Lion Underwater Meandering Fish Recipe,Consumable,0,Basic,0
+106789,Black Lion Underwater Coral Formation Recipe,Consumable,0,Basic,0
+106792,Black Lion Underwater Tranquil Fish Recipe,Consumable,0,Basic,0
+106795,Black Lion Underwater Anemone Recipe,Consumable,0,Basic,0
+106801,Black Lion Underwater Kelp Recipe,Consumable,0,Basic,0
+106806,Black Lion Underwater Solid Rock Recipe,Consumable,0,Basic,0
+106814,Asuran Conjured Doorway Skin,Consumable,0,Rare,0
+106815,Underwater Homestead Package,Container,0,Basic,0
+106818,Homestead Racetrack Starter Bundle,Container,0,Exotic,0
+106821,Black Lion Underwater Jellyfish Recipe,Consumable,0,Basic,0
+106825,Black Lion Underwater Porous Rock Recipe,Consumable,0,Basic,0
