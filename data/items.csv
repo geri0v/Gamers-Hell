@@ -1319,6 +1319,7 @@ id,name,type,level,rarity,vendor_value
 1374,Mighty Worn Chain Gauntlets,Armor,16,Fine,18
 1375,Shaman's Privateer Pants,Armor,69,Fine,82
 1376,Precise Worn Chain Gauntlets,Armor,7,Fine,11
+1377,Ravaging Privateer Boots of the Afflicted,Armor,57,Masterwork,98
 1378,Precise Worn Chain Gauntlets,Armor,12,Fine,16
 1379,Shaman's Privateer Pants,Armor,74,Fine,86
 1380,Precise Worn Chain Gauntlets,Armor,17,Fine,19
@@ -18106,6 +18107,7 @@ id,name,type,level,rarity,vendor_value
 25442,Healing Shiverpeak Short Bow,Weapon,11,Fine,24
 25443,Healing Shiverpeak Short Bow,Weapon,16,Fine,30
 25444,Mending Shiverpeak Short Bow,Weapon,21,Fine,36
+25445,Mending Shiverpeak Short Bow,Weapon,26,Fine,42
 25446,Mending Shiverpeak Short Bow,Weapon,31,Fine,47
 25447,Mending Shiverpeak Short Bow,Weapon,36,Fine,53
 25448,Mending Shiverpeak Short Bow,Weapon,41,Fine,57
@@ -18117,8 +18119,10 @@ id,name,type,level,rarity,vendor_value
 25454,Shaman's Shiverpeak Short Bow,Weapon,71,Fine,89
 25455,Shaman's Shiverpeak Short Bow,Weapon,76,Fine,95
 25456,Shaman's Shiverpeak Short Bow,Weapon,80,Fine,99
+25457,Healing Shiverpeak Short Bow of Agony,Weapon,14,Masterwork,57
 25458,Healing Shiverpeak Short Bow of Force,Weapon,20,Masterwork,72
 25459,Mending Shiverpeak Short Bow of Accuracy,Weapon,26,Masterwork,84
+25460,Mending Shiverpeak Short Bow of Grawl Slaying,Weapon,32,Masterwork,96
 25461,Mending Shiverpeak Short Bow of Serpent Slaying,Weapon,38,Masterwork,108
 25462,Mending Shiverpeak Short Bow of Smoldering,Weapon,44,Masterwork,120
 25463,Mending Shiverpeak Short Bow of Debility,Weapon,50,Masterwork,135
