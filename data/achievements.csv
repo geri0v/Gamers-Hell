@@ -119,7 +119,7 @@ Story Instance: Legacy"
 919,What Does She Know?,Default,['Permanent'],"So close, yet so far."
 4193,For Petey's Sake,Default,"['Pvp', 'RepairOnLogin', 'Permanent']",Find the collections requested by Gorrik to nurse Petey back to health.
 1060,Trick-or-Treater V,Default,"['Pvp', 'Daily']",
-1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
+8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
 4171,Master Diver: Kessex Hills,Default,['Permanent'],This chest can be reopened once per week or per completion of the Master Diver achievement.
 1712,Fractal Master,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>WARNING: some fractals may cause injury, psychic trauma, blindness, or death.</c>"
 3475,Siren's Landing Insight: Lava Leap,Default,['Permanent'],
@@ -133,7 +133,7 @@ Surely it must be an official title if a self-proclaimed skritt king gives it to
 
 Surely it must be an official title if a self-proclaimed skritt king gives it to you, right?"
 3489,Aurora II: Empowering,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
-8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
+1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
 4167,Survey on Subjects of Importance,Default,['Permanent'],
 6159,An Impostor Walks among Us,Default,['Permanent'],You'll have to take off your shoes.
 6934,Peace and Quiet,Default,['Permanent'],
@@ -771,6 +771,7 @@ During the Fractal Incursion event, some steps of this achievement will be unloc
 2874,Interior Design 203,Default,['Daily'],
 2344,Headhunter,Default,['Permanent'],
 6991,Amnytas Mastery,Default,"['CategoryDisplay', 'MoveToTop', 'Permanent']","Isgarren and Vass stood over the edge of Amnytas, looking down. This place was worth protecting—Tyria. Amnytas would be their vessel to do so."
+9096,"(Daily) Gnashbash ""Birthday"" Celebration: Dance",Default,['Daily'],
 6197,Adept Catalyst,Default,"['Pvp', 'Permanent']",
 5540,Champions Insight: Thunderhead Keep,Default,['Permanent'],
 4781,Passport to Ahdashim,Default,['Permanent'],The worthiest of heroes gain the greatest access.
@@ -1853,6 +1854,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 5895,Return to The Crystal Dragon,Default,['Permanent'],
 454,Daily Dodger,Default,"['Pvp', 'Daily']",Also known as Daily Evader.
 7342,Deputized for Dungeons,Default,['Permanent'],
+9094,Gnashbash Heist: Not So Sneaky,Default,['Permanent'],
 1646,No Shocks Here,Default,['Permanent'],Story Instance: Disturbance in Brisban Wildlands
 2703,League Revenant—Champion,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement advances the League Profession—Champion achievement.
 7089,Mabon's Fate,Default,['Permanent'],Journal: Mabon's Fate
@@ -2026,13 +2028,13 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3672,To Kill a God,Default,"['Hidden', 'Permanent']",Journal: To Kill a God Completed
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
+4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
 6618,Completing Events III,Default,['Permanent'],
 8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
+6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
 2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
-4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
-6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 8909,Sylvan Shapeshifter,Default,['Permanent'],They'd prefer you to be anything but yourself.
 5551,League Participator—Conquest Season Twenty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
@@ -2042,6 +2044,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 1195,Aetherblade Retreat Stabilizer,Default,['Permanent'],They're in full retreat now.
 1912,Daily Spekks's Lab Jumping Puzzle,Default,"['Pvp', 'Daily']",
 6733,Training Skills,Default,['Permanent'],
+9093,Gnashbash Heist: Silver,Default,['Permanent'],
 2960,Daily Adventure: The Ley-Line Run,Default,"['Pvp', 'Daily']",
 8911,Daily Birdie Benefactor,Default,['Daily'],"You'll earn a medal for this one, soldier."
 1011,Something Good to Eat,Default,"['Pvp', 'Hidden', 'Permanent']",
@@ -3053,6 +3056,7 @@ This is but the first step on a long road."
 8489,(Repeatable) Mount Balrior: Calibration Courier,Default,"['IgnoreNearlyComplete', 'Repeatable', 'Permanent']","""What's 'calibration'? Does it smell funny?"""
 5737,Ore Miner: Bloodstone Fen,Default,['Permanent'],
 8212,Lowland Shore Insight: Geyser Flow,Default,['Permanent'],
+9097,Gnashbash Heist: Bronze,Default,['Permanent'],
 7017,Skywatch Archipelago Mastery,Default,"['CategoryDisplay', 'MoveToTop', 'Permanent']",You've proven your dedication as a true member of the Astral Ward.
 5701,Cooler Than Cool,Default,['Permanent'],
 8444,Klobjarne Geirr: Journey of the Claw,Default,"['Pvp', 'RepairOnLogin', 'Permanent']",
@@ -3741,6 +3745,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 7952,Darkhaven Veteran,Default,"['Pvp', 'Hidden', 'Permanent']",Days gone by...
 8166,Woad Armor Collector,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",Shrouded by the strength of the wilds.
 4707,Skyscale Scales,ItemSet,"['Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
+9098,"Gnashbash ""Birthday"" Celebration: Checking In",Default,['Permanent'],
 2595,Tamer of Wyverns,Default,['Permanent'],That's a meaty task...
 6865,Hunger Manifest,ItemSet,"['Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 7075,Skywatch Archipelago Incursions,Default,['Weekly'],
@@ -7182,6 +7187,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 —Loonaloo</c>"
 2962,Daily Tier 3 Captain Mai Trin Boss,Default,['Daily'],
 7908,Fabled Paragon,Default,"['Pvp', 'Permanent']",Your virtues are your strength.
+9089,Gnashbash Heist: Special Shiny,Default,['Permanent'],
 5006,(Annual) Raceway Regular,Default,['Permanent'],
 3007,"Ley-Line ""Research""",Default,['Permanent'],
 3849,Equipment Tracker,Default,"['Hidden', 'Permanent']",
@@ -7333,6 +7339,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 5958,Return to Bad Blood,Default,['Permanent'],
 1238,Aftermath Toxic Offshoot Finisher III,Default,"['Pvp', 'Daily']",
 2094,Daily Guardian or Necromancer Winner,Default,"['Pvp', 'Daily']",
+9087,"Gnashbash ""Birthday"" Celebration",Default,"['IgnoreNearlyComplete', 'MoveToTop', 'Permanent']",
 8940,Ruins of the Old World,Default,['Permanent'],Journal: Ruins of the Old World
 2441,Meteorlogicus I: The Experimental Scepter,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",The power of the elements are some of the greatest powers in Tyria. Journey through the land and experience the fury of its storms and the might of its creatures as you begin your personal journey to create the legendary precursor Storm.
 5593,Top Dragon Responder: Snowden Drifts,Default,['Permanent'],
