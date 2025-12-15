@@ -21643,6 +21643,7 @@ id,name,type,level,rarity,vendor_value
 29073,Strong Torch,Weapon,24,Basic,13
 29074,Strong Torch,Weapon,28,Basic,15
 29075,Strong Torch,Weapon,32,Basic,16
+29076,Strong Torch,Weapon,36,Basic,18
 29077,Strong Torch,Weapon,40,Basic,19
 29078,Strong Torch,Weapon,44,Basic,20
 29079,Strong Torch,Weapon,48,Basic,22
@@ -21661,6 +21662,7 @@ id,name,type,level,rarity,vendor_value
 29092,Strong Trident,Weapon,32,Basic,24
 29093,Strong Trident,Weapon,36,Basic,27
 29094,Strong Trident,Weapon,40,Basic,29
+29095,Strong Trident,Weapon,44,Basic,30
 29096,Strong Trident,Weapon,48,Basic,33
 29097,Berserker's Trident,Weapon,52,Basic,35
 29098,Berserker's Trident,Weapon,56,Basic,37
