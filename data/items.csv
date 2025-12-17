@@ -12439,7 +12439,6 @@ id,name,type,level,rarity,vendor_value
 14831,Vigorous Dredge Firearm,Weapon,50,Rare,135
 14832,Hearty Dredge Firearm,Weapon,50,Rare,135
 14833,Carrion Ogre Flintlock,Weapon,65,Rare,165
-14834,Cleric's Ogre Flintlock,Weapon,65,Rare,165
 14836,Valkyrie Ogre Flintlock,Weapon,65,Rare,165
 14837,Berserker's Ogre Flintlock,Weapon,65,Rare,165
 14838,Rampager's Ogre Flintlock,Weapon,65,Rare,165
@@ -12450,18 +12449,15 @@ id,name,type,level,rarity,vendor_value
 14844,Strong Bandit Musket,Weapon,35,Rare,153
 14845,Vigorous Bandit Musket,Weapon,35,Rare,153
 14846,Hearty Bandit Musket,Weapon,35,Rare,153
-14847,Ravaging Dredge Boomstick,Weapon,50,Rare,203
 14848,Rejuvenating Dredge Boomstick,Weapon,50,Rare,203
 14849,Honed Dredge Boomstick,Weapon,50,Rare,203
 14851,Strong Dredge Boomstick,Weapon,50,Rare,203
 14852,Vigorous Dredge Boomstick,Weapon,50,Rare,203
 14853,Hearty Dredge Boomstick,Weapon,50,Rare,203
 14854,Carrion Ogre Blaster,Weapon,65,Rare,248
-14855,Cleric's Ogre Blaster,Weapon,65,Rare,248
 14857,Valkyrie Ogre Blaster,Weapon,65,Rare,248
 14858,Berserker's Ogre Blaster,Weapon,65,Rare,248
 14859,Rampager's Ogre Blaster,Weapon,65,Rare,248
-14860,Knight's Ogre Blaster,Weapon,65,Rare,248
 14861,Ravaging Bandit Harpoon Gun,Weapon,35,Rare,153
 14862,Rejuvenating Bandit Harpoon Gun,Weapon,35,Rare,153
 14863,Honed Bandit Harpoon Gun,Weapon,35,Rare,153
@@ -12519,14 +12515,7 @@ id,name,type,level,rarity,vendor_value
 14936,Valkyrie Corrupted Wartorch,Weapon,80,Exotic,264
 14937,Valkyrie Corrupted Trident,Weapon,80,Exotic,396
 14938,Valkyrie Corrupted Harbinger,Weapon,80,Exotic,264
-14939,Mighty Bronze Axe,Weapon,10,Fine,15
-14940,Vital Bronze Axe,Weapon,10,Fine,15
-14941,Mighty Bronze Axe,Weapon,20,Masterwork,48
 14942,Vital Bronze Axe,Weapon,20,Masterwork,48
-14943,Precise Bronze Axe,Weapon,15,Fine,20
-14944,Resilient Bronze Axe,Weapon,15,Fine,20
-14945,Precise Bronze Axe,Weapon,20,Masterwork,48
-14946,Resilient Bronze Axe,Weapon,20,Masterwork,48
 14947,Vigorous Iron Axe,Weapon,35,Masterwork,68
 14948,Vigorous Iron Axe,Weapon,25,Fine,27
 14949,Mighty Bronze Sword,Weapon,10,Fine,15
@@ -12549,14 +12538,7 @@ id,name,type,level,rarity,vendor_value
 14966,Resilient Bronze Mace,Weapon,20,Masterwork,48
 14967,Vigorous Iron Mace,Weapon,35,Masterwork,68
 14968,Vigorous Iron Mace,Weapon,25,Fine,27
-14969,Mighty Bronze Shield,Weapon,10,Fine,15
-14970,Vital Bronze Shield,Weapon,10,Fine,15
-14971,Mighty Bronze Shield,Weapon,20,Masterwork,48
-14972,Vital Bronze Shield,Weapon,20,Masterwork,48
 14973,Precise Bronze Shield,Weapon,15,Fine,20
-14974,Resilient Bronze Shield,Weapon,15,Fine,20
-14975,Precise Bronze Shield,Weapon,20,Masterwork,48
-14976,Resilient Bronze Shield,Weapon,20,Masterwork,48
 14977,Vigorous Iron Shield,Weapon,35,Masterwork,68
 14978,Vigorous Iron Shield,Weapon,25,Fine,27
 14979,Mighty Bronze Dagger,Weapon,10,Fine,15
@@ -12597,7 +12579,6 @@ id,name,type,level,rarity,vendor_value
 15014,Resilient Bronze Spear,Weapon,15,Fine,30
 15015,Precise Bronze Spear,Weapon,20,Masterwork,72
 15016,Resilient Bronze Spear,Weapon,20,Masterwork,72
-15017,Vigorous Iron Spear,Weapon,35,Masterwork,102
 15018,Vigorous Iron Spear,Weapon,25,Fine,41
 15019,Healing Bronze Dagger,Weapon,15,Fine,20
 15020,Iron Dagger,Weapon,35,Masterwork,68
@@ -25675,6 +25656,7 @@ id,name,type,level,rarity,vendor_value
 34132,Carrion Tribal Focus of Accuracy,Weapon,78,Exotic,256
 34133,Carrion Tribal Focus of Rage,Weapon,80,Exotic,264
 34134,Carrion Tribal Greatsword of Blood,Weapon,62,Exotic,318
+34135,Carrion Tribal Greatsword of Vision,Weapon,70,Exotic,354
 34136,Carrion Tribal Greatsword of Accuracy,Weapon,78,Exotic,384
 34137,Carrion Tribal Greatsword of Rage,Weapon,80,Exotic,396
 34138,Carrion Tribal Warhammer of Blood,Weapon,62,Exotic,318
@@ -25721,6 +25703,7 @@ id,name,type,level,rarity,vendor_value
 34179,Carrion Tribal Staff of Vision,Weapon,70,Exotic,354
 34180,Carrion Tribal Staff of Accuracy,Weapon,78,Exotic,384
 34181,Carrion Tribal Staff of Rage,Weapon,80,Exotic,396
+34182,Carrion Tribal Sword of Blood,Weapon,62,Exotic,212
 34183,Carrion Tribal Sword of Vision,Weapon,70,Exotic,236
 34184,Carrion Tribal Sword of Accuracy,Weapon,78,Exotic,256
 34185,Carrion Tribal Sword of Rage,Weapon,80,Exotic,264
@@ -25785,6 +25768,7 @@ id,name,type,level,rarity,vendor_value
 34244,Malign Glyphic Ward,Weapon,11,Fine,16
 34245,Malign Glyphic Ward,Weapon,16,Fine,20
 34246,Malign Glyphic Short Bow,Weapon,1,Fine,9
+34247,Malign Glyphic Short Bow,Weapon,6,Fine,17
 34248,Malign Glyphic Short Bow,Weapon,11,Fine,24
 34249,Malign Glyphic Short Bow,Weapon,16,Fine,30
 34250,Malign Glyphic Speargun,Weapon,1,Fine,9
@@ -37559,6 +37543,7 @@ id,name,type,level,rarity,vendor_value
 52098,Apostate's Little Smirk,Weapon,59,Exotic,318
 52099,Apostate's Razor Shard,Weapon,59,Exotic,212
 52104,Apostate's Glaukon's Greeting,Weapon,59,Exotic,212
+52105,Apostate's Gritted Bayonet,Weapon,59,Exotic,318
 52106,Apostate's Smodur's Charge,Weapon,59,Exotic,212
 52107,Apostate's Chiminea Ward,Weapon,59,Exotic,212
 52108,Apostate's Radiance,Weapon,59,Exotic,318
@@ -40392,6 +40377,7 @@ id,name,type,level,rarity,vendor_value
 61042,Fury Unleashed,Container,0,Exotic,0
 61044,Forge Gavel,Container,0,Exotic,0
 61045,Glaukon's Greeting,Container,0,Exotic,0
+61046,Gritted Bayonet,Container,0,Exotic,0
 61047,Smodur's Charge,Container,0,Exotic,0
 61048,Chiminea Ward,Container,0,Exotic,0
 61049,Radiance,Container,0,Exotic,0
@@ -71158,6 +71144,7 @@ Balance",Gizmo,0,Basic,0
 106828,Sugardrift Mace,Weapon,80,Exotic,264
 106829,Sugardrift Shield,Weapon,80,Exotic,264
 106830,Sugardrift Spear,Weapon,80,Exotic,396
+106831,Metal Legion Logging Tool,Gathering,0,Rare,192
 106832,Black Lion Gingerbread Window Recipe,Consumable,0,Basic,0
 106833,Sugardrift Scepter,Weapon,80,Exotic,264
 106834,Jorms Plush,Consumable,0,Basic,0
@@ -71166,6 +71153,7 @@ Balance",Gizmo,0,Basic,0
 106837,Steam-Powered Legwear (Right) Skin,Consumable,0,Masterwork,0
 106838,Recipe: Jorms Plush,Consumable,0,Basic,50
 106839,Black Lion Gingerbread Door Recipe,Consumable,0,Basic,0
+106841,Metal Legion Harvesting Tool,Gathering,0,Rare,192
 106842,Raptor Mount Unlock,Consumable,0,Exotic,0
 106843,Sugardrift Rifle,Weapon,80,Exotic,396
 106844,Mini Plush Tiger,MiniPet,0,Exotic,50
@@ -71189,6 +71177,7 @@ Balance",Gizmo,0,Basic,0
 106867,Gift Barrel,Consumable,0,Basic,0
 106868,Black Lion Gingerbread Doorway Recipe,Consumable,0,Basic,0
 106869,Black Lion Gingerbread Frosting Trim Recipe,Consumable,0,Basic,0
+106870,Metal Legion Mining Tool,Gathering,0,Rare,192
 106871,Steam-Powered Legwear Package,Container,0,Masterwork,0
 106872,Basic Glider Unlock,Consumable,0,Exotic,0
 106873,Recipe: Gift Barrel,Consumable,0,Basic,50
