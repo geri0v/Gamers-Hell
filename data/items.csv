@@ -12439,6 +12439,7 @@ id,name,type,level,rarity,vendor_value
 14831,Vigorous Dredge Firearm,Weapon,50,Rare,135
 14832,Hearty Dredge Firearm,Weapon,50,Rare,135
 14833,Carrion Ogre Flintlock,Weapon,65,Rare,165
+14834,Cleric's Ogre Flintlock,Weapon,65,Rare,165
 14836,Valkyrie Ogre Flintlock,Weapon,65,Rare,165
 14837,Berserker's Ogre Flintlock,Weapon,65,Rare,165
 14838,Rampager's Ogre Flintlock,Weapon,65,Rare,165
@@ -12449,15 +12450,18 @@ id,name,type,level,rarity,vendor_value
 14844,Strong Bandit Musket,Weapon,35,Rare,153
 14845,Vigorous Bandit Musket,Weapon,35,Rare,153
 14846,Hearty Bandit Musket,Weapon,35,Rare,153
+14847,Ravaging Dredge Boomstick,Weapon,50,Rare,203
 14848,Rejuvenating Dredge Boomstick,Weapon,50,Rare,203
 14849,Honed Dredge Boomstick,Weapon,50,Rare,203
 14851,Strong Dredge Boomstick,Weapon,50,Rare,203
 14852,Vigorous Dredge Boomstick,Weapon,50,Rare,203
 14853,Hearty Dredge Boomstick,Weapon,50,Rare,203
 14854,Carrion Ogre Blaster,Weapon,65,Rare,248
+14855,Cleric's Ogre Blaster,Weapon,65,Rare,248
 14857,Valkyrie Ogre Blaster,Weapon,65,Rare,248
 14858,Berserker's Ogre Blaster,Weapon,65,Rare,248
 14859,Rampager's Ogre Blaster,Weapon,65,Rare,248
+14860,Knight's Ogre Blaster,Weapon,65,Rare,248
 14861,Ravaging Bandit Harpoon Gun,Weapon,35,Rare,153
 14862,Rejuvenating Bandit Harpoon Gun,Weapon,35,Rare,153
 14863,Honed Bandit Harpoon Gun,Weapon,35,Rare,153
@@ -12515,7 +12519,14 @@ id,name,type,level,rarity,vendor_value
 14936,Valkyrie Corrupted Wartorch,Weapon,80,Exotic,264
 14937,Valkyrie Corrupted Trident,Weapon,80,Exotic,396
 14938,Valkyrie Corrupted Harbinger,Weapon,80,Exotic,264
+14939,Mighty Bronze Axe,Weapon,10,Fine,15
+14940,Vital Bronze Axe,Weapon,10,Fine,15
+14941,Mighty Bronze Axe,Weapon,20,Masterwork,48
 14942,Vital Bronze Axe,Weapon,20,Masterwork,48
+14943,Precise Bronze Axe,Weapon,15,Fine,20
+14944,Resilient Bronze Axe,Weapon,15,Fine,20
+14945,Precise Bronze Axe,Weapon,20,Masterwork,48
+14946,Resilient Bronze Axe,Weapon,20,Masterwork,48
 14947,Vigorous Iron Axe,Weapon,35,Masterwork,68
 14948,Vigorous Iron Axe,Weapon,25,Fine,27
 14949,Mighty Bronze Sword,Weapon,10,Fine,15
@@ -12538,7 +12549,14 @@ id,name,type,level,rarity,vendor_value
 14966,Resilient Bronze Mace,Weapon,20,Masterwork,48
 14967,Vigorous Iron Mace,Weapon,35,Masterwork,68
 14968,Vigorous Iron Mace,Weapon,25,Fine,27
+14969,Mighty Bronze Shield,Weapon,10,Fine,15
+14970,Vital Bronze Shield,Weapon,10,Fine,15
+14971,Mighty Bronze Shield,Weapon,20,Masterwork,48
+14972,Vital Bronze Shield,Weapon,20,Masterwork,48
 14973,Precise Bronze Shield,Weapon,15,Fine,20
+14974,Resilient Bronze Shield,Weapon,15,Fine,20
+14975,Precise Bronze Shield,Weapon,20,Masterwork,48
+14976,Resilient Bronze Shield,Weapon,20,Masterwork,48
 14977,Vigorous Iron Shield,Weapon,35,Masterwork,68
 14978,Vigorous Iron Shield,Weapon,25,Fine,27
 14979,Mighty Bronze Dagger,Weapon,10,Fine,15
@@ -12579,6 +12597,7 @@ id,name,type,level,rarity,vendor_value
 15014,Resilient Bronze Spear,Weapon,15,Fine,30
 15015,Precise Bronze Spear,Weapon,20,Masterwork,72
 15016,Resilient Bronze Spear,Weapon,20,Masterwork,72
+15017,Vigorous Iron Spear,Weapon,35,Masterwork,102
 15018,Vigorous Iron Spear,Weapon,25,Fine,41
 15019,Healing Bronze Dagger,Weapon,15,Fine,20
 15020,Iron Dagger,Weapon,35,Masterwork,68
@@ -71174,6 +71193,7 @@ Balance",Gizmo,0,Basic,0
 106862,Recipe: Snow Diamond Ornament,Consumable,70,Masterwork,57
 106863,Sugardrift Chest,Container,0,Exotic,256
 106865,Recipe: Light-Blue Wintersday Gift,Consumable,0,Basic,50
+106866,Winter Snow Goggles,Armor,80,Exotic,330
 106867,Gift Barrel,Consumable,0,Basic,0
 106868,Black Lion Gingerbread Doorway Recipe,Consumable,0,Basic,0
 106869,Black Lion Gingerbread Frosting Trim Recipe,Consumable,0,Basic,0
