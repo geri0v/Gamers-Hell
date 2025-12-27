@@ -29057,6 +29057,7 @@ id,name,type,level,rarity,vendor_value
 38321,Bringer's Pearl Sabre,Weapon,80,Exotic,264
 38322,Bringer's Ogre Scimitar,Weapon,65,Rare,165
 38323,Giver's Iron Sword,Weapon,50,Masterwork,90
+38324,Giver's Iron Sword,Weapon,35,Masterwork,68
 38325,Bringer's Pearl Impaler,Weapon,80,Exotic,396
 38326,Bringer's Krait Pilum,Weapon,80,Rare,297
 38327,Bringer's Ogre Javelin,Weapon,65,Rare,248
@@ -29065,6 +29066,7 @@ id,name,type,level,rarity,vendor_value
 38330,Bringer's Pearl Shell,Weapon,80,Exotic,264
 38331,Bringer's Krait Shell,Weapon,80,Rare,198
 38332,Bringer's Ogre Bulwark,Weapon,65,Rare,165
+38333,Giver's Iron Shield,Weapon,50,Masterwork,90
 38334,Giver's Iron Shield,Weapon,35,Masterwork,68
 38335,Bringer's Pearl Bludgeoner,Weapon,80,Exotic,264
 38336,Bringer's Krait Morning Star,Weapon,80,Rare,198
@@ -29107,11 +29109,13 @@ id,name,type,level,rarity,vendor_value
 38373,Bringer's Krait Handgun,Weapon,80,Rare,198
 38374,Bringer's Pearl Handcannon,Weapon,80,Exotic,264
 38375,Giver's Bronze Rifle,Weapon,15,Fine,30
+38376,Giver's Iron Rifle,Weapon,35,Masterwork,102
 38377,Giver's Iron Rifle,Weapon,50,Masterwork,135
 38378,Bringer's Ogre Blaster,Weapon,65,Rare,248
 38379,Bringer's Krait Shooter,Weapon,80,Rare,297
 38380,Bringer's Pearl Blunderbuss,Weapon,80,Exotic,396
 38381,Giver's Green Wood Short Bow,Weapon,15,Fine,30
+38382,Giver's Soft Wood Short Bow,Weapon,35,Masterwork,102
 38383,Giver's Soft Wood Short Bow,Weapon,50,Masterwork,135
 38384,Bringer's Ogre Short Bow,Weapon,65,Rare,248
 38385,Bringer's Krait Short Bow,Weapon,80,Rare,297
@@ -29129,6 +29133,7 @@ id,name,type,level,rarity,vendor_value
 38397,Bringer's Krait Brazier,Weapon,80,Rare,198
 38398,Bringer's Pearl Brazier,Weapon,80,Exotic,264
 38399,Giver's Green Wood Warhorn,Weapon,15,Fine,20
+38400,Giver's Soft Wood Warhorn,Weapon,35,Masterwork,68
 38401,Giver's Soft Wood Warhorn,Weapon,50,Masterwork,90
 38402,Bringer's Ogre Harbinger,Weapon,65,Rare,165
 38403,Bringer's Krait Whelk,Weapon,80,Rare,198
@@ -29141,6 +29146,7 @@ id,name,type,level,rarity,vendor_value
 38410,Bringer's Pearl Conch,Weapon,80,Exotic,264
 38411,Giver's Green Wood Scepter,Weapon,15,Fine,20
 38412,Giver's Soft Wood Scepter,Weapon,35,Masterwork,68
+38413,Giver's Soft Wood Scepter,Weapon,50,Masterwork,90
 38414,Bringer's Ogre Truncheon,Weapon,65,Rare,165
 38415,Bringer's Krait Wand,Weapon,80,Rare,198
 38416,Bringer's Pearl Rod,Weapon,80,Exotic,264
@@ -29186,9 +29192,12 @@ id,name,type,level,rarity,vendor_value
 38506,Permanent Self-Style Hair Kit,Gizmo,0,Exotic,32
 38507,Permanent Hair Stylist Contract,Container,0,Exotic,10000
 38508,Cavalier's Ceremonial Warhorn,Weapon,80,Exotic,264
+38509,Magi's Ceremonial Warhorn,Weapon,80,Exotic,264
 38510,Rabid Ceremonial Warhorn,Weapon,80,Exotic,264
+38511,Soldier's Ceremonial Warhorn,Weapon,80,Exotic,264
 38513,Cavalier's Krytan Warhorn,Weapon,80,Masterwork,132
 38514,Magi's Krytan Warhorn,Weapon,80,Masterwork,132
+38515,Rabid Krytan Warhorn,Weapon,80,Masterwork,132
 38516,Soldier's Krytan Warhorn,Weapon,80,Masterwork,132
 38517,Krytan Warhorn,Weapon,80,Masterwork,132
 38518,Cavalier's Aureate Warhorn,Weapon,80,Rare,198
