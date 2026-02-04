@@ -805,28 +805,28 @@ id,name,min_level,max_level,type,region_name,continent_name
 1328,Auric Span,80,80,Pvp,Player vs. Player,Mists
 1329,Coming Home,80,80,Instance,Ascalon,Tyria
 1330,Grothmar Valley,80,80,Public,Ascalon,Tyria
-1331,Strike Mission: Shiverpeaks Pass (Public),80,80,Public,Ascalon,Tyria
-1332,Strike Mission: Shiverpeaks Pass (Squad),80,80,Instance,Ascalon,Tyria
+1331,Shiverpeaks Pass (Public),80,80,Public,Ascalon,Tyria
+1332,Shiverpeaks Pass,80,80,Instance,Ascalon,Tyria
 1334,Deeper and Deeper,80,80,Instance,Ascalon,Tyria
 1336,A Race to Arms,80,80,Instance,Ascalon,Tyria
 1338,Bad Blood,80,80,Instance,Ascalon,Tyria
-1339,Weekly Strike Mission: Boneskinner (Squad),80,80,Instance,Shiverpeak Mountains,Tyria
-1340,Weekly Strike Mission: Voice of the Fallen and Claw of the Fallen (Public),80,80,Public,Shiverpeak Mountains,Tyria
-1341,Weekly Strike Mission: Fraenir of Jormag (Squad),80,80,Instance,Shiverpeak Mountains,Tyria
+1339,Boneskinner,80,80,Instance,Shiverpeak Mountains,Tyria
+1340,Voice of the Fallen and Claw of the Fallen (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1341,Fraenir of Jormag,80,80,Instance,Shiverpeak Mountains,Tyria
 1342,The Invitation,80,80,Instance,Shiverpeak Mountains,Tyria
 1343,Bjora Marches,80,80,Public,Shiverpeak Mountains,Tyria
-1344,Weekly Strike Mission: Fraenir of Jormag (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1344,Fraenir of Jormag (Public),80,80,Public,Shiverpeak Mountains,Tyria
 1345,What's Left Behind,80,80,Instance,Shiverpeak Mountains,Tyria
-1346,Weekly Strike Mission: Voice of the Fallen and Claw of the Fallen (Squad),80,80,Instance,Shiverpeak Mountains,Tyria
+1346,Voice of the Fallen and Claw of the Fallen,80,80,Instance,Shiverpeak Mountains,Tyria
 1349,Silence,80,80,Instance,Shiverpeak Mountains,Tyria
-1351,Weekly Strike Mission: Boneskinner (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1351,Boneskinner (Public),80,80,Public,Shiverpeak Mountains,Tyria
 1352,Secret Lair of the Snowmen (Public),80,80,Public,,
 1353,Celestial Challenge,0,80,Public,Kryta,Tyria
 1355,Voice in the Deep,80,80,Instance,Shiverpeak Mountains,Tyria
 1356,Chasing Ghosts,80,80,Instance,Shiverpeak Mountains,Tyria
-1357,Strike Mission: Whisper of Jormag (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1357,Whisper of Jormag (Public),80,80,Public,Shiverpeak Mountains,Tyria
 1358,Eye of the North,0,0,Instance,Shiverpeak Mountains,Tyria
-1359,Strike Mission: Whisper of Jormag (Squad),80,80,Instance,Shiverpeak Mountains,Tyria
+1359,Whisper of Jormag,80,80,Instance,Shiverpeak Mountains,Tyria
 1361,The Nightmare Incarnate,80,80,Instance,Kryta,Tyria
 1362,Forging Steel (Public),80,80,Public,Shiverpeak Mountains,Tyria
 1363,"New Friends, New Enemies—North Nolan Hatchery",0,80,Instance,Ascalon,Tyria
@@ -838,9 +838,9 @@ id,name,min_level,max_level,type,region_name,continent_name
 1371,Drizzlewood Coast,80,80,Public,Shiverpeak Mountains,Tyria
 1372,Turnabout,80,80,Instance,Shiverpeak Mountains,Tyria
 1373,Pointed Parley,80,80,Instance,Shiverpeak Mountains,Tyria
-1374,Strike Mission: Cold War (Squad),80,80,Instance,Shiverpeak Mountains,Tyria
+1374,Cold War,80,80,Instance,Shiverpeak Mountains,Tyria
 1375,Snapping Steel,80,80,Instance,Shiverpeak Mountains,Tyria
-1376,Strike Mission: Cold War (Public),80,80,Public,Shiverpeak Mountains,Tyria
+1376,Cold War (Public),80,80,Public,Shiverpeak Mountains,Tyria
 1378,Behind Enemy Lines,80,80,Instance,Shiverpeak Mountains,Tyria
 1379,"One Charr, One Dragon, One Champion",80,80,Instance,Shiverpeak Mountains,Tyria
 1380,Epilogue,0,0,Instance,Shiverpeak Mountains,Tyria
@@ -887,12 +887,12 @@ id,name,min_level,max_level,type,region_name,continent_name
 1428,Arborstone,80,80,Public,Cantha,Tyria
 1429,"The Cycle, Reborn: Arborstone",80,80,Instance,Cantha,Tyria
 1430,Claiming the Isle of Reflection,80,80,Instance,Cantha,Tyria
-1432,Strike Mission: Aetherblade Hideout,80,80,Instance,Cantha,Tyria
+1432,Aetherblade Hideout,80,80,Instance,Cantha,Tyria
 1433,Old Friends,80,80,Instance,Shiverpeak Mountains,Tyria
 1434,Empty,80,80,Instance,Cantha,Tyria
 1435,Isle of Reflection,80,80,Instance,Cantha,Tyria
 1436,Extraction Point: Command Quarters,80,80,Instance,Cantha,Tyria
-1437,Strike Mission: Harvest Temple,80,80,Instance,Cantha,Tyria
+1437,Harvest Temple,80,80,Instance,Cantha,Tyria
 1438,New Kaineng City,80,80,Public,Cantha,Tyria
 1439,The Only One,80,80,Instance,Cantha,Tyria
 1440,Laying to Rest,80,80,Instance,Cantha,Tyria
@@ -902,8 +902,8 @@ id,name,min_level,max_level,type,region_name,continent_name
 1446,Aetherblade Armada,0,80,Instance,Cantha,Tyria
 1448,"The Cycle, Reborn: The Dead End Bar",80,80,Instance,Cantha,Tyria
 1449,Aurene's Sanctuary,80,80,Instance,Cantha,Tyria
-1450,Strike Mission: Xunlai Jade Junkyard,80,80,Instance,Cantha,Tyria
-1451,Strike Mission: Kaineng Overlook,80,80,Instance,Cantha,Tyria
+1450,Xunlai Jade Junkyard,80,80,Instance,Cantha,Tyria
+1451,Kaineng Overlook,80,80,Instance,Cantha,Tyria
 1452,The Echovald Wilds,80,80,Public,Cantha,Tyria
 1453,Ministry of Security: Main Office,80,80,Instance,Cantha,Tyria
 1454,The Scenic Route: Kaineng Docks,80,80,Instance,Cantha,Tyria
@@ -932,7 +932,7 @@ id,name,min_level,max_level,type,region_name,continent_name
 1482,The Battle For Lion's Arch (Public),80,80,Public,Kryta,Tyria
 1483,Memory of Old Lion's Arch,0,80,Public,Kryta,Tyria
 1484,North Evacuation Camp,80,80,Instance,Kryta,Tyria
-1485,Strike Mission: Old Lion's Court,80,80,Instance,Kryta,Tyria
+1485,Old Lion's Court,80,80,Instance,Kryta,Tyria
 1487,The Aether Escape,80,80,Instance,Kryta,Tyria
 1488,On the Case: Excavation Yard,80,80,Instance,Cantha,Tyria
 1489,A Raw Deal: Red Duck Teahouse,80,80,Instance,Cantha,Tyria
@@ -959,12 +959,12 @@ id,name,min_level,max_level,type,region_name,continent_name
 1512,The World Spire: Bastion of the Celestial,80,80,Instance,Horn of Maguuma,Tyria
 1513,Mother of Stars: Cosmic Observatory,80,80,Instance,Horn of Maguuma,Tyria
 1514,Epilogue: The Wizard's Tower,80,80,Instance,Horn of Maguuma,Tyria
-1515,Strike Mission: Cosmic Observatory,80,80,Instance,Horn of Maguuma,Tyria
+1515,Cosmic Observatory,80,80,Instance,Horn of Maguuma,Tyria
 1516,Into the Obscure: The Wizard's Tower,80,80,Instance,Horn of Maguuma,Tyria
 1517,Amnytas,80,80,Public,Horn of Maguuma,Tyria
 1518,Treachery: Nayos,80,80,Instance,Horn of Maguuma,Tyria
 1519,Hell Breaks Loose: ???,80,80,Instance,Horn of Maguuma,Tyria
-1520,Strike Mission: Temple of Febe,80,80,Instance,Horn of Maguuma,Tyria
+1520,Temple of Febe,80,80,Instance,Horn of Maguuma,Tyria
 1521,The Missing Facet: Droknar's Light,80,80,Instance,Horn of Maguuma,Tyria
 1522,Stopped Clock Tower,80,80,Public,Mad King's Realm,Mists
 1523,Convergence: Outer Nayos (Public),80,80,Public,,Mists
@@ -1048,3 +1048,5 @@ id,name,min_level,max_level,type,region_name,continent_name
 1606,Beneath the Canopy: Command Complex,80,80,Instance,Castora,Tyria
 1607,Ruins of the Old World: Untamed Crags,80,80,Instance,Castora,Tyria
 1608,Unscheduled Departures: Shipwreck Strand,80,80,Instance,Castora,Tyria
+1609,Guardian's Glade,80,80,Instance,Castora,Tyria
+1611,Laboratory CAS-U-5,78,80,Instance,Castora,Tyria
