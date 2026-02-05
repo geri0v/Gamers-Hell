@@ -119,7 +119,7 @@ Story Instance: Legacy"
 919,What Does She Know?,Default,['Permanent'],"So close, yet so far."
 4193,For Petey's Sake,Default,"['Pvp', 'RepairOnLogin', 'Permanent']",Find the collections requested by Gorrik to nurse Petey back to health.
 1060,Trick-or-Treater V,Default,"['Pvp', 'Daily']",
-1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
+8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
 4171,Master Diver: Kessex Hills,Default,['Permanent'],This chest can be reopened once per week or per completion of the Master Diver achievement.
 1712,Fractal Master,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>WARNING: some fractals may cause injury, psychic trauma, blindness, or death.</c>"
 3475,Siren's Landing Insight: Lava Leap,Default,['Permanent'],
@@ -133,7 +133,7 @@ Surely it must be an official title if a self-proclaimed skritt king gives it to
 
 Surely it must be an official title if a self-proclaimed skritt king gives it to you, right?"
 3489,Aurora II: Empowering,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
-8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
+1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
 9110,Castoran Coral: Inquest Investigation,Default,"['Pvp', 'RequiresUnlock', 'Permanent']",The Inquest will salvage whatever they can in a place like Castora.
 4167,Survey on Subjects of Importance,Default,['Permanent'],
 6159,An Impostor Walks among Us,Default,['Permanent'],You'll have to take off your shoes.
@@ -2038,13 +2038,13 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3672,To Kill a God,Default,"['Hidden', 'Permanent']",Journal: To Kill a God Completed
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
+2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
 8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
+6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
 4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
 6618,Completing Events III,Default,['Permanent'],
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
-2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
-6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 8909,Sylvan Shapeshifter,Default,['Permanent'],They'd prefer you to be anything but yourself.
 5551,League Participator—Conquest Season Twenty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
@@ -2158,6 +2158,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 6411,Legendary Xunlai Jade Junkyard,Default,['Permanent'],
 3387,The Sword Regrown,Default,"['Hidden', 'Permanent']",
 941,Grandmaster Leatherworker,Default,['Permanent'],Now with 100% more tanning.
+9158,Raid Bounty: Kela,Default,['Daily'],
 5305,Special Mission: False Effigies,Default,"['RequiresUnlock', 'Permanent']",No gods or khan-urs. Only charr.
 5428,Special Mission: Behold the Power of Healing Rockets,Default,"['RequiresUnlock', 'Permanent']",
 3552,A Family's Sacrifice,Default,"['Hidden', 'Permanent']","Countless families have been torn apart by Joko's rule. He took their hope, but now you've returned it."
@@ -2313,6 +2314,7 @@ Ward Crafter Lucirae in Moon Camp Covert can offer assisted crafting if you do n
 4561,Chasing Tales: Master of the Duel,Default,"['Hidden', 'Permanent']",Carver's ferocity was known throughout Deldrimor.
 2557,Ad Infinitum II: Upper Bound,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",Unlock all 11 fractal tier 2 components to work towards building the legendary fractal backpack.
 3412,Searing Ascent,Default,['Permanent'],Taking the scenic route...
+9129,Friend to Djinn,Default,['Permanent'],Restore the imbalance that Qadim has brought to the gates of Ahdashim.
 12,Krytan Explorer,Default,['Permanent'],You've explored the war-torn hills of humanity's home.
 2513,Chak Killer—Beginner,Default,['Permanent'],"Story Instance: ""Roots of Terror"""
 1551,WvW Tournament Contestant,Default,"['IgnoreNearlyComplete', 'Pvp', 'MoveToTop', 'Permanent']",
@@ -2752,6 +2754,7 @@ This is but the first step on a long road."
 9007,Backdoor Exploit,Default,"['Hidden', 'Permanent']",That's probably not supposed to be there.
 2560,Daily Recommended Fractal—Scale 10,Default,['Daily'],
 5037,Daily Bjora Marches Event Completer,Default,['Daily'],
+9148,Undefeated: The Key of Ahdashim,Default,['Permanent'],This achievement cannot be done in Emboldened mode.
 1701,Power Squelcher,Default,['Permanent'],Story Instance: Recalibrating the Waypoints
 6739,Decade of Champions: Claw of Jormag,Default,['Permanent'],
 2472,Hearts and Minds,Default,['Permanent'],Journal: Hearts and Minds Completed
@@ -4033,6 +4036,7 @@ Surely it must be an official title if a self-proclaimed skritt king gives it to
 6580,Dodging Attacks III,Default,['Permanent'],
 5675,Choya Response Mission,Default,['Permanent'],Note: This achievement functions on the honor system.
 3568,Damage Control,Default,['Permanent'],"Story Instance: ""The Sacrifice"""
+9142,Raid God,Default,['Permanent'],"Speaks for itself, doesn't it?"
 668,Caching Out,Default,"['MoveToTop', 'Permanent']",
 4196,[FTT 306] Proficient Dynamics—Speed Wall Level 3,Default,"['RepairOnLogin', 'Permanent']",
 6521,Pet the Dog,Default,['Permanent'],
@@ -4273,6 +4277,7 @@ It was shattered and discarded when someone asked the inventor, ""Why don't you 
 2100,Daily Warrior or Thief Winner,Default,"['Pvp', 'Daily']",
 3253,Saving Wintersday,Default,"['Pvp', 'Daily']",Everyone who celebrates Wintersday will thank you!
 4933,Staying In Character,Default,['Permanent'],
+9114,Raid God: Boss Kills,Default,['Permanent'],They've begun to fear you.
 5951,Second Response: Snowden Drifts,Default,['Permanent'],
 7240,Astral Stride,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
 5919,Course Favorite: Sandswept Isles,Default,['Permanent'],
@@ -4374,6 +4379,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 1048,Halloween Costume-Brawl Champion II,Default,['Daily'],Emerge as a champion from a costume brawl.
 8979,Lionguard Ledger,Default,['Permanent'],Journal: On the Sly
 1280,Wintersday Snowball Slinger III,Default,['Daily'],Give players a cold welcome with a snowball.
+9161,Raid Bounty: Greer,Default,['Daily'],
 1397,Antitoxin,Default,"['Pvp', 'Permanent']",Mission: The Battle for Lion's Arch
 3981,Istan Insight: Pillar of the Faithless,Default,['Permanent'],
 4389,Historical Ambition,Default,['Permanent'],If only it made a difference...
@@ -5780,6 +5786,7 @@ Story Instance: Legacy"
 6405,Daily Seitung Province Naga Slayer,Default,['Daily'],
 1713,Ogre Expert,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 6574,Ceremony and Acrimony,Default,['Permanent'],
+9183,Radiance of the Sun God,Default,['Permanent'],"""And then Zintl gifted the hylek with endless summers, filled with warmth and guiding light. May the sun never set."""
 4610,Chasing Tales: Torrent of Magic,Default,"['Hidden', 'Permanent']",Asaliea was said to be a living conduit of ley energy.
 3243,Maze Middle Manager,Default,['Permanent'],
 2776,The Wintersday Gauntlet,Default,"['Pvp', 'Permanent']",
@@ -7139,6 +7146,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 3128,Task Master,Default,['Permanent'],Who's afraid of a little lava?
 8,Bandit Slayer,Default,['Permanent'],All criminals eventually meet a dark end.
 7652,Avatar of Spite Annihilator,Default,"['IgnoreNearlyComplete', 'Repeatable', 'Permanent']",Spit in spite's eye.
+9125,Weekly Raid Encounters,Default,['Permanent'],
 2725,Path of the Ascension III: Monument of Legends,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'CategoryDisplay', 'Permanent']",
 5430,League Slayer—Conquest Season Twenty-Three,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
 7619,WvW Rush Player vs. Player,Default,"['Pvp', 'Permanent']",Champion points: 3
@@ -7211,6 +7219,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 4504,Chasing Tales: Purging Flame,Default,"['Hidden', 'Permanent']",Everything burns.
 1312,Marionette Short-Circuiter,Default,['Permanent'],
 6745,Decade of Adventure: Cantha,Default,['Permanent'],
+9192,Raid Bounty: Mursaat Overseer,Default,['Daily'],
 6796,Seeking Scarlet: Old Lion's Court,Default,['Permanent'],
 1695,Sand Shield,Default,['Permanent'],
 549,Minor in Immortality,Default,['Permanent'],Who needs continue coins?
@@ -7535,6 +7544,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 1808,Defender: Indigo Cave,Default,['Permanent'],
 2956,Daily Tier 4 Aquatic Ruins,Default,['Daily'],
 2981,Daily Tier 1 Thaumanova Reactor,Default,['Daily'],
+9176,Raid Bounty: Deimos,Default,['Daily'],
 922,Hold It Right There,Default,['Permanent'],"They can run, but not fast enough."
 6205,Adept Specter,Default,"['Pvp', 'Permanent']",
 5416,"The Long, Cold Road",Default,['Permanent'],"Do you miss the frost when it leaves you?
