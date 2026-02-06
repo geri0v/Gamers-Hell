@@ -119,7 +119,7 @@ Story Instance: Legacy"
 919,What Does She Know?,Default,['Permanent'],"So close, yet so far."
 4193,For Petey's Sake,Default,"['Pvp', 'RepairOnLogin', 'Permanent']",Find the collections requested by Gorrik to nurse Petey back to health.
 1060,Trick-or-Treater V,Default,"['Pvp', 'Daily']",
-8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
+1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
 4171,Master Diver: Kessex Hills,Default,['Permanent'],This chest can be reopened once per week or per completion of the Master Diver achievement.
 1712,Fractal Master,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>WARNING: some fractals may cause injury, psychic trauma, blindness, or death.</c>"
 3475,Siren's Landing Insight: Lava Leap,Default,['Permanent'],
@@ -133,7 +133,7 @@ Surely it must be an official title if a self-proclaimed skritt king gives it to
 
 Surely it must be an official title if a self-proclaimed skritt king gives it to you, right?"
 3489,Aurora II: Empowering,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
-1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
+8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
 9110,Castoran Coral: Inquest Investigation,Default,"['Pvp', 'RequiresUnlock', 'Permanent']",The Inquest will salvage whatever they can in a place like Castora.
 4167,Survey on Subjects of Importance,Default,['Permanent'],
 6159,An Impostor Walks among Us,Default,['Permanent'],You'll have to take off your shoes.
@@ -568,6 +568,7 @@ During the Fractal Incursion event, some steps of this achievement will be unloc
 3185,Daily Recommended Fractal—Scale 54,Default,['Daily'],
 7489,Dungeon Delver: Twilight Arbor,Default,['Permanent'],
 5139,Wolverine's Revelation,Default,['Permanent'],
+9121,Raid Bounty: Shiverpeaks Pass,Default,['Daily'],
 555,"Doctor of Secrets, World 1",Default,['Permanent'],That's Doctor of Secrets to you!
 2540,Flying Circus: Gold,Default,"['Pvp', 'Permanent']",
 8637,Search-and-Rescue Challenge: Gold,Default,['Permanent'],
@@ -1825,6 +1826,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 8786,Returning to Horn of Maguuma,Default,['Permanent'],
 2075,Dragon Ball Champion,Default,"['Pvp', 'Repeatable', 'Permanent']",Count yourself among the elite of the Dragon Ball.
 8160,Missing in Action,Default,['Permanent'],Journal: Missing in Action
+9194,Down and Out: Salvation Pass,Default,['Permanent'],This achievement cannot be done in Emboldened mode.
 5368,Special Mission: Shoot to Thrill,Default,"['RequiresUnlock', 'Permanent']",
 2792,Connoisseur of Confection,Default,"['Pvp', 'Permanent']",Be careful about eating too much at once; those sugar crashes can be painful.
 4059,(Annual) Leaping Above the Snow,Default,"['Pvp', 'Permanent']",
@@ -2038,13 +2040,13 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3672,To Kill a God,Default,"['Hidden', 'Permanent']",Journal: To Kill a God Completed
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
-2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
-6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
-8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
-6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
 4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
 6618,Completing Events III,Default,['Permanent'],
+2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
+6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
+8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
+6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 8909,Sylvan Shapeshifter,Default,['Permanent'],They'd prefer you to be anything but yourself.
 5551,League Participator—Conquest Season Twenty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
@@ -2258,6 +2260,7 @@ Ward Crafter Lucirae in Moon Camp Covert can offer assisted crafting if you do n
 5989,Return to Wildfire,Default,['Permanent'],
 5608,League Participator—3v3 Season Three,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
 3957,Daily Domain of Istan Bounty Hunter,Default,['Daily'],
+9153,Raid Bounty: Aetherblade Hideout,Default,['Daily'],
 2197,Flights of Fancy,Default,['Permanent'],"Story Instance: ""Hearts and Minds"""
 7891,Legendary Phantom,Default,"['Pvp', 'Permanent']","Walking the line between life and death—your life, their death."
 2536,The Flameseeker Prophecies III: The Chosen,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']","Tyria is a land of heroes and villains locked in eternal struggle. Attain the ""Anthology of Heroes,"" and record the tales of the greatest of their number, both from the past and the heroes of today. Consider the true nature of heroism in your efforts to craft the legendary precursor known as The Chosen."
@@ -2394,6 +2397,7 @@ Ward Crafter Lucirae in Moon Camp Covert can offer assisted crafting if you do n
 559,"Doctor of Baubles, World 1",Default,['Permanent'],But what if they were?
 5197,Spa Day,Default,['Permanent'],Sneak in some R&R when Ryland's not looking. Don't forget the mud mask and cucumber slices.
 1371,Make It Rain,Default,['Permanent'],
+5605,Lunar Homecoming: Plains of Ashford,Default,['Daily'],
 5952,Second Response: Bloodtide Coast,Default,['Permanent'],
 6255,Commander Be Quick,Default,['Permanent'],Avoided a grisly fate with expediency.
 4480,Daily Racer: Ghostfire Run,Default,['Daily'],
@@ -3216,6 +3220,7 @@ This is but the first step on a long road."
 1670,Toxicity Trampler,Default,['Permanent'],
 737,Aspect Arena: Crystal Capper,Default,"['Pvp', 'Permanent']","Bet you can't say ""Crystal Capper"" ten times in a row, fast."
 8148,True Ending: The Eleventh Hour,Default,['Permanent'],Journal: The Eleventh Hour
+9201,Raid Bounty: Qadim,Default,['Daily'],
 2476,Dark Harvest,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 6260,Tsunami Dodger,Default,['Permanent'],
 3167,Halloween Fright,Default,"['Pvp', 'MoveToTop', 'Daily']",
@@ -5526,6 +5531,7 @@ Story Instance: Legacy"
 3260,Wintersday Wrecking Ball,Default,['Permanent'],Nothing a little tape and some glue can't fix.
 8172,True Artist,Default,['Permanent'],The finest galleries in Tyria are eager to meet you.
 3202,Daily Recommended Fractal—Scale 57,Default,['Daily'],
+9135,Raid Bounty: Slothasor,Default,['Daily'],
 3287,Attuned,Default,['Permanent'],
 6988,"Wrong Time, Wrong Place",Default,"['Hidden', 'Permanent']",Hopefully it was quick and painless...
 5364,Death to the Corrupted,Default,"['Pvp', 'Permanent']",
