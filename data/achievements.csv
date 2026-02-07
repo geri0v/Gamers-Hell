@@ -686,6 +686,7 @@ During the Fractal Incursion event, some steps of this achievement will be unloc
 4929,Model Diplomat,Default,['Permanent'],Story Instance: Coming Home
 2965,Fractal Initiate,Default,['Permanent'],This is only the beginning...
 2626,Bo,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
+9160,Raid Bounty: Matthias,Default,['Daily'],
 4126,I Make This Golem Look Good,Default,['Permanent'],Story Instance: Tracking the Scientist
 878,Become the Master,Default,['Permanent'],And this round goes to...
 1858,Daily PvP Defender,Default,"['Pvp', 'Daily']",
@@ -1838,6 +1839,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3756,Expurgation,ItemSet,"['Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 4635,Fish Out of Water,Default,['Permanent'],
 3245,Snowball Mayhem,Default,"['Pvp', 'Daily']",Celebrate one of Tyria's oldest winter traditions.
+9154,Down and Out: Spirit Vale,Default,['Permanent'],This achievement cannot be done in Emboldened mode.
 2624,"""Thunderbreaker"" Strongbox",Default,['Permanent'],
 6905,New Kaineng Jade Bot Racer: Gold,Default,['Permanent'],
 3376,Niflhel Assaulter,Default,"['Pvp', 'Permanent']",The forest hides many enemies.
@@ -2402,6 +2404,7 @@ Ward Crafter Lucirae in Moon Camp Covert can offer assisted crafting if you do n
 6255,Commander Be Quick,Default,['Permanent'],Avoided a grisly fate with expediency.
 4480,Daily Racer: Ghostfire Run,Default,['Daily'],
 644,Daily WvW Camp Capturer,Default,"['Pvp', 'Daily']",
+9127,Raid Bounty: Cardinal Sabir,Default,['Daily'],
 3832,Crystal Oasis Griffon Master: Gold,Default,['Permanent'],
 4098,Sandswept Isles Bounty Hunter,Default,['Permanent'],
 3514,Daily Siren's Landing: Gambler,Default,['Daily'],A chest a day keeps your gold at bay.
@@ -4421,6 +4424,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 4165,Lost in Transit,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 4054,Holiday Food Drive,Default,"['Pvp', 'Permanent']",
 6563,"Check, First Mate",Default,['Permanent'],Story Instance: No More Secrets—The Scene of the Crime
+9184,Down and Out: Hall of Chains,Default,['Permanent'],"If a boss has a challenge mode, the challenge mode must be enabled to earn credit for this achievement, and it cannot be done with Emboldened enabled."
 1261,Wintersday Snowball Slinger,Default,['Daily'],Give players a cold welcome with a snowball.
 3777,Primeval Historian,Default,['Permanent'],"Story Instance: ""Hallowed Ground"""
 4006,Daily Tier 2 Twilight Oasis,Default,['Daily'],
@@ -4589,6 +4593,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 5254,Crystal Bloom Supporter,Default,['Permanent'],
 8655,(Annual) Future Fashionable,Default,['Permanent'],
 2067,Jump Up to Get Down,Default,['Permanent'],
+9118,Down and Out: Mythwright Gambit,Default,['Permanent'],"If a boss has a challenge mode, the challenge mode must be enabled to earn credit for this achievement, and it cannot be done with Emboldened enabled."
 5439,Dancing with Demons,Default,"['Hidden', 'Permanent']",A full party of five must participate in the fractal from start to finish without dying.
 6012,Revenge of the Ooze,Default,['Permanent'],
 4136,Race to the Finish: Inquest Facility,Default,['Permanent'],
@@ -5388,6 +5393,7 @@ Story Instance: Legacy"
 82,The Cost of Victory,Default,['Permanent'],You faced your worst fear and emerged triumphant.
 9122,Raid Bounty: Gorseval,Default,['Daily'],
 4925,Untouchable,Default,['Permanent'],Story Instance: A Race to Arms
+9159,Down and Out: Bastion of the Penitent,Default,['Permanent'],"If a boss has a challenge mode, the challenge mode must be enabled to earn credit for this achievement, and it cannot be done with Emboldened enabled."
 3188,Stay Unfrosty,Default,['Permanent'],Story Instance: Frozen Out
 1849,Daily WvW Land Claimer,Default,"['Pvp', 'Daily']",
 7787,Emotional Barrier,Default,['Permanent'],"""I'll try to pretend I'm sad or something."""
@@ -5488,6 +5494,7 @@ Story Instance: Legacy"
 5836,Local Response: Lake Doric,Default,['Permanent'],
 5034,Shadows Creep,Default,"['Hidden', 'RepairOnLogin', 'Permanent']","You saw something in West Bjora Marches, though you're not sure what..."
 4454,Extra Life,Default,"['Pvp', 'Hidden', 'Permanent']",
+9175,Raid Bounty: Voice and Claw of the Fallen,Default,['Daily'],
 1314,Marionette Muter,Default,['Permanent'],
 8350,Shield Trap,Default,['Permanent'],The best offense is a good defense.
 3572,Vehjin Supply Run: Gold,Default,['Permanent'],
@@ -7115,6 +7122,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 142,Shaman's Rookery,Default,['Permanent'],Prove your might to the four Spirits of the Wild.
 8485,"Raid: Decima, the Stormsinger",Default,['Permanent'],The amosphere is dense and crackling. The Stormsinger nears...
 2855,Adventuring 201,Default,['Daily'],
+9124,Raid Bounty: Qadim the Peerless,Default,['Daily'],
 7663,Auric Basin Incursions,Default,['Weekly'],
 3078,Bloodstone Fen Insight: Fragmented Wastes,Default,['Permanent'],
 4784,Baroness of the Arena,Default,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
