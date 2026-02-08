@@ -3521,6 +3521,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 618,Crab Toss Champion,Default,"['Pvp', 'Permanent']",Win the Southsun Crab Toss.
 3103,Ember Bay Insight: Caliph's Steps,Default,['Permanent'],
 2971,Daily Tier 2 Solid Ocean,Default,['Daily'],
+9107,Raid Bounty: Xera,Default,['Daily'],
 6156,In the Name of the Law,Default,['Permanent'],Journal: In the Name of the Law Completed
 1107,Tower of Nightmares Survivor,Default,['Daily'],
 1707,Mini Collection—Set III,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",Master of miniature mayhem.
@@ -3781,6 +3782,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 7952,Darkhaven Veteran,Default,"['Pvp', 'Hidden', 'Permanent']",Days gone by...
 8166,Woad Armor Collector,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",Shrouded by the strength of the wilds.
 4707,Skyscale Scales,ItemSet,"['Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
+9139,Raid Bounty: Fraenir of Jormag,Default,['Daily'],
 9098,"Gnashbash ""Birthday"" Celebration: Checking In",Default,['Permanent'],
 2595,Tamer of Wyverns,Default,['Permanent'],That's a meaty task...
 6865,Hunger Manifest,ItemSet,"['Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
@@ -7478,6 +7480,7 @@ This achievement can be reset by purchasing Recollection of Bearkin's Adversarie
 2186,Triple Mordrem Takedown,Default,['Permanent'],Mowing down Mordrem like a boss.
 2579,Lore Untangler,Default,['Permanent'],Obscure knowledge is no problem for the likes of you!
 3277,Dragon's Shadow,Default,"['Pvp', 'Permanent']",
+9136,Raid Mentor: Keep Construct,Default,['Permanent'],"This achievement progresses significantly when raiding with players who haven't killed the boss before, as well as with players who haven't killed it for the week but to a lesser extent. Very experienced raiders in the squad will not count toward this achievement."
 4204,Debbie's Cakes,Default,"['Pvp', 'RepairOnLogin', 'Permanent']","Each one is made with a hefty dose of love, and a bit too much salt."
 1944,Daily Frostgorge Sound Event Completer,Default,['Daily'],Scour the mountains.
 5038,Mysteries of the Raven Sanctum,Default,['Permanent'],
@@ -7973,6 +7976,7 @@ Bash the demon! Smash the demon! May it never rise up again!"
 98,To Know the Unknown,Default,['Permanent'],You are now a full member of the Order of Whispers.
 1647,Opportune Moment,Default,['Permanent'],Story Instance: Cornered
 4738,Skyscale Rider: Shiverpeak Mountains,Default,['Permanent'],"Wayfarer Foothills, Snowden Drifts, Lornar's Pass, Dredgehaunt Cliffs, Timberline Falls, and Frostgorge Sound"
+9146,Raid Bounty: Soulless Horror,Default,['Daily'],
 2189,Daily Recommended Fractal—Scale 21,Default,['Daily'],
 9079,Swift Skimming,Default,['Permanent'],Journal: Truths Unearthed
 4173,Master Diver: Snowden Drifts,Default,['Permanent'],This chest can be reopened once per week or per completion of the Master Diver achievement.
@@ -8043,6 +8047,7 @@ Bash the demon! Smash the demon! May it never rise up again!"
 6844,Black Lion Requisition Mission Week 4,Default,"['IgnoreNearlyComplete', 'Permanent']",The Black Lion Trading Company needs your help!
 1772,Shut the Doors,Default,"['Hidden', 'Permanent']",
 8554,Mistburned Barrens Fisher,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>The charm of fishing is in pursuing something elusive, though attainable. It is a simple yet profound practice of hope.</c>"
+9131,Raid Bounty: Whisper of Jormag,Default,['Daily'],
 2920,Chuka and Champawat I: Hunter's Journal,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']","""Under Bagred's tutelage, I now undertake my hunt. These pages will chronicle the greatness of my deed."""
 3881,Recitation of the Litany of Deeds,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",<c=@Flavor>It was customary for heralds and traveling performers to gather and compete over who could tell the most impressive tales to assembled guests and foreign dignitaries.</c>
 2802,The Shatterer,Default,"['CategoryDisplay', 'Permanent']",
@@ -8110,6 +8115,7 @@ Bash the demon! Smash the demon! May it never rise up again!"
 1862,Daily Necromancer Winner,Default,"['Pvp', 'Daily']",
 7866,Reconquer the Hidden Depths (Weekly),Default,['Permanent'],
 7806,A Record of War: The Natural,Default,['Permanent'],
+9199,Down and Out: Stronghold of the Faithful,Default,['Permanent'],"If a boss has a challenge mode, the challenge mode must be enabled to earn credit for this achievement, and it cannot be done with Emboldened enabled."
 6137,Friend to Testudines,Default,['Permanent'],
 2748,League Rank Earner—Champion,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",Completing this achievement awards an item for Path of the Ascension III: Monument of Legends.
 207,Only Zuhl,Default,['Permanent'],Plumb the depths of Sector Zuhl.
