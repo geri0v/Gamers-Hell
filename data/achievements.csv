@@ -18,6 +18,7 @@ id,name,type,flags,description
 5252,Tengu Weapon Collector,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
 2928,Daily Tier 3 Aetherblade,Default,['Daily'],
 6202,End of Dragons: Act 4 Mastery,Default,"['RepairOnLogin', 'CategoryDisplay', 'Permanent']",
+9126,Raid Bounty: Vale Guardian,Default,['Daily'],
 1633,Dive Master: Prospect Valley,Default,['Permanent'],
 572,A Rallying Flame,Default,['Permanent'],
 1752,Spirit Crafter,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']",<c=@flavor>May the spirits of the past protect me now and forever.</c>
@@ -4066,6 +4067,7 @@ Surely it must be an official title if a self-proclaimed skritt king gives it to
 6627,Dodging Attacks V,Default,['Permanent'],
 4137,Gate-Crasher,Default,['Permanent'],Story Instance: Tracking the Scientist
 6871,Agitator Eliminator,Default,['Permanent'],
+9103,Raid Bounty: Samarog,Default,['Daily'],
 3905,Hero of the Desert,Default,['Permanent'],You help where you're needed.
 2621,Glint's Bastion,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 3986,Gone Swimming,Default,"['Hidden', 'Permanent']",Story Instance: The First City
@@ -4594,6 +4596,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3973,Daily Tier 4 Twilight Oasis,Default,['Daily'],
 5254,Crystal Bloom Supporter,Default,['Permanent'],
 8655,(Annual) Future Fashionable,Default,['Permanent'],
+9164,Down and Out: The Key of Ahdashim,Default,['Permanent'],"If a boss has a challenge mode, the challenge mode must be enabled to earn credit for this achievement, and it cannot be done with Emboldened enabled."
 2067,Jump Up to Get Down,Default,['Permanent'],
 9118,Down and Out: Mythwright Gambit,Default,['Permanent'],"If a boss has a challenge mode, the challenge mode must be enabled to earn credit for this achievement, and it cannot be done with Emboldened enabled."
 5439,Dancing with Demons,Default,"['Hidden', 'Permanent']",A full party of five must participate in the fractal from start to finish without dying.
