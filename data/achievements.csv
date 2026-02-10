@@ -18,7 +18,6 @@ id,name,type,flags,description
 5252,Tengu Weapon Collector,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
 2928,Daily Tier 3 Aetherblade,Default,['Daily'],
 6202,End of Dragons: Act 4 Mastery,Default,"['RepairOnLogin', 'CategoryDisplay', 'Permanent']",
-9126,Raid Bounty: Vale Guardian,Default,['Daily'],
 1633,Dive Master: Prospect Valley,Default,['Permanent'],
 572,A Rallying Flame,Default,['Permanent'],
 1752,Spirit Crafter,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']",<c=@flavor>May the spirits of the past protect me now and forever.</c>
@@ -120,7 +119,7 @@ Story Instance: Legacy"
 919,What Does She Know?,Default,['Permanent'],"So close, yet so far."
 4193,For Petey's Sake,Default,"['Pvp', 'RepairOnLogin', 'Permanent']",Find the collections requested by Gorrik to nurse Petey back to health.
 1060,Trick-or-Treater V,Default,"['Pvp', 'Daily']",
-1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
+8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
 4171,Master Diver: Kessex Hills,Default,['Permanent'],This chest can be reopened once per week or per completion of the Master Diver achievement.
 1712,Fractal Master,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']","<c=@flavor>WARNING: some fractals may cause injury, psychic trauma, blindness, or death.</c>"
 3475,Siren's Landing Insight: Lava Leap,Default,['Permanent'],
@@ -134,7 +133,7 @@ Surely it must be an official title if a self-proclaimed skritt king gives it to
 
 Surely it must be an official title if a self-proclaimed skritt king gives it to you, right?"
 3489,Aurora II: Empowering,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
-8448,(Weekly) Convergences: Mount Balrior,Default,"['CategoryDisplay', 'MoveToTop', 'Weekly']","""Gather 'round for another tale of triumph and struggle..."""
+1283,Spreading Wintersday Joy IV,Default,['Daily'],Make the lives of the less fortunate in Divinity's Reach a little better.
 9110,Castoran Coral: Inquest Investigation,Default,"['Pvp', 'RequiresUnlock', 'Permanent']",The Inquest will salvage whatever they can in a place like Castora.
 4167,Survey on Subjects of Importance,Default,['Permanent'],
 6159,An Impostor Walks among Us,Default,['Permanent'],You'll have to take off your shoes.
@@ -1994,6 +1993,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 7668,Convergence Conqueror,Default,['Permanent'],Vigorously protecting Tyria from the evil within.
 8103,Chromatic Assassin Weapon Collection,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 4960,The Show Must Go On,Default,['Permanent'],
+9119,Raid Bounty: Conjured Amalgamate,Default,['Daily'],
 8681,Revenge of the Jade Behemoth,Default,['Permanent'],
 8680,Local Response: Seitung Province,Default,['Permanent'],
 2209,Death to the Undying,Default,"['Hidden', 'Permanent']",
@@ -2044,12 +2044,12 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 4037,Statues of Limitation,Default,['Permanent'],Death will not wait.
 8796,Revenge of Eparch,Default,['Permanent'],
 4227,"Squish, Squish",Default,['Permanent'],Story Instance: Seized
+8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
 6618,Completing Events III,Default,['Permanent'],
+6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
+1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
 2285,Priory's History,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 6104,Seitung Province Insight: Crystal Cave,Default,['Permanent'],
-1968,Daily Shiverpeaks Lumberer,Default,['Daily'],Fueling the engines of the economy.
-8361,Rehearsal,Default,"['Hidden', 'Permanent']",Practice makes perfect!
-6408,Turtle Unlock: Starting Small,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 5892,Second Response: Gendarran Fields,Default,['Permanent'],
 8909,Sylvan Shapeshifter,Default,['Permanent'],They'd prefer you to be anything but yourself.
 5551,League Participator—Conquest Season Twenty-Five,Default,"['IgnoreNearlyComplete', 'Pvp', 'Permanent']",
@@ -3113,6 +3113,7 @@ This is but the first step on a long road."
 6927,Daily Gyala Delve Kappa Slayer,Default,['Daily'],
 6940,Unsundered,Default,['Permanent'],
 270,Illusionist,Default,"['Pvp', 'Permanent']",Shatter your enemies.
+9155,Raid Bounty: Cosmic Observatory,Default,['Daily'],
 2323,Ogre Airship Climber,Default,"['Hidden', 'Permanent']","Wow, what a view."
 5134,A Bountiful Pastime,Default,['Permanent'],
 6467,Possession,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
@@ -4067,7 +4068,6 @@ Surely it must be an official title if a self-proclaimed skritt king gives it to
 6627,Dodging Attacks V,Default,['Permanent'],
 4137,Gate-Crasher,Default,['Permanent'],Story Instance: Tracking the Scientist
 6871,Agitator Eliminator,Default,['Permanent'],
-9103,Raid Bounty: Samarog,Default,['Daily'],
 3905,Hero of the Desert,Default,['Permanent'],You help where you're needed.
 2621,Glint's Bastion,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
 3986,Gone Swimming,Default,"['Hidden', 'Permanent']",Story Instance: The First City
