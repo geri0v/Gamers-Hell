@@ -1598,6 +1598,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 6910,Gyala Delve Beetle Racer: Silver,Default,['Permanent'],
 5419,Tribune Weapons Collector,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
 9042,Can't Fool Me,Default,['Permanent'],You already know how that trick is done.
+9145,Raid Bounty: Cardinal Adina,Default,['Daily'],
 9036,"Eyes, Ears, and Arms",Default,['Permanent'],"Journal: Eyes, Ears, and Arms"
 3030,Fiona's Stockpile,Default,['Permanent'],"<c=@flavor>""Magic belongs to the people, and for the people it will be kept.""
 —Fiona</c>"
@@ -6746,6 +6747,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 5542,Daily Ebon Vanguard Donations,Default,['Daily'],
 6612,Adventure Guide: Volume Two,Default,"['RepairOnLogin', 'CategoryDisplay', 'MoveToTop', 'Permanent']",
 5412,Special Mission: No Charr Left Behind,Default,"['RequiresUnlock', 'Permanent']",
+9185,Raid Bounty: Sabetha,Default,['Daily'],
 6665,Defeating Elder Dragon Minions,Default,['Permanent'],
 250,Ransacker,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']",People want you on their team.
 2077,Dragon's Breath,Default,"['Pvp', 'Permanent']",
