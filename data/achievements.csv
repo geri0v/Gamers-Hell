@@ -3579,6 +3579,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 3551,Lost Pilgrims,Default,['Permanent'],
 7690,Emotional Baggage,Default,"['IgnoreNearlyComplete', 'Repeatable', 'Permanent']","I'm completely fine, honestly!"
 6024,Return to Bjora Marches 2,Default,"['Pvp', 'RepairOnLogin', 'CategoryDisplay', 'Permanent']",
+9138,Raid Bounty: Old Lion's Court,Default,['Daily'],
 5415,Drizzlewood Coast Insight: Camp Cliffs,Default,['Permanent'],
 2793,The Bells of Wintersday,Default,"['Pvp', 'Hidden', 'Repeatable', 'Permanent']",Now you're the maestro.
 2983,Daily Heart of Maguuma Vista Viewer,Default,['Daily'],Always on the lookout for a good view.
@@ -6570,6 +6571,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 4345,A Good Defense,ItemSet,"['Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
 1311,Marionette Lightfoot,Default,['Permanent'],
 857,Explorer's Second Super Adventure,Default,['Permanent'],Contemplate World 2's stunning horizons at your leisure.
+9196,Raid Bounty: Xunlai Jade Junkyard,Default,['Daily'],
 8332,All the Queen's Men,Default,['Permanent'],"Even in life, Alessia's smile had the power to bring ruin to her enemies..."
 5823,Return to Research,Default,['Permanent'],
 2044,Adept Toymaker,Default,"['Pvp', 'Hidden', 'CategoryDisplay', 'Permanent']",Getting into the spirit of the season.
