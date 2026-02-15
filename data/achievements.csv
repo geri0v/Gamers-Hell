@@ -1406,6 +1406,7 @@ Note: Completion of this achievement requires completion of the Riding Skyscales
 6653,Logging Lumber,Default,['Permanent'],
 5266,Special Mission: Rearguard,Default,"['RequiresUnlock', 'Permanent']",
 4655,Super Adventurer's Quest 2,ItemSet,"['Pvp', 'RepairOnLogin', 'Permanent']",
+9166,Raid Mentor: Deimos,Default,['Permanent'],"This achievement progresses significantly when raiding with players who haven't killed the boss before, as well as with players who haven't killed it for the week but to a lesser extent. Very experienced raiders in the squad will not count toward this achievement."
 6462,Echovald Wilds Insight: Saprophyte's Pond,Default,['Permanent'],
 8390,Revenge of Sulypix (Weekly),Default,['Permanent'],
 7882,Fabled Magus,Default,"['Pvp', 'Permanent']",Standing on a smoldering pile of your enemies.
@@ -2893,6 +2894,7 @@ This is but the first step on a long road."
 1408,Executive Execution,Default,['Daily'],
 4081,(Annual) Celestial Racer,Default,['Permanent'],
 9003,Orb Hopper,Default,['Permanent'],
+9186,Raid Mentor: Samarog,Default,['Permanent'],"This achievement progresses significantly when raiding with players who haven't killed the boss before, as well as with players who haven't killed it for the week but to a lesser extent. Very experienced raiders in the squad will not count toward this achievement."
 248,Mercenary,Default,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'Permanent']",You aren't a total liability anymore.
 5730,Crop Harvester: Silverwastes,Default,"['RepairOnLogin', 'Permanent']",
 2629,Machined Hammer,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'Hidden', 'RepairOnLogin', 'Permanent']",
@@ -4385,6 +4387,7 @@ It was shattered and discarded when someone asked the inventor, ""Why don't you 
 992,WvW Premier Season: 2nd Place,Default,"['Pvp', 'Hidden', 'MoveToTop', 'Permanent']",
 7171,Skywatch Archipelago Insight: Above the Jungle,Default,['Permanent'],
 2418,The North Wind,ItemSet,"['IgnoreNearlyComplete', 'Pvp', 'RepairOnLogin', 'RequiresUnlock', 'Permanent']",
+9178,Dhuum's Butcher,Default,['Permanent'],"""There is no conclusion more natural than death."""
 4803,Rock Solid,Default,['Permanent'],Dig deep to crack the foundations of corruption.
 8238,"Lowland Shore Insight: ""Battle of Ice"" Memorial",Default,['Permanent'],
 5828,Treasure Hunter: Prospect Valley,Default,['Permanent'],
@@ -4880,6 +4883,7 @@ Story Instance: Legacy"
 4589,Chasing Tales: Call to Action,Default,"['Hidden', 'Permanent']","After his death, Codd's prized warhorn was cast in bronze and promptly pitched into the sea."
 1400,Trader's Forum Triumphant,Default,"['Pvp', 'Permanent']",Mission: The Battle for Lion's Arch
 6851,The Facet of Prisms and Boundless Light,Default,"['Pvp', 'RepairOnLogin', 'CategoryDisplay', 'MoveToTop', 'Permanent']",
+9104,Raid Mentor: Cairn,Default,['Permanent'],"This achievement progresses significantly when raiding with players who haven't killed the boss before, as well as with players who haven't killed it for the week but to a lesser extent. Very experienced raiders in the squad will not count toward this achievement."
 8107,Sunken Treasure Week: Iron Marches,Default,['Permanent'],This chest can be reopened once per week or per completion of the Master Diver achievement.
 273,Shadow,Default,"['Pvp', 'Permanent']",Never should have turned their back on you.
 4886,Champion Rush Community Goal: Tier 3,Default,['Permanent'],
